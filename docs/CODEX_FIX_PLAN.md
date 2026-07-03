@@ -1337,6 +1337,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1474/#2892: The knowledge research network panel now starts with one closed compact
   network fields choice while research opt-in, aggregation plan, PubMed preview and source
   registry remain reachable.
+  Partial G1475/#2894: The knowledge add research form now starts with one closed compact input
+  choice while title, source, date, note, summaries and save action remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1476 — Kennis toevoegroute eigen kennisitem start met één compacte itemkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1475 blijft de kennis toevoegroute voor eigen kennisitems gevoelig voor titel, categorie, broncontext, notitie en bewaaractie tegelijk.
+- **User Impact:** Gebruikers die eigen kennis toevoegen, krijgen nog meerdere invoervelden voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis toevoegroute voor eigen kennisitems starten met één compacte itemkeuze of samengevouwen sublaag, terwijl titel, categorie, broncontext, notitie en bewaaractie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één itemcontext kiezen zonder dat alle eigen-kennisvelden tegelijk de route domineren.
+- **Acceptance Criteria:** Bestaande eigen-kennisformulier hooks, velden en bewaaractie blijven aanwezig; het eigen-kennisitem start met één compacte keuze of samengevouwen sublaag; titel, categorie, broncontext, notitie en bewaaractie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Toevoegen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, eigen kennis item form, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2896
+
 ### G1475 — Kennis toevoegroute researchformulier start met één compacte invoerkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, research item form, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2894
 
 ### G1474 — Kennis researchnetwerk start met één compacte netwerkkeuze

@@ -38497,6 +38497,9 @@ describe('app shell', () => {
     expect(html).toContain('href="#knowledge-own-item-disclosure"');
     expect(html).toContain('data-knowledge-add-layout="single-input"');
     expect(html).toContain('data-knowledge-add-primary="research"');
+    expect(html).toContain('data-knowledge-add-research-input-choice="collapsed"');
+    expect(html).toContain('Researchinvoer openen');
+    expect(html).toContain('Titel, bron, datum, notitie, samenvattingen en bewaaractie.');
     expect(html).toContain('id="research-item-form"');
     expect(html).toContain('id="knowledge-own-item-disclosure"');
     expect(html).toContain('data-knowledge-add-followup="own-item"');
@@ -38506,6 +38509,12 @@ describe('app shell', () => {
     expect(html).toContain('Open daarna eigen kennisitem of notitiecontext');
     expect(html).toContain('data-knowledge-add-secondary="own-item"');
     expect(html).toContain('id="knowledge-item-form"');
+    expect(html.indexOf('data-knowledge-add-primary="research"')).toBeLessThan(
+      html.indexOf('data-knowledge-add-research-input-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-add-research-input-choice="collapsed"')).toBeLessThan(
+      html.indexOf('id="research-item-form"'),
+    );
     expect(html.indexOf('data-knowledge-add-primary="research"')).toBeLessThan(
       html.indexOf('id="knowledge-own-item-disclosure"'),
     );
@@ -38520,6 +38529,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="command-route-summary knowledge-add-route-status-choice" aria-label="Kennis toevoegen route-samenvatting" data-knowledge-route-summary="add" data-knowledge-add-route-status-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-add-research-input-choice" data-knowledge-add-research-input-choice="collapsed" open>',
     );
     expect(html).not.toContain('<details id="knowledge-own-item-disclosure" open');
     expect(html).not.toContain(
@@ -39027,6 +39039,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-add-route-status-choice__body {');
     expect(css).toContain(
       '.knowledge-add-route-status-choice:not([open]) > .knowledge-add-route-status-choice__body {',
+    );
+    expect(css).toContain('.knowledge-add-research-input-choice {');
+    expect(css).toContain('.knowledge-add-research-input-choice__summary {');
+    expect(css).toContain('.knowledge-add-research-input-choice__body {');
+    expect(css).toContain(
+      '.knowledge-add-research-input-choice:not([open]) > .knowledge-add-research-input-choice__body {',
     );
     expect(css).toContain('.knowledge-add-context-choice {');
     expect(css).toContain('.knowledge-add-context-choice__summary {');
