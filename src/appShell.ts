@@ -13221,15 +13221,26 @@ function renderKnowledgeWorkbenchStatusChoice(input: {
         </span>
         <em>${formatKnowledgeVisibleCount(input.kennisItems, input.totalKennisItems)}</em>
       </summary>
-      <div class="knowledge-workbench-status-choice__body" data-knowledge-workbench-status-metrics="ready">
-        <p class="knowledge-research-workbench__status">${input.netwerkAan ? 'Netwerkresearch: opt-in aan' : 'Netwerkresearch: lokale cache'}</p>
-        ${renderKnowledgeItemStatus(input)}
-        ${statRow([
-          { label: 'Bronnen', value: String(input.researchBronnen) },
-          { label: 'Samenvattingen', value: String(input.researchSamenvattingen) },
-          { label: 'Trends', value: String(input.researchTrends) },
-          { label: 'Items', value: `${input.kennisItems}/${input.totalKennisItems}` },
-        ])}
+      <div class="knowledge-workbench-status-choice__body">
+        <details class="knowledge-workbench-metrics-choice" data-knowledge-workbench-metrics-choice="collapsed">
+          <summary class="knowledge-workbench-metrics-choice__summary">
+            <span>
+              <strong>Metrics openen</strong>
+              <small>Netwerkstatus, zichtbaar aantal en researchaantallen.</small>
+            </span>
+            <em>${input.researchTrends} trends</em>
+          </summary>
+          <div class="knowledge-workbench-metrics-choice__body" data-knowledge-workbench-status-metrics="ready">
+            <p class="knowledge-research-workbench__status">${input.netwerkAan ? 'Netwerkresearch: opt-in aan' : 'Netwerkresearch: lokale cache'}</p>
+            ${renderKnowledgeItemStatus(input)}
+            ${statRow([
+              { label: 'Bronnen', value: String(input.researchBronnen) },
+              { label: 'Samenvattingen', value: String(input.researchSamenvattingen) },
+              { label: 'Trends', value: String(input.researchTrends) },
+              { label: 'Items', value: `${input.kennisItems}/${input.totalKennisItems}` },
+            ])}
+          </div>
+        </details>
       </div>
     </details>
   `;
