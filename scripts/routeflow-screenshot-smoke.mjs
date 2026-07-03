@@ -133,6 +133,23 @@ const targets = [
     closedDetailsSelectors: ['[data-knowledge-research-scan-choice="collapsed"]'],
   },
   {
+    screen: 'knowledge-status',
+    hash: '#kennis?route=read',
+    rootSelector: '.content',
+    expectedText: 'Kies werkbankstatus',
+    openSelectors: ['[data-knowledge-workbench-disclosure="collapsed"]'],
+    requiredSelectors: [
+      '[data-knowledge-workbench-status-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '[data-knowledge-workbench-status-metrics="ready"]',
+      '.knowledge-research-workbench__status',
+      '.knowledge-workbench-status-choice__body .stat-row',
+      '.knowledge-workbench-status-choice__body .stat__value',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-workbench-status-choice="collapsed"]'],
+  },
+  {
     screen: 'knowledge-filter',
     hash: '#kennis?route=read',
     rootSelector: '.content',

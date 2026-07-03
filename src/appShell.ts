@@ -13078,7 +13078,6 @@ function renderKnowledgeResearchWorkbench(input: {
           <h2>Research begrijpen zonder alles tegelijk te lezen</h2>
           <p>Start met publicaties, trends of broncontrole. Kiempad houdt research conceptmatig en brongekoppeld.</p>
         </div>
-        <p class="knowledge-research-workbench__status">${input.netwerkAan ? 'Netwerkresearch: opt-in aan' : 'Netwerkresearch: lokale cache'}</p>
       </header>
       ${renderKnowledgeResearchSnapshot(input)}
       <div id="knowledge-overview" class="summary-panel priority-panel knowledge-command-panel">
@@ -13086,18 +13085,43 @@ function renderKnowledgeResearchWorkbench(input: {
           <div>
             <h2>Kennisbank</h2>
             <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>
-            ${renderKnowledgeItemStatus(input)}
           </div>
-          ${statRow([
-            { label: 'Bronnen', value: String(input.researchBronnen) },
-            { label: 'Samenvattingen', value: String(input.researchSamenvattingen) },
-            { label: 'Trends', value: String(input.researchTrends) },
-            { label: 'Items', value: `${input.kennisItems}/${input.totalKennisItems}` },
-          ])}
+          ${renderKnowledgeWorkbenchStatusChoice(input)}
         </div>
         ${renderKennisFilterForm(input.filter)}
       </div>
     </section>
+  `;
+}
+
+function renderKnowledgeWorkbenchStatusChoice(input: {
+  researchBronnen: number;
+  researchSamenvattingen: number;
+  researchTrends: number;
+  kennisItems: number;
+  totalKennisItems: number;
+  netwerkAan: boolean;
+}): string {
+  return `
+    <details class="knowledge-workbench-status-choice" data-knowledge-workbench-status-choice="collapsed">
+      <summary class="knowledge-workbench-status-choice__summary">
+        <span>
+          <strong>Kies werkbankstatus</strong>
+          <small>Open netwerkstatus, zichtbaar aantal en researchmetrics.</small>
+        </span>
+        <em>${formatKnowledgeVisibleCount(input.kennisItems, input.totalKennisItems)}</em>
+      </summary>
+      <div class="knowledge-workbench-status-choice__body" data-knowledge-workbench-status-metrics="ready">
+        <p class="knowledge-research-workbench__status">${input.netwerkAan ? 'Netwerkresearch: opt-in aan' : 'Netwerkresearch: lokale cache'}</p>
+        ${renderKnowledgeItemStatus(input)}
+        ${statRow([
+          { label: 'Bronnen', value: String(input.researchBronnen) },
+          { label: 'Samenvattingen', value: String(input.researchSamenvattingen) },
+          { label: 'Trends', value: String(input.researchTrends) },
+          { label: 'Items', value: `${input.kennisItems}/${input.totalKennisItems}` },
+        ])}
+      </div>
+    </details>
   `;
 }
 

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1445 — Kennis filterformulier start met één compacte formulierkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1444 blijft het kennis filterformulier gevoelig voor meerdere velden en acties zodra de filterlaag wordt geopend.
+- **User Impact:** Gebruikers die kennis willen filteren, krijgen zoekterm, categorie, bronfilter, verificatiefilter en acties nog tegelijk aangeboden.
+- **Desired Outcome:** Laat het kennis filterformulier starten met één compacte formulierkeuze of samengevouwen sublaag, terwijl zoekterm, categorie, bronfilter, verificatiefilter en reset/toepassen bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst bewust het filterformulier openen zonder dat alle filtervelden direct de contextlaag vullen.
+- **Acceptance Criteria:** Bestaande filterform hooks, veldnamen, knoppen en routehashes blijven aanwezig; het filterformulier start met één compacte formulierkeuze of samengevouwen sublaag; zoekterm, categorie, bronfilter, verificatiefilter en acties blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheekfilter
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge filter kit, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2834
+
 ### G1444 — Kennis werkbankstatus start met één compacte statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge research workbench, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2832
 
 ### G1443 — Kennis researchscan start met één compacte scankeuze
