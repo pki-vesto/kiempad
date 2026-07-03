@@ -38384,6 +38384,9 @@ describe('app shell', () => {
     expect(html).toContain('Wetenschappelijke en eenvoudige uitleg');
     expect(html).toContain('Relevantie, relaties en trends openen');
     expect(html).toContain('data-knowledge-route-summary="add"');
+    expect(html).toContain('data-knowledge-add-route-status-choice="collapsed"');
+    expect(html).toContain('Toevoegstatus openen');
+    expect(html).toContain('Open routecontext, researchinvoer, eigen kennis en opslagstatus.');
     expect(html).toContain('Start met een publicatie of researchnotitie');
     expect(html).toContain('href="#research-item-form"');
     expect(html).toContain('href="#knowledge-own-item-disclosure"');
@@ -38406,6 +38409,12 @@ describe('app shell', () => {
     );
     expect(html.indexOf('data-knowledge-add-context-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-add-secondary="own-item"'),
+    );
+    expect(html.indexOf('data-knowledge-add-route-status-choice="collapsed"')).toBeLessThan(
+      html.indexOf('href="#research-item-form"'),
+    );
+    expect(html).not.toContain(
+      '<details class="command-route-summary knowledge-add-route-status-choice" aria-label="Kennis toevoegen route-samenvatting" data-knowledge-route-summary="add" data-knowledge-add-route-status-choice="collapsed" open>',
     );
     expect(html).not.toContain('<details id="knowledge-own-item-disclosure" open');
     expect(html).not.toContain(
@@ -38822,6 +38831,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-filter-status-choice__body {');
     expect(css).toContain(
       '.knowledge-filter-status-choice:not([open]) > .knowledge-filter-status-choice__body {',
+    );
+    expect(css).toContain('.knowledge-add-route-status-choice {');
+    expect(css).toContain('.knowledge-add-route-status-choice__summary {');
+    expect(css).toContain('.knowledge-add-route-status-choice__body {');
+    expect(css).toContain(
+      '.knowledge-add-route-status-choice:not([open]) > .knowledge-add-route-status-choice__body {',
     );
     expect(css).toContain('.knowledge-add-context-choice {');
     expect(css).toContain('.knowledge-add-context-choice__summary {');

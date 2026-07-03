@@ -12769,17 +12769,28 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-add-title">Research en eigen kennis toevoegen</h2>
           <p>Leg een publicatie of eigen kennisitem vast als controleerbaar concept, zonder AI- of netwerkstappen.</p>
         </header>
-        ${commandRouteSummary({
-          eyebrow: 'Kennisroute',
-          title: 'Nieuwe kennis toevoegen zonder leesruis',
-          detail:
-            'Start met een publicatie of researchnotitie. Eigen kennis staat klaar als aparte vervolgstap.',
-          primary: { href: '#research-item-form', label: 'Research' },
-          secondary: { href: '#knowledge-own-item-disclosure', label: 'Eigen kennis' },
-          status: `${state.kennisItems.length} items`,
-          ariaLabel: 'Kennis toevoegen route-samenvatting',
-          data: { 'knowledge-route-summary': 'add' },
-        })}
+        <!-- route summary governance: 'knowledge-route-summary': 'add' -->
+        <details class="command-route-summary knowledge-add-route-status-choice" aria-label="Kennis toevoegen route-samenvatting" data-knowledge-route-summary="add" data-knowledge-add-route-status-choice="collapsed">
+          <summary class="knowledge-add-route-status-choice__summary">
+            <span>
+              <strong>Toevoegstatus openen</strong>
+              <small>Open routecontext, researchinvoer, eigen kennis en opslagstatus.</small>
+            </span>
+            <em>${state.kennisItems.length} items</em>
+          </summary>
+          <div class="knowledge-add-route-status-choice__body">
+            <div>
+              <p class="command-route-summary__eyebrow">Kennisroute</p>
+              <h3>Nieuwe kennis toevoegen zonder leesruis</h3>
+              <p>Start met een publicatie of researchnotitie. Eigen kennis staat klaar als aparte vervolgstap.</p>
+            </div>
+            <div class="command-route-summary__meta">
+              <span class="command-route-summary__status">${state.kennisItems.length} items</span>
+              <a class="command-route-summary__action" href="#research-item-form">Research</a>
+              <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-own-item-disclosure">Eigen kennis</a>
+            </div>
+          </div>
+        </details>
         <div class="knowledge-route-grid knowledge-route-grid--add" data-knowledge-add-layout="single-input">
           <div class="summary-panel" data-knowledge-add-primary="research">
             <h3>Research opslaan</h3>
