@@ -12880,10 +12880,19 @@ function renderKennisScreen(state: AppShellState): string {
                       ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
                     </div>
                   </details>
-                  <div class="summary-panel" data-knowledge-ai-console-region="research-network">
-                    ${renderResearchNetworkSettingsForm(state.settings)}
-                    ${renderResearchAggregatiePlan(researchAggregatie)}
-                  </div>
+                  <details class="summary-panel knowledge-ai-network-choice" data-knowledge-ai-console-region="research-network" data-knowledge-ai-network-choice="collapsed">
+                    <summary class="knowledge-ai-network-choice__summary">
+                      <span>
+                        <strong>Researchnetwerk openen</strong>
+                        <small>Open research-opt-in, aggregatieplan, PubMed-preview en bronregister.</small>
+                      </span>
+                      <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
+                    </summary>
+                    <div class="knowledge-ai-network-choice__body">
+                      ${renderResearchNetworkSettingsForm(state.settings)}
+                      ${renderResearchAggregatiePlan(researchAggregatie)}
+                    </div>
+                  </details>
                 </div>
               </details>
             </div>

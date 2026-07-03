@@ -398,6 +398,33 @@ const targets = [
     closedDetailsSelectors: ['[data-knowledge-ai-settings-choice="collapsed"]'],
   },
   {
+    screen: 'knowledge-ai-network',
+    hash: '#kennis?route=ai',
+    rootSelector: '.content',
+    expectedText: 'Researchnetwerk openen',
+    openSelectors: [
+      '[data-knowledge-ai-support="collapsed"]',
+      '[data-knowledge-ai-support-context-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-knowledge-ai-network-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '[data-knowledge-ai-console-region="research-network"]',
+      '#research-network-form',
+      'select[name="researchNetwerkIngeschakeld"]',
+      '#research-network-form button[type="submit"]',
+      '[aria-label="Researchaggregatie-status"]',
+      '[aria-label="PubMed query preview zonder dossierplaintext"]',
+      '#pubmed-query-preview-form',
+      'input[name="pubmedZoektermen"]',
+      'input[name="pubmedPreviewDatum"]',
+      'select[name="pubmedReviewStatus"]',
+      '[aria-label="Research bronregister"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-ai-network-choice="collapsed"]'],
+  },
+  {
     screen: 'start-today-console',
     hash: '#start-today',
     rootSelector: '[data-start-today-route="ready"]',

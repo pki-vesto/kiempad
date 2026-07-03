@@ -38432,6 +38432,9 @@ describe('app shell', () => {
     expect(html).toContain('AI-instellingen openen');
     expect(html).toContain('Open opt-in, opslagmodus, on-device status en bewaaractie.');
     expect(html).toContain('data-knowledge-ai-console-region="research-network"');
+    expect(html).toContain('data-knowledge-ai-network-choice="collapsed"');
+    expect(html).toContain('Researchnetwerk openen');
+    expect(html).toContain('Open research-opt-in, aggregatieplan, PubMed-preview en bronregister.');
     expect(html.indexOf('data-knowledge-ai-console-region="preview"')).toBeLessThan(
       html.indexOf('id="knowledge-ai-support"'),
     );
@@ -38447,6 +38450,9 @@ describe('app shell', () => {
     expect(html.indexOf('data-knowledge-ai-settings-choice="collapsed"')).toBeLessThan(
       html.indexOf('id="ai-settings-form"'),
     );
+    expect(html.indexOf('data-knowledge-ai-network-choice="collapsed"')).toBeLessThan(
+      html.indexOf('id="research-network-form"'),
+    );
     expect(html).not.toContain(
       '<details class="knowledge-ai-support-context-choice" data-knowledge-ai-support-context-choice="collapsed" open>',
     );
@@ -38455,6 +38461,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="summary-panel knowledge-ai-settings-choice" data-knowledge-ai-console-region="settings" data-knowledge-ai-settings-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="summary-panel knowledge-ai-network-choice" data-knowledge-ai-console-region="research-network" data-knowledge-ai-network-choice="collapsed" open>',
     );
     expect(html).toContain('data-knowledge-route-summary="library"');
     expect(html).toContain('Eerst één categoriekeuze');
@@ -38794,6 +38803,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-ai-settings-choice__body {');
     expect(css).toContain(
       '.knowledge-ai-settings-choice:not([open]) > .knowledge-ai-settings-choice__body {',
+    );
+    expect(css).toContain('.knowledge-ai-network-choice {');
+    expect(css).toContain('.knowledge-ai-network-choice__summary {');
+    expect(css).toContain('.knowledge-ai-network-choice__body {');
+    expect(css).toContain(
+      '.knowledge-ai-network-choice:not([open]) > .knowledge-ai-network-choice__body {',
     );
     expect(css).toContain(
       '.knowledge-ai-support-context-choice__body > .summary-panel:first-child {',
