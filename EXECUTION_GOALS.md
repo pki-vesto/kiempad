@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1484 — Kennis bibliotheek categorievervolg start met compacte zichtbaarheidssamenvatting
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1483 mist het categorievervolg nog een compacte statusstart die uitlegt wat zichtbaar is voordat lijst- en kaartdetails openen.
+- **User Impact:** Gebruikers kunnen na de vervolgankers nog in detailkaarten terechtkomen zonder eerst een rustige zichtbaarheidscontext te zien.
+- **Desired Outcome:** Laat het categorievervolg in de Kennis Bibliotheek starten met een compacte zichtbaarheidssamenvatting of samengevouwen statuslaag, terwijl categoriecontext, lijst en kaartdetails bereikbaar blijven.
+- **User Value:** Gebruikers zien eerst wat de bibliotheek toont voordat zij dieper in categorieën en kaartdetails gaan.
+- **Acceptance Criteria:** Bestaande categorie-, vervolganker-, lijst- en kaarthooks blijven aanwezig; het categorievervolg start met een compacte zichtbaarheidssamenvatting of samengevouwen statuslaag; zichtbare telling, categoriecontext, lijst en kaartdetails blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte statuslaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library follow-up, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2912
+
 ### G1483 — Kennis bibliotheek categoriekaarten tonen compacte vervolgankers
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library category cards, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2910
 
 ### G1482 — Kennis bibliotheek categoriekaarten starten met één compacte kaartkeuze

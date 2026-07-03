@@ -13128,6 +13128,21 @@ function renderKnowledgeLibraryCategoryChoice(
               </div>
               <span>${totalItems} zichtbaar</span>
             </header>
+            <details class="knowledge-library-category-card-followup-choice" data-knowledge-library-category-card-followup-choice="collapsed">
+              <summary class="knowledge-library-category-card-followup-choice__summary">
+                <span>
+                  <strong>Vervolgankers openen</strong>
+                  <small>Kies categorieanker, vervolgcontext of zichtbaarheidsstatus.</small>
+                </span>
+                <em>3 vervolgstappen</em>
+              </summary>
+              <div class="knowledge-library-category-card-followup-choice__body">
+                <a class="knowledge-library-category-card-followup-choice__action" href="#knowledge-category-fasen" data-knowledge-library-category-followup-anchor="fasen">Fasen</a>
+                <a class="knowledge-library-category-card-followup-choice__action" href="#knowledge-category-research" data-knowledge-library-category-followup-anchor="research">Research</a>
+                <a class="knowledge-library-category-card-followup-choice__action knowledge-library-category-card-followup-choice__action--secondary" href="#knowledge-library-followup" data-knowledge-library-category-followup-anchor="followup">Vervolgcontext</a>
+                <span class="knowledge-library-category-card-followup-choice__status" data-knowledge-library-category-followup-anchor="visibility">${totalItems} zichtbaar</span>
+              </div>
+            </details>
             <nav class="knowledge-library-category-choice__grid" aria-label="Kennis categorie kiezen">
               ${Object.entries(KENNIS_CATEGORIE_LABELS)
                 .map(([categorie, label]) => {
