@@ -39356,6 +39356,8 @@ describe('app shell', () => {
     expect(hoverBadgeFeedbackBlockSizePx).toBe(hoverBadgeFeedbackStableBlockSizePx);
     expect(focusBadgeFeedbackWidthCh).toBe(hoverBadgeFeedbackWidthCh);
     expect(focusBadgeFeedbackWidthPercent).toBe(hoverBadgeFeedbackWidthPercent);
+    expect(hoverBadgeFeedbackMaxWidthCh).toBe(hoverBadgeFeedbackWidthCh);
+    expect(hoverBadgeFeedbackMaxWidthPercent).toBe(hoverBadgeFeedbackWidthPercent);
     expect(hoverBadgeFeedbackWidthCh).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWidthCh);
     expect(hoverBadgeFeedbackWidthPercent).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWidthPercent);
     expect(hoverBadgeFeedbackMinWidthCh).toBeGreaterThanOrEqual(
