@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1497 — Kennis bibliotheek herstelactie badges houden focusring vrij van badge-overlap
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1496 hebben mobiele herstelacties een focusring, maar de relatie tussen focusring en badgepositie is nog niet apart bewaakt.
+- **User Impact:** Gebruikers zien focus, maar badge-labels kunnen de focusruimte visueel druk maken.
+- **Desired Outcome:** Behoud zichtbare focusring rond herstelacties zonder dat badge-labels of tekst de ring visueel verdringen.
+- **User Value:** Gebruikers houden duidelijke focusmarkering en compacte routefeedback tegelijk.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, mobiele flow-, tapruimte-, focusring-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; focusring blijft zichtbaar rond herstelactieknoppen en wordt niet visueel verdrongen door badges; feedbackbadges blijven compact binnen de actieknoppen; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken focusring-ruimte en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2938
+
 ### G1496 — Kennis bibliotheek herstelactie badges tonen mobiele focusring
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2936
 
 ### G1495 — Kennis bibliotheek herstelactie badges tonen mobiele tapruimte

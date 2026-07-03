@@ -23804,6 +23804,12 @@ a.action-card:active {
     width: 100%;
   }
 
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--category) 52%, var(--accent));
+    outline-offset: 2px;
+  }
+
   .knowledge-library-empty-recovery-choice__feedback {
     margin-left: auto;
     max-width: min(12ch, 38%);
