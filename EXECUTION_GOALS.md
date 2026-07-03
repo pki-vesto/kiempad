@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1414 — Dossier upload: submitfeedback start met één afrondingskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1413 zijn de upload-subpanelen rustiger, maar de onderkant van de uploadroute kan nog submitactie, feedbackstatus en vervolgcontext tegelijk tonen.
+- **User Impact:** Gebruikers die klaar zijn met uploaden, moeten alsnog meerdere afrondings- en statuslagen tegelijk scannen.
+- **Desired Outcome:** Laat de uploadafronding eerst één rustige afrondingskeuze of compacte statuslaag tonen, waarna feedbackdetails en herstelcontext als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers sluiten de upload stap voor stap af zonder opnieuw een drukke statuszone te krijgen.
+- **Acceptance Criteria:** Bestaande submitknop, form ids, feedback hooks, privacy hooks en dossier hooks blijven aanwezig; de afrondingszone toont eerst één duidelijke upload-/afrondingskeuze of compacte statuslaag; feedbackdetails en herstelcontext blijven bereikbaar maar starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Dossier, Upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload submit feedback, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2774
+
 ### G1413 — Dossier upload: embryo-labcontextpaneel start met één labkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload embryo lab context panel, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2772
 
 ### G1412 — Dossier upload: beeldcontextpaneel start met één beeldkeuze

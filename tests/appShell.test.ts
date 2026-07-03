@@ -7626,6 +7626,8 @@ describe('app shell', () => {
     expect(addSection).toContain('data-dossier-upload-image-fields="collapsed"');
     expect(addSection).toContain('Beeldvelden openen');
     expect(addSection).toContain('data-dossier-upload-optional="embryo-labcontext"');
+    expect(addSection).toContain('data-dossier-upload-lab-fields="collapsed"');
+    expect(addSection).toContain('Labvelden openen');
     expect(addSection).toContain('class="dossier-upload-optional__summary"');
     expect(readFileSync('src/styles.css', 'utf8')).toContain(
       '.dossier-upload-optional__summary:focus-visible {',
@@ -7644,6 +7646,9 @@ describe('app shell', () => {
     );
     expect(addSection).not.toContain(
       '<details class="dossier-upload-optional dossier-upload-image-fields" data-dossier-upload-image-fields="collapsed" open',
+    );
+    expect(addSection).not.toContain(
+      '<details class="dossier-upload-optional dossier-upload-lab-fields" data-dossier-upload-lab-fields="collapsed" open',
     );
     expect(addSection).not.toContain('<details class="dossier-upload-optional" open');
     expect(addSection).toContain('data-dossier-upload-privacy-disclosure="collapsed"');
@@ -7803,6 +7808,7 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('data-dossier-upload-metadata-fields="collapsed"');
     expect(dossierPanel).toContain('data-dossier-upload-link-fields="collapsed"');
     expect(dossierPanel).toContain('data-dossier-upload-image-fields="collapsed"');
+    expect(dossierPanel).toContain('data-dossier-upload-lab-fields="collapsed"');
     expect(dossierPanel.indexOf('data-dossier-upload-file-choice="ready"')).toBeLessThan(
       dossierPanel.indexOf('data-dossier-upload-metadata="collapsed"'),
     );
@@ -7836,6 +7842,12 @@ describe('app shell', () => {
     );
     expect(dossierPanel.indexOf('data-dossier-upload-image-fields="collapsed"')).toBeLessThan(
       dossierPanel.indexOf('name="beeldContext"'),
+    );
+    expect(dossierPanel.indexOf('data-dossier-upload-optional="embryo-labcontext"')).toBeLessThan(
+      dossierPanel.indexOf('data-dossier-upload-lab-fields="collapsed"'),
+    );
+    expect(dossierPanel.indexOf('data-dossier-upload-lab-fields="collapsed"')).toBeLessThan(
+      dossierPanel.indexOf('name="beeldEmbryoLabel"'),
     );
     expect(dossierPanel).toContain(
       'data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional"',
@@ -8157,6 +8169,7 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-optional.dossier-upload-metadata-fields');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-link-fields');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-image-fields');
+    expect(css).toContain('.dossier-upload-optional.dossier-upload-lab-fields');
     expect(css).toContain(
       '#dossier-upload-form,\n#consult-verslag-form,\n#embryo-quality-form,\n#embryo-status-event-form',
     );
