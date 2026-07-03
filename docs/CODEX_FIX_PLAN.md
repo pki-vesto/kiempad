@@ -1491,6 +1491,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge hover max-width equal to its compact inline-size.
   Partial G1549/#3042: The knowledge library empty-state recovery actions now keep mobile
   badge hover flex-basis equal to its compact inline-size.
+  Partial G1550/#3044: The knowledge library empty-state recovery actions now keep mobile
+  badge hover flex-shrink disabled for stable compact feedback.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
