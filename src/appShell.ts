@@ -16544,19 +16544,35 @@ function renderAgendaScreen(state: AppShellState): string {
           eyebrow: 'Plannen',
           title: selected ? 'Afspraak bewerken' : 'Nieuwe afspraak plannen',
           detail:
-            'Datum, type, voorbereiding, vraag en herinnering staan in één formulier zonder de komende lijst erboven.',
+            'Het afspraakformulier staat vooraan. Komende afspraken, import en historie open je pas als vervolgcontext.',
           status: `${state.afspraken.length} afspraken`,
           primary: { href: '#afspraak-form', label: selected ? 'Bewerken' : 'Plannen' },
-          secondary: { href: '#agenda?route=komend', label: 'Komend' },
+          secondary: { href: '#schedule-planning-followup', label: 'Vervolgcontext' },
           data: { 'schedule-route-summary': 'plannen' },
           ariaLabel: 'Afspraak plannen route-samenvatting',
         })}
         ${renderAgendaStatus(state.agendaStatus, 'plannen')}
-        ${disclosure({
-          summary: selected ? 'Afspraak bewerken' : 'Afspraak aanmaken',
-          open: !selected,
-          body: renderAfspraakForm(selected, state.trajecten, state.settings),
-        })}
+        <div class="schedule-planning-console" data-schedule-planning-layout="single-input">
+          <div class="summary-panel schedule-planning-primary" data-schedule-planning-primary="afspraak-form">
+            <h3>${selected ? 'Afspraak bewerken' : 'Afspraak aanmaken'}</h3>
+            <p class="small-print">Leg alleen tijd, type, voorbereiding, vraag en herinnering vast. Kiempad geeft geen medisch advies of behandelkeuze.</p>
+            ${renderAfspraakForm(selected, state.trajecten, state.settings)}
+          </div>
+          <details id="schedule-planning-followup" class="kp-disclosure schedule-planning-followup" data-schedule-planning-followup="collapsed">
+            <summary class="kp-disclosure__summary schedule-planning-followup__summary">
+              <span>
+                <strong>Vervolgcontext openen</strong>
+                <small>Bekijk komende afspraken, import of historie pas na de invoer.</small>
+              </span>
+              <em>${upcoming.length} komend</em>
+            </summary>
+            <div class="kp-disclosure__body schedule-planning-followup__body">
+              <a href="#agenda?route=komend">Komende afspraken</a>
+              <a href="#agenda?route=import">ICS importeren</a>
+              <a href="#agenda?route=historie">Historie openen</a>
+            </div>
+          </details>
+        </div>
       </section>`,
     `<section id="agenda-route-import" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-import-title" data-schedule-route="import"${renderScheduleRouteVisibility(activeScheduleRoute, 'import')}>
         <header class="schedule-route-section__header command-route-section__header">

@@ -11053,6 +11053,84 @@ h2 {
   min-width: 0;
 }
 
+.schedule-planning-console {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.schedule-planning-primary {
+  min-width: 0;
+}
+
+.schedule-planning-primary h3,
+.schedule-planning-primary p {
+  margin-top: 0;
+}
+
+.schedule-planning-followup {
+  min-width: 0;
+}
+
+.schedule-planning-followup__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.schedule-planning-followup__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.schedule-planning-followup__summary strong,
+.schedule-planning-followup__summary small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.schedule-planning-followup__summary small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.schedule-planning-followup__summary em {
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.schedule-planning-followup__body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.schedule-planning-followup__body a {
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 780;
+  text-decoration: none;
+}
+
+.schedule-planning-followup__body a:hover,
+.schedule-planning-followup__body a:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  outline: none;
+}
+
 .schedule-form {
   gap: 12px;
 }
