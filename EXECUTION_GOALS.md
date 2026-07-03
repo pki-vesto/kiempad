@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1538 — Kennis bibliotheek herstelactie badges houden mobiele badgehover secundair
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1537 blijft badgefocus sterker dan hover, maar de secundaire aard van badgehover is nog niet apart bewaakt tegen visuele dominantie.
+- **User Impact:** Gebruikers kunnen op kleine schermen te dominante hoverbadges zien die afleiden van de primaire actielabels.
+- **Desired Outcome:** Mobiele herstelbadges tonen hover als subtiele secundaire feedback naast de primaire actielabels.
+- **User Value:** Gebruikers krijgen pointerfeedback zonder dat badgefeedback de actieflow overneemt.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgehover blijft secundair op mobiel; badgefocus blijft visueel sterker dan badgehover op mobiel; mobiele badgecascade-dekking blijft compleet; mobiele labelcascade-dekking blijft compleet; badgefeedback blijft compact en getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badgehover-secundariteit en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3020
+
 ### G1537 — Kennis bibliotheek herstelactie badges houden mobiele badgefocus sterker dan hover
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3018
 
 ### G1536 — Kennis bibliotheek herstelactie badges houden mobiele badgecascade dekking compleet
