@@ -8205,6 +8205,10 @@ describe('app shell', () => {
     expect(embryoStatusPanel).toContain('data-embryo-status-completion-choice="ready"');
     expect(embryoStatusPanel).toContain('data-embryo-status-submit-feedback-details="collapsed"');
     expect(embryoStatusPanel).toContain('Bewaarstatus openen');
+    expect(embryoStatusPanel).toContain('data-embryo-status-completion-status-choice="collapsed"');
+    expect(embryoStatusPanel).toContain('data-embryo-status-completion-status-summary="ready"');
+    expect(embryoStatusPanel).toContain('Kies statusafronding');
+    expect(embryoStatusPanel).toContain('Opslagstatus, herstelcontext en vervolgroutes');
     expect(embryoStatusPanel).toContain('Bewaar embryo-status</button>');
     expect(embryoStatusPanel).toContain('data-dossier-submit-feedback="embryo-status"');
     expect(embryoStatusPanel).toContain('data-dossier-feedback-announcement-order="4"');
@@ -8225,6 +8229,9 @@ describe('app shell', () => {
     expect(embryoStatusPanel).not.toContain(
       '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-status-submit-feedback-details="collapsed" open',
     );
+    expect(embryoStatusPanel).not.toContain(
+      '<details class="dossier-upload-completion-status-choice" data-embryo-status-completion-status-choice="collapsed" open>',
+    );
     expect(embryoStatusPanel.indexOf('data-embryo-status-choice="ready"')).toBeLessThan(
       embryoStatusPanel.indexOf('data-embryo-status-basis-fields="collapsed"'),
     );
@@ -8242,6 +8249,11 @@ describe('app shell', () => {
     );
     expect(
       embryoStatusPanel.indexOf('data-embryo-status-submit-feedback-details="collapsed"'),
+    ).toBeLessThan(
+      embryoStatusPanel.indexOf('data-embryo-status-completion-status-choice="collapsed"'),
+    );
+    expect(
+      embryoStatusPanel.indexOf('data-embryo-status-completion-status-choice="collapsed"'),
     ).toBeLessThan(embryoStatusPanel.indexOf('data-dossier-submit-feedback="embryo-status"'));
 
     const routeOrder = [

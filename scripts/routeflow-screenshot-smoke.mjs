@@ -883,6 +883,9 @@ const targets = [
     ],
     presentSelectors: [
       '[data-dossier-upload-console="ready"][data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="embryo-status"]',
+      '[data-embryo-status-completion-status-choice="collapsed"]',
+      '[data-embryo-status-completion-status-summary="ready"]',
+      '[data-dossier-submit-feedback="embryo-status"]',
       '[data-embryo-status-group="status-bron"]',
       '[data-embryo-status-group="status-koppelingen"]',
     ],
@@ -891,6 +894,7 @@ const targets = [
       '[data-embryo-status-source-fields="collapsed"]',
       '[data-embryo-status-link-fields="collapsed"]',
       '[data-embryo-status-submit-feedback-details="collapsed"]',
+      '[data-embryo-status-completion-status-choice="collapsed"]',
     ],
     expectedUploadFlow: 'embryoStatus',
     desktopHiddenSelectors: [
