@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1444 — Kennis werkbankstatus start met één compacte statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1443 blijven netwerkstatus, zichtbaar aantal en researchmetrics als losse statusinformatie in de kenniswerkbank zichtbaar.
+- **User Impact:** Gebruikers die de kenniswerkbank openen, krijgen nog meerdere statussignalen tegelijk voordat ze een taak kiezen.
+- **Desired Outcome:** Laat de kennis werkbankstatus starten met één compacte statuskeuze of samengevouwen sublaag, terwijl netwerkstatus, zichtbaar aantal en researchmetrics bereikbaar blijven.
+- **User Value:** Gebruikers zien eerst één rustige statusingang en kunnen daarna pas de aanvullende research- en filtercontext openen.
+- **Acceptance Criteria:** Bestaande kenniswerkbank hooks, statushooks, metrichooks en routehashes blijven aanwezig; de werkbankstatus start met één compacte statuskeuze of samengevouwen sublaag; netwerkstatus, zichtbaar aantal en researchmetrics blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Researchwerkbank
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge research workbench, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2832
+
 ### G1443 — Kennis researchscan start met één compacte scankeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge research snapshot, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2830
 
 ### G1442 — Kennis taakroutes starten met één compacte routekeuze
