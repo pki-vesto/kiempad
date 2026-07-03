@@ -39241,7 +39241,9 @@ describe('app shell', () => {
     expect(css).toContain('min-width: 7ch;');
     expect(css).toContain('margin-left: auto;');
     expect(css).toContain('flex-shrink: 0;');
+    expect(css).toContain('font-size: 0.66rem;');
     expect(css).toContain('letter-spacing: 0.01em;');
+    expect(css).toContain('line-height: 1.15;');
     expect(css).toContain('overflow: hidden;');
     expect(css).toContain('text-align: right;');
     expect(css).toContain('white-space: nowrap;');
