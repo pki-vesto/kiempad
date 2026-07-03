@@ -4273,7 +4273,7 @@ function renderDossierScreen(state: AppShellState): string {
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Tijdlijn</p>
           <h2 id="dossier-route-timeline-title">Tijdlijn en behandelgeschiedenis</h2>
-          <p>Lees historische onderzoeken en behandelcontext achter elkaar, zonder uploadformulieren ertussen.</p>
+          <p>Start met één leesfocus. Documenttijdlijn en behandelgeschiedenis open je daarna als vervolgcontext.</p>
         </header>
         ${renderHubWorkflowHeader({
           id: 'dossier-timeline-workflow-header',
@@ -4312,15 +4312,39 @@ function renderDossierScreen(state: AppShellState): string {
         })}
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
-          title: 'Tijdlijn eerst begrijpen, details daarna openen',
+          title: 'Eerst één leesfocus',
           detail:
-            'Historische onderzoeken en behandelgeschiedenis zijn gescheiden zodat de route scanbaar blijft op mobiel en desktop.',
-          primary: { href: '#dossier-documenttijdlijn', label: 'Tijdlijn openen' },
-          secondary: { href: '#dossier-behandelgeschiedenis', label: 'Geschiedenis openen' },
+            'De leesfocus staat vooraan; documenttijdlijn en behandelgeschiedenis staan achter één rustige vervolgstap.',
+          primary: { href: '#dossier-timeline-primary-focus', label: 'Leesfocus' },
+          secondary: { href: '#dossier-timeline-followup', label: 'Vervolgcontext' },
           status: `${tijdlijn.length} momenten`,
           ariaLabel: 'Dossier tijdlijn route-samenvatting',
           data: { 'dossier-route-summary': 'timeline' },
         })}
+        <section id="dossier-timeline-primary-focus" class="dossier-timeline-focus" aria-label="Dossier tijdlijn leesfocus" data-dossier-timeline-primary-focus="ready">
+          <header class="dossier-timeline-focus__header">
+            <div>
+              <p class="kp-card__eyebrow">Leesfocus</p>
+              <h3>Begrijp eerst de volgorde</h3>
+            </div>
+            <span>${tijdlijn.length} momenten</span>
+          </header>
+          <p>Lees de trajectlijn eerst als veilige samenvatting. Onderzoeken, consultcontext en behandelgeschiedenis blijven beschikbaar zonder meteen alle details te tonen.</p>
+          <dl class="summary-list">
+            <div><dt>Documenttijdlijn</dt><dd>${tijdlijn.length} momenten</dd></div>
+            <div><dt>Behandelgeschiedenis</dt><dd>${behandelGeschiedenis.length} items</dd></div>
+            <div><dt>Opslag</dt><dd>${beschrijfEncryptedRecordLocatie(state)}</dd></div>
+          </dl>
+        </section>
+        <details id="dossier-timeline-followup" class="kp-disclosure dossier-timeline-followup" data-dossier-timeline-followup="collapsed">
+          <summary class="kp-disclosure__summary dossier-timeline-followup__summary">
+            <span>
+              <strong>Tijdlijncontext openen</strong>
+              <small>Documenttijdlijn en behandelgeschiedenis</small>
+            </span>
+            <em>${tijdlijn.length} momenten · ${behandelGeschiedenis.length} historie</em>
+          </summary>
+          <div class="kp-disclosure__body dossier-timeline-followup__body">
         <details class="kp-disclosure hub-detail-disclosure" data-dossier-timeline-disclosure="documents" data-hub-detail-panel="timeline-documents">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
@@ -4353,6 +4377,8 @@ function renderDossierScreen(state: AppShellState): string {
                     { title: 'Geen behandelgeschiedenis' },
                   )
             }
+          </div>
+        </details>
           </div>
         </details>
         </section>

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1401 — Dossier: review start met één reviewtaak
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier Review moet rustig blijven als één reviewtaak en mag niet opnieuw aanvoelen als een wand met import-inbox, wachtrij, duplicaatcontext en statusdetails.
+- **User Impact:** Gebruikers kunnen bij documentreview alsnog door meerdere reviewlagen moeten scannen voordat de hoofdtaak duidelijk is.
+- **Desired Outcome:** Start met één primaire reviewtaak en houd import-inbox, wachtrij, duplicaatcontext en statusdetails als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers beoordelen eerst de reviewtaak en openen extra reviewcontext pas wanneer nodig.
+- **Acceptance Criteria:** Dossier Review toont één primaire reviewtaak in de eerste viewport; import-inbox, wachtrij, duplicaatcontext en statusdetails blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Dossier, Review
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier review route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2748
+
 ### G1400 — Dossier: tijdlijn start met één leesfocus
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier timeline route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2746
 
 ### G1399 — Dossier: beelden start met één inspectiekeuze

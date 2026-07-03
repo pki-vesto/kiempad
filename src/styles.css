@@ -3077,6 +3077,99 @@ h2 {
   gap: 12px;
 }
 
+.dossier-timeline-focus {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 48%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+}
+
+.dossier-timeline-focus__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.dossier-timeline-focus__header h3,
+.dossier-timeline-focus__header p,
+.dossier-timeline-focus > p {
+  margin: 0;
+}
+
+.dossier-timeline-focus__header h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.08rem, 1.4vw, 1.38rem);
+}
+
+.dossier-timeline-focus__header span {
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--accent-strong);
+  font-size: 0.76rem;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.dossier-timeline-focus > p {
+  max-width: 70ch;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.dossier-timeline-followup {
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+  background: color-mix(in srgb, var(--surface) 86%, var(--surface-subtle));
+}
+
+.dossier-timeline-followup__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.dossier-timeline-followup__summary span,
+.dossier-timeline-followup__summary small,
+.dossier-timeline-followup__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dossier-timeline-followup__summary span {
+  display: grid;
+  gap: 2px;
+}
+
+.dossier-timeline-followup__summary small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.dossier-timeline-followup__summary em {
+  justify-self: end;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.dossier-timeline-followup__body {
+  display: grid;
+  gap: 12px;
+}
+
 @media (max-width: 720px) {
   .imaging-compare-grid {
     grid-template-columns: 1fr;
@@ -17480,6 +17573,15 @@ a.action-card:active {
   }
 
   .dossier-imaging-followup__summary em {
+    justify-self: start;
+  }
+
+  .dossier-timeline-focus__header,
+  .dossier-timeline-followup__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .dossier-timeline-followup__summary em {
     justify-self: start;
   }
 
