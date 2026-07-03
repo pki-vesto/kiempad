@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1379 |
+| ☑ klaar | 1380 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -1741,12 +1741,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1577 | Faint text contrast haalt AA in licht en donker thema | P1 | F5 | ☑ |
 | G1578 | Disclosure summaries krijgen gedeelde teal focusring | P2 | F5 | ☑ |
 | G1579 | Kosten datumveld toont zichtbaar dd-mm-jjjj hulpje | P2 | F5 | ☑ |
+| G1580 | Kennis datumvelden tonen zichtbaar dd-mm-jjjj hulpje | P2 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1578** (id's G001 t/m G1579; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1579** (id's G001 t/m G1580; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

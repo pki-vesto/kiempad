@@ -39046,6 +39046,7 @@ describe('app shell', () => {
     expect(html).toContain('name="researchTitel"');
     expect(html).toContain('name="researchBron" type="url"');
     expect(html).toContain('name="researchPublicatieDatum" type="date"');
+    expect(html).toContain('class="date-format-hint" data-date-format-hint="knowledge-research"');
     expect(html).toContain('name="researchNotitie"');
     expect(html).toContain('name="researchWetenschappelijkeSamenvatting"');
     expect(html).toContain('name="researchEenvoudigeSamenvatting"');
@@ -39102,6 +39103,7 @@ describe('app shell', () => {
     expect(html).toContain('id="pubmed-query-preview-form"');
     expect(html).toContain('name="pubmedZoektermen"');
     expect(html).toContain('name="pubmedPreviewDatum" type="date"');
+    expect(html).toContain('class="date-format-hint" data-date-format-hint="knowledge-pubmed"');
     expect(html).toContain('name="pubmedReviewStatus"');
     expect(html).toContain('Uitgesloten context: geen dossierdocumenttekst');
     expect(html).toContain('geen consulttekst');
