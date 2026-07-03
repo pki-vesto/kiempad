@@ -3194,9 +3194,12 @@ describe('app shell', () => {
     expect(css).toContain('overflow-wrap: anywhere;');
     expect(css).toContain('.daily-recommendation-reset-route-focus__close {');
     expect(css).toContain('min-height: 28px;');
+    expect(css).toContain('[data-daily-recommendation-reset-route-focus="ready"]:focus-visible {');
     expect(css).toContain('border-left-color: Highlight;');
     expect(css).toContain('color: CanvasText;');
     expect(css).toContain('outline: 1px solid ButtonText;');
+    expect(css).toContain('outline: 2px solid Highlight;');
+    expect(css).toContain('outline-offset: 2px;');
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(

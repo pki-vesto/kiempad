@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1368 — Daily Recommendations: resetmelding gebruikt compacte focusafstand op mobiel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding heeft expliciete focus en forced-colors focusstijl, maar de focusafstand op smalle schermen is nog niet apart bewaakt.
+- **User Impact:** Mobiele gebruikers kunnen bij een gefocuste resetbevestiging meer horizontale druk ervaren dan nodig.
+- **Desired Outcome:** Borg dat de focusstijl van de resetmelding en Verberg-knop compact binnen de mobiele viewport blijft.
+- **User Value:** Mobiele toetsenbord- en assistive-techgebruikers houden duidelijke feedback zonder overflow of overlap.
+- **Acceptance Criteria:** De gefocuste reset-routefocusmelding blijft binnen de viewport op mobiel; de Verberg-knop behoudt een tapbare, compacte focusafstand; de mobiele focusstijl verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, mobile CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2682
+
 ### G1367 — Daily Recommendations: resetmelding behoudt focusstijl in forced-colors
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, accessibility, CSS tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2680
 
 ### G1366 — Daily Recommendations: resetmelding heeft toetsenbordfocus na nieuwe reset
