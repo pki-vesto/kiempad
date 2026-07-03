@@ -7956,6 +7956,10 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('data-dossier-upload-completion-choice="ready"');
     expect(dossierPanel).toContain('data-dossier-upload-submit-feedback-details="collapsed"');
     expect(dossierPanel).toContain('Afrondingsstatus openen');
+    expect(dossierPanel).toContain('data-dossier-upload-completion-status-choice="collapsed"');
+    expect(dossierPanel).toContain('data-dossier-upload-completion-status-summary="ready"');
+    expect(dossierPanel).toContain('Kies afrondingsstatus');
+    expect(dossierPanel).toContain('Opslagstatus, reviewstap en vervolgroutes');
     expect(dossierPanel).toContain('Upload document naar dossier</button>');
     expect(dossierPanel).toContain('data-dossier-submit-feedback="dossier-upload"');
     expect(dossierPanel).toContain('data-dossier-feedback-announcement-order="1"');
@@ -7971,11 +7975,19 @@ describe('app shell', () => {
     expect(dossierPanel).not.toContain(
       '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-dossier-upload-submit-feedback-details="collapsed" open',
     );
+    expect(dossierPanel).not.toContain(
+      '<details class="dossier-upload-completion-status-choice" data-dossier-upload-completion-status-choice="collapsed" open>',
+    );
     expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
       dossierPanel.indexOf('data-dossier-upload-submit-feedback-details="collapsed"'),
     );
     expect(
       dossierPanel.indexOf('data-dossier-upload-submit-feedback-details="collapsed"'),
+    ).toBeLessThan(
+      dossierPanel.indexOf('data-dossier-upload-completion-status-choice="collapsed"'),
+    );
+    expect(
+      dossierPanel.indexOf('data-dossier-upload-completion-status-choice="collapsed"'),
     ).toBeLessThan(dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'));
     expect(consultPanel).toContain('id="consult-upload-workflow-header"');
     expect(consultPanel).toContain('data-hub-workflow="consult-upload"');
@@ -8765,6 +8777,14 @@ describe('app shell', () => {
     expect(css).toContain('data-embryo-quality-completion-choice="ready"');
     expect(css).toContain('data-embryo-status-completion-choice="ready"');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-submit-feedback-details');
+    expect(css).toContain('.dossier-upload-completion-status-choice {');
+    expect(css).toContain('.dossier-upload-completion-status-choice__summary {');
+    expect(css).toContain('.dossier-upload-completion-status-choice__summary::after {');
+    expect(css).toContain('.dossier-upload-completion-status-choice[open]');
+    expect(css).toContain('> .dossier-upload-completion-status-choice__summary::after {');
+    expect(css).toContain('.dossier-upload-completion-status-choice__body {');
+    expect(css).toContain('.dossier-upload-completion-status-choice:not([open])');
+    expect(css).toContain('> .dossier-upload-completion-status-choice__body {');
     expect(css).toContain('.dossier-submit-action');
     expect(css).toContain('justify-self: start;');
     expect(css).toContain('min-width: min(100%, 220px);');

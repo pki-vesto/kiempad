@@ -3571,7 +3571,18 @@ function renderDossierScreen(state: AppShellState): string {
                 <span>Afrondingsstatus openen</span>
                 <small>Feedback en herstelcontext</small>
               </summary>
-              ${renderDossierSubmitFeedback('dossier-upload', 'dossier-upload', state)}
+              <details class="dossier-upload-completion-status-choice" data-dossier-upload-completion-status-choice="collapsed">
+                <summary class="dossier-upload-completion-status-choice__summary" data-dossier-upload-completion-status-summary="ready">
+                  <span>
+                    <strong>Kies afrondingsstatus</strong>
+                    <small>Opslagstatus, reviewstap en vervolgroutes</small>
+                  </span>
+                  <em>status klaar</em>
+                </summary>
+                <div class="dossier-upload-completion-status-choice__body">
+                  ${renderDossierSubmitFeedback('dossier-upload', 'dossier-upload', state)}
+                </div>
+              </details>
             </details>
           </section>
         </form>
