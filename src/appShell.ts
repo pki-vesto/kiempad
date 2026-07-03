@@ -14005,38 +14005,49 @@ function costStatusBadgeTone(
 
 function renderResearchItemForm(): string {
   return `
-    <form id="research-item-form" class="data-form compact-form">
-      <label>
-        Titel
-        <input name="researchTitel" autocomplete="off" required />
-      </label>
-      <label>
-        Bron of link
-        <input name="researchBron" type="url" autocomplete="off" placeholder="https://..." />
-      </label>
-      <label>
-        Publicatiedatum
-        <input name="researchPublicatieDatum" type="date" />
-      </label>
-      <label>
-        Notitie
-        <textarea name="researchNotitie" rows="4" required></textarea>
-      </label>
-      <label>
-        Wetenschappelijke samenvatting
-        <textarea name="researchWetenschappelijkeSamenvatting" rows="4" placeholder="Doel, methode, belangrijkste bevindingen en beperkingen; geen behandeladvies"></textarea>
-      </label>
-      <label>
-        Eenvoudige samenvatting
-        <textarea name="researchEenvoudigeSamenvatting" rows="4" placeholder="Leg in gewone Nederlandse taal uit wat deze publicatie zegt en wat nog onzeker is"></textarea>
-      </label>
-      <p class="small-print">Kiempad bewaart hierbij automatisch scientificSummary, patientSummary en sourceCitation als brongekoppeld concept.</p>
-      <label>
-        Relevantie voor jullie dossiercontext
-        <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."></textarea>
-      </label>
-      <button type="submit">Bewaar research</button>
-    </form>
+    <details class="knowledge-add-research-input-choice" data-knowledge-add-research-input-choice="collapsed">
+      <summary class="knowledge-add-research-input-choice__summary">
+        <span>
+          <strong>Researchinvoer openen</strong>
+          <small>Titel, bron, datum, notitie, samenvattingen en bewaaractie.</small>
+        </span>
+        <em>Concept</em>
+      </summary>
+      <div class="knowledge-add-research-input-choice__body">
+        <form id="research-item-form" class="data-form compact-form">
+          <label>
+            Titel
+            <input name="researchTitel" autocomplete="off" required />
+          </label>
+          <label>
+            Bron of link
+            <input name="researchBron" type="url" autocomplete="off" placeholder="https://..." />
+          </label>
+          <label>
+            Publicatiedatum
+            <input name="researchPublicatieDatum" type="date" />
+          </label>
+          <label>
+            Notitie
+            <textarea name="researchNotitie" rows="4" required></textarea>
+          </label>
+          <label>
+            Wetenschappelijke samenvatting
+            <textarea name="researchWetenschappelijkeSamenvatting" rows="4" placeholder="Doel, methode, belangrijkste bevindingen en beperkingen; geen behandeladvies"></textarea>
+          </label>
+          <label>
+            Eenvoudige samenvatting
+            <textarea name="researchEenvoudigeSamenvatting" rows="4" placeholder="Leg in gewone Nederlandse taal uit wat deze publicatie zegt en wat nog onzeker is"></textarea>
+          </label>
+          <p class="small-print">Kiempad bewaart hierbij automatisch scientificSummary, patientSummary en sourceCitation als brongekoppeld concept.</p>
+          <label>
+            Relevantie voor jullie dossiercontext
+            <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."></textarea>
+          </label>
+          <button type="submit">Bewaar research</button>
+        </form>
+      </div>
+    </details>
   `;
 }
 
