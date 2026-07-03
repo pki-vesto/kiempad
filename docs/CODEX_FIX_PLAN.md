@@ -226,6 +226,9 @@
   now keeps the full generated question list closed by default, so users start with the prep board
   and compact work layer while the list content, print/PDF hooks, and privacy boundaries remain
   available on demand.
+- **Knowledge add single input — done in G1480 / issue #2722.** The Kennis add route now opens with
+  one primary research/publication form while the own-knowledge form remains available in a closed
+  follow-up disclosure, preserving form hooks, privacy boundaries, and non-medical context.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

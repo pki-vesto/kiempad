@@ -12364,22 +12364,33 @@ function renderKennisScreen(state: AppShellState): string {
           eyebrow: 'Kennisroute',
           title: 'Nieuwe kennis toevoegen zonder leesruis',
           detail:
-            'Publicaties en eigen kennisitems staan naast elkaar als invoerroute; researchoverzichten blijven in de leesroute.',
+            'Start met een publicatie of researchnotitie. Eigen kennis staat klaar als aparte vervolgstap.',
           primary: { href: '#research-item-form', label: 'Research' },
-          secondary: { href: '#knowledge-item-form', label: 'Eigen kennis' },
+          secondary: { href: '#knowledge-own-item-disclosure', label: 'Eigen kennis' },
           status: `${state.kennisItems.length} items`,
           ariaLabel: 'Kennis toevoegen route-samenvatting',
           data: { 'knowledge-route-summary': 'add' },
         })}
-        <div class="knowledge-route-grid">
-          <div class="summary-panel">
+        <div class="knowledge-route-grid knowledge-route-grid--add" data-knowledge-add-layout="single-input">
+          <div class="summary-panel" data-knowledge-add-primary="research">
             <h3>Research opslaan</h3>
             ${renderResearchItemForm()}
           </div>
-          <div class="summary-panel">
-            <h3>Eigen kennisitem</h3>
-            ${renderEigenKennisItemForm()}
-          </div>
+          <details id="knowledge-own-item-disclosure" class="kp-disclosure hub-detail-disclosure knowledge-add-followup" data-knowledge-add-followup="own-item">
+            <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+              <span>
+                <strong>Eigen kennisitem openen</strong>
+                <small>Notitie of broncontext apart toevoegen wanneer nodig.</small>
+              </span>
+              <em>Optioneel</em>
+            </summary>
+            <div class="kp-disclosure__body">
+              <div class="summary-panel" data-knowledge-add-secondary="own-item">
+                <h3>Eigen kennisitem</h3>
+                ${renderEigenKennisItemForm()}
+              </div>
+            </div>
+          </details>
         </div>
       </section>
       <section id="knowledge-route-ai" class="knowledge-route-section" aria-labelledby="knowledge-route-ai-title" data-knowledge-route="ai"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'ai')}>
