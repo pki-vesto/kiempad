@@ -15540,14 +15540,70 @@ a.action-card:active {
 }
 
 .dossier-add-route-choice {
-  display: grid;
-  gap: 5px;
   max-width: 68ch;
   margin: 0 0 12px;
-  padding: 12px;
+  min-width: 0;
   border: 1px dashed color-mix(in srgb, var(--accent) 34%, var(--border));
   border-radius: var(--radius-card);
   background: color-mix(in srgb, var(--accent) 7%, var(--surface-subtle));
+  overflow: hidden;
+}
+
+.dossier-add-route-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 9px 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.dossier-add-route-choice__summary::-webkit-details-marker {
+  display: none;
+}
+
+.dossier-add-route-choice__summary::after {
+  content: "+";
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: 999px;
+  color: var(--accent-strong);
+  font-weight: 850;
+  line-height: 1;
+}
+
+.dossier-add-route-choice[open] > .dossier-add-route-choice__summary::after {
+  content: "-";
+}
+
+.dossier-add-route-choice__summary span,
+.dossier-add-route-choice__summary small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dossier-add-route-choice__summary span {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 850;
+}
+
+.dossier-add-route-choice__summary small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.dossier-add-route-choice__body {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 0 12px 12px;
 }
 
 .dossier-add-route-choice h4,

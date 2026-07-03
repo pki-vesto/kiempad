@@ -7674,6 +7674,16 @@ describe('app shell', () => {
     expect(draftNote).toContain(
       'Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.',
     );
+    expect(addSection).toContain('data-dossier-add-route-choice-details="collapsed"');
+    expect(addSection).toContain('data-dossier-add-route-choice-summary="ready"');
+    expect(addSection).toContain('Kies één toevoeging');
+    expect(addSection).toContain('Formulieren blijven gescheiden');
+    expect(addSection).not.toContain(
+      '<details class="dossier-add-route-choice" data-dossier-add-route-choice="ready" data-dossier-add-route-choice-details="collapsed" aria-label="Kies eerst wat je wilt toevoegen" open>',
+    );
+    expect(addSection.indexOf('data-dossier-add-route-choice-summary="ready"')).toBeLessThan(
+      addSection.indexOf('Kies één toevoeging om het bijbehorende formulier te openen.'),
+    );
     expect(addSection.indexOf('data-dossier-add-route-selector="compact-tabs"')).toBeLessThan(
       addSection.indexOf('id="dossier-upload-form"'),
     );
@@ -8434,6 +8444,12 @@ describe('app shell', () => {
       '.dossier-add-route-microcopy[open] > .dossier-add-route-microcopy__summary::after',
     );
     expect(css).toContain('.dossier-add-route-microcopy__body {');
+    expect(css).toContain('.dossier-add-route-choice__summary {');
+    expect(css).toContain('.dossier-add-route-choice__summary::after {');
+    expect(css).toContain(
+      '.dossier-add-route-choice[open] > .dossier-add-route-choice__summary::after',
+    );
+    expect(css).toContain('.dossier-add-route-choice__body {');
     expect(css).toContain('.dossier-focus-shell {');
     expect(css).toContain('.dossier-focus-shell__header {');
     expect(css).toContain('.dossier-focus-shell__body {');
@@ -9056,6 +9072,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-upload-focus-mode="single-flow"');
     expect(emptyHtml).toContain('data-dossier-add-flow="keuze"');
     expect(emptyHtml).toContain('data-dossier-add-route-choice="ready"');
+    expect(emptyHtml).toContain('data-dossier-add-route-choice-details="collapsed"');
+    expect(emptyHtml).toContain('data-dossier-add-route-choice-summary="ready"');
+    expect(emptyHtml).toContain('Formulieren blijven gescheiden');
     expect(emptyHtml).toContain('Kies één toevoeging om het bijbehorende formulier te openen.');
     expect(emptyHtml).toContain('class="dossier-upload-console"');
     expect(emptyHtml).not.toContain(
