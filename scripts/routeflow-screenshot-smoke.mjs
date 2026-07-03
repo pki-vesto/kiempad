@@ -1664,6 +1664,10 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   await page.locator('[data-daily-recommendation-list-filter-reset="ready"]').click();
   await expectHash(page, '#start-recommendations');
   await page
+    .locator('[data-daily-recommendation-reset-route-focus="ready"]')
+    .filter({ hasText: 'Lokale feedbackfilter gewist vanuit de lijstfilter.' })
+    .waitFor({ timeout: 10_000 });
+  await page
     .locator('[data-daily-advice-feedback-workflow-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });
   await page
@@ -1688,6 +1692,10 @@ async function assertDailyAdviceFeedbackNavigation(page) {
 
   await page.locator('[data-daily-advice-feedback-workflow-reset="ready"]').click();
   await expectHash(page, '#start-recommendations');
+  await page
+    .locator('[data-daily-recommendation-reset-route-focus="ready"]')
+    .filter({ hasText: 'Lokale feedbackfilter gewist vanuit de workflowstatus.' })
+    .waitFor({ timeout: 10_000 });
   await page
     .locator('[data-daily-advice-feedback-workflow-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });
@@ -1714,6 +1722,10 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   await page.locator('[data-daily-recommendation-feedback-filter-reset="ready"]').click();
   await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
   await expectHash(page, '#start-recommendations');
+  await page
+    .locator('[data-daily-recommendation-reset-route-focus="ready"]')
+    .filter({ hasText: 'Lokale feedbackfilter gewist vanuit het filterformulier.' })
+    .waitFor({ timeout: 10_000 });
   await page
     .locator('[data-daily-advice-feedback-workflow-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });

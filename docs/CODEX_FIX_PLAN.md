@@ -145,6 +145,9 @@
 - **Daily advice feedback reset text-width consistency — done in G1453 / issue #2666.** The
   workflow, list-header, and filter-form reset buttons now share compact max-width and ellipsis
   rules so longer local reset labels cannot overlap nearby status or filter controls.
+- **Daily advice feedback reset route-focus consistency — done in G1454 / issue #2668.** The
+  workflow, list-header, and filter-form reset paths now show a local routefocus confirmation on
+  the plain Dagadvies route while hiding it again when browser history restores an active filter.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1362 — Daily Recommendations: resetmelding heeft compacte scanstijl
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na het wissen van de lokale feedbackfilter toont Dagadvies routefocusfeedback, maar de visuele scanstijl van die melding is nog niet apart geborgd.
+- **User Impact:** Gebruikers kunnen de resetmelding als zwaarder of foutachtiger ervaren dan nodig wanneer hij dezelfde generieke statusstijl houdt.
+- **Desired Outcome:** Geef de reset-routefocusmelding een compacte, rustige scanstijl zonder extra routegedrag of medische interpretatie.
+- **User Value:** Gebruikers herkennen de resetbevestiging snel zonder dat hij de Dagadviesroute visueel domineert.
+- **Acceptance Criteria:** De reset-routefocusmelding heeft een compacte visuele stijl die niet op een foutmelding lijkt; de melding veroorzaakt geen layoutshift of horizontale overflow op mobiel en desktop; de melding blijft afwezig wanneer een actieve feedbackfilter hersteld is via browser back/forward; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2670
+
 ### G1361 — Daily Recommendations: resetknoppen bewaren consistente routefocus
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2668
 
 ### G1360 — Daily Recommendations: resetknoppen behouden compacte tekstbreedte

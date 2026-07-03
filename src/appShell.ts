@@ -829,6 +829,7 @@ export type AppShellState = {
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
+  dailyRecommendationRouteFocusStatus?: string;
   dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   centralSyncFeedback?: Partial<Record<CentralSyncFeedbackKind, CentralSyncFeedbackItem>>;
@@ -14634,8 +14635,15 @@ function renderDailyAdviceConsole(
     filteredTotal: filteredTotalRecommendations,
   });
 
+  const routeFocusStatus =
+    state.dailyRecommendationRouteFocusStatus && !state.dailyRecommendationFeedbackFilter
+      ? statusMessage(state.dailyRecommendationRouteFocusStatus, {
+          data: { 'daily-recommendation-reset-route-focus': 'ready' },
+        })
+      : '';
+
   return renderDailyAdviceFocusShell({
-    status: state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : '',
+    status: `${state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''}${routeFocusStatus}`,
     filterStatus: feedbackFilterStatus,
     workflow: renderHubWorkflowHeader({
       id: 'start-recommendations-workflow-header',

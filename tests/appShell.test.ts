@@ -4145,6 +4145,62 @@ describe('app shell', () => {
     expect(unfilteredRecommendations).not.toContain(
       'data-daily-recommendation-feedback-filter-reset="ready"',
     );
+
+    const resetRouteFocusHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [],
+      dailyRecommendationRouteFocusStatus:
+        'Lokale feedbackfilter gewist vanuit de lijstfilter. Je blijft op Dagadvies.',
+      activeStartRoute: 'recommendations',
+    });
+    const resetRouteFocusRecommendations = extractDailyRecommendationsSection(resetRouteFocusHtml);
+
+    expect(resetRouteFocusRecommendations).toContain(
+      'data-daily-recommendation-reset-route-focus="ready"',
+    );
+    expect(resetRouteFocusRecommendations).toContain(
+      'Lokale feedbackfilter gewist vanuit de lijstfilter. Je blijft op Dagadvies.',
+    );
+    const resetRouteFocusStart = resetRouteFocusRecommendations.indexOf(
+      'data-daily-recommendation-reset-route-focus="ready"',
+    );
+    const resetRouteFocusSnippet = resetRouteFocusRecommendations.slice(
+      resetRouteFocusStart,
+      resetRouteFocusStart + 180,
+    );
+    expect(resetRouteFocusSnippet).not.toContain('tracking-payload');
+    expect(resetRouteFocusSnippet).not.toContain('behandeladvies');
+    expect(resetRouteFocusSnippet).not.toContain('medische conclusie');
+
+    const filteredResetRouteFocusHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [],
+      dailyRecommendationFeedbackFilter: 'gedaan',
+      dailyRecommendationRouteFocusStatus:
+        'Lokale feedbackfilter gewist vanuit de lijstfilter. Je blijft op Dagadvies.',
+      activeStartRoute: 'recommendations',
+    });
+    const filteredResetRouteFocusRecommendations = extractDailyRecommendationsSection(
+      filteredResetRouteFocusHtml,
+    );
+
+    expect(filteredResetRouteFocusRecommendations).not.toContain(
+      'data-daily-recommendation-reset-route-focus="ready"',
+    );
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {

@@ -176,6 +176,7 @@ type RuntimeState = {
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
+  dailyRecommendationRouteFocusStatus?: string;
   dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   settingsOpen: boolean;
@@ -248,6 +249,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
     dailyRecommendationStatus: state.dailyRecommendationStatus,
+    dailyRecommendationRouteFocusStatus: state.dailyRecommendationRouteFocusStatus,
     dailyRecommendationFeedbackFilter:
       normalizeStartRoute(window.location.hash) === 'recommendations'
         ? normalizeDailyRecommendationFeedbackFilter(window.location.hash)
@@ -1765,6 +1767,8 @@ function applyDailyRecommendationFeedbackFilter(
   if (!(target instanceof HTMLFormElement)) return;
   if (submitter instanceof HTMLButtonElement && submitter.value === 'reset') {
     state.dailyRecommendationFeedbackFilter = undefined;
+    state.dailyRecommendationRouteFocusStatus =
+      buildDailyRecommendationResetRouteFocusStatus(submitter);
     setDailyRecommendationFeedbackFilterHash();
     render(root, state);
     return;
@@ -1773,8 +1777,19 @@ function applyDailyRecommendationFeedbackFilter(
   state.dailyRecommendationFeedbackFilter = parseTimelineAanbevelingFeedbackStatus(
     data.get('dailyRecommendationFeedbackStatus'),
   );
+  state.dailyRecommendationRouteFocusStatus = undefined;
   setDailyRecommendationFeedbackFilterHash(state.dailyRecommendationFeedbackFilter);
   render(root, state);
+}
+
+function buildDailyRecommendationResetRouteFocusStatus(submitter: HTMLButtonElement): string {
+  if (submitter.matches('[data-daily-advice-feedback-workflow-reset="ready"]')) {
+    return 'Lokale feedbackfilter gewist vanuit de workflowstatus. Je blijft op Dagadvies.';
+  }
+  if (submitter.matches('[data-daily-recommendation-list-filter-reset="ready"]')) {
+    return 'Lokale feedbackfilter gewist vanuit de lijstfilter. Je blijft op Dagadvies.';
+  }
+  return 'Lokale feedbackfilter gewist vanuit het filterformulier. Je blijft op Dagadvies.';
 }
 
 function setDailyRecommendationFeedbackFilterHash(
