@@ -60,7 +60,7 @@ const targets = [
     screen: 'knowledge-research',
     hash: '#kennis?route=read',
     rootSelector: '[data-knowledge-focus-shell="ready"]',
-    expectedText: 'Eerst één researchfocus',
+    expectedText: 'Researchstatus openen',
     activeRouteSelector: '[data-knowledge-route="read"][data-knowledge-route-state="active"]',
     inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
     requiredSelectors: [
@@ -76,6 +76,8 @@ const targets = [
       '[data-hub-workflow-tab="research"][aria-current="page"]',
       '[data-hub-workflow-tab="summaries"]',
       '[data-hub-workflow-tab="trends"]',
+      '[data-knowledge-route-summary="read"]',
+      '[data-knowledge-research-route-status-choice="collapsed"]',
       '#knowledge-research-primary-focus',
       '[data-knowledge-research-primary-focus="ready"]',
       '#knowledge-research-followup',
@@ -94,6 +96,9 @@ const targets = [
       'a[href="#kennis?route=add"]',
       'a[href="#kennis?route=ai"]',
       'a[href="#kennis?route=library"]',
+      'a[href="#knowledge-research-primary-focus"]',
+      'a[href="#knowledge-research-followup"]',
+      '.command-route-summary__status',
       '[data-hub-detail-panel="research-summaries"]',
       '[data-knowledge-research-disclosure="sources"]',
       '#knowledge-research-trends',
@@ -101,6 +106,7 @@ const targets = [
     closedDetailsSelectors: [
       '[data-knowledge-task-route-choice="collapsed"]',
       '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-research-route-status-choice="collapsed"]',
       '[data-knowledge-research-followup="collapsed"]',
       '[data-knowledge-research-context-choice="collapsed"]',
     ],
@@ -1376,6 +1382,7 @@ const targets = [
 
 const viewports = [
   { label: 'desktop', viewport: { width: 1440, height: 1000 } },
+  { label: 'tablet', viewport: { width: 820, height: 1180 } },
   { label: 'mobile', viewport: { width: 390, height: 844 } },
 ];
 
