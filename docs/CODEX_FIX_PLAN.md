@@ -1350,6 +1350,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1479/#2902: The knowledge AI support context now starts with one closed compact
   support-panel choice while summary save, settings, research network and support status remain
   reachable.
+  Partial G1480/#2904: The knowledge library route follow-up actions now start with one closed
+  compact action choice while the category anchor, follow-up anchor, card details and route
+  context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

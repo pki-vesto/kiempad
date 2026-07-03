@@ -7845,6 +7845,94 @@ h2 {
   display: none;
 }
 
+.knowledge-library-action-choice {
+  display: grid;
+  gap: 0;
+  min-width: 220px;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+}
+
+.knowledge-library-action-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 52px;
+  padding: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.knowledge-library-action-choice__summary::-webkit-details-marker {
+  display: none;
+}
+
+.knowledge-library-action-choice__summary::after {
+  content: "+";
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: 999px;
+  color: var(--category);
+  font-size: 0.95rem;
+  font-weight: 850;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.knowledge-library-action-choice[open] > .knowledge-library-action-choice__summary::after {
+  content: "-";
+}
+
+.knowledge-library-action-choice__summary span,
+.knowledge-library-action-choice__summary small,
+.knowledge-library-action-choice__summary strong,
+.knowledge-library-action-choice__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.knowledge-library-action-choice__summary span {
+  display: grid;
+  gap: 2px;
+}
+
+.knowledge-library-action-choice__summary small {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.knowledge-library-action-choice__summary strong {
+  color: var(--text);
+  font-size: 0.86rem;
+  line-height: 1.2;
+}
+
+.knowledge-library-action-choice__summary em {
+  justify-self: end;
+  color: var(--category);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.knowledge-library-action-choice__body {
+  display: grid;
+  gap: 10px;
+  padding: 0 12px 12px;
+}
+
+.knowledge-library-action-choice:not([open]) > .knowledge-library-action-choice__body {
+  display: none;
+}
+
 .knowledge-library-category-choice__summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -23029,6 +23117,19 @@ a.action-card:active {
 
   .knowledge-library-route-status-choice__body {
     grid-template-columns: 1fr;
+  }
+
+  .knowledge-library-action-choice {
+    min-width: 0;
+  }
+
+  .knowledge-library-action-choice__summary {
+    grid-template-columns: minmax(0, 1fr) 26px;
+  }
+
+  .knowledge-library-action-choice__summary em {
+    grid-column: 1;
+    justify-self: start;
   }
 
   .knowledge-library-category-choice__summary {

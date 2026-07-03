@@ -38691,6 +38691,9 @@ describe('app shell', () => {
       'Open routecontext, categoriekeuze, vervolgcontext en zichtbaarheidsstatus.',
     );
     expect(html).toContain('Eerst één categoriekeuze');
+    expect(html).toContain('data-knowledge-library-action-choice="collapsed"');
+    expect(html).toContain('Bibliotheekactie kiezen');
+    expect(html).toContain('Open categorieanker, vervolgcontext, kaartdetails en routecontext.');
     expect(html).toContain('href="#knowledge-library-category-choice"');
     expect(html).toContain('href="#knowledge-library-followup"');
     expect(html).toContain('id="knowledge-library-category-choice"');
@@ -38708,6 +38711,9 @@ describe('app shell', () => {
     expect(html).toContain('Kies bibliotheekcontext');
     expect(html).toContain('Open daarna categorieën, kaarten en bewerkacties');
     expect(html.indexOf('data-knowledge-library-route-status-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-action-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-library-action-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#knowledge-library-category-choice"'),
     );
     expect(html.indexOf('data-knowledge-library-category-choice="ready"')).toBeLessThan(
@@ -38725,6 +38731,9 @@ describe('app shell', () => {
     expect(html).not.toContain('<details id="knowledge-library-followup" open');
     expect(html).not.toContain(
       '<details class="command-route-summary knowledge-library-route-status-choice" aria-label="Kennis bibliotheek route-samenvatting" data-knowledge-route-summary="library" data-knowledge-library-route-status-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-library-action-choice" data-knowledge-library-action-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details id="knowledge-library-category-choice" class="knowledge-library-category-choice" aria-label="Kennisbibliotheek categoriekeuze" data-knowledge-library-category-choice="ready" data-knowledge-library-category-card-choice="collapsed" open>',
@@ -39003,6 +39012,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-route-status-choice__summary {');
     expect(css).toContain('.knowledge-library-route-status-choice__body {');
     expect(css).toContain('.knowledge-library-route-status-choice:not([open])');
+    expect(css).toContain('.knowledge-library-action-choice {');
+    expect(css).toContain('.knowledge-library-action-choice__summary {');
+    expect(css).toContain('.knowledge-library-action-choice__body {');
+    expect(css).toContain(
+      '.knowledge-library-action-choice:not([open]) > .knowledge-library-action-choice__body {',
+    );
     expect(css).toContain('.knowledge-library-category-choice {');
     expect(css).toContain('.knowledge-library-category-choice__summary {');
     expect(css).toContain('.knowledge-library-category-choice__body {');
