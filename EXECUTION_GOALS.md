@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1490 — Kennis bibliotheek herstelacties tonen compacte actiefeedback
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1489 hebben herstelacties een duidelijke volgorde, maar nog geen compacte feedback over welke route de actie opent.
+- **User Impact:** Gebruikers weten de volgorde, maar kunnen nog onzeker zijn wat er na klikken gebeurt.
+- **Desired Outcome:** Laat de herstelacties van de Kennis Bibliotheek compacte actiefeedback of routecopy tonen, zodat gebruikers na het kiezen weten welke route wordt geopend.
+- **User Value:** Gebruikers begrijpen vooraf wat filter wissen, categorie kiezen of kennis toevoegen doet.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; elke herstelactie toont compacte feedback of routecopy zonder brede extra panelen; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken actiefeedback en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery actions, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2924
+
 ### G1489 — Kennis bibliotheek herstelkeuze opent acties in compacte actievolgorde
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery choice, tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2922
 
 ### G1488 — Kennis bibliotheek herstelkeuze toont compacte statuscontext

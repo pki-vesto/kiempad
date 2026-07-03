@@ -38291,6 +38291,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-empty-recovery-action="clear-filter"');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="category"');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="add"');
+    expect(html).toContain('data-knowledge-library-empty-recovery-order="1"');
+    expect(html).toContain('data-knowledge-library-empty-recovery-order="2"');
+    expect(html).toContain('data-knowledge-library-empty-recovery-order="3"');
     expect(html).toContain('href="#kennis?route=library"');
     expect(html).toContain('href="#kennis?route=add"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="category"');
@@ -38302,6 +38305,12 @@ describe('app shell', () => {
     expect(html).not.toContain('data-knowledge-library-followup-visibility-status="visible"');
     expect(html).not.toContain(
       '<details class="knowledge-library-empty-recovery-choice" data-knowledge-library-empty-recovery-choice="collapsed" data-knowledge-library-empty-recovery="ready" open>',
+    );
+    expect(
+      html.indexOf('data-knowledge-library-empty-recovery-action="clear-filter"'),
+    ).toBeLessThan(html.indexOf('data-knowledge-library-empty-recovery-action="category"'));
+    expect(html.indexOf('data-knowledge-library-empty-recovery-action="category"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-empty-recovery-action="add"'),
     );
     expect(visibilitySummary).not.toContain('tracking-payload');
     expect(visibilitySummary).not.toContain('providerpayload');
@@ -39155,6 +39164,7 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-empty-recovery-choice__summary {');
     expect(css).toContain('.knowledge-library-empty-recovery-choice__status {');
     expect(css).toContain('.knowledge-library-empty-recovery-choice__body {');
+    expect(css).toContain('.knowledge-library-empty-recovery-choice__step {');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');

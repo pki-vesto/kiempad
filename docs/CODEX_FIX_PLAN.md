@@ -1369,6 +1369,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   compact closed recovery choice while all recovery actions remain reachable.
   Partial G1488/#2920: The knowledge library empty-state recovery choice now includes compact
   status context explaining why recovery is needed before actions open.
+  Partial G1489/#2922: The knowledge library empty-state recovery actions now expose explicit
+  compact action order: clear filter, choose category, then add knowledge.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1289 |
+| ☑ klaar | 1290 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1488** |
+| **Totaal** | **1489** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1650,13 +1650,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1486 | Kennis bibliotheek lege-staat biedt compacte herstelactie | P1 | F5 | ☑ |
 | G1487 | Kennis bibliotheek herstelacties starten met compacte keuze | P1 | F5 | ☑ |
 | G1488 | Kennis bibliotheek herstelkeuze toont compacte statuscontext | P1 | F5 | ☑ |
-| G1489 | Kennis bibliotheek herstelkeuze opent acties in compacte actievolgorde | P1 | F5 | ☐ |
+| G1489 | Kennis bibliotheek herstelkeuze opent acties in compacte actievolgorde | P1 | F5 | ☑ |
+| G1490 | Kennis bibliotheek herstelacties tonen compacte actiefeedback | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1488** (id's G001 t/m G1489; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1489** (id's G001 t/m G1490; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
