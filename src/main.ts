@@ -1958,6 +1958,8 @@ function applyKennisFilterFromForm(
   state.kennisFilter = {
     zoekterm: optionalString(data.get('kennisZoekterm')),
     categorie: parseKennisCategorie(data.get('kennisCategorie')),
+    bron: optionalString(data.get('kennisBronFilter')),
+    verificatie: parseKennisVerificatie(data.get('kennisVerificatie')),
   };
   render(root, state);
 }
@@ -3370,6 +3372,11 @@ function parseKennisCategorie(value: FormDataEntryValue | null): KennisFilter['c
     return value;
   }
 
+  return undefined;
+}
+
+function parseKennisVerificatie(value: FormDataEntryValue | null): KennisFilter['verificatie'] {
+  if (value === 'verified' || value === 'concept') return value;
   return undefined;
 }
 

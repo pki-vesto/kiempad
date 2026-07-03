@@ -608,6 +608,24 @@ describe('kennis domeinregels', () => {
     expect(filtered.map((item) => item.id)).toEqual(['seed-kosten-2026-eigen-risico']);
   });
 
+  it('filtert kennisitems op bron en verificatiestatus', () => {
+    const basisItem = INITIELE_KENNIS_ITEMS[0];
+    expect(basisItem).toBeDefined();
+    if (!basisItem) return;
+
+    const verifiedItem = markeerKennisItemGeverifieerd(basisItem, true, '2026-06-24');
+    const filtered = filterKennisItems([verifiedItem, ...INITIELE_KENNIS_ITEMS.slice(1)], {
+      bron: 'kennisbank',
+      verificatie: 'verified',
+    });
+
+    expect(filtered.length).toBeGreaterThan(0);
+    expect(filtered.every((item) => (item.bron ?? '').toLowerCase().includes('kennisbank'))).toBe(
+      true,
+    );
+    expect(filtered.every((item) => item.geverifieerd_met_arts)).toBe(true);
+  });
+
   it('markeert het jaartal alleen bij kostenkennis', () => {
     const kostenItem = INITIELE_KENNIS_ITEMS.find((item) => item.categorie === 'kosten');
     const faseItem = INITIELE_KENNIS_ITEMS.find((item) => item.categorie === 'fasen');

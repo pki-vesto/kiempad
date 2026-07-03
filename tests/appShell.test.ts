@@ -38152,6 +38152,8 @@ describe('app shell', () => {
       kennisFilter: {
         zoekterm: 'eigen risico',
         categorie: 'kosten',
+        bron: 'Bron kosten',
+        verificatie: 'concept',
       },
       kennisItems: [
         {
@@ -38180,10 +38182,25 @@ describe('app shell', () => {
       'id="knowledge-filter-form" class="data-form compact-form knowledge-filter-kit" data-knowledge-filter-kit="ready" data-knowledge-filter-state="active"',
     );
     expect(html).toContain('class="knowledge-filter-kit__header"');
+    expect(html).toContain('data-knowledge-filter-choice="collapsed"');
+    expect(html).toContain('Filters kiezen');
+    expect(html).toContain('Open daarna zoekterm, categorie, bron of verificatie');
     expect(html).toContain('class="knowledge-filter-kit__fields"');
     expect(html).toContain('class="knowledge-filter-kit__actions"');
-    expect(html).toContain('2 actief: zoekterm &quot;eigen risico&quot; · categorie Kosten');
+    expect(html).toContain(
+      '4 actief: zoekterm &quot;eigen risico&quot; · categorie Kosten · bron &quot;Bron kosten&quot; · status concept',
+    );
     expect(html).toContain('name="kennisZoekterm" value="eigen risico"');
+    expect(html).toContain('name="kennisBronFilter" value="Bron kosten"');
+    expect(html).toContain('name="kennisVerificatie"');
+    expect(html).toContain('<option value="concept" selected>Concept</option>');
+    expect(html).toContain('data-knowledge-filter-choice="collapsed"');
+    expect(html.indexOf('data-knowledge-filter-choice="collapsed"')).toBeLessThan(
+      html.indexOf('class="knowledge-filter-kit__fields"'),
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-filter-choice" data-knowledge-filter-choice="collapsed" open>',
+    );
     expect(html).toContain('1 van 2 kennisitems zichtbaar');
     expect(html).toContain('Kosten 2026: eigen risico');
     expect(html).not.toContain('Fasen overzicht');
@@ -38251,6 +38268,7 @@ describe('app shell', () => {
     expect(html).toContain('Bibliotheekfilter');
     expect(html).toContain('Kennisitems vinden');
     expect(html).toContain('Geen filter actief');
+    expect(html).toContain('data-knowledge-filter-choice="collapsed"');
     expect(html).toContain('<span class="stat__value">');
     expect(html).toContain('class="knowledge-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Kennis taakroutes"');
@@ -38630,6 +38648,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-filter-kit__header {');
     expect(css).toContain('.knowledge-filter-kit__fields {');
     expect(css).toContain('.knowledge-filter-kit__actions {');
+    expect(css).toContain('.knowledge-filter-choice {');
+    expect(css).toContain('.knowledge-filter-choice__summary {');
+    expect(css).toContain('.knowledge-filter-choice__body {');
+    expect(css).toContain(
+      '.knowledge-filter-choice:not([open]) > .knowledge-filter-choice__body {',
+    );
     expect(css).toContain('.knowledge-add-context-choice {');
     expect(css).toContain('.knowledge-add-context-choice__summary {');
     expect(css).toContain('.knowledge-add-context-choice__body {');

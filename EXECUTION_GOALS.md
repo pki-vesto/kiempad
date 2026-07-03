@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1442 — Kennis taakroutes starten met één compacte routekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1441 blijven de kennis taakroutes gevoelig voor meerdere routekeuzes tegelijk in de contextlaag.
+- **User Impact:** Gebruikers die naar kennis navigeren, krijgen lezen, toevoegen, AI en bibliotheek nog als brede routecontrole aangeboden.
+- **Desired Outcome:** Laat de kennis taakroutes starten met één compacte routekeuze of samengevouwen sublaag, terwijl lezen, toevoegen, AI en bibliotheek bereikbaar blijven.
+- **User Value:** Gebruikers kunnen de kennisroute stap voor stap kiezen zonder dat routenavigatie de contextlaag domineert.
+- **Acceptance Criteria:** Bestaande kennis routehooks, taakroutehooks en hashes blijven aanwezig; de kennis taakroutes starten met één compacte routekeuze of samengevouwen sublaag; lezen, toevoegen, AI en bibliotheek blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Routekeuze
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge task routes, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2828
+
 ### G1441 — Kennis filters starten met één compacte filterkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge filters, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2826
 
 ### G1440 — Kennis toevoegen follow-up start met één compacte contextkeuze
