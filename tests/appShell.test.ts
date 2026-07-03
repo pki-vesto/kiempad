@@ -6443,6 +6443,10 @@ describe('app shell', () => {
     expect(html).toContain('# Kiempad gespreksblad');
     expect(html).toContain('Open timeline en graph exports');
     expect(html).toContain('Vragenlijst voor volgende afspraak');
+    expect(html).toContain('id="vragen-voorbereiden-volledige-lijst"');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="vragen-voorbereiden-volledige-lijst" open>',
+    );
     expect(html).toContain('Vraag aan arts: wanneer plannen we de controle?');
     expect(html).toContain('Consultactiepunt');
     expect(html).toContain('Voorbereidend consult');

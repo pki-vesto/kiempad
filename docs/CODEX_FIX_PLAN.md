@@ -222,6 +222,10 @@
   upload choice route now shows one triage choice layer instead of immediately repeating the
   add-flow selector and choice card, while concrete add routes still open the compact tabbed
   console with the same hashes, upload hooks, privacy data, and non-medical boundaries.
+- **Question prep closed full list — done in G1479 / issue #2720.** The consult-preparation route
+  now keeps the full generated question list closed by default, so users start with the prep board
+  and compact work layer while the list content, print/PDF hooks, and privacy boundaries remain
+  available on demand.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

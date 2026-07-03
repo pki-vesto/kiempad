@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1387 — Vragen: consultvoorbereiding houdt volledige vragenlijst dicht
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Vragen-route opent de volledige gegenereerde vragenlijst direct onder het prep-bord wanneer er consultvoorbereiding is.
+- **User Impact:** De voorbereiden-route voelt langer dan nodig en minder als één gesprekstaak tegelijk.
+- **Desired Outcome:** Start met prep-bord en compacte werklaag; houd de volledige vragenlijst beschikbaar maar standaard gesloten.
+- **User Value:** Gebruikers scannen eerst de gesprekstaak en openen pas daarna de volledige lijst wanneer ze die nodig hebben.
+- **Acceptance Criteria:** De voorbereiden-route toont het consult-prep bord en de samenvattende werklaag eerst; de volledige vragenlijst voor de volgende afspraak start gesloten, ook wanneer er gegenereerde vragen zijn; de vragenlijstinhoud, print/PDF hooks en bestaande formuliercontracten blijven aanwezig; mobiel ontstaat geen extra overlap, horizontale pagina-scroll of lange open lijst in de eerste viewport; tests of routeflow-smoke bewaken gesloten disclosure, inhoud, volgorde en privacygrenzen.
+- **Affected Screens:** Vragen, Consult voorbereiden
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, consult preparation, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2720
+
 ### G1386 — Dossier Upload: keuzevariant toont niet twee routekeuzes tegelijk
 
 - **Epic:** Onboarding & Daily Use
