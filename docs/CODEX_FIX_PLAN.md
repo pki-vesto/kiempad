@@ -1359,6 +1359,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   card-grid choice while category cards, counts, route anchors and library follow-up remain reachable.
   Partial G1483/#2910: The knowledge library category card group now exposes one compact closed
   follow-up anchor layer for category anchors, library follow-up and visibility status.
+  Partial G1484/#2912: The knowledge library category follow-up now starts with a compact closed
+  visibility summary before context, list and card detail layers open.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

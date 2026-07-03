@@ -13056,6 +13056,21 @@ function renderKennisScreen(state: AppShellState): string {
             <em>${filteredItems.length} zichtbaar</em>
           </summary>
           <div class="kp-disclosure__body knowledge-library-followup__body">
+            <details class="knowledge-library-followup-visibility-choice" data-knowledge-library-followup-visibility-choice="collapsed">
+              <summary class="knowledge-library-followup-visibility-choice__summary">
+                <span>
+                  <strong>Zichtbaarheid samenvatten</strong>
+                  <small>Bekijk eerst telling, categoriekeuze, lijstcontext en kaartdetails.</small>
+                </span>
+                <em>${filteredItems.length} zichtbaar</em>
+              </summary>
+              <div class="knowledge-library-followup-visibility-choice__body">
+                <span class="knowledge-library-followup-visibility-choice__status" data-knowledge-library-followup-visibility-status="visible">${filteredItems.length} zichtbaar</span>
+                <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-followup-visibility-anchor="category">Categoriekeuze</a>
+                <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-panel" data-knowledge-library-followup-visibility-anchor="list">Bibliotheeklijst</a>
+                <a class="knowledge-library-followup-visibility-choice__anchor knowledge-library-followup-visibility-choice__anchor--secondary" href="#knowledge-library-panel" data-knowledge-library-followup-visibility-anchor="cards">Kaartdetails</a>
+              </div>
+            </details>
             <details class="knowledge-library-context-choice" data-knowledge-library-context-choice="collapsed">
               <summary class="knowledge-library-context-choice__summary">
                 <span>

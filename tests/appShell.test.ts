@@ -38719,6 +38719,13 @@ describe('app shell', () => {
     expect(html).toContain('id="knowledge-library-followup"');
     expect(html).toContain('data-knowledge-library-followup="collapsed"');
     expect(html).toContain('Kennisbibliotheek per categorie openen');
+    expect(html).toContain('data-knowledge-library-followup-visibility-choice="collapsed"');
+    expect(html).toContain('Zichtbaarheid samenvatten');
+    expect(html).toContain('Bekijk eerst telling, categoriekeuze, lijstcontext en kaartdetails.');
+    expect(html).toContain('data-knowledge-library-followup-visibility-status="visible"');
+    expect(html).toContain('data-knowledge-library-followup-visibility-anchor="category"');
+    expect(html).toContain('data-knowledge-library-followup-visibility-anchor="list"');
+    expect(html).toContain('data-knowledge-library-followup-visibility-anchor="cards"');
     expect(html).toContain('data-knowledge-library-context-choice="collapsed"');
     expect(html).toContain('Kies bibliotheekcontext');
     expect(html).toContain('Open daarna categorieën, kaarten en bewerkacties');
@@ -38746,8 +38753,11 @@ describe('app shell', () => {
       html.indexOf('data-knowledge-library-followup="collapsed"'),
     );
     expect(html.indexOf('data-knowledge-library-followup="collapsed"')).toBeLessThan(
-      html.indexOf('data-knowledge-library-context-choice="collapsed"'),
+      html.indexOf('data-knowledge-library-followup-visibility-choice="collapsed"'),
     );
+    expect(
+      html.indexOf('data-knowledge-library-followup-visibility-choice="collapsed"'),
+    ).toBeLessThan(html.indexOf('data-knowledge-library-context-choice="collapsed"'));
     expect(html.indexOf('data-knowledge-library-context-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-library-context-panel-choice="collapsed"'),
     );
@@ -38769,6 +38779,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="knowledge-library-category-card-followup-choice" data-knowledge-library-category-card-followup-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-library-followup-visibility-choice" data-knowledge-library-followup-visibility-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details class="knowledge-library-context-choice" data-knowledge-library-context-choice="collapsed" open>',
@@ -39067,6 +39080,10 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-category-card-followup-choice__summary {');
     expect(css).toContain('.knowledge-library-category-card-followup-choice__body {');
     expect(css).toContain('.knowledge-library-category-card-followup-choice:not([open])');
+    expect(css).toContain('.knowledge-library-followup-visibility-choice {');
+    expect(css).toContain('.knowledge-library-followup-visibility-choice__summary {');
+    expect(css).toContain('.knowledge-library-followup-visibility-choice__body {');
+    expect(css).toContain('.knowledge-library-followup-visibility-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
     expect(css).toContain('.knowledge-library-category-choice__card {');

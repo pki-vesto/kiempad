@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1485 — Kennis bibliotheek zichtbaarheidssamenvatting toont compacte lege-staat
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1484 heeft de zichtbaarheidssamenvatting nog geen expliciete compacte lege-staat wanneer filters of categorieën geen zichtbare kennisitems opleveren.
+- **User Impact:** Gebruikers kunnen bij lege resultaten denken dat de bibliotheek stuk is of dat context ontbreekt.
+- **Desired Outcome:** Laat de zichtbaarheidssamenvatting in de Kennis Bibliotheek een compacte lege-staat of statusregel tonen wanneer er geen zichtbare items zijn, terwijl categoriecontext en kaartdetails bereikbaar blijven.
+- **User Value:** Gebruikers begrijpen lege of gefilterde bibliotheekresultaten zonder extra uitleg of brede panelen.
+- **Acceptance Criteria:** Bestaande zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; de zichtbaarheidssamenvatting toont een compacte lege-staat of statusregel wanneer er geen zichtbare items zijn; categoriecontext, lijstcontext en kaartdetails blijven bereikbaar zonder overlap; desktop, tablet en mobiel tonen geen horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken de lege-staat en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library visibility summary, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2914
+
 ### G1484 — Kennis bibliotheek categorievervolg start met compacte zichtbaarheidssamenvatting
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library follow-up, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2912
 
 ### G1483 — Kennis bibliotheek categoriekaarten tonen compacte vervolgankers

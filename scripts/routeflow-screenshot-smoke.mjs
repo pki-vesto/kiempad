@@ -254,6 +254,7 @@ const targets = [
       '[data-knowledge-library-category-card-choice="collapsed"]',
       '#knowledge-library-followup',
       '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-followup-visibility-choice="collapsed"]',
       '[data-knowledge-library-context-choice="collapsed"]',
     ],
     presentSelectors: [
@@ -270,6 +271,7 @@ const targets = [
       '#knowledge-category-research',
       '[data-knowledge-category="ready"]',
       '[data-knowledge-library-list="ready"]',
+      '[data-knowledge-library-followup-visibility-choice="collapsed"]',
       '[data-knowledge-library-context-panel-choice="collapsed"]',
     ],
     closedDetailsSelectors: [
@@ -280,6 +282,7 @@ const targets = [
       '[data-knowledge-library-category-card-grid-choice="collapsed"]',
       '[data-knowledge-library-category-card-followup-choice="collapsed"]',
       '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-followup-visibility-choice="collapsed"]',
       '[data-knowledge-library-context-choice="collapsed"]',
       '[data-knowledge-library-context-panel-choice="collapsed"]',
     ],
@@ -317,6 +320,7 @@ const targets = [
       '[data-knowledge-library-category-card-grid-choice="collapsed"]',
       '[data-knowledge-library-category-card-followup-choice="collapsed"]',
       '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-followup-visibility-choice="collapsed"]',
       '[data-knowledge-library-context-choice="collapsed"]',
     ],
     knowledgeConsole: true,
@@ -383,6 +387,43 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-library-followup-visibility',
+    hash: '#kennis?route=library',
+    rootSelector: '.content',
+    expectedText: 'Zichtbaarheid samenvatten',
+    openSelectors: ['[data-knowledge-library-followup="collapsed"]'],
+    requiredSelectors: ['[data-knowledge-library-followup-visibility-choice="collapsed"]'],
+    presentSelectors: [
+      '[data-knowledge-library-context-choice="collapsed"]',
+      '[data-knowledge-library-followup-visibility-status="visible"]',
+      '[data-knowledge-library-followup-visibility-anchor="category"]',
+      '[data-knowledge-library-followup-visibility-anchor="list"]',
+      '[data-knowledge-library-followup-visibility-anchor="cards"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-library-followup-visibility-choice="collapsed"]'],
+  },
+  {
+    screen: 'knowledge-library-followup-visibility-anchors',
+    hash: '#kennis?route=library',
+    rootSelector: '.content',
+    expectedText: 'Categoriekeuze',
+    openSelectors: [
+      '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-followup-visibility-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-knowledge-library-followup-visibility-status="visible"]',
+      '[data-knowledge-library-followup-visibility-anchor="category"]',
+      '[data-knowledge-library-followup-visibility-anchor="list"]',
+      '[data-knowledge-library-followup-visibility-anchor="cards"]',
+    ],
+    presentSelectors: [
+      '[data-knowledge-library-context-choice="collapsed"]',
+      '[data-knowledge-library-list="ready"]',
+      '[data-knowledge-library-card="ready"]',
+    ],
+  },
+  {
     screen: 'knowledge-library-context',
     hash: '#kennis?route=library',
     rootSelector: '.content',
@@ -401,7 +442,10 @@ const targets = [
       '[data-knowledge-library-list="ready"]',
       '[data-knowledge-library-card="ready"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-library-context-panel-choice="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-knowledge-library-followup-visibility-choice="collapsed"]',
+      '[data-knowledge-library-context-panel-choice="collapsed"]',
+    ],
   },
   {
     screen: 'knowledge-library-list',
@@ -426,6 +470,7 @@ const targets = [
       '[data-knowledge-library-category-card="research"]',
     ],
     closedDetailsSelectors: [
+      '[data-knowledge-library-followup-visibility-choice="collapsed"]',
       '[data-knowledge-library-list-choice="collapsed"]',
       '[data-knowledge-library-list-items-choice="collapsed"]',
     ],
@@ -457,6 +502,7 @@ const targets = [
       '[data-status-badge="knowledge"]',
     ],
     closedDetailsSelectors: [
+      '[data-knowledge-library-followup-visibility-choice="collapsed"]',
       '[data-knowledge-library-card-content-choice="collapsed"]',
     ],
   },
