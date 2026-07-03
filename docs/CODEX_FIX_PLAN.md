@@ -1403,6 +1403,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   width against compact badge feedback.
   Partial G1505/#2954: The knowledge library empty-state recovery badges now keep a compact
   right-aligned mobile badge column.
+  Partial G1506/#2956: The knowledge library empty-state recovery badges now keep explicit
+  mobile ellipsis behavior inside the compact badge column.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

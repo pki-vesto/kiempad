@@ -23869,7 +23869,11 @@ a.action-card:active {
     max-width: min(12ch, 38%);
     min-width: 7ch;
     flex-shrink: 0;
+    letter-spacing: 0.01em;
+    overflow: hidden;
     text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .knowledge-library-category-choice__grid {
