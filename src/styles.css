@@ -16110,6 +16110,12 @@ a.action-card:active {
   background: color-mix(in srgb, var(--accent) 6%, var(--surface-subtle));
 }
 
+.embryo-quality-choice {
+  grid-template-columns: minmax(0, 1fr);
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface-subtle));
+}
+
 .dossier-upload-file-choice label {
   grid-column: 1 / -1;
 }
@@ -16126,6 +16132,9 @@ a.action-card:active {
 .dossier-upload-optional.dossier-upload-link-fields,
 .dossier-upload-optional.dossier-upload-image-fields,
 .dossier-upload-optional.dossier-upload-lab-fields,
+.dossier-upload-optional.embryo-quality-identification-fields,
+.dossier-upload-optional.embryo-quality-assessment-fields,
+.dossier-upload-optional.embryo-quality-link-fields,
 .dossier-upload-optional.dossier-upload-submit-feedback-details {
   margin: 0 10px 10px;
   background: var(--surface);
@@ -16135,7 +16144,12 @@ a.action-card:active {
   margin: 0;
 }
 
-.consult-upload-report-fields__body {
+.embryo-quality-choice > .embryo-quality-identification-fields {
+  margin: 0;
+}
+
+.consult-upload-report-fields__body,
+.embryo-quality-identification-fields__body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px 12px;
@@ -16143,7 +16157,8 @@ a.action-card:active {
   padding: 0 10px 10px;
 }
 
-.consult-upload-report-fields__body > * {
+.consult-upload-report-fields__body > *,
+.embryo-quality-identification-fields__body > * {
   min-width: 0;
 }
 
@@ -16340,7 +16355,8 @@ a.action-card:active {
     border-radius: 12px;
   }
 
-  .consult-upload-report-fields__body {
+  .consult-upload-report-fields__body,
+  .embryo-quality-identification-fields__body {
     grid-template-columns: 1fr;
     gap: 8px;
     padding: 0 10px 10px;
