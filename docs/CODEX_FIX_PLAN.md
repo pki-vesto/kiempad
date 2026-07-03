@@ -624,6 +624,10 @@
 - **Short global medical disclaimer — done in G1574 / issue #3092.** The shared app disclaimer is
   now one short non-medical boundary sentence, reducing repeated disclaimer fatigue while
   preserving the separate dose/clinic instruction warning.
+- **Dossier required input maps — done in G1575 / issue #3094.** Document, consult,
+  embryo-quality, and embryo-status upload routes now show compact required-input maps before
+  their submit actions, using clay-ink chips so users can see the minimum fields without opening
+  every collapsed step.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.
@@ -1176,6 +1180,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**
 - **CFX-028** — Form actions: primary Bewaar + ghost Annuleer, not both full-width teal (C28). **P2 · S**
 - **CFX-029** — Inline validation in `--clay-ink` (no browser popups) (C29). **P2 · M**
+  Partial G1575/#3094: dossier upload, consult upload, embryo-quality, and embryo-status routes
+  show required-input maps in `--clay-ink` before submit actions, reducing reliance on late browser
+  validation popups for collapsed required steps.
 - **CFX-030f** — Forms in a card with title + `✕` close, padding 20, radius 18 (C30). **P2 · M**
 
 ### Data / backend / seed

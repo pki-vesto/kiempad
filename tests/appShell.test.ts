@@ -7967,6 +7967,14 @@ describe('app shell', () => {
     expect(dossierPanel).toContain(
       'class="dossier-submit-action" data-dossier-submit-action="dossier-upload"',
     );
+    expect(dossierPanel).toContain(
+      'class="dossier-required-map" data-dossier-required-map="dossier-upload" aria-label="Verplichte documentvelden"',
+    );
+    expect(dossierPanel).toContain('Bestand gekozen');
+    expect(dossierPanel).toContain('Conceptreview bevestigd');
+    expect(dossierPanel.indexOf('data-dossier-required-map="dossier-upload"')).toBeLessThan(
+      dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"'),
+    );
     expect(dossierPanel).toContain('data-dossier-upload-completion-choice="ready"');
     expect(dossierPanel).toContain('data-dossier-upload-submit-feedback-details="collapsed"');
     expect(dossierPanel).toContain('Afrondingsstatus openen');
@@ -8057,6 +8065,14 @@ describe('app shell', () => {
     expect(consultPanel).toContain(
       'class="dossier-submit-action" data-dossier-submit-action="consult-upload"',
     );
+    expect(consultPanel).toContain(
+      'class="dossier-required-map" data-dossier-required-map="consult-upload" aria-label="Verplichte consultvelden"',
+    );
+    expect(consultPanel).toContain('Datum consult');
+    expect(consultPanel).toContain('Verslagtekst of bestand');
+    expect(consultPanel.indexOf('data-dossier-required-map="consult-upload"')).toBeLessThan(
+      consultPanel.indexOf('data-dossier-submit-action="consult-upload"'),
+    );
     expect(consultPanel).toContain('data-consult-upload-completion-choice="ready"');
     expect(consultPanel).toContain('data-consult-upload-submit-feedback-details="collapsed"');
     expect(consultPanel).toContain('Bewaarstatus openen');
@@ -8124,6 +8140,14 @@ describe('app shell', () => {
     );
     expect(embryoQualityPanel).toContain(
       'class="dossier-submit-action" data-dossier-submit-action="embryo-quality"',
+    );
+    expect(embryoQualityPanel).toContain(
+      'class="dossier-required-map" data-dossier-required-map="embryo-quality" aria-label="Verplichte embryokwaliteit velden"',
+    );
+    expect(embryoQualityPanel).toContain('Datum labterugkoppeling');
+    expect(embryoQualityPanel).toContain('Kwaliteit volgens kliniek');
+    expect(embryoQualityPanel.indexOf('data-dossier-required-map="embryo-quality"')).toBeLessThan(
+      embryoQualityPanel.indexOf('data-dossier-submit-action="embryo-quality"'),
     );
     expect(embryoQualityPanel).toContain('data-embryo-quality-completion-choice="ready"');
     expect(embryoQualityPanel).toContain('data-embryo-quality-submit-feedback-details="collapsed"');
@@ -8215,6 +8239,14 @@ describe('app shell', () => {
     );
     expect(embryoStatusPanel).toContain(
       'class="dossier-submit-action" data-dossier-submit-action="embryo-status"',
+    );
+    expect(embryoStatusPanel).toContain(
+      'class="dossier-required-map" data-dossier-required-map="embryo-status" aria-label="Verplichte embryostatus velden"',
+    );
+    expect(embryoStatusPanel).toContain('Datum status');
+    expect(embryoStatusPanel).toContain('Statusmoment');
+    expect(embryoStatusPanel.indexOf('data-dossier-required-map="embryo-status"')).toBeLessThan(
+      embryoStatusPanel.indexOf('data-dossier-submit-action="embryo-status"'),
     );
     expect(embryoStatusPanel).toContain('data-embryo-status-completion-choice="ready"');
     expect(embryoStatusPanel).toContain('data-embryo-status-submit-feedback-details="collapsed"');
@@ -8801,6 +8833,11 @@ describe('app shell', () => {
     expect(css).toContain('grid-column: 1 / -1;');
     expect(css).toContain('font-size: 0.78rem;');
     expect(css).toContain('font-weight: 650;');
+    expect(css).toContain('.dossier-required-map {');
+    expect(css).toContain('.dossier-required-map div[role="list"]');
+    expect(css).toContain('.dossier-required-map span[role="listitem"]');
+    expect(css).toContain('color: var(--clay-ink);');
+    expect(css).toContain('.dossier-required-map span[role="listitem"]::before');
     expect(css).toContain('.dossier-upload-group[data-dossier-field-section]');
     expect(css).toContain('.dossier-subform-group[data-dossier-field-section]');
     expect(css).toContain('content: attr(data-dossier-field-section-label);');

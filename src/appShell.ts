@@ -3563,6 +3563,14 @@ function renderDossierScreen(state: AppShellState): string {
               </fieldset>
             </details>
           </details>
+          <section class="dossier-required-map" data-dossier-required-map="dossier-upload" aria-label="Verplichte documentvelden">
+            <strong>Nog nodig voor opslaan</strong>
+            <div role="list">
+              <span role="listitem">Bestand gekozen</span>
+              <span role="listitem">Datum gecontroleerd</span>
+              <span role="listitem">Conceptreview bevestigd</span>
+            </div>
+          </section>
           <section class="dossier-upload-completion" data-dossier-upload-completion-choice="ready">
             <button type="submit" class="dossier-submit-action" data-dossier-submit-action="dossier-upload">Upload document naar dossier</button>
             <details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-dossier-upload-submit-feedback-details="collapsed">
@@ -3830,6 +3838,14 @@ function renderDossierScreen(state: AppShellState): string {
             </label>
             </fieldset>
           </details>
+          <section class="dossier-required-map" data-dossier-required-map="consult-upload" aria-label="Verplichte consultvelden">
+            <strong>Nog nodig voor opslaan</strong>
+            <div role="list">
+              <span role="listitem">Datum consult</span>
+              <span role="listitem">Verslagtekst of bestand</span>
+              <span role="listitem">Broncontext optioneel</span>
+            </div>
+          </section>
           <section class="dossier-upload-completion" data-consult-upload-completion-choice="ready">
             <button type="submit" class="dossier-submit-action" data-dossier-submit-action="consult-upload">Bewaar consultverslag</button>
             <details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-consult-upload-submit-feedback-details="collapsed">
@@ -3974,6 +3990,14 @@ function renderDossierScreen(state: AppShellState): string {
             </label>
             </fieldset>
           </details>
+          <section class="dossier-required-map" data-dossier-required-map="embryo-quality" aria-label="Verplichte embryokwaliteit velden">
+            <strong>Nog nodig voor opslaan</strong>
+            <div role="list">
+              <span role="listitem">Datum labterugkoppeling</span>
+              <span role="listitem">Embryolabel</span>
+              <span role="listitem">Kwaliteit volgens kliniek</span>
+            </div>
+          </section>
           <section class="dossier-upload-completion" data-embryo-quality-completion-choice="ready">
             <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-quality">Bewaar embryokwaliteit</button>
             <details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-quality-submit-feedback-details="collapsed">
@@ -4101,6 +4125,14 @@ function renderDossierScreen(state: AppShellState): string {
             </label>
             </fieldset>
           </details>
+          <section class="dossier-required-map" data-dossier-required-map="embryo-status" aria-label="Verplichte embryostatus velden">
+            <strong>Nog nodig voor opslaan</strong>
+            <div role="list">
+              <span role="listitem">Datum status</span>
+              <span role="listitem">Embryolabel</span>
+              <span role="listitem">Statusmoment</span>
+            </div>
+          </section>
           <section class="dossier-upload-completion" data-embryo-status-completion-choice="ready">
             <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-status">Bewaar embryo-status</button>
             <details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-status-submit-feedback-details="collapsed">
