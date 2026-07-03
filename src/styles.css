@@ -16103,6 +16103,12 @@ a.action-card:active {
   background: color-mix(in srgb, var(--accent) 7%, var(--surface-subtle));
 }
 
+.consult-upload-report-choice {
+  grid-template-columns: minmax(0, 1fr);
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface-subtle));
+}
+
 .dossier-upload-file-choice label {
   grid-column: 1 / -1;
 }
@@ -16122,6 +16128,26 @@ a.action-card:active {
 .dossier-upload-optional.dossier-upload-submit-feedback-details {
   margin: 0 10px 10px;
   background: var(--surface);
+}
+
+.consult-upload-report-choice > .consult-upload-report-fields {
+  margin: 0;
+}
+
+.consult-upload-report-fields__body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+  min-width: 0;
+  padding: 0 10px 10px;
+}
+
+.consult-upload-report-fields__body > * {
+  min-width: 0;
+}
+
+.consult-upload-report-fields__body label:has(textarea) {
+  grid-column: 1 / -1;
 }
 
 .dossier-upload-completion > .dossier-upload-submit-feedback-details {
@@ -16311,6 +16337,12 @@ a.action-card:active {
     gap: 8px;
     padding: 10px;
     border-radius: 12px;
+  }
+
+  .consult-upload-report-fields__body {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 0 10px 10px;
   }
 
   .dossier-upload-group[data-dossier-field-section],

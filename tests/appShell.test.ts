@@ -7362,6 +7362,10 @@ describe('app shell', () => {
     expect(consultForm).toContain('data-upload-privacy-kind="consult"');
     expect(consultForm).toContain('data-consult-upload-privacy-state="encrypted-text-or-file"');
     expect(consultForm).toContain('data-consult-upload-group="consult-basis"');
+    expect(consultForm).toContain('data-consult-upload-report-choice="ready"');
+    expect(consultForm).toContain('data-consult-upload-report-fields="collapsed"');
+    expect(consultForm).toContain('data-consult-upload-link-fields="collapsed"');
+    expect(consultForm).toContain('data-consult-upload-context-fields="collapsed"');
     expect(consultForm).toContain('data-consult-upload-group="consult-koppelingen"');
     expect(consultForm).toContain('data-consult-upload-group="consult-context"');
     expect(consultForm).toContain('data-dossier-field-section="consult-basis"');
@@ -7370,9 +7374,21 @@ describe('app shell', () => {
     expect(consultForm).toContain('data-dossier-field-section-label="Stap 2 · koppelen"');
     expect(consultForm).toContain('data-dossier-field-section="consult-context"');
     expect(consultForm).toContain('data-dossier-field-section-label="Stap 3 · context"');
-    expect(consultForm).toContain('<legend>Consultbasis</legend>');
+    expect(consultForm).toContain('<legend>Verslag kiezen</legend>');
+    expect(consultForm).toContain('Verslagvelden openen');
+    expect(consultForm).toContain('Koppelingen openen');
+    expect(consultForm).toContain('Bron en context openen');
     expect(consultForm).toContain('<legend>Koppelingen</legend>');
     expect(consultForm).toContain('<legend>Bron en context</legend>');
+    expect(consultForm).not.toContain(
+      '<details class="dossier-upload-optional consult-upload-report-fields" data-consult-upload-report-fields="collapsed" open',
+    );
+    expect(consultForm).not.toContain(
+      '<details class="dossier-upload-optional consult-upload-link-fields" data-consult-upload-link-fields="collapsed" open',
+    );
+    expect(consultForm).not.toContain(
+      '<details class="dossier-upload-optional consult-upload-context-fields" data-consult-upload-context-fields="collapsed" open',
+    );
     expect(consultForm).toContain('name="datum" type="date" required');
     expect(consultForm).toContain('name="titel"');
     expect(consultForm).toContain(
@@ -7906,11 +7922,29 @@ describe('app shell', () => {
     expect(consultPanel).toContain('data-dossier-feedback-focus-target="consult-upload"');
     expect(consultPanel).toContain('tabindex="-1"');
     expect(consultPanel).toContain('data-consult-upload-group="consult-basis"');
+    expect(consultPanel).toContain('data-consult-upload-report-choice="ready"');
+    expect(consultPanel).toContain('data-consult-upload-report-fields="collapsed"');
+    expect(consultPanel).toContain('data-consult-upload-link-fields="collapsed"');
+    expect(consultPanel).toContain('data-consult-upload-context-fields="collapsed"');
     expect(consultPanel).not.toContain(
       'data-consult-upload-group="consult-basis" data-dossier-context-priority="optional"',
     );
     expect(consultPanel).toContain('data-dossier-required-cue="consult-upload"');
-    expect(consultRequiredCue).toContain('Verplicht: datum; voeg daarna tekst of bestand toe.');
+    expect(consultRequiredCue).toContain(
+      'Start met één verslagroute. Tekst, bestand en datum blijven achter de verslagkeuze bereikbaar.',
+    );
+    expect(consultPanel.indexOf('data-consult-upload-report-choice="ready"')).toBeLessThan(
+      consultPanel.indexOf('data-consult-upload-report-fields="collapsed"'),
+    );
+    expect(consultPanel.indexOf('data-consult-upload-report-fields="collapsed"')).toBeLessThan(
+      consultPanel.indexOf('name="datum" type="date" required'),
+    );
+    expect(consultPanel.indexOf('data-consult-upload-link-fields="collapsed"')).toBeLessThan(
+      consultPanel.indexOf('name="afspraakId"'),
+    );
+    expect(consultPanel.indexOf('data-consult-upload-context-fields="collapsed"')).toBeLessThan(
+      consultPanel.indexOf('name="samenvattingCorrectie"'),
+    );
     expect(consultPanel).toContain(
       'data-consult-upload-group="consult-koppelingen" data-dossier-context-priority="optional"',
     );
@@ -8179,6 +8213,8 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-optional.dossier-upload-link-fields');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-image-fields');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-lab-fields');
+    expect(css).toContain('.consult-upload-report-choice');
+    expect(css).toContain('.consult-upload-report-fields__body');
     expect(css).toContain(
       '#dossier-upload-form,\n#consult-verslag-form,\n#embryo-quality-form,\n#embryo-status-event-form',
     );

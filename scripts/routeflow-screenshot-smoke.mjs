@@ -700,11 +700,24 @@ const targets = [
       '[data-dossier-add-route-panel="consult-upload"]',
       '#consult-verslag-form',
       '[data-consult-upload-group="consult-basis"]',
-      '[data-consult-upload-group="consult-context"]',
+      '[data-consult-upload-report-choice="ready"]',
+      '[data-consult-upload-report-fields="collapsed"]',
+      '[data-consult-upload-report-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-consult-upload-link-fields="collapsed"]',
+      '[data-consult-upload-link-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-consult-upload-context-fields="collapsed"]',
+      '[data-consult-upload-context-fields="collapsed"] > .dossier-upload-optional__summary',
     ],
     presentSelectors: [
       '[data-dossier-upload-console="ready"]',
       '[data-dossier-upload-console="ready"][data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="consult"]',
+      '[data-consult-upload-group="consult-koppelingen"]',
+      '[data-consult-upload-group="consult-context"]',
+    ],
+    closedDetailsSelectors: [
+      '[data-consult-upload-report-fields="collapsed"]',
+      '[data-consult-upload-link-fields="collapsed"]',
+      '[data-consult-upload-context-fields="collapsed"]',
     ],
     expectedUploadFlow: 'consult',
     desktopHiddenSelectors: [
@@ -1899,6 +1912,15 @@ async function prepareFilledConsultCard(page, targetHash) {
   await page.goto(`${url}#consult-verslag-form`, { waitUntil: 'networkidle' });
   await unlockIfNeeded(page, '#consult-verslag-form');
   await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-consult-upload-report-fields="collapsed"]',
+      '[data-consult-upload-context-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
 
   await page.locator('#consult-verslag-form [name="datum"]').fill('2026-06-25');
   await page.locator('#consult-verslag-form [name="titel"]').fill('Smoke consultkaart');
