@@ -1316,6 +1316,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   trend choice while relevance, dossier relations and trend groups remain reachable.
   Partial G1465/#2874: The knowledge research snapshot now starts with one closed compact
   snapshot route choice while source, summary, trend and network cards remain reachable.
+  Partial G1466/#2876: The knowledge research workbench status now starts with one closed
+  compact metrics choice while network status, visible counts and research metrics remain
+  reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

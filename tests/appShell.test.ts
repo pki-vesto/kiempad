@@ -38274,6 +38274,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-workbench-status-choice="collapsed"');
     expect(html).toContain('Kies werkbankstatus');
     expect(html).toContain('Open netwerkstatus, zichtbaar aantal en researchmetrics.');
+    expect(html).toContain('data-knowledge-workbench-metrics-choice="collapsed"');
+    expect(html).toContain('Metrics openen');
+    expect(html).toContain('Netwerkstatus, zichtbaar aantal en researchaantallen.');
     expect(html).toContain('data-knowledge-workbench-status-metrics="ready"');
     expect(html).toContain('data-knowledge-research-scan-choice="collapsed"');
     expect(html).toContain('Kies researchscan');
@@ -38303,10 +38306,16 @@ describe('app shell', () => {
       '<details class="knowledge-research-snapshot-choice" data-knowledge-research-snapshot-choice="collapsed" open>',
     );
     expect(html.indexOf('data-knowledge-workbench-status-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-workbench-metrics-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-workbench-metrics-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-workbench-status-metrics="ready"'),
     );
     expect(html).not.toContain(
       '<details class="knowledge-workbench-status-choice" data-knowledge-workbench-status-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-workbench-metrics-choice" data-knowledge-workbench-metrics-choice="collapsed" open>',
     );
     expect(html).toContain('id="knowledge-overview"');
     expect(html).toContain('class="knowledge-command-panel__intro"');
@@ -38825,6 +38834,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-workbench-status-choice:not([open]) > .knowledge-workbench-status-choice__body {',
     );
+    expect(css).toContain('.knowledge-workbench-metrics-choice {');
+    expect(css).toContain('.knowledge-workbench-metrics-choice__summary {');
     expect(css).toContain('.knowledge-research-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.knowledge-research-snapshot__card {');

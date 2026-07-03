@@ -173,12 +173,16 @@ const targets = [
       '[data-knowledge-workbench-status-choice="collapsed"]',
     ],
     presentSelectors: [
+      '[data-knowledge-workbench-metrics-choice="collapsed"]',
       '[data-knowledge-workbench-status-metrics="ready"]',
       '.knowledge-research-workbench__status',
       '.knowledge-workbench-status-choice__body .stat-row',
       '.knowledge-workbench-status-choice__body .stat__value',
     ],
-    closedDetailsSelectors: ['[data-knowledge-workbench-status-choice="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-knowledge-workbench-status-choice="collapsed"]',
+      '[data-knowledge-workbench-metrics-choice="collapsed"]',
+    ],
   },
   {
     screen: 'knowledge-filter',
