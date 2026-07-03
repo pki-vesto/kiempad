@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1410 — Dossier upload: metadatapaneel start met één controlekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** G1409 verplaatst metadata en reviewcontext achter één gesloten paneel, maar zodra gebruikers dit paneel openen kunnen datum, titel, categorie, uploadprofiel, OCR, preview en bevestiging nog tegelijk verschijnen.
+- **User Impact:** Gebruikers die alleen de upload willen controleren, moeten binnen het metadata-paneel alsnog meerdere velden en reviewstappen tegelijk scannen.
+- **Desired Outcome:** Laat het metadata-/controlepaneel eerst openen met één rustige controlekeuze of samenvattingslaag, waarna datum, herkenning, OCR en conceptreview als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen uploads stap voor stap afronden zonder dat de tweede laag opnieuw als een lange invoerpagina voelt.
+- **Acceptance Criteria:** Bestaande inputnamen, form ids, privacy hooks en dossier hooks blijven aanwezig; het metadata-/controlepaneel toont eerst één duidelijke controle- of samenvattingskeuze; datum, titel, categorie, uploadprofiel, OCR-preview en controlebevestiging blijven bereikbaar maar starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Dossier, Upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload metadata panel, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2766
+
 ### G1409 — Dossier upload: uploadroute start met één bestandskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2764
 
 ### G1408 — Dagadvies: workflowkop start met één routekeuze

@@ -1204,6 +1204,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-095** — One medical disclaimer per screen (footer), remove per-card repetition (N95). **P1 · M**
   Partial G1397/#2568: Dossier upload no longer leaves multiple privacy/status explanation panels
   visible directly under the document form; they remain available in one disclosure.
+  Partial G1409/#2764: Dossier document upload now starts with one visible file choice; metadata,
+  links, image/lab context and upload privacy remain available as closed follow-up context.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

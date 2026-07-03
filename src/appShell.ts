@@ -3379,39 +3379,14 @@ function renderDossierScreen(state: AppShellState): string {
           ],
           body: `
         <p class="dossier-add-form-start" data-dossier-add-form-start="document-first-step">
-          Begin met datum, titel en bestand; koppelingen en beeldcontext kun je daarna rustig aanvullen.
+          Begin met je bestand of bestanden. Metadata, koppelingen en controle kun je daarna rustig aanvullen.
         </p>
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-feedback-focus-target="dossier-upload" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment" tabindex="-1">
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis" data-dossier-field-section="document-basis" data-dossier-field-section-label="Stap 1 · basis">
-            <legend>Documentbasis</legend>
+          <fieldset class="dossier-upload-group dossier-upload-file-choice" data-dossier-upload-group="document-basis" data-dossier-upload-file-choice="ready" data-dossier-field-section="document-basis" data-dossier-field-section-label="Stap 1 · bestand">
+            <legend>Bestanden kiezen</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="dossier-upload">
-            Verplicht: datum, bestand en controlebevestiging.
+            Kies eerst één of meer onderzoeken, echo’s, foto’s, scans of rapporten.
           </p>
-          <label>
-            Datum document
-            <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
-          </label>
-          <label>
-            Titel of reeksnaam
-            <input name="titel" autocomplete="off" placeholder="Bijvoorbeeld: bloeduitslagen voorjaar" />
-          </label>
-          <label>
-            Categorie
-            <select name="categorie">
-              ${Object.entries(DOSSIER_CATEGORIE_LABELS)
-                .map(([value, label]) => renderOption(value, label, 'onderzoek'))
-                .join('')}
-            </select>
-          </label>
-          <label>
-            Uploadprofiel
-            <select name="uploadProfiel">
-              <option value="">Automatisch herkennen</option>
-              ${Object.entries(DOSSIER_UPLOAD_PROFIEL_LABELS)
-                .map(([value, label]) => renderOption(value, label))
-                .join('')}
-            </select>
-          </label>
           <label>
             Bestanden
             <input name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required />
@@ -3419,24 +3394,61 @@ function renderDossierScreen(state: AppShellState): string {
           <p class="field-hint" data-dossier-upload-size-guidance="ready">
             ${describeDossierUploadLimits()} Bij een te groot pakket kun je bestanden verwijderen en opnieuw uploaden; Kiempad toont alleen type en grootte in foutmeldingen.
           </p>
-          <label class="check-row">
-            <input name="lokaleOcr" type="checkbox" value="ja" />
-            Lokale OCR-pipeline starten voor tekstherkenning op dit toestel
-          </label>
-          <div id="dossier-concept-preview" class="linked-note" aria-live="polite">
-            Kies bestanden om conceptrecords lokaal te controleren vóór opslag.
-          </div>
-          <label class="check-row">
-            <input name="conceptBevestigd" type="checkbox" value="ja" required />
-            Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
-          </label>
           </fieldset>
+          <details class="dossier-upload-optional dossier-upload-metadata" data-dossier-upload-metadata="collapsed">
+            <summary class="dossier-upload-optional__summary">
+              <span>Metadata en controle</span>
+              <small>Datum, titel, herkenning en conceptcontrole</small>
+            </summary>
+            <fieldset class="dossier-upload-group" data-dossier-upload-group="document-metadata" data-dossier-context-priority="optional" data-dossier-field-section="document-metadata" data-dossier-field-section-label="Stap 2 · metadata">
+              <legend>Metadata en controle</legend>
+            <p class="dossier-required-cue" data-dossier-required-cue="dossier-upload-review">
+              Controleer datum en conceptrecords voordat je opslaat.
+            </p>
+            <label>
+              Datum document
+              <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+            </label>
+            <label>
+              Titel of reeksnaam
+              <input name="titel" autocomplete="off" placeholder="Bijvoorbeeld: bloeduitslagen voorjaar" />
+            </label>
+            <label>
+              Categorie
+              <select name="categorie">
+                ${Object.entries(DOSSIER_CATEGORIE_LABELS)
+                  .map(([value, label]) => renderOption(value, label, 'onderzoek'))
+                  .join('')}
+              </select>
+            </label>
+            <label>
+              Uploadprofiel
+              <select name="uploadProfiel">
+                <option value="">Automatisch herkennen</option>
+                ${Object.entries(DOSSIER_UPLOAD_PROFIEL_LABELS)
+                  .map(([value, label]) => renderOption(value, label))
+                  .join('')}
+              </select>
+            </label>
+            <label class="check-row">
+              <input name="lokaleOcr" type="checkbox" value="ja" />
+              Lokale OCR-pipeline starten voor tekstherkenning op dit toestel
+            </label>
+            <div id="dossier-concept-preview" class="linked-note" aria-live="polite">
+              Kies bestanden om conceptrecords lokaal te controleren vóór opslag.
+            </div>
+            <label class="check-row">
+              <input name="conceptBevestigd" type="checkbox" value="ja" required />
+              Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
+            </label>
+            </fieldset>
+          </details>
           <details class="dossier-upload-optional" data-dossier-upload-optional="koppelingen">
             <summary class="dossier-upload-optional__summary">
               <span>Koppelingen</span>
               <small>Afspraak, traject of notitie toevoegen</small>
             </summary>
-            <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="document-koppelingen" data-dossier-field-section-label="Stap 2 · koppelen">
+            <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="document-koppelingen" data-dossier-field-section-label="Stap 3 · koppelen">
               <legend>Koppelingen</legend>
             <label>
               Koppel aan afspraak
@@ -3463,7 +3475,7 @@ function renderDossierScreen(state: AppShellState): string {
               <span>Beeldcontext</span>
               <small>Echo, foto of scan beschrijven</small>
             </summary>
-            <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 3 · beeld">
+            <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 4 · beeld">
               <legend>Beeldcontext</legend>
             <label>
               Beeldcontext
@@ -3484,7 +3496,7 @@ function renderDossierScreen(state: AppShellState): string {
               <span>Embryo en labcontext</span>
               <small>Embryo-id, dag of lablabel toevoegen</small>
             </summary>
-            <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-embryo-labcontext" data-dossier-field-section-label="Stap 4 · lab">
+            <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-embryo-labcontext" data-dossier-field-section-label="Stap 5 · lab">
               <legend>Embryo en labcontext</legend>
             <label>
               Beeld embryo
