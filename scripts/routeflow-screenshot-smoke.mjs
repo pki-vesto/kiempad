@@ -295,12 +295,16 @@ const targets = [
       '[data-knowledge-library-list-choice="collapsed"]',
     ],
     presentSelectors: [
+      '[data-knowledge-library-list-items-choice="collapsed"]',
       '[data-knowledge-library-list="ready"]',
       '[data-knowledge-library-card="ready"]',
       '.knowledge-library-card__actions',
       '[data-knowledge-library-category-card="research"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-library-list-choice="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-knowledge-library-list-choice="collapsed"]',
+      '[data-knowledge-library-list-items-choice="collapsed"]',
+    ],
   },
   {
     screen: 'knowledge-library-card',
@@ -311,6 +315,7 @@ const targets = [
       '[data-knowledge-library-followup="collapsed"]',
       '[data-knowledge-library-context-choice="collapsed"]',
       '[data-knowledge-library-list-choice="collapsed"]',
+      '[data-knowledge-library-list-items-choice="collapsed"]',
     ],
     requiredSelectors: [
       '[data-knowledge-library-card-detail-choice="collapsed"]',
