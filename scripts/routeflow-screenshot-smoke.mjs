@@ -79,18 +79,22 @@ const targets = [
       '[data-knowledge-research-primary-focus="ready"]',
       '#knowledge-research-followup',
       '[data-knowledge-research-followup="collapsed"]',
-      '[data-hub-detail-panel="research-summaries"]',
+      '[data-knowledge-research-context-choice="collapsed"]',
       '[data-knowledge-research-reader="ready"]',
       '[data-knowledge-research-lane="scientific"]',
       '[data-knowledge-research-lane="patient"]',
       '[data-knowledge-research-lane="relevance"]',
       '[data-knowledge-research-lane="trends"]',
+    ],
+    presentSelectors: [
+      '[data-hub-detail-panel="research-summaries"]',
       '[data-knowledge-research-disclosure="sources"]',
       '#knowledge-research-trends',
     ],
     closedDetailsSelectors: [
       '[data-knowledge-workbench-disclosure="collapsed"]',
       '[data-knowledge-research-followup="collapsed"]',
+      '[data-knowledge-research-context-choice="collapsed"]',
     ],
     knowledgeConsole: true,
     desktopHiddenSelectors: [
