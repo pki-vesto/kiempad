@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1498 — Kennis bibliotheek herstelactie badges tonen compacte disabled-vrije routes
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1497 is de focusring vrij van badge-overlap, maar de herstelroutes zijn nog niet apart bewaakt op het vermijden van disabled-achtige states.
+- **User Impact:** Gebruikers kunnen herstelacties met compacte badges zien, maar moeten direct blijven herkennen dat alle routes actief zijn.
+- **Desired Outcome:** Alle herstelacties blijven als duidelijke actieve routes aanvoelen, zonder disabled-achtige visuele behandeling, terwijl badgecopy compact blijft.
+- **User Value:** Gebruikers weten dat filter wissen, categorie kiezen en kennis toevoegen direct bruikbare acties zijn.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, mobiele flow-, tapruimte-, focusring-, focusruimte-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; herstelacties ogen actief en klikbaar, niet disabled; feedbackbadges blijven compact binnen de actieknoppen; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken actieve routebehandeling en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2940
+
 ### G1497 — Kennis bibliotheek herstelactie badges houden focusring vrij van badge-overlap
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2938
 
 ### G1496 — Kennis bibliotheek herstelactie badges tonen mobiele focusring

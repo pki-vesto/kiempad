@@ -39198,7 +39198,12 @@ describe('app shell', () => {
     expect(css).toContain(
       'outline: 2px solid color-mix(in srgb, var(--category) 52%, var(--accent));',
     );
-    expect(css).toContain('outline-offset: 2px;');
+    expect(css).toContain('outline-offset: 3px;');
+    expect(css).toContain(
+      'box-shadow: 0 0 0 5px color-mix(in srgb, var(--surface) 82%, transparent);',
+    );
+    expect(css).toContain('position: relative;');
+    expect(css).toContain('z-index: 1;');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
