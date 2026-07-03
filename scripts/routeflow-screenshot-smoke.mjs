@@ -82,6 +82,7 @@ const targets = [
       '[data-knowledge-research-followup="collapsed"]',
       '[data-knowledge-research-followup-context-choice="collapsed"]',
       '[data-knowledge-research-context-choice="collapsed"]',
+      '[data-knowledge-research-detail-choice="collapsed"]',
       '[data-knowledge-research-reader="ready"]',
       '[data-knowledge-research-lane-choice="collapsed"]',
     ],
@@ -117,6 +118,7 @@ const targets = [
       '[data-knowledge-research-followup="collapsed"]',
       '[data-knowledge-research-followup-context-choice="collapsed"]',
       '[data-knowledge-research-context-choice="collapsed"]',
+      '[data-knowledge-research-detail-choice="collapsed"]',
     ],
     knowledgeConsole: true,
     desktopHiddenSelectors: [

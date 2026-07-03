@@ -38387,8 +38387,9 @@ describe('app shell', () => {
     expect(html).toContain('Vervolgcontext kiezen');
     expect(html).toContain('Open bronnen, samenvattingen, relevantie en trends.');
     expect(html).toContain('data-knowledge-research-context-choice="collapsed"');
-    expect(html).toContain('Kies researchcontext');
-    expect(html).toContain('Open daarna bronnen, samenvattingen of trendcontext');
+    expect(html).toContain('data-knowledge-research-detail-choice="collapsed"');
+    expect(html).toContain('Researchdetail kiezen');
+    expect(html).toContain('Open bronnen, samenvattingen of trendcontext.');
     expect(html.indexOf('data-knowledge-research-primary-focus="ready"')).toBeLessThan(
       html.indexOf('data-knowledge-research-followup="collapsed"'),
     );
@@ -38401,6 +38402,9 @@ describe('app shell', () => {
     expect(html.indexOf('data-knowledge-research-context-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-research-disclosure="sources"'),
     );
+    expect(html.indexOf('data-knowledge-research-detail-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-research-disclosure="sources"'),
+    );
     expect(html.indexOf('data-knowledge-research-route-status-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#knowledge-research-primary-focus"'),
     );
@@ -38409,7 +38413,7 @@ describe('app shell', () => {
     );
     expect(html).not.toContain('<details id="knowledge-research-followup" open');
     expect(html).not.toContain(
-      '<details class="knowledge-research-context-choice" data-knowledge-research-context-choice="collapsed" open>',
+      '<details class="knowledge-research-context-choice knowledge-research-detail-choice" data-knowledge-research-context-choice="collapsed" data-knowledge-research-detail-choice="collapsed" open>',
     );
     expect(html.indexOf('data-knowledge-research-reader="ready"')).toBeLessThan(
       html.indexOf('data-knowledge-research-disclosure="sources"'),
@@ -38806,6 +38810,7 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-research-context-choice:not([open]) > .knowledge-research-context-choice__body {',
     );
+    expect(css).toContain('.knowledge-research-detail-choice {');
     expect(css).toContain('.knowledge-research-followup-context-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice__summary {');
