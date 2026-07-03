@@ -23869,7 +23869,9 @@ a.action-card:active {
     max-width: min(12ch, 38%);
     min-width: 7ch;
     flex-shrink: 0;
+    font-size: 0.66rem;
     letter-spacing: 0.01em;
+    line-height: 1.15;
     overflow: hidden;
     text-align: right;
     text-overflow: ellipsis;
