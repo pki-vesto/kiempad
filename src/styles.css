@@ -8591,7 +8591,17 @@ h2 {
 .knowledge-library-empty-recovery-choice__body
   .knowledge-library-followup-visibility-choice__anchor {
   gap: 6px;
+  cursor: pointer;
+  opacity: 1;
+  pointer-events: auto;
   background: color-mix(in srgb, var(--category) 6%, var(--surface));
+  color: var(--category);
+}
+
+.knowledge-library-empty-recovery-choice__body
+  .knowledge-library-followup-visibility-choice__anchor--secondary {
+  border-style: solid;
+  color: var(--category);
 }
 
 .knowledge-library-empty-recovery-choice__step {
