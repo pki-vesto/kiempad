@@ -1204,6 +1204,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   established edit-form action pattern.
   Partial G1583/#3110: Kennis AI preview, summary-save and settings forms now use
   `command-form-actions` with primary actions plus ghost `Annuleer` links back to the AI route.
+  Partial G1584/#3112: Kennis item, research relevance correction and research opt-in forms now
+  use `command-form-actions` with primary actions plus ghost `Annuleer` links to the relevant
+  Kennis routes.
 - **CFX-029** — Inline validation in `--clay-ink` (no browser popups) (C29). **P2 · M**
   Partial G1575/#3094: dossier upload, consult upload, embryo-quality, and embryo-status routes
   show required-input maps in `--clay-ink` before submit actions, reducing reliance on late browser

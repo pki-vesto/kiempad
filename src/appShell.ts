@@ -13625,7 +13625,10 @@ function renderEigenKennisItemForm(item?: KennisItem): string {
         Inhoud
         <textarea name="kennisInhoud" rows="4" required>${escapeHtml(item?.inhoud ?? '')}</textarea>
       </label>
-      <button type="submit">${item ? 'Werk kennisitem bij' : 'Bewaar kennisitem'}</button>
+      <div class="command-form-actions" data-knowledge-form-actions="knowledge-item">
+        <button type="submit">${item ? 'Werk kennisitem bij' : 'Bewaar kennisitem'}</button>
+        <a class="form-cancel-link" href="#kennis?route=bibliotheek" data-form-cancel-action="knowledge-item">Annuleer</a>
+      </div>
     </form>
   `;
 
@@ -14399,7 +14402,10 @@ function renderResearchRelevantieVoorGebruiker(
                           ${renderOption('concept_te_controleren', 'Concept te controleren', item.relevantieUitleg.reviewStatus)}
                         </select>
                       </label>
-                      <button type="submit">Bewaar relevantiecorrectie</button>
+                      <div class="command-form-actions" data-knowledge-form-actions="research-relevance">
+                        <button type="submit">Bewaar relevantiecorrectie</button>
+                        <a class="form-cancel-link" href="#kennis?route=research" data-form-cancel-action="knowledge-relevance">Annuleer</a>
+                      </div>
                     </form>
                     <small>Bronpad: ${item.relevantieUitleg.bronpad.map(escapeHtml).join(' > ')}</small>
                     <small>Correctievelden: ${item.relevantieUitleg.correctieVelden.map(escapeHtml).join(' · ')}</small>
@@ -14515,7 +14521,10 @@ function renderResearchNetworkSettingsForm(settings: AppSettings): string {
           ${renderOption('true', 'Aan na expliciete opt-in', String(settings.researchNetwerk.ingeschakeld))}
         </select>
       </label>
-      <button type="submit">Bewaar research-opt-in</button>
+      <div class="command-form-actions" data-knowledge-form-actions="research-network">
+        <button type="submit">Bewaar research-opt-in</button>
+        <a class="form-cancel-link" href="#kennis?route=research" data-form-cancel-action="knowledge-research-network">Annuleer</a>
+      </div>
     </form>
     <p class="small-print">Deze instelling bewaart alleen toestemming. Kiempad start geen automatische netwerkrequest.</p>
   `;

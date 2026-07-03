@@ -6855,7 +6855,13 @@ describe('app shell', () => {
     );
     expect(html).toContain('Eigen kennis');
     expect(html).toContain('name="kennisId" value="eigen-1"');
+    expect(html).toContain(
+      'class="command-form-actions" data-knowledge-form-actions="knowledge-item"',
+    );
     expect(html).toContain('Werk kennisitem bij');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#kennis?route=bibliotheek" data-form-cancel-action="knowledge-item"',
+    );
   });
 
   it('rendert dossierupload voor historische onderzoeken met lokale analyse', () => {
@@ -39100,7 +39106,13 @@ describe('app shell', () => {
     expect(html).toContain('id="research-network-form"');
     expect(html).toContain('name="researchNetwerkIngeschakeld"');
     expect(html).toContain('Uit: alleen lokale cache');
+    expect(html).toContain(
+      'class="command-form-actions" data-knowledge-form-actions="research-network"',
+    );
     expect(html).toContain('Bewaar research-opt-in');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#kennis?route=research" data-form-cancel-action="knowledge-research-network"',
+    );
     expect(html).toContain('Aggregatie uitgeschakeld.');
     expect(html).toContain('Netwerkresearch staat uit');
     expect(html).toContain('aria-label="PubMed query preview zonder dossierplaintext"');
@@ -40173,7 +40185,13 @@ describe('app shell', () => {
     expect(html).toContain('data-research-relevance-id="research-eigen"');
     expect(html).toContain('name="researchRelevanceCorrection"');
     expect(html).toContain('name="researchRelevanceReviewStatus"');
+    expect(html).toContain(
+      'class="command-form-actions" data-knowledge-form-actions="research-relevance"',
+    );
     expect(html).toContain('Bewaar relevantiecorrectie');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#kennis?route=research" data-form-cancel-action="knowledge-relevance"',
+    );
     expect(html).toContain(
       'Bronpad: Research: Eigen artikel embryo-cultuur > Bron: https://voorbeeld.test/embryo-cultuur > Publicatie: 2026-05-10 > Contextmatch: contextmatch_met_lokale_bronnen',
     );

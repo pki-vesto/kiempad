@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1584 — Kennis basisformulieren krijgen ghost Annuleer acties
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Eigen kennisitem-, researchrelevantie- en research-opt-in formulieren hadden nog losse submitknoppen zonder consistente ghost Annuleer-route.
+- **User Impact:** Gebruikers kunnen basiskennisacties minder rustig verlaten wanneer ze toch niets willen bewaren.
+- **Desired Outcome:** Kennis basisformulieren gebruiken `command-form-actions` met primaire actie en ghost Annuleer-link.
+- **User Value:** Gebruikers houden ook bij handmatige kennisinvoer, relevantiecorrecties en research-opt-in dezelfde duidelijke terugweg.
+- **Acceptance Criteria:** Eigen kennisitem toevoegen/bewerken toont `Bewaar kennisitem` of `Werk kennisitem bij` als primaire actie in `.command-form-actions`; Eigen kennisitem formulier toont een ghost `Annuleer` link terug naar de kennisbibliotheek; Research relevantiecorrectie toont `Bewaar relevantiecorrectie` als primaire actie in `.command-form-actions`; Research opt-in toont `Bewaar research-opt-in` als primaire actie in `.command-form-actions`; Relevantiecorrectie en research opt-in tonen een ghost `Annuleer` link terug naar de kennisresearchroute; app-shell tests bewaken markup en bestaande mobiele action-row styling; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Kennis toevoegen, Kennis bibliotheek, Researchaggregatie
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Knowledge item form, research relevance form, research network form, command form actions, form cancel links
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3112
+
 ### G1583 — Kennis AI formulieren krijgen ghost Annuleer acties
 
 - **Epic:** Onboarding & Daily Use
