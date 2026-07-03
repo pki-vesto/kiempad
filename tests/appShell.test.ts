@@ -39268,6 +39268,15 @@ describe('app shell', () => {
     );
     expect(css).toContain('position: relative;');
     expect(css).toContain('z-index: 1;');
+    expect(css).toContain(
+      '.knowledge-library-empty-recovery-choice__body\n    .knowledge-library-followup-visibility-choice__anchor:hover\n    .knowledge-library-empty-recovery-choice__feedback,',
+    );
+    expect(css).toContain(
+      '.knowledge-library-empty-recovery-choice__body\n    .knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__feedback {',
+    );
+    expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__feedback {\n    align-items: center;\n    block-size: 22px;\n    inline-size: min(12ch, 38%);\n    justify-content: center;\n    text-align: center;\n  }',
+    );
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');

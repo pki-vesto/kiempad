@@ -23885,6 +23885,19 @@ a.action-card:active {
     white-space: nowrap;
   }
 
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor:hover
+    .knowledge-library-empty-recovery-choice__feedback,
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor:focus-visible
+    .knowledge-library-empty-recovery-choice__feedback {
+    align-items: center;
+    block-size: 22px;
+    inline-size: min(12ch, 38%);
+    justify-content: center;
+    text-align: center;
+  }
+
   .knowledge-library-category-choice__grid {
     display: flex;
     overflow-x: auto;
