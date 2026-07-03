@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1421 — Dossier upload microcopy start met één compacte hulphint
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1420 is de routekeuze compacter, maar de toelichting onder de selector kan nog meerdere zinnen tegelijk tonen voordat de gebruiker een flow kiest.
+- **User Impact:** Gebruikers krijgen na de routekeuze alsnog meerdere helpteksten tegelijk te zien, waardoor de start van dossierupload druk blijft.
+- **Desired Outcome:** Laat de microcopy onder de dossier-uploadselector eerst één compacte hulphint of samengevouwen contextlaag tonen, terwijl wisselhint en lokale-conceptnotitie bereikbaar blijven.
+- **User Value:** Gebruikers houden focus op één uploadtaak en kunnen extra uitleg openen wanneer zij die nodig hebben.
+- **Acceptance Criteria:** Bestaande routehashes, route buttons, active-state hooks, draft-note hooks en dossier upload hooks blijven aanwezig; de microcopy toont eerst één compacte hulphint of samengevouwen contextlaag; wisselhint en lokale-conceptnotitie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken bereikbaarheid, hooks en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload microcopy, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2788
+
 ### G1420 — Dossier upload selector start met één compacte routekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload selector, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2786
 
 ### G1419 — Embryostatus route start met één statuskeuze

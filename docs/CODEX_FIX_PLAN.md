@@ -1226,6 +1226,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   closed save-status disclosure before submit feedback and recovery context appear.
   Partial G1419/#2784: Embryo status now starts with one closed statusmoment choice before date,
   embryo, source, linking, submit feedback and recovery context appear.
+  Partial G1420/#2786: The dossier upload selector now starts with one closed route-choice group
+  while document, consult, embryo quality and embryo status routes remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

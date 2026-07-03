@@ -3319,28 +3319,34 @@ function renderDossierScreen(state: AppShellState): string {
           <span>${zichtbareDocumenten.length} records</span>
         </header>
         <div class="dossier-upload-console__body" data-dossier-upload-console-region="body">
-        <nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen" data-dossier-add-route-selector="compact-tabs" data-dossier-upload-console-region="selector">
-          <a href="#dossier-upload-form" class="dossier-add-route" data-dossier-add-route-kind="document">
-            <strong>Document</strong>
-            <span>Onderzoek, echo, foto</span>
-            <small data-dossier-add-route-cue="document">Upload</small>
-          </a>
-          <a href="#consult-verslag-form" class="dossier-add-route" data-dossier-add-route-kind="consult">
-            <strong>Consult</strong>
-            <span>Gesprek of notitie</span>
-            <small data-dossier-add-route-cue="consult">Tekst</small>
-          </a>
-          <a href="#embryo-quality-form" class="dossier-add-route" data-dossier-add-route-kind="embryo-quality">
-            <strong>Embryo score</strong>
-            <span>Kwaliteit met bron</span>
-            <small data-dossier-add-route-cue="embryo-quality">Score</small>
-          </a>
-          <a href="#embryo-status-event-form" class="dossier-add-route" data-dossier-add-route-kind="embryo-status">
-            <strong>Status</strong>
-            <span>Moment of update</span>
-            <small data-dossier-add-route-cue="embryo-status">Koppelen</small>
-          </a>
-        </nav>
+        <details class="dossier-add-route-group" data-dossier-add-route-group="collapsed"${activeDossierAddFlow === 'keuze' ? '' : ' open'}>
+          <summary class="dossier-add-route-group__summary" data-dossier-add-route-group-summary="ready">
+            <span>Toevoegroute kiezen</span>
+            <small>Document, consult, embryo score of status</small>
+          </summary>
+          <nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen" data-dossier-add-route-selector="compact-tabs" data-dossier-upload-console-region="selector">
+            <a href="#dossier-upload-form" class="dossier-add-route" data-dossier-add-route-kind="document">
+              <strong>Document</strong>
+              <span>Onderzoek, echo, foto</span>
+              <small data-dossier-add-route-cue="document">Upload</small>
+            </a>
+            <a href="#consult-verslag-form" class="dossier-add-route" data-dossier-add-route-kind="consult">
+              <strong>Consult</strong>
+              <span>Gesprek of notitie</span>
+              <small data-dossier-add-route-cue="consult">Tekst</small>
+            </a>
+            <a href="#embryo-quality-form" class="dossier-add-route" data-dossier-add-route-kind="embryo-quality">
+              <strong>Embryo score</strong>
+              <span>Kwaliteit met bron</span>
+              <small data-dossier-add-route-cue="embryo-quality">Score</small>
+            </a>
+            <a href="#embryo-status-event-form" class="dossier-add-route" data-dossier-add-route-kind="embryo-status">
+              <strong>Status</strong>
+              <span>Moment of update</span>
+              <small data-dossier-add-route-cue="embryo-status">Koppelen</small>
+            </a>
+          </nav>
+        </details>
         <div class="sr-only dossier-add-route-active-contexts" aria-live="polite" data-dossier-add-route-active-contexts="ready">
           <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="dossier-upload">Actieve toevoegroute: document toevoegen voor onderzoek, echo, foto of scan.</p>
           <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="consult-upload">Actieve toevoegroute: consult vastleggen voor gesprek, notitie of artsupdate.</p>

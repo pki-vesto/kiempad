@@ -345,6 +345,8 @@ const targets = [
       '[data-dossier-upload-lane="consult"]',
       '[data-dossier-upload-lane="imaging"]',
       '[data-dossier-upload-lane="ocr"]',
+      '[data-dossier-add-route-group="collapsed"]',
+      '[data-dossier-add-route-group-summary="ready"]',
     ],
     presentSelectors: [
       '[data-dossier-upload-console="ready"]',
@@ -352,8 +354,8 @@ const targets = [
       '[data-dossier-upload-console-region="selector"]',
       '[data-dossier-add-route-choice="ready"]',
     ],
+    closedDetailsSelectors: ['[data-dossier-add-route-group="collapsed"]'],
     hiddenSelectors: [
-      '[data-dossier-upload-console="ready"][data-dossier-add-flow="keuze"]',
       '[data-dossier-add-route-panel="dossier-upload"]',
       '[data-dossier-add-route-panel="consult-upload"]',
       '[data-dossier-add-route-panel="embryo-quality"]',

@@ -7608,6 +7608,15 @@ describe('app shell', () => {
     expect(emptyHtml.indexOf('data-dossier-upload-triage="ready"')).toBeLessThan(
       emptyHtml.indexOf('data-hub-detail-panel="upload-intake"'),
     );
+    expect(addSection).toContain(
+      '<details class="dossier-add-route-group" data-dossier-add-route-group="collapsed">',
+    );
+    expect(addSection).toContain('data-dossier-add-route-group-summary="ready"');
+    expect(addSection).toContain('Toevoegroute kiezen');
+    expect(addSection).toContain('Document, consult, embryo score of status');
+    expect(addSection).not.toContain(
+      '<details class="dossier-add-route-group" data-dossier-add-route-group="collapsed" open>',
+    );
     expect(selector).toContain('data-dossier-add-route-selector="compact-tabs"');
     expect(selector).toContain('href="#dossier-upload-form"');
     expect(selector).toContain('href="#consult-verslag-form"');
@@ -7660,6 +7669,9 @@ describe('app shell', () => {
     );
     expect(addSection.indexOf('data-dossier-add-route-selector="compact-tabs"')).toBeLessThan(
       addSection.indexOf('id="dossier-upload-form"'),
+    );
+    expect(addSection.indexOf('data-dossier-add-route-group="collapsed"')).toBeLessThan(
+      addSection.indexOf('data-dossier-add-route-selector="compact-tabs"'),
     );
     expect(addSection.indexOf('data-dossier-add-route-switch-hint="safe-switch"')).toBeLessThan(
       addSection.indexOf('id="dossier-upload-form"'),
@@ -8432,6 +8444,12 @@ describe('app shell', () => {
     expect(css).toContain('[data-dossier-upload-focus-mode="single-flow"]');
     expect(css).toContain('.dossier-upload-console__header {');
     expect(css).toContain('.dossier-upload-console__body {');
+    expect(css).toContain('.dossier-add-route-group {');
+    expect(css).toContain('.dossier-add-route-group__summary {');
+    expect(css).toContain('.dossier-add-route-group__summary::after {');
+    expect(css).toContain(
+      '.dossier-add-route-group[open] > .dossier-add-route-group__summary::after',
+    );
     expect(css).toContain('.dossier-add-route-selector {');
     expect(css).toContain('flex-wrap: wrap;');
     expect(css).toContain('flex: 1 1 142px;');
