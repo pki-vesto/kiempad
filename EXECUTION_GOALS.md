@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1539 — Kennis bibliotheek herstelactie badges houden mobiele badgehover tekst rustig
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1538 blijft badgehover secundair, maar de rust van badgehovertekst is nog niet apart bewaakt tegen te hoog contrast of gewicht.
+- **User Impact:** Gebruikers kunnen op kleine schermen alsnog te nadrukkelijke hoverbadgetekst zien die afleidt van de primaire herstelactie.
+- **Desired Outcome:** Mobiele herstelbadges tonen hovertekst rustig en leesbaar zonder het primaire actielabel te domineren.
+- **User Value:** Gebruikers houden subtiele routefeedback en duidelijke primaire actielabels.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgehovertekst blijft rustig op mobiel; badgehover blijft secundair op mobiel; badgefocus blijft visueel sterker dan badgehover op mobiel; mobiele badgecascade-dekking blijft compleet; mobiele labelcascade-dekking blijft compleet; badgefeedback blijft compact en getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badgehovertekst en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3022
+
 ### G1538 — Kennis bibliotheek herstelactie badges houden mobiele badgehover secundair
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3020
 
 ### G1537 — Kennis bibliotheek herstelactie badges houden mobiele badgefocus sterker dan hover
