@@ -1254,6 +1254,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   status choice while storage status, review step and follow-up routes remain reachable.
   Partial G1434/#2812: The consult upload completion context now starts with one closed compact
   status choice while storage status, recovery context and follow-up routes remain reachable.
+  Partial G1435/#2814: The embryo quality completion context now starts with one closed compact
+  status choice while storage status, recovery context and follow-up routes remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

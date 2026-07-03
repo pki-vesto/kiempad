@@ -8114,6 +8114,12 @@ describe('app shell', () => {
     expect(embryoQualityPanel).toContain('data-embryo-quality-completion-choice="ready"');
     expect(embryoQualityPanel).toContain('data-embryo-quality-submit-feedback-details="collapsed"');
     expect(embryoQualityPanel).toContain('Bewaarstatus openen');
+    expect(embryoQualityPanel).toContain(
+      'data-embryo-quality-completion-status-choice="collapsed"',
+    );
+    expect(embryoQualityPanel).toContain('data-embryo-quality-completion-status-summary="ready"');
+    expect(embryoQualityPanel).toContain('Kies embryostatus');
+    expect(embryoQualityPanel).toContain('Opslagstatus, herstelcontext en vervolgroutes');
     expect(embryoQualityPanel).toContain('Bewaar embryokwaliteit</button>');
     expect(embryoQualityPanel).toContain('data-dossier-submit-feedback="embryo-quality"');
     expect(embryoQualityPanel).toContain('data-dossier-feedback-announcement-order="3"');
@@ -8134,6 +8140,9 @@ describe('app shell', () => {
     expect(embryoQualityPanel).not.toContain(
       '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-quality-submit-feedback-details="collapsed" open',
     );
+    expect(embryoQualityPanel).not.toContain(
+      '<details class="dossier-upload-completion-status-choice" data-embryo-quality-completion-status-choice="collapsed" open>',
+    );
     expect(embryoQualityPanel.indexOf('data-embryo-quality-choice="ready"')).toBeLessThan(
       embryoQualityPanel.indexOf('data-embryo-quality-identification-fields="collapsed"'),
     );
@@ -8151,6 +8160,11 @@ describe('app shell', () => {
     );
     expect(
       embryoQualityPanel.indexOf('data-embryo-quality-submit-feedback-details="collapsed"'),
+    ).toBeLessThan(
+      embryoQualityPanel.indexOf('data-embryo-quality-completion-status-choice="collapsed"'),
+    );
+    expect(
+      embryoQualityPanel.indexOf('data-embryo-quality-completion-status-choice="collapsed"'),
     ).toBeLessThan(embryoQualityPanel.indexOf('data-dossier-submit-feedback="embryo-quality"'));
     expect(embryoStatusPanel).toContain('class="kp-workflow-panel embryo-status-workflow"');
     expect(embryoStatusPanel).toContain('aria-label="Begeleide embryo-status registratie"');

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1436 — Embryostatus afrondingscontext start met één compacte statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1435 blijft de embryostatus afrondingscontext gevoelig voor meerdere status- en actiepanelen tegelijk zodra gebruikers een statusmoment opslaan.
+- **User Impact:** Gebruikers die een embryostatusmoment vastleggen, moeten alsnog meerdere statusblokken en vervolgstappen tegelijk scannen.
+- **Desired Outcome:** Laat de embryostatus afrondingscontext starten met één compacte statuskeuze of samengevouwen sublaag, terwijl opslagstatus, herstelcontext, reviewstap en vervolgroutes bereikbaar blijven.
+- **User Value:** Gebruikers kunnen een embryostatusmoment afronden zonder dat de route als brede statuspagina voelt.
+- **Acceptance Criteria:** Bestaande embryo status submitfeedback hooks, routehashes en vervolgacties blijven aanwezig; de embryostatus afrondingscontext start met één compacte statuskeuze of samengevouwen sublaag; opslagstatus, herstelcontext, reviewstap en vervolgroutes blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Embryostatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, embryo status submit feedback, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2816
+
 ### G1435 — Embryokwaliteit afrondingscontext start met één compacte statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, embryo quality submit feedback, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2814
 
 ### G1434 — Consult upload afrondingscontext start met één compacte statuskeuze
