@@ -316,7 +316,7 @@ const targets = [
     screen: 'knowledge-ai',
     hash: '#kennis?route=ai',
     rootSelector: '[data-knowledge-focus-shell="ready"]',
-    expectedText: 'Start met een gecontroleerde AI-preview',
+    expectedText: 'AI-routestatus openen',
     activeRouteSelector: '[data-knowledge-route="ai"][data-knowledge-route-state="active"]',
     inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
     requiredSelectors: [
@@ -327,6 +327,7 @@ const targets = [
       '[data-knowledge-workbench-disclosure="collapsed"]',
       '#knowledge-route-ai',
       '[data-knowledge-route-summary="ai"]',
+      '[data-knowledge-ai-route-status-choice="collapsed"]',
       '[data-knowledge-ai-console="ready"]',
       '[data-knowledge-ai-console-region="preview"]',
       '[data-knowledge-ai-preview-choice="collapsed"]',
@@ -335,6 +336,9 @@ const targets = [
       '[data-knowledge-ai-support-context-choice="collapsed"]',
     ],
     presentSelectors: [
+      'a[href="#ai-preview-form"]',
+      'a[href="#knowledge-ai-support"]',
+      '.command-route-summary__status',
       '#ai-preview-form',
       '[data-knowledge-ai-console-region="summary-save"]',
       '[data-knowledge-ai-console-region="settings"]',
@@ -342,6 +346,7 @@ const targets = [
     ],
     closedDetailsSelectors: [
       '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-ai-route-status-choice="collapsed"]',
       '[data-knowledge-ai-preview-choice="collapsed"]',
       '[data-knowledge-ai-support="collapsed"]',
       '[data-knowledge-ai-support-context-choice="collapsed"]',

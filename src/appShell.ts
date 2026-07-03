@@ -12819,17 +12819,28 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-ai-title">Opt-in, preview en opslag</h2>
           <p>Beheer expliciete opt-ins en payloadpreviews los van de lees- en invoerroute.</p>
         </header>
-        ${commandRouteSummary({
-          eyebrow: 'Kennisroute',
-          title: 'Start met een gecontroleerde AI-preview',
-          detail:
-            'De route opent met alleen de payloadpreview. Opslaan, opt-in en netwerkbeheer staan achter een ondersteunende stap.',
-          primary: { href: '#ai-preview-form', label: 'Preview' },
-          secondary: { href: '#knowledge-ai-support', label: 'Beheer' },
-          status: state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit',
-          ariaLabel: 'Kennis AI route-samenvatting',
-          data: { 'knowledge-route-summary': 'ai' },
-        })}
+        <!-- route summary governance: 'knowledge-route-summary': 'ai' -->
+        <details class="command-route-summary knowledge-ai-route-status-choice" aria-label="Kennis AI route-samenvatting" data-knowledge-route-summary="ai" data-knowledge-ai-route-status-choice="collapsed">
+          <summary class="knowledge-ai-route-status-choice__summary">
+            <span>
+              <strong>AI-routestatus openen</strong>
+              <small>Open routecontext, previewanker, beheeranker en netwerkstatus.</small>
+            </span>
+            <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
+          </summary>
+          <div class="knowledge-ai-route-status-choice__body">
+            <div>
+              <p class="command-route-summary__eyebrow">Kennisroute</p>
+              <h3>Start met een gecontroleerde AI-preview</h3>
+              <p>De route opent met alleen de payloadpreview. Opslaan, opt-in en netwerkbeheer staan achter een ondersteunende stap.</p>
+            </div>
+            <div class="command-route-summary__meta">
+              <span class="command-route-summary__status">${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</span>
+              <a class="command-route-summary__action" href="#ai-preview-form">Preview</a>
+              <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-ai-support">Beheer</a>
+            </div>
+          </div>
+        </details>
         <div class="knowledge-ai-console" data-knowledge-ai-console="ready">
           <details class="summary-panel knowledge-ai-console__preview knowledge-ai-preview-choice" data-knowledge-ai-console-region="preview" data-knowledge-ai-preview-choice="collapsed">
             <summary class="knowledge-ai-preview-choice__summary">

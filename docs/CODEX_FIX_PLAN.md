@@ -1290,6 +1290,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   network choice while research opt-in, aggregation plan, PubMed preview and source registry remain reachable.
   Partial G1452/#2848: The knowledge AI preview form now starts with one closed compact
   input choice while source, preview text, error status and preview action remain reachable.
+  Partial G1453/#2850: The knowledge AI route header now starts with one closed compact
+  status choice while route context, preview anchor, management anchor and network status remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
