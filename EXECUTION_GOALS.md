@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1376 — Daily Recommendations: resetmelding bewaakt helptekst in forced-colors mobiel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding stapelt de status, helptekst en Verberg-knop rustiger op smalle schermen, maar smalle forced-colors combinaties hebben nog geen aparte guard.
+- **User Impact:** High-contrast gebruikers op mobiel kunnen minder duidelijke scheiding tussen helptekst, focus en knop ervaren.
+- **Desired Outcome:** Borg dat de reset-helptekst en Verberg-knop op smalle high-contrast schermen duidelijk blijven zonder overlap.
+- **User Value:** De resetfeedback blijft toegankelijk voor gebruikers met high-contrast instellingen op kleine schermen.
+- **Acceptance Criteria:** Smalle forced-colors layout behoudt duidelijke status, helptekst en knopcontrast; focusstijl blijft zichtbaar zonder horizontale scroll of layout shift; de high-contrast guard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, forced-colors CSS, responsive CSS
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2698
+
 ### G1375 — Daily Recommendations: resetmelding bewaakt helptekst op smalle schermen
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, responsive CSS, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2696
 
 ### G1374 — Daily Recommendations: resetmelding toont guarded hide uitleg

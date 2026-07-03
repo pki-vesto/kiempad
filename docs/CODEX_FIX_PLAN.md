@@ -187,6 +187,9 @@
 - **Daily advice feedback reset route-focus guarded copy — done in G1467 / issue #2694.**
   The reset confirmation now includes compact helper copy and an `aria-describedby` link for the
   local hide action, explaining the guarded focus behavior without adding medical or tracking data.
+- **Daily advice feedback reset route-focus mobile helper layout — done in G1468 / issue #2696.**
+  On narrow screens the reset status, helper copy, and local hide action now stack cleanly so the
+  Verberg control stays tap-friendly without horizontal overflow.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
