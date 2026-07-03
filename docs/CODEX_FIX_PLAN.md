@@ -1459,6 +1459,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   primary label hover weight stable after focus overrides.
   Partial G1533/#3010: The knowledge library empty-state recovery actions now keep mobile
   label weight cascade predictable when hover and focus overlap.
+  Partial G1534/#3012: The knowledge library empty-state recovery actions now keep mobile
+  label color cascade predictable when hover and focus overlap.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
