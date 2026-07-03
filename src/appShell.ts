@@ -4163,6 +4163,15 @@ function renderDossierScreen(state: AppShellState): string {
               <em>${indexItems.length} indexitems</em>
             </summary>
             <div class="kp-disclosure__body dossier-search-support__body">
+              <details class="dossier-search-result-choice" data-dossier-search-result-choice="collapsed">
+                <summary class="dossier-search-result-choice__summary" data-dossier-search-result-summary="ready">
+                  <span>
+                    <strong>Kies zoekcontext</strong>
+                    <small>Resultaten, privacycontrole of inhoudsindex</small>
+                  </span>
+                  <em>${zoekterm ? `${zoekResultaten.length} resultaten` : `${indexItems.length} indexitems`}</em>
+                </summary>
+                <div class="dossier-search-result-choice__body">
           <section class="dossier-search-console__panel" aria-labelledby="dossier-search-results-title" data-dossier-search-console-region="results">
             <header class="dossier-search-console__panel-header">
               <p class="kp-card__eyebrow">Resultaten</p>
@@ -4298,6 +4307,8 @@ function renderDossierScreen(state: AppShellState): string {
           </div>
         </details>
           </section>
+                </div>
+              </details>
             </div>
           </details>
         </section>
