@@ -2013,24 +2013,40 @@ function renderAfwegingenScreen(state: AppShellState): string {
         <header class="decision-route-section__header">
           <p class="kp-card__eyebrow">Voorbereiden</p>
           <h2 id="afwegingen-route-prepare-title">Beslisnotitie toevoegen</h2>
-          <p>Leg onderwerp, gekoppelde artsvraag en opties vast voordat je een keuze maakt.</p>
+          <p>Leg eerst de beslisnotitie vast; vergelijken en kiezen blijven aparte vervolgstappen.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Afwegingenroute',
           title: 'Eerst de beslisnotitie scherp krijgen',
           detail:
-            'Onderwerp, artsvraag en opties blijven in één invoerstap, los van vergelijking, keuze en verslag.',
+            'De invoer staat vooraan. Vergelijken, kiezen en verslag lezen open je pas als vervolgcontext.',
           primary: { href: '#decision-form', label: 'Notitie toevoegen' },
-          secondary: { href: '#afwegingen-route-compare', label: 'Vergelijken' },
+          secondary: { href: '#decision-prepare-followup', label: 'Vervolgcontext' },
           status: `${decisions.length} notities`,
           ariaLabel: 'Afwegingen voorbereiden route-samenvatting',
           data: { 'decision-route-summary': 'prepare' },
         })}
-        ${disclosure({
-          summary: 'Beslisnotitie toevoegen',
-          open: decisions.length === 0,
-          body: renderDecisionForm(state),
-        })}
+        <div class="decision-prepare-console" data-decision-prepare-layout="single-input">
+          <div class="summary-panel decision-prepare-primary" data-decision-prepare-primary="decision-form">
+            <h3>Beslisnotitie toevoegen</h3>
+            <p class="small-print">Onderwerp, artsvraag en minimaal twee opties blijven in één lokale invoer. Kiempad voegt geen score of behandeladvies toe.</p>
+            ${renderDecisionForm(state)}
+          </div>
+          <details id="decision-prepare-followup" class="kp-disclosure decision-prepare-followup" data-decision-prepare-followup="collapsed">
+            <summary class="kp-disclosure__summary decision-prepare-followup__summary">
+              <span>
+                <strong>Vervolgcontext openen</strong>
+                <small>Vergelijken, keuze vastleggen of verslag teruglezen na de notitie.</small>
+              </span>
+              <em>${decisions.length} notities</em>
+            </summary>
+            <div class="kp-disclosure__body decision-prepare-followup__body">
+              <a href="#afwegingen?route=compare">Opties vergelijken</a>
+              <a href="#afwegingen?route=choice">Keuze vastleggen</a>
+              <a href="#afwegingen?route=history">Verslag teruglezen</a>
+            </div>
+          </details>
+        </div>
       </section>
       <section id="afwegingen-route-compare" class="decision-route-section" aria-labelledby="afwegingen-route-compare-title" data-decision-route="compare"${renderDecisionRouteVisibility(activeDecisionRoute, 'compare')}>
         <header class="decision-route-section__header">
