@@ -12587,17 +12587,25 @@ function renderKennisScreen(state: AppShellState): string {
         </header>
         ${commandRouteSummary({
           eyebrow: 'Kennisroute',
-          title: 'Bibliotheek per categorie pas openen wanneer nodig',
+          title: 'Eerst één categoriekeuze',
           detail:
-            'De categorieen blijven beschikbaar, maar nemen niet meer direct de volledige pagina over onder de researchroutes.',
-          primary: { href: '#knowledge-library-panel', label: 'Bibliotheek' },
+            'Kies eerst welke kennisgroep je wilt bekijken. De volledige bibliotheek blijft daarna als gesloten vervolgcontext beschikbaar.',
+          primary: { href: '#knowledge-library-category-choice', label: 'Categoriekeuze' },
+          secondary: { href: '#knowledge-library-followup', label: 'Vervolgcontext' },
           status: `${filteredItems.length} zichtbaar`,
           ariaLabel: 'Kennis bibliotheek route-samenvatting',
           data: { 'knowledge-route-summary': 'library' },
         })}
-        <details class="kp-disclosure" data-knowledge-library-disclosure="categories">
-          <summary class="kp-disclosure__summary">Kennisbibliotheek per categorie openen</summary>
-          <div class="kp-disclosure__body">
+        ${renderKnowledgeLibraryCategoryChoice(grouped)}
+        <details id="knowledge-library-followup" class="kp-disclosure knowledge-library-followup" data-knowledge-library-followup="collapsed" data-knowledge-library-disclosure="categories">
+          <summary class="kp-disclosure__summary knowledge-library-followup__summary">
+            <span>
+              <strong>Kennisbibliotheek per categorie openen</strong>
+              <small>Alle kaarten, statuslabels en bewerkacties blijven hier beschikbaar.</small>
+            </span>
+            <em>${filteredItems.length} zichtbaar</em>
+          </summary>
+          <div class="kp-disclosure__body knowledge-library-followup__body">
             <div id="knowledge-library-panel" class="timeline-panel knowledge-library-panel">
               ${Object.entries(KENNIS_CATEGORIE_LABELS)
                 .map(([categorie, label]) =>
@@ -12611,6 +12619,36 @@ function renderKennisScreen(state: AppShellState): string {
       `,
         }),
       })}
+    </section>
+  `;
+}
+
+function renderKnowledgeLibraryCategoryChoice(
+  grouped: Record<KennisItem['categorie'], KennisItem[]>,
+): string {
+  return `
+    <section id="knowledge-library-category-choice" class="knowledge-library-category-choice" aria-label="Kennisbibliotheek categoriekeuze" data-knowledge-library-category-choice="ready">
+      <header class="knowledge-library-category-choice__header">
+        <div>
+          <p class="kp-card__eyebrow">Categoriekeuze</p>
+          <h3>Kies eerst één kennisgroep</h3>
+        </div>
+        <span>${Object.values(grouped).reduce((total, items) => total + items.length, 0)} zichtbaar</span>
+      </header>
+      <nav class="knowledge-library-category-choice__grid" aria-label="Kennis categorie kiezen">
+        ${Object.entries(KENNIS_CATEGORIE_LABELS)
+          .map(([categorie, label]) => {
+            const items = grouped[categorie as KennisItem['categorie']] ?? [];
+            return `
+              <a class="knowledge-library-category-choice__card" href="#knowledge-category-${escapeAttribute(categorie)}" data-knowledge-library-category-card="${escapeAttribute(categorie)}">
+                <span>${escapeHtml(label)}</span>
+                <strong>${items.length} item${items.length === 1 ? '' : 's'}</strong>
+                <small>${items.length > 0 ? 'Open deze categorie in de bibliotheek.' : 'Nog geen items in deze categorie.'}</small>
+              </a>
+            `;
+          })
+          .join('')}
+      </nav>
     </section>
   `;
 }
@@ -13901,8 +13939,13 @@ function renderOnDeviceAiStatus(capabilities: OnDeviceAiCapability[]): string {
 }
 
 function renderKennisCategorie(label: string, items: KennisItem[]): string {
+  const categorie = Object.entries(KENNIS_CATEGORIE_LABELS).find(
+    ([, categorieLabel]) => categorieLabel === label,
+  )?.[0];
+  const id = categorie ? ` id="knowledge-category-${escapeAttribute(categorie)}"` : '';
+
   return `
-    <section class="knowledge-category" aria-label="${label}" data-knowledge-category="ready">
+    <section${id} class="knowledge-category" aria-label="${label}" data-knowledge-category="ready">
       <header class="knowledge-category__header">
         <p class="kp-card__eyebrow">Categorie</p>
         <h2>${label}</h2>
