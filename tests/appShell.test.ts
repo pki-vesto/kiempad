@@ -39324,6 +39324,7 @@ describe('app shell', () => {
     }
     const focusBadgeFeedbackWeight = 760;
     const hoverBadgeFeedbackWeight = 750;
+    const focusBadgeFeedbackBlockSizePx = 22;
     const hoverBadgeFeedbackBlockSizePx = 22;
     const hoverBadgeFeedbackStableBlockSizePx = 22;
     const hoverBadgeFeedbackWidthCh = 12;
@@ -39349,6 +39350,7 @@ describe('app shell', () => {
       'white-space: nowrap;',
     ];
     expect(focusBadgeFeedbackWeight).toBeGreaterThan(hoverBadgeFeedbackWeight);
+    expect(focusBadgeFeedbackBlockSizePx).toBe(hoverBadgeFeedbackBlockSizePx);
     expect(hoverBadgeFeedbackBlockSizePx).toBe(hoverBadgeFeedbackStableBlockSizePx);
     expect(hoverBadgeFeedbackWidthCh).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWidthCh);
     expect(hoverBadgeFeedbackWidthPercent).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWidthPercent);
