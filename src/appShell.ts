@@ -12764,8 +12764,14 @@ function renderKennisScreen(state: AppShellState): string {
                     </div>
                   </div>
                 </details>
-                <details id="knowledge-research-trends" class="kp-disclosure" data-knowledge-research-disclosure="context">
-                  <summary class="kp-disclosure__summary">Relevantie, relaties en trends openen</summary>
+                <details id="knowledge-research-trends" class="kp-disclosure knowledge-research-trends-choice" data-knowledge-research-disclosure="context" data-knowledge-research-trends-choice="collapsed">
+                  <summary class="kp-disclosure__summary knowledge-research-trends-choice__summary">
+                    <span>
+                      <strong>Trendkeuze openen</strong>
+                      <small>Relevantie, relaties en trendgroepen.</small>
+                    </span>
+                    <em>${researchTrendGroepen.length} groepen</em>
+                  </summary>
                   <div class="kp-disclosure__body">
                     <div class="knowledge-route-grid knowledge-route-grid--research">
                       <div class="summary-panel">${renderResearchRelevantieVoorGebruiker(researchRelevantie)}</div>
@@ -14091,60 +14097,62 @@ function renderResearchRelevantieVoorGebruiker(
   items: readonly ResearchRelevantieVoorGebruiker[],
 ): string {
   return `
-    <h2>Relevantie voor jullie context</h2>
-    <p class="small-print">Handmatige contextnotities gekoppeld aan lokale dossierbronnen. Dit is alleen bespreekcontext voor de kliniek.</p>
-    ${
-      items.length > 0
-        ? `<ol class="compact-list">${items
-            .map(
-              (item) => `
-                <li>
-                  <strong>${escapeHtml(item.titel)}</strong>
-                  <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
-                  <small>${escapeHtml(item.relevantieVoorGebruiker)}</small>
-                  <small>Contextmatch: ${escapeHtml(item.contextMatch.label)}</small>
-                  <small>Gekoppelde contextfactoren: ${escapeHtml(item.contextMatch.gekoppeldeContextfactoren.join(' · ') || 'nog geen lokale contextfactoren')}</small>
-                  <small>Ontbrekende gegevens: ${escapeHtml(item.contextMatch.ontbrekendeGegevens.join(' · ') || 'geen ontbrekende context')}</small>
-                  <small>${escapeHtml(item.contextMatch.artsBespreekTaal)}</small>
-                  <small>${escapeHtml(item.contextMatch.uitleg)}</small>
-                  <dl class="metadata-list compact-list">
-                    <div><dt>Relevantiebron</dt><dd>${escapeHtml(item.relevantieUitleg.bron)}</dd></div>
-                    <div><dt>Datum</dt><dd>${escapeHtml(item.relevantieUitleg.datum)}</dd></div>
-                    <div><dt>Reviewstatus</dt><dd>${escapeHtml(item.relevantieUitleg.reviewStatus)}</dd></div>
-                    <div><dt>Onzekerheidslabel</dt><dd>${escapeHtml(item.relevantieUitleg.onzekerheidslabel)}</dd></div>
-                    <div><dt>Uitleg voor leken</dt><dd>${escapeHtml(item.relevantieUitleg.uitlegVoorLeken)}</dd></div>
-                  </dl>
-                  <form class="research-relevance-review-form compact-form" data-research-relevance-id="${escapeAttribute(item.id)}">
-                    <input type="hidden" name="researchRelevanceId" value="${escapeAttribute(item.id)}" />
-                    <label>
-                      Relevantieconcept controleren
-                      <input name="researchRelevanceCorrection" value="${escapeAttribute(item.relevantieVoorGebruiker)}" />
-                    </label>
-                    <label>
-                      Reviewstatus
-                      <select name="researchRelevanceReviewStatus">
-                        ${renderOption('concept_te_controleren', 'Concept te controleren', item.relevantieUitleg.reviewStatus)}
-                      </select>
-                    </label>
-                    <button type="submit">Bewaar relevantiecorrectie</button>
-                  </form>
-                  <small>Bronpad: ${item.relevantieUitleg.bronpad.map(escapeHtml).join(' > ')}</small>
-                  <small>Correctievelden: ${item.relevantieUitleg.correctieVelden.map(escapeHtml).join(' · ')}</small>
-                  <small>${escapeHtml(item.relevantieUitleg.waarschuwing)}</small>
-                  ${
-                    item.dossierContextBronnen.length > 0
-                      ? `<small>Context: ${item.dossierContextBronnen.map((bron) => escapeHtml(bron.label)).join(' · ')}</small>`
-                      : '<small>Context: nog geen lokale dossierbron beschikbaar.</small>'
-                  }
-                  <small>${escapeHtml(item.waarschuwing)}</small>
-                </li>
-              `,
-            )
-            .join('')}</ol>`
-        : renderEmptyState('Nog geen relevantie per publicatie aan dossiercontext gekoppeld.', {
-            title: 'Geen relevantiekoppeling',
-          })
-    }
+    <section data-research-relevance-panel="ready">
+      <h2>Relevantie voor jullie context</h2>
+      <p class="small-print">Handmatige contextnotities gekoppeld aan lokale dossierbronnen. Dit is alleen bespreekcontext voor de kliniek.</p>
+      ${
+        items.length > 0
+          ? `<ol class="compact-list">${items
+              .map(
+                (item) => `
+                  <li>
+                    <strong>${escapeHtml(item.titel)}</strong>
+                    <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
+                    <small>${escapeHtml(item.relevantieVoorGebruiker)}</small>
+                    <small>Contextmatch: ${escapeHtml(item.contextMatch.label)}</small>
+                    <small>Gekoppelde contextfactoren: ${escapeHtml(item.contextMatch.gekoppeldeContextfactoren.join(' · ') || 'nog geen lokale contextfactoren')}</small>
+                    <small>Ontbrekende gegevens: ${escapeHtml(item.contextMatch.ontbrekendeGegevens.join(' · ') || 'geen ontbrekende context')}</small>
+                    <small>${escapeHtml(item.contextMatch.artsBespreekTaal)}</small>
+                    <small>${escapeHtml(item.contextMatch.uitleg)}</small>
+                    <dl class="metadata-list compact-list">
+                      <div><dt>Relevantiebron</dt><dd>${escapeHtml(item.relevantieUitleg.bron)}</dd></div>
+                      <div><dt>Datum</dt><dd>${escapeHtml(item.relevantieUitleg.datum)}</dd></div>
+                      <div><dt>Reviewstatus</dt><dd>${escapeHtml(item.relevantieUitleg.reviewStatus)}</dd></div>
+                      <div><dt>Onzekerheidslabel</dt><dd>${escapeHtml(item.relevantieUitleg.onzekerheidslabel)}</dd></div>
+                      <div><dt>Uitleg voor leken</dt><dd>${escapeHtml(item.relevantieUitleg.uitlegVoorLeken)}</dd></div>
+                    </dl>
+                    <form class="research-relevance-review-form compact-form" data-research-relevance-id="${escapeAttribute(item.id)}">
+                      <input type="hidden" name="researchRelevanceId" value="${escapeAttribute(item.id)}" />
+                      <label>
+                        Relevantieconcept controleren
+                        <input name="researchRelevanceCorrection" value="${escapeAttribute(item.relevantieVoorGebruiker)}" />
+                      </label>
+                      <label>
+                        Reviewstatus
+                        <select name="researchRelevanceReviewStatus">
+                          ${renderOption('concept_te_controleren', 'Concept te controleren', item.relevantieUitleg.reviewStatus)}
+                        </select>
+                      </label>
+                      <button type="submit">Bewaar relevantiecorrectie</button>
+                    </form>
+                    <small>Bronpad: ${item.relevantieUitleg.bronpad.map(escapeHtml).join(' > ')}</small>
+                    <small>Correctievelden: ${item.relevantieUitleg.correctieVelden.map(escapeHtml).join(' · ')}</small>
+                    <small>${escapeHtml(item.relevantieUitleg.waarschuwing)}</small>
+                    ${
+                      item.dossierContextBronnen.length > 0
+                        ? `<small>Context: ${item.dossierContextBronnen.map((bron) => escapeHtml(bron.label)).join(' · ')}</small>`
+                        : '<small>Context: nog geen lokale dossierbron beschikbaar.</small>'
+                    }
+                    <small>${escapeHtml(item.waarschuwing)}</small>
+                  </li>
+                `,
+              )
+              .join('')}</ol>`
+          : renderEmptyState('Nog geen relevantie per publicatie aan dossiercontext gekoppeld.', {
+              title: 'Geen relevantiekoppeling',
+            })
+      }
+    </section>
   `;
 }
 

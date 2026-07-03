@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1465 — Kennis research snapshot start met één compacte scankeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1464 blijft de research snapshot/startscan gevoelig voor bronnen, samenvattingen, trends en netwerkstatus tegelijk.
+- **User Impact:** Gebruikers die de researchscan openen, krijgen nog meerdere snapshotkaarten voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis research snapshot/startscan starten met één compacte scankeuze of samengevouwen sublaag, terwijl bronnen, samenvattingen, trends en netwerkstatus bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één scankeuze maken zonder dat alle researchsnapshotkaarten tegelijk de contextlaag domineren.
+- **Acceptance Criteria:** Bestaande research snapshot hooks, snapshot cards en routehashes blijven aanwezig; de research snapshot/startscan start met één compacte scankeuze of samengevouwen sublaag; bronnen, samenvattingen, trends en netwerkstatus blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, research snapshot, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2874
+
 ### G1464 — Kennis research trendpaneel start met één compacte trendkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, research trends panel, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2872
 
 ### G1463 — Kennis research samenvattingenpaneel start met één compacte samenvattingkeuze

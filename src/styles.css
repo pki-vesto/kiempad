@@ -6802,6 +6802,43 @@ h2 {
   min-width: 0;
 }
 
+.knowledge-research-trends-choice {
+  min-width: 0;
+}
+
+.knowledge-research-trends-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.knowledge-research-trends-choice__summary span,
+.knowledge-research-trends-choice__summary small,
+.knowledge-research-trends-choice__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.knowledge-research-trends-choice__summary span {
+  display: grid;
+  gap: 2px;
+}
+
+.knowledge-research-trends-choice__summary small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.knowledge-research-trends-choice__summary em {
+  justify-self: end;
+  color: var(--category);
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 850;
+}
+
 .knowledge-research-context-choice__summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
