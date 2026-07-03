@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1556 — Kennis bibliotheek herstelactie badges houden mobiele badgehover maxbreedte responsief
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1555 blijft de inline-size responsief, maar de max-width min()-responsiviteit is nog niet apart bewaakt tegen regressies waarbij alleen ch of alleen percentage overblijft.
+- **User Impact:** Gebruikers kunnen op kleine schermen alsnog minder responsieve hoverfeedback zien als de maximale badgebreedte te star wordt.
+- **Desired Outcome:** Mobiele herstelbadges houden de hover max-width responsief met zowel 12ch als 38% zodat feedback compact blijft op verschillende schermbreedtes.
+- **User Value:** Gebruikers krijgen badgefeedback waarvan ook de maximale breedte compact en voorspelbaar blijft op smalle en bredere mobiele layouts.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgehover max-width blijft responsief met ch- en percentagebeperking op mobiel; badgehover inline-size blijft responsief met ch- en percentagebeperking op mobiel; badgehover flexbasis blijft responsief met ch- en percentagebeperking op mobiel; badgehover flexcontractvolgorde blijft grow-shrink-basis op mobiel; badgehover flexcontract blijft compleet en stabiel op mobiel; badgehover flexgroei blijft uitgeschakeld op mobiel; badgehover flexkrimp blijft uitgeschakeld op mobiel; badgehover flexbasis blijft gelijk aan de compacte hoverbreedte op mobiel; badgehover maxbreedte blijft gelijk aan de compacte hoverbreedte op mobiel; badgehover en badgefocus houden gelijke breedte op mobiel; badgehover en badgefocus houden gelijke hoogte op mobiel; badgehover rijhoogte blijft stabiel op mobiel; badgehover minimale breedte blijft stabiel en leesbaar op mobiel; badgehovertruncatie blijft stabiel op mobiel; badgehoverbreedte blijft compact op mobiel; badgehoverachtergrond blijft rustig op mobiel; badgehoverrand blijft rustig op mobiel; badgehovertekst blijft rustig op mobiel; badgehover blijft secundair op mobiel; badgefocus blijft visueel sterker dan badgehover op mobiel; mobiele badgecascade-dekking blijft compleet; mobiele labelcascade-dekking blijft compleet; badgefeedback blijft compact en getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badgehover max-width-responsiviteit en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3056
+
 ### G1555 — Kennis bibliotheek herstelactie badges houden mobiele badgehover inline responsief
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3054
 
 ### G1554 — Kennis bibliotheek herstelactie badges houden mobiele badgehover flexbasis responsief

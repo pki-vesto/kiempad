@@ -1501,6 +1501,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge hover flex shorthand ordered as grow, shrink and basis.
   Partial G1554/#3052: The knowledge library empty-state recovery actions now keep mobile
   badge hover flex-basis responsive with both 12ch and 38% constraints.
+  Partial G1555/#3054: The knowledge library empty-state recovery actions now keep mobile
+  badge hover inline-size responsive with both 12ch and 38% constraints.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
