@@ -38282,6 +38282,12 @@ describe('app shell', () => {
     expect(html).toContain('Geen zichtbare kennisitems');
     expect(html).toContain('data-knowledge-library-followup-visibility-empty-state="ready"');
     expect(html).toContain('Pas filter of categorie aan; context en ankers blijven beschikbaar.');
+    expect(html).toContain('data-knowledge-library-empty-recovery="ready"');
+    expect(html).toContain('data-knowledge-library-empty-recovery-action="clear-filter"');
+    expect(html).toContain('data-knowledge-library-empty-recovery-action="category"');
+    expect(html).toContain('data-knowledge-library-empty-recovery-action="add"');
+    expect(html).toContain('href="#kennis?route=library"');
+    expect(html).toContain('href="#kennis?route=add"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="category"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="list"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="cards"');
@@ -38773,6 +38779,7 @@ describe('app shell', () => {
     expect(html).toContain('Bekijk eerst telling, categoriekeuze, lijstcontext en kaartdetails.');
     expect(html).toContain('data-knowledge-library-followup-visibility-status="visible"');
     expect(html).not.toContain('data-knowledge-library-followup-visibility-empty-state="ready"');
+    expect(html).not.toContain('data-knowledge-library-empty-recovery="ready"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="category"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="list"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="cards"');
@@ -39135,6 +39142,7 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-followup-visibility-choice__body {');
     expect(css).toContain('.knowledge-library-followup-visibility-choice:not([open])');
     expect(css).toContain('.knowledge-library-followup-visibility-choice__empty');
+    expect(css).toContain('.knowledge-library-followup-visibility-choice__recovery');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
     expect(css).toContain('.knowledge-library-category-choice__card {');

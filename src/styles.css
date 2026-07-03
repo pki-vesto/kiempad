@@ -8486,6 +8486,19 @@ h2 {
   background: color-mix(in srgb, var(--surface) 92%, var(--surface-2));
 }
 
+.knowledge-library-followup-visibility-choice__recovery {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.knowledge-library-followup-visibility-choice__recovery
+  .knowledge-library-followup-visibility-choice__anchor {
+  background: color-mix(in srgb, var(--category) 6%, var(--surface));
+}
+
 .knowledge-library-context-choice {
   display: grid;
   gap: 0;
@@ -23629,6 +23642,11 @@ a.action-card:active {
   }
 
   .knowledge-library-followup-visibility-choice__body {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-library-followup-visibility-choice__recovery {
     display: grid;
     grid-template-columns: 1fr;
   }
