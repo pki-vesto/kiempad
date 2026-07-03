@@ -39237,8 +39237,11 @@ describe('app shell', () => {
     expect(css).toContain('border-style: solid;');
     expect(css).toContain('background: color-mix(in srgb, var(--surface) 82%, var(--category));');
     expect(css).toContain('max-width: min(12ch, 38%);');
+    expect(css).toContain('flex: 0 0 min(12ch, 38%);');
+    expect(css).toContain('min-width: 7ch;');
     expect(css).toContain('margin-left: auto;');
     expect(css).toContain('flex-shrink: 0;');
+    expect(css).toContain('text-align: right;');
     expect(css).toContain('gap: 8px;');
     expect(css).toContain('flex: 1 1 minmax(0, 62%);');
     expect(css).toContain('max-width: calc(100% - 76px);');

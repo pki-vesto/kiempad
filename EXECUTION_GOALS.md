@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1506 — Kennis bibliotheek herstelactie badges houden mobiele ellipsis leesbaar
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1505 is de mobiele badgekolom compact bewaakt, maar de ellipsis-behandeling van badgecopy bij smalle schermen is nog niet apart bewaakt.
+- **User Impact:** Gebruikers kunnen badgefeedback op smalle schermen minder goed herkennen als truncatie te agressief of onrustig oogt.
+- **Desired Outcome:** Mobiele badgecopy blijft bij truncatie herkenbaar en rustig, zonder labels te verdringen.
+- **User Value:** Gebruikers kunnen compacte routefeedback blijven lezen zonder scanbaarheid van de actie te verliezen.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgecopy blijft leesbaar genoeg bij ellipsis op mobiel; badgekolom blijft compact en secundair; primaire actielabels blijven scanbaar op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badge-ellipsis en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2956
+
 ### G1505 — Kennis bibliotheek herstelactie badges houden mobiele badgekolom compact
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2954
 
 ### G1504 — Kennis bibliotheek herstelactie badges houden mobiele labelruimte stabiel
