@@ -38710,6 +38710,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-context-choice="collapsed"');
     expect(html).toContain('Kies bibliotheekcontext');
     expect(html).toContain('Open daarna categorieën, kaarten en bewerkacties');
+    expect(html).toContain('data-knowledge-library-context-panel-choice="collapsed"');
+    expect(html).toContain('Bibliotheekcontext openen');
+    expect(html).toContain('Open categorieën, kaarten, bewerkacties en zichtbaarheid.');
     expect(html.indexOf('data-knowledge-library-route-status-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-library-action-choice="collapsed"'),
     );
@@ -38726,6 +38729,9 @@ describe('app shell', () => {
       html.indexOf('data-knowledge-library-context-choice="collapsed"'),
     );
     expect(html.indexOf('data-knowledge-library-context-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-context-panel-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-library-context-panel-choice="collapsed"')).toBeLessThan(
       html.indexOf('id="knowledge-library-panel"'),
     );
     expect(html).not.toContain('<details id="knowledge-library-followup" open');
@@ -38740,6 +38746,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="knowledge-library-context-choice" data-knowledge-library-context-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-library-context-panel-choice" data-knowledge-library-context-panel-choice="collapsed" open>',
     );
     expect(html).toContain('Bronnen, samenvattingen en trends');
     expect(html).toContain('Research en eigen kennis toevoegen');
@@ -39036,6 +39045,10 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-library-context-choice:not([open]) > .knowledge-library-context-choice__body {',
     );
+    expect(css).toContain('.knowledge-library-context-panel-choice {');
+    expect(css).toContain('.knowledge-library-context-panel-choice__summary {');
+    expect(css).toContain('.knowledge-library-context-panel-choice__body {');
+    expect(css).toContain('.knowledge-library-context-panel-choice:not([open])');
     expect(css).toContain('.knowledge-category__header {');
     expect(css).toContain('.knowledge-library-list-choice {');
     expect(css).toContain('.knowledge-library-list-choice__summary {');

@@ -268,6 +268,7 @@ const targets = [
       '#knowledge-category-research',
       '[data-knowledge-category="ready"]',
       '[data-knowledge-library-list="ready"]',
+      '[data-knowledge-library-context-panel-choice="collapsed"]',
     ],
     closedDetailsSelectors: [
       '[data-knowledge-workbench-disclosure="collapsed"]',
@@ -276,6 +277,7 @@ const targets = [
       '[data-knowledge-library-category-card-choice="collapsed"]',
       '[data-knowledge-library-followup="collapsed"]',
       '[data-knowledge-library-context-choice="collapsed"]',
+      '[data-knowledge-library-context-panel-choice="collapsed"]',
     ],
     knowledgeConsole: true,
     desktopHiddenSelectors: [
@@ -318,6 +320,25 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-library-context',
+    hash: '#kennis?route=library',
+    rootSelector: '.content',
+    expectedText: 'Bibliotheekcontext openen',
+    openSelectors: [
+      '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-context-choice="collapsed"]',
+    ],
+    requiredSelectors: ['[data-knowledge-library-context-panel-choice="collapsed"]'],
+    presentSelectors: [
+      '#knowledge-library-panel',
+      '#knowledge-category-fasen',
+      '#knowledge-category-research',
+      '[data-knowledge-library-list="ready"]',
+      '[data-knowledge-library-card="ready"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-library-context-panel-choice="collapsed"]'],
+  },
+  {
     screen: 'knowledge-library-list',
     hash: '#kennis?route=library',
     rootSelector: '.content',
@@ -325,6 +346,7 @@ const targets = [
     openSelectors: [
       '[data-knowledge-library-followup="collapsed"]',
       '[data-knowledge-library-context-choice="collapsed"]',
+      '[data-knowledge-library-context-panel-choice="collapsed"]',
     ],
     requiredSelectors: [
       '[data-knowledge-library-list-choice="collapsed"]',
@@ -349,6 +371,7 @@ const targets = [
     openSelectors: [
       '[data-knowledge-library-followup="collapsed"]',
       '[data-knowledge-library-context-choice="collapsed"]',
+      '[data-knowledge-library-context-panel-choice="collapsed"]',
       '[data-knowledge-library-list-choice="collapsed"]',
       '[data-knowledge-library-list-items-choice="collapsed"]',
       '[data-knowledge-library-card-detail-choice="collapsed"]',

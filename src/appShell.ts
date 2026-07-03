@@ -13065,13 +13065,27 @@ function renderKennisScreen(state: AppShellState): string {
                 <em>${Object.keys(KENNIS_CATEGORIE_LABELS).length} categorieën</em>
               </summary>
               <div class="knowledge-library-context-choice__body">
-                <div id="knowledge-library-panel" class="timeline-panel knowledge-library-panel">
-                  ${Object.entries(KENNIS_CATEGORIE_LABELS)
-                    .map(([categorie, label]) =>
-                      renderKennisCategorie(label, grouped[categorie as KennisItem['categorie']]),
-                    )
-                    .join('')}
-                </div>
+                <details class="knowledge-library-context-panel-choice" data-knowledge-library-context-panel-choice="collapsed">
+                  <summary class="knowledge-library-context-panel-choice__summary">
+                    <span>
+                      <strong>Bibliotheekcontext openen</strong>
+                      <small>Open categorieën, kaarten, bewerkacties en zichtbaarheid.</small>
+                    </span>
+                    <em>${filteredItems.length} zichtbaar</em>
+                  </summary>
+                  <div class="knowledge-library-context-panel-choice__body">
+                    <div id="knowledge-library-panel" class="timeline-panel knowledge-library-panel">
+                      ${Object.entries(KENNIS_CATEGORIE_LABELS)
+                        .map(([categorie, label]) =>
+                          renderKennisCategorie(
+                            label,
+                            grouped[categorie as KennisItem['categorie']],
+                          ),
+                        )
+                        .join('')}
+                    </div>
+                  </div>
+                </details>
               </div>
             </details>
           </div>
