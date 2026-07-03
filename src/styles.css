@@ -13538,10 +13538,10 @@ a.action-card:active {
 
 .dossier-search-console {
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
-    "search support"
-    "search support";
+    "search"
+    "support";
   gap: 12px;
   min-width: 0;
 }
@@ -13563,6 +13563,10 @@ a.action-card:active {
 
 .dossier-search-console__panel[data-dossier-search-console-region="privacy"] {
   grid-area: privacy;
+}
+
+.dossier-search-console__panel[data-dossier-search-console-region="results"] {
+  grid-area: results;
 }
 
 .dossier-search-console__panel[data-dossier-search-console-region="index"] {
@@ -13605,6 +13609,12 @@ a.action-card:active {
 
 .dossier-search-console .data-form {
   margin: 0;
+}
+
+.dossier-search-primary-control {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
 }
 
 .dossier-search-kit {
@@ -13692,6 +13702,44 @@ a.action-card:active {
   min-height: 40px;
 }
 
+.dossier-search-result-context {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.dossier-search-result-context p {
+  margin: 0;
+}
+
+.dossier-search-result-context__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dossier-search-result-context__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.dossier-search-result-context__links a:hover,
+.dossier-search-result-context__links a:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
 .dossier-section-index {
   display: grid;
   gap: 12px;
@@ -13761,6 +13809,10 @@ a.action-card:active {
 
   .dossier-search-support__body {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "results"
+      "privacy"
+      "index";
   }
 
   .dossier-search-console__panel {
@@ -13784,6 +13836,10 @@ a.action-card:active {
   }
 
   .dossier-search-kit__actions {
+    display: grid;
+  }
+
+  .dossier-search-result-context__links {
     display: grid;
   }
 
@@ -14194,7 +14250,10 @@ a.action-card:active {
 
 .dossier-search-support__body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.86fr);
+  grid-template-areas:
+    "results results"
+    "privacy index";
   gap: 12px;
 }
 

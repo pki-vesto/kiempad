@@ -103,9 +103,7 @@ function extractDossierCommandCenter(html: string): string {
 }
 
 function extractDossierSecondaryPrivacyDisclosure(html: string): string {
-  const start = html.indexOf(
-    '<details class="kp-disclosure dossier-secondary-privacy" data-dossier-secondary-privacy="collapsed">',
-  );
+  const start = html.indexOf('data-dossier-secondary-privacy="collapsed"');
   const end = html.indexOf('<nav class="dossier-section-index" aria-label="Dossierinhoud"', start);
   if (start < 0 || end < 0) throw new Error('Dossier privacy disclosure ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
@@ -8059,10 +8057,16 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-search-console {');
     expect(css).toContain('grid-template-areas:');
-    expect(css).toContain('"search support"');
+    expect(css).toContain('"search"');
+    expect(css).toContain('"support"');
+    expect(css).toContain('.dossier-search-primary-control {');
     expect(css).toContain('.dossier-search-support {');
     expect(css).toContain('.dossier-search-support__body {');
+    expect(css).toContain('"results results"');
     expect(css).toContain('.dossier-search-console__panel {');
+    expect(css).toContain('[data-dossier-search-console-region="results"]');
+    expect(css).toContain('.dossier-search-result-context {');
+    expect(css).toContain('.dossier-search-result-context__links {');
     expect(css).toContain('[data-dossier-search-console-region="privacy"]');
     expect(css).toContain('[data-dossier-search-console-region="index"]');
     expect(css).toContain('"document"');
@@ -8929,10 +8933,21 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-search-console-region="privacy"');
     expect(emptyHtml).toContain('data-dossier-search-console-region="index"');
     expect(emptyHtml).toContain('data-dossier-search-support="collapsed"');
-    expect(emptyHtml).toContain('Ondersteunende panelen openen');
-    expect(emptyHtml).toContain('Privacycontrole en inhoudsindex');
+    expect(emptyHtml).toContain('Start met één zoekcontrole.');
+    expect(emptyHtml).toContain('Eerst één zoekcontrole');
+    expect(emptyHtml).toContain('href="#dossier-search-followup"');
+    expect(emptyHtml).toContain('data-dossier-search-primary-control="ready"');
+    expect(emptyHtml).toContain('data-dossier-search-followup="collapsed"');
+    expect(emptyHtml).toContain('Vervolgcontext openen');
+    expect(emptyHtml).toContain('Resultaten, privacycontrole en inhoudsindex');
     expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
-    expect(emptyHtml).toContain('Zoek gericht in je dossier');
+    expect(emptyHtml).toContain('Eén zoekcontrole');
+    expect(emptyHtml).toContain('data-dossier-search-console-region="results"');
+    expect(emptyHtml).toContain('data-dossier-search-results="collapsed"');
+    expect(emptyHtml).toContain('aria-label="Dossier zoeken vervolglinks"');
+    expect(emptyHtml).toContain('href="#dossier-search-form">Terug naar zoekcontrole</a>');
+    expect(emptyHtml).toContain('href="#dossier-route-index-disclosure">Inhoudsindex</a>');
+    expect(emptyHtml).toContain('href="#dossier-secondary-privacy-disclosure">Privacycontrole</a>');
     expect(emptyHtml).toContain('data-dossier-search-kit="ready"');
     expect(emptyHtml).toContain('data-dossier-search-kit-state="idle"');
     expect(emptyHtml).toContain('Zoeken zonder broninhoud te openen');
@@ -8950,6 +8965,9 @@ describe('app shell', () => {
       emptyHtml.indexOf('data-dossier-search-support="collapsed"'),
     );
     expect(emptyHtml.indexOf('data-dossier-search-support="collapsed"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-search-console-region="results"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-search-console-region="results"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"'),
     );
     expect(emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"')).toBeLessThan(
