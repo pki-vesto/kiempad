@@ -1479,6 +1479,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge hover width compact with explicit ch and percentage ceilings.
   Partial G1543/#3030: The knowledge library empty-state recovery actions now keep mobile
   badge hover truncation stable with overflow, ellipsis and nowrap coverage.
+  Partial G1544/#3032: The knowledge library empty-state recovery actions now keep mobile
+  badge hover minimum width stable with a readable 7ch floor.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
