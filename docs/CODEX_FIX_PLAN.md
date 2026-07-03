@@ -37,6 +37,10 @@
   with one primary research-focus surface while sources, summaries, relevance, relations, and
   trends sit behind one closed follow-up disclosure, preserving research anchors, route tabs, and
   summary/trend hooks.
+- **Knowledge library single category choice — done in G1496 / issue #2752.** Kennis Bibliotheek
+  now opens with one primary category-choice board while the full category library, card actions,
+  edit details, and item hooks sit behind one closed follow-up disclosure with stable category
+  anchors.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

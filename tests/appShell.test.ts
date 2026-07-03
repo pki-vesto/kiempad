@@ -37698,11 +37698,30 @@ describe('app shell', () => {
       html.indexOf('data-knowledge-ai-console-region="summary-save"'),
     );
     expect(html).toContain('data-knowledge-route-summary="library"');
+    expect(html).toContain('Eerst één categoriekeuze');
+    expect(html).toContain('href="#knowledge-library-category-choice"');
+    expect(html).toContain('href="#knowledge-library-followup"');
+    expect(html).toContain('id="knowledge-library-category-choice"');
+    expect(html).toContain('data-knowledge-library-category-choice="ready"');
+    expect(html).toContain('Kies eerst één kennisgroep');
+    expect(html).toContain('data-knowledge-library-category-card="fasen"');
+    expect(html).toContain('data-knowledge-library-category-card="research"');
+    expect(html).toContain('id="knowledge-library-followup"');
+    expect(html).toContain('data-knowledge-library-followup="collapsed"');
     expect(html).toContain('Kennisbibliotheek per categorie openen');
+    expect(html.indexOf('data-knowledge-library-category-choice="ready"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-followup="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-library-followup="collapsed"')).toBeLessThan(
+      html.indexOf('id="knowledge-library-panel"'),
+    );
+    expect(html).not.toContain('<details id="knowledge-library-followup" open');
     expect(html).toContain('Bronnen, samenvattingen en trends');
     expect(html).toContain('Research en eigen kennis toevoegen');
     expect(html).toContain('Opt-in, preview en opslag');
     expect(html).toContain('Kennisitems per categorie');
+    expect(html).toContain('id="knowledge-category-fasen"');
+    expect(html).toContain('id="knowledge-category-research"');
     expect(html).toContain('data-knowledge-category="ready"');
     expect(html).toContain('class="knowledge-category__header"');
     expect(html).toContain('class="knowledge-library-list"');
@@ -37885,6 +37904,13 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-reader__lanes {');
     expect(css).toContain('.knowledge-research-reader__lane {');
     expect(css).toContain('grid-template-rows: auto auto 1fr auto;');
+    expect(css).toContain('.knowledge-library-category-choice {');
+    expect(css).toContain('.knowledge-library-category-choice__header {');
+    expect(css).toContain('.knowledge-library-category-choice__grid {');
+    expect(css).toContain('.knowledge-library-category-choice__card {');
+    expect(css).toContain('.knowledge-library-followup {');
+    expect(css).toContain('.knowledge-library-followup__summary {');
+    expect(css).toContain('.knowledge-library-followup__body {');
     expect(css).toContain('.knowledge-category__header {');
     expect(css).toContain('.knowledge-library-list {');
     expect(css).toContain('.knowledge-library-card > article {');

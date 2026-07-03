@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1404 — Start: dashboard start met één primaire dagactie
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Het startdashboard kan opnieuw te veel dagmodules tegelijk tonen zodra dagadvies, medicatie, vragen en snelle invoer allemaal gevuld zijn.
+- **User Impact:** Gebruikers zien bij binnenkomst alsnog meerdere concurrerende startpunten in plaats van één duidelijke dagactie.
+- **Desired Outcome:** Start met één primaire dagactie en houd secundaire dagmodules als rustige vervolgcontext bereikbaar.
+- **User Value:** Gebruikers weten direct waarmee ze vandaag moeten beginnen en kunnen extra context pas openen wanneer nodig.
+- **Acceptance Criteria:** Start toont één primaire dagactie in de eerste viewport; dagadvies, volgende stap, medicatie, vragen en snelle invoer blijven bereikbaar via bestaande anchors en hooks; secundaire modules starten gegroepeerd of gesloten waar passend; mobile, tablet en desktop tonen geen overlap; geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies; tests of routeflow-smoke bewaken volgorde, vervolgcontext en hooks.
+- **Affected Screens:** Start
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, start dashboard, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2754
+
 ### G1403 — Kennis: bibliotheek start met één categoriekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2752
 
 ### G1402 — Kennis: lezen start met één researchfocus
