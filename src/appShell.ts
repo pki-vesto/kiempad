@@ -4381,6 +4381,15 @@ function renderDossierScreen(state: AppShellState): string {
             <em>${imagingItems.length} beelden · ${embryoDossiers.length} embryo's</em>
           </summary>
           <div class="kp-disclosure__body dossier-imaging-followup__body">
+        <details class="dossier-imaging-context-choice" data-dossier-imaging-context-choice="collapsed">
+          <summary class="dossier-imaging-context-choice__summary" data-dossier-imaging-context-summary="ready">
+            <span>
+              <strong>Kies beeldcontext</strong>
+              <small>Consulten, beeldenoverzicht, index of embryo-dossiers</small>
+            </span>
+            <em>${imagingItems.length} beelden · ${embryoDossiers.length} embryo's</em>
+          </summary>
+          <div class="dossier-imaging-context-choice__body">
         <details class="kp-disclosure hub-detail-disclosure" data-dossier-imaging-disclosure="consults" data-hub-detail-panel="consult-verslagen">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
@@ -4478,6 +4487,8 @@ function renderDossierScreen(state: AppShellState): string {
                     },
                   )
             }
+          </div>
+        </details>
           </div>
         </details>
           </div>

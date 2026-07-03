@@ -1248,6 +1248,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   result-context choice while results, privacy and index context remain reachable.
   Partial G1431/#2806: The dossier timeline follow-up now starts with one closed compact
   timeline-context choice while document timeline and treatment history remain reachable.
+  Partial G1432/#2808: The dossier imaging follow-up now starts with one closed compact
+  image-context choice while consults, repository, index and embryo dossiers remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
