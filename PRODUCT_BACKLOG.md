@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1267 |
+| ☑ klaar | 1268 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1466** |
+| **Totaal** | **1467** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1628,13 +1628,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1464 | Kennis research trendpaneel start met één compacte trendkeuze | P1 | F5 | ☑ |
 | G1465 | Kennis research snapshot start met één compacte scankeuze | P1 | F5 | ☑ |
 | G1466 | Kennis research werkbankstatus start met één compacte metricskeuze | P1 | F5 | ☑ |
-| G1467 | Kennis bibliotheek filterpaneel start met één compacte filterkeuze | P1 | F5 | ☐ |
+| G1467 | Kennis bibliotheek filterpaneel start met één compacte filterkeuze | P1 | F5 | ☑ |
+| G1468 | Kennis bibliotheek filterstatus start met één compacte statusdetailkeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1466** (id's G001 t/m G1467; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1467** (id's G001 t/m G1468; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1468 — Kennis bibliotheek filterstatus start met één compacte statusdetailkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1467 blijft de kennis bibliotheek filterstatus gevoelig voor actieve telling, filterdetails en resetcontext tegelijk.
+- **User Impact:** Gebruikers die filterstatus openen, krijgen nog statusdetail en resetcontext voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis bibliotheek filterstatus starten met één compacte statusdetailkeuze of samengevouwen sublaag, terwijl actieve telling, filterdetails en resetcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één statusdetailcontext kiezen zonder dat filterdetails tegelijk de filterlaag domineren.
+- **Acceptance Criteria:** Bestaande filterstatus hooks en resetactie blijven aanwezig; de filterstatus start met één compacte keuze of samengevouwen sublaag; actieve telling, filterdetails en resetcontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, kennis filter status, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2880
+
 ### G1467 — Kennis bibliotheek filterpaneel start met één compacte filterkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, kennis filter form, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2878
 
 ### G1466 — Kennis research werkbankstatus start met één compacte metricskeuze
