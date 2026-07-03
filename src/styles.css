@@ -15094,6 +15094,18 @@ a.action-card:active {
   }
 }
 
+@media (max-width: 480px) {
+  [data-daily-recommendation-reset-route-focus="ready"] {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .daily-recommendation-reset-route-focus__close {
+    justify-self: start;
+    max-width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-daily-recommendation-reset-route-focus="ready"],
   .daily-recommendation-reset-route-focus__close {

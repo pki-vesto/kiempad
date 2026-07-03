@@ -3206,6 +3206,11 @@ describe('app shell', () => {
     expect(css).toContain('font-size: 0.7rem;');
     expect(css).toContain('outline-offset: 1px;');
     expect(css).toContain('min-height: 32px;');
+    expect(css).toContain('@media (max-width: 480px)');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(css).toContain('align-items: start;');
+    expect(css).toContain('justify-self: start;');
+    expect(css).toContain('max-width: 100%;');
     expect(css).toContain('@media (hover: hover) and (pointer: fine)');
     expect(css).toContain('.daily-recommendation-reset-route-focus__close:hover {');
     expect(css).toContain('background: var(--surface);');
