@@ -42041,7 +42041,17 @@ describe('app shell', () => {
     expect(css).toContain('gap: 12px;');
     expect(css).toContain('max-height: min(860px, calc(100vh - 148px));');
     expect(css).toContain('overflow-y: auto;');
+    expect(css).toContain('border-radius: 16px;');
+    expect(css).toContain(
+      'background: color-mix(in srgb, var(--surface) 92%, var(--surface-raised));',
+    );
     expect(css).toContain('scrollbar-gutter: stable;');
+    expect(css).toContain('.domain-split-workspace__main {');
+    expect(css).toContain('box-shadow: 0 12px 28px rgba(21, 48, 44, 0.045);');
+    expect(css).toContain('background: color-mix(in srgb, var(--surface-2) 68%, var(--surface));');
+    expect(css).toContain(
+      '.domain-split-workspace__main .knowledge-ai-summary-detail-choice__summary em {',
+    );
     expect(css).toContain('.domain-split-workspace__rail .command-task-routes {');
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.domain-split-workspace__rail .command-task-route span,');

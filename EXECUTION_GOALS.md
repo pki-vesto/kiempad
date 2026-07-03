@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1570 — Premium Claude Design UI houdt desktop routewerkruimte als begrensde app-panelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1569 zijn mobiele routewerkruimtes begrensd, maar desktop en tablet kunnen het actieve werkvlak en de contextkolom nog als één doorlopende pagina laten lezen.
+- **User Impact:** Gebruikers krijgen op brede schermen minder snel het gevoel dat ze in één afgebakende taak werken.
+- **Desired Outcome:** Desktop en tablet tonen actieve route en context als rustige scrollbare app-panelen binnen de split-workspace.
+- **User Value:** Gebruikers zien sneller waar de taak begint en eindigt, met minder lange-paginaervaring op brede schermen.
+- **Acceptance Criteria:** Desktop/tablet domain-split workspaces begrenzen actieve route en context als app-panelen; mobiele panelen uit G1569 blijven intact; routehooks, contextkolommen en taakroutes blijven bereikbaar; panelen blijven min-width veilig, intern scrollbaar en zonder horizontale overflow; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Dossier, Kennis, Agenda, Medicatie, Traject, Vragen, Welzijn, Afwegingen, Kosten, Logboek, Back-up, Herinneringen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Shared domain split workspace CSS, route-first workspaces, desktop/tablet layout
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3084
+
 ### G1569 — Premium Claude Design UI houdt mobiele routewerkruimte als begrensde app-panelen
 
 - **Epic:** Onboarding & Daily Use
