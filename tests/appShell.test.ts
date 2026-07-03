@@ -38348,6 +38348,9 @@ describe('app shell', () => {
     expect(html).toContain('id="knowledge-ai-support"');
     expect(html).toContain('data-knowledge-ai-support="collapsed"');
     expect(html).toContain('Opslaan, opt-in en netwerkbeheer openen');
+    expect(html).toContain('data-knowledge-ai-support-context-choice="collapsed"');
+    expect(html).toContain('Kies AI-context');
+    expect(html).toContain('Open daarna bewaren, instellingen of researchnetwerk');
     expect(html).toContain('data-knowledge-ai-console-region="summary-save"');
     expect(html).toContain('data-knowledge-ai-console-region="settings"');
     expect(html).toContain('data-knowledge-ai-console-region="research-network"');
@@ -38355,7 +38358,13 @@ describe('app shell', () => {
       html.indexOf('id="knowledge-ai-support"'),
     );
     expect(html.indexOf('id="knowledge-ai-support"')).toBeLessThan(
+      html.indexOf('data-knowledge-ai-support-context-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-ai-support-context-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-ai-console-region="summary-save"'),
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-ai-support-context-choice" data-knowledge-ai-support-context-choice="collapsed" open>',
     );
     expect(html).toContain('data-knowledge-route-summary="library"');
     expect(html).toContain('Eerst één categoriekeuze');
@@ -38612,7 +38621,15 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-ai-console {');
     expect(css).toContain('.knowledge-ai-support__summary {');
     expect(css).toContain('.knowledge-ai-support__body {');
-    expect(css).toContain('.knowledge-ai-support__body > .summary-panel:first-child {');
+    expect(css).toContain('.knowledge-ai-support-context-choice {');
+    expect(css).toContain('.knowledge-ai-support-context-choice__summary {');
+    expect(css).toContain('.knowledge-ai-support-context-choice__body {');
+    expect(css).toContain(
+      '.knowledge-ai-support-context-choice:not([open]) > .knowledge-ai-support-context-choice__body {',
+    );
+    expect(css).toContain(
+      '.knowledge-ai-support-context-choice__body > .summary-panel:first-child {',
+    );
     expect(css).toContain('grid-column: 1 / -1;');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.knowledge-task-routes {');
@@ -38646,7 +38663,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.knowledge-filter-kit {');
     expect(mobileCss).toContain('.knowledge-filter-kit__header,');
     expect(mobileCss).toContain('.knowledge-filter-kit__actions {');
-    expect(mobileCss).toContain('.knowledge-ai-support__body {');
+    expect(mobileCss).toContain('.knowledge-ai-support__body,');
+    expect(mobileCss).toContain('.knowledge-ai-support-context-choice__body {');
   });
 
   it('bewaakt AI-preview en on-device opt-in states zonder sleutel of providerpayload', () => {

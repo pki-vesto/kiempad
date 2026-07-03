@@ -1262,6 +1262,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   research-context choice while sources, summaries, relevance and trends remain reachable.
   Partial G1438/#2820: The knowledge library follow-up now starts with one closed compact
   library-context choice while categories, card actions and item details remain reachable.
+  Partial G1439/#2822: The knowledge AI support context now starts with one closed compact
+  AI-context choice while summary save, AI settings and research network context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

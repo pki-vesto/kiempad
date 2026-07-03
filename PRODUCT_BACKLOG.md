@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1239 |
+| ☑ klaar | 1240 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1438** |
+| **Totaal** | **1439** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1600,13 +1600,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1436 | Embryostatus afrondingscontext start met één compacte statuskeuze | P1 | F5 | ☑ |
 | G1437 | Kennis researchroute follow-up start met één compacte contextkeuze | P1 | F5 | ☑ |
 | G1438 | Kennis bibliotheekroute follow-up start met één compacte contextkeuze | P1 | F5 | ☑ |
-| G1439 | Kennis AI-route supportcontext start met één compacte contextkeuze | P1 | F5 | ☐ |
+| G1439 | Kennis AI-route supportcontext start met één compacte contextkeuze | P1 | F5 | ☑ |
+| G1440 | Kennis toevoegen follow-up start met één compacte contextkeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1438** (id's G001 t/m G1439; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1439** (id's G001 t/m G1440; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
