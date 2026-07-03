@@ -4559,6 +4559,15 @@ function renderDossierScreen(state: AppShellState): string {
             <em>${tijdlijn.length} momenten · ${behandelGeschiedenis.length} historie</em>
           </summary>
           <div class="kp-disclosure__body dossier-timeline-followup__body">
+        <details class="dossier-timeline-context-choice" data-dossier-timeline-context-choice="collapsed">
+          <summary class="dossier-timeline-context-choice__summary" data-dossier-timeline-context-summary="ready">
+            <span>
+              <strong>Kies tijdlijncontext</strong>
+              <small>Documenttijdlijn of behandelgeschiedenis</small>
+            </span>
+            <em>${tijdlijn.length} momenten · ${behandelGeschiedenis.length} historie</em>
+          </summary>
+          <div class="dossier-timeline-context-choice__body">
         <details class="kp-disclosure hub-detail-disclosure" data-dossier-timeline-disclosure="documents" data-hub-detail-panel="timeline-documents">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
@@ -4591,6 +4600,8 @@ function renderDossierScreen(state: AppShellState): string {
                     { title: 'Geen behandelgeschiedenis' },
                   )
             }
+          </div>
+        </details>
           </div>
         </details>
           </div>

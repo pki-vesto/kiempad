@@ -8647,6 +8647,16 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-timeline-followup {');
     expect(css).toContain('.dossier-timeline-followup__summary {');
     expect(css).toContain('.dossier-timeline-followup__body {');
+    expect(css).toContain('.dossier-timeline-context-choice {');
+    expect(css).toContain('.dossier-timeline-context-choice__summary {');
+    expect(css).toContain('.dossier-timeline-context-choice__summary::after {');
+    expect(css).toContain(
+      '.dossier-timeline-context-choice[open] > .dossier-timeline-context-choice__summary::after',
+    );
+    expect(css).toContain('.dossier-timeline-context-choice__body {');
+    expect(css).toContain(
+      '.dossier-timeline-context-choice:not([open]) > .dossier-timeline-context-choice__body {',
+    );
     expect(css).toContain('.dossier-review-primary-task {');
     expect(css).toContain('.dossier-review-primary-task__summary {');
     expect(css).toContain('.dossier-review-primary-task__summary::after {');
@@ -9263,13 +9273,23 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-timeline-followup="collapsed"');
     expect(emptyHtml).toContain('Tijdlijncontext openen');
     expect(emptyHtml).toContain('Documenttijdlijn en behandelgeschiedenis');
+    expect(emptyHtml).toContain('data-dossier-timeline-context-choice="collapsed"');
+    expect(emptyHtml).toContain('data-dossier-timeline-context-summary="ready"');
+    expect(emptyHtml).toContain('Kies tijdlijncontext');
+    expect(emptyHtml).toContain('Documenttijdlijn of behandelgeschiedenis');
     expect(emptyHtml.indexOf('data-dossier-timeline-primary-focus="ready"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-timeline-followup="collapsed"'),
     );
     expect(emptyHtml.indexOf('data-dossier-timeline-followup="collapsed"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-timeline-context-choice="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-timeline-context-choice="collapsed"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-timeline-disclosure="documents"'),
     );
     expect(emptyHtml).not.toContain('<details id="dossier-timeline-followup" open');
+    expect(emptyHtml).not.toContain(
+      '<details class="dossier-timeline-context-choice" data-dossier-timeline-context-choice="collapsed" open>',
+    );
     expect(emptyHtml).toContain('data-hub-detail-panel="timeline-documents"');
     expect(emptyHtml).toContain('Historische onderzoeken in volgorde');
     expect(emptyHtml).toContain('<em>0 momenten</em>');

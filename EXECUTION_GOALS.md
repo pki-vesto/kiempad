@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1432 — Dossier imaging follow-up start met één compacte beeldcontextkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1431 blijft de imaging follow-up gevoelig voor brede contextpanelen wanneer gebruikers na de inspectiekeuze extra details openen.
+- **User Impact:** Gebruikers die beelden of embryo's willen vergelijken, krijgen vervolgcontext nog als brede laag aangeboden.
+- **Desired Outcome:** Laat de dossier imaging follow-up starten met één compacte beeldcontextkeuze of samengevouwen sublaag, terwijl beeldenoverzicht, vergelijking, embryodossiers en consultcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen beeldcontext gericht openen zonder meteen alle vervolgpanelen te scannen.
+- **Acceptance Criteria:** Bestaande imaging follow-up hooks, routehashes en detailpanels blijven aanwezig; de imaging follow-up start met één compacte beeldcontextkeuze of samengevouwen sublaag; beeldenoverzicht, vergelijking, embryodossiers en consultcontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Beelden en embryo's
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier imaging follow-up, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2808
+
 ### G1431 — Dossier tijdlijnroute start met één compacte tijdlijnkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier timeline route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2806
 
 ### G1430 — Dossier zoekroute vervolgcontext start met één compacte resultaatkeuze
