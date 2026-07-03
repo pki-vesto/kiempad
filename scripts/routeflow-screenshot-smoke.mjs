@@ -672,11 +672,18 @@ const targets = [
       '[data-hub-workflow-tab="history"]',
       '[data-dossier-timeline-primary-focus="ready"]',
       '[data-dossier-timeline-followup="collapsed"] > .dossier-timeline-followup__summary',
+    ],
+    presentSelectors: [
+      '[data-dossier-timeline-context-choice="collapsed"]',
+      '[data-dossier-timeline-context-summary="ready"]',
       '[data-hub-detail-panel="timeline-documents"]',
       '[data-dossier-timeline-disclosure="documents"]',
       '[data-dossier-timeline-disclosure="history"]',
     ],
-    closedDetailsSelectors: ['[data-dossier-timeline-followup="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-dossier-timeline-followup="collapsed"]',
+      '[data-dossier-timeline-context-choice="collapsed"]',
+    ],
     dossierConsole: true,
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',

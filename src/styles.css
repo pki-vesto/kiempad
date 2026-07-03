@@ -3170,6 +3170,87 @@ h2 {
   gap: 12px;
 }
 
+.dossier-timeline-context-choice {
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-subtle));
+}
+
+.dossier-timeline-context-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 22px;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.dossier-timeline-context-choice__summary::-webkit-details-marker {
+  display: none;
+}
+
+.dossier-timeline-context-choice__summary::after {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--accent-strong);
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.dossier-timeline-context-choice[open] > .dossier-timeline-context-choice__summary::after {
+  content: "-";
+}
+
+.dossier-timeline-context-choice__summary span,
+.dossier-timeline-context-choice__summary small,
+.dossier-timeline-context-choice__summary strong,
+.dossier-timeline-context-choice__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dossier-timeline-context-choice__summary span {
+  display: grid;
+  gap: 2px;
+}
+
+.dossier-timeline-context-choice__summary small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.dossier-timeline-context-choice__summary strong {
+  color: var(--text);
+}
+
+.dossier-timeline-context-choice__summary em {
+  justify-self: end;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.dossier-timeline-context-choice__body {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 0 12px 12px;
+}
+
+.dossier-timeline-context-choice:not([open]) > .dossier-timeline-context-choice__body {
+  display: none;
+}
+
 .dossier-review-primary-task {
   min-width: 0;
   border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
@@ -19165,11 +19246,13 @@ a.action-card:active {
   }
 
   .dossier-timeline-focus__header,
-  .dossier-timeline-followup__summary {
+  .dossier-timeline-followup__summary,
+  .dossier-timeline-context-choice__summary {
     grid-template-columns: 1fr;
   }
 
-  .dossier-timeline-followup__summary em {
+  .dossier-timeline-followup__summary em,
+  .dossier-timeline-context-choice__summary em {
     justify-self: start;
   }
 
