@@ -12833,19 +12833,30 @@ function renderKennisScreen(state: AppShellState): string {
               <em>${state.settings.ai.ingeschakeld ? 'AI aan' : 'AI uit'}</em>
             </summary>
             <div class="kp-disclosure__body knowledge-ai-support__body">
-              <div class="summary-panel" data-knowledge-ai-console-region="summary-save">
-                <h2>AI-samenvatting bewaren</h2>
-                ${renderAiSummaryForm(state.aiPreview)}
-              </div>
-              <div class="summary-panel" data-knowledge-ai-console-region="settings">
-                <h2>AI-instelling</h2>
-                ${renderAiSettingsForm(state.settings, state.storageMode)}
-                ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
-              </div>
-              <div class="summary-panel" data-knowledge-ai-console-region="research-network">
-                ${renderResearchNetworkSettingsForm(state.settings)}
-                ${renderResearchAggregatiePlan(researchAggregatie)}
-              </div>
+              <details class="knowledge-ai-support-context-choice" data-knowledge-ai-support-context-choice="collapsed">
+                <summary class="knowledge-ai-support-context-choice__summary">
+                  <span>
+                    <strong>Kies AI-context</strong>
+                    <small>Open daarna bewaren, instellingen of researchnetwerk</small>
+                  </span>
+                  <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
+                </summary>
+                <div class="knowledge-ai-support-context-choice__body">
+                  <div class="summary-panel" data-knowledge-ai-console-region="summary-save">
+                    <h2>AI-samenvatting bewaren</h2>
+                    ${renderAiSummaryForm(state.aiPreview)}
+                  </div>
+                  <div class="summary-panel" data-knowledge-ai-console-region="settings">
+                    <h2>AI-instelling</h2>
+                    ${renderAiSettingsForm(state.settings, state.storageMode)}
+                    ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
+                  </div>
+                  <div class="summary-panel" data-knowledge-ai-console-region="research-network">
+                    ${renderResearchNetworkSettingsForm(state.settings)}
+                    ${renderResearchAggregatiePlan(researchAggregatie)}
+                  </div>
+                </div>
+              </details>
             </div>
           </details>
         </div>

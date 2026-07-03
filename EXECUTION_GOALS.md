@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1440 — Kennis toevoegen follow-up start met één compacte contextkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1439 blijft de kennis toevoegen-route gevoelig voor brede vervolgcontext zodra gebruikers eigen kennis of notitiecontext openen.
+- **User Impact:** Gebruikers die een bron willen toevoegen, krijgen aanvullende invoercontext nog te snel als extra paneel aangeboden.
+- **Desired Outcome:** Laat de kennis toevoegen-route follow-up starten met één compacte contextkeuze of samengevouwen sublaag, terwijl eigen kennisitem, notitiecontext en bronvastlegging bereikbaar blijven.
+- **User Value:** Gebruikers kunnen kennis stap voor stap toevoegen zonder dat de route als brede invoerpagina voelt.
+- **Acceptance Criteria:** Bestaande kennis-toevoegen hooks, eigen-item hooks, formulierhooks en routehashes blijven aanwezig; de toevoegen follow-up start met één compacte contextkeuze of samengevouwen sublaag; eigen kennisitem, notitiecontext en bronvastlegging blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Toevoegen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge add route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2824
+
 ### G1439 — Kennis AI-route supportcontext start met één compacte contextkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge AI route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2822
 
 ### G1438 — Kennis bibliotheekroute follow-up start met één compacte contextkeuze
