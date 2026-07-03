@@ -253,6 +253,28 @@ const targets = [
     closedDetailsSelectors: ['[data-knowledge-library-list-choice="collapsed"]'],
   },
   {
+    screen: 'knowledge-library-card',
+    hash: '#kennis?route=library',
+    rootSelector: '.content',
+    expectedText: 'Kaartdetails openen',
+    openSelectors: [
+      '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-context-choice="collapsed"]',
+      '[data-knowledge-library-list-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-knowledge-library-card-detail-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '.knowledge-library-card__body',
+      '.knowledge-library-card__source',
+      '.knowledge-library-card__badges',
+      '.knowledge-library-card__actions',
+      '[data-status-badge="knowledge"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-library-card-detail-choice="collapsed"]'],
+  },
+  {
     screen: 'knowledge-add',
     hash: '#kennis?route=add',
     rootSelector: '[data-knowledge-focus-shell="ready"]',

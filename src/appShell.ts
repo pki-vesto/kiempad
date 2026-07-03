@@ -14398,33 +14398,44 @@ function renderKennisItem(item: KennisItem): string {
           </div>
           <span class="knowledge-library-card__chevron" aria-hidden="true">&rsaquo;</span>
         </header>
-        <p class="knowledge-library-card__body">${escapeHtml(item.inhoud)}</p>
-        <p class="knowledge-library-card__source">Bron: ${escapeHtml(item.bron ?? 'Geen bron vastgelegd')}</p>
-        ${researchMetadata ? renderResearchKaartMetadata(researchMetadata) : ''}
-        ${researchHerverificatie ? renderResearchHerverificatieStatus(researchHerverificatie) : ''}
-        ${
-          item.geverifieerdOp
-            ? `<p class="linked-note">Geverifieerd op ${escapeHtml(item.geverifieerdOp)} · review uiterlijk ${escapeHtml(item.volgendeVerificatieOp ?? 'onbekend')}</p>`
-            : '<p class="linked-note">Nog niet met behandelaar geverifieerd.</p>'
-        }
-        <div class="knowledge-library-card__badges" aria-label="Kennisitem status">
-          ${badges}
-        </div>
-        <div class="knowledge-library-card__actions">
-          ${
-            item.geverifieerd_met_arts
-              ? '<span class="knowledge-library-card__verified">Artscheck vastgelegd</span>'
-              : `<button class="phase-button" type="button" data-kennis-id="${item.id}" aria-label="Markeer kennisitem als geverifieerd: ${escapeAttribute(item.titel)}">Markeer geverifieerd</button>`
-          }
-          ${
-            isEigenKennisItem(item)
-              ? `<details class="knowledge-library-card__edit">
-                  <summary>Bewerk kennisitem</summary>
-                  ${renderEigenKennisItemForm(item)}
-                </details>`
-              : ''
-          }
-        </div>
+        <details class="knowledge-library-card-detail-choice" data-knowledge-library-card-detail-choice="collapsed">
+          <summary class="knowledge-library-card-detail-choice__summary">
+            <span>
+              <strong>Kaartdetails openen</strong>
+              <small>Open inhoud, bron, badges en acties.</small>
+            </span>
+            <em>${item.geverifieerd_met_arts ? 'Artscheck' : 'Concept'}</em>
+          </summary>
+          <div class="knowledge-library-card-detail-choice__body">
+            <p class="knowledge-library-card__body">${escapeHtml(item.inhoud)}</p>
+            <p class="knowledge-library-card__source">Bron: ${escapeHtml(item.bron ?? 'Geen bron vastgelegd')}</p>
+            ${researchMetadata ? renderResearchKaartMetadata(researchMetadata) : ''}
+            ${researchHerverificatie ? renderResearchHerverificatieStatus(researchHerverificatie) : ''}
+            ${
+              item.geverifieerdOp
+                ? `<p class="linked-note">Geverifieerd op ${escapeHtml(item.geverifieerdOp)} · review uiterlijk ${escapeHtml(item.volgendeVerificatieOp ?? 'onbekend')}</p>`
+                : '<p class="linked-note">Nog niet met behandelaar geverifieerd.</p>'
+            }
+            <div class="knowledge-library-card__badges" aria-label="Kennisitem status">
+              ${badges}
+            </div>
+            <div class="knowledge-library-card__actions">
+              ${
+                item.geverifieerd_met_arts
+                  ? '<span class="knowledge-library-card__verified">Artscheck vastgelegd</span>'
+                  : `<button class="phase-button" type="button" data-kennis-id="${item.id}" aria-label="Markeer kennisitem als geverifieerd: ${escapeAttribute(item.titel)}">Markeer geverifieerd</button>`
+              }
+              ${
+                isEigenKennisItem(item)
+                  ? `<details class="knowledge-library-card__edit">
+                      <summary>Bewerk kennisitem</summary>
+                      ${renderEigenKennisItemForm(item)}
+                    </details>`
+                  : ''
+              }
+            </div>
+          </div>
+        </details>
       </article>
     </li>
   `;
