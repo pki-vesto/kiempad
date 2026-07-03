@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1503 — Kennis bibliotheek herstelactie badges houden labelcopy primair
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1502 is badgecopy secundair bewaakt, maar de primaire herstelactie-labelcopy is nog niet apart bewaakt tegen visuele verdringing door compacte feedbackbadges.
+- **User Impact:** Gebruikers kunnen herstelacties trager scannen als badgefeedback visueel concurreert met de echte actie.
+- **Desired Outcome:** Herstelactie-labels blijven tijdens hover/focus de duidelijke primaire scanlaag, met badges als aanvullende statuscopy.
+- **User Value:** Gebruikers zien direct welke route ze kiezen en lezen badgefeedback pas daarna als context.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; primaire actielabels blijven dominant genoeg om eerst gelezen te worden; badgecopy blijft compact en secundair; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken labelhiërarchie en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2950
+
 ### G1502 — Kennis bibliotheek herstelactie badges houden focuscopy secundair
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2948
 
 ### G1501 — Kennis bibliotheek herstelactie badges tonen consistente focusgewicht

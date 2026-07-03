@@ -8627,6 +8627,15 @@ h2 {
   line-height: 1;
 }
 
+.knowledge-library-empty-recovery-choice__label {
+  min-width: 0;
+  color: inherit;
+  font-weight: 850;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .knowledge-library-empty-recovery-choice__feedback {
   display: inline-block;
   max-width: 14ch;
@@ -8652,7 +8661,8 @@ h2 {
   border-color: color-mix(in srgb, var(--category) 26%, var(--border-strong));
   border-style: solid;
   background: color-mix(in srgb, var(--surface) 82%, var(--category));
-  color: var(--text);
+  color: color-mix(in srgb, var(--text) 86%, var(--text-muted));
+  font-size: 0.66rem;
   font-weight: 800;
 }
 
