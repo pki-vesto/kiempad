@@ -3206,6 +3206,11 @@ describe('app shell', () => {
     expect(css).toContain(
       'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);',
     );
+    expect(css).toContain('.daily-recommendation-reset-route-focus__close:disabled,');
+    expect(css).toContain('.daily-recommendation-reset-route-focus__close[aria-disabled="true"] {');
+    expect(css).toContain('cursor: not-allowed;');
+    expect(css).toContain('opacity: 0.72;');
+    expect(css).toContain('opacity: 1;');
     expect(css).toContain('background: Highlight;');
     expect(css).toContain('color: HighlightText;');
     expect(css).toContain('outline-color 0.16s ease;');
