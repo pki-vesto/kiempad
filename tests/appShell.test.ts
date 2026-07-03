@@ -38296,6 +38296,15 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-empty-recovery-order="1"');
     expect(html).toContain('data-knowledge-library-empty-recovery-order="2"');
     expect(html).toContain('data-knowledge-library-empty-recovery-order="3"');
+    expect(html).toContain(
+      '<span class="knowledge-library-empty-recovery-choice__label">Filter wissen</span>',
+    );
+    expect(html).toContain(
+      '<span class="knowledge-library-empty-recovery-choice__label">Categorie kiezen</span>',
+    );
+    expect(html).toContain(
+      '<span class="knowledge-library-empty-recovery-choice__label">Kennis toevoegen</span>',
+    );
     expect(html).toContain('data-knowledge-library-empty-recovery-feedback="library"');
     expect(html).toContain('overzicht');
     expect(html).toContain('data-knowledge-library-empty-recovery-feedback="category"');
@@ -39184,6 +39193,9 @@ describe('app shell', () => {
     expect(css).toContain('pointer-events: auto;');
     expect(css).toContain('.knowledge-library-followup-visibility-choice__anchor--secondary {');
     expect(css).toContain('border-style: solid;');
+    expect(css).toContain('.knowledge-library-empty-recovery-choice__label {');
+    expect(css).toContain('font-weight: 850;');
+    expect(css).toContain('white-space: nowrap;');
     expect(css).toContain(
       '.knowledge-library-empty-recovery-choice__body\n  .knowledge-library-followup-visibility-choice__anchor:hover,',
     );
@@ -39204,8 +39216,10 @@ describe('app shell', () => {
       '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__feedback',
     );
     expect(css).toContain(
-      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__feedback {\n  border-color: color-mix(in srgb, var(--category) 26%, var(--border-strong));\n  border-style: solid;\n  background: color-mix(in srgb, var(--surface) 82%, var(--category));\n  color: var(--text);\n  font-weight: 800;\n}',
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__feedback {\n  border-color: color-mix(in srgb, var(--category) 26%, var(--border-strong));\n  border-style: solid;\n  background: color-mix(in srgb, var(--surface) 82%, var(--category));\n  color: color-mix(in srgb, var(--text) 86%, var(--text-muted));\n  font-size: 0.66rem;\n  font-weight: 800;\n}',
     );
+    expect(css).toContain('color: color-mix(in srgb, var(--text) 86%, var(--text-muted));');
+    expect(css).toContain('font-size: 0.66rem;');
     expect(css).toContain(
       'border-color: color-mix(in srgb, var(--category) 26%, var(--border-strong));',
     );

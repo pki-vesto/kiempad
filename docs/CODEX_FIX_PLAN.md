@@ -1395,6 +1395,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   consistent hover and focus badge styling across all recovery routes.
   Partial G1501/#2946: The knowledge library empty-state recovery feedback badges now keep a
   secondary focus weight below the action labels.
+  Partial G1502/#2948: The knowledge library empty-state recovery actions now separate primary
+  labels from secondary badge copy during focus.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
