@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1430 — Dossier zoekroute vervolgcontext start met één compacte resultaatkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1429 start de zoekcontrole compacter, maar de vervolgcontext kan bij openen nog resultaatcontext, privacycontrole en inhoudsindex tegelijk tonen.
+- **User Impact:** Gebruikers die zoekcontext willen bekijken, krijgen alsnog meerdere contextpanelen tegelijk.
+- **Desired Outcome:** Laat de vervolgcontext van de dossier zoekroute starten met één compacte resultaatkeuze of samengevouwen sublaag, terwijl resultaten, privacycontrole en inhoudsindex bereikbaar blijven.
+- **User Value:** Gebruikers kunnen zoekresultaten en context gericht openen zonder een brede vervolgpagina te scannen.
+- **Acceptance Criteria:** Bestaande follow-up hooks, resultaat hooks, privacy hooks, index hooks en routehashes blijven aanwezig; de vervolgcontext start met één compacte resultaatkeuze of samengevouwen sublaag; resultaten, privacycontrole en inhoudsindex blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier zoeken
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier search follow-up, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2804
+
 ### G1429 — Dossier zoekroute start met één compacte zoekkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier search route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2802
 
 ### G1428 — Dossier review follow-up start met één compacte contextkeuze

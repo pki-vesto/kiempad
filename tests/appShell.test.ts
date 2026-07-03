@@ -8530,6 +8530,12 @@ describe('app shell', () => {
     expect(css).toContain('"search"');
     expect(css).toContain('"support"');
     expect(css).toContain('.dossier-search-primary-control {');
+    expect(css).toContain('.dossier-search-choice {');
+    expect(css).toContain('.dossier-search-choice__summary {');
+    expect(css).toContain('.dossier-search-choice__summary::after {');
+    expect(css).toContain('.dossier-search-choice[open] > .dossier-search-choice__summary::after');
+    expect(css).toContain('.dossier-search-choice__body {');
+    expect(css).toContain('.dossier-search-choice:not([open]) > .dossier-search-choice__body {');
     expect(css).toContain('.dossier-search-support {');
     expect(css).toContain('.dossier-search-support__body {');
     expect(css).toContain('"results results"');
@@ -9537,6 +9543,8 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Eerst één zoekcontrole');
     expect(emptyHtml).toContain('href="#dossier-search-followup"');
     expect(emptyHtml).toContain('data-dossier-search-primary-control="ready"');
+    expect(emptyHtml).toContain('data-dossier-search-choice="collapsed"');
+    expect(emptyHtml).toContain('data-dossier-search-choice-summary="ready"');
     expect(emptyHtml).toContain('data-dossier-search-followup="collapsed"');
     expect(emptyHtml).toContain('Vervolgcontext openen');
     expect(emptyHtml).toContain('Resultaten, privacycontrole en inhoudsindex');
@@ -9553,6 +9561,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Zoeken zonder broninhoud te openen');
     expect(emptyHtml).toContain('data-dossier-search-chip="idle"');
     expect(emptyHtml).toContain('Geen zoekterm actief');
+    expect(emptyHtml).not.toContain(
+      '<details class="dossier-search-choice" data-dossier-search-choice="collapsed" open>',
+    );
     expect(emptyHtml).toContain('href="#dossier?route=search">Wis zoekterm</a>');
     expect(emptyHtml).toContain('Privacy en toegankelijkheid');
     expect(emptyHtml).toContain('Inhoudsindex');
