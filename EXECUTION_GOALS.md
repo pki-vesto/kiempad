@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1394 — Medicatie: planning start met één innametaak
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Medicatie Planning moet rustig blijven als één planningstaak en mag niet opnieuw aanvoelen als een wand met vandaag, beheer en historie.
+- **User Impact:** Gebruikers kunnen bij medicatieplanning alsnog door meerdere medicatielagen moeten scannen voordat de hoofdtaak duidelijk is.
+- **Desired Outcome:** Start met één primaire innametaak of planningsinvoer en houd vandaag, beheer en historie als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers kunnen eerst de medicatieplanning vastleggen of controleren en openen extra context pas wanneer nodig.
+- **Acceptance Criteria:** Medicatie Planning toont één primaire innametaak of planningsinvoer in de eerste viewport; vandaag, beheer en historie blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen doseringsadvies, behandeladvies, trackingpayload of medische conclusie bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Medicatie, Planning
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, medication route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2734
+
 ### G1393 — Agenda: plannen start met één afspraaktaak
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, schedule route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2732
 
 ### G1392 — Kosten: toevoegen start met één kostenpost taak

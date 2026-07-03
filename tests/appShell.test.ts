@@ -2214,6 +2214,11 @@ describe('app shell', () => {
     expect(css).toContain(
       '.schedule-focus-shell__workspace .domain-split-workspace__context > .schedule-planning-workbench {',
     );
+    expect(css).toContain('.schedule-planning-console {');
+    expect(css).toContain('.schedule-planning-primary {');
+    expect(css).toContain('.schedule-planning-followup {');
+    expect(css).toContain('.schedule-planning-followup__summary {');
+    expect(css).toContain('.schedule-planning-followup__body {');
     expect(css).toContain('.schedule-form {');
     expect(css).toContain('.schedule-form-section {');
     expect(css).toContain('.schedule-form-section--primary {');
@@ -4636,6 +4641,22 @@ describe('app shell', () => {
     expect(html).toContain(
       'class="status-message schedule-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="schedule-plannen" data-schedule-save-feedback="plannen"',
     );
+    expect(html).toContain(
+      'Het afspraakformulier staat vooraan. Komende afspraken, import en historie open je pas als vervolgcontext.',
+    );
+    expect(html).toContain('href="#schedule-planning-followup"');
+    expect(html).toContain('data-schedule-planning-layout="single-input"');
+    expect(html).toContain('data-schedule-planning-primary="afspraak-form"');
+    expect(html).toContain('data-schedule-planning-followup="collapsed"');
+    expect(html).toContain('id="schedule-planning-followup"');
+    expect(html).toContain('Vervolgcontext openen');
+    expect(html).toContain('href="#agenda?route=komend"');
+    expect(html).toContain('href="#agenda?route=import"');
+    expect(html).toContain('href="#agenda?route=historie"');
+    expect(html.indexOf('data-schedule-planning-primary="afspraak-form"')).toBeLessThan(
+      html.indexOf('id="schedule-planning-followup"'),
+    );
+    expect(html).not.toContain('<details id="schedule-planning-followup" open');
     expect(html).toContain('Afspraak opgeslagen.');
     expect(html).toContain('id="agenda-route-import"');
     expect(html).toContain('data-schedule-route="import"');

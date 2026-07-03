@@ -249,6 +249,10 @@
   opens with the cost form as the primary task while overview, reimbursement, and history routes
   sit behind one closed follow-up context, preserving form hooks, hashes, and non-advice financial
   boundaries.
+- **Schedule planning single appointment task — done in G1486 / issue #2732.** The Agenda plannen
+  route now opens with the appointment form as the primary task while upcoming appointments, ICS
+  import, and history routes sit behind one closed follow-up context, preserving form hooks, hashes,
+  and non-advice planning boundaries.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
