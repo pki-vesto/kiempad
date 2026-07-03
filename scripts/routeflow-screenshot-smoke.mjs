@@ -106,6 +106,9 @@ const targets = [
       '[data-knowledge-research-lane="relevance"]',
       '[data-knowledge-research-lane="trends"]',
       '[data-hub-detail-panel="research-summaries"]',
+      '[data-knowledge-research-summaries-choice="collapsed"]',
+      '[data-research-summary-component="scientific-list"]',
+      '[data-research-summary-component="patient-list"]',
       '[data-knowledge-research-disclosure="sources"]',
       '[data-knowledge-research-sources-choice="collapsed"]',
       '[data-research-source-component="source-list"]',
@@ -122,6 +125,7 @@ const targets = [
       '[data-knowledge-research-context-choice="collapsed"]',
       '[data-knowledge-research-detail-choice="collapsed"]',
       '[data-knowledge-research-sources-choice="collapsed"]',
+      '[data-knowledge-research-summaries-choice="collapsed"]',
     ],
     knowledgeConsole: true,
     desktopHiddenSelectors: [

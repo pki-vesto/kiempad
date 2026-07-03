@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1464 — Kennis research trendpaneel start met één compacte trendkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1463 blijft het research trendpaneel gevoelig voor relevantie, dossierrelaties en trendgroepen tegelijk.
+- **User Impact:** Gebruikers die trendcontext openen, krijgen nog meerdere contextsignalen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat het kennis research trendpaneel starten met één compacte trendkeuze of samengevouwen sublaag, terwijl relevantie, dossierrelaties en trendgroepen bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één trendkeuze maken zonder dat alle trendcontext tegelijk de detailcontext domineert.
+- **Acceptance Criteria:** Bestaande research trend/context hooks, disclosure ids en routehashes blijven aanwezig; het trendpaneel start met één compacte trendkeuze of samengevouwen sublaag; relevantie, dossierrelaties en trendgroepen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, research trends panel, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2872
+
 ### G1463 — Kennis research samenvattingenpaneel start met één compacte samenvattingkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, research summaries panel, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2870
 
 ### G1462 — Kennis research bronnenpaneel start met één compacte bronnenkeuze

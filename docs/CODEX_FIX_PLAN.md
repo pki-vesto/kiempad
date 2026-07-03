@@ -1310,6 +1310,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   compact detail choice while sources, summaries and trend context remain reachable.
   Partial G1462/#2868: The knowledge research sources panel now starts with one closed compact
   sources choice while the local source cache and research details remain reachable.
+  Partial G1463/#2870: The knowledge research summaries panel now starts with one closed compact
+  summary choice while scientific and plain-language summaries remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
