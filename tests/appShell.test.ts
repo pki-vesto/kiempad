@@ -39275,8 +39275,10 @@ describe('app shell', () => {
       '.knowledge-library-empty-recovery-choice__body\n    .knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__feedback {',
     );
     expect(css).toContain(
-      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__feedback {\n    align-items: center;\n    block-size: 22px;\n    inline-size: min(12ch, 38%);\n    justify-content: center;\n    text-align: center;\n  }',
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__feedback {\n    align-items: center;\n    block-size: 22px;\n    color: color-mix(in srgb, var(--text) 92%, var(--text-muted));\n    inline-size: min(12ch, 38%);\n    justify-content: center;\n    text-align: center;\n    z-index: 2;\n  }',
     );
+    expect(css).toContain('color: color-mix(in srgb, var(--text) 92%, var(--text-muted));');
+    expect(css).toContain('z-index: 2;');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');

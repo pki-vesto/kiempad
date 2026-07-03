@@ -23893,9 +23893,11 @@ a.action-card:active {
     .knowledge-library-empty-recovery-choice__feedback {
     align-items: center;
     block-size: 22px;
+    color: color-mix(in srgb, var(--text) 92%, var(--text-muted));
     inline-size: min(12ch, 38%);
     justify-content: center;
     text-align: center;
+    z-index: 2;
   }
 
   .knowledge-library-category-choice__grid {

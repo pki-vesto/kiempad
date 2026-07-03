@@ -1415,6 +1415,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   copy within the stable badge box.
   Partial G1511/#2966: The knowledge library empty-state recovery badges now keep mobile
   centering explicit across hover and focus states.
+  Partial G1512/#2968: The knowledge library empty-state recovery badges now keep focused
+  mobile badge copy visibly centered above focus feedback.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
