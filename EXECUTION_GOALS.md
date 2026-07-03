@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1579 — Kosten datumveld toont zichtbaar dd-mm-jjjj hulpje
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Native datumvelden tonen per browser geen consistente placeholder, waardoor het gewenste datumformaat in het Kostenformulier onduidelijk kan zijn.
+- **User Impact:** Gebruikers moeten gokken hoe ze een datum invoeren of vertrouwen op browsergedrag dat niet overal hetzelfde is.
+- **Desired Outcome:** Het Kosten datumveld toont een zichtbare `dd-mm-jjjj` hint onder het veld.
+- **User Value:** Gebruikers zien direct welk datumformaat bedoeld is zonder extra uitleg of foutmelding.
+- **Acceptance Criteria:** Kostenpost toevoegen/bewerken toont `Gebruik dd-mm-jjjj` onder het datumveld; de hint gebruikt gedeelde `.date-format-hint` styling; de bestaande date/time field kit blijft intact; app-shell tests bewaken markup en CSS-contract; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Kosten toevoegen, Kostenhistorie bewerken
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Kosten form, date/time field kit, form helper styling
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3102
+
 ### G1578 — Disclosure summaries krijgen gedeelde teal focusring
 
 - **Epic:** Onboarding & Daily Use

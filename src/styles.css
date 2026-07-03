@@ -2628,6 +2628,13 @@ h2 {
   opacity: 1;
 }
 
+.date-format-hint {
+  color: var(--text-faint);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
 .binary-toggle {
   display: grid;
   gap: 8px;

@@ -637,6 +637,9 @@
 - **Shared disclosure focus rings — done in G1578 / issue #3100.** All app summary-class
   disclosures and the vault status summary now inherit the same visible teal focus ring, extending
   CFX-075 beyond the earlier named disclosure subset.
+- **Kosten date format hint — done in G1579 / issue #3102.** The Kosten add/edit date field now
+  shows a visible `dd-mm-jjjj` helper below the native date input, avoiding browser-dependent
+  placeholder visibility while keeping the shared date/time field kit.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.
@@ -1186,6 +1189,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   optional context groups closed until explicitly opened.
 - **CFX-025** — `€` prefix adornment in amount fields (C25). **P3 · S**
 - **CFX-026** — Real date placeholder ("dd-mm-jjjj") vs grey filled-looking default (C26). **P2 · S**
+  Partial G1579/#3102: Kosten add/edit date fields now show a visible `Gebruik dd-mm-jjjj`
+  helper via `.date-format-hint`, instead of relying on native date placeholder behavior.
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**
 - **CFX-028** — Form actions: primary Bewaar + ghost Annuleer, not both full-width teal (C28). **P2 · S**
 - **CFX-029** — Inline validation in `--clay-ink` (no browser popups) (C29). **P2 · M**
