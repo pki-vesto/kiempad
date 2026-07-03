@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1372 — Daily Recommendations: resetmelding borgt disabled/verberg-state
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding heeft hover-, focus- en active-state borging, maar de Verberg-knop heeft nog geen expliciete guarded/disabled presentatie.
+- **User Impact:** Als de lokale hide-actie tijdelijk niet beschikbaar zou zijn, kan de UI minder duidelijk of inconsistent ogen.
+- **Desired Outcome:** Borg een rustige disabled/guarded stijl voor de Verberg-knop zonder layout shift of overflow.
+- **User Value:** De tijdelijke resetfeedback blijft voorspelbaar, ook in bewaakte interactiestates.
+- **Acceptance Criteria:** Disabled/aria-disabled stijl is compact en duidelijk; de stijl veroorzaakt geen overflow op mobiel of desktop; de guarded state verandert geen hash, feedbackfilter, tracking of medische data; tests of CSS guards bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, button states, CSS tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2690
+
 ### G1371 — Daily Recommendations: resetmelding borgt active-state op touch
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, touch CSS, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2688
 
 ### G1370 — Daily Recommendations: resetmelding toont rustige hover op mobiel

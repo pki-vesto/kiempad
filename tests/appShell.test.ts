@@ -3202,6 +3202,12 @@ describe('app shell', () => {
     expect(css).toContain('@media (hover: hover) and (pointer: fine)');
     expect(css).toContain('.daily-recommendation-reset-route-focus__close:hover {');
     expect(css).toContain('background: var(--surface);');
+    expect(css).toContain('.daily-recommendation-reset-route-focus__close:active {');
+    expect(css).toContain(
+      'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);',
+    );
+    expect(css).toContain('background: Highlight;');
+    expect(css).toContain('color: HighlightText;');
     expect(css).toContain('outline-color 0.16s ease;');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
     expect(css).toContain(

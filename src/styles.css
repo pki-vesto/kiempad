@@ -14217,6 +14217,13 @@ a.action-card:active {
     outline-offset: 2px;
   }
 
+  .daily-recommendation-reset-route-focus__close:active {
+    border-color: Highlight;
+    background: Highlight;
+    box-shadow: none;
+    color: HighlightText;
+  }
+
   #dossier-upload-form,
   #consult-verslag-form,
   #embryo-quality-form,
@@ -15006,6 +15013,13 @@ a.action-card:active {
   outline-offset: 2px;
 }
 
+.daily-recommendation-reset-route-focus__close:active {
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--text);
+}
+
 @media (max-width: 759px) {
   [data-daily-recommendation-reset-route-focus="ready"] {
     width: 100%;
@@ -15026,6 +15040,12 @@ a.action-card:active {
   .daily-recommendation-reset-route-focus__close:hover {
     border-color: color-mix(in srgb, var(--accent) 26%, var(--border));
     background: var(--surface);
+  }
+
+  .daily-recommendation-reset-route-focus__close:active {
+    border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
   }
 }
 
