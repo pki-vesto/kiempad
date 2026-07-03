@@ -38252,6 +38252,10 @@ describe('app shell', () => {
     );
     expect(html).toContain('Research begrijpen zonder alles tegelijk te lezen');
     expect(html).toContain('Netwerkresearch: lokale cache');
+    expect(html).toContain('data-knowledge-workbench-status-choice="collapsed"');
+    expect(html).toContain('Kies werkbankstatus');
+    expect(html).toContain('Open netwerkstatus, zichtbaar aantal en researchmetrics.');
+    expect(html).toContain('data-knowledge-workbench-status-metrics="ready"');
     expect(html).toContain('data-knowledge-research-scan-choice="collapsed"');
     expect(html).toContain('Kies researchscan');
     expect(html).toContain('Open daarna bronnen, samenvattingen, trends of netwerkstatus.');
@@ -38269,6 +38273,12 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="knowledge-research-scan-choice" data-knowledge-research-scan-choice="collapsed" open>',
+    );
+    expect(html.indexOf('data-knowledge-workbench-status-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-workbench-status-metrics="ready"'),
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-workbench-status-choice" data-knowledge-workbench-status-choice="collapsed" open>',
     );
     expect(html).toContain('id="knowledge-overview"');
     expect(html).toContain('class="knowledge-command-panel__intro"');
@@ -38625,6 +38635,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-scan-choice__body {');
     expect(css).toContain(
       '.knowledge-research-scan-choice:not([open]) > .knowledge-research-scan-choice__body {',
+    );
+    expect(css).toContain('.knowledge-workbench-status-choice {');
+    expect(css).toContain('.knowledge-workbench-status-choice__summary {');
+    expect(css).toContain('.knowledge-workbench-status-choice__body {');
+    expect(css).toContain(
+      '.knowledge-workbench-status-choice:not([open]) > .knowledge-workbench-status-choice__body {',
     );
     expect(css).toContain('.knowledge-research-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
