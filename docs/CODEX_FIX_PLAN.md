@@ -605,6 +605,9 @@
   renders inside the main content before the active screen panel for every route, with a sticky
   compact route switcher, so desktop users get an immediate "where am I / switch here" cue instead
   of the route context living in the sidebar.
+- **Mobile route workspace panels — done in G1569 / issue #3082.** Mobile task workspaces now
+  bound the active route and context areas as scrollable app panels below the route dock, reducing
+  the long-page feel while keeping desktop/tablet split views and route hooks intact.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.
@@ -1022,6 +1025,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   fix any full-bleed screens (L81/I63). **P1 · M**
   Partial G1398/#2570: Start mobile removes clipped horizontal cockpit/workbanen carousels and
   keeps the first-run checklist closed by default.
+  Partial G1569/#3082: Shared mobile domain split workspaces now keep the route dock, active route,
+  and context as bounded app panels with internal scrolling instead of one continuous long page.
 
 ### Screens (from Screen-by-Screen)
 - **CFX-020** — Timeline component adoption for Traject + Logboek (dot/line rail, amber current

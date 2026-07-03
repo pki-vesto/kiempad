@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1368 |
+| ☑ klaar | 1369 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1567** |
+| **Totaal** | **1568** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1730,12 +1730,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1566 | Kennis bibliotheek herstelactie badges houden mobiele badgehover responsive contractnamen stabiel | P1 | F5 | ☑ |
 | G1567 | Kennis bibliotheek herstelactie badges houden mobiele badgehover responsive contracttypen stabiel | P1 | F5 | ☑ |
 | G1568 | Kennis bibliotheek herstelactie badges houden mobiele badgehover responsive contract traceerbaar | P1 | F5 | ☐ |
+| G1569 | Premium Claude Design UI houdt mobiele routewerkruimte als begrensde app-panelen | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1567** (id's G001 t/m G1568; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1568** (id's G001 t/m G1569; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

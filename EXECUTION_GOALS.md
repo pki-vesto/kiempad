@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1569 — Premium Claude Design UI houdt mobiele routewerkruimte als begrensde app-panelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Mobiele route-first werkruimtes hebben wel taakroutes, maar rail, actieve route en context kunnen alsnog als één lange documentpagina aanvoelen.
+- **User Impact:** Gebruikers moeten op kleine schermen te veel door één doorlopende pagina scannen en verliezen sneller het gevoel van een rustige app-workspace.
+- **Desired Outcome:** Mobiele taakwerkruimtes tonen een compacte routedock met daaronder begrensde scrollbare panelen voor actieve route en context.
+- **User Value:** Gebruikers krijgen sneller overzicht en blijven binnen één duidelijke werktaak zonder alle vervolgcontext tegelijk als lange pagina te ervaren.
+- **Acceptance Criteria:** Mobiele domain-split workspaces begrenzen actieve route en context als app-panelen; desktop/tablet split-view structuur blijft intact; routehooks, contextkolommen en taakroutes blijven bereikbaar; panelen blijven min-width veilig, intern scrollbaar en zonder horizontale overflow; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Dossier, Kennis, Agenda, Medicatie, Traject, Vragen, Welzijn, Afwegingen, Kosten, Logboek, Back-up, Herinneringen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Shared domain split workspace CSS, route-first workspaces, mobile layout
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3082
+
 ### G1568 — Kennis bibliotheek herstelactie badges houden mobiele badgehover responsive contract traceerbaar
 
 - **Epic:** Onboarding & Daily Use
