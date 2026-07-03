@@ -23914,6 +23914,7 @@ a.action-card:active {
   .knowledge-library-empty-recovery-choice__body
     .knowledge-library-followup-visibility-choice__anchor:hover:focus-visible
     .knowledge-library-empty-recovery-choice__label {
+    color: color-mix(in srgb, var(--category) 76%, var(--text));
     font-weight: 860;
   }
 
