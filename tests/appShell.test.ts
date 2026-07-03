@@ -37426,7 +37426,21 @@ describe('app shell', () => {
     expect(html).toContain('Wetenschappelijke en eenvoudige uitleg');
     expect(html).toContain('Relevantie, relaties en trends openen');
     expect(html).toContain('data-knowledge-route-summary="add"');
-    expect(html).toContain('href="#knowledge-item-form"');
+    expect(html).toContain('Start met een publicatie of researchnotitie');
+    expect(html).toContain('href="#research-item-form"');
+    expect(html).toContain('href="#knowledge-own-item-disclosure"');
+    expect(html).toContain('data-knowledge-add-layout="single-input"');
+    expect(html).toContain('data-knowledge-add-primary="research"');
+    expect(html).toContain('id="research-item-form"');
+    expect(html).toContain('id="knowledge-own-item-disclosure"');
+    expect(html).toContain('data-knowledge-add-followup="own-item"');
+    expect(html).toContain('Eigen kennisitem openen');
+    expect(html).toContain('data-knowledge-add-secondary="own-item"');
+    expect(html).toContain('id="knowledge-item-form"');
+    expect(html.indexOf('data-knowledge-add-primary="research"')).toBeLessThan(
+      html.indexOf('id="knowledge-own-item-disclosure"'),
+    );
+    expect(html).not.toContain('<details id="knowledge-own-item-disclosure" open');
     expect(html).toContain('data-knowledge-route-summary="ai"');
     expect(html).toContain('Start met een gecontroleerde AI-preview');
     expect(html).toContain('href="#ai-preview-form"');

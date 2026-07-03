@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1388 — Kennis: toevoegen start met één kennisinvoer tegelijk
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Kennis-route Toevoegen toont het researchformulier en het eigen-kennisitemformulier tegelijk in twee panels.
+- **User Impact:** Gebruikers ervaren de route als een formulierwand in plaats van één rustige kennisinvoertaak.
+- **Desired Outcome:** Start met research/publicatie toevoegen als primaire invoer en houd eigen kennis beschikbaar als gesloten vervolgstap.
+- **User Value:** Gebruikers kunnen eerst één kennisbron vastleggen en openen extra notitiecontext pas wanneer dat nodig is.
+- **Acceptance Criteria:** Kennis Toevoegen toont één primaire research-invoer in de eerste viewport; het eigen-kennisitemformulier blijft aanwezig met dezelfde `#knowledge-item-form` hook maar start in een gesloten disclosure; research form id/name/hooks blijven ongewijzigd; er komt geen extra tracking, AI-payload, medische conclusie of broninhoud-lek bij; tests bewaken gesloten vervolgstap, inhoud, volgorde en non-overlap.
+- **Affected Screens:** Kennis, Research toevoegen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, Kennis route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2722
+
 ### G1387 — Vragen: consultvoorbereiding houdt volledige vragenlijst dicht
 
 - **Epic:** Onboarding & Daily Use

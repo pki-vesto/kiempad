@@ -5615,9 +5615,17 @@ h2 {
   grid-template-columns: minmax(0, 1fr);
 }
 
+.knowledge-route-grid--add {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .knowledge-route-grid > .summary-panel,
 .knowledge-library-panel {
   min-width: 0;
+}
+
+.knowledge-add-followup .summary-panel {
+  margin: 0;
 }
 
 .knowledge-ai-console {

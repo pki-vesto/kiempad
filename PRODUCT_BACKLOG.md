@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1188 |
+| ☑ klaar | 1189 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1387** |
+| **Totaal** | **1388** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1550,12 +1550,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1385 | Dossier Upload: compacte toevoegstroom tabs in plaats van kaartlaag | P1 | F5 | ☑ |
 | G1386 | Dossier Upload: keuzevariant toont niet twee routekeuzes tegelijk | P1 | F5 | ☑ |
 | G1387 | Vragen: consultvoorbereiding houdt volledige vragenlijst dicht | P1 | F5 | ☑ |
+| G1388 | Kennis: toevoegen start met één kennisinvoer tegelijk | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1387** (id's G001 t/m G1387, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1388** (id's G001 t/m G1388, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
