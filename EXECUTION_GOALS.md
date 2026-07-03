@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1411 — Dossier upload: koppelingenpaneel start met één koppelkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1410 zijn bestandskeuze en metadata rustiger, maar zodra gebruikers Koppelingen openen verschijnen afspraak, traject en notitie nog tegelijk.
+- **User Impact:** Gebruikers die alleen willen bepalen of een upload gekoppeld moet worden, moeten alsnog meerdere koppelvelden tegelijk scannen.
+- **Desired Outcome:** Laat het koppelingenpaneel eerst openen met één rustige keuze- of samenvattingslaag, waarna afspraak, traject en notitie als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen optionele koppelingen stap voor stap toevoegen zonder dat de uploadroute opnieuw volloopt.
+- **Acceptance Criteria:** Bestaande inputnamen, form ids, privacy hooks en dossier hooks blijven aanwezig; het koppelingenpaneel toont eerst één duidelijke koppelkeuze of samenvattingslaag; afspraak-, traject- en notitievelden blijven bereikbaar maar starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Dossier, Upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload link panel, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2768
+
 ### G1410 — Dossier upload: metadatapaneel start met één controlekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload metadata panel, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2766
 
 ### G1409 — Dossier upload: uploadroute start met één bestandskeuze
