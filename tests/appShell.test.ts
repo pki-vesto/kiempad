@@ -39204,11 +39204,13 @@ describe('app shell', () => {
       '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__feedback',
     );
     expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__feedback {\n  border-color: color-mix(in srgb, var(--category) 26%, var(--border-strong));\n  border-style: solid;\n  background: color-mix(in srgb, var(--surface) 82%, var(--category));\n  color: var(--text);\n  font-weight: 800;\n}',
+    );
+    expect(css).toContain(
       'border-color: color-mix(in srgb, var(--category) 26%, var(--border-strong));',
     );
     expect(css).toContain('border-style: solid;');
     expect(css).toContain('background: color-mix(in srgb, var(--surface) 82%, var(--category));');
-    expect(css).toContain('font-weight: 850;');
     expect(css).toContain('max-width: min(12ch, 38%);');
     expect(css).toContain('margin-left: auto;');
     expect(css).toContain('flex-shrink: 0;');
