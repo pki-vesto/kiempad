@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1459 — Kennis research leeslaag start met één compacte laankeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1458 blijft de research leeslaag gevoelig voor vier lane-kaarten met samenvattingsstatussen tegelijk.
+- **User Impact:** Gebruikers die research openen, zien nog meerdere leeslagen voordat ze één laag kiezen.
+- **Desired Outcome:** Laat de kennis research leeslaag starten met één compacte laankeuze of samengevouwen sublaag, terwijl Wetenschappelijk, Eenvoudig, Relevantie en Trends bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één leeskeuze maken zonder dat alle researchlagen tegelijk de werkruimte domineren.
+- **Acceptance Criteria:** Bestaande knowledge research readerhooks, lane-anchors en routehashes blijven aanwezig; de research leeslaag start met één compacte laankeuze of samengevouwen sublaag; Wetenschappelijk, Eenvoudig, Relevantie en Trends blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge research reader, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2862
+
 ### G1458 — Kennis research workflowkop start met één compacte routekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge research workflow header, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2860
 
 ### G1457 — Kennis researchroute routekop start met één compacte statuskeuze
