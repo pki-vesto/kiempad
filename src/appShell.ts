@@ -14375,28 +14375,39 @@ function renderPubMedQueryPreview(preview: PubMedQueryPreview): string {
 
 function renderAiPreviewForm(preview?: AiSamenvattingPayload, error?: string): string {
   return `
-    <form id="ai-preview-form" class="data-form compact-form" data-ai-preview-state="${preview ? 'preview' : 'leeg'}" data-ai-preview-feedback-state="${error ? 'error' : preview ? 'preview' : 'idle'}">
-      <label>
-        Bron
-        <input name="aiBron" value="${escapeAttribute(preview?.bron ?? '')}" autocomplete="off" required />
-      </label>
-      <label>
-        Tekst voor preview
-        <textarea name="aiBronTekst" rows="5" required>${escapeHtml(preview?.tekst ?? '')}</textarea>
-      </label>
-      <button type="submit">Toon payload-preview</button>
-    </form>
-    ${
-      preview
-        ? `<div class="policy-panel embedded-summary" aria-label="AI payload-preview">
-            <h3>Payload-preview</h3>
-            <p class="small-print">${preview.lengteVerstuurd} van ${preview.lengteOrigineel} tekens na minimalisatie.</p>
-            ${renderAiRedactionPreview(preview)}
-            <pre class="payload-preview">${escapeHtml(preview.tekst)}</pre>
-          </div>`
-        : ''
-    }
-    ${error ? `<p class="form-error" role="alert">${escapeHtml(sanitizeSettingsPrivacyFeedback(error, 'AI-previewstatus bijgewerkt zonder provider- of broninhoud.'))}</p>` : ''}
+    <details class="knowledge-ai-preview-content-choice" data-knowledge-ai-preview-content-choice="collapsed">
+      <summary class="knowledge-ai-preview-content-choice__summary">
+        <span>
+          <strong>Previewinhoud openen</strong>
+          <small>Bron, previewtekst, foutstatus en previewactie.</small>
+        </span>
+        <em>${error ? 'Controle nodig' : preview ? 'Preview klaar' : 'Geen preview'}</em>
+      </summary>
+      <div class="knowledge-ai-preview-content-choice__body">
+        <form id="ai-preview-form" class="data-form compact-form" data-ai-preview-state="${preview ? 'preview' : 'leeg'}" data-ai-preview-feedback-state="${error ? 'error' : preview ? 'preview' : 'idle'}">
+          <label>
+            Bron
+            <input name="aiBron" value="${escapeAttribute(preview?.bron ?? '')}" autocomplete="off" required />
+          </label>
+          <label>
+            Tekst voor preview
+            <textarea name="aiBronTekst" rows="5" required>${escapeHtml(preview?.tekst ?? '')}</textarea>
+          </label>
+          <button type="submit">Toon payload-preview</button>
+        </form>
+        ${
+          preview
+            ? `<div class="policy-panel embedded-summary" aria-label="AI payload-preview">
+                <h3>Payload-preview</h3>
+                <p class="small-print">${preview.lengteVerstuurd} van ${preview.lengteOrigineel} tekens na minimalisatie.</p>
+                ${renderAiRedactionPreview(preview)}
+                <pre class="payload-preview">${escapeHtml(preview.tekst)}</pre>
+              </div>`
+            : ''
+        }
+        ${error ? `<p class="form-error" role="alert">${escapeHtml(sanitizeSettingsPrivacyFeedback(error, 'AI-previewstatus bijgewerkt zonder provider- of broninhoud.'))}</p>` : ''}
+      </div>
+    </details>
   `;
 }
 

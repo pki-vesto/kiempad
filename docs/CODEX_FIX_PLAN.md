@@ -1327,6 +1327,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   choice while item cards, category, status and source information remain reachable.
   Partial G1470/#2884: The knowledge library card details now start with one closed compact card
   content choice while content, source, badges and actions remain reachable.
+  Partial G1471/#2886: The knowledge AI preview now starts with one closed compact preview
+  content choice while source, preview text, error status and preview action remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
