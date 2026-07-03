@@ -13436,7 +13436,7 @@ function renderKnowledgeRouteVisibility(
 }
 
 function renderEigenKennisItemForm(item?: KennisItem): string {
-  return `
+  const form = `
     <form ${item ? 'class="data-form compact-form knowledge-item-form"' : 'id="knowledge-item-form" class="data-form compact-form knowledge-item-form"'}>
       ${item ? `<input type="hidden" name="kennisId" value="${escapeAttribute(item.id)}" />` : ''}
       <label>
@@ -13461,6 +13461,23 @@ function renderEigenKennisItemForm(item?: KennisItem): string {
       </label>
       <button type="submit">${item ? 'Werk kennisitem bij' : 'Bewaar kennisitem'}</button>
     </form>
+  `;
+
+  if (item) return form;
+
+  return `
+    <details class="knowledge-add-own-item-choice" data-knowledge-add-own-item-choice="collapsed">
+      <summary class="knowledge-add-own-item-choice__summary">
+        <span>
+          <strong>Itemvelden openen</strong>
+          <small>Titel, categorie, broncontext, inhoud en bewaaractie.</small>
+        </span>
+        <em>Optioneel</em>
+      </summary>
+      <div class="knowledge-add-own-item-choice__body">
+        ${form}
+      </div>
+    </details>
   `;
 }
 

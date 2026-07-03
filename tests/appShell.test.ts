@@ -38508,6 +38508,9 @@ describe('app shell', () => {
     expect(html).toContain('Kies toevoegcontext');
     expect(html).toContain('Open daarna eigen kennisitem of notitiecontext');
     expect(html).toContain('data-knowledge-add-secondary="own-item"');
+    expect(html).toContain('data-knowledge-add-own-item-choice="collapsed"');
+    expect(html).toContain('Itemvelden openen');
+    expect(html).toContain('Titel, categorie, broncontext, inhoud en bewaaractie.');
     expect(html).toContain('id="knowledge-item-form"');
     expect(html.indexOf('data-knowledge-add-primary="research"')).toBeLessThan(
       html.indexOf('data-knowledge-add-research-input-choice="collapsed"'),
@@ -38524,6 +38527,12 @@ describe('app shell', () => {
     expect(html.indexOf('data-knowledge-add-context-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-add-secondary="own-item"'),
     );
+    expect(html.indexOf('data-knowledge-add-secondary="own-item"')).toBeLessThan(
+      html.indexOf('data-knowledge-add-own-item-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-add-own-item-choice="collapsed"')).toBeLessThan(
+      html.indexOf('id="knowledge-item-form"'),
+    );
     expect(html.indexOf('data-knowledge-add-route-status-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#research-item-form"'),
     );
@@ -38536,6 +38545,9 @@ describe('app shell', () => {
     expect(html).not.toContain('<details id="knowledge-own-item-disclosure" open');
     expect(html).not.toContain(
       '<details class="knowledge-add-context-choice" data-knowledge-add-context-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-add-own-item-choice" data-knowledge-add-own-item-choice="collapsed" open>',
     );
     expect(html).toContain('data-knowledge-route-summary="ai"');
     expect(html).toContain('data-knowledge-ai-route-status-choice="collapsed"');
@@ -39051,6 +39063,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-add-context-choice__body {');
     expect(css).toContain(
       '.knowledge-add-context-choice:not([open]) > .knowledge-add-context-choice__body {',
+    );
+    expect(css).toContain('.knowledge-add-own-item-choice {');
+    expect(css).toContain('.knowledge-add-own-item-choice__summary {');
+    expect(css).toContain('.knowledge-add-own-item-choice__body {');
+    expect(css).toContain(
+      '.knowledge-add-own-item-choice:not([open]) > .knowledge-add-own-item-choice__body {',
     );
     expect(css).toContain('.knowledge-ai-console {');
     expect(css).toContain('.knowledge-ai-support__summary {');
