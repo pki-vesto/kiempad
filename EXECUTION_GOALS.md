@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1413 — Dossier upload: embryo-labcontextpaneel start met één labkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1412 zijn bestandskeuze, metadata, koppelingen en beeldcontext rustiger, maar zodra gebruikers Embryo en labcontext openen verschijnen vier labvelden nog tegelijk.
+- **User Impact:** Gebruikers die alleen willen aangeven dat een upload embryologie- of labcontext heeft, moeten alsnog meerdere labvelden tegelijk scannen.
+- **Desired Outcome:** Laat het embryo/labcontextpaneel eerst openen met één rustige keuze- of samenvattingslaag, waarna embryo-label, embryo-id, embryodag en laboratoriumcontext als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen labcontext stap voor stap toevoegen zonder dat de uploadroute opnieuw als een brede invoerpagina voelt.
+- **Acceptance Criteria:** Bestaande inputnamen, form ids, privacy hooks en dossier hooks blijven aanwezig; het embryo/labcontextpaneel toont eerst één duidelijke labkeuze of samenvattingslaag; embryo-label, embryo-id, embryodag en laboratoriumcontext blijven bereikbaar maar starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Dossier, Upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload embryo lab context panel, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2772
+
 ### G1412 — Dossier upload: beeldcontextpaneel start met één beeldkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload image context panel, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2770
 
 ### G1411 — Dossier upload: koppelingenpaneel start met één koppelkeuze

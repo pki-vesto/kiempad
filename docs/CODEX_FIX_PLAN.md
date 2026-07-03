@@ -1210,6 +1210,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   before date, recognition, OCR preview and concept confirmation fields appear.
   Partial G1411/#2768: Opening the upload links panel now shows one closed linking choice before
   appointment, treatment-track and note fields appear.
+  Partial G1412/#2770: Opening the upload image-context panel now shows one closed image-field choice
+  before image context, source and cycle-day fields appear.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
