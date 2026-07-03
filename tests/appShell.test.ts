@@ -39260,11 +39260,11 @@ describe('app shell', () => {
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('touch-action: manipulation;');
     expect(css).toContain(
-      'outline: 2px solid color-mix(in srgb, var(--category) 52%, var(--accent));',
+      'outline: 2px solid color-mix(in srgb, var(--category) 46%, var(--accent));',
     );
     expect(css).toContain('outline-offset: 3px;');
     expect(css).toContain(
-      'box-shadow: 0 0 0 5px color-mix(in srgb, var(--surface) 82%, transparent);',
+      'box-shadow: 0 0 0 4px color-mix(in srgb, var(--surface) 88%, transparent);',
     );
     expect(css).toContain('position: relative;');
     expect(css).toContain('z-index: 1;');

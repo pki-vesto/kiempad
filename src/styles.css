@@ -23851,9 +23851,9 @@ a.action-card:active {
 
   .knowledge-library-empty-recovery-choice__body
     .knowledge-library-followup-visibility-choice__anchor:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--category) 52%, var(--accent));
+    outline: 2px solid color-mix(in srgb, var(--category) 46%, var(--accent));
     outline-offset: 3px;
-    box-shadow: 0 0 0 5px color-mix(in srgb, var(--surface) 82%, transparent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--surface) 88%, transparent);
   }
 
   .knowledge-library-empty-recovery-choice__label {
