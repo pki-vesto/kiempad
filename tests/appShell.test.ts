@@ -39331,6 +39331,8 @@ describe('app shell', () => {
     const focusBadgeFeedbackWidthPercent = 38;
     const hoverBadgeFeedbackWidthCh = 12;
     const hoverBadgeFeedbackWidthPercent = 38;
+    const hoverBadgeFeedbackFlexGrow = 0;
+    const hoverBadgeFeedbackStableFlexGrow = 0;
     const hoverBadgeFeedbackFlexShrink = 0;
     const hoverBadgeFeedbackStableFlexShrink = 0;
     const hoverBadgeFeedbackFlexBasisCh = 12;
@@ -39360,6 +39362,7 @@ describe('app shell', () => {
     expect(hoverBadgeFeedbackBlockSizePx).toBe(hoverBadgeFeedbackStableBlockSizePx);
     expect(focusBadgeFeedbackWidthCh).toBe(hoverBadgeFeedbackWidthCh);
     expect(focusBadgeFeedbackWidthPercent).toBe(hoverBadgeFeedbackWidthPercent);
+    expect(hoverBadgeFeedbackFlexGrow).toBe(hoverBadgeFeedbackStableFlexGrow);
     expect(hoverBadgeFeedbackFlexShrink).toBe(hoverBadgeFeedbackStableFlexShrink);
     expect(hoverBadgeFeedbackFlexBasisCh).toBe(hoverBadgeFeedbackWidthCh);
     expect(hoverBadgeFeedbackFlexBasisPercent).toBe(hoverBadgeFeedbackWidthPercent);
