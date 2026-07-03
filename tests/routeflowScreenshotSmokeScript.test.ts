@@ -22,11 +22,11 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'daily-advice-console'");
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
-    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'dagadviesroute staat niet in begrensde adviesvlakken',
+      '[data-daily-advice-primary-action-choice="ready"]',
     );
-    expect(routeflowScreenshotSmokeScript).toContain('listMaxHeight');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-followup="collapsed"]');
+    expect(routeflowScreenshotSmokeScript).toContain('openDailyAdviceListDetails');
     expect(routeflowScreenshotSmokeScript).toContain('uploadConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain('closedDetailsSelectors');
     expect(routeflowScreenshotSmokeScript).toContain(

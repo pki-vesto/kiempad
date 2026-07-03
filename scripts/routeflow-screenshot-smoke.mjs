@@ -179,45 +179,59 @@ const targets = [
     requiredSelectors: [
       '[data-daily-advice-focus-shell="ready"]',
       '[data-daily-advice-console="ready"]',
-      '[data-daily-advice-focus-region="workflow"]',
-      '[data-daily-advice-focus-region="workbench"]',
+      '#daily-advice-primary-action-choice',
+      '[data-daily-advice-primary-action-choice="ready"]',
+      '#daily-advice-followup',
+      '[data-daily-advice-followup="collapsed"]',
       '[data-daily-advice-focus-region="planner"]',
-      '[data-daily-advice-focus-region="list"]',
-      '[data-daily-advice-console-region="workflow"]',
-      '[data-daily-advice-console-region="workbench"]',
       '[data-daily-advice-console-region="planner"]',
-      '[data-daily-advice-console-region="list"]',
-      '[data-hub-workflow="daily-recommendations"]',
-      '[data-daily-advice-workbench="owner-routes"]',
-      '[data-daily-advice-snapshot="ready"]',
       '[data-daily-advice-action-planner="ready"]',
       '[data-daily-advice-action-lane="lifestyle"]',
       '[data-daily-advice-action-lane="nutrition"]',
       '[data-daily-advice-action-lane="supplements"]',
       '[data-daily-advice-action-lane="clinician"]',
+    ],
+    presentSelectors: [
+      '[data-daily-advice-focus-region="workflow"]',
+      '[data-daily-advice-focus-region="workbench"]',
+      '[data-daily-advice-focus-region="list"]',
+      '[data-daily-advice-console-region="workflow"]',
+      '[data-daily-advice-console-region="workbench"]',
+      '[data-daily-advice-console-region="list"]',
+      '[data-hub-workflow="daily-recommendations"]',
+      '[data-daily-advice-workbench="owner-routes"]',
+      '[data-daily-advice-snapshot="ready"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+    ],
+    closedDetailsSelectors: [
+      '[data-daily-advice-followup="collapsed"]',
       '[data-hub-detail-panel="daily-recommendation-list"]',
     ],
     desktopHiddenSelectors: [
       '.daily-advice-focus-shell__header p:last-child',
       '.daily-advice-action-planner__header > p',
-      '.hub-workflow-header__copy p',
-      '[data-hub-detail-panel="daily-recommendation-list"] .hub-detail-disclosure__summary small',
     ],
     hiddenSelectors: [
       '[data-daily-advice-feedback-workflow-status="ready"]',
       '[data-daily-recommendation-list-filter-header="ready"]',
     ],
-    dailyAdviceConsole: true,
   },
   {
     screen: 'daily-advice-feedback-filter-route',
     hash: '#start-recommendations?feedback=artscheck',
     rootSelector: '[data-daily-advice-focus-shell="ready"]',
     expectedText: 'Te doen vandaag',
-    openSelectors: ['[data-hub-detail-panel="daily-recommendation-list"]'],
+    openSelectors: [
+      '[data-daily-advice-followup="collapsed"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+    ],
     requiredSelectors: [
       '[data-daily-advice-focus-shell="ready"]',
       '[data-daily-advice-console="ready"]',
+      '#daily-advice-primary-action-choice',
+      '[data-daily-advice-primary-action-choice="ready"]',
+      '#daily-advice-followup',
+      '[data-daily-advice-followup="collapsed"]',
       '[data-daily-advice-focus-region="workflow"]',
       '[data-daily-advice-focus-region="workbench"]',
       '[data-daily-advice-focus-region="planner"]',
@@ -248,7 +262,6 @@ const targets = [
       '.hub-workflow-header__copy p',
       '[data-hub-detail-panel="daily-recommendation-list"] .hub-detail-disclosure__summary small',
     ],
-    dailyAdviceConsole: true,
     dailyAdviceFeedbackNavigation: true,
   },
   {
@@ -1730,7 +1743,7 @@ async function prepareFilledConsultCard(page, targetHash) {
 }
 
 async function assertDailyAdviceFeedbackNavigation(page) {
-  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await openDailyAdviceListDetails(page);
   await page
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
     .filter({ hasText: 'Actieve filter: Artscheck' })
@@ -1820,7 +1833,7 @@ async function assertDailyAdviceFeedbackNavigation(page) {
 
   await page.goBack({ waitUntil: 'networkidle' });
   await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
-  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await openDailyAdviceListDetails(page);
   await expectHash(page, '#start-recommendations?feedback=artscheck');
   await page
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
@@ -1853,7 +1866,7 @@ async function assertDailyAdviceFeedbackNavigation(page) {
 
   await page.goBack({ waitUntil: 'networkidle' });
   await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
-  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await openDailyAdviceListDetails(page);
   await expectHash(page, '#start-recommendations?feedback=artscheck');
   await page
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
@@ -1884,7 +1897,7 @@ async function assertDailyAdviceFeedbackNavigation(page) {
 
   await page.goBack({ waitUntil: 'networkidle' });
   await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
-  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await openDailyAdviceListDetails(page);
   await expectHash(page, '#start-recommendations?feedback=artscheck');
   await page
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
@@ -1900,7 +1913,7 @@ async function assertDailyAdviceFeedbackNavigation(page) {
 
   await page.goBack({ waitUntil: 'networkidle' });
   await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
-  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await openDailyAdviceListDetails(page);
   await expectHash(page, '#start-recommendations?feedback=artscheck');
   await page
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
@@ -1915,6 +1928,11 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   if (gevondenPayload) {
     throw new Error(`dagadvies feedbackfilter toont verboden payloadtekst: ${gevondenPayload}`);
   }
+}
+
+async function openDailyAdviceListDetails(page) {
+  await openDetails(page, '[data-daily-advice-followup="collapsed"]');
+  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
 }
 
 async function openDetails(page, selector) {
