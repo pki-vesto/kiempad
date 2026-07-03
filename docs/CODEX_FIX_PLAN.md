@@ -1525,6 +1525,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge hover responsive contract values stable for flex-basis, inline-size, max-width and 7ch minimum.
   Partial G1566/#3076: The knowledge library empty-state recovery actions now keep mobile
   badge hover responsive contract names stable as flexBasis, inlineSize, maxWidth and minWidth.
+  Partial G1567/#3078: The knowledge library empty-state recovery actions now keep mobile
+  badge hover responsive contract types stable as responsive min() values and a fixed 7ch minimum.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
