@@ -16377,7 +16377,7 @@ function renderDailyRecommendationActions(item: DailyRecommendation): string {
         <button class="rec-action rec-action--ghost" type="submit" name="recommendationAction" value="herinnering">Maak herinnering</button>
         <button class="rec-action rec-action--ghost" type="submit" name="recommendationAction" value="vraag">Maak vraag</button>
         <details class="rec-overflow">
-          <summary class="rec-overflow__toggle" aria-label="Meer acties">⋯</summary>
+          <summary class="rec-overflow__toggle" data-rec-overflow-toggle="hit-target" aria-label="Meer acties" title="Meer acties">⋯</summary>
           <div class="rec-overflow__menu" role="menu">
             <button class="rec-action rec-action--menu" type="submit" name="recommendationAction" value="gedaan">Gedaan</button>
             <button class="rec-action rec-action--menu" type="submit" name="recommendationAction" value="afwijzen">Wijs af</button>

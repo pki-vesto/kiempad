@@ -628,6 +628,9 @@
   embryo-quality, and embryo-status upload routes now show compact required-input maps before
   their submit actions, using clay-ink chips so users can see the minimum fields without opening
   every collapsed step.
+- **Mobile hit-target polish — done in G1576 / issue #3096.** Tablet primary navigation and the
+  Meer-schermen summary now meet a 44px tap-target floor, and the daily recommendation overflow
+  control is a labelled 44x44 icon control with visible hover/focus styling.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.
@@ -1210,7 +1213,11 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 
 ### Accessibility
 - **CFX-053** — Audit every icon-only button for `aria-label` (eye, `⋯`, delete, toggles). **P1 · S**
+  Partial G1576/#3096: the daily recommendation overflow control keeps an explicit `aria-label`,
+  adds a visible title, and is covered by app-shell markup tests.
 - **CFX-054** — Hit-target ≥44px audit on mobile nav/toggles/menus. **P2 · S**
+  Partial G1576/#3096: tablet primary navigation links and Meer-schermen summary now use a 44px
+  minimum height, and the daily recommendation overflow icon control is at least 44x44.
 - **CFX-055** — `role="switch"`/`aria-checked` on all toggles (with CFX-017). **P1 · S**
   Partial G1378/#2530: the Settings gedeelde-modus and Herinneringen lockscreenprivacy controls
   expose `role="switch"`/`aria-checked` and update their visible state on change.

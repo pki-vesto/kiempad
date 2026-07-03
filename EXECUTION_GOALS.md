@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1576 — Mobiele navigatie en dagadvies-overflow halen 44px tap-targets
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Tabletnavigatie en de icon-only dagadvies-overflow gebruiken nog kleinere tapzones dan de 44px toegankelijkheidsnorm.
+- **User Impact:** Navigeren en extra dagadviesacties kiezen voelt op tablet en touchschermen minder precies en minder premium.
+- **Desired Outcome:** Tablet primary nav, de mobiele/tablet Meer-toggle en de dagadvies-overflow zijn minimaal 44px tapbaar en blijven expliciet gelabeld.
+- **User Value:** Gebruikers kunnen routes en extra acties makkelijker raken zonder mis-taps.
+- **Acceptance Criteria:** Tablet primary nav-links hebben minimaal 44px hoogte; tablet Meer-schermen summary heeft minimaal 44px hoogte; de dagadvies-overflow-toggle is minimaal 44x44, behoudt `aria-label` en heeft een zichtbaar `title`; hover/focus states blijven zichtbaar; app-shell tests dekken markup en CSS-contract; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Primary navigation, Dagelijkse aanbevelingen
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Primary nav CSS, daily recommendation actions, accessibility hit-target contracts
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3096
+
 ### G1575 — Dossier uploadroutes tonen verplichte invoerkaart
 
 - **Epic:** Onboarding & Daily Use
