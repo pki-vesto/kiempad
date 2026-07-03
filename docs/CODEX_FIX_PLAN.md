@@ -1409,6 +1409,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   mobile truncation metrics across rest and focus states.
   Partial G1508/#2960: The knowledge library empty-state recovery badges now keep stable mobile
   focus height with explicit badge box sizing.
+  Partial G1509/#2962: The knowledge library empty-state recovery badges now keep fixed mobile
+  inline and block sizes across interaction states.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

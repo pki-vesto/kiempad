@@ -23862,11 +23862,16 @@ a.action-card:active {
   }
 
   .knowledge-library-empty-recovery-choice__feedback {
+    display: inline-flex;
+    align-items: center;
     box-sizing: border-box;
     flex: 0 0 min(12ch, 38%);
+    justify-content: flex-end;
     position: relative;
     z-index: 1;
     margin-left: auto;
+    block-size: 22px;
+    inline-size: min(12ch, 38%);
     max-width: min(12ch, 38%);
     min-height: 22px;
     min-width: 7ch;
