@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1496 — Kennis bibliotheek herstelactie badges tonen mobiele focusring
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1495 hebben herstelacties mobiele tapruimte, maar de focusring rond mobiele herstelacties is nog niet apart bewaakt.
+- **User Impact:** Mobiele en toetsenbordgebruikers kunnen minder duidelijk zien welke herstelactie focus heeft.
+- **Desired Outcome:** Behoud een duidelijke focusring rond mobiele herstelactieknoppen zonder de compacte badge-flow te verstoren.
+- **User Value:** Gebruikers houden zichtbare focus en betrouwbare bediening binnen de compacte herstelroute.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, mobiele flow-, tapruimte-, hover/focus-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; mobiele herstelactieknoppen hebben een duidelijke focusring; feedbackbadges blijven compact binnen de actieknoppen; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele focusring en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2936
+
 ### G1495 — Kennis bibliotheek herstelactie badges tonen mobiele tapruimte
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2934
 
 ### G1494 — Kennis bibliotheek herstelactie badges blijven compact op mobiel

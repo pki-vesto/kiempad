@@ -39193,6 +39193,8 @@ describe('app shell', () => {
     expect(css).toContain('max-width: min(12ch, 38%);');
     expect(css).toContain('margin-left: auto;');
     expect(css).toContain('flex-shrink: 0;');
+    expect(css).toContain('min-height: 44px;');
+    expect(css).toContain('touch-action: manipulation;');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
