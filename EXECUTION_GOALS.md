@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1474 — Kennis researchnetwerk start met één compacte netwerkkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1473 blijft het kennis researchnetwerk gevoelig voor research-opt-in, aggregatieplan, PubMed-preview en bronregister tegelijk.
+- **User Impact:** Gebruikers die researchnetwerk openen, krijgen nog meerdere netwerkvelden voordat ze gericht kiezen.
+- **Desired Outcome:** Laat het kennis researchnetwerk starten met één compacte netwerkkeuze of samengevouwen sublaag, terwijl research-opt-in, aggregatieplan, PubMed-preview en bronregister bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één netwerkcontext kiezen zonder dat alle researchnetwerkvelden tegelijk de route domineren.
+- **Acceptance Criteria:** Bestaande researchnetwerk hooks, formulier en bronregister blijven aanwezig; de researchnetwerksectie start met één compacte keuze of samengevouwen sublaag; research-opt-in, aggregatieplan, PubMed-preview en bronregister blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, research network settings, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2892
+
 ### G1473 — Kennis AI-instellingen start met één compacte instellingenkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, AI settings form, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2890
 
 ### G1472 — Kennis AI-samenvatting bewaren start met één compacte opslagkeuze
