@@ -2139,8 +2139,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card forced-colors active context line-height, small-mobile CSS, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3587
+
+### G1823 — Dossier upload small-mobile routekaart forced-colors actieve micro-label regelhoogte rustiger
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na expliciete forced-colors contextregel-regelhoogte kan de actieve micro-label-regelhoogte nog explicieter worden bewaakt zodat het kleine label compact blijft zonder druk op de routekaart.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen moeten het kleine actieve label kunnen lezen zonder dat het de compacte routekaart hoger of onrustiger maakt.
+- **Desired Outcome:** Actieve routekaart-micro-labels behouden systeemkleurcontrast met compacte, stabiele regelhoogte naast titel, context, focus en actieve indicator.
+- **User Value:** De uploadkeuze blijft rustig en compact, ook wanneer systeemcontrast alle themakleuren overneemt.
+- **Acceptance Criteria:** Actieve routekaart-micro-labels gebruiken forced-colors systeemkleur, rustig gewicht en compacte regelhoogte; focus, actieve route, titel, context en micro-label blijven onderscheidbaar; small-mobile routekaarten behouden compacte afmetingen; app-shell tests of routeflow smoke bewaken actieve micro-label-regelhoogte en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card forced-colors active micro-label line-height, small-mobile CSS, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3589
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

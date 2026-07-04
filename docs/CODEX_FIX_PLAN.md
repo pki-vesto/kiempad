@@ -2144,3 +2144,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1821/#3585: Dossier upload active route context lines now keep
   CanvasText with a calmer forced-colors weight on small-mobile so context
   remains readable without competing with the active title or focus cue.
+- Partial G1822/#3587: Dossier upload active route context lines now
+  explicitly keep compact 1.16 line-height in small-mobile forced-colors mode,
+  preserving route-card density beside title, focus and active indicators.

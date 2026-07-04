@@ -27618,6 +27618,7 @@ summary[class*="__summary"]:focus-visible,
     span {
     color: CanvasText;
     font-weight: 720;
+    line-height: 1.16;
   }
 
   .dossier-upload-console[data-dossier-add-flow="document"]
