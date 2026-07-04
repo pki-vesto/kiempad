@@ -1462,24 +1462,64 @@ h2 {
     max-height: 184px;
   }
 
-  .fertility-timeline-console__controls {
+  .fertility-timeline-console__details--controls {
     grid-area: controls;
+  }
+
+  .fertility-timeline-console__details--insights {
+    grid-area: insights;
+  }
+
+  .fertility-timeline-console__details--items {
+    grid-area: items;
+  }
+
+  .fertility-timeline-console__controls {
     padding-right: 4px;
   }
 
   .fertility-timeline-console__insights {
-    grid-area: insights;
     padding-right: 4px;
   }
 
   .fertility-timeline-console__items {
-    grid-area: items;
     padding-right: 4px;
   }
 
   .fertility-timeline-console .fertility-timeline-reader {
     margin: 0;
   }
+}
+
+.fertility-timeline-console__details {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-field);
+  background: var(--surface-subtle);
+}
+
+.fertility-timeline-console__summary {
+  min-height: 48px;
+}
+
+.fertility-timeline-console__summary span {
+  min-width: 0;
+}
+
+.fertility-timeline-console__summary small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.fertility-timeline-console__summary em {
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 760;
+  white-space: nowrap;
 }
 
 @media (min-width: 761px) {
