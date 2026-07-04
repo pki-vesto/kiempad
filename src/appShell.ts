@@ -235,6 +235,8 @@ const IMAGING_CONTEXT_DISCLAIMER = 'Kiempad ordent je beelden; je kliniek blijft
 
 const UPLOAD_CONTEXT_DISCLAIMER = 'Kiempad ordent je uploads; je kliniek blijft leidend.';
 
+const GRAPH_CONTEXT_DISCLAIMER = 'Kiempad ordent je graphcontext; je kliniek blijft leidend.';
+
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
 function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
@@ -19964,7 +19966,7 @@ function renderFertilityTimelineContextSignalen(timeline: FertilityTimeline): st
               },
             )
       }
-      <p class="small-print">Deze vragen helpen het gesprek voorbereiden en geven geen diagnose, dosering, kansberekening of behandelkeuzeadvies.</p>
+      <p class="small-print">${QUESTION_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }
@@ -20322,7 +20324,7 @@ function renderGraphNodeSchema(weergave: FertilityGraphTrajectWeergave): string 
           })
           .join('')}
       </ol>
-      <p class="small-print">Graph-nodes zijn bronmetadata voor context en geen medisch advies.</p>
+      <p class="small-print">${GRAPH_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }

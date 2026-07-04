@@ -1070,6 +1070,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   disclaimer instead of an interpretation/kansberekening/behandeladvies caveat.
   Partial G1605/#3154: Dossierupload and consultupload keep storage-location copy while using
   short upload/conversation context disclaimers instead of long medical caveats.
+  Partial G1606/#3156: Traject context artsvragen and graph-node schema now use short
+  conversation/graph context disclaimers instead of long medical caveats.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

@@ -5191,7 +5191,8 @@ describe('app shell', () => {
     expect(html).toContain('data-fertility-timeline-artsvragen="ready"');
     expect(html).toContain('Vragen voor arts');
     expect(html).toContain('Geen conceptvragen uit contextsignalen in de huidige timelinefilter.');
-    expect(html).toContain(
+    expect(html).toContain('Kiempad helpt je gesprek voorbereiden; je kliniek blijft leidend.');
+    expect(html).not.toContain(
       'Deze vragen helpen het gesprek voorbereiden en geven geen diagnose, dosering, kansberekening of behandelkeuzeadvies.',
     );
     expect(html).toContain('Echo verslag');
@@ -5269,7 +5270,10 @@ describe('app shell', () => {
     expect(html).toContain('data-graph-node-id="document:doc-1"');
     expect(html).toContain('Type: document · Bron: echo.pdf · Datum: 2026-06-24');
     expect(html).toContain('Reviewstatus: Concept · Schema: v1');
-    expect(html).toContain('Graph-nodes zijn bronmetadata voor context');
+    expect(html).toContain('Kiempad ordent je graphcontext; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Graph-nodes zijn bronmetadata voor context en geen medisch advies.',
+    );
     expect(html).toContain('Graph-index rebuild');
     expect(html).toContain('Opnieuw opgebouwd uit ontgrendelde versleutelde records');
     expect(html).toContain('Bronrecords');
