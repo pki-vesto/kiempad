@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1622 — Medicatie historie lege staat gebruikt korte dossiercontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie historie lege staat gebruikt nog een langere zin over toevoegen zoals de kliniek het voorschrijft.
+- **User Impact:** Gebruikers zien bij teruglezen opnieuw uitleg die beter als korte dossiercontext kan werken.
+- **Desired Outcome:** Historie lege staat gebruikt korte dossiercontext en een duidelijke beheerroute.
+- **User Value:** Medicatiehistorie blijft scanbaar, ook zonder opgeslagen middelen.
+- **Acceptance Criteria:** Medicatie historie lege staat gebruikt korte dossiercontext; app-shell tests bewaken dat de oude lege-historiezin niet terugkeert.
+- **Affected Screens:** Medicatie historie lege staat
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication history route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1621 — Medicatie lege staat gebruikt korte startcontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Screen config, medication empty state, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3187
 
 ### G1620 — Medicatie schemaformulier gebruikt korte planningshulp
 

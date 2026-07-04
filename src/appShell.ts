@@ -317,7 +317,7 @@ export const SCREENS: readonly Screen[] = [
     label: 'Medicatie',
     title: 'Medicatie & injecties',
     intro: 'Leg alleen vast wat de kliniek voorschrijft, inclusief de originele instructie.',
-    emptyState: 'Nog geen medicatie. Doseringen worden nooit door Kiempad berekend.',
+    emptyState: 'Nog geen medicatie. Voeg je eerste middel toe vanuit het kliniekschema.',
   },
   {
     id: 'herinneringen',
@@ -18440,10 +18440,13 @@ function renderMedicatieScreen(state: AppShellState): string {
         ${
           todayLogs.length > 0
             ? `${renderMedicationProgress(todayLogs)}${renderDoseLogList(todayLogs, state.medicatie)}`
-            : renderEmptyState('Nog geen geplande innames of injecties voor vandaag.', {
-                title: 'Vandaag niets gepland',
-                cta: { href: '#medicatie?route=beheer', label: 'Medicatie beheren' },
-              })
+            : renderEmptyState(
+                'Nog geen dagmomenten. Voeg je eerste middel toe vanuit het kliniekschema.',
+                {
+                  title: 'Vandaag niets gepland',
+                  cta: { href: '#medicatie?route=beheer', label: 'Medicatie beheren' },
+                },
+              )
         }
       </section>`,
     `<section id="medicatie-route-planning" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-planning-title" data-medication-route="planning"${renderMedicationRouteVisibility(activeMedicationRoute, 'planning')}>
