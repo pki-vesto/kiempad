@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1660 — Medicatie planning routesamenvatting actie noemt lokale invoer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning routesamenvatting secundaire actie noemt vervolgcontext, terwijl de lege staat lokale invoer en routekeuze benadrukt.
+- **User Impact:** Gebruikers zien in de routesamenvatting minder duidelijk dat lokale invoer een vervolgroute is.
+- **Desired Outcome:** Routesamenvatting actiecopy maakt de routekeuze of lokale invoer duidelijker zonder de ankers te wijzigen.
+- **User Value:** De planningroute wordt consequenter met de lege staat en importflow.
+- **Acceptance Criteria:** Routesamenvatting actiecopy noemt routekeuze of lokale invoer; bestaande anker-hrefs blijven behouden; app-shell tests bewaken de nieuwe actiecopy.
+- **Affected Screens:** Medicatie planning route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1659 — Medicatie planning lege CTA link noemt beheer en invoercontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3263
 
 ### G1658 — Medicatie planning lege CTA noemt lokale invoer
 
