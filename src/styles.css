@@ -23664,6 +23664,7 @@ summary[class*="__summary"]:focus-visible,
     overflow: hidden;
     scroll-margin-inline: 8px;
     scroll-snap-align: start;
+    scroll-snap-stop: normal;
     text-overflow: ellipsis;
   }
 

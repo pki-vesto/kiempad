@@ -1034,8 +1034,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload active button snap stop
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3457
+
+### G1758 — App-shell mobiel workspace-strip bewaakt reload switcher touch-pan op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve knop heeft nu een stabiele snap-stop waarde, maar de swipe-rij kan nog expliciet bewaakt worden dat horizontale touch-pan het bedoelde gebaar blijft.
+- **User Impact:** Zonder duidelijke touch-pan instelling kan een smalle swipe-rij op touchschermen minder voorspelbaar voelen.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met voorspelbare horizontale touch-pan binnen de compacte rij.
+- **User Value:** Gebruikers kunnen routeknoppen rustiger horizontaal swipen zonder pagina-overflow of onverwachte verticale druk.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin en actieve knop snap-stop; workspace-strip switcher gebruikt na reload stabiele touch-action instellingen voor horizontaal swipen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher touch-pan; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher touch pan
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3459
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
