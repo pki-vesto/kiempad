@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1662 — Medicatie planning primaire paneeltitel gebruikt lege-state copy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Het primaire planningpaneel gebruikt nog een generieke lege titel naast de nieuwe korte routeactie.
+- **User Impact:** Gebruikers zien minder directe aansluiting tussen routeactie en lege planningstaat.
+- **Desired Outcome:** Primaire paneeltitel sluit beter aan op lege planning en blijft begrijpelijk bij toekomstige momenten.
+- **User Value:** De planningroute voelt consistenter tussen samenvatting en paneel.
+- **Acceptance Criteria:** Lege paneeltitel benoemt planning of vervolg kort; toekomstige momenttitel blijft begrijpelijk; app-shell tests bewaken de nieuwe titelcopy.
+- **Affected Screens:** Medicatie planning primair paneel
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1661 — Medicatie planning primaire actie noemt volgend moment kort
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3267
 
 ### G1660 — Medicatie planning routesamenvatting actie noemt lokale invoer
 
