@@ -1068,6 +1068,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   treatment-context disclaimer instead of separate medical-advice caveats.
   Partial G1604/#3152: The empty imaging comparison panel now uses one short image-context
   disclaimer instead of an interpretation/kansberekening/behandeladvies caveat.
+  Partial G1605/#3154: Dossierupload and consultupload keep storage-location copy while using
+  short upload/conversation context disclaimers instead of long medical caveats.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

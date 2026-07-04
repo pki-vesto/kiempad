@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1605 — Uploadflows gebruiken korte contextdisclaimers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossierupload en consultupload toonden lange medische grenszinnen onder de uploadformulieren.
+- **User Impact:** Gebruikers zagen zware disclaimertekst op invoerpunten waar opslaglocatie en vervolgstap belangrijker zijn.
+- **Desired Outcome:** Uploadflows behouden duidelijke opslaglocatiecopy en gebruiken korte contextzinnen voor upload- en gesprekscontext.
+- **User Value:** Gebruikers kunnen sneller zien waar uploads worden bewaard en wat Kiempad ermee ordent.
+- **Acceptance Criteria:** Dossierupload behoudt de opslaglocatiecopy en vervangt de lange medisch-advieszin door een korte uploadcontextzin; Consultupload behoudt de eigen-recordtype/opslaglocatiecopy en vervangt de diagnose/dosering/behandelkeuzezin door een korte gesprekscontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zinnen.
+- **Affected Screens:** Dossierupload, Consultupload
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Dossier add flow, consult upload flow, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3154
+
 ### G1604 — Beelden vergelijken gebruikt korte contextdisclaimer
 
 - **Epic:** Onboarding & Daily Use

@@ -233,6 +233,8 @@ const TREATMENT_CONTEXT_DISCLAIMER = 'Kiempad ordent je trajectfase; je kliniek 
 
 const IMAGING_CONTEXT_DISCLAIMER = 'Kiempad ordent je beelden; je kliniek blijft leidend.';
 
+const UPLOAD_CONTEXT_DISCLAIMER = 'Kiempad ordent je uploads; je kliniek blijft leidend.';
+
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
 function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
@@ -3610,7 +3612,7 @@ function renderDossierScreen(state: AppShellState): string {
             </details>
           </section>
         </form>
-        <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als versleutelde dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
+        <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. ${UPLOAD_CONTEXT_DISCLAIMER}</p>
         ${renderDossierUploadPrivacyDisclosure(state)}
         ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
         `,
@@ -3885,7 +3887,7 @@ function renderDossierScreen(state: AppShellState): string {
             </details>
           </section>
         </form>
-        <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
+        <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. ${QUESTION_CONTEXT_DISCLAIMER}</p>
         `,
         })}
           </section>
