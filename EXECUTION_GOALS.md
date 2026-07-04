@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1643 — Medicatie import success feedback gebruikt lokale verwerkingscopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import succesfeedback noemt verwerken, maar maakt de lokale context niet direct zichtbaar.
+- **User Impact:** Gebruikers zien na import minder expliciet dat het schema lokaal is omgezet.
+- **Desired Outcome:** Import succesfeedback gebruikt korte lokale verwerkingscopy en behoudt statusfeedback.
+- **User Value:** De importflow voelt privacybewuster en consequenter.
+- **Acceptance Criteria:** Succesfeedback noemt lokale verwerking; bestaande statusfeedback blijft zichtbaar; app-shell tests bewaken dat de oude succescopy niet terugkeert.
+- **Affected Screens:** Medicatie import feedback
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import feedback, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1642 — Medicatie import knop krijgt expliciete lokale actiecopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import form, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3229
 
 ### G1641 — Medicatie import helper gebruikt voorbeeldindicator
 

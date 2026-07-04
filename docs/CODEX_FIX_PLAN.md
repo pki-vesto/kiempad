@@ -1753,3 +1753,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   keeping the YYYY-MM-DD and HH:MM format visible.
 - Partial G1641/#3227: Medication import helper now uses Voorbeeldformaat copy while preserving the
   visible Medicatie | YYYY-MM-DD | HH:MM structure.
+- Partial G1642/#3229: Medication import submit action now uses Zet lokaal klaar copy while
+  preserving submit behavior.
