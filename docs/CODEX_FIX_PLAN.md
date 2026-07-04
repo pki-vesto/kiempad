@@ -1937,3 +1937,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   height with contained overflow so route context does not push active content down.
 - Partial G1731/#3405: Mobile workspace strip buttons now use compact swipe widths,
   lower tap height and ellipsis so the strip stays horizontal without page overflow.
+- Partial G1732/#3407: Mobile workspace strip active buttons now keep a clear inset
+  accent state inside the compact swipe row without adding extra height.
