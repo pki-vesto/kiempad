@@ -2081,3 +2081,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1800/#3543: Dossier upload route group now uses shorter small-mobile
   context copy plus compact summary padding and routeflow guards summary height,
   context length and line-height.
+- Partial G1801/#3545: Dossier upload route group now uses an 18px small-mobile
+  summary indicator while routeflow guards marker dimensions, marker content and
+  summary grid columns.

@@ -2329,6 +2329,9 @@ async function assertRouteflows(browser, options) {
               const routeGroupSummaryStyle = routeGroupSummary
                 ? getComputedStyle(routeGroupSummary)
                 : null;
+              const routeGroupSummaryMarkerStyle = routeGroupSummary
+                ? getComputedStyle(routeGroupSummary, '::after')
+                : null;
               const routeGroupSummaryContextStyle = routeGroupSummaryContext
                 ? getComputedStyle(routeGroupSummaryContext)
                 : null;
@@ -2407,6 +2410,11 @@ async function assertRouteflows(browser, options) {
                 ),
                 routeGroupSummaryHeight: routeGroupSummaryRect?.height ?? 0,
                 routeGroupSummaryPaddingTop: routeGroupSummaryStyle?.paddingTop ?? '',
+                routeGroupSummaryGridTemplateColumns:
+                  routeGroupSummaryStyle?.gridTemplateColumns ?? '',
+                routeGroupSummaryMarkerWidth: routeGroupSummaryMarkerStyle?.width ?? '',
+                routeGroupSummaryMarkerHeight: routeGroupSummaryMarkerStyle?.height ?? '',
+                routeGroupSummaryMarkerContent: routeGroupSummaryMarkerStyle?.content ?? '',
                 routeGroupSummaryContextText: routeGroupSummaryContext?.textContent?.trim() ?? '',
                 routeGroupSummaryContextLength:
                   routeGroupSummaryContext?.textContent?.trim().length ?? 0,
@@ -3201,6 +3209,10 @@ async function assertRouteflows(browser, options) {
         (!evidence.uploadConsole.routeGroupSummaryVisible ||
           evidence.uploadConsole.routeGroupSummaryHeight > 54 ||
           parseFloat(evidence.uploadConsole.routeGroupSummaryPaddingTop) > 7 ||
+          !evidence.uploadConsole.routeGroupSummaryGridTemplateColumns.includes('18px') ||
+          parseFloat(evidence.uploadConsole.routeGroupSummaryMarkerWidth) > 18 ||
+          parseFloat(evidence.uploadConsole.routeGroupSummaryMarkerHeight) > 18 ||
+          !['"+"', '"-"'].includes(evidence.uploadConsole.routeGroupSummaryMarkerContent) ||
           evidence.uploadConsole.routeGroupSummaryContextLength > 36 ||
           parseFloat(evidence.uploadConsole.routeGroupSummaryContextLineHeight) > 15 ||
           !evidence.uploadConsole.selectorVisible ||

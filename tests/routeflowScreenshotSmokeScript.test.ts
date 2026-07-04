@@ -226,6 +226,8 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('addRouteMinHeight');
     expect(routeflowScreenshotSmokeScript).toContain('routeGroupSummaryHeight');
     expect(routeflowScreenshotSmokeScript).toContain('routeGroupSummaryContextLength');
+    expect(routeflowScreenshotSmokeScript).toContain('routeGroupSummaryMarkerWidth');
+    expect(routeflowScreenshotSmokeScript).toContain('routeGroupSummaryMarkerContent');
     expect(routeflowScreenshotSmokeScript).toContain('selectorPaddingTop');
     expect(routeflowScreenshotSmokeScript).toContain('addRouteActiveBorderColor');
     expect(routeflowScreenshotSmokeScript).toContain('addRouteLabelMaxLength');
