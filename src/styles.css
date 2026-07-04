@@ -23651,6 +23651,7 @@ summary[class*="__summary"]:focus-visible,
     border-width: 0;
     box-shadow: none;
     box-sizing: border-box;
+    display: flex;
     filter: none;
     flex-basis: auto;
     flex-grow: 0;
