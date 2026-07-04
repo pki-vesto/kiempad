@@ -3224,13 +3224,15 @@ async function assertWorkspaceStripDirectLinkFocus(page, viewportLabel) {
 }
 
 async function assertWorkspaceStripReloadContext(page, viewportLabel) {
-  await page.goto(`${url}#vragen?route=voorbereiden`, { waitUntil: 'networkidle' });
-  await unlockIfNeeded(page, '#vragen?route=voorbereiden');
+  const expectedReloadHash = '#vragen?route=voorbereiden';
+
+  await page.goto(`${url}${expectedReloadHash}`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, expectedReloadHash);
   await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
   await waitForActiveWorkspaceStripButton(page, 'Vragen');
 
   await page.reload({ waitUntil: 'networkidle' });
-  await unlockIfNeeded(page, '#vragen?route=voorbereiden');
+  await unlockIfNeeded(page, expectedReloadHash);
   await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
   await waitForActiveWorkspaceStripButton(page, 'Vragen');
 
@@ -3255,8 +3257,15 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     };
   });
 
+  const smallMobileReloadHashStable =
+    viewportLabel !== 'small-mobile' || reloadLayout.hash === expectedReloadHash;
+  const smallMobileExpectedHash =
+    viewportLabel === 'small-mobile' ? expectedReloadHash : '';
+  const smallMobileActualHash = viewportLabel === 'small-mobile' ? reloadLayout.hash : '';
+
   if (
-    reloadLayout.hash !== '#vragen?route=voorbereiden' ||
+    reloadLayout.hash !== expectedReloadHash ||
+    !smallMobileReloadHashStable ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3264,7 +3273,12 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   ) {
     throw new Error(
       `mobiele workspace-strip reload verliest actieve context of layout (${JSON.stringify(
-        reloadLayout,
+        {
+          ...reloadLayout,
+          smallMobileReloadHashStable,
+          smallMobileExpectedHash,
+          smallMobileActualHash,
+        },
       )}).`,
     );
   }
@@ -3274,7 +3288,10 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   });
 
   return {
-    screen: `${viewportLabel}-workspace-strip-reload`,
+    screen:
+      viewportLabel === 'small-mobile'
+        ? `${viewportLabel}-workspace-strip-reload-hash`
+        : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
   };

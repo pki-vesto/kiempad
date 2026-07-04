@@ -745,8 +745,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload hash
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3423
+
+### G1741 — App-shell mobiel workspace-strip bewaakt reload paneelpositie op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Reload hash en focus zijn bewaakt, maar small-mobile reloads kunnen nog explicieter controleren dat het actieve paneel zelf zichtbaar en compact gepositioneerd blijft.
+- **User Impact:** Als het actieve paneel na reload onder chrome of bottom-nav verdwijnt, lijkt de route leeg of lastig scanbaar op kleine toestellen.
+- **Desired Outcome:** Small-mobile reloads behouden hash, actieve stripcontext en een zichtbaar actief screen-stage paneel.
+- **User Value:** Gebruikers kunnen kleine toestellen verversen en direct verder lezen zonder handmatig terug te scrollen.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt de verwachte hash en actieve stripcontext op small-mobile; actieve screen-stage panel blijft na reload zichtbaar binnen de viewport met bottom-nav clearance; tests of smoke checks bewaken small-mobile reload-paneelpositie; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload panel position
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3425
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
