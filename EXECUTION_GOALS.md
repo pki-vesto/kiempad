@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1619 — Medicatie beheerroute gebruikt korte kliniektekstcontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie beheerroute gebruikt nog langere copy over doseeradvies, interpretatie en berekening bij het vastleggen van kliniektekst.
+- **User Impact:** Gebruikers zien ook in beheer defensieve tekst terwijl ze vooral naam, voorraad, instructie en schema willen vastleggen.
+- **Desired Outcome:** Beheerroute gebruikt korte kliniektekstcontext en behoudt de veiligheidsgrens.
+- **User Value:** Medicatiebeheer voelt meer als rustig invoeren en minder als waarschuwingen lezen.
+- **Acceptance Criteria:** Beheerroute header en route-samenvatting gebruiken korte kliniektekstcontext; app-shell tests bewaken dat oude doseeradvies/interpreteer/berekenzinnen niet terugkeren.
+- **Affected Screens:** Medicatie beheer
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication management route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1618 — Medicatie werkbank gebruikt korte statuscontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication focus shell, medication workbench, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3181
 
 ### G1617 — Medicatie vandaagroute gebruikt korte afvinkcontext
 

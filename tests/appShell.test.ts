@@ -6058,6 +6058,12 @@ describe('app shell', () => {
     expect(html).not.toContain('data-medication-console-region="workbench"');
     expect(html).toContain('data-medication-console-region="workspace"');
     expect(html).toContain('Eerst vandaag afvinken, daarna planning of beheer openen');
+    expect(html).toContain(
+      'Dagmomenten, schema-import, voorraad en historie blijven samen in één medicatieruimte.',
+    );
+    expect(html).not.toContain(
+      'Dagmomenten, schema-import, voorraad en historie blijven in één medicatieruimte zonder doseeradvies of berekening.',
+    );
     expect(html).not.toContain('data-medication-focus-region="workbench"');
     expect(html).toContain('data-medication-focus-region="workspace"');
     expect(html).toContain('data-medication-single-workspace="ready"');
@@ -6066,9 +6072,15 @@ describe('app shell', () => {
       '<section class="planning-workbench medication-planning-workbench" aria-label="Medicatie innameswerkbank" data-medication-first-viewport="planning-workbench">',
     );
     expect(html).toContain('Vandaag, planning en voorraad eerst');
+    expect(html).toContain('Start met afvinken, komende momenten en voorraadcontext.');
     expect(html).toContain('Volgend moment');
     expect(html).toContain(`Progesteron: ${vandaag} 08:00`);
-    expect(html).toContain('Kiempad berekent geen doseringen');
+    expect(html).toContain('Genomen · volgens je planning');
+    expect(html).not.toContain('Kiempad berekent geen doseringen');
+    expect(html).not.toContain('Bekijk importfeedback zonder doseringen over te nemen.');
+    expect(html).not.toContain(
+      'Start met afvinken, komende momenten en voorraadcontext zonder doseeradvies of berekeningen.',
+    );
     expect(html).toContain('aria-label="Medicatie werkbank acties"');
     expect(html).toContain('href="#medicatie?route=vandaag"');
     expect(html).toContain('href="#medicatie?route=beheer"');

@@ -1094,6 +1094,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   short planning-context copy instead of dosage-transfer or calculation caveats.
   Partial G1617/#3179: Medication today route now uses short checklist context in the header
   and route summary instead of dosage calculation or advice wording.
+  Partial G1618/#3181: Medication focus shell and workbench now use short status context
+  instead of repeated dosage advice or calculation wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
