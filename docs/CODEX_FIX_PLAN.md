@@ -1835,3 +1835,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   while preserving the planned medication count.
 - Partial G1682/#3309: Medication planning route options helper now says historie teruglezen
   while preserving the visible history route link.
+- Partial G1683/#3311: Medication planning route options helper now says lokale invoer while
+  preserving the visible local import route link.

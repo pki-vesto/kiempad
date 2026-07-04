@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1684 — Medicatie planning routeopties importlink noemt invoer lokaal
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties importlink zegt Lokale import, terwijl de helper lokale invoer noemt.
+- **User Impact:** Gebruikers moeten import en invoer zelf aan elkaar koppelen.
+- **Desired Outcome:** Importlink sluit aan op lokale invoer zonder de importroute te verliezen.
+- **User Value:** Routeopties blijven consistenter en directer scanbaar.
+- **Acceptance Criteria:** Importlink noemt lokale invoer compact; bestaande import href blijft behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1683 — Medicatie planning routeopties import helper noemt lokaal kort
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3311
 
 ### G1682 — Medicatie planning routeopties helper noemt historie teruglezen
 
