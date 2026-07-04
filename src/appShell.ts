@@ -18461,7 +18461,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             plannedLogs.length > 0
               ? `${plannedLogs.length} toekomstig moment${plannedLogs.length === 1 ? '' : 'en'}`
               : 'Geen planning buiten vandaag',
-          detail: 'Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.',
+          detail: 'Nog geen vervolgplanning; open Routekeuze voor Beheer of lokale invoer.',
           status: `${plannedLogs.length} later medicatie`,
           primary: { href: '#medication-planning-primary', label: 'Volgende' },
           secondary: { href: '#medication-planning-followup', label: 'Routekeuze' },
