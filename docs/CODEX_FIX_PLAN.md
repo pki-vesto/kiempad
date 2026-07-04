@@ -1755,3 +1755,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   visible Medicatie | YYYY-MM-DD | HH:MM structure.
 - Partial G1642/#3229: Medication import submit action now uses Zet lokaal klaar copy while
   preserving submit behavior.
+- Partial G1643/#3231: Medication import success status now uses Lokaal verwerkt copy while
+  preserving existing feedback status rendering.

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1644 — Medicatie import feedback context noemt lokale planning
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import feedbackcontext verwijst naar importfeedback naast planning, maar noemt de lokale planningcontext niet expliciet.
+- **User Impact:** Gebruikers krijgen na import minder privacy- en planningscontext in de workbench.
+- **Desired Outcome:** Import feedbackcontext noemt lokale planning kort en behoudt de workbenchcontext.
+- **User Value:** De workbench voelt consequenter met de lokale importactie.
+- **Acceptance Criteria:** Feedbackcontext noemt lokale planning; workbench blijft zichtbaar; app-shell tests bewaken dat de oude contextcopy niet terugkeert.
+- **Affected Screens:** Medicatie planning workbench
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning workbench, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1643 — Medicatie import success feedback gebruikt lokale verwerkingscopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import feedback, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3231
 
 ### G1642 — Medicatie import knop krijgt expliciete lokale actiecopy
 

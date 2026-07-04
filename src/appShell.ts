@@ -18670,7 +18670,7 @@ function renderMedicationPlanningWorkbench(input: {
     : input.todayCount > 0
       ? `${input.completedToday}/${input.todayCount} gedaan`
       : input.importStatus
-        ? 'Schema verwerkt'
+        ? 'Lokaal verwerkt'
         : 'Geen dagmomenten';
   const context = input.nextDoseLog
     ? `${input.nextDoseLog.status === 'genomen' ? 'Genomen' : input.nextDoseLog.status === 'overgeslagen' ? 'Overgeslagen' : 'Gepland'} · volgens je planning`

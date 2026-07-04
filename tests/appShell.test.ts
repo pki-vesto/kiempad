@@ -6343,6 +6343,8 @@ describe('app shell', () => {
       html.indexOf('id="medicatie-import-form"'),
     );
     expect(html).toContain('Feedback klaar');
+    expect(html).toContain('Lokaal verwerkt');
+    expect(html).not.toContain('Schema verwerkt');
     expect(html).not.toContain('Schemafeedback beschikbaar');
     expect(importSummary).toContain('<span class="command-route-summary__status">OK</span>');
     expect(importSummary).not.toContain(
