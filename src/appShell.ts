@@ -18549,7 +18549,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           status: state.medicatieImportError
             ? 'Check'
             : state.medicatieImportStatus
-              ? 'Feedback'
+              ? 'OK'
               : 'Schema',
           primary: { href: '#medicatie?route=beheer', label: 'Middel beheren' },
           secondary: { href: '#medicatie?route=planning', label: 'Planning' },
