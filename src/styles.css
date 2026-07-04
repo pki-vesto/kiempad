@@ -22235,6 +22235,13 @@ summary[class*="__summary"]:focus-visible,
     padding: 7px 9px;
   }
 
+  .dossier-add-route-group__summary:focus-visible {
+    border-radius: 10px;
+    outline: 2px solid color-mix(in srgb, var(--accent) 42%, var(--border));
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
   .dossier-add-route-group__summary span {
     font-weight: 800;
   }

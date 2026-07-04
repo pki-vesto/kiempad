@@ -9580,6 +9580,12 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) 18px;');
     expect(css).toContain('min-height: 42px;');
     expect(css).toContain('padding: 7px 9px;');
+    expect(css).toContain('.dossier-add-route-group__summary:focus-visible {');
+    expect(css).toContain(
+      'outline: 2px solid color-mix(in srgb, var(--accent) 42%, var(--border));',
+    );
+    expect(css).toContain('outline-offset: 2px;');
+    expect(css).toContain('box-shadow: none;');
     expect(css).toContain('.dossier-add-route-group__summary span {');
     expect(css).toContain('font-weight: 800;');
     expect(css).toContain('.dossier-add-route-group__summary::after {');

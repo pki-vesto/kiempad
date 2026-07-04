@@ -2298,6 +2298,7 @@ async function assertRouteflows(browser, options) {
               const routeGroupSummary = consoleElement?.querySelector(
                 '[data-dossier-add-route-group-summary="ready"]',
               );
+              routeGroupSummary?.focus();
               const routeGroupSummaryTitle = routeGroupSummary?.querySelector('span');
               const routeGroupSummaryContext = routeGroupSummary?.querySelector('small');
               const selector = consoleElement?.querySelector('.dossier-add-route-selector');
@@ -2418,6 +2419,10 @@ async function assertRouteflows(browser, options) {
                 ),
                 routeGroupSummaryHeight: routeGroupSummaryRect?.height ?? 0,
                 routeGroupSummaryPaddingTop: routeGroupSummaryStyle?.paddingTop ?? '',
+                routeGroupSummaryOutlineStyle: routeGroupSummaryStyle?.outlineStyle ?? '',
+                routeGroupSummaryOutlineWidth: routeGroupSummaryStyle?.outlineWidth ?? '',
+                routeGroupSummaryOutlineOffset: routeGroupSummaryStyle?.outlineOffset ?? '',
+                routeGroupSummaryBoxShadow: routeGroupSummaryStyle?.boxShadow ?? '',
                 routeGroupSummaryGridTemplateColumns:
                   routeGroupSummaryStyle?.gridTemplateColumns ?? '',
                 routeGroupSummaryMarkerWidth: routeGroupSummaryMarkerStyle?.width ?? '',
@@ -3226,6 +3231,10 @@ async function assertRouteflows(browser, options) {
         (!evidence.uploadConsole.routeGroupSummaryVisible ||
           evidence.uploadConsole.routeGroupSummaryHeight > 54 ||
           parseFloat(evidence.uploadConsole.routeGroupSummaryPaddingTop) > 7 ||
+          (evidence.uploadConsole.routeGroupSummaryOutlineStyle !== 'none' &&
+            (parseFloat(evidence.uploadConsole.routeGroupSummaryOutlineWidth) > 2 ||
+              parseFloat(evidence.uploadConsole.routeGroupSummaryOutlineOffset) > 2 ||
+              evidence.uploadConsole.routeGroupSummaryBoxShadow !== 'none')) ||
           evidence.uploadConsole.routeGroupBorderColor === '' ||
           evidence.uploadConsole.routeGroupBackground === '' ||
           !evidence.uploadConsole.routeGroupSummaryGridTemplateColumns.includes('18px') ||

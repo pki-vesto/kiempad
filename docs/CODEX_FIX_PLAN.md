@@ -2090,3 +2090,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1803/#3549: Dossier upload route summary now uses calmer small-mobile
   text contrast with lighter context color/weight and routeflow guards title and
   context computed text styling.
+- Partial G1804/#3551: Dossier upload route summary now uses a calmer
+  small-mobile focus-visible ring with compact outline offset and no shadow,
+  guarded by CSS tests and routeflow outline evidence.
