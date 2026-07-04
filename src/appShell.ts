@@ -237,6 +237,8 @@ const UPLOAD_CONTEXT_DISCLAIMER = 'Kiempad ordent je uploads; je kliniek blijft 
 
 const GRAPH_CONTEXT_DISCLAIMER = 'Kiempad ordent je graphcontext; je kliniek blijft leidend.';
 
+const WELLBEING_CONTEXT_DISCLAIMER = 'Kiempad ordent je welzijn; je kliniek blijft leidend.';
+
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
 function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
@@ -12189,7 +12191,7 @@ function renderWellbeingFocusShell(input: { workspace: string }): string {
       <header class="wellbeing-focus-shell__header">
         <p class="kp-card__eyebrow">Welzijnfocus</p>
         <h2 id="wellbeing-focus-shell-title">Eerst welzijn scannen, daarna teruglezen of vastleggen</h2>
-        <p>Overzicht, geschiedenis en invoer blijven in één rustige welzijnsruimte zonder score, diagnose of behandeladvies.</p>
+        <p>${WELLBEING_CONTEXT_DISCLAIMER}</p>
       </header>
       <div class="wellbeing-focus-shell__body" data-wellbeing-console="ready">
         <div class="wellbeing-focus-shell__workspace" data-wellbeing-focus-region="workspace" data-wellbeing-console-region="workspace">
@@ -12416,7 +12418,7 @@ function renderWellbeingHistoryBoard(input: {
           )
           .join('')}
       </nav>
-      <p class="small-print">Deze laag toont alleen lokale tellingen en datums; geen notities, diagnose, score, behandeladvies of trackingdata.</p>
+      <p class="small-print">${WELLBEING_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }

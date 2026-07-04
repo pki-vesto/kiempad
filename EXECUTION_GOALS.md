@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1608 — Welzijn gebruikt korte contextdisclaimers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Welzijn focus en terugleesbord herhaalden lange caveats over score, diagnose, behandeladvies en trackingdata.
+- **User Impact:** Gebruikers zagen defensieve tekst in een scherm dat vooral check-ins, geschiedenis en rustige registratie moet ondersteunen.
+- **Desired Outcome:** Welzijn gebruikt één korte contextzin voor focus en terugleesbord.
+- **User Value:** Gebruikers kunnen welzijnssignalen sneller scannen zonder herhaalde juridische ruis.
+- **Acceptance Criteria:** De Welzijnfocus-kop vervangt de score/diagnose/behandeladvieszin door een korte welzijnscontextzin; het terugleesbord vervangt de lange notities/diagnose/score/behandeladvies/trackingdatazin door dezelfde korte welzijnscontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zinnen.
+- **Affected Screens:** Welzijn focus, Welzijn terugleesbord
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Wellbeing focus shell, wellbeing history board, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3160
+
 ### G1607 — Consult bronreview gebruikt korte contextdisclaimer
 
 - **Epic:** Onboarding & Daily Use

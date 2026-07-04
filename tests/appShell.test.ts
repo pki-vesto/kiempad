@@ -38163,7 +38163,11 @@ describe('app shell', () => {
     expect(html).toContain('data-wellbeing-history-lane="cycle"');
     expect(html).toContain('data-wellbeing-history-lane="trends"');
     expect(html).toContain('Terugleesbord');
-    expect(html).toContain(
+    expect(html).toContain('Kiempad ordent je welzijn; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Overzicht, geschiedenis en invoer blijven in één rustige welzijnsruimte zonder score, diagnose of behandeladvies.',
+    );
+    expect(html).not.toContain(
       'Deze laag toont alleen lokale tellingen en datums; geen notities, diagnose, score, behandeladvies of trackingdata.',
     );
     expect(html.indexOf('data-wellbeing-history-board="ready"')).toBeLessThan(
