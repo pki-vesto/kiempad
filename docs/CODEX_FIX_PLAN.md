@@ -1931,3 +1931,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   overflow and two-line page-header intros, keeping tablet route context compact above panel scroll.
 - Partial G1728/#3399: Tablet screen-stage panels now hide horizontal overflow while keeping
   contained vertical panel scrolling and stable scrollbar gutters.
+- Partial G1729/#3401: Mobile screen-stage panels now hide horizontal overflow and keep
+  extra bottom clearance/scroll margin above the fixed bottom navigation.

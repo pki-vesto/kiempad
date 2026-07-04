@@ -549,17 +549,34 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Epic:** Premium Claude Design UI
 - **Problem:** Tablet panel-scroll is nu stabieler, maar mobiel moet apart bewaakt worden zodat de actieve screen-stage boven de bottom-nav rustig blijft.
 - **User Impact:** Zonder expliciete mobiele paneelruimte kan content krap of horizontaal druk worden boven de vaste bottom-nav.
-- **Desired Outcome:** Mobiele content behoudt bottom-nav clearance en rustige paneelruimte zonder horizontale overflow.
+- **Desired Outcome:** Mobiele content behoudt bottom-nav clearance, extra paneelruimte en verborgen horizontale overflow.
 - **User Value:** Mobiele gebruikers houden een overzichtelijke actieve taak boven de navigatie.
-- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele content behoudt bottom-nav clearance en rustige paneelruimte; de mobiele screen-stage panel veroorzaakt geen horizontale overflow; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele paneelruimte boven bottom-nav; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele content behoudt bottom-nav clearance en extra paneelruimte; de mobiele screen-stage panel verbergt horizontale overflow en houdt scroll-margin boven de bottom-nav; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele paneelruimte boven bottom-nav; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
 - **Affected Screens:** App-shell, alle hoofdschermen
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** App shell, mobile layout, screen-stage panel, bottom-nav
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3401
+
+### G1730 — App-shell mobiel workspace-strip behoudt compacte hoogte boven content
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Mobiele screen-stage panelruimte is nu rustiger boven de bottom-nav, maar de workspace-strip kan nog expliciet bewaakt worden tegen te veel hoogte boven de content.
+- **User Impact:** Een hoge mobiele workspace-strip kan de actieve taak alsnog omlaag duwen en het lange-pagina gevoel terugbrengen.
+- **Desired Outcome:** Mobiele workspace-strip blijft compact en veroorzaakt geen horizontale overflow.
+- **User Value:** Mobiele gebruikers zien sneller de actieve taak en behouden context zonder extra scroll.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele workspace-strip blijft compact en veroorzaakt geen horizontale overflow; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele workspace-strip compactheid; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, mobile layout, workspace strip
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3403
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
