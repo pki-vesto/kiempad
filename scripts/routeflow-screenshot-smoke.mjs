@@ -3300,6 +3300,7 @@ async function assertRouteflows(browser, options) {
           evidence.uploadConsole.addRouteActiveBoxShadow.includes('0px -3px') ||
           evidence.uploadConsole.addRouteFocusBorderColor === '' ||
           evidence.uploadConsole.addRouteFocusBoxShadow === '' ||
+          evidence.uploadConsole.addRouteFocusBoxShadow.includes('0px 0px 0px 3px') ||
           evidence.uploadConsole.addRouteFocusBoxShadow.includes('0px 0px 0px 4px') ||
           parseFloat(evidence.uploadConsole.routeItemMinHeight) > 60 ||
           evidence.uploadConsole.routeItemWidth > 158 ||

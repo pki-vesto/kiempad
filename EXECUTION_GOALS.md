@@ -1986,8 +1986,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card focus offset, small-mobile CSS, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3569
+
+### G1814 — Dossier upload small-mobile routekaart focuskleur rustiger
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De focus-offset is compacter gemaakt, maar de focuskleur kan op small-mobile nog subtieler zonder toetsenbordzichtbaarheid te verliezen.
+- **User Impact:** Focus blijft zichtbaar, maar kan nog iets minder aandacht vragen naast de compacte routekaartstijl.
+- **Desired Outcome:** De focuskleur blijft duidelijk genoeg, maar sluit rustiger aan op de small-mobile kaartstijl.
+- **User Value:** Keyboardgebruikers houden heldere focus zonder dat de routekeuze visueel zwaar wordt.
+- **Acceptance Criteria:** Focus op routekaarten blijft zichtbaar; focuskleur is rustiger dan desktop en behoudt voldoende contrast; actieve route blijft herkenbaar naast focus; app-shell tests of routeflow smoke bewaken focuskleur en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card focus color, small-mobile CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3571
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
