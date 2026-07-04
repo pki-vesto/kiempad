@@ -141,7 +141,10 @@ wordt gewijzigd.
   behandelkeuzeadvies bevatten.
 - **Freshness:** wijzig deze sectie samen met `docs/RUNBOOK.md`,
   `.github/workflows/ci.yml` en `tests/maintenanceDocs.test.ts` wanneer de
-  cue-parity smoke van naam, commando of scope verandert.
+  cue-parity smoke van naam, commando of scope verandert. G1176 bewaakt dat het
+  exacte commando `npm run test -- tests/appShell.test.ts` in workflow, runbook,
+  completion-audit en maintenance-test synchroon blijft; `npm run assets:check`
+  blijft onderdeel van de CI-validatie.
 
 ## Beslissing
 

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1700 — Dossier upload actiepad zichtbaarder na bounded workspace
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De app-shell is nu begrensd, maar het dossieruploadscherm kan nog sneller tonen wat de eerstvolgende veilige uploadactie is.
+- **User Impact:** Gebruikers moeten in een druk dossiergebied nog zoeken naar de juiste startactie.
+- **Desired Outcome:** Het uploadscherm opent met een duidelijker primair actiepad dat document, consult, beeld en embryo-invoer scanbaar verbindt zonder extra contextlagen.
+- **User Value:** Nieuwe medische informatie toevoegen voelt sneller en overzichtelijker binnen de bounded workspace.
+- **Acceptance Criteria:** Dossier upload behoudt bestaande ankers, form-id's, input names en data-hooks; document-, consult-, beeld- en embryo-acties zijn vanaf de eerste viewport scanbaar; mobiele, tablet- en desktoplayout tonen geen overlap; tests dekken lege en gevulde uploadcontext; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, upload workflow, screen-stage panel, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 88
+- **Status:** ☐ open
+- **Issue:** #3343
+
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 
 - **Epic:** Premium Claude Design UI
@@ -21915,7 +21932,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, CI workflow, tests
 - **ADR Needed:** no
 - **Score:** 48
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G1177 — werkruimte-navigatie tegen alles-op-een-pagina gevoel
 
