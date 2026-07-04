@@ -1102,8 +1102,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload active button tap highlight
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3465
+
+### G1762 — App-shell mobiel workspace-strip bewaakt reload switcher gap op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve knop heeft nu rustige tap-highlight, maar de switcher kan nog expliciet bewaakt worden op compacte gap zodat de swipe-rij niet onnodig breed of druk wordt.
+- **User Impact:** Te ruime of inconsistente gaps kunnen smalle routeknoppen sneller buiten beeld duwen en de compacte rij minder scanbaar maken.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele compacte gap-instellingen.
+- **User Value:** Gebruikers houden een scanbare, compacte rij routeknoppen na reload.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing en actieve knop tap-highlight; workspace-strip switcher gebruikt na reload stabiele compacte gap-instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher gap; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher gap
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3467
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

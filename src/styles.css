@@ -23668,6 +23668,7 @@ summary[class*="__summary"]:focus-visible,
     scroll-snap-stop: normal;
     text-overflow: ellipsis;
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
