@@ -2019,3 +2019,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   box-sizing, guarded by CSS and reload smoke.
 - Partial G1772/#3487: Small-mobile workspace-strip switchers now keep stable
   padding-inline, guarded by CSS and reload smoke.
+- Partial G1773/#3489: Small-mobile workspace-strip switchers now keep stable
+  padding-block, guarded by CSS and reload smoke.
