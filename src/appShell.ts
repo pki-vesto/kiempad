@@ -18552,7 +18552,7 @@ function renderMedicatieScreen(state: AppShellState): string {
               ? 'OK'
               : 'Schema',
           primary: { href: '#medicatie?route=beheer', label: 'Beheer' },
-          secondary: { href: '#medicatie?route=planning', label: 'Planning' },
+          secondary: { href: '#medicatie?route=planning', label: 'Plan' },
           data: { 'medication-route-summary': 'import' },
           ariaLabel: 'Medicatie-import route-samenvatting',
         })}

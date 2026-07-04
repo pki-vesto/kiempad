@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1638 — Medicatie import disclosure gebruikt korte actiecopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import disclosure herhaalt met Schema importeren de importcontext die de routeheader al geeft.
+- **User Impact:** Gebruikers zien in de compacte importflow onnodig brede copy voordat ze het formulier openen.
+- **Desired Outcome:** Import disclosure gebruikt korte actiecopy en behoudt het importformulier.
+- **User Value:** De importflow wordt compacter en sneller scanbaar.
+- **Acceptance Criteria:** Import disclosure summary gebruikt korte actiecopy; importformulier blijft bereikbaar; app-shell tests bewaken dat de oude disclosurecopy niet terugkeert in de importroute.
+- **Affected Screens:** Medicatie import disclosure
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import disclosure, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1637 — Medicatie import secundaire actie gebruikt korte planninglabel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3219
 
 ### G1636 — Medicatie import primaire actie gebruikt korte beheerlabel
 

@@ -6243,6 +6243,8 @@ describe('app shell', () => {
     );
     expect(importRouteSummary).toContain('href="#medicatie?route=beheer">Beheer</a>');
     expect(importRouteSummary).not.toContain('href="#medicatie?route=beheer">Middel beheren</a>');
+    expect(importRouteSummary).toContain('href="#medicatie?route=planning">Plan</a>');
+    expect(importRouteSummary).not.toContain('href="#medicatie?route=planning">Planning</a>');
     expect(html).toContain('Formaat: Medicatie | YYYY-MM-DD | HH:MM.');
     expect(html).toContain('<button type="submit">Importeer</button>');
     expect(html).not.toContain('<button type="submit">Importeer schema</button>');
