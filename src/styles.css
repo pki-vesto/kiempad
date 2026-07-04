@@ -27467,8 +27467,8 @@ summary[class*="__summary"]:focus-visible,
 
   .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
     .dossier-add-route:focus-visible {
-    border-color: color-mix(in srgb, var(--accent) 48%, var(--border));
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 38%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 32%, transparent);
   }
 
   .dossier-upload-console[data-dossier-add-flow="document"]
