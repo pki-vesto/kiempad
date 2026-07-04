@@ -18510,13 +18510,12 @@ function renderMedicatieScreen(state: AppShellState): string {
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Beheer</p>
           <h2 id="medicatie-route-beheer-title">Middel beheren</h2>
-          <p>Bewaar kliniektekst, voorraad, instructie en lokale video zonder doseeradvies.</p>
+          <p>Bewaar kliniektekst, voorraad, instructie en lokale video bij elkaar.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Beheer',
           title: selected ? `${selected.medicatie.naam} bewerken` : 'Nieuw middel toevoegen',
-          detail:
-            'Leg alleen de tekst vast zoals de kliniek die heeft gegeven; geen interpretatie of berekening.',
+          detail: 'Neem de kliniektekst over en houd planning en voorraad bij elkaar.',
           status: `${state.medicatie.length} middel${state.medicatie.length === 1 ? '' : 'en'}`,
           primary: { href: '#medicatie?route=vandaag', label: 'Vandaag bekijken' },
           secondary: { href: '#medicatie?route=historie', label: 'Historie' },

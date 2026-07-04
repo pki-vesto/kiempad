@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1419 |
+| ☑ klaar | 1420 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1618** |
+| **Totaal** | **1619** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1780,13 +1780,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1616 | Medicatie schema-import gebruikt korte planningcontext | P2 | F5 | ☑ |
 | G1617 | Medicatie vandaagroute gebruikt korte afvinkcontext | P2 | F5 | ☑ |
 | G1618 | Medicatie werkbank gebruikt korte statuscontext | P2 | F5 | ☑ |
-| G1619 | Medicatie beheerroute gebruikt korte kliniektekstcontext | P2 | F5 | ☐ |
+| G1619 | Medicatie beheerroute gebruikt korte kliniektekstcontext | P2 | F5 | ☑ |
+| G1620 | Medicatie schemaformulier gebruikt korte planningshulp | P2 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1618** (id's G001 t/m G1619; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1619** (id's G001 t/m G1620; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

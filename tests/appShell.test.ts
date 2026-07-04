@@ -6177,6 +6177,14 @@ describe('app shell', () => {
     expect(html).not.toContain('<details id="medication-planning-followup" open');
     expect(html).toContain('id="medicatie-route-beheer"');
     expect(html).toContain('data-medication-route="beheer"');
+    expect(html).toContain('Bewaar kliniektekst, voorraad, instructie en lokale video bij elkaar.');
+    expect(html).toContain('Neem de kliniektekst over en houd planning en voorraad bij elkaar.');
+    expect(html).not.toContain(
+      'Bewaar kliniektekst, voorraad, instructie en lokale video zonder doseeradvies.',
+    );
+    expect(html).not.toContain(
+      'Leg alleen de tekst vast zoals de kliniek die heeft gegeven; geen interpretatie of berekening.',
+    );
     expect(html).toContain(
       'class="status-message medication-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="medication-beheer" data-medication-save-feedback="beheer"',
     );
