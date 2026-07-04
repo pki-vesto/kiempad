@@ -2031,3 +2031,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   border-style, guarded by CSS and reload smoke.
 - Partial G1778/#3499: Small-mobile workspace-strip switchers now keep stable
   border-color, guarded by CSS and reload smoke.
+- Partial G1779/#3501: Small-mobile workspace-strip switchers now keep stable
+  border-radius, guarded by CSS and reload smoke.
