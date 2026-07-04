@@ -20474,7 +20474,70 @@ summary[class*="__summary"]:focus-visible,
 }
 
 .dossier-upload-console__body {
+  display: grid;
+  gap: 10px;
   min-width: 0;
+}
+
+.dossier-upload-action-path {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.dossier-upload-action-path__item {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  min-height: 84px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--surface-subtle));
+  color: var(--text);
+  text-decoration: none;
+}
+
+.dossier-upload-action-path__item:hover,
+.dossier-upload-action-path__item:focus-visible,
+.dossier-upload-action-path__item[data-dossier-upload-action-state="active"],
+.dossier-upload-action-path__item[aria-current="step"] {
+  border-color: color-mix(in srgb, var(--accent) 44%, var(--border-strong));
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+  outline: none;
+}
+
+.dossier-upload-action-path__item span,
+.dossier-upload-action-path__item strong,
+.dossier-upload-action-path__item small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dossier-upload-action-path__item span {
+  width: fit-content;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface) 90%);
+  color: var(--accent-strong);
+  font-size: 0.66rem;
+  font-weight: 850;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.dossier-upload-action-path__item strong {
+  font-size: 0.88rem;
+  line-height: 1.18;
+}
+
+.dossier-upload-action-path__item small {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 740;
+  line-height: 1.24;
 }
 
 .dossier-add-route:focus-visible {
@@ -23835,6 +23898,25 @@ summary[class*="__summary"]:focus-visible,
   .dossier-route-snapshot__card {
     flex: 0 0 min(230px, 76vw);
     padding: 10px 11px;
+    scroll-snap-align: start;
+  }
+
+  .dossier-upload-action-path {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .dossier-upload-action-path::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dossier-upload-action-path__item {
+    flex: 0 0 min(178px, 72vw);
+    min-height: 78px;
+    padding: 9px;
     scroll-snap-align: start;
   }
 

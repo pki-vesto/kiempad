@@ -1870,3 +1870,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1176/#2127: The dossier cue parity maintenance contract now guards the exact
   `npm run test -- tests/appShell.test.ts` command across CI, runbook, completion audit and
   maintenance docs while keeping assets-check evidence visible.
+- Partial G1700/#3343: Dossier upload now opens with a visible action path for document,
+  consult, image and embryo intake inside the bounded workspace; routeflow guards the action
+  path on desktop, tablet and mobile.
