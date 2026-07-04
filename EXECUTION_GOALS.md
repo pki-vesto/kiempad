@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1663 — Medicatie planning lege empty-state titel noemt vervolgplanning
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning empty-state titel noemt alleen geen komende momenten terwijl de route vervolgplanning benadrukt.
+- **User Impact:** Gebruikers zien minder directe aansluiting tussen paneeltitel en empty-state titel.
+- **Desired Outcome:** Empty-state titel benoemt vervolgplanning kort en behoudt de beheer CTA.
+- **User Value:** De lege planningstaat leest als één consequente route.
+- **Acceptance Criteria:** Empty-state titel noemt vervolgplanning; beheer/invoer CTA blijft zichtbaar; app-shell tests bewaken de nieuwe titelcopy.
+- **Affected Screens:** Medicatie planning primair paneel
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1662 — Medicatie planning primaire paneeltitel gebruikt lege-state copy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3269
 
 ### G1661 — Medicatie planning primaire actie noemt volgend moment kort
 
