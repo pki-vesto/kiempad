@@ -27633,6 +27633,7 @@ summary[class*="__summary"]:focus-visible,
   .dossier-upload-console[data-dossier-add-flow="embryo-status"]
     .dossier-add-route[href="#embryo-status-event-form"]
     small {
+    align-self: end;
     font-weight: 700;
     line-height: 1.18;
     text-decoration: none;
