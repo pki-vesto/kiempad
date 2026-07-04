@@ -6107,7 +6107,8 @@ describe('app shell', () => {
     expect(html).toContain('href="#medicatie?route=planning"');
     expect(html).toContain('href="#medicatie?route=beheer"');
     expect(html).toContain('href="#medicatie?route=import"');
-    expect(html).toContain('href="#medicatie?route=historie"');
+    expect(html).toContain('href="#medicatie?route=historie">Historie teruglezen</a>');
+    expect(html).not.toContain('href="#medicatie?route=historie">Historie openen</a>');
     expect(html).toContain('id="medicatie-route-vandaag"');
     expect(html).toContain('class="medication-route-section command-route-section"');
     expect(html).toContain('data-medication-route-summary="vandaag"');

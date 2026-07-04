@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1677 — Medicatie planning routeopties beheerlink noemt beheren kort
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties beheerlink zegt Middel beheren, terwijl de helper kort Beheer noemt.
+- **User Impact:** Gebruikers zien minder consistentie tussen helper en routeoptielinks.
+- **Desired Outcome:** Beheerlink blijft compact en sluit aan op Beheer.
+- **User Value:** Routeopties worden rustiger en sneller scanbaar.
+- **Acceptance Criteria:** Beheerlink noemt Beheer compact; bestaande beheer href blijft behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1676 — Medicatie planning routeopties historielink noemt teruglezen
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3297
 
 ### G1675 — Medicatie planning routeopties navigatie noemt import lokaal
 

@@ -18497,7 +18497,7 @@ function renderMedicatieScreen(state: AppShellState): string {
                 <a href="#medicatie?route=vandaag">Vandaag afvinken</a>
                 <a href="#medicatie?route=beheer">Middel beheren</a>
                 <a href="#medicatie?route=import">Lokale import</a>
-                <a href="#medicatie?route=historie">Historie openen</a>
+                <a href="#medicatie?route=historie">Historie teruglezen</a>
               </nav>
               ${
                 plannedLogs.length > 1
