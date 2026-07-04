@@ -2294,6 +2294,10 @@ async function assertRouteflows(browser, options) {
           ? (() => {
               const consoleElement = document.querySelector('[data-dossier-upload-console="ready"]');
               const body = consoleElement?.querySelector('[data-dossier-upload-console-region="body"]');
+              const routeGroupSummary = consoleElement?.querySelector(
+                '[data-dossier-add-route-group-summary="ready"]',
+              );
+              const routeGroupSummaryContext = routeGroupSummary?.querySelector('small');
               const selector = consoleElement?.querySelector('.dossier-add-route-selector');
               const addRoute = selector?.querySelector('.dossier-add-route');
               const activeAddRoute = selector?.querySelector(
@@ -2314,6 +2318,7 @@ async function assertRouteflows(browser, options) {
                 '[data-dossier-add-route-panel="embryo-status"]',
               );
               const bodyRect = body?.getBoundingClientRect();
+              const routeGroupSummaryRect = routeGroupSummary?.getBoundingClientRect();
               const selectorRect = selector?.getBoundingClientRect();
               const documentRect = documentPanel?.getBoundingClientRect();
               const consultRect = consultPanel?.getBoundingClientRect();
@@ -2321,6 +2326,12 @@ async function assertRouteflows(browser, options) {
               const embryoQualityRect = embryoQualityPanel?.getBoundingClientRect();
               const embryoStatusRect = embryoStatusPanel?.getBoundingClientRect();
               const bodyStyle = body ? getComputedStyle(body) : null;
+              const routeGroupSummaryStyle = routeGroupSummary
+                ? getComputedStyle(routeGroupSummary)
+                : null;
+              const routeGroupSummaryContextStyle = routeGroupSummaryContext
+                ? getComputedStyle(routeGroupSummaryContext)
+                : null;
               const selectorStyle = selector ? getComputedStyle(selector) : null;
               const addRouteRect = addRoute?.getBoundingClientRect();
               const addRouteStyle = addRoute ? getComputedStyle(addRoute) : null;
@@ -2389,6 +2400,18 @@ async function assertRouteflows(browser, options) {
                 consultOverflowY: consultStyle?.overflowY ?? '',
                 reviewOverflowY: reviewStyle?.overflowY ?? '',
                 documentMaxHeight: documentStyle?.maxHeight ?? '',
+                routeGroupSummaryVisible: Boolean(
+                  routeGroupSummaryRect &&
+                    routeGroupSummaryRect.width > 0 &&
+                    routeGroupSummaryRect.height > 0,
+                ),
+                routeGroupSummaryHeight: routeGroupSummaryRect?.height ?? 0,
+                routeGroupSummaryPaddingTop: routeGroupSummaryStyle?.paddingTop ?? '',
+                routeGroupSummaryContextText: routeGroupSummaryContext?.textContent?.trim() ?? '',
+                routeGroupSummaryContextLength:
+                  routeGroupSummaryContext?.textContent?.trim().length ?? 0,
+                routeGroupSummaryContextLineHeight:
+                  routeGroupSummaryContextStyle?.lineHeight ?? '',
                 selectorDisplay: selectorStyle?.display ?? '',
                 selectorGap: selectorStyle?.gap ?? '',
                 selectorPaddingTop: selectorStyle?.paddingTop ?? '',
@@ -3175,7 +3198,12 @@ async function assertRouteflows(browser, options) {
       if (
         options.label === 'small-mobile' &&
         evidence.uploadConsole &&
-        (!evidence.uploadConsole.selectorVisible ||
+        (!evidence.uploadConsole.routeGroupSummaryVisible ||
+          evidence.uploadConsole.routeGroupSummaryHeight > 54 ||
+          parseFloat(evidence.uploadConsole.routeGroupSummaryPaddingTop) > 7 ||
+          evidence.uploadConsole.routeGroupSummaryContextLength > 36 ||
+          parseFloat(evidence.uploadConsole.routeGroupSummaryContextLineHeight) > 15 ||
+          !evidence.uploadConsole.selectorVisible ||
           parseFloat(evidence.uploadConsole.selectorGap) > 6 ||
           parseFloat(evidence.uploadConsole.selectorPaddingTop) > 4 ||
           evidence.uploadConsole.selectorClientWidth > evidence.uploadConsole.viewportWidth ||

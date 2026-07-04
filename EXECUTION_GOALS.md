@@ -1765,8 +1765,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route group summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3543
+
+### G1801 — Dossier upload small-mobile route summary chevron compacter
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De chevron/indicator in de Dossier upload routegroep kan op small-mobile compacter zonder klikbaarheid of herkenning te verliezen.
+- **User Impact:** De summary-regel gebruikt nog ruimte voor de open/dicht-indicator die op kleine schermen strakker kan.
+- **Desired Outcome:** De routegroep blijft duidelijk open/dicht herkenbaar met een compactere indicator.
+- **User Value:** Gebruikers zien sneller de routekaarten onder de summary op kleine schermen.
+- **Acceptance Criteria:** De routegroep blijft duidelijk open/dicht herkenbaar; de indicator neemt minder hoogte/breedte in op small-mobile; de routekaarten en context blijven aanwezig; app-shell tests of routeflow smoke bewaken de compacte summary-indicator.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route group summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3545
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

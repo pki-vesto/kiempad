@@ -22224,6 +22224,22 @@ summary[class*="__summary"]:focus-visible,
 }
 
 @media (max-width: 420px) {
+  .dossier-add-route-group__summary {
+    grid-template-columns: minmax(0, 1fr) 22px;
+    min-height: 42px;
+    padding: 7px 9px;
+  }
+
+  .dossier-add-route-group__summary::after {
+    width: 22px;
+    height: 22px;
+  }
+
+  .dossier-add-route-group__summary small {
+    font-size: 0.7rem;
+    line-height: 1.18;
+  }
+
   .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
     .dossier-add-route-selector {
     display: flex;
