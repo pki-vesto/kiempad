@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1597 — Kostenhistorie gebruikt bedragcellen met euro-adornment
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kostenhistoriebedragen stonden als losse tekst in de kaartkop, waardoor bedragen minder strak scanbaar waren dan de CFX-066 amount-cell richtlijn vraagt.
+- **User Impact:** Gebruikers moeten bedragen visueel vergelijken zonder een vaste euro-adornment en tabular numeric layout.
+- **Desired Outcome:** Kostenhistorie toont bedragen als compacte amount-cells met apart euroteken, rechts uitgelijnde tabular cijfers en toegankelijke volledige bedragtekst.
+- **User Value:** Gebruikers kunnen kosten sneller vergelijken zonder de kaartinhoud opnieuw te lezen.
+- **Acceptance Criteria:** Kostenhistoriebedragen renderen als amount-cell met vaste hook; het euroteken staat als eigen adornment los van de numerieke waarde; de numerieke waarde gebruikt tabular cijfers en rechtsuitlijning; bestaande bedragtekst blijft toegankelijk via aria-label; app-shell en CSS-tests bewaken markup en styling; geen financieel advies, trackingpayload of secrets.
+- **Affected Screens:** Kosten historie
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Finance history cards, cost amount styles, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3138
+
 ### G1596 — Backup importmeldingen openen niet automatisch
 
 - **Epic:** Onboarding & Daily Use

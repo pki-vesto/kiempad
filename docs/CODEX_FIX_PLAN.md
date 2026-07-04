@@ -1035,6 +1035,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1400/#2574: Kosten, Vragen, Traject, Agenda, and Medicatie delete flows share the inline
   alertdialog confirmation helper; native `window.confirm()` is no longer used for delete actions.
 - **CFX-066** — Amount cell (`tabular-nums`, right-aligned, `€` adornment) for Kosten. **P2 · S**
+  Done in G1597/#3138: Kostenhistorie cards render amount cells with a separate euro adornment,
+  tabular right-aligned value and accessible full currency label.
 
 ### Copy / language (H)
 - **CFX-008** — De-jargon sweep: "command center"→"dagoverzicht", "Imaging-repository"→"Beelden",

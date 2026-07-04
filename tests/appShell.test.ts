@@ -2133,6 +2133,10 @@ describe('app shell', () => {
     expect(css).toContain('.cost-history-card > article {');
     expect(css).toContain('.cost-history-card__header {');
     expect(css).toContain('.cost-history-card__amount {');
+    expect(css).toContain('.cost-amount-cell {');
+    expect(css).toContain('font-variant-numeric: tabular-nums;');
+    expect(css).toContain('.cost-amount__currency {');
+    expect(css).toContain('.cost-amount__value {');
     expect(css).toContain('.cost-history-card__edit summary {');
     expect(css).toContain('.backup-focus-shell {');
     expect(css).toContain('.backup-focus-shell__header {');
@@ -40758,7 +40762,11 @@ describe('app shell', () => {
     expect(html).toContain('class="cost-history-card" data-cost-history-card="ready"');
     expect(html).toContain('data-cost-status="eigen_risico"');
     expect(html).toContain('class="cost-history-card__header"');
-    expect(html).toContain('class="cost-amount cost-history-card__amount" data-cost-amount="row"');
+    expect(html).toContain(
+      'class="cost-amount cost-history-card__amount cost-amount-cell" data-cost-amount="row" data-cost-amount-cell="ready" aria-label="€',
+    );
+    expect(html).toContain('<span class="cost-amount__currency" aria-hidden="true">€</span>');
+    expect(html).toContain('<span class="cost-amount__value">42,50</span>');
     expect(html).toContain('class="cost-history-card__meta"');
     expect(html).toContain('Bewerk kostenpost');
     expect(html).toContain('Geen traject gekoppeld');
