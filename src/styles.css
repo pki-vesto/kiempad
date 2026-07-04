@@ -23646,6 +23646,7 @@ summary[class*="__summary"]:focus-visible,
     justify-content: flex-start;
     overflow-x: auto;
     overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
   }
 
@@ -23660,6 +23661,7 @@ summary[class*="__summary"]:focus-visible,
     min-height: 32px;
     justify-content: center;
     overflow: hidden;
+    scroll-snap-align: start;
     text-overflow: ellipsis;
   }
 

@@ -966,8 +966,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher snap
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3449
+
+### G1754 — App-shell mobiel workspace-strip bewaakt reload actieve stripknop snap-align op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Switcher snap wordt bewaakt, maar de actieve knop kan nog expliciet een stabiele snap-align guard krijgen.
+- **User Impact:** Als de actieve knop geen stabiele snap-uitlijning heeft, kan herladen of swipen alsnog net naast de gewenste knop landen.
+- **Desired Outcome:** Small-mobile reloads houden de actieve workspace-strip knop zelf snapbaar op startpositie.
+- **User Value:** Gebruikers zien de actieve routeknop voorspelbaar in de swipe-rij.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll en rustige switcher snap; actieve workspace-strip knop gebruikt na reload stabiele snap-align instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload actieve stripknop snap-align; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload active button snap align
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3451
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
