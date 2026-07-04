@@ -1817,3 +1817,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the `#medication-planning-followup` disclosure anchor.
 - Partial G1673/#3291: Medication planning follow-up helper now starts with Routeopties and keeps
   local planning import visible.
+- Partial G1674/#3293: Medication planning follow-up counter now uses compact later copy while
+  the route summary keeps the later medicatie status.
