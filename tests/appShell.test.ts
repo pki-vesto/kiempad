@@ -6837,6 +6837,14 @@ describe('app shell', () => {
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="vragen-voorbereiden-volledige-lijst" open>',
     );
+    expect(html).toContain('id="question-reports-disclosure"');
+    expect(html).toContain('id="question-all-disclosure"');
+    expect(html).toContain('Verslag per afspraak');
+    expect(html).toContain('Alle vragen tonen');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="question-reports-disclosure" open',
+    );
+    expect(html).not.toContain('<details class="kp-disclosure" id="question-all-disclosure" open');
     expect(html).toContain('Vraag aan arts: wanneer plannen we de controle?');
     expect(html).toContain('Consultactiepunt');
     expect(html).toContain('Voorbereidend consult');
