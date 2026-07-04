@@ -27634,6 +27634,7 @@ summary[class*="__summary"]:focus-visible,
     .dossier-add-route[href="#embryo-status-event-form"]
     small {
     font-weight: 700;
+    line-height: 1.18;
     text-decoration: none;
   }
 }
