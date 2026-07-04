@@ -18488,7 +18488,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             <summary class="kp-disclosure__summary medication-planning-followup__summary">
               <span>
                 <strong>Route kiezen</strong>
-                <small>Routeopties: afvinken, beheer, Planninginvoer aanvullen of historie teruglezen.</small>
+                <small>Routeopties: afvinken, beheer, aanvullen of historie teruglezen.</small>
               </span>
               <em>${plannedLogs.length} medicatie later</em>
             </summary>

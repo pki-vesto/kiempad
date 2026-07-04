@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1691 — Medicatie planning routeopties helper noemt aanvullen met routecontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties helper noemt alleen aanvullen, waardoor de relatie met de planningroute nog explicieter kan.
+- **User Impact:** Gebruikers kunnen bij alleen scannen minder snel herkennen dat aanvullen de planninginvoerroute opent.
+- **Desired Outcome:** De helper blijft kort maar geeft aanvullen een compacte planningcontext.
+- **User Value:** De routeopties blijven scanbaar en de invoerroute blijft begrijpelijk.
+- **Acceptance Criteria:** Helper noemt aanvullen met compacte planningcontext; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1690 — Medicatie planning routeopties helper noemt aanvullen zonder herhaling
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3325
 
 ### G1689 — Medicatie planning routeopties helper noemt toevoegen rustiger
 
