@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1638 |
+| ☑ klaar | 1639 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -1999,13 +1999,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1835 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label afbreektekens rustig | P1 | F5 | ☑ |
 | G1836 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label tabgrootte rustig | P1 | F5 | ☑ |
 | G1837 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label lettertype rustig | P1 | F5 | ☑ |
-| G1838 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label font-synthese rustig | P1 | F5 | ☐ |
+| G1838 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label font-synthese rustig | P1 | F5 | ☑ |
+| G1839 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label optische sizing rustig | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1837** (id's G001 t/m G1838; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1838** (id's G001 t/m G1839; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
