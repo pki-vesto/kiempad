@@ -15840,7 +15840,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload, imaging upload, central API, tests
 - **ADR Needed:** no
 - **Score:** 113
+- **Status:** ☑ done
+- **Issue:** #936
+
+### G1841 — Central attachment envelope batch status UI
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Na per-upload attachment-envelope feedback kan een grotere uploadselectie nog sneller een samenvatting nodig hebben van hoeveel technische envelopes klaar, hash-pending of ongeldig zijn.
+- **User Impact:** Gebruikers met meerdere onderzoeken, echo's of embryobeelden moeten de batchstatus kunnen scannen zonder bestandsnamen, inhoud of medische context in de statuslaag te zien.
+- **Desired Outcome:** Uploadflows tonen een rustige batchsamenvatting voor attachment-envelope metadata op basis van alleen technisch type, grootte en hashstatus.
+- **User Value:** Grote uploadselecties voelen controleerbaarer terwijl de centrale encrypted boundary zichtbaar blijft.
+- **Acceptance Criteria:** UI toont aantallen voor klaar, hash-pending en controle nodig zonder filename, token, secret, base64, OCR-tekst of medische plaintext; status gebruikt dezelfde attachment-envelope helper als G585; tests dekken mixed valid/hash-pending/invalid metadata; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Dossier upload, imaging upload, embryo upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload, attachment envelope helper, app-shell tests
+- **ADR Needed:** no
+- **Score:** 105
 - **Status:** ☐ open
+- **Issue:** #3625
 
 ### G586 — replay conflict recovery status UI
 

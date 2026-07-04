@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1640 |
+| ☑ klaar | 1641 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1839** |
+| **Totaal** | **1840** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -747,7 +747,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G582 | Product Quality & Automation: active goal floor CI gate | P1 | F5 | ☐ |
 | G583 | Central Encrypted Platform: central session renewal status UI | P1 | F5 | ☐ |
 | G584 | Central Encrypted Platform: paginated record load status UI | P1 | F5 | ☐ |
-| G585 | Central Encrypted Platform: attachment envelope metadata UI feedback | P1 | F5 | ☐ |
+| G585 | Central Encrypted Platform: attachment envelope metadata UI feedback | P1 | F5 | ☑ |
 | G586 | Central Encrypted Platform: replay conflict recovery status UI | P1 | F5 | ☐ |
 | G587 | Central Encrypted Platform: bootstrap smoke CI command | P1 | F5 | ☑ |
 | G588 | Central Encrypted Platform: missing key metadata recovery UI | P1 | F5 | ☑ |
@@ -2002,12 +2002,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1838 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label font-synthese rustig | P1 | F5 | ☑ |
 | G1839 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label optische sizing rustig | P1 | F5 | ☐ |
 | G1840 | Premium Claude Design UI: Dossier routepanelen als bounded werkruimte | P1 | F5 | ☑ |
+| G1841 | Central Encrypted Platform: attachment envelope batch status UI | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1839** (id's G001 t/m G1840; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1840** (id's G001 t/m G1841; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

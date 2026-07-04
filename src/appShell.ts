@@ -3463,6 +3463,13 @@ function renderDossierScreen(state: AppShellState): string {
           <p class="field-hint" data-dossier-upload-size-guidance="ready">
             ${describeDossierUploadLimits()} Bij een te groot pakket kun je bestanden verwijderen en opnieuw uploaden; Kiempad toont alleen type en grootte in foutmeldingen.
           </p>
+          <section class="attachment-envelope-status" aria-label="Attachment envelope metadata controle" data-attachment-envelope-surface="dossier-upload">
+            <div data-attachment-envelope-validation="idle">
+              <strong>Envelope controle</strong>
+              <span>Kiempad controleert alleen technisch type, grootte en hashstatus voor versleutelde opslag.</span>
+            </div>
+            <p>Bestandsnaam, broninhoud, OCR-tekst en medische context worden niet in deze status getoond.</p>
+          </section>
           </fieldset>
           <details class="dossier-upload-optional dossier-upload-metadata" data-dossier-upload-metadata="collapsed">
             <summary class="dossier-upload-optional__summary">

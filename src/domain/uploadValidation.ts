@@ -1,3 +1,5 @@
+import { describeAttachmentEnvelopeStorageError } from './attachmentEnvelope';
+
 export const DOSSIER_UPLOAD_MAX_FILE_BYTES = 25 * 1024 * 1024;
 export const DOSSIER_UPLOAD_MAX_TOTAL_BYTES = 50 * 1024 * 1024;
 
@@ -128,6 +130,9 @@ export function describeDossierUploadRejection(
 }
 
 export function describeDossierUploadFailure(error: unknown): string {
+  const attachmentEnvelopeError = describeAttachmentEnvelopeStorageError(error);
+  if (attachmentEnvelopeError) return attachmentEnvelopeError;
+
   const message = error instanceof Error ? error.message : '';
   if (message === 'request-body-too-large') {
     return 'Uploadpakket is te groot voor centrale opslag. Kies minder of kleinere bestanden en probeer opnieuw; broninhoud is niet gelogd.';
