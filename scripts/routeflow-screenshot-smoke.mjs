@@ -3263,6 +3263,8 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       activeButtonFocused: document.activeElement === activeButton,
       activeElementTag: document.activeElement?.tagName ?? '',
       activeButtonWidth: Math.round(activeButtonRect?.width ?? 0),
+      activeButtonLeft: Math.round(activeButtonRect?.left ?? 0),
+      activeButtonRight: Math.round(activeButtonRect?.right ?? 0),
       activePanelVisible: Boolean(
         activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
       ),
@@ -3275,6 +3277,8 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       bodyScrollTop: Math.round(document.body.scrollTop),
       screenStageChromeHeight: Math.round(screenStageChromeRect?.height ?? 0),
       workspaceStripHeight: Math.round(workspaceStripRect?.height ?? 0),
+      workspaceStripLeft: Math.round(workspaceStripRect?.left ?? 0),
+      workspaceStripRight: Math.round(workspaceStripRect?.right ?? 0),
       bottomNavTop: Math.round(bottomNavTop),
       viewportWidth,
       viewportHeight,
@@ -3316,6 +3320,10 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     viewportLabel !== 'small-mobile' ||
     (reloadLayout.activeButtonWidth > 0 &&
       reloadLayout.activeButtonWidth <= Math.min(148, reloadLayout.viewportWidth * 0.58) + 1);
+  const smallMobileActiveButtonPositionVisible =
+    viewportLabel !== 'small-mobile' ||
+    (reloadLayout.activeButtonLeft >= reloadLayout.workspaceStripLeft - 1 &&
+      reloadLayout.activeButtonRight <= reloadLayout.workspaceStripRight + 1);
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3326,6 +3334,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileChromeCompact ||
     !smallMobileWorkspaceStripHeightCompact ||
     !smallMobileActiveButtonWidthCompact ||
+    !smallMobileActiveButtonPositionVisible ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3344,6 +3353,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileChromeCompact,
           smallMobileWorkspaceStripHeightCompact,
           smallMobileActiveButtonWidthCompact,
+          smallMobileActiveButtonPositionVisible,
         },
       )}).`,
     );
@@ -3356,7 +3366,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
