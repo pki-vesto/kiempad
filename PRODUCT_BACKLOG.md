@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1398 |
+| ☑ klaar | 1399 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1597** |
+| **Totaal** | **1598** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1760,12 +1760,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1596 | Backup importmeldingen openen niet automatisch | P1 | F5 | ☑ |
 | G1597 | Kostenhistorie gebruikt bedragcellen met euro-adornment | P2 | F5 | ☑ |
 | G1598 | Kosten gebruikt korte standaarddisclaimer | P2 | F5 | ☑ |
+| G1599 | Vragen gebruikt korte standaard gespreksdisclaimer | P2 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1597** (id's G001 t/m G1598; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1598** (id's G001 t/m G1599; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
