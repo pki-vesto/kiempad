@@ -27636,6 +27636,7 @@ summary[class*="__summary"]:focus-visible,
     align-self: end;
     color: CanvasText;
     font-family: inherit;
+    font-synthesis: none;
     font-style: normal;
     font-variant: normal;
     font-weight: 680;

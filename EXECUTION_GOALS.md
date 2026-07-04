@@ -2411,8 +2411,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card forced-colors active micro-label font-synthesis, small-mobile CSS, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3619
+
+### G1839 — Dossier upload small-mobile routekaart forced-colors actieve micro-label optische sizing rustig
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na expliciet forced-colors micro-label-font-synthese kan optische sizing nog zelfstandiger worden bewaakt zodat variabele fonts het kleine label niet onverwacht breder of anders laten ogen.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen moeten het micro-label compact kunnen lezen zonder onverwachte optische fontaanpassing.
+- **Desired Outcome:** Actieve routekaart-micro-labels behouden systeemkleurcontrast, geerfd lettertype, geen font-synthese, normale tekststijl, normale tekstvariant, rustig gewicht, handmatige hyphenation, normale letterspatiëring, compacte regelhoogte, stabiele uitlijning, normale overflow-wrap, normale tabgrootte, normale word-break, geen extra decoratie, normale teksttransformatie en normale witruimte naast titel, context, focus en actieve indicator.
+- **User Value:** De uploadkeuze blijft compact en typografisch voorspelbaar op kleine schermen.
+- **Acceptance Criteria:** Actieve routekaart-micro-labels gebruiken expliciet auto font-optical-sizing in hun eigen forced-colors regel; focus, actieve route, titel, context en micro-label blijven onderscheidbaar; small-mobile routekaarten behouden compacte afmetingen zonder onverwachte optische fontaanpassing; app-shell tests of routeflow smoke bewaken actieve micro-label-font-optical-sizing en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card forced-colors active micro-label font-optical-sizing, small-mobile CSS, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3621
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

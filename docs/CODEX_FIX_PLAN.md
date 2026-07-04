@@ -2192,3 +2192,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1837/#3617: Dossier upload active route micro-labels now inherit the
   route card font family in their own small-mobile forced-colors rule,
   preventing monospace or system font drift from widening compact labels.
+- Partial G1838/#3619: Dossier upload active route micro-labels now disable
+  font synthesis in their own small-mobile forced-colors rule, preventing
+  browser-synthesized bold or italic emphasis from making compact labels louder.
