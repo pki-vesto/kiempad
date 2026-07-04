@@ -2084,3 +2084,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1801/#3545: Dossier upload route group now uses an 18px small-mobile
   summary indicator while routeflow guards marker dimensions, marker content and
   summary grid columns.
+- Partial G1802/#3547: Dossier upload route group now uses calmer small-mobile
+  summary border/background and transparent marker surface, guarded by CSS tests
+  and routeflow computed border/background evidence.

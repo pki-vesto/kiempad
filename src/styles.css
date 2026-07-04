@@ -22224,6 +22224,11 @@ summary[class*="__summary"]:focus-visible,
 }
 
 @media (max-width: 420px) {
+  .dossier-add-route-group {
+    border-color: color-mix(in srgb, var(--accent) 10%, var(--border));
+    background: color-mix(in srgb, var(--surface) 94%, var(--surface-subtle));
+  }
+
   .dossier-add-route-group__summary {
     grid-template-columns: minmax(0, 1fr) 18px;
     min-height: 42px;
@@ -22233,6 +22238,8 @@ summary[class*="__summary"]:focus-visible,
   .dossier-add-route-group__summary::after {
     width: 18px;
     height: 18px;
+    border-color: color-mix(in srgb, var(--accent) 14%, var(--border));
+    background: transparent;
     font-size: 0.74rem;
     line-height: 1;
   }

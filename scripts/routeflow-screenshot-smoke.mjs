@@ -2294,6 +2294,7 @@ async function assertRouteflows(browser, options) {
           ? (() => {
               const consoleElement = document.querySelector('[data-dossier-upload-console="ready"]');
               const body = consoleElement?.querySelector('[data-dossier-upload-console-region="body"]');
+              const routeGroup = consoleElement?.querySelector('[data-dossier-add-route-group]');
               const routeGroupSummary = consoleElement?.querySelector(
                 '[data-dossier-add-route-group-summary="ready"]',
               );
@@ -2318,6 +2319,7 @@ async function assertRouteflows(browser, options) {
                 '[data-dossier-add-route-panel="embryo-status"]',
               );
               const bodyRect = body?.getBoundingClientRect();
+              const routeGroupStyle = routeGroup ? getComputedStyle(routeGroup) : null;
               const routeGroupSummaryRect = routeGroupSummary?.getBoundingClientRect();
               const selectorRect = selector?.getBoundingClientRect();
               const documentRect = documentPanel?.getBoundingClientRect();
@@ -2403,6 +2405,8 @@ async function assertRouteflows(browser, options) {
                 consultOverflowY: consultStyle?.overflowY ?? '',
                 reviewOverflowY: reviewStyle?.overflowY ?? '',
                 documentMaxHeight: documentStyle?.maxHeight ?? '',
+                routeGroupBorderColor: routeGroupStyle?.borderColor ?? '',
+                routeGroupBackground: routeGroupStyle?.backgroundColor ?? '',
                 routeGroupSummaryVisible: Boolean(
                   routeGroupSummaryRect &&
                     routeGroupSummaryRect.width > 0 &&
@@ -2414,6 +2418,10 @@ async function assertRouteflows(browser, options) {
                   routeGroupSummaryStyle?.gridTemplateColumns ?? '',
                 routeGroupSummaryMarkerWidth: routeGroupSummaryMarkerStyle?.width ?? '',
                 routeGroupSummaryMarkerHeight: routeGroupSummaryMarkerStyle?.height ?? '',
+                routeGroupSummaryMarkerBorderColor:
+                  routeGroupSummaryMarkerStyle?.borderColor ?? '',
+                routeGroupSummaryMarkerBackground:
+                  routeGroupSummaryMarkerStyle?.backgroundColor ?? '',
                 routeGroupSummaryMarkerContent: routeGroupSummaryMarkerStyle?.content ?? '',
                 routeGroupSummaryContextText: routeGroupSummaryContext?.textContent?.trim() ?? '',
                 routeGroupSummaryContextLength:
@@ -3209,9 +3217,13 @@ async function assertRouteflows(browser, options) {
         (!evidence.uploadConsole.routeGroupSummaryVisible ||
           evidence.uploadConsole.routeGroupSummaryHeight > 54 ||
           parseFloat(evidence.uploadConsole.routeGroupSummaryPaddingTop) > 7 ||
+          evidence.uploadConsole.routeGroupBorderColor === '' ||
+          evidence.uploadConsole.routeGroupBackground === '' ||
           !evidence.uploadConsole.routeGroupSummaryGridTemplateColumns.includes('18px') ||
           parseFloat(evidence.uploadConsole.routeGroupSummaryMarkerWidth) > 18 ||
           parseFloat(evidence.uploadConsole.routeGroupSummaryMarkerHeight) > 18 ||
+          evidence.uploadConsole.routeGroupSummaryMarkerBackground !== 'rgba(0, 0, 0, 0)' ||
+          evidence.uploadConsole.routeGroupSummaryMarkerBorderColor === '' ||
           !['"+"', '"-"'].includes(evidence.uploadConsole.routeGroupSummaryMarkerContent) ||
           evidence.uploadConsole.routeGroupSummaryContextLength > 36 ||
           parseFloat(evidence.uploadConsole.routeGroupSummaryContextLineHeight) > 15 ||
