@@ -1782,8 +1782,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route group summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3545
+
+### G1802 — Dossier upload small-mobile route summary border rustiger
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De rand en achtergrond van de Dossier upload routegroep-summary concurreren op small-mobile nog met de routekaarten.
+- **User Impact:** De routekeuze voelt visueel drukker dan nodig voordat gebruikers de concrete routekaarten scannen.
+- **Desired Outcome:** De summary blijft herkenbaar en klikbaar, maar gebruikt rustigere rand- en achtergrondstyling op small-mobile.
+- **User Value:** Gebruikers scannen de routekaarten sneller doordat de summary minder visuele nadruk opeist.
+- **Acceptance Criteria:** De routegroep-summary blijft herkenbaar en klikbaar; rand/achtergrond concurreren minder met de routekaarten op small-mobile; open/dicht-indicator en routecontext blijven zichtbaar; app-shell tests of routeflow smoke bewaken de compacte summary-styling.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route group summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3547
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
