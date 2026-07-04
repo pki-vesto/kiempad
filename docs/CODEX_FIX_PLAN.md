@@ -1903,3 +1903,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   shared pill radius while preserving the fixed compact badge box.
 - Partial G1714/#3371: Focused forced-colors image-context badges now use a single
   explicit Highlight border while keeping shadow and outline suppressed.
+- Partial G1715/#3373: Focused forced-colors image-context badges now explicitly keep a
+  Canvas background and suppress background images to avoid extra contrast surfaces.
