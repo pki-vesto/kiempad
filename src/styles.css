@@ -27477,7 +27477,7 @@ summary[class*="__summary"]:focus-visible,
     background: color-mix(in srgb, var(--surface) 99%, var(--surface-subtle));
     box-shadow:
       inset 0 -1px 0 color-mix(in srgb, var(--accent) 46%, transparent),
-      inset 0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent);
+      inset 0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent);
   }
 
   .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route strong {
