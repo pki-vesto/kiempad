@@ -6107,6 +6107,10 @@ describe('app shell', () => {
     expect(html).toContain('href="#medicatie?route=planning"');
     const planningFollowupLinks =
       html.match(/<nav class="medication-planning-followup__links"[\s\S]*?<\/nav>/)?.[0] ?? '';
+    expect(planningFollowupLinks).toContain('href="#medicatie?route=vandaag">Afvinken</a>');
+    expect(planningFollowupLinks).not.toContain(
+      'href="#medicatie?route=vandaag">Vandaag afvinken</a>',
+    );
     expect(planningFollowupLinks).toContain('href="#medicatie?route=beheer">Beheer</a>');
     expect(planningFollowupLinks).not.toContain(
       'href="#medicatie?route=beheer">Middel beheren</a>',

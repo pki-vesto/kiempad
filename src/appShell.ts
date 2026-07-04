@@ -18494,7 +18494,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             </summary>
             <div class="kp-disclosure__body medication-planning-followup__body">
               <nav class="medication-planning-followup__links" aria-label="Medicatie vervolgcontext">
-                <a href="#medicatie?route=vandaag">Vandaag afvinken</a>
+                <a href="#medicatie?route=vandaag">Afvinken</a>
                 <a href="#medicatie?route=beheer">Beheer</a>
                 <a href="#medicatie?route=import">Lokale import</a>
                 <a href="#medicatie?route=historie">Historie teruglezen</a>
