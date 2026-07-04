@@ -1911,3 +1911,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   compact 820 font weight so the number does not jump beside input focus.
 - Partial G1718/#3379: Focused forced-colors image-context badges now explicitly keep the
   compact 0.68rem font size to avoid number size jumps during focus.
+- Partial G1719/#3381: Focused forced-colors image-context badges now explicitly keep
+  inline-grid layout with line-height 1 to prevent compact line-height shifts.
