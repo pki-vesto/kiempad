@@ -647,7 +647,9 @@ function formatRecoverableStorageError(error: unknown, fallback: string): string
 
 function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
   root
-    .querySelectorAll<HTMLButtonElement>('[data-central-session-renewal-action="reload"]')
+    .querySelectorAll<HTMLButtonElement>(
+      '[data-central-session-renewal-action="reload"], [data-central-replay-conflict-action="reload"]',
+    )
     .forEach((button) => {
       button.addEventListener('click', () => window.location.reload());
     });

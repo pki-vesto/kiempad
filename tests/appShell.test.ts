@@ -42228,6 +42228,7 @@ describe('app shell', () => {
     expect(syncFeedback).toContain('data-central-sync-feedback-kind="record-load"');
     expect(syncFeedback).toContain('data-central-sync-feedback-state="warning"');
     expect(syncFeedback).toContain('Replayconflict bijgewerkt zonder sessie- of recorddetails.');
+    expect(syncFeedback).toContain('data-central-replay-conflict-action="reload"');
     expect(syncFeedback).toContain('geen lokale plaintext fallback');
     expect(syncFeedback).toContain('data-central-session-renewal-action="reload"');
     expect(syncFeedback).toContain('Herlaad Kiempad');
@@ -42297,6 +42298,49 @@ describe('app shell', () => {
     expect(failedSyncFeedback).not.toContain('sessie-id');
     expect(failedSyncFeedback).not.toContain('OCR_RAW_PAYLOAD');
     expect(failedSyncFeedback).not.toContain('BASE64_MEDISCHE_PAYLOAD');
+  });
+
+  it('toont replayconflict reloadactie alleen bij herstelbare centrale conflictstatus', () => {
+    const idleHtml = renderAppShell(
+      'backup',
+      makeStartState({
+        storageMode: 'central-api',
+        centralSyncFeedback: {
+          'replay-conflict': {
+            state: 'idle',
+            status: 'Geen replayconflict gemeld voor deze centrale sessie.',
+          },
+        },
+      }),
+    );
+    const warningHtml = renderAppShell(
+      'backup',
+      makeStartState({
+        storageMode: 'central-api',
+        centralSyncFeedback: {
+          'replay-conflict': {
+            state: 'warning',
+            status:
+              'Replay conflict voor recordpayload token abc123 echo.png encrypted payload diagnose 150 mg.',
+          },
+        },
+      }),
+    );
+    const idleSyncFeedback = extractCentralSyncFeedback(idleHtml);
+    const warningSyncFeedback = extractCentralSyncFeedback(warningHtml);
+
+    expect(idleSyncFeedback).not.toContain('data-central-replay-conflict-action="reload"');
+    expect(warningSyncFeedback).toContain('data-central-replay-conflict-action="reload"');
+    expect(warningSyncFeedback).toContain('Herlaad Kiempad');
+    expect(warningSyncFeedback).toContain(
+      'Replayconflict bijgewerkt zonder sessie- of recorddetails.',
+    );
+    expect(warningSyncFeedback).not.toContain('token abc123');
+    expect(warningSyncFeedback).not.toContain('passphrase');
+    expect(warningSyncFeedback).not.toContain('recordpayload');
+    expect(warningSyncFeedback).not.toContain('echo.png');
+    expect(warningSyncFeedback).not.toContain('diagnose');
+    expect(warningSyncFeedback).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert biometrie-copy voor de centrale versleutelde opslag', () => {
