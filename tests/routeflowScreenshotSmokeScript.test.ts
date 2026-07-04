@@ -247,6 +247,9 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('addRouteActiveBackground');
     expect(routeflowScreenshotSmokeScript).toContain('addRouteInactiveBackground');
     expect(routeflowScreenshotSmokeScript).toContain('addRouteActiveBoxShadow');
+    expect(routeflowScreenshotSmokeScript).toContain('addRouteFocusBorderColor');
+    expect(routeflowScreenshotSmokeScript).toContain('addRouteFocusBoxShadow');
+    expect(routeflowScreenshotSmokeScript).toContain("includes('0px 0px 0px 4px')");
     expect(routeflowScreenshotSmokeScript).toContain("includes('0px -2px')");
     expect(routeflowScreenshotSmokeScript).toContain("includes('0px -3px')");
     expect(routeflowScreenshotSmokeScript).toContain('addRouteLabelMaxLength');
