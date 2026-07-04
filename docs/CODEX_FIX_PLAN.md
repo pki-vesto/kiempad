@@ -511,6 +511,9 @@
   the safety management workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active safety route, and compact backup context
   while mobile remains stacked.
+- **CFX-044 backup import feedback collapse — partial in G1596 / issue #3136.** Back-up import
+  keeps import/export feedback details closed by default with a stable id while route summary still
+  surfaces status/error state.
 - **CFX-008/CFX-044 biometric backup de-jargon — partial in G1395 / issue #2564.** Back-up,
   biometrie, dossierpreviews, timeline, and attachment status copy now use plain Dutch terms such
   as `centrale versleutelde opslag`, `lokale kluis`, and `versleutelde overdracht` while technical
