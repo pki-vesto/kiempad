@@ -1092,6 +1092,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   app-shell tests guard against behandeladvies wording returning to research placeholder copy.
   Partial G1616/#3177: Medication schema import now keeps the example line format while using
   short planning-context copy instead of dosage-transfer or calculation caveats.
+  Partial G1617/#3179: Medication today route now uses short checklist context in the header
+  and route summary instead of dosage calculation or advice wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

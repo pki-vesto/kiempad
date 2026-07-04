@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1618 — Medicatie werkbank gebruikt korte statuscontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie werkbank en focusshell herhalen nog meerdere doseeradvies/berekenzinnen buiten de actieve taakroute.
+- **User Impact:** Gebruikers zien in de contextkolom alsnog defensieve tekst nadat de routecopy is opgeschoond.
+- **Desired Outcome:** Medicatie werkbank gebruikt korte statuscontext zonder herhaalde doseeradviesformuleringen.
+- **User Value:** Medicatie voelt rustiger en taakgerichter op desktop en mobiel.
+- **Acceptance Criteria:** Medicatie focusshell en werkbank gebruiken korte statuscontext; app-shell tests bewaken dat oude doseeradvies/berekenzinnen niet terugkeren in de werkbank.
+- **Affected Screens:** Medicatie werkbank
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication focus shell, medication workbench, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1617 — Medicatie vandaagroute gebruikt korte afvinkcontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication today route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3179
 
 ### G1616 — Medicatie schema-import gebruikt korte planningcontext
 
