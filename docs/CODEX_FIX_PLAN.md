@@ -1787,3 +1787,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   planning instead of the generic Import route.
 - Partial G1658/#3261: Medication empty planning CTA context now says local input can help while
   preserving the visible Beheer CTA.
+- Partial G1659/#3263: Medication empty planning CTA label now says Beheer en invoer openen while
+  preserving the beheer route href.
