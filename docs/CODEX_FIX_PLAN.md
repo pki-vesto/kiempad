@@ -1939,3 +1939,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   lower tap height and ellipsis so the strip stays horizontal without page overflow.
 - Partial G1732/#3407: Mobile workspace strip active buttons now keep a clear inset
   accent state inside the compact swipe row without adding extra height.
+- Partial G1733/#3409: Mobile renders now align the active workspace-strip button into
+  the compact swipe row, and routeflow smoke checks mobile active-strip visibility before screenshots.

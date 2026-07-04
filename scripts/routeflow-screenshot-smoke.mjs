@@ -1863,6 +1863,9 @@ async function assertRouteflows(browser, options) {
       await page.evaluate((selector) => {
         document.querySelector(selector)?.scrollIntoView({ block: 'center', inline: 'nearest' });
       }, target.rootSelector);
+      if (options.label === 'mobile' || options.label === 'small-mobile') {
+        await waitForActiveWorkspaceStripButton(page);
+      }
       let imageOpenFieldFocus = null;
       if (target.imageOpenFieldFocus) {
         const focusSelector =
@@ -1933,7 +1936,6 @@ async function assertRouteflows(browser, options) {
       }
 
       const root = page.locator(target.rootSelector);
-      const screenshot = await root.screenshot({ animations: 'disabled' });
       const evidence = await page.evaluate(({ routeflow, viewportLabel }) => {
         const rootElement = document.querySelector(routeflow.rootSelector);
         const rootRect = rootElement?.getBoundingClientRect();
@@ -2011,6 +2013,16 @@ async function assertRouteflows(browser, options) {
           ? document.querySelector(routeflow.activeRouteSelector)
           : rootElement;
         const activeRect = activeElement?.getBoundingClientRect();
+        const activeWorkspaceButton = document.querySelector(
+          '[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]',
+        );
+        const activeWorkspaceStrip = activeWorkspaceButton?.closest('.workspace-strip__switcher');
+        const activeWorkspaceButtonRect = activeWorkspaceButton?.getBoundingClientRect();
+        const activeWorkspaceStripRect = activeWorkspaceStrip?.getBoundingClientRect();
+        const activeWorkspaceButtonStyle =
+          activeWorkspaceButton instanceof HTMLElement
+            ? getComputedStyle(activeWorkspaceButton)
+            : null;
         const hiddenSelectors = [
           ...(routeflow.hiddenSelectors ?? []),
           ...(viewportLabel === 'desktop' ? (routeflow.desktopHiddenSelectors ?? []) : []),
@@ -2630,6 +2642,31 @@ async function assertRouteflows(browser, options) {
               document.documentElement.scrollHeight > document.documentElement.clientHeight + 1 ||
               document.body.scrollHeight > document.body.clientHeight + 1,
           },
+          workspaceStripActive: {
+            exists: Boolean(activeWorkspaceButton),
+            visible: Boolean(
+              activeWorkspaceButtonRect &&
+                activeWorkspaceButtonRect.width > 0 &&
+                activeWorkspaceButtonRect.height > 0,
+            ),
+            buttonLeft: activeWorkspaceButtonRect?.left ?? 0,
+            buttonRight: activeWorkspaceButtonRect?.right ?? 0,
+            stripLeft: activeWorkspaceStripRect?.left ?? 0,
+            stripRight: activeWorkspaceStripRect?.right ?? 0,
+            stripScrollLeft:
+              activeWorkspaceStrip instanceof HTMLElement ? activeWorkspaceStrip.scrollLeft : 0,
+            inStripViewport: Boolean(
+              activeWorkspaceButtonRect &&
+                activeWorkspaceStripRect &&
+                activeWorkspaceButtonRect.left >= activeWorkspaceStripRect.left - 4 &&
+                activeWorkspaceButtonRect.right <= activeWorkspaceStripRect.right + 4,
+            ),
+            stripOverflowX:
+              activeWorkspaceStrip instanceof HTMLElement
+                ? getComputedStyle(activeWorkspaceStrip).overflowX
+                : '',
+            activeBoxShadow: activeWorkspaceButtonStyle?.boxShadow ?? '',
+          },
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -2637,6 +2674,7 @@ async function assertRouteflows(browser, options) {
         };
       }, { routeflow: target, viewportLabel: options.label });
       evidence.imageOpenFieldFocus = imageOpenFieldFocus;
+      const screenshot = await root.screenshot({ animations: 'disabled' });
 
       if (pageErrors.length > 0) {
         throw new Error(
@@ -3056,6 +3094,19 @@ async function assertRouteflows(browser, options) {
       if (evidence.horizontalOverflow) {
         throw new Error(`${options.label}/${target.screen}: routeflow veroorzaakt horizontale overflow.`);
       }
+      if (
+        (options.label === 'mobile' || options.label === 'small-mobile') &&
+        (!evidence.workspaceStripActive.exists ||
+          !evidence.workspaceStripActive.visible ||
+          !evidence.workspaceStripActive.inStripViewport ||
+          evidence.workspaceStripActive.stripOverflowX !== 'auto')
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: actieve workspace-strip knop staat niet zichtbaar in de compacte swipe-rij (${JSON.stringify(
+            evidence.workspaceStripActive,
+          )}).`,
+        );
+      }
       if (screenshot.byteLength < 2_000) {
         throw new Error(`${options.label}/${target.screen}: screenshot-evidence is te klein.`);
       }
@@ -3386,6 +3437,33 @@ async function waitForStableRouteflowRoot(page, selector) {
       return Boolean(root?.isConnected && !loadingPanel);
     },
     selector,
+    { timeout: 10_000 },
+  );
+}
+
+async function waitForActiveWorkspaceStripButton(page) {
+  await page.waitForFunction(
+    () => {
+      const activeButton = document.querySelector(
+        '[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]',
+      );
+      const strip = activeButton?.closest('.workspace-strip__switcher');
+      const buttonRect = activeButton?.getBoundingClientRect();
+      const stripRect = strip?.getBoundingClientRect();
+
+      return Boolean(
+        activeButton &&
+          strip instanceof HTMLElement &&
+          buttonRect &&
+          stripRect &&
+          buttonRect.width > 0 &&
+          buttonRect.height > 0 &&
+          getComputedStyle(strip).overflowX === 'auto' &&
+          buttonRect.left >= stripRect.left - 4 &&
+          buttonRect.right <= stripRect.right + 4,
+      );
+    },
+    undefined,
     { timeout: 10_000 },
   );
 }

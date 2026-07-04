@@ -626,8 +626,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, mobile layout, workspace strip active route visibility
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3409
+
+### G1734 — App-shell mobiel workspace-strip behoudt actieve context bij browser terug
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De mobiele workspace-strip brengt de actieve knop in beeld, maar history-navigatie kan nog expliciet bewaakt worden.
+- **User Impact:** Gebruikers kunnen bij terug/vooruit tijdelijk context verliezen als de actieve strippositie niet meebeweegt.
+- **Desired Outcome:** Mobiele workspace-strip houdt de actieve context zichtbaar na browser terug/vooruit.
+- **User Value:** Gebruikers blijven georiënteerd wanneer zij tussen hoofdschermen navigeren.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; actieve workspace-strip knop blijft zichtbaar na browser terug/vooruit tussen hoofdschermen; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; tests of smoke checks bewaken actieve mobiele stripcontext na history-navigatie; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, mobile layout, workspace strip history navigation
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3411
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
