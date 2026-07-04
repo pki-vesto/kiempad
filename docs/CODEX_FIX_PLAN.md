@@ -2003,3 +2003,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   item alignment, guarded by reload smoke.
 - Partial G1764/#3471: Small-mobile workspace-strip switchers now keep left-starting
   justify-content, guarded by reload smoke.
+- Partial G1765/#3473: Small-mobile workspace-strip switchers now keep stable
+  flex display, guarded by reload smoke.
