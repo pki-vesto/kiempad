@@ -8124,6 +8124,21 @@ describe('app shell', () => {
     const switchHint = extractDossierAddRouteSwitchHint(emptyHtml);
     const draftNote = extractDossierAddRouteDraftNote(emptyHtml);
 
+    expect(addSection).toContain('data-dossier-upload-action-path="ready"');
+    expect(addSection).toContain('data-dossier-upload-console-region="action-path"');
+    expect(addSection).toContain('aria-label="Snel toevoegen aan dossier"');
+    expect(addSection).toContain('data-dossier-upload-action="document"');
+    expect(addSection).toContain('data-dossier-upload-action="consult"');
+    expect(addSection).toContain('data-dossier-upload-action="image"');
+    expect(addSection).toContain('data-dossier-upload-action="embryo"');
+    expect(addSection).toContain('Onderzoek uploaden');
+    expect(addSection).toContain('Gesprek vastleggen');
+    expect(addSection).toContain('Echo of foto toevoegen');
+    expect(addSection).toContain('Kwaliteit registreren');
+    expect(addSection).toContain('Upload met beeldcontext');
+    expect(addSection.indexOf('data-dossier-upload-action-path="ready"')).toBeLessThan(
+      addSection.indexOf('data-dossier-add-route-group="collapsed"'),
+    );
     expect(triage).toContain('data-dossier-upload-triage="ready"');
     expect(triage).toContain('data-dossier-upload-triage-details="collapsed"');
     expect(triage).toContain('data-dossier-upload-triage-summary="ready"');
@@ -8318,12 +8333,17 @@ describe('app shell', () => {
     );
     const populatedSelector = extractDossierAddRouteSelector(populatedHtml);
     const populatedTriage = extractDossierUploadTriage(populatedHtml);
+    const populatedAddSection = extractDossierAddSection(populatedHtml);
     const populatedSwitchHint = extractDossierAddRouteSwitchHint(populatedHtml);
     const populatedDraftNote = extractDossierAddRouteDraftNote(populatedHtml);
     const uploadFeedback = extractUploadAttachmentFeedback(populatedHtml);
 
     expect(populatedTriage).toContain('data-dossier-upload-triage="ready"');
     expect(populatedTriage).not.toMatch(
+      /secret-route\.pdf|secret-route-consult\.txt|secret-route-embryo\.jpg|OCR-payload|diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i,
+    );
+    expect(populatedAddSection).toContain('data-dossier-upload-action-path="ready"');
+    expect(populatedAddSection).not.toMatch(
       /secret-route\.pdf|secret-route-consult\.txt|secret-route-embryo\.jpg|OCR-payload|diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i,
     );
     expect(populatedSelector).toContain('href="#dossier-upload-form"');
@@ -8377,6 +8397,7 @@ describe('app shell', () => {
     );
     const lockedSelector = extractDossierAddRouteSelector(lockedHtml);
     const lockedTriage = extractDossierUploadTriage(lockedHtml);
+    const lockedAddSection = extractDossierAddSection(lockedHtml);
 
     expect(lockedTriage).toContain('data-dossier-upload-lane="imaging"');
     expect(lockedTriage).not.toContain('locked-route-selector-secret.jpg');
@@ -8384,6 +8405,9 @@ describe('app shell', () => {
     expect(lockedSelector).toContain('data-dossier-add-route-selector="compact-tabs"');
     expect(lockedSelector).not.toContain('locked-route-selector-secret.jpg');
     expect(lockedSelector).not.toContain('cm91dGUtc2VsZWN0b3I=');
+    expect(lockedAddSection).toContain('data-dossier-upload-action="image"');
+    expect(lockedAddSection).not.toContain('locked-route-selector-secret.jpg');
+    expect(lockedAddSection).not.toContain('cm91dGUtc2VsZWN0b3I=');
   });
 
   it('plaatst toevoegformulieren in gefocuste routepanelen zonder contracten te verbergen', () => {
@@ -9199,6 +9223,15 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-upload-console #dossier-route-review {');
     expect(css).toContain('max-height: none;');
+    expect(css).toContain('.dossier-upload-action-path {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.dossier-upload-action-path__item {');
+    expect(css).toContain('min-height: 84px;');
+    expect(css).toContain('.dossier-upload-action-path__item:hover,');
+    expect(css).toContain(
+      '.dossier-upload-action-path__item[data-dossier-upload-action-state="active"],',
+    );
+    expect(css).toContain('.dossier-upload-action-path__item[aria-current="step"]');
     expect(css).toContain(
       '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]\n  .dossier-add-route-disclosure[open]\n  > [data-dossier-add-route-panel],',
     );
@@ -9340,6 +9373,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.dossier-route-snapshot__card {');
     expect(mobileCss).toContain('flex: 0 0 min(230px, 76vw);');
     expect(mobileCss).toContain('.dossier-upload-triage {');
+    expect(mobileCss).toContain('.dossier-upload-action-path {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.dossier-upload-action-path__item {');
+    expect(mobileCss).toContain('flex: 0 0 min(178px, 72vw);');
     expect(mobileCss).toContain('.dossier-upload-triage__lanes {');
     expect(mobileCss).toContain('display: flex;');
     expect(mobileCss).toContain('flex-wrap: nowrap;');

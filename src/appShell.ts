@@ -3355,6 +3355,7 @@ function renderDossierScreen(state: AppShellState): string {
           <span data-dossier-upload-console-records="ready">${zichtbareDocumenten.length} records</span>
         </header>
         <div class="dossier-upload-console__body" data-dossier-upload-console-region="body">
+        ${renderDossierUploadActionPath(activeDossierAddFlow)}
         <details class="dossier-add-route-group" data-dossier-add-route-group="collapsed"${activeDossierAddFlow === 'keuze' ? '' : ' open'}>
           <summary class="dossier-add-route-group__summary" data-dossier-add-route-group-summary="ready">
             <span>Toevoegroute kiezen</span>
@@ -5030,6 +5031,61 @@ function renderDossierUploadTriage(input: {
         <p class="small-print">${DOSSIER_CONTEXT_DISCLAIMER}</p>
       </div>
     </details>
+  `;
+}
+
+function renderDossierUploadActionPath(activeFlow: DossierAddFlow): string {
+  const actions = [
+    {
+      id: 'document',
+      flow: 'document',
+      href: '#dossier-upload-form',
+      label: 'Document',
+      title: 'Onderzoek uploaden',
+      detail: 'PDF, labuitslag of verslag',
+    },
+    {
+      id: 'consult',
+      flow: 'consult',
+      href: '#consult-verslag-form',
+      label: 'Consult',
+      title: 'Gesprek vastleggen',
+      detail: 'Notitie of samenvatting',
+    },
+    {
+      id: 'image',
+      flow: 'document',
+      href: '#dossier-upload-form',
+      label: 'Beeld',
+      title: 'Echo of foto toevoegen',
+      detail: 'Upload met beeldcontext',
+    },
+    {
+      id: 'embryo',
+      flow: 'embryo-quality',
+      href: '#embryo-quality-form',
+      label: 'Embryo',
+      title: 'Kwaliteit registreren',
+      detail: 'Labscore met bron',
+    },
+  ] as const;
+
+  return `
+    <nav class="dossier-upload-action-path" aria-label="Snel toevoegen aan dossier" data-dossier-upload-action-path="ready" data-dossier-upload-console-region="action-path">
+      ${actions
+        .map((action) => {
+          const isActive = activeFlow === action.flow;
+          const isCurrent = isActive && action.id !== 'image';
+          return `
+            <a class="dossier-upload-action-path__item" href="${action.href}" data-dossier-upload-action="${action.id}" data-dossier-upload-action-state="${isActive ? 'active' : 'idle'}"${isCurrent ? ' aria-current="step"' : ''}>
+              <span>${escapeHtml(action.label)}</span>
+              <strong>${escapeHtml(action.title)}</strong>
+              <small>${escapeHtml(action.detail)}</small>
+            </a>
+          `;
+        })
+        .join('')}
+    </nav>
   `;
 }
 

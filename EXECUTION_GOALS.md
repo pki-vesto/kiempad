@@ -48,8 +48,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, upload workflow, screen-stage panel, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 88
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3343
+
+### G1701 — Dossier upload beeldactie opent beeldcontext directer
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De nieuwe beeldactie in dossierupload is zichtbaar, maar echo's, foto's en scans delen nog dezelfde startankers als algemene documenten.
+- **User Impact:** Gebruikers die specifiek beeldmateriaal toevoegen kunnen nog missen dat de beeldcontextvelden de volgende relevante stap zijn.
+- **Desired Outcome:** De beeldactie maakt duidelijker hoe gebruikers van beeldupload naar beeldcontext gaan zonder documentuploadcontracten te wijzigen.
+- **User Value:** Echo's, foto's en scans toevoegen voelt gerichter terwijl de veilige documentroute behouden blijft.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; de beeldactie maakt de beeldcontext als volgende stap duidelijker vanaf het upload-actiepad; desktop, tablet en mobile tonen geen overlap; tests dekken lege en gevulde uploadcontext plus locked imaging state; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontextvelden, upload action path, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3345
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 
