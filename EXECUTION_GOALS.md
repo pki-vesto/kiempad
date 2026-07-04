@@ -116,8 +116,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontextvelden, upload action path, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3351
+
+### G1705 — Dossier upload beeldcontext veldlabels blijven compact op mobiel
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De beeldcontextvelden volgen nu scanbaar de samenvattingsvolgorde, maar de genummerde veldlabels kunnen op small mobile nog extra compactheidsbewaking gebruiken.
+- **User Impact:** Gebruikers met smalle schermen kunnen alsnog meer verticale druk ervaren bij echo-, foto- of scancontext.
+- **Desired Outcome:** Genummerde beeldcontextveldlabels blijven compact en stabiel op small mobile zonder horizontale druk of overlap.
+- **User Value:** Beeldmateriaal toevoegen blijft rustig en scanbaar, ook op kleine telefoons.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; genummerde beeldcontextveldlabels blijven compact en leesbaar op small mobile; desktop, tablet en mobile tonen geen overlap; tests dekken lege en gevulde uploadcontext plus locked imaging state; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontextvelden, mobile field-label rhythm, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3353
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 
