@@ -1119,8 +1119,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher gap
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3467
+
+### G1763 — App-shell mobiel workspace-strip bewaakt reload switcher align-items op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele compacte gaps, maar de rij kan nog expliciet bewaakt worden op verticale uitlijning zodat knoppen niet ongelijk ogen.
+- **User Impact:** Inconsistente verticale uitlijning maakt de compacte swipe-rij minder rustig en minder scanbaar.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele align-items instellingen.
+- **User Value:** Gebruikers houden een nette, gelijkmatig uitgelijnde rij routeknoppen na reload.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing, actieve knop tap-highlight en compacte switcher gap; workspace-strip switcher gebruikt na reload stabiele align-items instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher align-items; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher align items
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3469
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
