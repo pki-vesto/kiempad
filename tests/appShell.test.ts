@@ -9167,6 +9167,8 @@ describe('app shell', () => {
     expect(forcedColorsCss).toContain('line-height: 1;');
     expect(forcedColorsCss).toContain('outline: 0;');
     expect(forcedColorsCss).toContain('text-align: center;');
+    expect(forcedColorsCss).toContain('text-decoration: none;');
+    expect(forcedColorsCss).toContain('text-shadow: none;');
     expect(css).toContain('@media (max-width: 420px) {');
     expect(css).toContain('font-size: 0.78rem;');
     expect(css).toContain('min-height: 22px;');
