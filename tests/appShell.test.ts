@@ -6106,12 +6106,12 @@ describe('app shell', () => {
     expect(html).toContain('class="command-task-route__badge">schema</strong>');
     expect(html).toContain('href="#medicatie?route=planning"');
     expect(html).toContain(
+      'Routeopties: afvinken, beheer, planning aanvullen of historie teruglezen.',
+    );
+    expect(html).not.toContain(
       'Routeopties: afvinken, beheer, planningaanvulling of historie teruglezen.',
     );
     expect(html).not.toContain('Routeopties: afvinken, beheer, aanvulling of historie teruglezen.');
-    expect(html).not.toContain(
-      'Routeopties: afvinken, beheer, planning aanvullen of historie teruglezen.',
-    );
     expect(html).not.toContain(
       'Routeopties: afvinken, beheer, planningaanvullen of historie teruglezen.',
     );
@@ -6263,12 +6263,12 @@ describe('app shell', () => {
     );
     expect(medicationFollowupSection).not.toContain('Vervolgcontext openen');
     expect(html).toContain(
+      'Routeopties: afvinken, beheer, planning aanvullen of historie teruglezen.',
+    );
+    expect(html).not.toContain(
       'Routeopties: afvinken, beheer, planningaanvulling of historie teruglezen.',
     );
     expect(html).not.toContain('Routeopties: afvinken, beheer, aanvulling of historie teruglezen.');
-    expect(html).not.toContain(
-      'Routeopties: afvinken, beheer, planning aanvullen of historie teruglezen.',
-    );
     expect(html).not.toContain(
       'Routeopties: afvinken, beheer, planningaanvullen of historie teruglezen.',
     );
@@ -6344,12 +6344,12 @@ describe('app shell', () => {
       '<details class="kp-disclosure" id="medication-history-disclosure" open',
     );
     expect(html).toContain(
+      'Routeopties: afvinken, beheer, planning aanvullen of historie teruglezen.',
+    );
+    expect(html).not.toContain(
       'Routeopties: afvinken, beheer, planningaanvulling of historie teruglezen.',
     );
     expect(html).not.toContain('Routeopties: afvinken, beheer, aanvulling of historie teruglezen.');
-    expect(html).not.toContain(
-      'Routeopties: afvinken, beheer, planning aanvullen of historie teruglezen.',
-    );
     expect(html).not.toContain(
       'Routeopties: afvinken, beheer, planningaanvullen of historie teruglezen.',
     );
