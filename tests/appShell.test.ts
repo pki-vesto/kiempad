@@ -9151,6 +9151,10 @@ describe('app shell', () => {
     expect(forcedColorsCss).toContain('background: ButtonFace;');
     expect(forcedColorsCss).toContain('color: ButtonText;');
     expect(forcedColorsCss).toContain('label[data-dossier-upload-image-field]:focus-within');
+    expect(forcedColorsCss).toContain('width: 22px;');
+    expect(forcedColorsCss).toContain('height: 22px;');
+    expect(forcedColorsCss).toContain('min-height: 22px;');
+    expect(forcedColorsCss).toContain('padding: 0;');
     expect(forcedColorsCss).toContain('border-color: Highlight;');
     expect(forcedColorsCss).toContain('background: Canvas;');
     expect(forcedColorsCss).toContain('color: CanvasText;');

@@ -1895,3 +1895,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   ButtonText system colors so field order remains readable in high-contrast mode.
 - Partial G1710/#3363: Focused image-context labels now get a calm forced-colors
   focus-within badge state that avoids extra outline, shadow or layout pressure.
+- Partial G1711/#3365: Focused forced-colors image-context badges now keep a fixed
+  22px box with zero padding so small-mobile focus cannot add height or width pressure.
