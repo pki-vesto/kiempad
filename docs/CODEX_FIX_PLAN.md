@@ -2135,3 +2135,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1818/#3579: Dossier upload route card labels now use explicit
   forced-colors system text colors on small-mobile, with active route labels
   switching to CanvasText alongside the selected-route cue.
+- Partial G1819/#3581: Dossier upload active route micro-labels now keep a
+  calmer forced-colors tone with CanvasText, lighter weight and no underline
+  while the active route indicator remains visible.
