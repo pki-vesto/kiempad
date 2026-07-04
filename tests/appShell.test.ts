@@ -6233,6 +6233,8 @@ describe('app shell', () => {
     expect(html).toContain('Progesteron | 2026-06-23 | 08:00');
     expect(html).toContain('Zet je kliniekschema om naar planning.');
     expect(html).not.toContain('Importeer geplande momenten uit je eigen klinieklijst.');
+    expect(html).toContain('Schema klaarzetten');
+    expect(html).not.toContain('Eigen schema lokaal importeren');
     expect(html).toContain('Maak lokale planning uit je schema.');
     expect(html).not.toContain('Import maakt alleen planningmomenten aan vanuit je eigen schema.');
     expect(html).toContain('Formaat: Medicatie | YYYY-MM-DD | HH:MM.');
