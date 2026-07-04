@@ -2102,3 +2102,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1807/#3557: Dossier upload route cards now use calmer small-mobile
   surface contrast and a softer active card cue, guarded by CSS tests and
   routeflow active-card background/shadow evidence.
+- Partial G1808/#3559: Dossier upload active route cards now use a calmer
+  one-pixel small-mobile active line with lower accent mix, guarded by CSS tests
+  and routeflow active-shadow width evidence.
