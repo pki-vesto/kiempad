@@ -229,6 +229,8 @@ const DOSSIER_CONTEXT_DISCLAIMER = 'Kiempad ordent je dossier; je kliniek blijft
 
 const DECISION_CONTEXT_DISCLAIMER = 'Kiempad ordent je keuzes; je kliniek blijft leidend.';
 
+const RESEARCH_CONTEXT_DISCLAIMER = 'Kiempad ordent researchcontext; je kliniek blijft leidend.';
+
 const APPOINTMENT_CONTEXT_DISCLAIMER = 'Kiempad ordent je afspraak; je kliniek blijft leidend.';
 
 const MEDICATION_CONTEXT_DISCLAIMER = 'Kiempad toont je planning; je kliniekschema blijft leidend.';
@@ -14270,7 +14272,7 @@ function renderResearchItemForm(): string {
           </label>
           <label>
             Wetenschappelijke samenvatting
-            <textarea name="researchWetenschappelijkeSamenvatting" rows="4" placeholder="Doel, methode, belangrijkste bevindingen en beperkingen; geen behandeladvies"></textarea>
+            <textarea name="researchWetenschappelijkeSamenvatting" rows="4" placeholder="Doel, methode, belangrijkste bevindingen en beperkingen"></textarea>
           </label>
           <label>
             Eenvoudige samenvatting
@@ -14279,7 +14281,7 @@ function renderResearchItemForm(): string {
           <p class="small-print">Kiempad bewaart hierbij automatisch scientificSummary, patientSummary en sourceCitation als brongekoppeld concept.</p>
           <label>
             Relevantie voor jullie dossiercontext
-            <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."></textarea>
+            <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken?"></textarea>
           </label>
           ${renderFormRequiredMap('knowledge-research', 'Verplicht voor research', ['Titel', 'Notitie'])}
           <div class="command-form-actions" data-knowledge-form-actions="research">
@@ -14325,8 +14327,7 @@ function renderWetenschappelijkeResearchSamenvattingen(
   const kennisItemMap = new Map(kennisItems.map((item) => [item.id, item]));
   return researchSummaryList({
     title: 'Wetenschappelijke samenvattingen',
-    intro:
-      'Handmatig vastgelegde researchpublicaties met bron, publicatiedatum en herverificatiecontext. Dit is geen behandeladvies.',
+    intro: RESEARCH_CONTEXT_DISCLAIMER,
     kind: 'scientific',
     emptyState: 'Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.',
     ariaLabel: 'Wetenschappelijke researchsamenvattingen',
@@ -14372,8 +14373,7 @@ function renderEenvoudigeResearchSamenvattingen(
   const kennisItemMap = new Map(kennisItems.map((item) => [item.id, item]));
   return researchSummaryList({
     title: 'Eenvoudige samenvattingen',
-    intro:
-      'Begrijpelijke Nederlandse uitleg per publicatie, met bron, datum en lekencontext. Dit is geen diagnose of behandeladvies.',
+    intro: RESEARCH_CONTEXT_DISCLAIMER,
     kind: 'patient',
     emptyState: 'Nog geen eenvoudige samenvattingen per publicatie vastgelegd.',
     ariaLabel: 'Eenvoudige researchsamenvattingen',
@@ -14513,7 +14513,7 @@ function renderResearchTrendGroepen(groepen: readonly ResearchTrendGroep[]): str
         <div>
           <p class="kp-card__eyebrow">Trenddashboard</p>
           <h2>Researchtrends</h2>
-          <p>Lokale trefwoordgroepering van opgeslagen researchitems. Dit is geen bewijsweging of behandeladvies.</p>
+          <p>${RESEARCH_CONTEXT_DISCLAIMER}</p>
         </div>
         <dl class="research-trend-dashboard__stats" aria-label="Researchtrend status">
           <div><dt>Groepen</dt><dd>${groepen.length}</dd></div>
