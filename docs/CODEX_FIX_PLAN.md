@@ -2153,3 +2153,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1824/#3591: Dossier upload active route micro-labels now
   explicitly keep end alignment in small-mobile forced-colors mode, preserving
   stable placement inside the compact route card.
+- Partial G1825/#3593: Dossier upload active route micro-labels now
+  explicitly keep CanvasText in their own small-mobile forced-colors rule,
+  making the small active label robust against shared label color changes.
