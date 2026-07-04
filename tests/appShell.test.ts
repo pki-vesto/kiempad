@@ -3953,9 +3953,11 @@ describe('app shell', () => {
     expect(html).toContain(
       'Bestanden, gespreksverslagen, OCR-status en analyse worden centraal versleuteld bewaard voor gekoppelde apparaten.',
     );
+    expect(html).toContain('Kiempad ordent je uploads; je kliniek blijft leidend.');
     expect(html).toContain(
       'Consultverslagen worden als eigen recordtype centraal versleuteld bewaard voor gekoppelde apparaten.',
     );
+    expect(html).toContain('Kiempad helpt je gesprek voorbereiden; je kliniek blijft leidend.');
     expect(html).toContain('Zoek in dataset');
     expect(html).toContain('Zoeken gebruikt alleen de ontgrendelde centrale versleutelde opslag');
     expect(html).toContain('Lokale OCR-pipeline starten voor tekstherkenning op dit toestel');
@@ -7246,11 +7248,15 @@ describe('app shell', () => {
     expect(html).toContain(
       'Bestanden, gespreksverslagen, OCR-status en analyse worden in de lokale kluis op dit toestel bewaard',
     );
+    expect(html).toContain('Kiempad ordent je uploads; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.',
+    );
     expect(html).toContain('Koppel aan afspraak');
     expect(html).toContain('Intakegesprek · 2026-05-01 09:30');
     expect(html).toContain('Koppel aan traject');
     expect(html).toContain('Poging 1');
-    expect(html).toContain('geen medisch advies');
+    expect(html).not.toContain('Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.');
     expect(html).toContain('Bloeduitslag mei');
     expect(html).toContain('2026-05-01 · Labuitslag · Bron: bloed-lab-uitslag.pdf');
     expect(html).toContain(
