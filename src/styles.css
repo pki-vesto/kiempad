@@ -27588,6 +27588,22 @@ summary[class*="__summary"]:focus-visible,
     :is(strong, span, small) {
     color: CanvasText;
   }
+
+  .dossier-upload-console[data-dossier-add-flow="document"]
+    .dossier-add-route[href="#dossier-upload-form"]
+    small,
+  .dossier-upload-console[data-dossier-add-flow="consult"]
+    .dossier-add-route[href="#consult-verslag-form"]
+    small,
+  .dossier-upload-console[data-dossier-add-flow="embryo-quality"]
+    .dossier-add-route[href="#embryo-quality-form"]
+    small,
+  .dossier-upload-console[data-dossier-add-flow="embryo-status"]
+    .dossier-add-route[href="#embryo-status-event-form"]
+    small {
+    font-weight: 700;
+    text-decoration: none;
+  }
 }
 
 .wellbeing-focus-shell__workspace
