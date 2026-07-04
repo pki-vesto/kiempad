@@ -1323,8 +1323,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher margin-inline
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3491
+
+### G1775 — App-shell mobiel workspace-strip bewaakt reload switcher margin-block op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele margin-inline, maar margin-block kan nog expliciet bewaakt worden zodat verticale ruimte compact blijft.
+- **User Impact:** Als verticale marge onverwacht groeit, kan de sticky chrome te hoog worden en belangrijke content verdringen.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele margin-block instellingen.
+- **User Value:** Gebruikers houden een compacte routebalk zonder extra verticale sprong.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing, actieve knop tap-highlight, compacte switcher gap, gecentreerde align-items, links startende justify-content, flex display, min-width 0, max-width 100%, flex-shrink 1, flex-grow 0, flex-basis auto, border-box sizing, nul padding-inline, nul padding-block en nul margin-inline; workspace-strip switcher houdt na reload stabiele margin-block instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher margin-block; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher margin-block
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3493
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
