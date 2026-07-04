@@ -6161,7 +6161,8 @@ describe('app shell', () => {
     );
     expect(html).toContain('id="medicatie-route-planning"');
     expect(html).toContain('data-medication-route="planning"');
-    expect(html).toContain('Bekijk komende afvinkmomenten.');
+    expect(html).toContain('Controleer en zet komende afvinkmomenten klaar.');
+    expect(html).not.toContain('Bekijk komende afvinkmomenten.');
     expect(html).not.toContain('Bekijk toekomstige afvinkmomenten uit eigen invoer of import.');
     expect(html).toContain('Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.');
     expect(html).not.toContain('Nog geen vervolgplanning; voeg momenten toe via Beheer of Import.');
