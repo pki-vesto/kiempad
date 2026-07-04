@@ -39221,12 +39221,22 @@ describe('app shell', () => {
     expect(html).toContain('name="researchEenvoudigeSamenvatting"');
     expect(html).toContain('scientificSummary, patientSummary en sourceCitation');
     expect(html).toContain('name="researchRelevantieVoorGebruiker"');
-    expect(html).toContain('placeholder="Doel, methode, belangrijkste bevindingen en beperkingen"');
-    expect(html).toContain(
-      'placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken?"',
+    expect(html).toContain('placeholder="Vat doel, methode, bevindingen en beperkingen samen"');
+    expect(html).toContain('placeholder="Leg in gewone taal uit wat bekend en onzeker is"');
+    expect(html).toContain('placeholder="Waarom is dit bespreekcontext voor jullie dossier?"');
+    const researchForm = html.slice(
+      html.indexOf('id="research-item-form"'),
+      html.indexOf('class="command-form-actions" data-knowledge-form-actions="research"'),
+    );
+    expect(researchForm).not.toMatch(/placeholder="[^"]*behandeladvies/i);
+    expect(html).not.toContain(
+      'placeholder="Doel, methode, belangrijkste bevindingen en beperkingen"',
     );
     expect(html).not.toContain(
       'placeholder="Doel, methode, belangrijkste bevindingen en beperkingen; geen behandeladvies"',
+    );
+    expect(html).not.toContain(
+      'placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken?"',
     );
     expect(html).not.toContain(
       'placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."',

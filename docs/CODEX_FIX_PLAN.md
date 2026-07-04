@@ -1088,6 +1088,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   disclaimer instead of OCR/bestandsinhoud/beeldpayloads/behandeladvies caveats.
   Partial G1614/#3173: Research input placeholders, scientific/patient summaries and trend
   dashboard now use short research-context copy instead of behandeladvies/diagnose/bewijsweging caveats.
+  Partial G1615/#3175: Research text fields now use short content-focused placeholders and
+  app-shell tests guard against behandeladvies wording returning to research placeholder copy.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

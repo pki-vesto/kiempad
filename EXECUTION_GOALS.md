@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1616 — Medicatie schema-import gebruikt korte planningcontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Medicatie schema-import toont nog een lange zin over geplande momenten en dosering overnemen/berekenen.
+- **User Impact:** Gebruikers zien defensieve tekst bij een importveld dat vooral het verwachte invoerformaat moet uitleggen.
+- **Desired Outcome:** Schema-import gebruikt korte medicatieplanningcontext en behoudt het invoerformaat.
+- **User Value:** Gebruikers kunnen medicatieschema's sneller overnemen zonder herhaalde medische caveats.
+- **Acceptance Criteria:** Schema-import behoudt het voorbeeldformaat maar vervangt de lange doseringsovername/berekenzin door korte medicatiecontextcopy; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zin.
+- **Affected Screens:** Medicatie schema-import
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning form, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1615 — Research kaartvelden gebruiken korte placeholdercopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge research form, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3175
 
 ### G1614 — Research invoer gebruikt korte contextdisclaimers
 
