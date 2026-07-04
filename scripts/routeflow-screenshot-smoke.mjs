@@ -2445,6 +2445,9 @@ async function assertRouteflows(browser, options) {
                 selectorDisplay: selectorStyle?.display ?? '',
                 selectorGap: selectorStyle?.gap ?? '',
                 selectorPaddingTop: selectorStyle?.paddingTop ?? '',
+                selectorBorderTopWidth: selectorStyle?.borderTopWidth ?? '',
+                selectorBorderTopColor: selectorStyle?.borderTopColor ?? '',
+                selectorBackground: selectorStyle?.backgroundColor ?? '',
                 selectorScrollWidth: selector?.scrollWidth ?? 0,
                 selectorClientWidth: selector?.clientWidth ?? 0,
                 addRouteWidth: addRouteRect?.width ?? 0,
@@ -3252,6 +3255,9 @@ async function assertRouteflows(browser, options) {
           !evidence.uploadConsole.selectorVisible ||
           parseFloat(evidence.uploadConsole.selectorGap) > 6 ||
           parseFloat(evidence.uploadConsole.selectorPaddingTop) > 4 ||
+          parseFloat(evidence.uploadConsole.selectorBorderTopWidth) > 1 ||
+          evidence.uploadConsole.selectorBorderTopColor === '' ||
+          evidence.uploadConsole.selectorBackground === '' ||
           evidence.uploadConsole.selectorClientWidth > evidence.uploadConsole.viewportWidth ||
           evidence.uploadConsole.addRouteWidth > 138 ||
           parseFloat(evidence.uploadConsole.addRouteMinHeight) > 52 ||
