@@ -21112,6 +21112,19 @@ summary[class*="__summary"]:focus-visible,
 }
 
 @media (forced-colors: active) {
+  .dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]
+    label[data-dossier-upload-image-field]
+    > input:focus,
+  .dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]
+    label[data-dossier-upload-image-field]
+    > input:focus-visible {
+    border-color: Highlight;
+    outline: 2px solid Highlight;
+    outline-offset: 1px;
+    box-shadow: 0 0 0 2px Canvas;
+    forced-color-adjust: auto;
+  }
+
   [data-daily-advice-feedback-workflow-reset="ready"],
   [data-daily-recommendation-list-filter-reset="ready"],
   [data-daily-recommendation-feedback-filter-reset="ready"] {

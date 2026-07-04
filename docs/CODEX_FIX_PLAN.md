@@ -1889,3 +1889,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   duplicate fieldset chrome and routeflow-check label/input spacing across viewports.
 - Partial G1707/#3357: Open image-context inputs now have stable focus styling and routeflow
   evidence verifies focus activation, unchanged fieldset dimensions and no overflow.
+- Partial G1708/#3359: Open image-context inputs now use forced-colors system focus styling
+  with explicit Highlight and Canvas cues while preserving compact focus spacing.
