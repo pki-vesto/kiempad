@@ -6228,7 +6228,8 @@ describe('app shell', () => {
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="medication-history-disclosure" open',
     );
-    expect(html).toContain('Schema importeren');
+    expect(html).toContain('href="#medicatie?route=import">Lokale invoer plannen</a>');
+    expect(html).not.toContain('href="#medicatie?route=import">Schema importeren</a>');
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Medicatie | 2026-06-23 | 08:00');
     expect(html).not.toContain('Progesteron | 2026-06-23 | 08:00');
