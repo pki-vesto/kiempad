@@ -18420,7 +18420,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Vandaag</p>
           <h2 id="medicatie-route-vandaag-title">Medicatie vandaag</h2>
-          <p>Vink geplande momenten af zonder dosering te laten berekenen of interpreteren.</p>
+          <p>Vink alleen de geplande momenten van vandaag af.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Nu eerst',
@@ -18428,8 +18428,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             todayLogs.length > 0
               ? `${completedToday}/${todayLogs.length} momenten afgevinkt`
               : 'Geen geplande medicatiemomenten vandaag',
-          detail:
-            'Vink alleen feitelijke innames of injecties af; Kiempad berekent of adviseert geen dosering.',
+          detail: 'Gebruik dit als afvinklijst naast je kliniekschema.',
           status: `${todayLogs.length} vandaag`,
           primary: { href: '#medicatie?route=beheer', label: 'Middel beheren' },
           secondary: { href: '#medicatie?route=planning', label: 'Planning bekijken' },

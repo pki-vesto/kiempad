@@ -6115,6 +6115,14 @@ describe('app shell', () => {
     );
     expect(html).toContain('data-medication-route="vandaag"');
     expect(html).toContain('data-medication-route-state="active"');
+    expect(html).toContain('Vink alleen de geplande momenten van vandaag af.');
+    expect(html).toContain('Gebruik dit als afvinklijst naast je kliniekschema.');
+    expect(html).not.toContain(
+      'Vink geplande momenten af zonder dosering te laten berekenen of interpreteren.',
+    );
+    expect(html).not.toContain(
+      'Vink alleen feitelijke innames of injecties af; Kiempad berekent of adviseert geen dosering.',
+    );
     expect(html).toContain('data-medication-progress="today"');
     expect(html).toContain('Medicatievoortgang vandaag');
     expect(html).toContain('1/3 afgevinkt');
