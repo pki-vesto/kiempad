@@ -7816,6 +7816,10 @@ describe('app shell', () => {
     expect(triage).toContain('0 verslagen · acties later');
     expect(triage).toContain('0 beelden · vergelijken apart');
     expect(triage).toContain('0 wachten · 0 review');
+    expect(triage).toContain('Kiempad ordent je dossier; je kliniek blijft leidend.');
+    expect(triage).not.toContain(
+      'Deze keuze toont alleen aantallen en routes; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.',
+    );
     expect(triage).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies|OCR-payload|base64/i);
     expect(emptyHtml.indexOf('data-dossier-upload-triage="ready"')).toBeLessThan(
       emptyHtml.indexOf('data-hub-detail-panel="upload-intake"'),
@@ -9671,8 +9675,9 @@ describe('app shell', () => {
     expect(emptyCenter).toContain('href="#dossier?route=imaging"');
     expect(emptyCenter).toContain('href="#dossier?route=search"');
     expect(emptyCenter).toContain('Nog geen historische dossierstukken toegevoegd.');
-    expect(emptyCenter).toContain(
-      'geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies',
+    expect(emptyCenter).toContain('Kiempad ordent je dossier; je kliniek blijft leidend.');
+    expect(emptyCenter).not.toContain(
+      'Dit startoverzicht toont alleen aantallen, datums, types en workflowstatussen; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.',
     );
     expect(emptyHtml).toContain('id="dossier-upload-form"');
     expect(emptyHtml).toContain('id="imaging-filter-form"');

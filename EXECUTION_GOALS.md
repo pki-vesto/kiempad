@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1610 — Dossier review en echo-classificatie gebruiken korte contextdisclaimers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier reviewwachtrij en echo-classificatie tonen nog lange caveats over OCR-tekst, broninhoud, beeldanalyse en medisch advies.
+- **User Impact:** Gebruikers krijgen defensieve tekst in reviewpanelen die vooral prioriteit, confidence, afspraak en metadata moeten tonen.
+- **Desired Outcome:** Reviewwachtrij en echo-classificatie gebruiken korte dossier- en beeldcontextzinnen.
+- **User Value:** Gebruikers kunnen reviewstatus en echo-afspraakkoppeling sneller scannen zonder herhaalde juridische ruis.
+- **Acceptance Criteria:** Dossier reviewwachtrij vervangt de lange OCR-confidence/broninhoud/medisch-advieszin door een korte dossiercontextzin; echo-classificatie vervangt de beeldanalyse/medisch-advieszin door een korte beeldcontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zinnen.
+- **Affected Screens:** Dossier reviewwachtrij, Echo-classificatie per afspraak
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Dossier review queue, echo appointment classification, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1609 — Dossier gebruikt korte start- en keuzecontextdisclaimers
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier command center, dossier upload triage, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3163
 
 ### G1608 — Welzijn gebruikt korte contextdisclaimers
 

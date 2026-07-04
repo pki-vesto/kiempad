@@ -225,6 +225,8 @@ const QUESTION_CONTEXT_DISCLAIMER =
 
 const DAILY_CONTEXT_DISCLAIMER = 'Kiempad ordent je dag; je kliniek blijft leidend.';
 
+const DOSSIER_CONTEXT_DISCLAIMER = 'Kiempad ordent je dossier; je kliniek blijft leidend.';
+
 const APPOINTMENT_CONTEXT_DISCLAIMER = 'Kiempad ordent je afspraak; je kliniek blijft leidend.';
 
 const MEDICATION_CONTEXT_DISCLAIMER = 'Kiempad toont je planning; je kliniekschema blijft leidend.';
@@ -5019,7 +5021,7 @@ function renderDossierUploadTriage(input: {
             )
             .join('')}
         </nav>
-        <p class="small-print">Deze keuze toont alleen aantallen en routes; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.</p>
+        <p class="small-print">${DOSSIER_CONTEXT_DISCLAIMER}</p>
       </div>
     </details>
   `;
@@ -5245,7 +5247,7 @@ function renderDossierCommandCenter(input: {
         <p>${input.consultVerslagen.length} consultverslag${input.consultVerslagen.length === 1 ? '' : 'en'} · ${ocrWacht} OCR wacht · ${previewStatus}</p>
       </div>
       ${contextSignals}
-      <p class="small-print">Dit startoverzicht toont alleen aantallen, datums, types en workflowstatussen; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.</p>
+      <p class="small-print">${DOSSIER_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }
