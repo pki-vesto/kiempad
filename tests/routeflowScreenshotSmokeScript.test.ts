@@ -40,7 +40,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow',
+      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis',
     );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
@@ -62,6 +62,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherMaxWidthStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherFlexShrinkStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherFlexGrowStable');
+    expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherFlexBasisStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherScrollbarHidden');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherOverscrollContained');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherSnapStable');
@@ -106,6 +107,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherMinWidth');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherMaxWidth');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherOverflowX');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherFlexBasis');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherFlexGrow');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherFlexShrink');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherFlexWrap');

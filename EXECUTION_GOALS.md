@@ -1255,8 +1255,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher flex-basis
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3483
+
+### G1771 — App-shell mobiel workspace-strip bewaakt reload switcher box-sizing op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele flex-basis, maar box-sizing kan nog expliciet bewaakt worden zodat padding en breedte voorspelbaar binnen de shell blijven.
+- **User Impact:** Als box-sizing verschuift, kan padding weer optellen bij breedte en mobiele overflow veroorzaken.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele box-sizing instellingen.
+- **User Value:** Gebruikers houden een compacte routebalk waarvan padding en swipegebied voorspelbaar blijven.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing, actieve knop tap-highlight, compacte switcher gap, gecentreerde align-items, links startende justify-content, flex display, min-width 0, max-width 100%, flex-shrink 1, flex-grow 0 en flex-basis auto; workspace-strip switcher houdt na reload stabiele box-sizing instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher box-sizing; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher box-sizing
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3485
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
