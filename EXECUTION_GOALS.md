@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1646 — Medicatie import foutcontext noemt importfeedback
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import foutcontext noemt lokale controle, maar niet dat importfeedback beschikbaar is.
+- **User Impact:** Gebruikers weten minder snel waar ze correctiepunten terugvinden.
+- **Desired Outcome:** Import foutcontext noemt importfeedback kort en behoudt lokale controle.
+- **User Value:** De foutstaat wordt sneller scanbaar en actiegericht.
+- **Acceptance Criteria:** Foutcontext noemt importfeedback; lokale controle blijft zichtbaar; app-shell tests bewaken de foutcontextcopy.
+- **Affected Screens:** Medicatie planning workbench
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning workbench, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1645 — Medicatie import foutcontext noemt lokale controle
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning workbench, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3235
 
 ### G1644 — Medicatie import feedback context noemt lokale planning
 

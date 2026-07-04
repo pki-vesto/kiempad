@@ -1759,3 +1759,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving existing feedback status rendering.
 - Partial G1644/#3233: Medication import feedback context now names local planning while preserving
   the workbench feedback state.
+- Partial G1645/#3235: Medication import error workbench status now uses Lokaal controleren copy
+  while preserving the error summary status.

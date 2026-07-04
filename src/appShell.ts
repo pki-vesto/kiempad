@@ -18666,7 +18666,7 @@ function renderMedicationPlanningWorkbench(input: {
       ? `${nextMedication.medicatie.naam}: ${formatDateTime(input.nextDoseLog.geplandOp)}`
       : 'Nog geen geplande innames of injecties.';
   const status = input.importError
-    ? 'Schema controleren'
+    ? 'Lokaal controleren'
     : input.todayCount > 0
       ? `${input.completedToday}/${input.todayCount} gedaan`
       : input.importStatus
