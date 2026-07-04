@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1627 — Medicatie import routeheader gebruikt korte schemacontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import routeheader gebruikt nog langere uitleg over geplande momenten uit een eigen klinieklijst.
+- **User Impact:** Gebruikers lezen extra uitleg voordat ze een schema kunnen importeren.
+- **Desired Outcome:** Import routeheader gebruikt korte schemacontext en behoudt de routeoriëntatie.
+- **User Value:** De importroute voelt compacter en sneller scanbaar.
+- **Acceptance Criteria:** Import routeheader gebruikt korte schemacontext; app-shell tests bewaken dat de oude routeheaderzin niet terugkeert.
+- **Affected Screens:** Medicatie import routeheader
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1626 — Medicatie historie routeheader gebruikt korte terugleescontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication history route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3197
 
 ### G1625 — Medicatie planning routeheader gebruikt korte routecontext
 

@@ -1110,6 +1110,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   copy while preserving Today, Manage, Import and History links.
   Partial G1625/#3195: Medication planning route header now uses short route context
   instead of future-input/import wording.
+  Partial G1626/#3197: Medication history route header now uses short backread context
+  instead of management-screen/instruction-log wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
