@@ -1797,3 +1797,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   leeg while preserving the future next-dose title.
 - Partial G1663/#3271: Medication empty planning empty-state title now says Geen vervolgplanning
   while preserving the Beheer/invoer CTA.
+- Partial G1664/#3273: Medication empty planning text now tells users to begin in Beheer or use
+  local input planning while preserving the empty planning CTA.

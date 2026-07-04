@@ -6166,6 +6166,9 @@ describe('app shell', () => {
     expect(html).toContain('Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.');
     expect(html).not.toContain('Nog geen vervolgplanning; voeg momenten toe via Beheer of Import.');
     expect(html).toContain(
+      'Nog geen vervolgplanning buiten vandaag; begin in Beheer of plan via lokale invoer.',
+    );
+    expect(html).not.toContain(
       'Nog geen vervolgplanning buiten vandaag; beheer of lokale invoer helpt verder.',
     );
     expect(html).toContain('Geen vervolgplanning');
