@@ -19845,7 +19845,7 @@ function renderFertilityTimelineReaderModes(
           )
           .join('')}
       </nav>
-      <p class="small-print">Deze leesmodus toont alleen aantallen en routes; geen OCR-tekst, bestandsinhoud, beeldpayloads of behandeladvies.</p>
+      <p class="small-print">${DOSSIER_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }
