@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1642 — Medicatie import knop krijgt expliciete lokale actiecopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import knop gebruikt korte actiecopy, maar maakt niet zichtbaar dat het om lokaal klaarzetten gaat.
+- **User Impact:** Gebruikers zien minder duidelijk dat import geen kliniekdata verstuurt.
+- **Desired Outcome:** Importknop gebruikt korte lokale actiecopy en behoudt submitgedrag.
+- **User Value:** De importactie voelt veiliger en contextbewuster zonder lange uitleg.
+- **Acceptance Criteria:** Import submitknop gebruikt korte lokale actiecopy; button type blijft submit; app-shell tests bewaken dat de oude knopcopy niet terugkeert in het importformulier.
+- **Affected Screens:** Medicatie import formulier
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import form, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1641 — Medicatie import helper gebruikt voorbeeldindicator
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import form, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3227
 
 ### G1640 — Medicatie import placeholder gebruikt generieke voorbeeldcopy
 

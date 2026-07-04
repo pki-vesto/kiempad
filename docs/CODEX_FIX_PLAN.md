@@ -1751,3 +1751,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the schemaImport textarea contract.
 - Partial G1640/#3225: Medication import placeholder now uses generic Medicatie example copy while
   keeping the YYYY-MM-DD and HH:MM format visible.
+- Partial G1641/#3227: Medication import helper now uses Voorbeeldformaat copy while preserving the
+  visible Medicatie | YYYY-MM-DD | HH:MM structure.
