@@ -23418,7 +23418,9 @@ summary[class*="__summary"]:focus-visible,
   .screen-stage__panel {
     min-height: 0;
     max-height: none;
+    overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 2px;
     scrollbar-gutter: stable;
     scrollbar-width: thin;
