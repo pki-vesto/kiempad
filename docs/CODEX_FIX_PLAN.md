@@ -1897,3 +1897,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   focus-within badge state that avoids extra outline, shadow or layout pressure.
 - Partial G1711/#3365: Focused forced-colors image-context badges now keep a fixed
   22px box with zero padding so small-mobile focus cannot add height or width pressure.
+- Partial G1712/#3367: Focused forced-colors image-context badges now explicitly preserve
+  centered placement with place-items, line-height and text-align guards.

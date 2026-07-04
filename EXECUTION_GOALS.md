@@ -252,8 +252,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontext badgeplaatsing, forced-colors focus, CSS smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3367
+
+### G1713 — Dossier upload beeldcontext forced-colors badge behoudt pilvorm tijdens focus
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het gefocuste forced-colors badge houdt nu gecentreerde tekst, maar de pilvorm/radius kan nog expliciet worden bewaakt.
+- **User Impact:** Als de radius bij hoogcontrastfocus wijzigt, kan de genummerde volgorde op smalle schermen visueel onrustig worden.
+- **Desired Outcome:** Het focus-within badge behoudt de bestaande radius en vaste box zonder layoutshift.
+- **User Value:** De beeldcontextvolgorde blijft consistent herkenbaar tijdens focus.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; het focus-within badge behoudt de bestaande radius en vaste box zonder layoutshift; desktop, tablet, mobile en small-mobile tonen geen horizontale druk in geopende beeldvelden; tests dekken lege en gevulde uploadcontext plus locked imaging state; CSS-smoke bewaakt de pilvorm/radius bij forced-colors focus; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontext badgeradius, forced-colors focus, CSS smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3369
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 
