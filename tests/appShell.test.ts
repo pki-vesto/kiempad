@@ -3131,6 +3131,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('padding: 8px;');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.workspace-strip > div,');
+    expect(mobileCss).toContain('.workspace-strip__switcher a,');
+    expect(mobileCss).toContain('flex: 0 0 min(148px, 58vw);');
+    expect(mobileCss).toContain('min-height: 32px;');
+    expect(mobileCss).toContain('text-overflow: ellipsis;');
     expect(mobileCss).toContain('.workspace-strip__description {');
     expect(mobileCss).toContain('display: none;');
     expect(mobileCss).toContain('.workspace-map__grid {');

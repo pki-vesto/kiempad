@@ -1935,3 +1935,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   extra bottom clearance/scroll margin above the fixed bottom navigation.
 - Partial G1730/#3403: Mobile workspace strips now use tighter spacing and a bounded
   height with contained overflow so route context does not push active content down.
+- Partial G1731/#3405: Mobile workspace strip buttons now use compact swipe widths,
+  lower tap height and ellipsis so the strip stays horizontal without page overflow.
