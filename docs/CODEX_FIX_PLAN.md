@@ -1769,3 +1769,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the local correction title.
 - Partial G1649/#3243: Medication import default route summary badge now uses Plan copy while
   preserving the default route summary title.
+- Partial G1650/#3245: Medication import default route summary title now uses Lokale planning copy
+  while preserving the Plan badge.

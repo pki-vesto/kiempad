@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1651 — Medicatie import standaarddetail gebruikt directe planningscopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import standaarddetail noemt lokale planning, maar gebruikt nog brede schemacopy.
+- **User Impact:** Gebruikers zien in de lege importstate nog dubbel taalgebruik over schema en planning.
+- **Desired Outcome:** Import standaarddetail gebruikt directe planningscopy en behoudt de routesamenvatting.
+- **User Value:** De lege importstate wordt korter en consequenter.
+- **Acceptance Criteria:** Standaarddetail gebruikt directe planningscopy; standaardtitel blijft zichtbaar; app-shell tests bewaken dat de oude detailcopy niet terugkeert in de importroute.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1650 — Medicatie import standaardtitel noemt lokale planning
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3245
 
 ### G1649 — Medicatie import standaardbadge gebruikt korte planningscopy
 
