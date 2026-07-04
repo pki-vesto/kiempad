@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1624 — Medicatie planning follow-up gebruikt korte vervolgstapcopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning follow-up disclosure gebruikt nog een lange zin over vandaag, beheer, import, historie en extra latere momenten.
+- **User Impact:** Gebruikers moeten lange navigatiecopy lezen voordat ze naar de vervolgstappen kunnen.
+- **Desired Outcome:** Follow-up disclosure gebruikt korte vervolgstapcopy met behoud van alle links.
+- **User Value:** De planningroute blijft scanbaar en minder tekstzwaar.
+- **Acceptance Criteria:** Planning follow-up summary gebruikt korte vervolgstapcopy; alle bestaande links blijven aanwezig; app-shell tests bewaken dat de oude lange zin niet terugkeert.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning disclosure, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1623 — Medicatie planning lege staat gebruikt korte vervolgcontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3191
 
 ### G1622 — Medicatie historie lege staat gebruikt korte dossiercontext
 

@@ -18461,8 +18461,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             plannedLogs.length > 0
               ? `${plannedLogs.length} toekomstig moment${plannedLogs.length === 1 ? '' : 'en'}`
               : 'Geen toekomstige momenten buiten vandaag',
-          detail:
-            'Het eerstvolgende planningsmoment staat vooraan. Vandaag, beheer, import en historie open je pas als vervolgcontext.',
+          detail: 'Nog geen vervolgplanning; voeg momenten toe via Beheer of Import.',
           status: `${plannedLogs.length} later`,
           primary: { href: '#medication-planning-primary', label: 'Volgend moment' },
           secondary: { href: '#medication-planning-followup', label: 'Vervolgcontext' },
@@ -18476,7 +18475,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             ${
               plannedLogs.length > 0
                 ? renderDoseLogList(plannedLogs.slice(0, 1), state.medicatie)
-                : renderEmptyState('Nog geen toekomstige medicatiemomenten buiten vandaag.', {
+                : renderEmptyState('Nog geen vervolgplanning buiten vandaag.', {
                     title: 'Geen komende momenten',
                     cta: { href: '#medicatie?route=beheer', label: 'Medicatie beheren' },
                   })

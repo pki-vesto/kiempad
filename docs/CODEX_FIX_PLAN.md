@@ -1104,6 +1104,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   instead of dosage calculation wording.
   Partial G1622/#3189: Medication history empty state now uses short dossier context instead
   of clinic-prescription wording.
+  Partial G1623/#3191: Medication planning empty state and route summary now use short
+  follow-up context instead of long future-moment wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
