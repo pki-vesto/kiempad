@@ -201,8 +201,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontextlabels, forced-colors contrast, CSS smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3361
+
+### G1710 — Dossier upload beeldcontext forced-colors focus en labelcontrast blijven samen rustig
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Focusringen en genummerde beeldcontextlabels hebben forced-colors cues, maar hun gecombineerde visuele rust kan nog expliciet worden bewaakt.
+- **User Impact:** Hoogcontrastgebruikers kunnen onrust ervaren als focusring en labelnummercontrast visueel met elkaar botsen.
+- **Desired Outcome:** Focusring en labelnummercontrast blijven samen duidelijk, compact en zonder overlap in forced-colors mode.
+- **User Value:** Beeldcontext invullen blijft ook met hoogcontrastinstellingen rustig en voorspelbaar.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; focusring en labelnummercontrast gebruiken systeemkleuren zonder elkaar te overlappen; desktop, tablet en mobile tonen geen horizontale druk in geopende beeldvelden; tests dekken lege en gevulde uploadcontext plus locked imaging state; CSS-smoke bewaakt de gecombineerde forced-colors focus- en labelregels; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontext forced-colors focus, labelcontrast, CSS smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3363
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 

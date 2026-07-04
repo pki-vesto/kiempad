@@ -1891,3 +1891,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   evidence verifies focus activation, unchanged fieldset dimensions and no overflow.
 - Partial G1708/#3359: Open image-context inputs now use forced-colors system focus styling
   with explicit Highlight and Canvas cues while preserving compact focus spacing.
+- Partial G1709/#3361: Numbered image-context labels now use forced-colors ButtonFace and
+  ButtonText system colors so field order remains readable in high-contrast mode.
