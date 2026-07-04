@@ -23644,6 +23644,7 @@ summary[class*="__summary"]:focus-visible,
   .workspace-strip__quick {
     align-items: center;
     background: transparent;
+    backdrop-filter: none;
     border-color: transparent;
     border-radius: 0;
     border-style: none;
