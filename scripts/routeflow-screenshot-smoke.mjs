@@ -3127,6 +3127,7 @@ async function assertRouteflows(browser, options) {
     }
     if (options.label === 'mobile' || options.label === 'small-mobile') {
       checked.push(await assertWorkspaceStripDirectLinkFocus(page, options.label));
+      checked.push(await assertWorkspaceStripReloadContext(page, options.label));
     }
 
     return { viewport: options.label, checked: checked.length, targets: checked };
@@ -3217,6 +3218,57 @@ async function assertWorkspaceStripDirectLinkFocus(page, viewportLabel) {
 
   return {
     screen: `${viewportLabel}-workspace-strip-direct-link`,
+    selectors: 3,
+    screenshotBytes: screenshot.byteLength,
+  };
+}
+
+async function assertWorkspaceStripReloadContext(page, viewportLabel) {
+  await page.goto(`${url}#vragen?route=voorbereiden`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#vragen?route=voorbereiden');
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+  await waitForActiveWorkspaceStripButton(page, 'Vragen');
+
+  await page.reload({ waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#vragen?route=voorbereiden');
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+  await waitForActiveWorkspaceStripButton(page, 'Vragen');
+
+  const reloadLayout = await page.evaluate(() => {
+    const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
+    const activePanelRect = activePanel?.getBoundingClientRect();
+    const activePanelStyle = activePanel ? getComputedStyle(activePanel) : null;
+    return {
+      hash: window.location.hash,
+      activePanelVisible: Boolean(
+        activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
+      ),
+      activePanelOverflowY: activePanelStyle?.overflowY ?? '',
+      horizontalOverflow:
+        document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
+        document.body.scrollWidth > document.body.clientWidth + 1,
+    };
+  });
+
+  if (
+    reloadLayout.hash !== '#vragen?route=voorbereiden' ||
+    !reloadLayout.activePanelVisible ||
+    reloadLayout.activePanelOverflowY !== 'auto' ||
+    reloadLayout.horizontalOverflow
+  ) {
+    throw new Error(
+      `mobiele workspace-strip reload verliest actieve context of layout (${JSON.stringify(
+        reloadLayout,
+      )}).`,
+    );
+  }
+
+  const screenshot = await page.locator('[data-question-focus-shell="ready"]').screenshot({
+    animations: 'disabled',
+  });
+
+  return {
+    screen: `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
   };
