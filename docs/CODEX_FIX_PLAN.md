@@ -2025,3 +2025,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   margin-inline, guarded by CSS and reload smoke.
 - Partial G1775/#3493: Small-mobile workspace-strip switchers now keep stable
   margin-block, guarded by CSS and reload smoke.
+- Partial G1776/#3495: Small-mobile workspace-strip switchers now keep stable
+  border-width, guarded by CSS and reload smoke.
