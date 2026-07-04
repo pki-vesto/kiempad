@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1594 — Trajectoverzicht opent actieve pogingen niet automatisch
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Trajectoverzicht klapte statusverdeling en actieve pogingen automatisch open zodra er actieve trajecten bestonden.
+- **User Impact:** Gebruikers kregen alsnog een lang behandeloverzicht terwijl de route-samenvatting bedoeld is als rustige startlaag.
+- **Desired Outcome:** Trajectoverzicht start compact en houdt statusverdeling en actieve pogingen achter een gesloten paneel met vaste hook.
+- **User Value:** Gebruikers kunnen eerst kiezen of ze fase, beheer, vergoeding of overzichtdetails willen openen zonder direct door poginglijsten te scrollen.
+- **Acceptance Criteria:** Trajectoverzicht houdt statusverdeling en actieve pogingen standaard gesloten; het paneel heeft de vaste id `treatment-overview-disclosure`; bestaande statusverdeling, actieve pogingen en archiefcontext blijven bereikbaar; app-shell tests bewaken gesloten startstaat en bestaande trajectinhoud; geen diagnose, kansberekening, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Traject overzicht
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Treatment routes, treatment disclosures, app-shell tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3132
+
 ### G1593 — Vraagverslagen en alle vragen openen niet automatisch
 
 - **Epic:** Onboarding & Daily Use

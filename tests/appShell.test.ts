@@ -41835,6 +41835,11 @@ describe('app shell', () => {
     );
     expect(html).toContain('data-treatment-route="overzicht"');
     expect(html).toContain('data-treatment-route-state="active"');
+    expect(html).toContain('id="treatment-overview-disclosure"');
+    expect(html).toContain('Statusverdeling en actieve pogingen');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="treatment-overview-disclosure" open',
+    );
     expect(html).toContain('id="traject-route-fasen"');
     expect(html).toContain('data-treatment-route="fasen"');
     expect(html).toContain('data-treatment-route-state="inactive" hidden');
