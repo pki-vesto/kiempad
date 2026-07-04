@@ -6126,7 +6126,8 @@ describe('app shell', () => {
     expect(planningFollowupLinks).not.toContain(
       'href="#medicatie?route=beheer">Middel beheren</a>',
     );
-    expect(planningFollowupLinks).toContain('href="#medicatie?route=import">Lokale invoer</a>');
+    expect(planningFollowupLinks).toContain('href="#medicatie?route=import">Planninginvoer</a>');
+    expect(planningFollowupLinks).not.toContain('href="#medicatie?route=import">Lokale invoer</a>');
     expect(planningFollowupLinks).not.toContain('href="#medicatie?route=import">Lokale import</a>');
     expect(html).toContain('href="#medicatie?route=historie">Historie teruglezen</a>');
     expect(html).not.toContain('href="#medicatie?route=historie">Historie openen</a>');
@@ -6259,7 +6260,8 @@ describe('app shell', () => {
     );
     expect(html).toContain('href="#medicatie?route=vandaag"');
     expect(html).toContain('href="#medicatie?route=beheer"');
-    expect(html).toContain('href="#medicatie?route=import">Lokale invoer</a>');
+    expect(html).toContain('href="#medicatie?route=import">Planninginvoer</a>');
+    expect(html).not.toContain('href="#medicatie?route=import">Lokale invoer</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Lokale import</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Lokale invoer plannen</a>');
     expect(html).toContain('href="#medicatie?route=historie"');
@@ -6313,7 +6315,8 @@ describe('app shell', () => {
     expect(html).not.toContain('Routeopties: afvinken, beheer, lokale import of historie.');
     expect(html).not.toContain('Routeopties: vandaag, beheer, lokale planningimport of historie.');
     expect(html).not.toContain('Kies daarna vandaag, beheer, import of historie.');
-    expect(html).toContain('href="#medicatie?route=import">Lokale invoer</a>');
+    expect(html).toContain('href="#medicatie?route=import">Planninginvoer</a>');
+    expect(html).not.toContain('href="#medicatie?route=import">Lokale invoer</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Lokale import</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Schema importeren</a>');
     expect(html).toContain('id="medicatie-import-form"');
