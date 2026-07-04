@@ -6256,7 +6256,8 @@ describe('app shell', () => {
     expect(importRouteSection).not.toContain('Klinieklijstje');
     expect(html).toContain('Voorbeeldformaat: Medicatie | YYYY-MM-DD | HH:MM.');
     expect(html).not.toContain('Formaat: Medicatie | YYYY-MM-DD | HH:MM.');
-    expect(html).toContain('<button type="submit">Importeer</button>');
+    expect(importRouteSection).toContain('<button type="submit">Zet lokaal klaar</button>');
+    expect(importRouteSection).not.toContain('<button type="submit">Importeer</button>');
     expect(html).not.toContain('<button type="submit">Importeer schema</button>');
     expect(html).not.toContain(
       'Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad zet dit lokaal om naar planningmomenten.',
