@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1695 — Medicatie planning routeopties helper gebruikt natuurlijk zelfstandig label
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De helper gebruikt planningaanvulling als zelfstandig woord, maar kan natuurlijker met een kort label dat gebruikers direct herkennen.
+- **User Impact:** Gebruikers kunnen een samengestelde term nog iets minder snel scannen dan een alledaags label.
+- **Desired Outcome:** De helper gebruikt een natuurlijk zelfstandig label voor de planninginvoerroute.
+- **User Value:** De routeopties blijven compact en menselijk leesbaar.
+- **Acceptance Criteria:** Helper gebruikt een natuurlijk zelfstandig label; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1694 — Medicatie planning routeopties helper noemt planningaanvulling als zelfstandig woord
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3333
 
 ### G1693 — Medicatie planning routeopties helper gebruikt natuurlijke planningterm
 
