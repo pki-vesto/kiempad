@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1666 — Medicatie planning samenvattingstatus noemt later korter
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De planningroutesamenvatting gebruikt een losse later-status die niet direct als medicatiecontext leest.
+- **User Impact:** Gebruikers scannen minder snel of het getal over latere medicatiemomenten gaat.
+- **Desired Outcome:** De statuscopy noemt latere medicatiemomenten kort en blijft compact.
+- **User Value:** De planningroute wordt duidelijker zonder extra interface.
+- **Acceptance Criteria:** Statuscopy noemt latere medicatiemomenten of latere doses; bestaande route-samenvatting blijft zichtbaar; app-shell tests bewaken de nieuwe copy.
+- **Affected Screens:** Medicatie planning route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1665 — Medicatie planning routeheader noemt afvinken expliciet
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3275
 
 ### G1664 — Medicatie planning lege tekst noemt beheer als eerste stap
 

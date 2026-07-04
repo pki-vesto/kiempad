@@ -1799,3 +1799,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   while preserving the Beheer/invoer CTA.
 - Partial G1664/#3273: Medication empty planning text now tells users to begin in Beheer or use
   local input planning while preserving the empty planning CTA.
+- Partial G1665/#3275: Medication planning route header now tells users to check and prepare
+  upcoming check-off moments while preserving the route heading.
