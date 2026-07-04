@@ -578,6 +578,9 @@
   generate neutral concept questions for the doctor with source, date, and reviewstatus metadata,
   visible in the timeline and consult export without diagnosis, dosage, probability, or treatment
   choice advice.
+- **CFX-020 treatment context timeline choice — partial in G1589 / issue #3122.** Traject Context
+  now opens with the timeline reader first while filters/export, insights, and the full item list
+  sit behind closed follow-up panels that routeflow opens explicitly for validation.
 - **Premium Claude Design consultkaart browser evidence — done in G1417 / issue #2269.** Routeflow
   smoke now seeds a synthetic filled consult record through the real upload form and verifies the
   compact consult card header, status chips, sections, source review, screenshot bytes, and
@@ -1083,6 +1086,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   count with source, date and reviewstatus metadata only.
   Partial G1416/#869: fertility timeline context gaps are also shown as reviewable doctor
   questions with source, date and reviewstatus, while preserving the non-medical boundary.
+  Partial G1589/#3122: Traject Context now opens with a compact timeline reader while filters,
+  export, insights and full items remain behind closed follow-up panels until explicitly opened.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without

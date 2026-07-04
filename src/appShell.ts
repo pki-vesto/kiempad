@@ -19211,6 +19211,7 @@ function renderTrajectScreen(state: AppShellState): string {
         ${disclosure({
           summary: 'Fertility timeline openen',
           open: fertilityTimeline.items.length > 0,
+          id: 'treatment-context-timeline-disclosure',
           body: renderFertilityTimeline(
             state,
             fertilityTimeline,
@@ -19664,35 +19665,62 @@ function renderFertilityTimeline(
         <div class="fertility-timeline-console__reader" data-fertility-timeline-console-region="reader">
           ${renderFertilityTimelineReaderModes(timeline, Boolean(trajectExport))}
         </div>
-        <div class="fertility-timeline-console__controls" data-fertility-timeline-console-region="controls">
-          ${renderFertilityTimelineMobielOverzicht(timeline)}
-          ${renderFertilityTimelineFilterForm(filter)}
-          ${trajectExport ? renderFertilityTimelineTrajectExport(trajectExport) : ''}
-        </div>
-        <div class="fertility-timeline-console__insights" data-fertility-timeline-console-region="insights">
-          ${renderFertilityTimelineMijlpalen(timeline)}
-          ${renderFertilityTimelineContextSignalen(timeline)}
-        </div>
-        <div class="fertility-timeline-console__items" data-fertility-timeline-console-region="items">
-          ${
-            timeline.items.length > 0
-              ? timelineList({
-                  id: 'fertility-timeline-items',
-                  className: 'timeline-list fertility-timeline-list',
-                  ariaLabel: 'Timeline-items',
-                  data: {
-                    'timeline-component': 'fertility-items',
-                    'timeline-component-state': 'structured',
-                  },
-                  items: renderFertilityTimelineGroupedItems(timeline),
-                })
-              : renderEmptyState('Nog geen centrale fertility timeline beschikbaar.', {
-                  id: 'fertility-timeline-items',
-                  title: 'Timeline is leeg',
-                })
-          }
-          <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
-        </div>
+        <details id="fertility-timeline-controls-panel" class="kp-disclosure fertility-timeline-console__details fertility-timeline-console__details--controls" data-fertility-timeline-panel="controls">
+          <summary class="kp-disclosure__summary fertility-timeline-console__summary">
+            <span>
+              <strong>Filters en export openen</strong>
+              <small>Filter, bronlijst en Markdown-export staan achter deze vervolgstap.</small>
+            </span>
+            <em>${trajectExport ? 'export' : 'filter'}</em>
+          </summary>
+          <div class="kp-disclosure__body fertility-timeline-console__controls" data-fertility-timeline-console-region="controls">
+            ${renderFertilityTimelineMobielOverzicht(timeline)}
+            ${renderFertilityTimelineFilterForm(filter)}
+            ${trajectExport ? renderFertilityTimelineTrajectExport(trajectExport) : ''}
+          </div>
+        </details>
+        <details id="fertility-timeline-insights-panel" class="kp-disclosure fertility-timeline-console__details fertility-timeline-console__details--insights" data-fertility-timeline-panel="insights">
+          <summary class="kp-disclosure__summary fertility-timeline-console__summary">
+            <span>
+              <strong>Inzichten openen</strong>
+              <small>Mijlpalen, ontbrekende context en artsvragen blijven gescheiden van lezen.</small>
+            </span>
+            <em>${timeline.mijlpalen.length + timeline.contextSignalen.length + timeline.artsvragen.length}</em>
+          </summary>
+          <div class="kp-disclosure__body fertility-timeline-console__insights" data-fertility-timeline-console-region="insights">
+            ${renderFertilityTimelineMijlpalen(timeline)}
+            ${renderFertilityTimelineContextSignalen(timeline)}
+          </div>
+        </details>
+        <details id="fertility-timeline-items-panel" class="kp-disclosure fertility-timeline-console__details fertility-timeline-console__details--items" data-fertility-timeline-panel="items">
+          <summary class="kp-disclosure__summary fertility-timeline-console__summary">
+            <span>
+              <strong>Volledige tijdlijn openen</strong>
+              <small>Open de volledige itemlijst pas als je records wilt nalopen.</small>
+            </span>
+            <em>${timeline.items.length} item${timeline.items.length === 1 ? '' : 's'}</em>
+          </summary>
+          <div class="kp-disclosure__body fertility-timeline-console__items" data-fertility-timeline-console-region="items">
+            ${
+              timeline.items.length > 0
+                ? timelineList({
+                    id: 'fertility-timeline-items',
+                    className: 'timeline-list fertility-timeline-list',
+                    ariaLabel: 'Timeline-items',
+                    data: {
+                      'timeline-component': 'fertility-items',
+                      'timeline-component-state': 'structured',
+                    },
+                    items: renderFertilityTimelineGroupedItems(timeline),
+                  })
+                : renderEmptyState('Nog geen centrale fertility timeline beschikbaar.', {
+                    id: 'fertility-timeline-items',
+                    title: 'Timeline is leeg',
+                  })
+            }
+            <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
+          </div>
+        </details>
       </div>
     </section>
   `;

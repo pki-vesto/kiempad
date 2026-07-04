@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1589 — Traject context opent als compacte timeline-keuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Traject context-route opende de fertility timeline met reader, filters, inzichten, export en volledige itemlijst tegelijk.
+- **User Impact:** Gebruikers ervaren de context-route als één lange pagina in plaats van een rustige taaklaag.
+- **Desired Outcome:** Traject context toont eerst de timeline-reader en zet filters/export, inzichten en volledige itemlijst achter gesloten vervolgpanelen.
+- **User Value:** Gebruikers kunnen eerst kiezen wat ze willen lezen of openen, zonder meteen door alle timeline-details te moeten scrollen.
+- **Acceptance Criteria:** Fertility timeline toont eerst de reader/keuzelanen; filters en export staan achter een gesloten vervolgpanel; inzichten staan achter een gesloten vervolgpanel; de volledige timeline-itemlijst staat achter een gesloten vervolgpanel; routeflow smoke opent de panels expliciet om bestaande functionaliteit te blijven valideren; app-shell tests bewaken markup, gesloten startstaat en styling; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Traject context, Fertility timeline
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Treatment context route, fertility timeline console, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3122
+
 ### G1588 — Vragen en traject tonen verplichte velden vooraf
 
 - **Epic:** Onboarding & Daily Use
