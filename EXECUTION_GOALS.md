@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1641 — Medicatie import helper gebruikt voorbeeldindicator
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import helper noemt het formaat, maar maakt niet expliciet dat de placeholder slechts een voorbeeld is.
+- **User Impact:** Gebruikers moeten zelf afleiden dat ze hun eigen medicatienaam en schema invullen.
+- **Desired Outcome:** Import helper gebruikt korte voorbeeldindicator en behoudt het formaat.
+- **User Value:** Het invoerveld voelt duidelijker zonder extra instructieblok.
+- **Acceptance Criteria:** Import helper noemt kort dat het om een voorbeeldformaat gaat; formaat blijft zichtbaar; app-shell tests bewaken de helpercopy.
+- **Affected Screens:** Medicatie import formulier
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import form, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1640 — Medicatie import placeholder gebruikt generieke voorbeeldcopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import form, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3225
 
 ### G1639 — Medicatie import formulierlabel gebruikt korte invoercopy
 

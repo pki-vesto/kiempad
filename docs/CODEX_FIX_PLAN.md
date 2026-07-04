@@ -1749,3 +1749,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   label while preserving the import form.
 - Partial G1639/#3223: Medication import form label now uses short Schema copy while preserving
   the schemaImport textarea contract.
+- Partial G1640/#3225: Medication import placeholder now uses generic Medicatie example copy while
+  keeping the YYYY-MM-DD and HH:MM format visible.
