@@ -2177,3 +2177,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1832/#3607: Dossier upload active route micro-labels now keep normal
   white-space in their own small-mobile forced-colors rule, avoiding accidental
   nowrap pressure inside compact route cards.
+- Partial G1833/#3609: Dossier upload active route micro-labels now keep normal
+  overflow wrapping in their own small-mobile forced-colors rule, preventing
+  aggressive word breaks from disrupting compact route cards.
