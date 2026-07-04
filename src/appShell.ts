@@ -18545,7 +18545,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             : state.medicatieImportStatus
               ? 'Schemafeedback beschikbaar'
               : 'Eigen schema lokaal importeren',
-          detail: 'Import maakt alleen planningmomenten aan vanuit je eigen schema.',
+          detail: 'Maak lokale planning uit je schema.',
           status: state.medicatieImportError
             ? 'Check'
             : state.medicatieImportStatus
