@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1609 — Dossier gebruikt korte start- en keuzecontextdisclaimers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier startoverzicht en uploadkeuze herhalen lange caveats over OCR-tekst, bestandsinhoud, beeldpayloads en medisch advies.
+- **User Impact:** Gebruikers zien defensieve tekst in panelen die vooral routekeuze, aantallen en veilige metadata moeten tonen.
+- **Desired Outcome:** Dossier start en uploadkeuze gebruiken korte dossiercontextzinnen zonder herhaalde payloadopsommingen.
+- **User Value:** Gebruikers kunnen sneller kiezen tussen uploaden, zoeken, beeldreview en tijdlijn zonder juridische ruis.
+- **Acceptance Criteria:** Uploadkeuze vervangt de lange OCR/bestandsinhoud/beeldpayloads/medisch-advieszin door een korte dossiercontextzin; Dossier vandaag vervangt de lange startoverzichtzin door dezelfde korte dossiercontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zinnen.
+- **Affected Screens:** Dossier startoverzicht, Dossier uploadkeuze
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Dossier command center, dossier upload triage, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1608 — Welzijn gebruikt korte contextdisclaimers
 
 - **Epic:** Onboarding & Daily Use
@@ -727,7 +744,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3080
 
 ### G1567 — Kennis bibliotheek herstelactie badges houden mobiele badgehover responsive contracttypen stabiel
