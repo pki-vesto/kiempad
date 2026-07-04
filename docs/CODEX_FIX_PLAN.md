@@ -2147,3 +2147,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1822/#3587: Dossier upload active route context lines now
   explicitly keep compact 1.16 line-height in small-mobile forced-colors mode,
   preserving route-card density beside title, focus and active indicators.
+- Partial G1823/#3589: Dossier upload active route micro-labels now
+  explicitly keep compact 1.18 line-height in small-mobile forced-colors mode,
+  preserving the small label without adding route-card height pressure.
