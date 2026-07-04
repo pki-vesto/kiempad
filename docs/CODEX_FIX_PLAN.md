@@ -1066,6 +1066,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the primary phase panel instead of a long treatment-advice/kansberekening caveat.
   Partial G1603/#3150: Traject workbench and the next-action snapshot now reuse the same short
   treatment-context disclaimer instead of separate medical-advice caveats.
+  Partial G1604/#3152: The empty imaging comparison panel now uses one short image-context
+  disclaimer instead of an interpretation/kansberekening/behandeladvies caveat.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
