@@ -541,8 +541,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, tablet layout, screen-stage panel
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3399
+
+### G1729 — App-shell mobiel screen-stage behoudt rustige paneelruimte boven bottom-nav
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Tablet panel-scroll is nu stabieler, maar mobiel moet apart bewaakt worden zodat de actieve screen-stage boven de bottom-nav rustig blijft.
+- **User Impact:** Zonder expliciete mobiele paneelruimte kan content krap of horizontaal druk worden boven de vaste bottom-nav.
+- **Desired Outcome:** Mobiele content behoudt bottom-nav clearance en rustige paneelruimte zonder horizontale overflow.
+- **User Value:** Mobiele gebruikers houden een overzichtelijke actieve taak boven de navigatie.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele content behoudt bottom-nav clearance en rustige paneelruimte; de mobiele screen-stage panel veroorzaakt geen horizontale overflow; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele paneelruimte boven bottom-nav; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, mobile layout, screen-stage panel, bottom-nav
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3401
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

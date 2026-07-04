@@ -1929,3 +1929,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   overscroll while preserving stable scrollbar gutters for calmer panel scrolling.
 - Partial G1727/#3397: Tablet screen-stage chrome is now height-bounded with contained
   overflow and two-line page-header intros, keeping tablet route context compact above panel scroll.
+- Partial G1728/#3399: Tablet screen-stage panels now hide horizontal overflow while keeping
+  contained vertical panel scrolling and stable scrollbar gutters.
