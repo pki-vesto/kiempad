@@ -21138,6 +21138,10 @@ summary[class*="__summary"]:focus-visible,
     label[data-dossier-upload-image-field]:focus-within
     .dossier-upload-image-field-label
     span {
+    width: 22px;
+    height: 22px;
+    min-height: 22px;
+    padding: 0;
     border-color: Highlight;
     background: Canvas;
     color: CanvasText;
