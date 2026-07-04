@@ -1893,3 +1893,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   with explicit Highlight and Canvas cues while preserving compact focus spacing.
 - Partial G1709/#3361: Numbered image-context labels now use forced-colors ButtonFace and
   ButtonText system colors so field order remains readable in high-contrast mode.
+- Partial G1710/#3363: Focused image-context labels now get a calm forced-colors
+  focus-within badge state that avoids extra outline, shadow or layout pressure.

@@ -21134,6 +21134,17 @@ summary[class*="__summary"]:focus-visible,
     forced-color-adjust: auto;
   }
 
+  .dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]
+    label[data-dossier-upload-image-field]:focus-within
+    .dossier-upload-image-field-label
+    span {
+    border-color: Highlight;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+    outline: 0;
+  }
+
   [data-daily-advice-feedback-workflow-reset="ready"],
   [data-daily-recommendation-list-filter-reset="ready"],
   [data-daily-recommendation-feedback-filter-reset="ready"] {

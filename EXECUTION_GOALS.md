@@ -218,8 +218,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontext forced-colors focus, labelcontrast, CSS smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3363
+
+### G1711 — Dossier upload beeldcontext forced-colors focus badge blijft compact op small mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het gefocuste forced-colors badge is nu rustig naast de inputfocus, maar small-mobile compactheid kan nog expliciet worden bewaakt.
+- **User Impact:** Op smalle schermen kan een hoogcontrast focusbadge anders extra regelhoogte of horizontale druk veroorzaken.
+- **Desired Outcome:** Het focus-within badge behoudt vaste afmetingen en veroorzaakt geen extra regelhoogte in forced-colors context.
+- **User Value:** Beeldcontext invullen blijft ook op small mobile met hoogcontrastinstellingen compact en voorspelbaar.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; het focus-within badge behoudt vaste afmetingen en veroorzaakt geen extra regelhoogte; desktop, tablet, mobile en small-mobile tonen geen horizontale druk in geopende beeldvelden; tests dekken lege en gevulde uploadcontext plus locked imaging state; CSS-smoke of routeflow-smoke bewaakt compact badgegedrag bij forced-colors focus; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontext badgefocus, forced-colors, small-mobile compactheid
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3365
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 
