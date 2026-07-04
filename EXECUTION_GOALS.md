@@ -2275,8 +2275,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card forced-colors active micro-label text transform, small-mobile CSS, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3603
+
+### G1831 — Dossier upload small-mobile routekaart forced-colors actieve micro-label tekststijl rustig
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na expliciete forced-colors micro-labelteksttransformatie kan de actieve micro-label-tekststijl nog zelfstandiger worden bewaakt zodat toekomstige italic-regels het kleine label niet extra laten opvallen.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen moeten het micro-label als subtiele toelichting kunnen lezen zonder schuine nadruk naast titel of context.
+- **Desired Outcome:** Actieve routekaart-micro-labels behouden systeemkleurcontrast, normale tekstvariant, rustig gewicht, normale letterspatiëring, compacte regelhoogte, stabiele uitlijning, geen extra decoratie, normale teksttransformatie en normale tekststijl naast titel, context, focus en actieve indicator.
+- **User Value:** De uploadkeuze blijft rustig scanbaar en typografisch voorspelbaar op kleine schermen.
+- **Acceptance Criteria:** Actieve routekaart-micro-labels gebruiken expliciet normale font-style in hun eigen forced-colors regel; focus, actieve route, titel, context en micro-label blijven onderscheidbaar; small-mobile routekaarten behouden compacte afmetingen; app-shell tests of routeflow smoke bewaken actieve micro-label-tekststijl en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card forced-colors active micro-label font style, small-mobile CSS, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3605
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
