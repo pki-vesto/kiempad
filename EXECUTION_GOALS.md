@@ -1493,8 +1493,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher opacity
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3511
+
+### G1785 — App-shell mobiel workspace-strip bewaakt reload switcher visibility op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele opacity, maar visibility kan nog expliciet bewaakt worden zodat de routebalk zichtbaar blijft.
+- **User Impact:** Als visibility onverwacht wijzigt, kan de mobiele routebalk onzichtbaar of onbruikbaar worden.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele visibility instellingen.
+- **User Value:** Gebruikers houden altijd zicht op de routebalk na een reload.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing, actieve knop tap-highlight, compacte switcher gap, gecentreerde align-items, links startende justify-content, flex display, min-width 0, max-width 100%, flex-shrink 1, flex-grow 0, flex-basis auto, border-box sizing, nul padding-inline, nul padding-block, nul margin-inline, nul margin-block, nul border-width, rustige border-style, transparante border-color, vlakke border-radius, transparante background, geen box-shadow, geen filter, geen backdrop-filter en volledige opacity; workspace-strip switcher houdt na reload stabiele visibility instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher visibility; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher visibility
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3513
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
