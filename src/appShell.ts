@@ -15198,7 +15198,7 @@ function renderStartScreen(state: AppShellState): string {
 
   return sectionStack(
     [
-      renderStartLaunchpad({
+      renderStartFocusShell({
         header: startHeader,
         primaryDayAction,
         cockpit: startCockpit,
@@ -15243,7 +15243,7 @@ function renderStartTodayConsole(input: {
   `;
 }
 
-function renderStartLaunchpad(input: {
+function renderStartFocusShell(input: {
   header: string;
   primaryDayAction: string;
   cockpit: string;
@@ -15251,35 +15251,39 @@ function renderStartLaunchpad(input: {
   setup: string;
 }): string {
   return `
-    <section class="start-launchpad" aria-label="Start launchpad" data-start-launchpad="ready" data-start-console-region="launchpad">
-      <div class="start-launchpad__header" data-start-launchpad-region="header">
+    <section class="start-focus-shell" aria-label="Start focusruimte" data-start-focus-shell="ready" data-start-launchpad="ready" data-start-console-region="launchpad">
+      <div class="start-focus-shell__header" data-start-launchpad-region="header">
         ${input.header}
       </div>
-      <div class="start-launchpad__primary" data-start-launchpad-region="primary">
-        ${input.primaryDayAction}
-      </div>
-      <details id="start-dashboard-followup" class="kp-disclosure start-dashboard-followup" data-start-dashboard-followup="collapsed">
-        <summary class="kp-disclosure__summary start-dashboard-followup__summary">
-          <span>
-            <strong>Dashboardcontext openen</strong>
-            <small>Dossierbasis, kernwerkbanen en eerste setup blijven beschikbaar.</small>
-          </span>
-          <em>Vervolg</em>
-        </summary>
-        <div class="kp-disclosure__body start-dashboard-followup__body">
-          <div class="start-launchpad__cockpit" data-start-launchpad-region="cockpit">
-            ${input.cockpit}
-          </div>
-          <div class="start-launchpad__deck" data-start-launchpad-region="deck">
-            ${input.workspaceDeck}
-          </div>
-          ${
-            input.setup
-              ? `<div class="start-launchpad__setup" data-start-launchpad-region="setup">${input.setup}</div>`
-              : ''
-          }
+      <div class="start-focus-shell__body">
+        <div class="start-focus-shell__primary" data-start-launchpad-region="primary">
+          ${input.primaryDayAction}
         </div>
-      </details>
+        <aside class="start-focus-shell__side" aria-label="Werkbanen" data-start-focus-region="workspaces" data-start-launchpad-region="deck">
+          ${input.workspaceDeck}
+        </aside>
+        <div class="start-focus-shell__dashboard" data-start-focus-region="dashboard">
+          <details id="start-dashboard-followup" class="kp-disclosure start-dashboard-followup" data-start-dashboard-followup="collapsed">
+            <summary class="kp-disclosure__summary start-dashboard-followup__summary">
+              <span>
+                <strong>Dashboardcontext openen</strong>
+                <small>Dossierbasis, kernwerkbanen en eerste setup blijven beschikbaar.</small>
+              </span>
+              <em>Vervolg</em>
+            </summary>
+            <div class="kp-disclosure__body start-dashboard-followup__body">
+              <div class="start-focus-shell__cockpit" data-start-launchpad-region="cockpit">
+                ${input.cockpit}
+              </div>
+              ${
+                input.setup
+                  ? `<div class="start-focus-shell__setup" data-start-launchpad-region="setup">${input.setup}</div>`
+                  : ''
+              }
+            </div>
+          </details>
+        </div>
+      </div>
     </section>
   `;
 }

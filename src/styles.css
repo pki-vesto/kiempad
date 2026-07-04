@@ -27213,6 +27213,11 @@ summary[class*="__summary"]:focus-visible,
   height: 100%;
 }
 
+.start-focus-shell__dashboard > .start-dashboard-followup,
+.start-focus-shell__side > .start-workspace-deck {
+  height: 100%;
+}
+
 .start-focus-shell__primary .start-workbench__grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -27225,6 +27230,20 @@ summary[class*="__summary"]:focus-visible,
 
 .start-focus-shell__side .start-snapshot {
   grid-template-columns: 1fr;
+}
+
+.start-focus-shell__side .start-workspace-deck {
+  grid-template-columns: 1fr;
+  align-content: start;
+  padding: 14px;
+}
+
+.start-focus-shell__side .start-workspace-deck__grid {
+  grid-template-columns: 1fr;
+}
+
+.start-focus-shell__side .start-workspace-deck__header p {
+  font-size: 0.82rem;
 }
 
 .start-focus-shell__side .start-snapshot__card strong {

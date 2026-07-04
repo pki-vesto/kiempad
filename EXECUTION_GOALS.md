@@ -1649,6 +1649,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Status:** ☐ open
 - **Issue:** #3529
 
+### G1794 — Startscherm focus-shell tegen alles-op-een-pagina gevoel
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het startscherm had wel routes en een gesloten vervolgcontext, maar de eerste viewport voelde nog als een brede launchpad/stapel waardoor de app alsnog als één pagina kon overkomen.
+- **User Impact:** Gebruikers moeten te veel scanwerk doen voordat duidelijk is welke actie nu eerst aandacht vraagt.
+- **Desired Outcome:** Start opent met een duidelijke focus-shell: één primaire dagactie, compacte werkbanen als aparte zone en dashboardcontext gesloten achter een vervolgactie.
+- **User Value:** Gebruikers zien direct waar ze moeten beginnen en hoeven de rest pas te openen wanneer dat nodig is.
+- **Acceptance Criteria:** Start opent met een duidelijke focus-shell met één primaire dagactie; werkbanen staan als aparte compacte zone naast de primaire dagactie; dashboardcontext blijft bereikbaar maar start gesloten achter een vervolgactie; bestaande Start-routes, anchors en routeflow selectors blijven intact; desktop, tablet en mobiel houden geen horizontale overflow of overlappende content; tests bewaken dat Start niet terugvalt naar een platte alles-op-een-pagina launchpad.
+- **Affected Screens:** Start, app-shell
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Start screen, app shell, routeflow smoke, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☑ done
+- **Issue:** #3531
+
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
 - **Epic:** Onboarding & Daily Use

@@ -2848,7 +2848,8 @@ describe('app shell', () => {
 
     expect(html).toContain('class="section-stack start-command-layout"');
     expect(html).toContain('data-start-console="ready"');
-    expect(html).toContain('class="start-launchpad"');
+    expect(html).toContain('class="start-focus-shell"');
+    expect(html).toContain('data-start-focus-shell="ready"');
     expect(html).toContain('data-start-launchpad="ready"');
     expect(html).toContain('data-start-console-region="launchpad"');
     expect(html).toContain('data-start-launchpad-region="header"');
@@ -2896,8 +2897,11 @@ describe('app shell', () => {
     expect(html).toContain('data-start-workspace-card="record"');
     expect(html).toContain('data-start-workspace-card="insight"');
     expect(html).toContain('data-start-workspace-card="control"');
-    expect(html).not.toContain('class="start-focus-shell"');
-    expect(html).not.toContain('data-start-focus-shell="ready"');
+    expect(html.indexOf('data-start-focus-shell="ready"')).toBeLessThan(
+      html.indexOf('data-start-primary-day-action="ready"'),
+    );
+    expect(html).toContain('data-start-focus-region="workspaces"');
+    expect(html).toContain('data-start-focus-region="dashboard"');
     expect(html).not.toContain('data-start-console-region="commandcenter"');
     expect(html).toContain('data-workspace-strip="ready"');
     expect(html).toContain('data-compact-workspace-deck="ready"');
@@ -3611,16 +3615,16 @@ describe('app shell', () => {
     const launchpadIndex = html.indexOf('data-start-launchpad="ready"');
     const headerIndex = html.indexOf('data-start-launchpad-region="header"', launchpadIndex);
     const primaryIndex = html.indexOf('data-start-primary-day-action="ready"', headerIndex);
-    const followupIndex = html.indexOf('data-start-dashboard-followup="collapsed"', primaryIndex);
+    const deckIndex = html.indexOf('data-start-launchpad-region="deck"', primaryIndex);
+    const followupIndex = html.indexOf('data-start-dashboard-followup="collapsed"', deckIndex);
     const cockpitIndex = html.indexOf('data-start-launchpad-region="cockpit"', followupIndex);
-    const deckIndex = html.indexOf('data-start-launchpad-region="deck"', cockpitIndex);
 
     expect(launchpadIndex).toBeGreaterThan(-1);
     expect(headerIndex).toBeGreaterThan(launchpadIndex);
     expect(primaryIndex).toBeGreaterThan(headerIndex);
-    expect(followupIndex).toBeGreaterThan(primaryIndex);
+    expect(deckIndex).toBeGreaterThan(primaryIndex);
+    expect(followupIndex).toBeGreaterThan(deckIndex);
     expect(cockpitIndex).toBeGreaterThan(followupIndex);
-    expect(deckIndex).toBeGreaterThan(cockpitIndex);
     expect(html).toContain('Poging dashboard · Stimulatie');
     expect(html).toContain('Echo dashboard');
     expect(html).toContain('data-start-workspace-card="today"');
