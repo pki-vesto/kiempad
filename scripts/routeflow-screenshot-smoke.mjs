@@ -3243,6 +3243,8 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
     const activePanelRect = activePanel?.getBoundingClientRect();
     const activePanelStyle = activePanel ? getComputedStyle(activePanel) : null;
+    const screenStageChrome = document.querySelector('[data-screen-stage-chrome="sticky"]');
+    const screenStageChromeRect = screenStageChrome?.getBoundingClientRect();
     const bottomNav = document.querySelector('.primary-nav');
     const bottomNavRect = bottomNav?.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
@@ -3265,6 +3267,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       documentScrollY: Math.round(window.scrollY),
       documentElementScrollTop: Math.round(document.documentElement.scrollTop),
       bodyScrollTop: Math.round(document.body.scrollTop),
+      screenStageChromeHeight: Math.round(screenStageChromeRect?.height ?? 0),
       bottomNavTop: Math.round(bottomNavTop),
       viewportHeight,
       activePanelOverflowY: activePanelStyle?.overflowY ?? '',
@@ -3292,6 +3295,11 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     (reloadLayout.documentScrollY <= 1 &&
       reloadLayout.documentElementScrollTop <= 1 &&
       reloadLayout.bodyScrollTop <= 1);
+  const smallMobileChromeCompact =
+    viewportLabel !== 'small-mobile' ||
+    (reloadLayout.screenStageChromeHeight > 0 &&
+      reloadLayout.screenStageChromeHeight <=
+        Math.min(172, Math.max(132, reloadLayout.viewportHeight * 0.24)));
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3299,6 +3307,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobilePanelPositionStable ||
     !smallMobilePanelScrollStartStable ||
     !smallMobileBodyScrollStable ||
+    !smallMobileChromeCompact ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3314,6 +3323,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobilePanelPositionStable,
           smallMobilePanelScrollStartStable,
           smallMobileBodyScrollStable,
+          smallMobileChromeCompact,
         },
       )}).`,
     );
@@ -3326,7 +3336,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,

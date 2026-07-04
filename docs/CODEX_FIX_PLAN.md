@@ -1961,3 +1961,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   panel starts at a calm internal scroll position after deep-link reloads.
 - Partial G1743/#3429: Small-mobile reload smoke now also verifies document/body
   scroll stays at the top while the active panel owns the scroll context.
+- Partial G1744/#3431: Small-mobile reload smoke now verifies screen-stage chrome
+  remains compact enough to leave visible active panel space after deep-link reloads.
