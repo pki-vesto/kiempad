@@ -17751,7 +17751,8 @@ function renderAgendaScreen(state: AppShellState): string {
         })}
         ${disclosure({
           summary: 'Week- en maandcontext',
-          open: state.afspraken.length > 0,
+          id: 'schedule-overview-context-disclosure',
+          open: false,
           body:
             agendaOverview ||
             renderEmptyState('Nog geen agenda-overzicht beschikbaar.', {
@@ -17781,7 +17782,8 @@ function renderAgendaScreen(state: AppShellState): string {
         ${renderAgendaStatus(state.agendaStatus, 'komend')}
         ${disclosure({
           summary: 'Komende afspraken en acties tonen',
-          open: upcoming.length > 0 && upcoming.length <= 2,
+          id: 'schedule-upcoming-actions-disclosure',
+          open: false,
           body: `
             <div class="panel-heading"><h2>Komende afspraken</h2>${exportIcsButton}${deleteAfspraakButton}</div>
             ${
@@ -17854,14 +17856,15 @@ function renderAgendaScreen(state: AppShellState): string {
             : state.agendaImportStatus
               ? 'Status beschikbaar'
               : 'Klaar',
-          primary: { href: '#ics-import-form', label: 'Importformulier' },
+          primary: { href: '#schedule-import-disclosure', label: 'Importformulier' },
           secondary: { href: '#agenda?route=plannen', label: 'Plannen' },
           data: { 'schedule-route-summary': 'import' },
           ariaLabel: 'Agenda import route-samenvatting',
         })}
         ${disclosure({
           summary: 'ICS importeren',
-          open: Boolean(state.agendaImportStatus || state.agendaImportError),
+          id: 'schedule-import-disclosure',
+          open: false,
           body: renderAgendaImportForm(state),
         })}
       </section>`,
@@ -17886,7 +17889,8 @@ function renderAgendaScreen(state: AppShellState): string {
         })}
         ${disclosure({
           summary: 'Afgelopen afspraken tonen',
-          open: past.length > 0,
+          id: 'schedule-history-disclosure',
+          open: false,
           body:
             past.length > 0
               ? renderAfgelopenAgendaList(past, state.trajecten)
