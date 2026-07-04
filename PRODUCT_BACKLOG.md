@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1446 |
+| ☑ klaar | 1447 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1645** |
+| **Totaal** | **1646** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1807,13 +1807,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1643 | Medicatie import success feedback gebruikt lokale verwerkingscopy | P2 | F5 | ☑ |
 | G1644 | Medicatie import feedback context noemt lokale planning | P2 | F5 | ☑ |
 | G1645 | Medicatie import foutcontext noemt lokale controle | P2 | F5 | ☑ |
-| G1646 | Medicatie import foutcontext noemt importfeedback | P2 | F5 | ☐ |
+| G1646 | Medicatie import foutcontext noemt importfeedback | P2 | F5 | ☑ |
+| G1647 | Medicatie import fouttitel gebruikt lokale correctiecopy | P2 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1645** (id's G001 t/m G1646; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1646** (id's G001 t/m G1647; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

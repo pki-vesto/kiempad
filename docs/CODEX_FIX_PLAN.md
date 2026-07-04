@@ -1761,3 +1761,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the workbench feedback state.
 - Partial G1645/#3235: Medication import error workbench status now uses Lokaal controleren copy
   while preserving the error summary status.
+- Partial G1646/#3237: Medication import error workbench context now points to local importfeedback
+  while preserving the local error status.
