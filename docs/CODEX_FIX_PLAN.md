@@ -1121,6 +1121,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Vragen folds the consult preparation workbench into the same split-view as route context, so
   desktop opens as one rail/main/context workspace instead of a separate focus-region plus nested
   route workspace.
+  Partial G1593/#3130: Vragen Verslagen and Alle vragen keep report/full-list panels closed by
+  default with stable ids instead of auto-expanding when question content exists.
 - **CFX-037** — Kosten: stat cards + info + list with badges + right-aligned amounts + kit form +
   rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.
   Partial G1364/#2502: Kostenhistorie renders as scan-friendly cost cards with status rails and

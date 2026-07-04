@@ -16633,7 +16633,8 @@ function renderVragenScreen(state: AppShellState): string {
         })}
         ${disclosure({
           summary: 'Verslag per afspraak',
-          open: vraagVerslagen.length > 0,
+          id: 'question-reports-disclosure',
+          open: false,
           body:
             vraagVerslagen.length > 0
               ? renderVraagVerslagen(vraagVerslagen)
@@ -16665,7 +16666,8 @@ function renderVragenScreen(state: AppShellState): string {
         ${renderVraagStatus(state.vraagStatus, 'alle')}
         ${disclosure({
           summary: 'Alle vragen tonen',
-          open: state.vragen.length > 0,
+          id: 'question-all-disclosure',
+          open: false,
           body:
             state.vragen.length > 0
               ? renderVragenList(state.vragen)

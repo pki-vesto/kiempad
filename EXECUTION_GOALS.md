@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1593 — Vraagverslagen en alle vragen openen niet automatisch
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Vragen-routes Verslagen en Alle vragen klapten volledige lijsten automatisch open zodra er antwoorden of vragen bestonden.
+- **User Impact:** Gebruikers kregen alsnog een lange consultpagina terwijl ze alleen een route-samenvatting of specifieke gesprekstaak wilden openen.
+- **Desired Outcome:** Verslagen en volledige vraaglijst starten compact met vaste disclosures die pas openen na expliciete keuze.
+- **User Value:** Gebruikers houden consultvoorbereiding en teruglezen rustiger en hoeven niet langs volledige vraag- en verslaglijsten te scrollen.
+- **Acceptance Criteria:** Vraagverslagen houdt het verslag-per-afspraak paneel standaard gesloten; Alle vragen houdt de volledige vraaglijst standaard gesloten; beide panelen hebben vaste hooks; bestaande vragen, antwoorden, prioriteitacties en verslaginhoud blijven bereikbaar; app-shell tests bewaken gesloten startstaat en bestaande vraaginhoud; geen diagnose, behandeladvies, transcriptpayload, secrets of trackingpayload.
+- **Affected Screens:** Vragen verslagen, Vragen alle
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Question routes, question disclosures, app-shell tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3130
+
 ### G1592 — Medicatie historie opent niet automatisch
 
 - **Epic:** Onboarding & Daily Use
