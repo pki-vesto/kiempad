@@ -1060,6 +1060,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   generated-question warning visible.
   Partial G1600/#3144: Vandaag and Dagadvies now use one short daily-context disclaimer across
   the day overview, advice workbench, advice list and action planner.
+  Partial G1601/#3146: Agenda planning and Medication planning now use short task-context
+  disclaimers in their primary task panels instead of long medical-advice caveats.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

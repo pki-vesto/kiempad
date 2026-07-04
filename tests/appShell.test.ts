@@ -4891,6 +4891,10 @@ describe('app shell', () => {
     expect(html).toContain('href="#schedule-planning-followup"');
     expect(html).toContain('data-schedule-planning-layout="single-input"');
     expect(html).toContain('data-schedule-planning-primary="afspraak-form"');
+    expect(html).toContain('Kiempad ordent je afspraak; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Leg alleen tijd, type, voorbereiding, vraag en herinnering vast. Kiempad geeft geen medisch advies of behandelkeuze.',
+    );
     expect(html).toContain('data-schedule-planning-followup="collapsed"');
     expect(html).toContain('id="schedule-planning-followup"');
     expect(html).toContain('Vervolgcontext openen');
@@ -6122,6 +6126,10 @@ describe('app shell', () => {
     expect(html).toContain('data-medication-planning-layout="single-input"');
     expect(html).toContain('id="medication-planning-primary"');
     expect(html).toContain('data-medication-planning-primary="next-dose"');
+    expect(html).toContain('Kiempad toont je planning; je kliniekschema blijft leidend.');
+    expect(html).not.toContain(
+      'Controleer alleen het feitelijke geplande moment. Kiempad geeft geen doseringsadvies of behandeladvies.',
+    );
     expect(html).toContain('id="medication-planning-followup"');
     expect(html).toContain('data-medication-planning-followup="collapsed"');
     expect(html).toContain('Planning nog leeg');

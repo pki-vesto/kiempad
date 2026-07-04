@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1601 — Agenda en medicatie gebruiken korte taakdisclaimers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Agenda plannen en Medicatie planning toonden lange medische grenszinnen direct onder de hoofdtaak.
+- **User Impact:** Gebruikers zagen defensieve disclaimertekst op plekken waar ze snel een afspraak of medicatiemoment willen controleren.
+- **Desired Outcome:** Agenda en medicatie gebruiken korte taakcontextzinnen die de rol van Kiempad helder maken zonder de hoofdworkflow te verzwaren.
+- **User Value:** Gebruikers kunnen de planningsformulieren en eerstvolgende medicatiemomenten sneller scannen.
+- **Acceptance Criteria:** Agenda plannen vervangt de lange geen-medisch-advies/behandelkeuzezin door een korte afspraakcontextzin; Medicatie planning vervangt de lange doseringsadvies/behandeladvieszin door een korte medicatiecontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van oude zinnen.
+- **Affected Screens:** Agenda plannen, Medicatie planning
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Schedule route, medication route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3146
+
 ### G1600 — Dagadvies gebruikt korte standaarddisclaimer
 
 - **Epic:** Onboarding & Daily Use
