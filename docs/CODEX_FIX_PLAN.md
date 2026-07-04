@@ -1917,3 +1917,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   align-items and justify-items centered alongside place-items and line-height guards.
 - Partial G1721/#3385: Focused forced-colors image-context badges now explicitly keep
   border-box sizing alongside padding 0 and the fixed 22px badgebox.
+- Partial G1722/#3387: Focused forced-colors image-context badges now explicitly keep
+  outline-offset 0 alongside outline 0 so input focus remains the only focus ring.

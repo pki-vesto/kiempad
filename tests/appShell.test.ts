@@ -9172,6 +9172,7 @@ describe('app shell', () => {
     expect(forcedColorsCss).toContain('font-weight: 820;');
     expect(forcedColorsCss).toContain('line-height: 1;');
     expect(forcedColorsCss).toContain('outline: 0;');
+    expect(forcedColorsCss).toContain('outline-offset: 0;');
     expect(forcedColorsCss).toContain('text-align: center;');
     expect(forcedColorsCss).toContain('text-decoration: none;');
     expect(forcedColorsCss).toContain('text-shadow: none;');
