@@ -6344,6 +6344,8 @@ describe('app shell', () => {
     );
     expect(html).toContain('Feedback klaar');
     expect(html).toContain('Lokaal verwerkt');
+    expect(html).toContain('Bekijk lokale planning en importfeedback.');
+    expect(html).not.toContain('Bekijk importfeedback naast je planning.');
     expect(html).not.toContain('Schema verwerkt');
     expect(html).not.toContain('Schemafeedback beschikbaar');
     expect(importSummary).toContain('<span class="command-route-summary__status">OK</span>');

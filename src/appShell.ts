@@ -18675,7 +18675,7 @@ function renderMedicationPlanningWorkbench(input: {
   const context = input.nextDoseLog
     ? `${input.nextDoseLog.status === 'genomen' ? 'Genomen' : input.nextDoseLog.status === 'overgeslagen' ? 'Overgeslagen' : 'Gepland'} · volgens je planning`
     : input.hasImportFeedback
-      ? 'Bekijk importfeedback naast je planning.'
+      ? 'Bekijk lokale planning en importfeedback.'
       : 'Voeg een middel toe of importeer een eigen schema.';
 
   return `
