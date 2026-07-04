@@ -14272,16 +14272,16 @@ function renderResearchItemForm(): string {
           </label>
           <label>
             Wetenschappelijke samenvatting
-            <textarea name="researchWetenschappelijkeSamenvatting" rows="4" placeholder="Doel, methode, belangrijkste bevindingen en beperkingen"></textarea>
+            <textarea name="researchWetenschappelijkeSamenvatting" rows="4" placeholder="Vat doel, methode, bevindingen en beperkingen samen"></textarea>
           </label>
           <label>
             Eenvoudige samenvatting
-            <textarea name="researchEenvoudigeSamenvatting" rows="4" placeholder="Leg in gewone Nederlandse taal uit wat deze publicatie zegt en wat nog onzeker is"></textarea>
+            <textarea name="researchEenvoudigeSamenvatting" rows="4" placeholder="Leg in gewone taal uit wat bekend en onzeker is"></textarea>
           </label>
           <p class="small-print">Kiempad bewaart hierbij automatisch scientificSummary, patientSummary en sourceCitation als brongekoppeld concept.</p>
           <label>
             Relevantie voor jullie dossiercontext
-            <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken?"></textarea>
+            <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit bespreekcontext voor jullie dossier?"></textarea>
           </label>
           ${renderFormRequiredMap('knowledge-research', 'Verplicht voor research', ['Titel', 'Notitie'])}
           <div class="command-form-actions" data-knowledge-form-actions="research">
