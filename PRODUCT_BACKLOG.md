@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1394 |
+| ☑ klaar | 1395 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1593** |
+| **Totaal** | **1594** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1756,12 +1756,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1592 | Medicatie historie opent niet automatisch | P1 | F5 | ☑ |
 | G1593 | Vraagverslagen en alle vragen openen niet automatisch | P1 | F5 | ☑ |
 | G1594 | Trajectoverzicht opent actieve pogingen niet automatisch | P1 | F5 | ☑ |
+| G1595 | Traject context timeline opent niet automatisch | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1593** (id's G001 t/m G1594; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1594** (id's G001 t/m G1595; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

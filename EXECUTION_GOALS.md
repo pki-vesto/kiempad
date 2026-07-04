@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1595 — Traject context timeline opent niet automatisch
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Traject Context klapte de volledige fertility timeline-laag automatisch open zodra er timeline-items waren.
+- **User Impact:** Gebruikers kregen op de context-route direct een grote tijdlijnsectie terwijl ze eerst alleen contextkeuze of graph nodig kunnen hebben.
+- **Desired Outcome:** De buitenste fertility timeline-disclosure start gesloten en behoudt de bestaande hook en inhoud.
+- **User Value:** Gebruikers openen de timeline pas bewust en houden de context-route scanbaar naast graph en dossierlijn.
+- **Acceptance Criteria:** De buitenste fertility timeline disclosure in Traject Context blijft standaard gesloten; de bestaande id `treatment-context-timeline-disclosure` blijft behouden; timeline reader, filters, inzichten, items en export blijven bereikbaar; app-shell tests bewaken gesloten startstaat en bestaande timeline-inhoud; geen diagnose, dosering, kansberekening, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Traject context, Fertility timeline
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Treatment context route, fertility timeline disclosure, app-shell tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3134
+
 ### G1594 — Trajectoverzicht opent actieve pogingen niet automatisch
 
 - **Epic:** Onboarding & Daily Use
