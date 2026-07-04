@@ -8282,11 +8282,47 @@ describe('app shell', () => {
     expect(addSection).toContain('data-dossier-upload-image-summary-item="context"');
     expect(addSection).toContain('data-dossier-upload-image-summary-item="source"');
     expect(addSection).toContain('data-dossier-upload-image-summary-item="cycle-day"');
+    expect(addSection.indexOf('data-dossier-upload-image-summary-item="context"')).toBeLessThan(
+      addSection.indexOf('data-dossier-upload-image-summary-item="source"'),
+    );
+    expect(addSection.indexOf('data-dossier-upload-image-summary-item="source"')).toBeLessThan(
+      addSection.indexOf('data-dossier-upload-image-summary-item="cycle-day"'),
+    );
     expect(addSection).toContain('Context</span>');
     expect(addSection).toContain('Bronlabel</span>');
     expect(addSection).toContain('Cyclusdag</span>');
     expect(addSection).toContain('data-dossier-upload-optional="beeldcontext"');
     expect(addSection).toContain('data-dossier-upload-image-fields="collapsed"');
+    expect(addSection).toContain(
+      'data-dossier-upload-image-field-order="context-source-cycle-day"',
+    );
+    expect(addSection).toContain('data-dossier-upload-image-field="context"');
+    expect(addSection).toContain('data-dossier-upload-image-field="source"');
+    expect(addSection).toContain('data-dossier-upload-image-field="cycle-day"');
+    expect(addSection.indexOf('data-dossier-upload-image-summary-item="cycle-day"')).toBeLessThan(
+      addSection.indexOf('data-dossier-upload-image-field-order="context-source-cycle-day"'),
+    );
+    expect(addSection.indexOf('data-dossier-upload-image-field="context"')).toBeLessThan(
+      addSection.indexOf('data-dossier-upload-image-field="source"'),
+    );
+    expect(addSection.indexOf('data-dossier-upload-image-field="source"')).toBeLessThan(
+      addSection.indexOf('data-dossier-upload-image-field="cycle-day"'),
+    );
+    expect(addSection.indexOf('name="beeldContext"')).toBeLessThan(
+      addSection.indexOf('name="beeldBron"'),
+    );
+    expect(addSection.indexOf('name="beeldBron"')).toBeLessThan(
+      addSection.indexOf('name="beeldCyclusDag"'),
+    );
+    expect(addSection).toContain(
+      '<span class="dossier-upload-image-field-label"><span>1</span> Beeldcontext</span>',
+    );
+    expect(addSection).toContain(
+      '<span class="dossier-upload-image-field-label"><span>2</span> Beeldbron</span>',
+    );
+    expect(addSection).toContain(
+      '<span class="dossier-upload-image-field-label"><span>3</span> Beeld cyclusdag</span>',
+    );
     expect(addSection).toContain('Beeldvelden openen');
     expect(addSection).toContain('data-dossier-upload-optional="embryo-labcontext"');
     expect(addSection).toContain('data-dossier-upload-lab-fields="collapsed"');
@@ -8359,6 +8395,12 @@ describe('app shell', () => {
     );
     expect(populatedAddSection).toContain('data-dossier-upload-action-path="ready"');
     expect(populatedAddSection).toContain('data-dossier-upload-image-summary="safe-next-step"');
+    expect(populatedAddSection).toContain(
+      'data-dossier-upload-image-field-order="context-source-cycle-day"',
+    );
+    expect(populatedAddSection).toContain('data-dossier-upload-image-field="context"');
+    expect(populatedAddSection).toContain('data-dossier-upload-image-field="source"');
+    expect(populatedAddSection).toContain('data-dossier-upload-image-field="cycle-day"');
     expect(populatedAddSection).not.toMatch(
       /secret-route\.pdf|secret-route-consult\.txt|secret-route-embryo\.jpg|OCR-payload|diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i,
     );
@@ -8424,6 +8466,12 @@ describe('app shell', () => {
     expect(lockedAddSection).toContain('data-dossier-upload-action="image"');
     expect(lockedAddSection).toContain('href="#dossier-upload-image-context"');
     expect(lockedAddSection).toContain('data-dossier-upload-image-summary="safe-next-step"');
+    expect(lockedAddSection).toContain(
+      'data-dossier-upload-image-field-order="context-source-cycle-day"',
+    );
+    expect(lockedAddSection).toContain('data-dossier-upload-image-field="context"');
+    expect(lockedAddSection).toContain('data-dossier-upload-image-field="source"');
+    expect(lockedAddSection).toContain('data-dossier-upload-image-field="cycle-day"');
     expect(lockedAddSection).not.toContain('locked-route-selector-secret.jpg');
     expect(lockedAddSection).not.toContain('cm91dGUtc2VsZWN0b3I=');
   });
@@ -9060,6 +9108,12 @@ describe('app shell', () => {
     expect(css).toContain('max-width: 100%;');
     expect(css).toContain('pointer-events: none;');
     expect(css).toContain('white-space: normal;');
+    expect(css).toContain(
+      '.dossier-upload-group[data-dossier-upload-image-field-order="context-source-cycle-day"]',
+    );
+    expect(css).toContain('label[data-dossier-upload-image-field]');
+    expect(css).toContain('.dossier-upload-image-field-label {');
+    expect(css).toContain('flex: 0 0 24px;');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-lab-fields');
     expect(css).toContain('.consult-upload-report-choice');
     expect(css).toContain('.consult-upload-report-fields__body');

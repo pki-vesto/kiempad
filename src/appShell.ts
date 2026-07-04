@@ -3556,18 +3556,18 @@ function renderDossierScreen(state: AppShellState): string {
                 <span>Beeldvelden openen</span>
                 <small>Context, bron en cyclusdag</small>
               </summary>
-              <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 4 · beeld">
+              <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 4 · beeld" data-dossier-upload-image-field-order="context-source-cycle-day">
                 <legend>Beeldcontext</legend>
-              <label>
-                Beeldcontext
+              <label data-dossier-upload-image-field="context">
+                <span class="dossier-upload-image-field-label"><span>1</span> Beeldcontext</span>
                 <input name="beeldContext" autocomplete="off" placeholder="Bijvoorbeeld: follikelmeting links, embryo 1 of baarmoeder" />
               </label>
-              <label>
-                Beeldbron
+              <label data-dossier-upload-image-field="source">
+                <span class="dossier-upload-image-field-label"><span>2</span> Beeldbron</span>
                 <input name="beeldBron" autocomplete="off" placeholder="Bijvoorbeeld: kliniekportaal of labfoto" />
               </label>
-              <label>
-                Beeld cyclusdag
+              <label data-dossier-upload-image-field="cycle-day">
+                <span class="dossier-upload-image-field-label"><span>3</span> Beeld cyclusdag</span>
                 <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
               </label>
               </fieldset>

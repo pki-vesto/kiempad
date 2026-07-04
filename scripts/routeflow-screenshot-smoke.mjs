@@ -1246,6 +1246,10 @@ const targets = [
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-image-fields="collapsed"]',
       '[data-dossier-upload-image-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-dossier-upload-image-field-order="context-source-cycle-day"]',
+      '[data-dossier-upload-image-field="context"]',
+      '[data-dossier-upload-image-field="source"]',
+      '[data-dossier-upload-image-field="cycle-day"]',
     ],
     closedDetailsSelectors: [
       '[data-dossier-upload-metadata="collapsed"]',
