@@ -9570,6 +9570,16 @@ describe('app shell', () => {
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.dossier-upload-action-path__item {');
     expect(mobileCss).toContain('flex: 0 0 min(178px, 72vw);');
+    expect(mobileCss).toContain('min-height: 68px;');
+    expect(css).toContain('.dossier-add-route-disclosure__summary {');
+    expect(css).toContain('min-height: 44px;');
+    expect(css).toContain('.dossier-add-route-disclosure > .dossier-add-route-panel,');
+    expect(css).toContain('padding: 0 8px 8px;');
+    expect(css).toContain('.dossier-upload-optional__summary {');
+    expect(css).toContain('min-height: 40px;');
+    expect(css).toContain('.dossier-upload-completion-status-choice__summary {');
+    expect(css).toContain('.dossier-required-map,');
+    expect(css).toContain('.dossier-upload-image-next-step span {');
     expect(mobileCss).toContain('.dossier-upload-triage__lanes {');
     expect(mobileCss).toContain('display: flex;');
     expect(mobileCss).toContain('flex-wrap: nowrap;');

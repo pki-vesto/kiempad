@@ -2069,3 +2069,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1796/#3535: Dagadvies now uses a compact mobile full-list rhythm with
   tighter list choice, owner groups, cards and action grids, guarded by routeflow
   screenshots on mobile and small-mobile.
+- Partial G1797/#3537: Dossier upload now uses tighter mobile disclosure,
+  group, completion and image-context panel spacing while routeflow screenshots
+  guard compact panels and overflow on mobile and small-mobile.

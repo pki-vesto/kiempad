@@ -2295,6 +2295,7 @@ async function assertRouteflows(browser, options) {
               const consoleElement = document.querySelector('[data-dossier-upload-console="ready"]');
               const body = consoleElement?.querySelector('[data-dossier-upload-console-region="body"]');
               const selector = consoleElement?.querySelector('.dossier-add-route-selector');
+              const routeItem = consoleElement?.querySelector('.dossier-upload-action-path__item');
               const documentPanel = consoleElement?.querySelector(
                 '[data-dossier-add-route-panel="dossier-upload"]',
               );
@@ -2316,9 +2317,38 @@ async function assertRouteflows(browser, options) {
               const embryoQualityRect = embryoQualityPanel?.getBoundingClientRect();
               const embryoStatusRect = embryoStatusPanel?.getBoundingClientRect();
               const bodyStyle = body ? getComputedStyle(body) : null;
+              const selectorStyle = selector ? getComputedStyle(selector) : null;
+              const routeItemStyle = routeItem ? getComputedStyle(routeItem) : null;
               const documentStyle = documentPanel ? getComputedStyle(documentPanel) : null;
               const consultStyle = consultPanel ? getComputedStyle(consultPanel) : null;
               const reviewStyle = reviewPanel ? getComputedStyle(reviewPanel) : null;
+              const visiblePanels = [
+                documentPanel,
+                consultPanel,
+                embryoQualityPanel,
+                embryoStatusPanel,
+                reviewPanel,
+              ].filter((panel) => {
+                const rect = panel?.getBoundingClientRect();
+                return Boolean(rect && rect.width > 0 && rect.height > 0);
+              });
+              const activePanel = visiblePanels[0] ?? null;
+              const activePanelRect = activePanel?.getBoundingClientRect();
+              const activePanelStyle = activePanel ? getComputedStyle(activePanel) : null;
+              const activeGroup = activePanel?.querySelector(
+                '.dossier-upload-group, .dossier-subform-group',
+              );
+              const activeGroupStyle = activeGroup ? getComputedStyle(activeGroup) : null;
+              const optionalPanel = activePanel?.querySelector('.dossier-upload-optional');
+              const optionalPanelStyle = optionalPanel ? getComputedStyle(optionalPanel) : null;
+              const optionalSummary = activePanel?.querySelector('.dossier-upload-optional__summary');
+              const optionalSummaryStyle = optionalSummary ? getComputedStyle(optionalSummary) : null;
+              const completion = activePanel?.querySelector('.dossier-upload-completion');
+              const completionStyle = completion ? getComputedStyle(completion) : null;
+              const statusChoice = activePanel?.querySelector('.dossier-upload-completion-status-choice');
+              const statusChoiceStyle = statusChoice ? getComputedStyle(statusChoice) : null;
+              const submitAction = activePanel?.querySelector('.dossier-submit-action');
+              const submitActionRect = submitAction?.getBoundingClientRect();
               return {
                 bodyVisible: Boolean(bodyRect && bodyRect.width > 0 && bodyRect.height > 0),
                 selectorVisible: Boolean(
@@ -2347,6 +2377,25 @@ async function assertRouteflows(browser, options) {
                 consultOverflowY: consultStyle?.overflowY ?? '',
                 reviewOverflowY: reviewStyle?.overflowY ?? '',
                 documentMaxHeight: documentStyle?.maxHeight ?? '',
+                selectorDisplay: selectorStyle?.display ?? '',
+                selectorGap: selectorStyle?.gap ?? '',
+                routeItemMinHeight: routeItemStyle?.minHeight ?? '',
+                activePanelVisible: Boolean(
+                  activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
+                ),
+                activePanelPaddingBottom: activePanelStyle?.paddingBottom ?? '',
+                activePanelRight: activePanelRect?.right ?? 0,
+                activeGroupVisible: Boolean(activeGroup),
+                activeGroupGap: activeGroupStyle?.gap ?? '',
+                activeGroupPaddingTop: activeGroupStyle?.paddingTop ?? '',
+                activeGroupGridTemplateColumns: activeGroupStyle?.gridTemplateColumns ?? '',
+                optionalPanelMarginBottom: optionalPanelStyle?.marginBottom ?? '',
+                optionalSummaryMinHeight: optionalSummaryStyle?.minHeight ?? '',
+                optionalSummaryPaddingTop: optionalSummaryStyle?.paddingTop ?? '',
+                completionGap: completionStyle?.gap ?? '',
+                statusChoiceMarginBottom: statusChoiceStyle?.marginBottom ?? '',
+                submitActionWidth: submitActionRect?.width ?? 0,
+                viewportWidth: window.innerWidth,
               };
             })()
           : null;
@@ -3064,6 +3113,37 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: upload-console toont niet precies de gekozen werkstroom (${JSON.stringify(evidence.uploadConsole)}).`,
+        );
+      }
+      if (
+        (options.label === 'mobile' || options.label === 'small-mobile') &&
+        evidence.uploadConsole &&
+        (!evidence.uploadConsole.bodyVisible ||
+          !evidence.uploadConsole.selectorVisible ||
+          evidence.uploadConsole.selectorDisplay !== 'flex' ||
+          parseFloat(evidence.uploadConsole.selectorGap) > 8 ||
+          parseFloat(evidence.uploadConsole.routeItemMinHeight) > 70 ||
+          !evidence.uploadConsole.activePanelVisible ||
+          parseFloat(evidence.uploadConsole.activePanelPaddingBottom) > 8 ||
+          !evidence.uploadConsole.activeGroupVisible ||
+          evidence.uploadConsole.activeGroupGridTemplateColumns === '' ||
+          parseFloat(evidence.uploadConsole.activeGroupGap) > 8 ||
+          parseFloat(evidence.uploadConsole.activeGroupPaddingTop) > 10 ||
+          (evidence.uploadConsole.optionalSummaryMinHeight &&
+            parseFloat(evidence.uploadConsole.optionalSummaryMinHeight) > 44) ||
+          (evidence.uploadConsole.optionalSummaryPaddingTop &&
+            parseFloat(evidence.uploadConsole.optionalSummaryPaddingTop) > 9) ||
+          (evidence.uploadConsole.optionalPanelMarginBottom &&
+            parseFloat(evidence.uploadConsole.optionalPanelMarginBottom) > 8) ||
+          (evidence.uploadConsole.completionGap &&
+            parseFloat(evidence.uploadConsole.completionGap) > 8) ||
+          (evidence.uploadConsole.statusChoiceMarginBottom &&
+            parseFloat(evidence.uploadConsole.statusChoiceMarginBottom) > 8) ||
+          evidence.uploadConsole.activePanelRight > evidence.uploadConsole.viewportWidth + 1 ||
+          evidence.uploadConsole.submitActionWidth > evidence.uploadConsole.viewportWidth)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: mobiele uploadpanelen zijn niet compact of veroorzaken overflow (${JSON.stringify(evidence.uploadConsole)}).`,
         );
       }
       if (
