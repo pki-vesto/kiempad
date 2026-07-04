@@ -1919,3 +1919,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   border-box sizing alongside padding 0 and the fixed 22px badgebox.
 - Partial G1722/#3387: Focused forced-colors image-context badges now explicitly keep
   outline-offset 0 alongside outline 0 so input focus remains the only focus ring.
+- Partial G1724/#3391: Tablet and small-desktop app-shell now uses a viewport-height
+  bounded workspace so only the active screen-stage panel scrolls, reducing the long-page feel.
