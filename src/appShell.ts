@@ -19425,7 +19425,7 @@ function renderTreatmentWorkbench(input: {
           <div class="treatment-workbench__next">
             <p class="kp-card__eyebrow">Nu eerst</p>
             <h3>${escapeHtml(nextAction)}</h3>
-            <p>Kiempad toont context en administratie, geen medisch advies.</p>
+            <p>${TREATMENT_CONTEXT_DISCLAIMER}</p>
           </div>
           ${statRow([
             { label: 'Actief', value: String(input.activeCount) },
@@ -19486,7 +19486,7 @@ function renderTreatmentSnapshot(input: {
       <article class="treatment-snapshot__card" data-treatment-snapshot-card="next-action">
         <p>Volgende actie</p>
         <strong>${escapeHtml(input.nextAction)}</strong>
-        <span>Feitelijke voorbereiding, geen behandeladvies.</span>
+        <span>${TREATMENT_CONTEXT_DISCLAIMER}</span>
       </article>
       <article class="treatment-snapshot__card" data-treatment-snapshot-card="timeline">
         <p>Laatste context</p>

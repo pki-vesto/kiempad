@@ -1064,6 +1064,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   disclaimers in their primary task panels instead of long medical-advice caveats.
   Partial G1602/#3148: Traject phase planning now uses one short treatment-context disclaimer in
   the primary phase panel instead of a long treatment-advice/kansberekening caveat.
+  Partial G1603/#3150: Traject workbench and the next-action snapshot now reuse the same short
+  treatment-context disclaimer instead of separate medical-advice caveats.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
