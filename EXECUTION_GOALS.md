@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1661 — Medicatie planning primaire actie noemt volgend moment kort
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning routesamenvatting primaire actie gebruikt nog brede tekst terwijl de route al als planningcontext leest.
+- **User Impact:** Gebruikers scannen de primaire actie minder snel in de lege planningstaat.
+- **Desired Outcome:** Primaire actiecopy wordt korter en behoudt de bestaande primaire ankerroute.
+- **User Value:** De planningroute voelt rustiger en sneller scanbaar.
+- **Acceptance Criteria:** Primaire actiecopy blijft naar het volgende moment verwijzen; href `#medication-planning-primary` blijft behouden; app-shell tests bewaken de nieuwe actiecopy.
+- **Affected Screens:** Medicatie planning route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1660 — Medicatie planning routesamenvatting actie noemt lokale invoer
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3265
 
 ### G1659 — Medicatie planning lege CTA link noemt beheer en invoercontext
 

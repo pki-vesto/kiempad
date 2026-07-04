@@ -6176,7 +6176,8 @@ describe('app shell', () => {
     );
     expect(html).not.toContain('Nog geen toekomstige medicatiemomenten buiten vandaag.');
     expect(html).toContain('href="#medication-planning-primary"');
-    expect(html).toContain('href="#medication-planning-followup"');
+    expect(html).toContain('href="#medication-planning-followup">Routekeuze</a>');
+    expect(html).not.toContain('href="#medication-planning-followup">Vervolgcontext</a>');
     expect(html).toContain('data-medication-planning-layout="single-input"');
     expect(html).toContain('id="medication-planning-primary"');
     expect(html).toContain('data-medication-planning-primary="next-dose"');

@@ -18464,7 +18464,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           detail: 'Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.',
           status: `${plannedLogs.length} later`,
           primary: { href: '#medication-planning-primary', label: 'Volgend moment' },
-          secondary: { href: '#medication-planning-followup', label: 'Vervolgcontext' },
+          secondary: { href: '#medication-planning-followup', label: 'Routekeuze' },
           data: { 'medication-route-summary': 'planning' },
           ariaLabel: 'Medicatieplanning route-samenvatting',
         })}

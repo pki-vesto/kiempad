@@ -1789,3 +1789,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the visible Beheer CTA.
 - Partial G1659/#3263: Medication empty planning CTA label now says Beheer en invoer openen while
   preserving the beheer route href.
+- Partial G1660/#3265: Medication planning route summary secondary action now says Routekeuze
+  while preserving the `#medication-planning-followup` href.
