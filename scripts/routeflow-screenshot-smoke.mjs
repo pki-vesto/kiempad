@@ -3262,6 +3262,9 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       activePanelBottom: Math.round(activePanelRect?.bottom ?? 0),
       activePanelVisibleHeight: Math.round(activePanelVisibleHeight),
       activePanelScrollTop: Math.round(activePanel?.scrollTop ?? 0),
+      documentScrollY: Math.round(window.scrollY),
+      documentElementScrollTop: Math.round(document.documentElement.scrollTop),
+      bodyScrollTop: Math.round(document.body.scrollTop),
       bottomNavTop: Math.round(bottomNavTop),
       viewportHeight,
       activePanelOverflowY: activePanelStyle?.overflowY ?? '',
@@ -3284,12 +3287,18 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
         Math.min(180, Math.max(96, reloadLayout.viewportHeight * 0.26)));
   const smallMobilePanelScrollStartStable =
     viewportLabel !== 'small-mobile' || reloadLayout.activePanelScrollTop <= 1;
+  const smallMobileBodyScrollStable =
+    viewportLabel !== 'small-mobile' ||
+    (reloadLayout.documentScrollY <= 1 &&
+      reloadLayout.documentElementScrollTop <= 1 &&
+      reloadLayout.bodyScrollTop <= 1);
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
     !smallMobileReloadHashStable ||
     !smallMobilePanelPositionStable ||
     !smallMobilePanelScrollStartStable ||
+    !smallMobileBodyScrollStable ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3304,6 +3313,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileActualHash,
           smallMobilePanelPositionStable,
           smallMobilePanelScrollStartStable,
+          smallMobileBodyScrollStable,
         },
       )}).`,
     );
@@ -3316,7 +3326,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,

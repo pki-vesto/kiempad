@@ -1959,3 +1959,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   viewport position against the fixed bottom nav before capturing the route evidence.
 - Partial G1742/#3427: Small-mobile reload smoke now verifies the active screen-stage
   panel starts at a calm internal scroll position after deep-link reloads.
+- Partial G1743/#3429: Small-mobile reload smoke now also verifies document/body
+  scroll stays at the top while the active panel owns the scroll context.
