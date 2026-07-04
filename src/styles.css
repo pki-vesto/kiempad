@@ -23578,6 +23578,20 @@ summary[class*="__summary"]:focus-visible,
     position: sticky;
     top: 0;
     z-index: 24;
+    max-height: min(24svh, 172px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .screen-stage__chrome > .page-header {
+    margin-bottom: 0;
+  }
+
+  .screen-stage__chrome > .page-header .page-header__intro {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .screen-stage__panel {
