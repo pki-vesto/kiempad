@@ -6253,6 +6253,10 @@ describe('app shell', () => {
       html.indexOf('id="medicatie-route-import"'),
       html.indexOf('id="medicatie-route-historie"'),
     );
+    expect(importRouteSection).toContain('Lokale invoer plannen');
+    expect(importRouteSection).not.toContain(
+      '<h2 id="medicatie-route-import-title">Schema importeren</h2>',
+    );
     expect(importRouteSection).toContain('>Importeren</summary>');
     expect(importRouteSection).not.toContain('>Schema importeren</summary>');
     expect(importRouteSection).toContain('Schema');

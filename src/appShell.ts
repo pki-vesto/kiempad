@@ -18535,7 +18535,7 @@ function renderMedicatieScreen(state: AppShellState): string {
     `<section id="medicatie-route-import" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-import-title" data-medication-route="import"${renderMedicationRouteVisibility(activeMedicationRoute, 'import')}>
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
-          <h2 id="medicatie-route-import-title">Schema importeren</h2>
+          <h2 id="medicatie-route-import-title">Lokale invoer plannen</h2>
           <p>Zet je schema lokaal om naar planning.</p>
         </header>
         ${commandRouteSummary({
