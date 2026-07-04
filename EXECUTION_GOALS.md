@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1681 — Medicatie planning routeopties teller noemt later korter met context
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties teller zegt alleen later, waardoor de context in de titel en helper moet worden gelezen.
+- **User Impact:** Gebruikers zien minder snel dat de teller over latere medicatiemomenten gaat.
+- **Desired Outcome:** Teller blijft compact maar noemt medicatiecontext.
+- **User Value:** De disclosure blijft scanbaar zonder contextverlies.
+- **Acceptance Criteria:** Teller noemt latere medicatie compact; bestaande tellerwaarde blijft behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1680 — Medicatie planning routeopties titel noemt kiezen compact
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3305
 
 ### G1679 — Medicatie planning routeopties helper noemt afvinken compact
 

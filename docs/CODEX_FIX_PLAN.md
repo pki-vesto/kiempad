@@ -1829,3 +1829,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the `#medicatie?route=vandaag` href.
 - Partial G1679/#3303: Medication planning route options helper now names afvinken, beheer,
   lokale import and historie consistently with the visible links.
+- Partial G1680/#3305: Medication planning route options title now says Route kiezen while
+  preserving the `#medication-planning-followup` disclosure.
