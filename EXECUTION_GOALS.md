@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1673 — Medicatie planning routeopties helper noemt lokale import
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties helper noemt lokale planningimport, maar sluit nog niet precies aan op de Routeopties titel.
+- **User Impact:** Gebruikers scannen minder snel welke opties in de follow-up staan.
+- **Desired Outcome:** De helper noemt kort de beschikbare routeopties en behoudt lokale import.
+- **User Value:** De follow-up sectie wordt sneller voorspelbaar.
+- **Acceptance Criteria:** Helper noemt routeopties of opties; lokale planningimport blijft zichtbaar; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1672 — Medicatie planning routekeuze titel noemt opties
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3289
 
 ### G1671 — Medicatie planning secundaire actie noemt opties
 
