@@ -2061,3 +2061,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   overflow-block settings, guarded by CSS and reload smoke.
 - Partial G1794/#3531: Start now opens as a visible focus-shell with one primary
   day action, compact work lanes, and closed dashboard follow-up context.
+- Partial G1795/#3533: Active screens now render one compact screen-stage medical
+  disclaimer while Dagadvies no longer repeats its day-context disclaimer in
+  workbench, list and planner layers.

@@ -848,6 +848,35 @@ h3 {
   gap: 18px;
 }
 
+.screen-disclaimer {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 84%, var(--surface-subtle));
+  color: var(--text-muted);
+}
+
+.screen-disclaimer h2,
+.screen-disclaimer p {
+  margin: 0;
+}
+
+.screen-disclaimer h2 {
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.screen-disclaimer p {
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
 .workspace-strip {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto;
