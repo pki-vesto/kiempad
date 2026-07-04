@@ -1810,6 +1810,9 @@ describe('app shell', () => {
     expect(html).toContain('class="screen-stage__panel"');
     expect(html).toContain('data-screen-stage-panel="active"');
     expect(html).toContain('data-screen-stage-scroll="active-workspace"');
+    expect(html).toContain('data-screen-disclaimer="medical-boundary"');
+    expect(html).toContain('data-screen-disclaimer-screen="agenda"');
+    expect(html).toContain(DISCLAIMER);
     expect(html).toContain('aria-label="Agenda actief scherm"');
     expect(html).toContain('aria-label="Werkruimtes en schermen"');
     for (const screen of SCREENS) {
@@ -3074,6 +3077,8 @@ describe('app shell', () => {
     expect(css).toContain('.app-sidebar > .workspace-strip .workspace-strip__switcher {');
     expect(css).toContain('.content[data-screen-stage="ready"] {');
     expect(css).toContain('.screen-stage__panel {');
+    expect(css).toContain('.screen-disclaimer {');
+    expect(css).toContain('.screen-disclaimer h2 {');
     expect(css).toContain('overflow-x: hidden;');
     expect(css).toContain('overscroll-behavior: contain;');
     const screenStageCss = extractCssRule(css, '.content[data-screen-stage="ready"]').declarations;
@@ -3724,9 +3729,12 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).not.toContain('Aanbeveling');
     expect(emptyContextRecommendations).toContain('data-daily-advice-workbench="owner-routes"');
     expect(emptyContextRecommendations).toContain('aria-label="Dagadvies werkbank"');
-    expect(emptyContextRecommendations).toContain(
+    expect(emptyContextRecommendations).not.toContain(
       'Kiempad ordent je dag; je kliniek blijft leidend.',
     );
+    expect(emptyContextHtml).toContain('data-screen-disclaimer="medical-boundary"');
+    expect(emptyContextHtml).toContain('data-screen-disclaimer-screen="start"');
+    expect(emptyContextHtml).toContain(DISCLAIMER);
     expect(emptyContextRecommendations).not.toContain(
       'Alles blijft concept en Kiempad geeft geen medisch advies.',
     );

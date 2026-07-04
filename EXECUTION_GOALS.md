@@ -1666,6 +1666,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Status:** ☑ done
 - **Issue:** #3531
 
+### G1795 — Screen-stage centrale medische disclaimer en minder dagadvies-herhaling
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De medische grens werd vooral via losse kleine tekstregels in panels herhaald, waardoor dagadvies en andere routes drukker voelden dan nodig.
+- **User Impact:** Gebruikers moeten dezelfde disclaimer meerdere keren scannen en verliezen sneller het onderscheid tussen primaire taak en juridische context.
+- **Desired Outcome:** Elk actief scherm krijgt één compacte screen-stage disclaimer terwijl Dagadvies minder herhaalde contextregels toont.
+- **User Value:** De UI blijft rustiger en de medische grens staat voorspelbaar op één plek.
+- **Acceptance Criteria:** Elk actief scherm rendert één compacte `data-screen-disclaimer="medical-boundary"` met de gedeelde medische disclaimer; de disclaimer is gekoppeld aan het actieve scherm via `data-screen-disclaimer-screen`; Dagadvies-workbench, lijstzone en actieplanner herhalen de dagcontextdisclaimer niet meer als losse kleine tekstregel; specialistische waarschuwingen over dosering, beeldanalyse, embryo-uitkomst en privacygrenzen blijven intact waar ze inhoudelijk nodig zijn; tests bewaken de centrale disclaimer en het verdwijnen van de dagadvies-herhaling; desktop, tablet en mobiel houden geen horizontale overflow of overlap.
+- **Affected Screens:** App-shell, Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Screen stage, app-shell tests, daily advice UI
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☑ done
+- **Issue:** #3533
+
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
 - **Epic:** Onboarding & Daily Use

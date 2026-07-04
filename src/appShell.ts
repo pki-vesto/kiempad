@@ -1004,6 +1004,7 @@ export function renderAppShell(
 
         <section class="screen-stage__panel" aria-label="${escapeAttribute(activeScreen.label)} actief scherm" data-screen-stage-panel="active" data-screen-stage-scroll="active-workspace"${state.loadingState ? ' aria-busy="true" data-screen-loading="true"' : ''}>
           ${screenContent}
+          ${renderScreenDisclaimer(activeScreen)}
         </section>
       </main>
     </div>
@@ -1025,6 +1026,15 @@ function renderAppLoadingState(loading: AppShellLoadingState): string {
         ${loadingSkeleton({ lines: 3, variant: 'text' })}
       </div>
     </section>
+  `;
+}
+
+function renderScreenDisclaimer(screen: Screen): string {
+  return `
+    <aside class="screen-disclaimer" aria-labelledby="screen-disclaimer-title" data-screen-disclaimer="medical-boundary" data-screen-disclaimer-screen="${escapeAttribute(screen.id)}">
+      <h2 id="screen-disclaimer-title">Geen medisch advies</h2>
+      <p>${DISCLAIMER}</p>
+    </aside>
   `;
 }
 
@@ -15770,7 +15780,6 @@ function renderDailyAdviceWorkbench(
         <div>
           <p class="daily-advice-workbench__eyebrow">Advieswerkbank</p>
           <h3>Dagadvies per persoon kiezen</h3>
-          <p>${DAILY_CONTEXT_DISCLAIMER}</p>
         </div>
         <div class="daily-advice-workbench__summary" aria-label="Dagadvies status">
           <span><strong>${total}</strong> adviezen</span>
@@ -16206,7 +16215,6 @@ function renderDailyAdviceFocusShell(input: {
               ${input.workbench}
             </div>
             <div class="daily-advice-focus-shell__list" data-daily-advice-focus-region="list" data-daily-advice-console-region="list">
-              <p class="small-print">${DAILY_CONTEXT_DISCLAIMER}</p>
               ${input.list}
             </div>
           </div>
@@ -16337,7 +16345,6 @@ function renderDailyAdviceActionPlanner(overview: DailyRecommendationOverview): 
           )
           .join('')}
       </nav>
-      <p class="small-print">${DAILY_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }
