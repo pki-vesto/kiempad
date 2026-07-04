@@ -932,8 +932,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher scrollbar
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3445
+
+### G1752 — App-shell mobiel workspace-strip bewaakt reload switcher overscroll op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Switcher-scrollbar verberging wordt bewaakt, maar overscrollgedrag van de interne swipe-rij kan nog expliciet gecontroleerd worden.
+- **User Impact:** Als swipen in de strip doorlekt naar de pagina, voelt kleine-schermnavigatie onrustig.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher als contained swipe-rij zonder scrollketting.
+- **User Value:** Gebruikers kunnen routes horizontaal swipen zonder dat de pagina meebeweegt.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained switcher scrollbreedte en verborgen scrollbar; workspace-strip switcher gebruikt na reload contained overscroll op small-mobile; tests of smoke checks bewaken small-mobile reload switcher overscroll; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher overscroll
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3447
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

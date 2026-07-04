@@ -1975,3 +1975,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   button text uses hidden overflow, ellipsis and nowrap without exceeding button width.
 - Partial G1750/#3443: Small-mobile reload smoke now verifies the workspace-strip
   switcher scroll width is contained inside the strip as an internal swipe row.
+- Partial G1751/#3445: Small-mobile reload smoke now verifies the workspace-strip
+  switcher keeps scrollbar-width none without measurable scrollbar height.
