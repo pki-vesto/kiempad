@@ -18785,7 +18785,7 @@ function renderMedicatieImportForm(state: AppShellState): string {
   return `
     <form id="medicatie-import-form" class="data-form compact-form">
       <label>
-        Klinieklijstje
+        Schema
         <textarea name="schemaImport" rows="5" placeholder="Progesteron | 2026-06-23 | 08:00" required></textarea>
       </label>
       <p class="small-print">Formaat: Medicatie | YYYY-MM-DD | HH:MM.</p>

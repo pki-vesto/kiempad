@@ -1747,3 +1747,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   label while preserving the planning route.
 - Partial G1638/#3221: Medication import disclosure summary now uses a short Importeren action
   label while preserving the import form.
+- Partial G1639/#3223: Medication import form label now uses short Schema copy while preserving
+  the schemaImport textarea contract.
