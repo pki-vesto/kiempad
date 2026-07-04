@@ -12588,7 +12588,7 @@ function renderCycleDataForm(): string {
         Waarde
         <input name="waarde" autocomplete="off" placeholder="36,8 of licht" required />
       </label>
-      <p class="small-print">Feitelijke registratie zonder interpretatie of medisch advies.</p>
+      <p class="small-print">${WELLBEING_CONTEXT_DISCLAIMER}</p>
       <button type="submit">Bewaar cyclusmeting</button>
     </form>
   `;

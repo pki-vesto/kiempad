@@ -1080,6 +1080,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   disclaimer instead of OCR/bestandsinhoud/beeldpayloads/medical-advice caveats.
   Partial G1610/#3165: Dossier review queue and echo appointment classification now use short
   dossier/image context disclaimers instead of OCR/broninhoud/beeldanalyse/medical-advice caveats.
+  Partial G1611/#3167: Welzijn cycle registration now uses the short wellbeing-context
+  disclaimer instead of a feitelijke-registratie/interpretatie/medical-advice caveat.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

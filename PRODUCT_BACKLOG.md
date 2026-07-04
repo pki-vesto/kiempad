@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1411 |
+| ☑ klaar | 1412 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1610** |
+| **Totaal** | **1611** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1772,13 +1772,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1608 | Welzijn gebruikt korte contextdisclaimers | P2 | F5 | ☑ |
 | G1609 | Dossier gebruikt korte start- en keuzecontextdisclaimers | P2 | F5 | ☑ |
 | G1610 | Dossier review en echo-classificatie gebruiken korte contextdisclaimers | P2 | F5 | ☑ |
-| G1611 | Welzijn registratie gebruikt korte vastlegcontext | P2 | F5 | ☐ |
+| G1611 | Welzijn registratie gebruikt korte vastlegcontext | P2 | F5 | ☑ |
+| G1612 | Afwegingen keuzehulp gebruikt korte contextdisclaimer | P2 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1610** (id's G001 t/m G1611; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1611** (id's G001 t/m G1612; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
