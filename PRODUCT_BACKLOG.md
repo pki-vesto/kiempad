@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1454 |
+| ☑ klaar | 1455 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1653** |
+| **Totaal** | **1654** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1815,13 +1815,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1651 | Medicatie import standaarddetail gebruikt directe planningscopy | P2 | F5 | ☑ |
 | G1652 | Medicatie import routeheader gebruikt directe lokale planningscopy | P2 | F5 | ☑ |
 | G1653 | Medicatie import routetitel gebruikt lokale invoercopy | P2 | F5 | ☑ |
-| G1654 | Medicatie import navigatie gebruikt lokale invoercopy | P2 | F5 | ☐ |
+| G1654 | Medicatie import navigatie gebruikt lokale invoercopy | P2 | F5 | ☑ |
+| G1655 | Medicatie import vervolgcontext microcopy noemt lokale planning | P2 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1653** (id's G001 t/m G1654; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1654** (id's G001 t/m G1655; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

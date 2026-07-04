@@ -1777,3 +1777,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   planning while preserving the route title.
 - Partial G1653/#3251: Medication import route title now says Lokale invoer plannen while
   preserving the import route id and aria-labelledby contract.
+- Partial G1654/#3253: Medication import follow-up navigation now labels the import link as
+  Lokale invoer plannen while preserving the `#medicatie?route=import` href.

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1655 — Medicatie import vervolgcontext microcopy noemt lokale planning
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie vervolgcontext noemt import nog los van lokale planning, terwijl de route lokale invoer benadrukt.
+- **User Impact:** Gebruikers zien in de vervolgcontext minder duidelijk waarom de importactie relevant is.
+- **Desired Outcome:** Vervolgcontext microcopy benoemt lokale planning zonder de disclosure structuur te wijzigen.
+- **User Value:** De routekeuze voelt consistenter en sneller scanbaar.
+- **Acceptance Criteria:** Vervolgcontext helper noemt lokale planning; bestaande routewoorden vandaag, beheer, import en historie blijven begrijpelijk; app-shell tests bewaken de nieuwe helpercopy.
+- **Affected Screens:** Medicatie vervolgcontext
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1654 — Medicatie import navigatie gebruikt lokale invoercopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication route navigation, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3253
 
 ### G1653 — Medicatie import routetitel gebruikt lokale invoercopy
 
