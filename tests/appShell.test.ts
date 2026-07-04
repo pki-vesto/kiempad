@@ -3070,6 +3070,8 @@ describe('app shell', () => {
     expect(css).toContain('.app-sidebar > .workspace-strip .workspace-strip__switcher {');
     expect(css).toContain('.content[data-screen-stage="ready"] {');
     expect(css).toContain('.screen-stage__panel {');
+    expect(css).toContain('overflow-x: hidden;');
+    expect(css).toContain('overscroll-behavior: contain;');
     const screenStageCss = extractCssRule(css, '.content[data-screen-stage="ready"]').declarations;
     expect(screenStageCss).toContain('padding: 0;');
     expect(screenStageCss).toContain('background: transparent;');
