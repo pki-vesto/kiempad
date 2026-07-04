@@ -42725,6 +42725,18 @@ describe('app shell', () => {
       '.primary-nav .primary-nav__more-sheet a[data-mobile-nav-tier="mobile-more-sheet"]',
     );
     expect(tabletCss).toContain('.primary-nav__more-sheet a[aria-current="page"]');
+    expect(tabletCss).toContain('.app-shell {');
+    expect(tabletCss).toContain('grid-template-rows: auto auto auto minmax(0, 1fr);');
+    expect(tabletCss).toContain('height: 100svh;');
+    expect(tabletCss).toContain('overflow: hidden;');
+    expect(tabletCss).toContain('.content[data-screen-stage="ready"] {');
+    expect(tabletCss).toContain('grid-template-rows: auto minmax(0, 1fr);');
+    expect(tabletCss).toContain('.screen-stage__chrome {');
+    expect(tabletCss).toContain('position: sticky;');
+    expect(tabletCss).toContain('.screen-stage__panel {');
+    expect(tabletCss).toContain('overflow-y: auto;');
+    expect(tabletCss).toContain('overscroll-behavior: contain;');
+    expect(tabletCss).toContain('scrollbar-gutter: stable;');
     expect(mobileCss).toContain('.command-route-section__header,');
     expect(mobileCss).toContain('.dossier-route-section__header,');
     expect(mobileCss).toContain('.knowledge-route-section__header,');

@@ -23411,6 +23411,16 @@ summary[class*="__summary"]:focus-visible,
 }
 
 @media (min-width: 761px) and (max-width: 899px) {
+  .app-shell {
+    display: grid;
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    gap: 12px;
+    height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+    padding: 18px;
+  }
+
   .primary-nav {
     position: relative;
     flex-wrap: nowrap;
@@ -23538,6 +23548,26 @@ summary[class*="__summary"]:focus-visible,
     border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
     background: var(--surface-active);
     color: var(--accent);
+  }
+
+  .content[data-screen-stage="ready"] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .screen-stage__chrome {
+    position: sticky;
+    top: 0;
+    z-index: 24;
+  }
+
+  .screen-stage__panel {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
   }
 }
 

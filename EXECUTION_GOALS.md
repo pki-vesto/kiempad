@@ -459,6 +459,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Status:** ☑ klaar
 - **Issue:** #3341
 
+### G1724 — App-shell tablet werkruimte scrollt als paneel in plaats van lange pagina
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** G1699 begrenst de desktop werkruimte, maar tablet en small-desktop kunnen nog als documentpagina aanvoelen doordat de shell niet viewport-hoog is.
+- **User Impact:** Gebruikers verliezen overzicht op tablet omdat routekop en actieve taak samen met de pagina blijven meeschuiven.
+- **Desired Outcome:** Tablet/small-desktop gebruikt een viewport-hoge bounded workspace waarin alleen het actieve paneel scrolt.
+- **User Value:** De app voelt meer als een rustige werkruimte met vaste context en minder als één lange pagina.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; tablet/small-desktop layout gebruikt een viewport-hoge shell met content als minmax(0, 1fr) werkruimte; alleen `.screen-stage__panel` scrolt verticaal en `.content` blijft overflow hidden; workspace-strip/pageheader blijven boven het actieve paneel beschikbaar; mobiele bottom-nav layout onder 761px blijft ongewijzigd; app-shell CSS tests bewaken tablet bounded-workspace regels; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, tablet layout, screen-stage panel, CSS breakpoints
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☑ done
+- **Issue:** #3391
+
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
 - **Epic:** Onboarding & Daily Use
