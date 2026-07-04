@@ -1118,6 +1118,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   context instead of longer own-schema planning-moment wording.
   Partial G1629/#3203: Medication import form helper now keeps only the line format
   instead of explaining local conversion to planning moments.
+  Partial G1630/#3205: Medication import form submit button now uses short action
+  copy instead of repeating schema import wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
