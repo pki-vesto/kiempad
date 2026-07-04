@@ -3373,7 +3373,7 @@ function renderDossierScreen(state: AppShellState): string {
         <details class="dossier-add-route-group" data-dossier-add-route-group="collapsed"${activeDossierAddFlow === 'keuze' ? '' : ' open'}>
           <summary class="dossier-add-route-group__summary" data-dossier-add-route-group-summary="ready">
             <span>Toevoegroute kiezen</span>
-            <small>Document, consult, embryo of status</small>
+            <small>Document · consult · embryo · status</small>
           </summary>
           <nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen" data-dossier-add-route-selector="compact-tabs" data-dossier-upload-console-region="selector">
             <a href="#dossier-upload-form" class="dossier-add-route" data-dossier-add-route-kind="document">
