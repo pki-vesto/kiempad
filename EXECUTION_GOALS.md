@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1617 — Medicatie vandaagroute gebruikt korte afvinkcontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie vandaagroute toont nog meerdere zinnen over dosering berekenen of adviseren bij een taak die alleen afvinken ondersteunt.
+- **User Impact:** Gebruikers zien herhaalde defensieve copy terwijl ze vooral snel willen zien wat vandaag gepland staat.
+- **Desired Outcome:** Vandaagroute gebruikt korte afvinkcontext en behoudt de medicatieveiligheidsgrens.
+- **User Value:** Gebruikers kunnen dagmomenten rustiger scannen en afvinken zonder overbodige waarschuwingstekst.
+- **Acceptance Criteria:** Vandaagroute en route-samenvatting gebruiken korte afvinkcontext; app-shell tests bewaken dat de oude bereken/advieszinnen niet terugkeren in de vandaagroute.
+- **Affected Screens:** Medicatie vandaag
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication today route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1616 — Medicatie schema-import gebruikt korte planningcontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning form, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3177
 
 ### G1615 — Research kaartvelden gebruiken korte placeholdercopy
 

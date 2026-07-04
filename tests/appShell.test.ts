@@ -6180,6 +6180,20 @@ describe('app shell', () => {
     expect(html).toContain('Schema importeren');
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Progesteron | 2026-06-23 | 08:00');
+    expect(html).toContain('Importeer geplande momenten uit je eigen klinieklijst.');
+    expect(html).toContain('Import maakt alleen planningmomenten aan vanuit je eigen schema.');
+    expect(html).toContain(
+      'Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad zet dit lokaal om naar planningmomenten.',
+    );
+    expect(html).not.toContain(
+      'Importeer geplande momenten uit eigen klinieklijst zonder doseringen over te nemen of te berekenen.',
+    );
+    expect(html).not.toContain(
+      'Import maakt alleen geplande momenten aan; doseringen worden niet overgenomen of berekend.',
+    );
+    expect(html).not.toContain(
+      'Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad neemt geen dosering over of berekent niets.',
+    );
     expect(html).toContain('zoals kliniek: 2x per dag');
     expect(html).toContain('name="voorraadAantal" type="number"');
     expect(html).toContain('value="6"');

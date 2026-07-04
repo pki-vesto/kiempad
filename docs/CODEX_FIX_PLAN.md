@@ -1090,6 +1090,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   dashboard now use short research-context copy instead of behandeladvies/diagnose/bewijsweging caveats.
   Partial G1615/#3175: Research text fields now use short content-focused placeholders and
   app-shell tests guard against behandeladvies wording returning to research placeholder copy.
+  Partial G1616/#3177: Medication schema import now keeps the example line format while using
+  short planning-context copy instead of dosage-transfer or calculation caveats.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
