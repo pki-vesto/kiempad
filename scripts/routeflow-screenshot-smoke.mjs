@@ -1254,6 +1254,7 @@ const targets = [
       '[data-dossier-upload-optional="embryo-labcontext"]',
       '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
+    imageSummaryChips: true,
     desktopHiddenSelectors: [
       '.dossier-split-workspace .domain-split-workspace__rail',
       '.dossier-split-workspace .domain-split-workspace__context',
@@ -2164,6 +2165,24 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const imageSummaryChips = routeflow.imageSummaryChips
+          ? [
+              ...document.querySelectorAll(
+                '[data-dossier-upload-image-summary="safe-next-step"] span',
+              ),
+            ].map((element) => {
+              const rect = element.getBoundingClientRect();
+              const style = getComputedStyle(element);
+              return {
+                text: element.textContent?.trim() ?? '',
+                visible: rect.width > 0 && rect.height > 0,
+                height: rect.height,
+                pointerEvents: style.pointerEvents,
+                whiteSpace: style.whiteSpace,
+                maxWidth: style.maxWidth,
+              };
+            })
+          : null;
         const dossierConsole = routeflow.dossierConsole
           ? (() => {
               const body = document.querySelector('[data-dossier-console="ready"]');
@@ -2430,6 +2449,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceConsole,
           startLaunchpad,
           uploadConsole,
+          imageSummaryChips,
           dossierConsole,
           knowledgeConsole,
           consultConsole,
@@ -2474,6 +2494,24 @@ async function assertRouteflows(browser, options) {
       }
       if (!evidence.activeVisible) {
         throw new Error(`${options.label}/${target.screen}: actieve routeflow is niet zichtbaar.`);
+      }
+      if (
+        evidence.imageSummaryChips &&
+        (evidence.imageSummaryChips.length !== 3 ||
+          evidence.imageSummaryChips.some(
+            (chip) =>
+              !chip.visible ||
+              chip.height < 34 ||
+              chip.pointerEvents !== 'none' ||
+              chip.whiteSpace !== 'normal' ||
+              chip.maxWidth !== '100%',
+          ))
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: beeldcontext-chips missen comfortabele non-interactive layout (${JSON.stringify(
+            evidence.imageSummaryChips,
+          )}).`,
+        );
       }
       if (
         options.label === 'desktop' &&
