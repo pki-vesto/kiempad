@@ -6105,7 +6105,8 @@ describe('app shell', () => {
     expect(html).toContain('class="command-task-route__badge">3</strong>');
     expect(html).toContain('class="command-task-route__badge">schema</strong>');
     expect(html).toContain('href="#medicatie?route=planning"');
-    expect(html).toContain(
+    expect(html).toContain('Routeopties: afvinken, beheer, Planninginvoer of historie teruglezen.');
+    expect(html).not.toContain(
       'Routeopties: afvinken, beheer, lokale planninginvoer of historie teruglezen.',
     );
     expect(html).not.toContain(
@@ -6242,7 +6243,8 @@ describe('app shell', () => {
       html.indexOf('href="#medicatie?route=vandaag"'),
     );
     expect(medicationFollowupSection).not.toContain('Vervolgcontext openen');
-    expect(html).toContain(
+    expect(html).toContain('Routeopties: afvinken, beheer, Planninginvoer of historie teruglezen.');
+    expect(html).not.toContain(
       'Routeopties: afvinken, beheer, lokale planninginvoer of historie teruglezen.',
     );
     expect(html).not.toContain(
@@ -6303,7 +6305,8 @@ describe('app shell', () => {
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="medication-history-disclosure" open',
     );
-    expect(html).toContain(
+    expect(html).toContain('Routeopties: afvinken, beheer, Planninginvoer of historie teruglezen.');
+    expect(html).not.toContain(
       'Routeopties: afvinken, beheer, lokale planninginvoer of historie teruglezen.',
     );
     expect(html).not.toContain(
