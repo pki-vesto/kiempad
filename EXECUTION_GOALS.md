@@ -1170,8 +1170,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher display
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3473
+
+### G1766 — App-shell mobiel workspace-strip bewaakt reload switcher min-width op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele display-instellingen, maar min-width kan nog expliciet bewaakt worden zodat de horizontale rij niet uit de shell duwt.
+- **User Impact:** Als min-width onverwacht terugvalt, kan de strip brede content afdwingen en opnieuw horizontale pagina-overflow veroorzaken.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele min-width instellingen.
+- **User Value:** Gebruikers houden een voorspelbare, horizontaal swipebare rij routeknoppen zonder schermbrede layoutdrift.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing, actieve knop tap-highlight, compacte switcher gap, gecentreerde align-items, links startende justify-content en flex display; workspace-strip switcher gebruikt na reload stabiele min-width instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher min-width; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher min-width
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3475
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
