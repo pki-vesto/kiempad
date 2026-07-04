@@ -18478,7 +18478,7 @@ function renderMedicatieScreen(state: AppShellState): string {
                 : renderEmptyState(
                     'Nog geen vervolgplanning buiten vandaag; beheer of lokale invoer helpt verder.',
                     {
-                      title: 'Geen komende momenten',
+                      title: 'Geen vervolgplanning',
                       cta: { href: '#medicatie?route=beheer', label: 'Beheer en invoer openen' },
                     },
                   )

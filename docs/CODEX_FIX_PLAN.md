@@ -1795,3 +1795,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the `#medication-planning-primary` href.
 - Partial G1662/#3269: Medication empty planning primary panel title now says Vervolgplanning
   leeg while preserving the future next-dose title.
+- Partial G1663/#3271: Medication empty planning empty-state title now says Geen vervolgplanning
+  while preserving the Beheer/invoer CTA.

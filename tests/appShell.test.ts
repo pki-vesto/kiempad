@@ -6168,6 +6168,8 @@ describe('app shell', () => {
     expect(html).toContain(
       'Nog geen vervolgplanning buiten vandaag; beheer of lokale invoer helpt verder.',
     );
+    expect(html).toContain('Geen vervolgplanning');
+    expect(html).not.toContain('Geen komende momenten');
     expect(html).not.toContain('Nog geen vervolgplanning buiten vandaag.');
     expect(html).toContain('href="#medicatie?route=beheer">Beheer en invoer openen</a>');
     expect(html).not.toContain('href="#medicatie?route=beheer">Medicatie beheren</a>');
