@@ -2066,3 +2066,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1795/#3533: Active screens now render one compact screen-stage medical
   disclaimer while Dagadvies no longer repeats its day-context disclaimer in
   workbench, list and planner layers.
+- Partial G1796/#3535: Dagadvies now uses a compact mobile full-list rhythm with
+  tighter list choice, owner groups, cards and action grids, guarded by routeflow
+  screenshots on mobile and small-mobile.

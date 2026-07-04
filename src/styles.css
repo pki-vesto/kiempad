@@ -25177,12 +25177,127 @@ summary[class*="__summary"]:focus-visible,
     scroll-snap-align: start;
   }
 
+  .daily-advice-list-choice {
+    gap: 7px;
+    margin-bottom: 8px;
+    padding: 9px;
+    border-radius: 10px;
+  }
+
+  .daily-advice-list-choice__header {
+    gap: 2px;
+  }
+
+  .daily-advice-full-list__body {
+    gap: 8px;
+  }
+
+  .daily-recommendation-list--dual-owner {
+    display: grid;
+    gap: 8px;
+  }
+
   .daily-recommendation-dual-owner-lane {
     grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
   }
 
   .daily-recommendation-list--dual-owner .daily-recommendation-group {
+    padding: 8px;
+  }
+
+  .daily-recommendation-list--dual-owner .kp-recommendation-group__items {
+    gap: 8px;
+  }
+
+  .daily-recommendation-list--dual-owner .kp-recommendation-group__title {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+  }
+
+  .daily-recommendation-list--dual-owner .kp-recommendation-card {
+    gap: 6px;
     padding: 10px;
+    border-radius: 10px;
+  }
+
+  .daily-recommendation-list--dual-owner .kp-recommendation-card__header,
+  .daily-recommendation-list--dual-owner .kp-recommendation-card__body {
+    gap: 6px;
+  }
+
+  .daily-recommendation-list--dual-owner .kp-recommendation-card__title {
+    font-size: 0.94rem;
+    line-height: 1.2;
+  }
+
+  .daily-recommendation-list--dual-owner .kp-recommendation-card__detail {
+    font-size: 0.85rem;
+    line-height: 1.35;
+  }
+
+  .daily-recommendation-list--dual-owner .kp-recommendation-card__meta,
+  .daily-recommendation-list--dual-owner .kp-recommendation-card__body > small,
+  .daily-recommendation-list--dual-owner .small-print {
+    font-size: 0.76rem;
+    line-height: 1.32;
+  }
+
+  .daily-recommendation-list--dual-owner .compact-list {
+    gap: 5px;
+  }
+
+  .daily-recommendation-list--dual-owner .rec-checklist li {
+    padding: 6px 0;
+  }
+
+  .daily-recommendation-list--dual-owner .rec-checklist li > span {
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .daily-recommendation-list--dual-owner .rec-checklist li > small {
+    margin-top: 3px;
+    font-size: 0.72rem;
+    line-height: 1.32;
+  }
+
+  .daily-recommendation-list--dual-owner .daily-recommendation-action-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .daily-recommendation-list--dual-owner .daily-recommendation-action-form label {
+    min-width: 0;
+  }
+
+  .daily-recommendation-list--dual-owner .rec-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(40px, auto);
+    gap: 6px;
+    margin-top: 0;
+  }
+
+  .daily-recommendation-list--dual-owner .rec-action {
+    width: 100%;
+    min-height: 34px;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+  }
+
+  .daily-recommendation-list--dual-owner .rec-action--primary {
+    grid-column: 1 / -1;
+  }
+
+  .daily-recommendation-list--dual-owner .rec-overflow {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .daily-recommendation-list--dual-owner .rec-overflow__toggle {
+    min-width: 40px;
+    min-height: 40px;
   }
 
   .start-workbench + .start-task-routes {
