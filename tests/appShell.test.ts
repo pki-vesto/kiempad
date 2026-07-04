@@ -4834,6 +4834,10 @@ describe('app shell', () => {
     expect(html).toContain('data-schedule-route-summary="overzicht"');
     expect(html).toContain('Agendaoverzicht route-samenvatting');
     expect(html).toContain('Week- en maandcontext');
+    expect(html).toContain('id="schedule-overview-context-disclosure"');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="schedule-overview-context-disclosure" open',
+    );
     expect(html).toContain('id="afspraak-form" class="data-form schedule-form"');
     expect(html).toContain('data-command-form-section="afspraak-basis"');
     expect(html).toContain('data-schedule-form-section="basis"');
@@ -4886,6 +4890,18 @@ describe('app shell', () => {
     expect(html).toContain('data-schedule-route="import"');
     expect(html).toContain('id="agenda-route-historie"');
     expect(html).toContain('data-schedule-route="historie"');
+    expect(html).toContain('id="schedule-upcoming-actions-disclosure"');
+    expect(html).toContain('id="schedule-import-disclosure"');
+    expect(html).toContain('id="schedule-history-disclosure"');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="schedule-upcoming-actions-disclosure" open',
+    );
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="schedule-import-disclosure" open',
+    );
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="schedule-history-disclosure" open',
+    );
     expect(html).toContain('Agendaoverzicht');
     expect(html).toContain('Afspraak plannen of bewerken');
     expect(html).toContain('Kliniekagenda importeren');

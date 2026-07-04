@@ -384,6 +384,9 @@
   first-class latest-backup reminder card and encrypted export preview before opening details.
 - **CFX-034 agenda route-first workspace — partial in G1357 / issue #2488.** Agenda now removes
   the fixed third context column and keeps the active planning route as the central workspace.
+- **CFX-034 agenda closed context panels — partial in G1591 / issue #3126.** Agenda overview,
+  upcoming, import, and history context panels now start closed even when appointments or import
+  feedback exist, reducing long automatically expanded agenda pages.
 - **CFX-035 medication route-first workspace — partial in G1358 / issue #2490.** Medicatie now
   removes the fixed third context column and keeps the active medication route as the central
   workspace.
@@ -1101,6 +1104,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   compact action row. Partial G1384/#2542: Agenda folds the planning workbench into the same
   split-view as route context, so desktop opens as one rail/main/context workspace instead of a
   separate focus-region plus nested route workspace.
+  Partial G1591/#3126: Agenda overview, upcoming, import, and history panels keep their context
+  closed by default with stable ids instead of auto-expanding when data exists.
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**
   Done in G1347/#2468. Partial G1358/#2490: Medicatie uses a route-first workspace without a fixed
   third context column.

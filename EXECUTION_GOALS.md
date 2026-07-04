@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1591 — Agenda contextpanelen openen niet automatisch
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Agenda routes klapten week/maandcontext, komende afspraken, import en historie automatisch open zodra er data of feedback was.
+- **User Impact:** Gebruikers kregen alsnog lange agendapagina's terwijl de route-first structuur bedoeld is om één taak tegelijk te tonen.
+- **Desired Outcome:** Agenda contextpanelen blijven standaard gesloten en openen pas wanneer de gebruiker expliciet context, acties, import of historie nodig heeft.
+- **User Value:** Gebruikers starten rustiger in de agenda en hoeven niet door contextlijsten te scrollen voordat ze plannen of controleren.
+- **Acceptance Criteria:** Agenda overzicht houdt week- en maandcontext standaard gesloten; Agenda komend houdt komende afspraken en acties standaard gesloten; Agenda import houdt het importformulier/statuspaneel standaard gesloten; Agenda historie houdt afgelopen afspraken standaard gesloten; elk panel heeft een vaste id/hook; app-shell tests bewaken de gesloten startstaat en bestaande agenda-inhoud; geen diagnose, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Agenda overzicht, Agenda komend, Agenda import, Agenda historie
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Schedule routes, agenda disclosures, app-shell tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3126
+
 ### G1590 — Traject graphcontext opent als compacte panelen
 
 - **Epic:** Onboarding & Daily Use
