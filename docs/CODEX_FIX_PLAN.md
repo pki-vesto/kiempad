@@ -1122,6 +1122,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   copy instead of repeating schema import wording.
   Partial G1631/#3207: Medication import route summary title now uses a short schema
   title instead of longer own-schema local-import wording.
+  Partial G1632/#3209: Medication import route summary error title now uses short
+  control-needed copy instead of longer schema-check wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
