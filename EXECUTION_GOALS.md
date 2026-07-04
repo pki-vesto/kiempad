@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1682 — Medicatie planning routeopties helper noemt historie teruglezen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties helper noemt historie, terwijl de link expliciet Historie teruglezen zegt.
+- **User Impact:** Gebruikers zien minder consistentie tussen helper en linktekst.
+- **Desired Outcome:** Helper benoemt teruglezen compact naast afvinken, beheer en lokale import.
+- **User Value:** Routeopties blijven voorspelbaar en actiegericht.
+- **Acceptance Criteria:** Helper noemt historie teruglezen compact; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1681 — Medicatie planning routeopties teller noemt later korter met context
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3307
 
 ### G1680 — Medicatie planning routeopties titel noemt kiezen compact
 
