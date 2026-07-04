@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1659 — Medicatie planning lege CTA link noemt beheer en invoercontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning lege CTA link noemt alleen medicatie beheren terwijl de lege staat nu ook lokale invoercontext noemt.
+- **User Impact:** Gebruikers zien minder duidelijk dat beheer de eerste stap blijft voor lokale invoer en planning.
+- **Desired Outcome:** Lege planning CTA-link of omliggende context verbindt beheer met lokale invoer zonder extra layout.
+- **User Value:** De lege planningstaat blijft compact maar duidelijker gekoppeld aan de invoerflow.
+- **Acceptance Criteria:** Beheer CTA blijft zichtbaar; CTA-context of label noemt lokale invoer; app-shell tests bewaken de nieuwe CTA-copy.
+- **Affected Screens:** Medicatie planning lege status
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1658 — Medicatie planning lege CTA noemt lokale invoer
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3261
 
 ### G1657 — Medicatie planning lege status noemt lokale importroute
 
