@@ -1238,8 +1238,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher flex-grow
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3481
+
+### G1770 — App-shell mobiel workspace-strip bewaakt reload switcher flex-basis op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele flex-grow, maar flex-basis kan nog expliciet bewaakt worden zodat de rij voorspelbaar zijn natuurlijke breedte behoudt.
+- **User Impact:** Als flex-basis onverwacht wijzigt, kunnen routeknoppen te veel of te weinig ruimte nemen en de compacte swipe-ervaring verstoren.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele flex-basis instellingen.
+- **User Value:** Gebruikers houden een compacte routebalk die natuurlijk meet en binnen de shell blijft.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing, actieve knop tap-highlight, compacte switcher gap, gecentreerde align-items, links startende justify-content, flex display, min-width 0, max-width 100%, flex-shrink 1 en flex-grow 0; workspace-strip switcher houdt na reload stabiele flex-basis instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher flex-basis; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher flex-basis
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3483
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
