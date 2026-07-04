@@ -6161,9 +6161,12 @@ describe('app shell', () => {
     );
     expect(html).toContain('id="medicatie-route-planning"');
     expect(html).toContain('data-medication-route="planning"');
-    expect(html).toContain(
+    expect(html).toContain('Nog geen vervolgplanning; voeg momenten toe via Beheer of Import.');
+    expect(html).toContain('Nog geen vervolgplanning buiten vandaag.');
+    expect(html).not.toContain(
       'Het eerstvolgende planningsmoment staat vooraan. Vandaag, beheer, import en historie open je pas als vervolgcontext.',
     );
+    expect(html).not.toContain('Nog geen toekomstige medicatiemomenten buiten vandaag.');
     expect(html).toContain('href="#medication-planning-primary"');
     expect(html).toContain('href="#medication-planning-followup"');
     expect(html).toContain('data-medication-planning-layout="single-input"');
