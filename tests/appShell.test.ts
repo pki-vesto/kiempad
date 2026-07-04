@@ -6254,7 +6254,8 @@ describe('app shell', () => {
     expect(importRouteSection).not.toContain('>Schema importeren</summary>');
     expect(importRouteSection).toContain('Schema');
     expect(importRouteSection).not.toContain('Klinieklijstje');
-    expect(html).toContain('Formaat: Medicatie | YYYY-MM-DD | HH:MM.');
+    expect(html).toContain('Voorbeeldformaat: Medicatie | YYYY-MM-DD | HH:MM.');
+    expect(html).not.toContain('Formaat: Medicatie | YYYY-MM-DD | HH:MM.');
     expect(html).toContain('<button type="submit">Importeer</button>');
     expect(html).not.toContain('<button type="submit">Importeer schema</button>');
     expect(html).not.toContain(
