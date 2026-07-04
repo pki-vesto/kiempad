@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1460 |
+| ☑ klaar | 1461 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1659** |
+| **Totaal** | **1660** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1821,13 +1821,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1657 | Medicatie planning lege status noemt lokale importroute | P2 | F5 | ☑ |
 | G1658 | Medicatie planning lege CTA noemt lokale invoer | P2 | F5 | ☑ |
 | G1659 | Medicatie planning lege CTA link noemt beheer en invoercontext | P2 | F5 | ☑ |
-| G1660 | Medicatie planning routesamenvatting actie noemt lokale invoer | P2 | F5 | ☐ |
+| G1660 | Medicatie planning routesamenvatting actie noemt lokale invoer | P2 | F5 | ☑ |
+| G1661 | Medicatie planning primaire actie noemt volgend moment kort | P2 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1659** (id's G001 t/m G1660; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1660** (id's G001 t/m G1661; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
