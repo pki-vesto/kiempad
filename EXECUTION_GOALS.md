@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1626 — Medicatie historie routeheader gebruikt korte terugleescontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie historie routeheader gebruikt nog een lange zin over middelen, voorraad, instructies en innameloghistorie buiten het beheerscherm.
+- **User Impact:** Gebruikers krijgen extra uitleg voordat ze medicatiehistorie kunnen teruglezen.
+- **Desired Outcome:** Historie routeheader gebruikt korte terugleescontext en behoudt de routeoriëntatie.
+- **User Value:** De historielijn voelt compacter en sneller scanbaar.
+- **Acceptance Criteria:** Historie routeheader gebruikt korte terugleescontext; app-shell tests bewaken dat de oude routeheaderzin niet terugkeert.
+- **Affected Screens:** Medicatie historie routeheader
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication history route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1625 — Medicatie planning routeheader gebruikt korte routecontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3195
 
 ### G1624 — Medicatie planning follow-up gebruikt korte vervolgstapcopy
 

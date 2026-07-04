@@ -1108,6 +1108,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   follow-up context instead of long future-moment wording.
   Partial G1624/#3193: Medication planning follow-up disclosure now uses short next-step
   copy while preserving Today, Manage, Import and History links.
+  Partial G1625/#3195: Medication planning route header now uses short route context
+  instead of future-input/import wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
