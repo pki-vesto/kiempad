@@ -18541,7 +18541,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         ${commandRouteSummary({
           eyebrow: 'Import',
           title: state.medicatieImportError
-            ? 'Schema vraagt controle'
+            ? 'Controle nodig'
             : state.medicatieImportStatus
               ? 'Schemafeedback beschikbaar'
               : 'Schema klaarzetten',

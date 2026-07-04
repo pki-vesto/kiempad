@@ -6283,6 +6283,23 @@ describe('app shell', () => {
     );
   });
 
+  it('gebruikt korte medicatie-import fouttitel', () => {
+    const html = renderAppShell('medicatie', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      medicatieImportError: 'Controleer de importregels.',
+    });
+
+    expect(html).toContain('Controle nodig');
+    expect(html).not.toContain('Schema vraagt controle');
+  });
+
   it('toont één actieve medicationroute tegelijk', () => {
     const html = renderAppShell('medicatie', {
       trajecten: [],

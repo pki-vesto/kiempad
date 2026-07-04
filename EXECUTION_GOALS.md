@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1633 — Medicatie import statustitel gebruikt korte feedbackcopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import route-samenvatting gebruikt bij importfeedback nog langere titelcopy over beschikbare schemafeedback.
+- **User Impact:** Gebruikers zien extra woorden terwijl ze vooral willen weten dat feedback klaarstaat.
+- **Desired Outcome:** Import statustitel gebruikt korte feedbackcopy en behoudt de feedbackoriëntatie.
+- **User Value:** Importfeedback blijft rustiger en sneller scanbaar.
+- **Acceptance Criteria:** Import statustitel gebruikt korte feedbackcopy; app-shell tests bewaken dat de oude statustitel niet terugkeert.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1632 — Medicatie import fouttitel gebruikt korte controlecopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3209
 
 ### G1631 — Medicatie import samenvattingstitel gebruikt korte schematitel
 
