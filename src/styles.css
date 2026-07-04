@@ -27638,6 +27638,7 @@ summary[class*="__summary"]:focus-visible,
     font-weight: 680;
     line-height: 1.18;
     text-decoration: none;
+    text-decoration-line: none;
   }
 }
 

@@ -2159,3 +2159,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1826/#3595: Dossier upload active route micro-labels now use a
   calmer 680 font weight in their own small-mobile forced-colors rule while
   keeping CanvasText, compact line-height and stable end alignment.
+- Partial G1827/#3597: Dossier upload active route micro-labels now
+  explicitly keep text-decoration-line disabled in their own small-mobile
+  forced-colors rule, preventing accidental underline drift on the active card.
