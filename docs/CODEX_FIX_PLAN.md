@@ -1905,3 +1905,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   explicit Highlight border while keeping shadow and outline suppressed.
 - Partial G1715/#3373: Focused forced-colors image-context badges now explicitly keep a
   Canvas background and suppress background images to avoid extra contrast surfaces.
+- Partial G1716/#3375: Focused forced-colors image-context badges now keep CanvasText
+  without text decoration or shadow layers competing with input focus.
