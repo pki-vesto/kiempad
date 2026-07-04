@@ -1098,6 +1098,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   filters, schema/rebuild, relationships and export stay behind closed follow-up panels.
   Partial G1594/#3132: Trajectoverzicht keeps status distribution and active attempts closed by
   default with a stable id instead of auto-expanding when active treatments exist.
+  Partial G1595/#3134: Traject Context keeps the outer fertility timeline disclosure closed by
+  default instead of auto-opening when timeline items exist.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without

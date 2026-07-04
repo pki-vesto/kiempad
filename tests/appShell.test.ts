@@ -5089,6 +5089,10 @@ describe('app shell', () => {
     expect(html).toContain('Filters en export openen');
     expect(html).toContain('Inzichten openen');
     expect(html).toContain('Volledige tijdlijn openen');
+    expect(html).toContain('id="treatment-context-timeline-disclosure"');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="treatment-context-timeline-disclosure" open',
+    );
     expect(html).not.toContain('<details id="fertility-timeline-controls-panel" open');
     expect(html).not.toContain('<details id="fertility-timeline-insights-panel" open');
     expect(html).not.toContain('<details id="fertility-timeline-items-panel" open');

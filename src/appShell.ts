@@ -19218,8 +19218,8 @@ function renderTrajectScreen(state: AppShellState): string {
         })}
         ${disclosure({
           summary: 'Fertility timeline openen',
-          open: fertilityTimeline.items.length > 0,
           id: 'treatment-context-timeline-disclosure',
+          open: false,
           body: renderFertilityTimeline(
             state,
             fertilityTimeline,
