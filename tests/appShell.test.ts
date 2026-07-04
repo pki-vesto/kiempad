@@ -3673,6 +3673,15 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).not.toContain('Aanbeveling');
     expect(emptyContextRecommendations).toContain('data-daily-advice-workbench="owner-routes"');
     expect(emptyContextRecommendations).toContain('aria-label="Dagadvies werkbank"');
+    expect(emptyContextRecommendations).toContain(
+      'Kiempad ordent je dag; je kliniek blijft leidend.',
+    );
+    expect(emptyContextRecommendations).not.toContain(
+      'Alles blijft concept en Kiempad geeft geen medisch advies.',
+    );
+    expect(emptyContextRecommendations).not.toContain(
+      'Deze planner toont alleen aantallen en routes; geen dosering, diagnose, behandelkeuzeadvies of trackingdata.',
+    );
     expect(emptyContextRecommendations).toContain('Dagadvies per persoon kiezen');
     expect(emptyContextRecommendations).toContain('data-daily-advice-owner-choice="ready"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-owner-choice-route="vrouw"');
@@ -4070,7 +4079,10 @@ describe('app shell', () => {
     expect(html).toContain('1 later(e) medicatiemoment(en)');
     expect(html).toContain('1 open vraag/vragen voor consultvoorbereiding');
     expect(html).toContain('Traject: Poging 1');
-    expect(html).toContain('Kiempad geeft geen medisch advies');
+    expect(html).toContain('Kiempad ordent je dag; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Een lokaal takenoverzicht op basis van agenda, medicatie, vragen, herinneringen en context. Kiempad geeft geen medisch advies.',
+    );
     expect(html).not.toMatch(/\b(behandeladvies|kansberekening)\b/i);
   });
 

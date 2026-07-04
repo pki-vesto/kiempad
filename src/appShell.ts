@@ -223,6 +223,8 @@ const FINANCE_CONTEXT_DISCLAIMER =
 const QUESTION_CONTEXT_DISCLAIMER =
   'Kiempad helpt je gesprek voorbereiden; je kliniek blijft leidend.';
 
+const DAILY_CONTEXT_DISCLAIMER = 'Kiempad ordent je dag; je kliniek blijft leidend.';
+
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
 function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
@@ -15509,7 +15511,7 @@ function renderDailyCommandCenter(state: AppShellState, vandaag: string, nuIso: 
   return `
     <section id="start-today" class="summary-panel command-center" aria-label="Vandaag overzicht">
       <h2>Vandaag</h2>
-      <p class="small-print">Een lokaal takenoverzicht op basis van agenda, medicatie, vragen, herinneringen en context. Kiempad geeft geen medisch advies.</p>
+      <p class="small-print">${DAILY_CONTEXT_DISCLAIMER}</p>
       <div class="daily-command-board">
         ${renderDailyCommandActions(urgentItems)}
         ${renderDailyCommandGroup('Later vandaag', laterItems, 'Geen extra taken later vandaag.')}
@@ -15679,7 +15681,7 @@ function renderDailyAdviceWorkbench(
         <div>
           <p class="daily-advice-workbench__eyebrow">Advieswerkbank</p>
           <h3>Dagadvies per persoon kiezen</h3>
-          <p>Scan vrouw, man en samen apart. Alles blijft concept en Kiempad geeft geen medisch advies.</p>
+          <p>${DAILY_CONTEXT_DISCLAIMER}</p>
         </div>
         <div class="daily-advice-workbench__summary" aria-label="Dagadvies status">
           <span><strong>${total}</strong> adviezen</span>
@@ -16115,7 +16117,7 @@ function renderDailyAdviceFocusShell(input: {
               ${input.workbench}
             </div>
             <div class="daily-advice-focus-shell__list" data-daily-advice-focus-region="list" data-daily-advice-console-region="list">
-              <p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
+              <p class="small-print">${DAILY_CONTEXT_DISCLAIMER}</p>
               ${input.list}
             </div>
           </div>
@@ -16246,7 +16248,7 @@ function renderDailyAdviceActionPlanner(overview: DailyRecommendationOverview): 
           )
           .join('')}
       </nav>
-      <p class="small-print">Deze planner toont alleen aantallen en routes; geen dosering, diagnose, behandelkeuzeadvies of trackingdata.</p>
+      <p class="small-print">${DAILY_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }
