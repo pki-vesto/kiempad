@@ -225,6 +225,10 @@ const QUESTION_CONTEXT_DISCLAIMER =
 
 const DAILY_CONTEXT_DISCLAIMER = 'Kiempad ordent je dag; je kliniek blijft leidend.';
 
+const APPOINTMENT_CONTEXT_DISCLAIMER = 'Kiempad ordent je afspraak; je kliniek blijft leidend.';
+
+const MEDICATION_CONTEXT_DISCLAIMER = 'Kiempad toont je planning; je kliniekschema blijft leidend.';
+
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
 function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
@@ -17841,7 +17845,7 @@ function renderAgendaScreen(state: AppShellState): string {
         <div class="schedule-planning-console" data-schedule-planning-layout="single-input">
           <div class="summary-panel schedule-planning-primary" data-schedule-planning-primary="afspraak-form">
             <h3>${selected ? 'Afspraak bewerken' : 'Afspraak aanmaken'}</h3>
-            <p class="small-print">Leg alleen tijd, type, voorbereiding, vraag en herinnering vast. Kiempad geeft geen medisch advies of behandelkeuze.</p>
+            <p class="small-print">${APPOINTMENT_CONTEXT_DISCLAIMER}</p>
             ${renderAfspraakForm(selected, state.trajecten, state.settings)}
           </div>
           <details id="schedule-planning-followup" class="kp-disclosure schedule-planning-followup" data-schedule-planning-followup="collapsed">
@@ -18452,7 +18456,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         <div class="medication-planning-console" data-medication-planning-layout="single-input">
           <div id="medication-planning-primary" class="summary-panel medication-planning-primary" data-medication-planning-primary="next-dose">
             <h3>${plannedLogs.length > 0 ? 'Eerstvolgend medicatiemoment' : 'Planning nog leeg'}</h3>
-            <p class="small-print">Controleer alleen het feitelijke geplande moment. Kiempad geeft geen doseringsadvies of behandeladvies.</p>
+            <p class="small-print">${MEDICATION_CONTEXT_DISCLAIMER}</p>
             ${
               plannedLogs.length > 0
                 ? renderDoseLogList(plannedLogs.slice(0, 1), state.medicatie)
