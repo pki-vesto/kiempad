@@ -1058,6 +1058,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1599/#3142: Vragen and consult preparation now use one short conversation-context
   disclaimer across question management, the prep board and the prep wizard while keeping the
   generated-question warning visible.
+  Partial G1600/#3144: Vandaag and Dagadvies now use one short daily-context disclaimer across
+  the day overview, advice workbench, advice list and action planner.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

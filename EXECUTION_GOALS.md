@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1600 — Dagadvies gebruikt korte standaarddisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Vandaag en dagadvies herhaalden lange medische grenszinnen in het dagoverzicht, de werkbank, advieslijst en actieplanner.
+- **User Impact:** Gebruikers zagen meer waarschuwingstekst dan taakcontext op een route die snel dagelijks scanbaar moet zijn.
+- **Desired Outcome:** De dagelijkse route gebruikt één korte standaardzin die duidelijk maakt dat Kiempad ordent en de kliniek leidend blijft.
+- **User Value:** Gebruikers kunnen hun dagtaken, eigenaarroute en lijstkeuze sneller lezen zonder herhaalde juridische ruis.
+- **Acceptance Criteria:** Vandaag, dagadvieswerkbank, advieslijst en actieplanner gebruiken dezelfde korte dagelijkse-contextdisclaimer; lange herhalende teksten over geen medisch advies, dosering, diagnose, behandelkeuzeadvies en trackingdata verdwijnen uit deze route; app-shell tests bewaken de nieuwe copy en het verdwijnen van oude herhaling.
+- **Affected Screens:** Vandaag, Dagadvies werkbank, Dagadvies actieplanner, Dagadvies lijst
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Start route, daily recommendation console, daily advice action planner, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3144
+
 ### G1599 — Vragen gebruikt korte standaard gespreksdisclaimer
 
 - **Epic:** Onboarding & Daily Use
