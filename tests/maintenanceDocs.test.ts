@@ -3870,7 +3870,7 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
-  it('documenteert G1173 dossier cue parity smoke CI evidence', () => {
+  it('documenteert G1173/G1176 dossier cue parity smoke CI evidence en command drift guard', () => {
     const requiredTerms = [
       DOSSIER_CUE_PARITY_SMOKE_LABEL,
       DOSSIER_CUE_PARITY_SMOKE_COMMAND,
@@ -3897,7 +3897,9 @@ describe('onderhoudsdocumentatie', () => {
     expect(ciWorkflow).toContain(`- name: ${DOSSIER_CUE_PARITY_SMOKE_LABEL}`);
     expect(ciWorkflow).toContain(`run: ${DOSSIER_CUE_PARITY_SMOKE_COMMAND}`);
     expect(runbook).toContain(`\`${DOSSIER_CUE_PARITY_SMOKE_LABEL}\``);
+    expect(runbook).toContain(`met \`${DOSSIER_CUE_PARITY_SMOKE_COMMAND}\``);
     expect(goalCompletionAudit).toContain(`\`${DOSSIER_CUE_PARITY_SMOKE_LABEL}\``);
+    expect(goalCompletionAudit).toContain(`\`${DOSSIER_CUE_PARITY_SMOKE_COMMAND}\``);
     expectCiStepOrder('Secrets scan', 'Sensitive fixture scan');
     expectCiStepOrder('Sensitive fixture scan', DOSSIER_CUE_PARITY_SMOKE_LABEL);
     expectCiStepOrder(DOSSIER_CUE_PARITY_SMOKE_LABEL, 'Test');
@@ -3908,12 +3910,16 @@ describe('onderhoudsdocumentatie', () => {
     expect(
       [
         `workflowLabel=${DOSSIER_CUE_PARITY_SMOKE_LABEL}`,
-        `command=${DOSSIER_CUE_PARITY_SMOKE_COMMAND}`,
+        `workflowCommand=${DOSSIER_CUE_PARITY_SMOKE_COMMAND}`,
+        `runbookCommand=${DOSSIER_CUE_PARITY_SMOKE_COMMAND}`,
+        `auditCommand=${DOSSIER_CUE_PARITY_SMOKE_COMMAND}`,
         'docs=docs/RUNBOOK.md|docs/GOAL_COMPLETION_AUDIT.md|tests/maintenanceDocs.test.ts',
       ].join('\n'),
     ).toMatchInlineSnapshot(`
       "workflowLabel=Dossier cue parity smoke
-      command=npm run test -- tests/appShell.test.ts
+      workflowCommand=npm run test -- tests/appShell.test.ts
+      runbookCommand=npm run test -- tests/appShell.test.ts
+      auditCommand=npm run test -- tests/appShell.test.ts
       docs=docs/RUNBOOK.md|docs/GOAL_COMPLETION_AUDIT.md|tests/maintenanceDocs.test.ts"
     `);
 

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1499 |
+| ☑ klaar | 1500 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1698** |
+| **Totaal** | **1699** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1338,7 +1338,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1173 | Premium Claude Design UI: dossier add feedback return cue parity smoke CI evidence | P1 | F5 | ☑ |
 | G1174 | Premium Claude Design UI: dossier add feedback return cue parity CI order guard | P1 | F5 | ☑ |
 | G1175 | Premium Claude Design UI: dossier add feedback return cue parity workflow label drift guard | P1 | F5 | ☑ |
-| G1176 | Premium Claude Design UI: dossier add feedback return cue parity command drift guard | P1 | F5 | ☐ |
+| G1176 | Premium Claude Design UI: dossier add feedback return cue parity command drift guard | P1 | F5 | ☑ |
 | G1177 | Premium Claude Design UI: werkruimte-navigatie tegen alles-op-een-pagina gevoel | P1 | F5 | ☑ |
 | G1178 | Premium Claude Design UI: startscherm modules verder verdelen in taakgerichte routes | P1 | F5 | ☑ |
 | G1179 | Premium Claude Design UI: uploadflows omzetten naar herbruikbare workflowcomponenten | P1 | F5 | ☑ |
@@ -1861,12 +1861,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1697 | Medicatie planning routeopties helper houdt planningcontext menselijk | P2 | F5 | ☑ |
 | G1698 | Medicatie planning routeopties helper houdt context maar korter | P2 | F5 | ☐ |
 | G1699 | Premium Claude Design UI: app-shell als bounded werkruimte in plaats van lange pagina | P1 | F5 | ☑ |
+| G1700 | Premium Claude Design UI: dossier upload actiepad zichtbaarder na bounded workspace | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1698** (id's G001 t/m G1699; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1699** (id's G001 t/m G1700; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
