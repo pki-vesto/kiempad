@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1679 — Medicatie planning routeopties helper noemt afvinken compact
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties helper noemt vandaag generiek, terwijl de link nu de concrete afvinkactie gebruikt.
+- **User Impact:** Gebruikers moeten de helper en linktekst zelf aan elkaar koppelen.
+- **Desired Outcome:** Helper benoemt afvinken compact naast beheer, lokale import en historie.
+- **User Value:** De routeopties lezen consistenter en actiegerichter.
+- **Acceptance Criteria:** Helper noemt afvinken compact; bestaande routeopties blijven behouden; app-shell tests bewaken de helpercopy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1678 — Medicatie planning routeopties vandaaglink noemt afvinken kort
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3301
 
 ### G1677 — Medicatie planning routeopties beheerlink noemt beheren kort
 
