@@ -21151,6 +21151,7 @@ summary[class*="__summary"]:focus-visible,
     background-image: none;
     color: CanvasText;
     box-shadow: none;
+    font-weight: 820;
     line-height: 1;
     outline: 0;
     text-align: center;

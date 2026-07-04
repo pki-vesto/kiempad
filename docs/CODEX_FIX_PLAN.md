@@ -1907,3 +1907,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Canvas background and suppress background images to avoid extra contrast surfaces.
 - Partial G1716/#3375: Focused forced-colors image-context badges now keep CanvasText
   without text decoration or shadow layers competing with input focus.
+- Partial G1717/#3377: Focused forced-colors image-context badges now explicitly keep the
+  compact 820 font weight so the number does not jump beside input focus.
