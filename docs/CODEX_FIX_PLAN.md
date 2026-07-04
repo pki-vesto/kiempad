@@ -1947,3 +1947,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   side effects, and routeflow smoke covers calm mobile direct-link active-strip focus.
 - Partial G1736/#3415: Small-mobile routeflow smoke now also opens the direct Vragen
   deep-link and verifies the active workspace-strip button stays visible without overflow.
+- Partial G1737/#3417: Small-mobile routeflow smoke now also runs the Start-to-Vragen
+  back/forward history flow and verifies active workspace-strip context after navigation.

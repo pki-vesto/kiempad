@@ -27,11 +27,13 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'async function waitForActiveWorkspaceStripButton',
     );
-    expect(routeflowScreenshotSmokeScript).toContain('assertWorkspaceStripHistoryNavigation(page)');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'assertWorkspaceStripHistoryNavigation(page, options.label)',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       'assertWorkspaceStripDirectLinkFocus(page, options.label)',
     );
-    expect(routeflowScreenshotSmokeScript).toContain("screen: 'workspace-strip-history'");
+    expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-history');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain("options.label === 'small-mobile'");
     expect(routeflowScreenshotSmokeScript).toContain("page.goBack({ waitUntil: 'networkidle' })");
