@@ -881,8 +881,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload active button focus ring
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3439
+
+### G1749 — App-shell mobiel workspace-strip bewaakt reload actieve stripknop tekstafkapping op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Focusring is bewaakt, maar actieve knoptekst kan nog expliciet op compacte afkapping worden gecontroleerd.
+- **User Impact:** Als actieve knoptekst na reload overloopt, ontstaat horizontale druk of onrust in de swipe-rij.
+- **Desired Outcome:** Small-mobile reloads houden actieve workspace-strip knoptekst binnen de compacte knopbreedte.
+- **User Value:** Gebruikers zien een rustige actieve routeknop zonder tekstoverlap.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, compacte stripmetrics, zichtbare actieve knoppositie en rustige focusstijl; actieve workspace-strip knoptekst blijft na reload binnen de knopbreedte en gebruikt afkapping zonder horizontale druk; tests of smoke checks bewaken small-mobile reload actieve stripknop tekstafkapping; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload active button text clipping
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3441
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
