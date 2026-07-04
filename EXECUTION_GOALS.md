@@ -2037,8 +2037,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card focus reduced-motion, small-mobile CSS, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3575
+
+### G1817 — Dossier upload small-mobile routekaart focus forced-colors explicieter
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De small-mobile routekaartfocus is rustig en reduced-motion expliciet, maar forced-colors kan nog explicieter bewaakt worden zodat focus en actieve route herkenbaar blijven in hoogcontrastmodi.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen moeten de actieve uploadroute en keyboardfocus betrouwbaar kunnen onderscheiden.
+- **Desired Outcome:** Forced-colors behoudt duidelijke routekaartfocus en actieve route zonder afhankelijkheid van subtiele kleurmixen.
+- **User Value:** De uploadkeuze blijft toegankelijk en scanbaar voor gebruikers die systeemcontrast gebruiken.
+- **Acceptance Criteria:** Focus op routekaarten blijft zichtbaar in forced-colors; actieve route blijft herkenbaar naast focus; CSS bevat een expliciet forced-colors contract voor small-mobile routekaarten; app-shell tests of routeflow smoke bewaken forced-colors focusgedrag en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card focus forced-colors, small-mobile CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3577
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

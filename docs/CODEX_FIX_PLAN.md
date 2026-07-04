@@ -2126,3 +2126,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1815/#3573: Dossier upload route cards now use short
   small-mobile focus transitions for border, shadow and background while
   reduced-motion disables those transitions.
+- Partial G1816/#3575: Dossier upload route card reduced-motion now
+  explicitly covers focused small-mobile route cards, keeping focus visible
+  while disabling focus transitions for motion-sensitive users.
