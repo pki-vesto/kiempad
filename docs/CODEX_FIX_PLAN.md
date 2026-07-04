@@ -1801,3 +1801,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   local input planning while preserving the empty planning CTA.
 - Partial G1665/#3275: Medication planning route header now tells users to check and prepare
   upcoming check-off moments while preserving the route heading.
+- Partial G1666/#3277: Medication planning summary status now says later medicatie instead of a
+  loose later counter while preserving the route summary.

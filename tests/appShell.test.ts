@@ -6164,6 +6164,8 @@ describe('app shell', () => {
     expect(html).toContain('Controleer en zet komende afvinkmomenten klaar.');
     expect(html).not.toContain('Bekijk komende afvinkmomenten.');
     expect(html).not.toContain('Bekijk toekomstige afvinkmomenten uit eigen invoer of import.');
+    expect(html).toContain('0 later medicatie');
+    expect(html).not.toContain('class="command-route-summary__status">0 later</span>');
     expect(html).toContain('Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.');
     expect(html).not.toContain('Nog geen vervolgplanning; voeg momenten toe via Beheer of Import.');
     expect(html).toContain(
