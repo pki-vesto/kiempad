@@ -9571,6 +9571,11 @@ describe('app shell', () => {
     expect(mobileCss).toContain('flex: 0 0 min(178px, 72vw);');
     expect(mobileCss).toContain('min-height: 68px;');
     expect(css).toContain('@media (max-width: 420px) {');
+    expect(css).toContain('.dossier-add-route-group {');
+    expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 10%, var(--border));');
+    expect(css).toContain(
+      'background: color-mix(in srgb, var(--surface) 94%, var(--surface-subtle));',
+    );
     expect(css).toContain('.dossier-add-route-group__summary {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) 18px;');
     expect(css).toContain('min-height: 42px;');
@@ -9578,6 +9583,8 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-add-route-group__summary::after {');
     expect(css).toContain('width: 18px;');
     expect(css).toContain('height: 18px;');
+    expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 14%, var(--border));');
+    expect(css).toContain('background: transparent;');
     expect(css).toContain('.dossier-add-route-group__summary small {');
     expect(css).toContain('line-height: 1.18;');
     expect(css).toContain('flex: 0 0 min(136px, 60vw);');
