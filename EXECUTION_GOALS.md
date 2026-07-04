@@ -1646,7 +1646,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher overscroll-behavior-inline
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3529
 
 ### G1794 — Startscherm focus-shell tegen alles-op-een-pagina gevoel
@@ -1682,6 +1682,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 90
 - **Status:** ☑ done
 - **Issue:** #3533
+
+### G1796 — Dagadvies mobiele lijst compacter na centrale disclaimer
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Nu de medische disclaimer centraal staat, kan de Dagadvies lijst op mobiel nog compacter en rustiger worden zonder de artscheck-context te verliezen.
+- **User Impact:** Gebruikers scrollen op kleine schermen nog door te veel visuele lucht voordat ze de concrete suggesties kunnen scannen.
+- **Desired Outcome:** Dagadvies toont op mobiel een compactere suggestielijst met stabiele spacing en behoud van centrale disclaimer en specialistische waarschuwingen.
+- **User Value:** De dagelijkse suggesties zijn sneller te scannen en voelen minder als één lange pagina.
+- **Acceptance Criteria:** Dagadvies behoudt de primaire actie-keuze en follow-up disclosures; de mobiele suggestielijst gebruikt compactere spacing zonder overlappende tekst of horizontale overflow; de centrale screen-stage disclaimer blijft de medische grens tonen; specialistische artscheck- en supplementwaarschuwingen blijven zichtbaar waar inhoudelijk nodig; tests of routeflow smoke bewaken desktop, tablet, mobile en small-mobile layout.
+- **Affected Screens:** Dagadvies, Start
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily advice list, mobile layout, screen disclaimer
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3535
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
