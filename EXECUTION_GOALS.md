@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1648 — Medicatie import foutbadge gebruikt lokale aandachtcopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import foutbadge gebruikt nog algemene aandachtcopy zonder lokale correctiecontext.
+- **User Impact:** Gebruikers zien bij importfouten minder consistent dat correctie lokaal gebeurt.
+- **Desired Outcome:** Import foutbadge gebruikt korte lokale aandachtcopy en behoudt foutstatus.
+- **User Value:** De route-samenvatting blijft compact en privacybewust.
+- **Acceptance Criteria:** Foutbadge gebruikt lokale aandachtcopy; fouttitel blijft zichtbaar; app-shell tests bewaken dat de oude foutbadge niet terugkeert in de importroute.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1647 — Medicatie import fouttitel gebruikt lokale correctiecopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3239
 
 ### G1646 — Medicatie import foutcontext noemt importfeedback
 

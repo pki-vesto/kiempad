@@ -1763,3 +1763,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   while preserving the error summary status.
 - Partial G1646/#3237: Medication import error workbench context now points to local importfeedback
   while preserving the local error status.
+- Partial G1647/#3239: Medication import error route summary title now uses Lokaal corrigeren copy
+  while preserving the error badge.
