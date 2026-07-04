@@ -27638,6 +27638,7 @@ summary[class*="__summary"]:focus-visible,
     font-style: normal;
     font-variant: normal;
     font-weight: 680;
+    hyphens: manual;
     letter-spacing: normal;
     line-height: 1.18;
     overflow-wrap: normal;
