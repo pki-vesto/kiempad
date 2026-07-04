@@ -27463,6 +27463,10 @@ summary[class*="__summary"]:focus-visible,
     padding: 6px 7px;
     border-color: color-mix(in srgb, var(--accent) 12%, var(--border));
     background: color-mix(in srgb, var(--surface) 99%, var(--surface-subtle));
+    transition:
+      border-color 120ms ease,
+      box-shadow 120ms ease,
+      background-color 120ms ease;
   }
 
   .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
@@ -27522,6 +27526,12 @@ summary[class*="__summary"]:focus-visible,
   .dossier-upload-action-path__item small {
     font-size: 0.68rem;
     line-height: 1.18;
+  }
+}
+
+@media (max-width: 420px) and (prefers-reduced-motion: reduce) {
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route {
+    transition: none;
   }
 }
 

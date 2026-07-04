@@ -2123,3 +2123,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1814/#3571: Dossier upload route card focus now uses calmer
   small-mobile focus border and ring color mixes while preserving the compact
   two-pixel focus ring and routeflow focus evidence.
+- Partial G1815/#3573: Dossier upload route cards now use short
+  small-mobile focus transitions for border, shadow and background while
+  reduced-motion disables those transitions.
