@@ -1805,3 +1805,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   loose later counter while preserving the route summary.
 - Partial G1667/#3279: Medication planning summary eyebrow now says Medicatieplanning instead of
   Later while preserving the route summary.
+- Partial G1668/#3281: Medication empty planning summary title now says Geen planning buiten
+  vandaag while preserving the route summary and today route context.
