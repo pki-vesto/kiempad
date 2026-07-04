@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1630 — Medicatie import knop gebruikt korte actiecopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie importknop gebruikt nog langere actiecopy terwijl de route en formuliercontext al over schema-import gaan.
+- **User Impact:** Gebruikers zien herhaalde schemacopy bij de primaire importactie.
+- **Desired Outcome:** Importknop gebruikt korte actiecopy en behoudt de submitfunctie.
+- **User Value:** De importtaak voelt compacter en directer.
+- **Acceptance Criteria:** Importknop gebruikt korte actiecopy; app-shell tests bewaken dat de oude knoptekst niet terugkeert.
+- **Affected Screens:** Medicatie importformulier
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import form, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1629 — Medicatie import formulier gebruikt korte regelhulp
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import form, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3203
 
 ### G1628 — Medicatie import samenvatting gebruikt korte importcontext
 

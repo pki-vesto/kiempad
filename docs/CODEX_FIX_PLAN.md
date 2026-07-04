@@ -1116,6 +1116,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   instead of planned-moment clinic-list wording.
   Partial G1628/#3201: Medication import route summary now uses short local-planning
   context instead of longer own-schema planning-moment wording.
+  Partial G1629/#3203: Medication import form helper now keeps only the line format
+  instead of explaining local conversion to planning moments.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
