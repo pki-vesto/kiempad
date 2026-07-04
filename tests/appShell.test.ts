@@ -6192,7 +6192,8 @@ describe('app shell', () => {
       'Het eerstvolgende planningsmoment staat vooraan. Vandaag, beheer, import en historie open je pas als vervolgcontext.',
     );
     expect(html).not.toContain('Nog geen toekomstige medicatiemomenten buiten vandaag.');
-    expect(html).toContain('href="#medication-planning-primary">Volgende</a>');
+    expect(html).toContain('href="#medication-planning-primary">Planningpaneel</a>');
+    expect(html).not.toContain('href="#medication-planning-primary">Volgende</a>');
     expect(html).not.toContain('href="#medication-planning-primary">Volgend moment</a>');
     expect(html).toContain('href="#medication-planning-followup">Routekeuze</a>');
     expect(html).not.toContain('href="#medication-planning-followup">Vervolgcontext</a>');

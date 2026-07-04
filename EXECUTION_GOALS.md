@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1671 — Medicatie planning secundaire actie noemt opties
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De secundaire actie Routekeuze is duidelijker dan voorheen, maar noemt niet direct dat het om opties gaat.
+- **User Impact:** Gebruikers kunnen de actie nog lezen als een status in plaats van een vervolgmenu.
+- **Desired Outcome:** Secundaire actiecopy blijft kort en benoemt opties of routes.
+- **User Value:** De planningkaart maakt vervolgkeuzes voorspelbaarder.
+- **Acceptance Criteria:** Secundaire actiecopy noemt opties of routes; href naar `#medication-planning-followup` blijft behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1670 — Medicatie planning primaire routeactie blijft herkenbaar
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3285
 
 ### G1669 — Medicatie planning samenvattingdetail noemt routekeuze
 

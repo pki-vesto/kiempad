@@ -18463,7 +18463,7 @@ function renderMedicatieScreen(state: AppShellState): string {
               : 'Geen planning buiten vandaag',
           detail: 'Nog geen vervolgplanning; open Routekeuze voor Beheer of lokale invoer.',
           status: `${plannedLogs.length} later medicatie`,
-          primary: { href: '#medication-planning-primary', label: 'Volgende' },
+          primary: { href: '#medication-planning-primary', label: 'Planningpaneel' },
           secondary: { href: '#medication-planning-followup', label: 'Routekeuze' },
           data: { 'medication-route-summary': 'planning' },
           ariaLabel: 'Medicatieplanning route-samenvatting',

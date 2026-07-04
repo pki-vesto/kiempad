@@ -1809,3 +1809,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   vandaag while preserving the route summary and today route context.
 - Partial G1669/#3283: Medication empty planning summary detail now points to Routekeuze for
   Beheer or local input while preserving the route summary actions.
+- Partial G1670/#3285: Medication planning summary primary action now says Planningpaneel while
+  preserving the `#medication-planning-primary` anchor.
