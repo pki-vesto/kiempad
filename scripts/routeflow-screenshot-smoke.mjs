@@ -2451,6 +2451,8 @@ async function assertRouteflows(browser, options) {
                 selectorScrollWidth: selector?.scrollWidth ?? 0,
                 selectorClientWidth: selector?.clientWidth ?? 0,
                 addRouteWidth: addRouteRect?.width ?? 0,
+                addRouteBorderColor: addRouteStyle?.borderColor ?? '',
+                addRouteBackground: addRouteStyle?.backgroundColor ?? '',
                 addRouteMinHeight: addRouteStyle?.minHeight ?? '',
                 addRoutePaddingTop: addRouteStyle?.paddingTop ?? '',
                 addRouteStrongFontSize:
@@ -3257,9 +3259,13 @@ async function assertRouteflows(browser, options) {
           parseFloat(evidence.uploadConsole.selectorPaddingTop) > 4 ||
           parseFloat(evidence.uploadConsole.selectorBorderTopWidth) > 1 ||
           evidence.uploadConsole.selectorBorderTopColor === '' ||
-          evidence.uploadConsole.selectorBackground === '' ||
+          evidence.uploadConsole.selectorBackground !== 'rgba(0, 0, 0, 0)' ||
           evidence.uploadConsole.selectorClientWidth > evidence.uploadConsole.viewportWidth ||
           evidence.uploadConsole.addRouteWidth > 138 ||
+          evidence.uploadConsole.addRouteBorderColor === '' ||
+          evidence.uploadConsole.addRouteBorderColor === 'rgba(0, 0, 0, 0)' ||
+          evidence.uploadConsole.addRouteBackground === '' ||
+          evidence.uploadConsole.addRouteBackground === 'rgba(0, 0, 0, 0)' ||
           parseFloat(evidence.uploadConsole.addRouteMinHeight) > 52 ||
           parseFloat(evidence.uploadConsole.addRoutePaddingTop) > 6 ||
           parseFloat(evidence.uploadConsole.addRouteStrongFontSize) > 13 ||

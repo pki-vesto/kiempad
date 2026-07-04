@@ -27453,12 +27453,16 @@ summary[class*="__summary"]:focus-visible,
     gap: 6px;
     margin-bottom: 6px;
     padding: 4px;
+    border-top-color: color-mix(in srgb, var(--accent) 8%, var(--border));
+    background: transparent;
   }
 
   .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route {
     flex: 0 0 min(136px, 60vw);
     min-height: 52px;
     padding: 6px 7px;
+    border-color: color-mix(in srgb, var(--accent) 12%, var(--border));
+    background: color-mix(in srgb, var(--surface) 98%, var(--surface-subtle));
   }
 
   .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route strong {
