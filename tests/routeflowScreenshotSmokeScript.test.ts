@@ -27,6 +27,12 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'async function waitForActiveWorkspaceStripButton',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('assertWorkspaceStripHistoryNavigation(page)');
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'workspace-strip-history'");
+    expect(routeflowScreenshotSmokeScript).toContain("page.goBack({ waitUntil: 'networkidle' })");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "page.goForward({ waitUntil: 'networkidle' })",
+    );
     expect(routeflowScreenshotSmokeScript).toContain('inStripViewport');
     expect(routeflowScreenshotSmokeScript).toContain(
       'actieve workspace-strip knop staat niet zichtbaar in de compacte swipe-rij',

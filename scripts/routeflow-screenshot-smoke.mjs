@@ -3122,10 +3122,54 @@ async function assertRouteflows(browser, options) {
       }
     }
 
+    if (options.label === 'mobile') {
+      checked.push(await assertWorkspaceStripHistoryNavigation(page));
+    }
+
     return { viewport: options.label, checked: checked.length, targets: checked };
   } finally {
     await context.close();
   }
+}
+
+async function assertWorkspaceStripHistoryNavigation(page) {
+  await page.goto(`${url}#start`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#start');
+  await waitForStableRouteflowRoot(page, '.content');
+  await waitForActiveWorkspaceStripButton(page, 'Start');
+
+  await page.evaluate(() => {
+    window.location.hash = '#vragen?route=voorbereiden';
+  });
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+  await waitForActiveWorkspaceStripButton(page, 'Vragen');
+
+  await page.goBack({ waitUntil: 'networkidle' });
+  await waitForStableRouteflowRoot(page, '.content');
+  await waitForActiveWorkspaceStripButton(page, 'Start');
+
+  await page.goForward({ waitUntil: 'networkidle' });
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+  await waitForActiveWorkspaceStripButton(page, 'Vragen');
+
+  const horizontalOverflow = await page.evaluate(
+    () =>
+      document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
+      document.body.scrollWidth > document.body.clientWidth + 1,
+  );
+  if (horizontalOverflow) {
+    throw new Error('mobiele workspace-strip history-flow veroorzaakt horizontale overflow.');
+  }
+
+  const screenshot = await page.locator('[data-question-focus-shell="ready"]').screenshot({
+    animations: 'disabled',
+  });
+
+  return {
+    screen: 'workspace-strip-history',
+    selectors: 3,
+    screenshotBytes: screenshot.byteLength,
+  };
 }
 
 async function prepareFilledConsultCard(page, targetHash) {
@@ -3441,9 +3485,9 @@ async function waitForStableRouteflowRoot(page, selector) {
   );
 }
 
-async function waitForActiveWorkspaceStripButton(page) {
+async function waitForActiveWorkspaceStripButton(page, expectedLabel) {
   await page.waitForFunction(
-    () => {
+    (label) => {
       const activeButton = document.querySelector(
         '[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]',
       );
@@ -3458,12 +3502,13 @@ async function waitForActiveWorkspaceStripButton(page) {
           stripRect &&
           buttonRect.width > 0 &&
           buttonRect.height > 0 &&
+          (!label || activeButton.textContent?.trim() === label) &&
           getComputedStyle(strip).overflowX === 'auto' &&
           buttonRect.left >= stripRect.left - 4 &&
           buttonRect.right <= stripRect.right + 4,
       );
     },
-    undefined,
+    expectedLabel,
     { timeout: 10_000 },
   );
 }

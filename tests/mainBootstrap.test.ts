@@ -129,6 +129,10 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain(
       'requestAnimationFrame(() => alignActiveWorkspaceStripButton(root))',
     );
+    expect(mainSource).toContain("window.addEventListener('popstate'");
+    expect(mainSource).toContain(
+      'requestAnimationFrame(() => alignActiveWorkspaceStripButton(app))',
+    );
     expect(mainSource).toContain('function alignActiveWorkspaceStripButton(root: HTMLElement)');
     expect(mainSource).toContain(
       '\'[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]\'',

@@ -1941,3 +1941,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   accent state inside the compact swipe row without adding extra height.
 - Partial G1733/#3409: Mobile renders now align the active workspace-strip button into
   the compact swipe row, and routeflow smoke checks mobile active-strip visibility before screenshots.
+- Partial G1734/#3411: Mobile history navigation now re-aligns the active workspace-strip
+  button, and routeflow smoke covers Start-to-Vragen back/forward active-strip context.
