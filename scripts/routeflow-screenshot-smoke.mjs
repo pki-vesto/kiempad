@@ -3354,6 +3354,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       workspaceSwitcherDisplay: workspaceSwitcherStyle?.display ?? '',
       workspaceSwitcherMinWidth: workspaceSwitcherStyle?.minWidth ?? '',
       workspaceSwitcherMaxWidth: workspaceSwitcherStyle?.maxWidth ?? '',
+      workspaceSwitcherOverflowInline: workspaceSwitcherStyle?.overflowInline ?? '',
       workspaceSwitcherOverflowX: workspaceSwitcherStyle?.overflowX ?? '',
       workspaceSwitcherOverflowY: workspaceSwitcherStyle?.overflowY ?? '',
       workspaceSwitcherFlexBasis: workspaceSwitcherStyle?.flexBasis ?? '',
@@ -3448,6 +3449,8 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       reloadLayout.workspaceSwitcherRight <= reloadLayout.workspaceStripRight + 1);
   const smallMobileSwitcherOverflowYStable =
     viewportLabel !== 'small-mobile' || reloadLayout.workspaceSwitcherOverflowY === 'hidden';
+  const smallMobileSwitcherOverflowInlineStable =
+    viewportLabel !== 'small-mobile' || reloadLayout.workspaceSwitcherOverflowInline === 'auto';
   const smallMobileSwitcherBorderWidthStable =
     viewportLabel !== 'small-mobile' ||
     (parseFloat(reloadLayout.workspaceSwitcherBorderBlockStartWidth) <= 0 &&
@@ -3594,6 +3597,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileActiveButtonTextClipped ||
     !smallMobileSwitcherScrollWidthContained ||
     !smallMobileSwitcherOverflowYStable ||
+    !smallMobileSwitcherOverflowInlineStable ||
     !smallMobileSwitcherBorderWidthStable ||
     !smallMobileSwitcherBorderStyleStable ||
     !smallMobileSwitcherBorderColorStable ||
@@ -3655,6 +3659,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileActiveButtonTextClipped,
           smallMobileSwitcherScrollWidthContained,
           smallMobileSwitcherOverflowYStable,
+          smallMobileSwitcherOverflowInlineStable,
           smallMobileSwitcherBorderWidthStable,
           smallMobileSwitcherBorderStyleStable,
           smallMobileSwitcherBorderColorStable,
@@ -3705,7 +3710,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-overflowy-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-visible-position-inset-zindex-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color-radius-background-shadow-filter-backdrop-opacity-visibility`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-overflowy-overflowinline-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-visible-position-inset-zindex-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color-radius-background-shadow-filter-backdrop-opacity-visibility`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
