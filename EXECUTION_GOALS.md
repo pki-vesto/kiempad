@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1639 — Medicatie import formulierlabel gebruikt korte invoercopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Het medicatie import formulierlabel Klinieklijstje is specifieker dan nodig binnen de compacte importroute.
+- **User Impact:** Gebruikers lezen extra kliniekcontext terwijl het formulier al door header en helpertekst wordt ingekaderd.
+- **Desired Outcome:** Import formulierlabel gebruikt korte invoercopy en behoudt dezelfde textarea.
+- **User Value:** Het formulier voelt rustiger en directer.
+- **Acceptance Criteria:** Import textarea label gebruikt korte invoercopy; textarea id en name blijven behouden; app-shell tests bewaken dat de oude labelcopy niet terugkeert in het importformulier.
+- **Affected Screens:** Medicatie import formulier
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import form, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1638 — Medicatie import disclosure gebruikt korte actiecopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import disclosure, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3221
 
 ### G1637 — Medicatie import secundaire actie gebruikt korte planninglabel
 
