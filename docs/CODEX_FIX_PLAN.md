@@ -1977,3 +1977,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   switcher scroll width is contained inside the strip as an internal swipe row.
 - Partial G1751/#3445: Small-mobile reload smoke now verifies the workspace-strip
   switcher keeps scrollbar-width none without measurable scrollbar height.
+- Partial G1752/#3447: Small-mobile workspace-strip switchers now use contained
+  horizontal overscroll and reload smoke verifies the computed overscroll guard.

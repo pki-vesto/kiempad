@@ -3305,6 +3305,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       workspaceSwitcherOverflowX: workspaceSwitcherStyle?.overflowX ?? '',
       workspaceSwitcherFlexWrap: workspaceSwitcherStyle?.flexWrap ?? '',
       workspaceSwitcherScrollbarWidth: workspaceSwitcherStyle?.scrollbarWidth ?? '',
+      workspaceSwitcherOverscrollBehaviorX: workspaceSwitcherStyle?.overscrollBehaviorX ?? '',
       bottomNavTop: Math.round(bottomNavTop),
       viewportWidth,
       viewportHeight,
@@ -3376,6 +3377,9 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     viewportLabel !== 'small-mobile' ||
     (reloadLayout.workspaceSwitcherScrollbarWidth === 'none' &&
       reloadLayout.workspaceSwitcherOffsetHeight - reloadLayout.workspaceSwitcherClientHeight <= 1);
+  const smallMobileSwitcherOverscrollContained =
+    viewportLabel !== 'small-mobile' ||
+    reloadLayout.workspaceSwitcherOverscrollBehaviorX === 'contain';
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3391,6 +3395,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileActiveButtonTextClipped ||
     !smallMobileSwitcherScrollWidthContained ||
     !smallMobileSwitcherScrollbarHidden ||
+    !smallMobileSwitcherOverscrollContained ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3414,6 +3419,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileActiveButtonTextClipped,
           smallMobileSwitcherScrollWidthContained,
           smallMobileSwitcherScrollbarHidden,
+          smallMobileSwitcherOverscrollContained,
         },
       )}).`,
     );
@@ -3426,7 +3432,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
