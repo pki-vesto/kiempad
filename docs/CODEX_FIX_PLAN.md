@@ -1839,3 +1839,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the visible local import route link.
 - Partial G1684/#3313: Medication planning route options import link now says Lokale invoer
   while preserving the `#medicatie?route=import` href.
+- Partial G1685/#3315: Medication planning route options helper now says lokale planninginvoer
+  while preserving the visible route links.
