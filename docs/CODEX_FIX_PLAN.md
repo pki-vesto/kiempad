@@ -1999,3 +1999,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   transparent tap highlight, guarded by reload smoke.
 - Partial G1762/#3467: Small-mobile workspace-strip switchers now keep a compact
   stable gap, guarded by reload smoke.
+- Partial G1763/#3469: Small-mobile workspace-strip switchers now keep centered
+  item alignment, guarded by reload smoke.
