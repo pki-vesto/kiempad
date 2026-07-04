@@ -21638,6 +21638,17 @@ summary[class*="__summary"]:focus-visible,
   padding-block: 8px;
 }
 
+.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]
+  label[data-dossier-upload-image-field]
+  > input:focus,
+.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]
+  label[data-dossier-upload-image-field]
+  > input:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 72%, var(--border-strong));
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
 @media (max-width: 420px) {
   .dossier-upload-group[data-dossier-upload-image-field-order="context-source-cycle-day"] {
     gap: 8px;

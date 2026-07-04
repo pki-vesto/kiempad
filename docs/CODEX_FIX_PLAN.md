@@ -1887,3 +1887,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   small-mobile routeflow evidence for label height, badge size and parent overflow.
 - Partial G1706/#3355: Open image-context fields now use a compact rhythm, visually compress
   duplicate fieldset chrome and routeflow-check label/input spacing across viewports.
+- Partial G1707/#3357: Open image-context inputs now have stable focus styling and routeflow
+  evidence verifies focus activation, unchanged fieldset dimensions and no overflow.
