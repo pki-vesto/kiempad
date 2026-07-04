@@ -2093,3 +2093,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1804/#3551: Dossier upload route summary now uses a calmer
   small-mobile focus-visible ring with compact outline offset and no shadow,
   guarded by CSS tests and routeflow outline evidence.
+- Partial G1805/#3553: Dossier upload route selector now uses a subtler
+  small-mobile top border and quieter selector background, guarded by CSS tests
+  and routeflow selector border/background evidence.

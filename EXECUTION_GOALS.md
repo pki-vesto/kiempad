@@ -1850,8 +1850,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, small-mobile CSS, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3553
+
+### G1806 — Dossier upload small-mobile route selector achtergrond rustiger
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De achtergrond van de Dossier upload route-selector kan op small-mobile nog rustiger zonder routekaartcontrast te verliezen.
+- **User Impact:** De selector-achtergrond vraagt nog aandacht terwijl de routekaarten de primaire keuzes zijn.
+- **Desired Outcome:** Routekaarten blijven duidelijk afgebakend terwijl de selector-achtergrond minder concurreert.
+- **User Value:** Gebruikers scannen sneller de concrete routekeuzes.
+- **Acceptance Criteria:** Routekaarten blijven duidelijk afgebakend; selector-achtergrond concurreert minder met de kaarten; actieve route blijft zichtbaar; app-shell tests of routeflow smoke bewaken de selector-background.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, small-mobile CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3555
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

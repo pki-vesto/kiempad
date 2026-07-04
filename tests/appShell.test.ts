@@ -9597,6 +9597,10 @@ describe('app shell', () => {
     expect(css).toContain('color: var(--text-muted);');
     expect(css).toContain('font-weight: 680;');
     expect(css).toContain('line-height: 1.18;');
+    expect(css).toContain('border-top-color: color-mix(in srgb, var(--accent) 8%, var(--border));');
+    expect(css).toContain(
+      'background: color-mix(in srgb, var(--surface) 96%, var(--surface-subtle));',
+    );
     expect(css).toContain('flex: 0 0 min(136px, 60vw);');
     expect(css).toContain('min-height: 52px;');
     expect(css).toContain('font-size: 0.64rem;');
