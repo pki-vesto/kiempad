@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1690 — Medicatie planning routeopties helper noemt aanvullen zonder herhaling
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties helper noemt Planninginvoer aanvullen, maar herhaalt nog de routenaam waar een actiegericht label korter kan zijn.
+- **User Impact:** De routehelper blijft iets langer dan nodig en kost meer scantijd.
+- **Desired Outcome:** De helper houdt dezelfde betekenis met een kortere actiegerichte invoerterm.
+- **User Value:** Gebruikers kunnen de routeopties sneller scannen zonder hrefs of linklabels te verliezen.
+- **Acceptance Criteria:** Helper gebruikt een kortere aanvulactie; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1689 — Medicatie planning routeopties helper noemt toevoegen rustiger
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3323
 
 ### G1688 — Medicatie planning routeopties helper noemt importactie als invoer
 
