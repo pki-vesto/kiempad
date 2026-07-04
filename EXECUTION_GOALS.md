@@ -1000,8 +1000,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher scroll padding
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3453
+
+### G1756 — App-shell mobiel workspace-strip bewaakt reload actieve stripknop scroll-margin op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele scroll-padding, maar de actieve knop kan nog expliciet bewaakt worden op een rustige scroll-margin binnen de snaprij.
+- **User Impact:** Zonder scroll-margin rond de actieve knop kan de knop bij smalle snap-scroll te strak tegen de striprand staan.
+- **Desired Outcome:** Small-mobile reloads houden de actieve workspace-strip knop met voorspelbare scroll-margin binnen de swipe-rij.
+- **User Value:** Gebruikers herkennen de actieve routeknop rustiger na reload of horizontaal swipen.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align en switcher scroll-padding; actieve workspace-strip knop gebruikt na reload stabiele scroll-margin op small-mobile; tests of smoke checks bewaken small-mobile reload actieve stripknop scroll-margin; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload active button scroll margin
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3455
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

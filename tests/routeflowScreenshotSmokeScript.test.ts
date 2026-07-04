@@ -40,7 +40,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align',
+      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding',
     );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
@@ -61,6 +61,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherOverscrollContained');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherSnapStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileActiveButtonSnapAlignStable');
+    expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherScrollPaddingStable');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonWidth');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonLeft');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonRight');
@@ -85,6 +86,8 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherFlexWrap');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollbarWidth');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherOverscrollBehaviorX');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollPaddingInlineStart');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollPaddingInlineEnd');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollSnapType');
     expect(routeflowScreenshotSmokeScript).toContain('activePanelVisibleHeight');
     expect(routeflowScreenshotSmokeScript).toContain('activePanelScrollTop');
