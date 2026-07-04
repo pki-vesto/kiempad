@@ -2150,3 +2150,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1823/#3589: Dossier upload active route micro-labels now
   explicitly keep compact 1.18 line-height in small-mobile forced-colors mode,
   preserving the small label without adding route-card height pressure.
+- Partial G1824/#3591: Dossier upload active route micro-labels now
+  explicitly keep end alignment in small-mobile forced-colors mode, preserving
+  stable placement inside the compact route card.
