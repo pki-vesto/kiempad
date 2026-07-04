@@ -2211,3 +2211,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   central fetch driver into the Back-up central sync status, showing active,
   refreshed, refreshing and failed states without tokens, passphrases,
   session ids, fallback plaintext or medical payloads.
+- Partial G1843/#3629: Failed central session renewal now shows a direct
+  Herlaad Kiempad action in the Back-up central sync status, bound to an app
+  reload without exposing tokens, passphrases, session ids, cursors, payloads
+  or medical plaintext. G586/#938 was also reconciled as already delivered.

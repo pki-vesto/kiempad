@@ -42229,6 +42229,8 @@ describe('app shell', () => {
     expect(syncFeedback).toContain('data-central-sync-feedback-state="warning"');
     expect(syncFeedback).toContain('Replayconflict bijgewerkt zonder sessie- of recorddetails.');
     expect(syncFeedback).toContain('geen lokale plaintext fallback');
+    expect(syncFeedback).toContain('data-central-session-renewal-action="reload"');
+    expect(syncFeedback).toContain('Herlaad Kiempad');
     expect(syncFeedback).toContain('Recordpakket bijgewerkt zonder sessie- of recorddetails.');
     expect(syncFeedback).toContain('Recordload bijgewerkt zonder sessie- of recorddetails.');
     expect(syncFeedback).toContain('geen recordinhoud');
@@ -42256,6 +42258,45 @@ describe('app shell', () => {
       expect(surface).not.toContain('behandelkeuzeadvies');
       expect(surface).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
     }
+  });
+
+  it('toont sessie-renewal reloadactie alleen bij failed centrale sessie', () => {
+    const activeHtml = renderAppShell(
+      'backup',
+      makeStartState({
+        storageMode: 'central-api',
+        centralSyncFeedback: {
+          'stale-session': {
+            state: 'success',
+            status: 'Centrale sessie is vernieuwd.',
+          },
+        },
+      }),
+    );
+    const failedHtml = renderAppShell(
+      'backup',
+      makeStartState({
+        storageMode: 'central-api',
+        centralSyncFeedback: {
+          'stale-session': {
+            state: 'error',
+            error:
+              'Centrale sessie kon niet worden vernieuwd. Herlaad Kiempad en probeer opnieuw; er is geen lokale plaintext fallback gestart.',
+          },
+        },
+      }),
+    );
+    const activeSyncFeedback = extractCentralSyncFeedback(activeHtml);
+    const failedSyncFeedback = extractCentralSyncFeedback(failedHtml);
+
+    expect(activeSyncFeedback).not.toContain('data-central-session-renewal-action="reload"');
+    expect(failedSyncFeedback).toContain('data-central-session-renewal-action="reload"');
+    expect(failedSyncFeedback).toContain('Herlaad Kiempad');
+    expect(failedSyncFeedback).not.toContain('central-token');
+    expect(failedSyncFeedback).not.toContain('passphrase');
+    expect(failedSyncFeedback).not.toContain('sessie-id');
+    expect(failedSyncFeedback).not.toContain('OCR_RAW_PAYLOAD');
+    expect(failedSyncFeedback).not.toContain('BASE64_MEDISCHE_PAYLOAD');
   });
 
   it('rendert biometrie-copy voor de centrale versleutelde opslag', () => {

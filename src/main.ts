@@ -646,6 +646,12 @@ function formatRecoverableStorageError(error: unknown, fallback: string): string
 }
 
 function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
+  root
+    .querySelectorAll<HTMLButtonElement>('[data-central-session-renewal-action="reload"]')
+    .forEach((button) => {
+      button.addEventListener('click', () => window.location.reload());
+    });
+
   root.querySelector('#export-backup')?.addEventListener('click', () => {
     void exportBackup(root, state);
   });
