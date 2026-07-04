@@ -18456,7 +18456,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           <p>Controleer en zet komende afvinkmomenten klaar.</p>
         </header>
         ${commandRouteSummary({
-          eyebrow: 'Later',
+          eyebrow: 'Medicatieplanning',
           title:
             plannedLogs.length > 0
               ? `${plannedLogs.length} toekomstig moment${plannedLogs.length === 1 ? '' : 'en'}`

@@ -1803,3 +1803,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   upcoming check-off moments while preserving the route heading.
 - Partial G1666/#3277: Medication planning summary status now says later medicatie instead of a
   loose later counter while preserving the route summary.
+- Partial G1667/#3279: Medication planning summary eyebrow now says Medicatieplanning instead of
+  Later while preserving the route summary.
