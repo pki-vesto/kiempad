@@ -2114,3 +2114,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1811/#3565: Dossier upload active route cards now use a calmer
   small-mobile inset shadow with lower accent mix while keeping the one-pixel
   active line and active border distinction.
+- Partial G1812/#3567: Dossier upload route cards now use a calmer
+  small-mobile focus-visible ring with lower border/accent mix, guarded by
+  routeflow computed focus border and box-shadow evidence.

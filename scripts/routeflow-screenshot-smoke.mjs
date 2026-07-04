@@ -2352,6 +2352,10 @@ async function assertRouteflows(browser, options) {
               const inactiveAddRouteStyle = inactiveAddRoute
                 ? getComputedStyle(inactiveAddRoute)
                 : null;
+              activeAddRoute?.focus();
+              const activeAddRouteFocusStyle = activeAddRoute
+                ? getComputedStyle(activeAddRoute)
+                : null;
               const addRouteLabels = Array.from(
                 selector?.querySelectorAll('.dossier-add-route strong, .dossier-add-route span, .dossier-add-route small') ??
                   [],
@@ -2471,6 +2475,8 @@ async function assertRouteflows(browser, options) {
                 addRouteActiveBoxShadow: activeAddRouteStyle?.boxShadow ?? '',
                 addRouteInactiveBorderColor: inactiveAddRouteStyle?.borderColor ?? '',
                 addRouteInactiveBackground: inactiveAddRouteStyle?.backgroundColor ?? '',
+                addRouteFocusBorderColor: activeAddRouteFocusStyle?.borderColor ?? '',
+                addRouteFocusBoxShadow: activeAddRouteFocusStyle?.boxShadow ?? '',
                 routeItemMinHeight: routeItemStyle?.minHeight ?? '',
                 routeItemWidth: routeItem?.getBoundingClientRect().width ?? 0,
                 routeItemPaddingTop: routeItemStyle?.paddingTop ?? '',
@@ -3292,6 +3298,9 @@ async function assertRouteflows(browser, options) {
           !evidence.uploadConsole.addRouteActiveBoxShadow.includes('inset') ||
           evidence.uploadConsole.addRouteActiveBoxShadow.includes('0px -2px') ||
           evidence.uploadConsole.addRouteActiveBoxShadow.includes('0px -3px') ||
+          evidence.uploadConsole.addRouteFocusBorderColor === '' ||
+          evidence.uploadConsole.addRouteFocusBoxShadow === '' ||
+          evidence.uploadConsole.addRouteFocusBoxShadow.includes('0px 0px 0px 4px') ||
           parseFloat(evidence.uploadConsole.routeItemMinHeight) > 60 ||
           evidence.uploadConsole.routeItemWidth > 158 ||
           parseFloat(evidence.uploadConsole.routeItemPaddingTop) > 7)

@@ -27465,6 +27465,14 @@ summary[class*="__summary"]:focus-visible,
     background: color-mix(in srgb, var(--surface) 99%, var(--surface-subtle));
   }
 
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
+    .dossier-add-route:focus-visible {
+    border-color: color-mix(in srgb, var(--accent) 48%, var(--border));
+    box-shadow:
+      0 0 0 1px var(--surface),
+      0 0 0 3px color-mix(in srgb, var(--accent) 38%, transparent);
+  }
+
   .dossier-upload-console[data-dossier-add-flow="document"]
     .dossier-add-route[href="#dossier-upload-form"],
   .dossier-upload-console[data-dossier-add-flow="consult"]
