@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1672 — Medicatie planning routekeuze titel noemt opties
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De uitklapbare routekeuze titel zegt openen, maar noemt niet dat het om routeopties gaat.
+- **User Impact:** Gebruikers zien minder direct waarom de secundaire actie Routeopties daarheen springt.
+- **Desired Outcome:** De follow-up titel sluit aan op Routeopties zonder extra layout.
+- **User Value:** De planningkaart voelt consistenter tussen actieknop en uitklapbare sectie.
+- **Acceptance Criteria:** Follow-up titel noemt routeopties; de bestaande follow-up anchor blijft behouden; app-shell tests bewaken de titelcopy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1671 — Medicatie planning secundaire actie noemt opties
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3287
 
 ### G1670 — Medicatie planning primaire routeactie blijft herkenbaar
 

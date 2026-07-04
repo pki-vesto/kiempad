@@ -1811,3 +1811,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Beheer or local input while preserving the route summary actions.
 - Partial G1670/#3285: Medication planning summary primary action now says Planningpaneel while
   preserving the `#medication-planning-primary` anchor.
+- Partial G1671/#3287: Medication planning summary secondary action now says Routeopties while
+  preserving the `#medication-planning-followup` anchor.
