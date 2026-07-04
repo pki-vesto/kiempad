@@ -3087,6 +3087,10 @@ describe('app shell', () => {
     expect(mobileScreenStageCss).toContain('padding: 0;');
     expect(mobileScreenStageCss).not.toContain('border-radius:');
     expect(mobileScreenStageCss).not.toContain('box-shadow:');
+    expect(mobileCss).toContain('.screen-stage__panel {');
+    expect(mobileCss).toContain('overflow-x: hidden;');
+    expect(mobileCss).toContain('padding-bottom: calc(var(--mobile-bottom-nav-clearance) * 0.35);');
+    expect(mobileCss).toContain('scroll-margin-bottom: var(--mobile-bottom-nav-clearance);');
     expect(css).toContain('.workspace-strip__switcher,');
     expect(css).toContain('.workspace-strip__quick {');
     expect(css).toContain('.binary-switch {');
