@@ -1783,3 +1783,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   today, beheer, import and history route choices understandable.
 - Partial G1656/#3257: Medication follow-up disclosure title now says Routekeuze openen while
   preserving the helper copy, counter and route links.
+- Partial G1657/#3259: Medication empty planning summary now points to Beheer or local input
+  planning instead of the generic Import route.

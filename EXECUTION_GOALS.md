@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1658 — Medicatie planning lege CTA noemt lokale invoer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning lege CTA stuurt alleen naar beheer terwijl lokale invoer plannen ook een passende route is.
+- **User Impact:** Gebruikers zien bij een lege planning minder snel dat lokale invoer een directe vervolgstap is.
+- **Desired Outcome:** Lege planning CTA-context noemt lokale invoer zonder de beheerroute te verliezen.
+- **User Value:** De lege planningstaat wordt vollediger en consistenter met de importflow.
+- **Acceptance Criteria:** Lege planning CTA-context benoemt lokale invoer; beheerlink blijft zichtbaar; app-shell tests bewaken de nieuwe lege CTA-context.
+- **Affected Screens:** Medicatie planning lege status
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1657 — Medicatie planning lege status noemt lokale importroute
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3259
 
 ### G1656 — Medicatie import vervolgcontext titel noemt routekeuze
 
