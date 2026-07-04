@@ -3053,12 +3053,17 @@ describe('app shell', () => {
     expect(css).toContain('max-height: calc(100vh - 48px);');
     expect(css).toContain('grid-template-rows: auto minmax(0, 1fr);');
     expect(css).toContain('.screen-stage__chrome {');
+    expect(css).toContain('max-height: min(22vh, 168px);');
     expect(css).toContain('overflow-y: auto;');
+    expect(css).toContain('overscroll-behavior: contain;');
     expect(css).toContain('scrollbar-gutter: stable;');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
     expect(css).toContain('.workspace-strip--compact {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(css).toContain('.screen-stage__chrome > .workspace-strip {');
+    expect(css).toContain('.screen-stage__chrome > .page-header {');
+    expect(css).toContain('.screen-stage__chrome > .page-header .page-header__intro {');
+    expect(css).toContain('-webkit-line-clamp: 2;');
     expect(css).toContain('position: sticky;');
     expect(css).toContain('.app-sidebar > .workspace-strip {');
     expect(css).toContain('display: none;');

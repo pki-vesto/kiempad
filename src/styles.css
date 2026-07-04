@@ -23388,6 +23388,9 @@ summary[class*="__summary"]:focus-visible,
     z-index: 28;
     gap: 10px;
     min-width: 0;
+    max-height: min(22vh, 168px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding-bottom: 2px;
     background: linear-gradient(
       180deg,
@@ -23399,6 +23402,17 @@ summary[class*="__summary"]:focus-visible,
 
   .screen-stage__chrome > .workspace-strip {
     top: 14px;
+  }
+
+  .screen-stage__chrome > .page-header {
+    margin-bottom: 0;
+  }
+
+  .screen-stage__chrome > .page-header .page-header__intro {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .screen-stage__panel {

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1525 |
+| ☑ klaar | 1526 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1724** |
+| **Totaal** | **1725** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1886,13 +1886,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1722 | Premium Claude Design UI: dossier upload beeldcontext forced-colors badge outline blijft rustig | P1 | F5 | ☑ |
 | G1723 | Premium Claude Design UI: dossier upload beeldcontext forced-colors badge tekstuitlijning blijft rustig | P1 | F5 | ☑ |
 | G1724 | Premium Claude Design UI: app-shell tablet werkruimte scrollt als paneel in plaats van lange pagina | P1 | F5 | ☑ |
-| G1725 | Premium Claude Design UI: app-shell desktop routekop blijft compact boven paneelscroll | P1 | F5 | ☐ |
+| G1725 | Premium Claude Design UI: app-shell desktop routekop blijft compact boven paneelscroll | P1 | F5 | ☑ |
+| G1726 | Premium Claude Design UI: app-shell desktop paneel behoudt stabiele scrollruimte zonder horizontale druk | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1724** (id's G001 t/m G1725; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1725** (id's G001 t/m G1726; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
