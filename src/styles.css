@@ -21568,41 +21568,53 @@ summary[class*="__summary"]:focus-visible,
 }
 
 .dossier-upload-group[data-dossier-upload-image-field-order="context-source-cycle-day"] {
-  gap: 10px;
+  gap: 8px;
 }
 
 .dossier-upload-group[data-dossier-upload-image-field-order="context-source-cycle-day"]
   label[data-dossier-upload-image-field] {
   display: grid;
-  gap: 7px;
+  gap: 6px;
   min-width: 0;
 }
 
 .dossier-upload-image-field-label {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   max-width: 100%;
   color: var(--text);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 790;
-  line-height: 1.25;
+  line-height: 1.2;
   white-space: normal;
 }
 
 .dossier-upload-image-field-label span {
   display: inline-grid;
   place-items: center;
-  flex: 0 0 24px;
-  width: 24px;
-  min-height: 24px;
+  box-sizing: border-box;
+  flex: 0 0 22px;
+  width: 22px;
+  min-height: 22px;
   border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--accent) 8%, var(--surface));
   color: var(--text-muted);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 820;
   line-height: 1;
+}
+
+@media (max-width: 420px) {
+  .dossier-upload-group[data-dossier-upload-image-field-order="context-source-cycle-day"] {
+    gap: 8px;
+  }
+
+  .dossier-upload-group[data-dossier-upload-image-field-order="context-source-cycle-day"]
+    label[data-dossier-upload-image-field] {
+    gap: 6px;
+  }
 }
 
 .dossier-upload-optional.dossier-upload-metadata-fields,

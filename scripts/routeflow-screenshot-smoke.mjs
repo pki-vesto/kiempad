@@ -1259,6 +1259,8 @@ const targets = [
       '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
     imageSummaryChips: true,
+    imageFieldLabels: true,
+    smallMobileViewport: true,
     desktopHiddenSelectors: [
       '.dossier-split-workspace .domain-split-workspace__rail',
       '.dossier-split-workspace .domain-split-workspace__context',
@@ -1775,6 +1777,7 @@ const viewports = [
   { label: 'desktop', viewport: { width: 1440, height: 1000 } },
   { label: 'tablet', viewport: { width: 820, height: 1180 } },
   { label: 'mobile', viewport: { width: 390, height: 844 } },
+  { label: 'small-mobile', viewport: { width: 360, height: 780 } },
 ];
 
 function fail(message) {
@@ -1827,6 +1830,7 @@ async function assertRouteflows(browser, options) {
   try {
     const checked = [];
     for (const target of targets) {
+      if (options.label === 'small-mobile' && !target.smallMobileViewport) continue;
       try {
         await page.goto(`${url}${target.hash}`, { waitUntil: 'networkidle' });
       await unlockIfNeeded(page, target.hash);
@@ -2187,6 +2191,32 @@ async function assertRouteflows(browser, options) {
               };
             })
           : null;
+        const imageFieldLabels = routeflow.imageFieldLabels
+          ? [
+              ...document.querySelectorAll(
+                '[data-dossier-upload-image-field] .dossier-upload-image-field-label',
+              ),
+            ].map((element) => {
+              const badge = element.querySelector('span');
+              const rect = element.getBoundingClientRect();
+              const badgeRect = badge?.getBoundingClientRect();
+              const style = getComputedStyle(element);
+              const parentRect = element.parentElement?.getBoundingClientRect();
+              return {
+                text: element.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                visible: rect.width > 0 && rect.height > 0,
+                height: rect.height,
+                width: rect.width,
+                parentWidth: parentRect?.width ?? 0,
+                badgeWidth: badgeRect?.width ?? 0,
+                badgeHeight: badgeRect?.height ?? 0,
+                fontSize: style.fontSize,
+                lineHeight: style.lineHeight,
+                whiteSpace: style.whiteSpace,
+                overflowsParent: Boolean(parentRect && rect.right > parentRect.right + 1),
+              };
+            })
+          : null;
         const dossierConsole = routeflow.dossierConsole
           ? (() => {
               const body = document.querySelector('[data-dossier-console="ready"]');
@@ -2454,6 +2484,7 @@ async function assertRouteflows(browser, options) {
           startLaunchpad,
           uploadConsole,
           imageSummaryChips,
+          imageFieldLabels,
           dossierConsole,
           knowledgeConsole,
           consultConsole,
@@ -2514,6 +2545,26 @@ async function assertRouteflows(browser, options) {
         throw new Error(
           `${options.label}/${target.screen}: beeldcontext-chips missen comfortabele non-interactive layout (${JSON.stringify(
             evidence.imageSummaryChips,
+          )}).`,
+        );
+      }
+      if (
+        evidence.imageFieldLabels &&
+        (evidence.imageFieldLabels.length !== 3 ||
+          evidence.imageFieldLabels.some(
+            (label) =>
+              !label.visible ||
+              label.height > (options.label === 'small-mobile' ? 26 : 30) ||
+              label.badgeWidth > (options.label === 'small-mobile' ? 23 : 25) ||
+              label.badgeHeight > (options.label === 'small-mobile' ? 23 : 25) ||
+              label.whiteSpace !== 'normal' ||
+              label.overflowsParent ||
+              label.width > label.parentWidth + 1,
+          ))
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: beeldcontext-veldlabels missen compacte mobile layout (${JSON.stringify(
+            evidence.imageFieldLabels,
           )}).`,
         );
       }
