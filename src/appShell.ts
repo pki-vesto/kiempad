@@ -18638,7 +18638,7 @@ function renderMedicationFocusShell(input: { workspace: string }): string {
       <header class="medication-focus-shell__header">
         <p class="kp-card__eyebrow">Medicatiefocus</p>
         <h2 id="medication-focus-shell-title">Eerst vandaag afvinken, daarna planning of beheer openen</h2>
-        <p>Dagmomenten, schema-import, voorraad en historie blijven in één medicatieruimte zonder doseeradvies of berekening.</p>
+        <p>Dagmomenten, schema-import, voorraad en historie blijven samen in één medicatieruimte.</p>
       </header>
       <div class="medication-focus-shell__body" data-medication-console="ready">
         <div class="medication-focus-shell__workspace" data-medication-focus-region="workspace" data-medication-console-region="workspace">
@@ -18675,9 +18675,9 @@ function renderMedicationPlanningWorkbench(input: {
         ? 'Schema verwerkt'
         : 'Geen dagmomenten';
   const context = input.nextDoseLog
-    ? `${input.nextDoseLog.status === 'genomen' ? 'Genomen' : input.nextDoseLog.status === 'overgeslagen' ? 'Overgeslagen' : 'Gepland'} · Kiempad berekent geen doseringen`
+    ? `${input.nextDoseLog.status === 'genomen' ? 'Genomen' : input.nextDoseLog.status === 'overgeslagen' ? 'Overgeslagen' : 'Gepland'} · volgens je planning`
     : input.hasImportFeedback
-      ? 'Bekijk importfeedback zonder doseringen over te nemen.'
+      ? 'Bekijk importfeedback naast je planning.'
       : 'Voeg een middel toe of importeer een eigen schema.';
 
   return `
@@ -18686,7 +18686,7 @@ function renderMedicationPlanningWorkbench(input: {
         <div>
           <p class="kp-card__eyebrow">Innameswerkbank</p>
           <h2>Vandaag, planning en voorraad eerst</h2>
-          <p>Start met afvinken, komende momenten en voorraadcontext zonder doseeradvies of berekeningen.</p>
+          <p>Start met afvinken, komende momenten en voorraadcontext.</p>
         </div>
         <p class="planning-workbench__status">${escapeHtml(status)}</p>
       </header>
