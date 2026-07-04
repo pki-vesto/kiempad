@@ -6237,12 +6237,13 @@ describe('app shell', () => {
     expect(html).toContain('Lokale planning');
     expect(html).not.toContain('Schema klaarzetten');
     expect(html).not.toContain('Eigen schema lokaal importeren');
-    expect(html).toContain('Maak lokale planning uit je schema.');
-    expect(html).not.toContain('Import maakt alleen planningmomenten aan vanuit je eigen schema.');
     const importRouteSummary = html.slice(
       html.indexOf('data-medication-route-summary="import"'),
       html.indexOf('id="medicatie-import-form"'),
     );
+    expect(importRouteSummary).toContain('Zet om naar lokale planning.');
+    expect(importRouteSummary).not.toContain('Maak lokale planning uit je schema.');
+    expect(html).not.toContain('Import maakt alleen planningmomenten aan vanuit je eigen schema.');
     expect(importRouteSummary).toContain('href="#medicatie?route=beheer">Beheer</a>');
     expect(importRouteSummary).not.toContain('href="#medicatie?route=beheer">Middel beheren</a>');
     expect(importRouteSummary).toContain('href="#medicatie?route=planning">Plan</a>');
