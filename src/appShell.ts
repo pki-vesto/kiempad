@@ -18550,7 +18550,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             ? 'Lokaal'
             : state.medicatieImportStatus
               ? 'OK'
-              : 'Schema',
+              : 'Plan',
           primary: { href: '#medicatie?route=beheer', label: 'Beheer' },
           secondary: { href: '#medicatie?route=planning', label: 'Plan' },
           data: { 'medication-route-summary': 'import' },

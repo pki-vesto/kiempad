@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1650 — Medicatie import standaardtitel noemt lokale planning
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import standaardtitel noemt schema klaarzetten, maar nog niet de lokale planningcontext.
+- **User Impact:** Gebruikers zien in de lege importstate minder expliciet dat het schema lokaal naar planning gaat.
+- **Desired Outcome:** Import standaardtitel noemt lokale planning kort en behoudt de routesamenvatting.
+- **User Value:** De lege importstate voelt consequenter met de lokale planningflow.
+- **Acceptance Criteria:** Standaardtitel noemt lokale planning; standaardbadge blijft zichtbaar; app-shell tests bewaken dat de oude titel niet terugkeert in de importroute.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1649 — Medicatie import standaardbadge gebruikt korte planningscopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3243
 
 ### G1648 — Medicatie import foutbadge gebruikt lokale aandachtcopy
 
