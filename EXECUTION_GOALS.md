@@ -65,8 +65,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontextvelden, upload action path, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3345
+
+### G1702 — Dossier upload beeldcontext samenvatting toont veilige next step
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De beeldactie landt nu directer bij beeldcontext, maar de samenvatting kan nog explicieter tonen welke veilige metadata hoort bij echo's, foto's en scans.
+- **User Impact:** Gebruikers kunnen nog twijfelen of zij beeldcontext, bron of cyclusdag moeten invullen.
+- **Desired Outcome:** Beeldcontext toont een compacte veilige next-step samenvatting zonder beeldpayload of bronbestandsnaam.
+- **User Value:** Beeldmateriaal toevoegen voelt sneller en vertrouwder zonder privacygrens te versoepelen.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; beeldcontext toont een compacte veilige next-step samenvatting zonder beeldpayload of bronbestandsnaam; desktop, tablet en mobile tonen geen overlap; tests dekken lege en gevulde uploadcontext plus locked imaging state; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontextvelden, upload action path, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3347
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 

@@ -1226,7 +1226,7 @@ const targets = [
   },
   {
     screen: 'dossier-upload-image-context',
-    hash: '#dossier-upload-form',
+    hash: '#dossier-upload-image-context',
     rootSelector: '#dossier-route-upload',
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
@@ -1236,6 +1236,9 @@ const targets = [
       '[data-dossier-upload-console="ready"]',
       '[data-dossier-upload-console="ready"][data-dossier-add-flow="document"]',
       '#dossier-upload-form',
+      '#dossier-upload-image-context',
+      '[data-dossier-upload-image-next-step="ready"]',
+      '[data-dossier-upload-image-context-summary="ready"]',
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-image-fields="collapsed"]',
       '[data-dossier-upload-image-fields="collapsed"] > .dossier-upload-optional__summary',

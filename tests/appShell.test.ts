@@ -1739,6 +1739,8 @@ describe('app shell', () => {
     expect(normalizeDossierRoute('#dossier?route=bestaat-niet')).toBe('upload');
     expect(normalizeScreenId('#consult-verslag-form')).toBe('dossier');
     expect(normalizeDossierRoute('#consult-verslag-form')).toBe('upload');
+    expect(normalizeScreenId('#dossier-upload-image-context')).toBe('dossier');
+    expect(normalizeDossierRoute('#dossier-upload-image-context')).toBe('upload');
     expect(normalizeDossierAddFlow('#consult-verslag-form')).toBe('consult');
     expect(normalizeDossierAddFlow('#consult-context-fields')).toBe('consult');
     expect(normalizeDossierAddFlow('#embryo-quality-form')).toBe('embryo-quality');
@@ -1746,6 +1748,7 @@ describe('app shell', () => {
     expect(normalizeScreenId('#dossier-route-review')).toBe('dossier');
     expect(normalizeDossierAddFlow('#dossier-route-review')).toBe('review');
     expect(normalizeDossierAddFlow('#dossier-upload-form')).toBe('document');
+    expect(normalizeDossierAddFlow('#dossier-upload-image-context')).toBe('document');
     expect(normalizeDossierAddFlow('#dossier')).toBe('keuze');
     expect(normalizeScreenId('#imaging-filter-form')).toBe('dossier');
     expect(normalizeDossierRoute('#imaging-filter-form')).toBe('imaging');
@@ -8135,7 +8138,8 @@ describe('app shell', () => {
     expect(addSection).toContain('Gesprek vastleggen');
     expect(addSection).toContain('Echo of foto toevoegen');
     expect(addSection).toContain('Kwaliteit registreren');
-    expect(addSection).toContain('Upload met beeldcontext');
+    expect(addSection).toContain('href="#dossier-upload-image-context"');
+    expect(addSection).toContain('Spring naar beeldcontext');
     expect(addSection.indexOf('data-dossier-upload-action-path="ready"')).toBeLessThan(
       addSection.indexOf('data-dossier-add-route-group="collapsed"'),
     );
@@ -8270,6 +8274,9 @@ describe('app shell', () => {
     expect(addSection).toContain('data-dossier-upload-optional="koppelingen"');
     expect(addSection).toContain('data-dossier-upload-link-fields="collapsed"');
     expect(addSection).toContain('Koppelvelden openen');
+    expect(addSection).toContain('id="dossier-upload-image-context"');
+    expect(addSection).toContain('data-dossier-upload-image-next-step="ready"');
+    expect(addSection).toContain('data-dossier-upload-image-context-summary="ready"');
     expect(addSection).toContain('data-dossier-upload-optional="beeldcontext"');
     expect(addSection).toContain('data-dossier-upload-image-fields="collapsed"');
     expect(addSection).toContain('Beeldvelden openen');
@@ -8281,7 +8288,7 @@ describe('app shell', () => {
       '.dossier-upload-optional__summary:focus-visible {',
     );
     expect(addSection).toContain('Afspraak, traject of notitie toevoegen');
-    expect(addSection).toContain('Echo, foto of scan beschrijven');
+    expect(addSection).toContain('Volgende stap voor echo, foto of scan');
     expect(addSection).toContain('Embryo-id, dag of lablabel toevoegen');
     expect(addSection).not.toContain(
       '<details class="dossier-upload-optional dossier-upload-metadata" data-dossier-upload-metadata="collapsed" open',
@@ -8406,6 +8413,7 @@ describe('app shell', () => {
     expect(lockedSelector).not.toContain('locked-route-selector-secret.jpg');
     expect(lockedSelector).not.toContain('cm91dGUtc2VsZWN0b3I=');
     expect(lockedAddSection).toContain('data-dossier-upload-action="image"');
+    expect(lockedAddSection).toContain('href="#dossier-upload-image-context"');
     expect(lockedAddSection).not.toContain('locked-route-selector-secret.jpg');
     expect(lockedAddSection).not.toContain('cm91dGUtc2VsZWN0b3I=');
   });
@@ -9033,6 +9041,8 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-optional.dossier-upload-metadata-fields');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-link-fields');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-image-fields');
+    expect(css).toContain('.dossier-upload-image-context:target {');
+    expect(css).toContain('scroll-margin-top: 18px;');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-lab-fields');
     expect(css).toContain('.consult-upload-report-choice');
     expect(css).toContain('.consult-upload-report-fields__body');
