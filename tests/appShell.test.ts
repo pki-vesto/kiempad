@@ -40751,8 +40751,12 @@ describe('app shell', () => {
     expect(html).toContain('Eigen risico 2026 gebruikt');
     expect(html).toContain('Eigen risico 2026 resterend');
     expect(html).toContain('Boven eigen-risicogrens');
-    expect(html).toContain('Het verplichte eigen risico voor 2026 staat op €385');
-    expect(html).toContain('controleer altijd je eigen polis en verzekeraar');
+    expect(html).toContain(
+      'Kiempad bewaart lokale administratie; je polis en verzekeraar blijven leidend.',
+    );
+    expect(html).toContain('Eigen risico 2026: €385');
+    expect(html).not.toContain('Dit overzicht telt alleen wat lokaal is ingevoerd.');
+    expect(html).not.toContain('controleer altijd je eigen polis en verzekeraar');
     expect(html).toContain('Apotheekfactuur');
     expect(html).toContain('€');
     expect(html).toContain('Medicatie');

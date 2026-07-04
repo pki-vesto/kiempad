@@ -147,6 +147,7 @@ import {
   TRAJECT_FASE_TOELICHTING,
   type TrajectMetFasen,
 } from './domain/traject';
+
 import type {
   Afspraak,
   ConsultVerslag,
@@ -215,6 +216,9 @@ import { escapeAttribute, escapeHtml } from './ui/escape';
 
 export const DISCLAIMER =
   'Kiempad is geen medisch hulpmiddel en geen vervanging van medisch advies. Schema’s en doseringen volgen altijd de kliniek.';
+
+const FINANCE_CONTEXT_DISCLAIMER =
+  'Kiempad bewaart lokale administratie; je polis en verzekeraar blijven leidend.';
 
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
@@ -13812,7 +13816,7 @@ function renderKostenScreen(state: AppShellState): string {
         <header class="finance-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
           <h2 id="kosten-route-overzicht-title">Lokale kostenbibliotheek</h2>
-          <p>Bekijk totalen uit lokale invoer zonder financieel advies of polisinterpretatie.</p>
+          <p>${FINANCE_CONTEXT_DISCLAIMER}</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Kostenroute',
@@ -13853,7 +13857,7 @@ function renderKostenScreen(state: AppShellState): string {
         <div class="finance-add-console" data-finance-add-layout="single-input">
           <div class="summary-panel finance-add-primary" data-finance-add-primary="kosten-form">
             <h3>Kostenpost toevoegen</h3>
-            <p class="small-print">Leg alleen de lokale factuur- of betaalregel vast. Kiempad geeft geen financieel advies of polisinterpretatie.</p>
+            <p class="small-print">${FINANCE_CONTEXT_DISCLAIMER}</p>
             ${renderKostenForm()}
           </div>
           <details id="finance-add-followup" class="kp-disclosure finance-add-followup" data-finance-add-followup="collapsed">
@@ -13876,7 +13880,7 @@ function renderKostenScreen(state: AppShellState): string {
         <header class="finance-route-section__header">
           <p class="kp-card__eyebrow">Vergoeding</p>
           <h2 id="kosten-route-vergoeding-title">Vergoeding en eigen risico</h2>
-          <p>Controleer eigen-risicocontext en onbekende posten zonder financieel advies.</p>
+          <p>${FINANCE_CONTEXT_DISCLAIMER}</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Kostenroute',
@@ -13898,7 +13902,7 @@ function renderKostenScreen(state: AppShellState): string {
               <div><dt>Boven eigen-risicogrens</dt><dd>${formatEuro(overzicht.eigenRisicoBovenGrens)}</dd></div>
               <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
             </dl>
-            <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>
+            <p class="small-print">Eigen risico 2026: €385. ${FINANCE_CONTEXT_DISCLAIMER}</p>
           </div>
         </details>
       </section>
