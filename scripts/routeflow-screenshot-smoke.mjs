@@ -3122,8 +3122,8 @@ async function assertRouteflows(browser, options) {
       }
     }
 
-    if (options.label === 'mobile') {
-      checked.push(await assertWorkspaceStripHistoryNavigation(page));
+    if (options.label === 'mobile' || options.label === 'small-mobile') {
+      checked.push(await assertWorkspaceStripHistoryNavigation(page, options.label));
     }
     if (options.label === 'mobile' || options.label === 'small-mobile') {
       checked.push(await assertWorkspaceStripDirectLinkFocus(page, options.label));
@@ -3135,7 +3135,7 @@ async function assertRouteflows(browser, options) {
   }
 }
 
-async function assertWorkspaceStripHistoryNavigation(page) {
+async function assertWorkspaceStripHistoryNavigation(page, viewportLabel) {
   await page.goto(`${url}#start`, { waitUntil: 'networkidle' });
   await unlockIfNeeded(page, '#start');
   await waitForStableRouteflowRoot(page, '.content');
@@ -3169,7 +3169,7 @@ async function assertWorkspaceStripHistoryNavigation(page) {
   });
 
   return {
-    screen: 'workspace-strip-history',
+    screen: `${viewportLabel}-workspace-strip-history`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
   };

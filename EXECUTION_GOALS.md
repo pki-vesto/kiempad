@@ -694,8 +694,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip history navigation
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3417
+
+### G1738 — App-shell mobiel workspace-strip bewaakt actieve knop na herladen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Directe links en history-navigatie zijn bewaakt, maar reload op een deep-link kan nog expliciet dezelfde actieve stripcontext krijgen.
+- **User Impact:** Gebruikers kunnen na herladen van een opgeslagen link context verliezen als de actieve knop niet opnieuw zichtbaar wordt.
+- **Desired Outcome:** Mobiele en small-mobile reloads houden de actieve workspace-strip knop zichtbaar.
+- **User Value:** Gebruikers kunnen links bewaren of verversen zonder opnieuw te zoeken waar zij zijn.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele en small-mobile workspace-strip behouden compacte swipebare knoppen zonder pagina-overflow; actieve workspace-strip knop blijft zichtbaar na reload op een deep-link; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; tests of smoke checks bewaken actieve stripcontext na reload; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, mobile layout, workspace strip reload navigation
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3419
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
