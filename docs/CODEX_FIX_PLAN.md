@@ -1847,3 +1847,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   consistently with the visible import link.
 - Partial G1688/#3321: Medication planning route options helper now says Planninginvoer
   toevoegen so the compact route helper identifies the input action.
+- Partial G1689/#3323: Medication planning route options helper now says Planninginvoer
+  aanvullen so the input route reads as a calmer planning update.
