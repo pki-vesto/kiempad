@@ -1765,3 +1765,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   while preserving the local error status.
 - Partial G1647/#3239: Medication import error route summary title now uses Lokaal corrigeren copy
   while preserving the error badge.
+- Partial G1648/#3241: Medication import error route summary badge now uses Lokaal copy while
+  preserving the local correction title.
