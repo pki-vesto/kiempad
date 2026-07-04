@@ -9113,7 +9113,11 @@ describe('app shell', () => {
     );
     expect(css).toContain('label[data-dossier-upload-image-field]');
     expect(css).toContain('.dossier-upload-image-field-label {');
-    expect(css).toContain('flex: 0 0 24px;');
+    expect(css).toContain('box-sizing: border-box;');
+    expect(css).toContain('flex: 0 0 22px;');
+    expect(css).toContain('@media (max-width: 420px) {');
+    expect(css).toContain('font-size: 0.78rem;');
+    expect(css).toContain('min-height: 22px;');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-lab-fields');
     expect(css).toContain('.consult-upload-report-choice');
     expect(css).toContain('.consult-upload-report-fields__body');

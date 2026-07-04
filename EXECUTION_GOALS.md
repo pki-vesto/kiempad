@@ -133,8 +133,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontextvelden, mobile field-label rhythm, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3353
+
+### G1706 — Dossier upload beeldcontext velden openen behoudt compact ritme
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De genummerde beeldcontextveldlabels blijven nu compact op small mobile, maar de geopende veldgroep kan nog explicieter worden bewaakt op compact ritme.
+- **User Impact:** Gebruikers die de beeldvelden openen kunnen alsnog onnodige verticale druk of label/input-ruis ervaren.
+- **Desired Outcome:** Geopende beeldcontextvelden tonen compacte verticale spacing zonder overlap of horizontale druk.
+- **User Value:** Echo's, foto's en scans invullen blijft rustig zodra gebruikers de optionele beeldvelden openen.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; geopende beeldcontextvelden tonen compacte verticale spacing zonder overlap; desktop, tablet en mobile tonen geen horizontale druk of overlappende labels/inputs; tests dekken lege en gevulde uploadcontext plus locked imaging state; routeflow-smoke dekt geopende beeldvelden; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontextvelden, open field details, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3355
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 

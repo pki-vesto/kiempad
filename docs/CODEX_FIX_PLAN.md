@@ -1883,3 +1883,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   fixed minimum height, wrapping and routeflow evidence across desktop, tablet and mobile.
 - Partial G1704/#3351: Image-context fields now mirror the safe summary order with numbered
   context, source label and cycle-day field labels while preserving upload form contracts.
+- Partial G1705/#3353: Numbered image-context field labels now use a compact rhythm with
+  small-mobile routeflow evidence for label height, badge size and parent overflow.
