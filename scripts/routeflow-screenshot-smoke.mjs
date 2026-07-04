@@ -3124,7 +3124,9 @@ async function assertRouteflows(browser, options) {
 
     if (options.label === 'mobile') {
       checked.push(await assertWorkspaceStripHistoryNavigation(page));
-      checked.push(await assertWorkspaceStripDirectLinkFocus(page));
+    }
+    if (options.label === 'mobile' || options.label === 'small-mobile') {
+      checked.push(await assertWorkspaceStripDirectLinkFocus(page, options.label));
     }
 
     return { viewport: options.label, checked: checked.length, targets: checked };
@@ -3173,7 +3175,7 @@ async function assertWorkspaceStripHistoryNavigation(page) {
   };
 }
 
-async function assertWorkspaceStripDirectLinkFocus(page) {
+async function assertWorkspaceStripDirectLinkFocus(page, viewportLabel) {
   await page.goto(`${url}#vragen?route=voorbereiden`, { waitUntil: 'networkidle' });
   await unlockIfNeeded(page, '#vragen?route=voorbereiden');
   await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
@@ -3214,7 +3216,7 @@ async function assertWorkspaceStripDirectLinkFocus(page) {
   });
 
   return {
-    screen: 'workspace-strip-direct-link',
+    screen: `${viewportLabel}-workspace-strip-direct-link`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
   };

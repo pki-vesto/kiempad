@@ -1945,3 +1945,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   button, and routeflow smoke covers Start-to-Vragen back/forward active-strip context.
 - Partial G1735/#3413: Active workspace-strip alignment now avoids link scrollIntoView
   side effects, and routeflow smoke covers calm mobile direct-link active-strip focus.
+- Partial G1736/#3415: Small-mobile routeflow smoke now also opens the direct Vragen
+  deep-link and verifies the active workspace-strip button stays visible without overflow.
