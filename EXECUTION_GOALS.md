@@ -830,8 +830,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload strip height
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3433
+
+### G1746 — App-shell mobiel workspace-strip bewaakt reload actieve stripknop breedte op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Workspace-strip hoogte wordt bewaakt, maar de actieve stripknop kan nog expliciet op compacte breedte worden gecontroleerd.
+- **User Impact:** Als de actieve knop te breed wordt, domineert die de swipe-rij en wordt routewisselen op kleine schermen minder prettig.
+- **Desired Outcome:** Small-mobile reloads houden de actieve workspace-strip knop compact en zichtbaar.
+- **User Value:** Gebruikers kunnen na verversen snel routes scannen zonder een uitgerekte actieve knop.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, rustige scrollposities, compacte chrome en compacte striphoogte; actieve workspace-strip knop blijft na reload binnen compacte breedtegrenzen op small-mobile; tests of smoke checks bewaken small-mobile reload actieve stripknop breedte; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload active button width
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3435
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
