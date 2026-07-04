@@ -18544,7 +18544,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             ? 'Lokaal corrigeren'
             : state.medicatieImportStatus
               ? 'Feedback klaar'
-              : 'Schema klaarzetten',
+              : 'Lokale planning',
           detail: 'Maak lokale planning uit je schema.',
           status: state.medicatieImportError
             ? 'Lokaal'
