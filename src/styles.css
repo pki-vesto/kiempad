@@ -27546,6 +27546,12 @@ summary[class*="__summary"]:focus-visible,
     forced-color-adjust: auto;
   }
 
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route strong,
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route span,
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route small {
+    color: ButtonText;
+  }
+
   .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
     .dossier-add-route:focus-visible {
     border-color: Highlight;
@@ -27566,6 +27572,21 @@ summary[class*="__summary"]:focus-visible,
     background: Canvas;
     color: CanvasText;
     box-shadow: inset 0 -2px 0 Highlight;
+  }
+
+  .dossier-upload-console[data-dossier-add-flow="document"]
+    .dossier-add-route[href="#dossier-upload-form"]
+    :is(strong, span, small),
+  .dossier-upload-console[data-dossier-add-flow="consult"]
+    .dossier-add-route[href="#consult-verslag-form"]
+    :is(strong, span, small),
+  .dossier-upload-console[data-dossier-add-flow="embryo-quality"]
+    .dossier-add-route[href="#embryo-quality-form"]
+    :is(strong, span, small),
+  .dossier-upload-console[data-dossier-add-flow="embryo-status"]
+    .dossier-add-route[href="#embryo-status-event-form"]
+    :is(strong, span, small) {
+    color: CanvasText;
   }
 }
 

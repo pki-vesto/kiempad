@@ -9626,10 +9626,16 @@ describe('app shell', () => {
     expect(css).toContain('color: ButtonText;');
     expect(css).toContain('forced-color-adjust: auto;');
     expect(css).toContain(
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route strong,\n  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route span,\n  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route small {\n    color: ButtonText;\n  }',
+    );
+    expect(css).toContain(
       '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]\n    .dossier-add-route:focus-visible {\n    border-color: Highlight;\n    outline: 2px solid Highlight;\n    outline-offset: 2px;\n    box-shadow: none;\n  }',
     );
     expect(css).toContain(
       '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"] {\n    border-color: Highlight;\n    background: Canvas;\n    color: CanvasText;\n    box-shadow: inset 0 -2px 0 Highlight;\n  }',
+    );
+    expect(css).toContain(
+      '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    :is(strong, span, small) {\n    color: CanvasText;\n  }',
     );
     expect(css).toContain('.dossier-add-route-disclosure__summary {');
     expect(css).toContain('min-height: 44px;');
