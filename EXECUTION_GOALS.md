@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1664 — Medicatie planning lege tekst noemt beheer als eerste stap
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning lege tekst noemt beheer en lokale invoer, maar maakt niet duidelijk dat beheer de eerste plek is om middelen te koppelen.
+- **User Impact:** Gebruikers kunnen bij een lege planning twijfelen of ze naar beheer of import moeten gaan.
+- **Desired Outcome:** Lege planningtekst noemt beheer als eerste stap zonder extra layout.
+- **User Value:** De lege planningstaat geeft rustiger richting aan de volgende actie.
+- **Acceptance Criteria:** Lege planningtekst noemt beheer als eerste stap; lokale invoer blijft zichtbaar; app-shell tests bewaken de nieuwe copy.
+- **Affected Screens:** Medicatie planning primair paneel
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1663 — Medicatie planning lege empty-state titel noemt vervolgplanning
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3271
 
 ### G1662 — Medicatie planning primaire paneeltitel gebruikt lege-state copy
 
