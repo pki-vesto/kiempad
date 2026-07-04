@@ -566,17 +566,34 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Epic:** Premium Claude Design UI
 - **Problem:** Mobiele screen-stage panelruimte is nu rustiger boven de bottom-nav, maar de workspace-strip kan nog expliciet bewaakt worden tegen te veel hoogte boven de content.
 - **User Impact:** Een hoge mobiele workspace-strip kan de actieve taak alsnog omlaag duwen en het lange-pagina gevoel terugbrengen.
-- **Desired Outcome:** Mobiele workspace-strip blijft compact en veroorzaakt geen horizontale overflow.
+- **Desired Outcome:** Mobiele workspace-strip blijft hoogtebegrensd, compact en veroorzaakt geen horizontale overflow.
 - **User Value:** Mobiele gebruikers zien sneller de actieve taak en behouden context zonder extra scroll.
-- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele workspace-strip blijft compact en veroorzaakt geen horizontale overflow; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele workspace-strip compactheid; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele workspace-strip blijft hoogtebegrensd en veroorzaakt geen horizontale overflow; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele workspace-strip compactheid; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
 - **Affected Screens:** App-shell, alle hoofdschermen
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** App shell, mobile layout, workspace strip
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3403
+
+### G1731 — App-shell mobiel workspace-strip knoppen blijven compact swipebaar
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De mobiele workspace-strip is nu hoogtebegrensd, maar de stripknoppen kunnen nog expliciet bewaakt worden zodat ze compact en swipebaar blijven.
+- **User Impact:** Te brede of hoge stripknoppen kunnen de actieve content verdringen of horizontale pagina-overflow veroorzaken.
+- **Desired Outcome:** Mobiele workspace-strip switcher en quick links blijven compact horizontaal swipebaar.
+- **User Value:** Gebruikers houden context zonder dat de strip de taak domineert.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele workspace-strip switcher en quick links blijven horizontaal swipebaar; stripknoppen blijven compact zonder horizontale pagina-overflow; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele stripknoppen; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, mobile layout, workspace strip buttons
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3405
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

@@ -3124,6 +3124,11 @@ describe('app shell', () => {
     expect(css).toContain('.workspace-map__card[data-workspace-map-state="active"]');
     expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-map,');
     expect(mobileCss).toContain('.workspace-strip {');
+    expect(mobileCss).toContain('gap: 6px;');
+    expect(mobileCss).toContain('max-height: min(138px, 28svh);');
+    expect(mobileCss).toContain('overflow: hidden auto;');
+    expect(mobileCss).toContain('overscroll-behavior: contain;');
+    expect(mobileCss).toContain('padding: 8px;');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.workspace-strip > div,');
     expect(mobileCss).toContain('.workspace-strip__description {');

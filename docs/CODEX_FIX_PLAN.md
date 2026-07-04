@@ -1933,3 +1933,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   contained vertical panel scrolling and stable scrollbar gutters.
 - Partial G1729/#3401: Mobile screen-stage panels now hide horizontal overflow and keep
   extra bottom clearance/scroll margin above the fixed bottom navigation.
+- Partial G1730/#3403: Mobile workspace strips now use tighter spacing and a bounded
+  height with contained overflow so route context does not push active content down.
