@@ -3326,6 +3326,12 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       workspaceSwitcherBorderInlineStartStyle:
         workspaceSwitcherStyle?.borderInlineStartStyle ?? '',
       workspaceSwitcherBorderInlineEndStyle: workspaceSwitcherStyle?.borderInlineEndStyle ?? '',
+      workspaceSwitcherBorderBlockStartColor:
+        workspaceSwitcherStyle?.borderBlockStartColor ?? '',
+      workspaceSwitcherBorderBlockEndColor: workspaceSwitcherStyle?.borderBlockEndColor ?? '',
+      workspaceSwitcherBorderInlineStartColor:
+        workspaceSwitcherStyle?.borderInlineStartColor ?? '',
+      workspaceSwitcherBorderInlineEndColor: workspaceSwitcherStyle?.borderInlineEndColor ?? '',
       workspaceSwitcherBoxSizing: workspaceSwitcherStyle?.boxSizing ?? '',
       workspaceSwitcherDisplay: workspaceSwitcherStyle?.display ?? '',
       workspaceSwitcherMinWidth: workspaceSwitcherStyle?.minWidth ?? '',
@@ -3433,6 +3439,17 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       reloadLayout.workspaceSwitcherBorderBlockEndStyle === 'none' &&
       reloadLayout.workspaceSwitcherBorderInlineStartStyle === 'none' &&
       reloadLayout.workspaceSwitcherBorderInlineEndStyle === 'none');
+  const switcherBorderColorValues = [
+    reloadLayout.workspaceSwitcherBorderBlockStartColor,
+    reloadLayout.workspaceSwitcherBorderBlockEndColor,
+    reloadLayout.workspaceSwitcherBorderInlineStartColor,
+    reloadLayout.workspaceSwitcherBorderInlineEndColor,
+  ];
+  const smallMobileSwitcherBorderColorStable =
+    viewportLabel !== 'small-mobile' ||
+    switcherBorderColorValues.every((color) =>
+      ['rgba(0, 0, 0, 0)', 'transparent'].includes(color),
+    );
   const smallMobileSwitcherBoxSizingStable =
     viewportLabel !== 'small-mobile' || reloadLayout.workspaceSwitcherBoxSizing === 'border-box';
   const smallMobileSwitcherDisplayStable =
@@ -3525,6 +3542,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileSwitcherScrollWidthContained ||
     !smallMobileSwitcherBorderWidthStable ||
     !smallMobileSwitcherBorderStyleStable ||
+    !smallMobileSwitcherBorderColorStable ||
     !smallMobileSwitcherBoxSizingStable ||
     !smallMobileSwitcherDisplayStable ||
     !smallMobileSwitcherMinWidthStable ||
@@ -3574,6 +3592,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileSwitcherScrollWidthContained,
           smallMobileSwitcherBorderWidthStable,
           smallMobileSwitcherBorderStyleStable,
+          smallMobileSwitcherBorderColorStable,
           smallMobileSwitcherBoxSizingStable,
           smallMobileSwitcherDisplayStable,
           smallMobileSwitcherMinWidthStable,
@@ -3611,7 +3630,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
