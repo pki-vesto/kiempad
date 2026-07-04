@@ -1106,6 +1106,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   of clinic-prescription wording.
   Partial G1623/#3191: Medication planning empty state and route summary now use short
   follow-up context instead of long future-moment wording.
+  Partial G1624/#3193: Medication planning follow-up disclosure now uses short next-step
+  copy while preserving Today, Manage, Import and History links.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

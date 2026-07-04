@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1625 — Medicatie planning routeheader gebruikt korte routecontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning routeheader gebruikt nog uitleg over toekomstige afvinkmomenten uit eigen invoer of import.
+- **User Impact:** Gebruikers lezen extra context voordat ze bij de planningtaak komen.
+- **Desired Outcome:** Planning routeheader gebruikt korte routecontext en behoudt de routeoriëntatie.
+- **User Value:** De planningroute voelt compacter en sneller scanbaar.
+- **Acceptance Criteria:** Planning routeheader gebruikt korte routecontext; app-shell tests bewaken dat de oude routeheaderzin niet terugkeert.
+- **Affected Screens:** Medicatie planning routeheader
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1624 — Medicatie planning follow-up gebruikt korte vervolgstapcopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning disclosure, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3193
 
 ### G1623 — Medicatie planning lege staat gebruikt korte vervolgcontext
 
