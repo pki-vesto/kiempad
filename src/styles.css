@@ -13685,6 +13685,27 @@ h2 {
   font-weight: 850;
 }
 
+.cost-amount-cell {
+  display: inline-grid;
+  grid-template-columns: auto minmax(7ch, 1fr);
+  align-items: baseline;
+  justify-self: end;
+  gap: 4px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cost-amount__currency {
+  color: var(--text-muted);
+  font-size: 0.82em;
+  font-weight: 800;
+}
+
+.cost-amount__value {
+  min-width: 7ch;
+  text-align: right;
+}
+
 .cost-history-card__meta {
   display: flex;
   flex-wrap: wrap;

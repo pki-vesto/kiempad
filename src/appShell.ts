@@ -14166,7 +14166,7 @@ function renderKostenItem(item: CostItem): string {
             <p class="kp-card__eyebrow">${escapeHtml(COST_CATEGORIE_LABELS[item.categorie])}</p>
             <h3>${escapeHtml(item.omschrijving)}</h3>
           </div>
-          <span class="cost-amount cost-history-card__amount" data-cost-amount="row">${formatEuro(item.bedrag)}</span>
+          ${renderCostAmountCell(item.bedrag)}
         </header>
         <div class="cost-history-card__meta">
           ${renderCostStatusBadge(item.vergoed)}
@@ -14192,6 +14192,15 @@ function renderCostStatusBadge(status: CostItem['vergoed']): string {
       'status-badge-state': status,
     },
   });
+}
+
+function renderCostAmountCell(value: number): string {
+  const formatted = formatEuro(value);
+  const amount = new Intl.NumberFormat('nl-NL', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+  return `<span class="cost-amount cost-history-card__amount cost-amount-cell" data-cost-amount="row" data-cost-amount-cell="ready" aria-label="${escapeAttribute(formatted)}"><span class="cost-amount__currency" aria-hidden="true">€</span><span class="cost-amount__value">${escapeHtml(amount)}</span></span>`;
 }
 
 function costStatusBadgeTone(
