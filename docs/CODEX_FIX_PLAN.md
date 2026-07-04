@@ -1821,3 +1821,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the route summary keeps the later medicatie status.
 - Partial G1675/#3295: Medication planning route options import link now says Lokale import while
   preserving the `#medicatie?route=import` href.
+- Partial G1676/#3297: Medication planning route options history link now says Historie
+  teruglezen while preserving the `#medicatie?route=historie` href.
