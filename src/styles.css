@@ -23662,6 +23662,7 @@ summary[class*="__summary"]:focus-visible,
     min-height: 32px;
     justify-content: center;
     overflow: hidden;
+    scroll-margin-inline: 8px;
     scroll-snap-align: start;
     text-overflow: ellipsis;
   }

@@ -1985,3 +1985,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   button snap-align separately from the switcher snap setting.
 - Partial G1755/#3453: Small-mobile workspace-strip switchers now keep inline
   scroll-padding around snap positions, guarded by reload smoke.
+- Partial G1756/#3455: Small-mobile active workspace-strip buttons now keep inline
+  scroll-margin around snap positions, guarded by reload smoke.
