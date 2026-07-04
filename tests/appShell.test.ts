@@ -7854,6 +7854,14 @@ describe('app shell', () => {
     expect(emptyForm).toContain('data-dossier-upload-size-guidance="ready"');
     expect(emptyForm).toContain(describeDossierUploadLimits());
     expect(emptyForm).toContain('Kiempad toont alleen type en grootte in foutmeldingen.');
+    expect(emptyForm).toContain('class="attachment-envelope-status"');
+    expect(emptyForm).toContain('data-attachment-envelope-surface="dossier-upload"');
+    expect(emptyForm).toContain('data-attachment-envelope-validation="idle"');
+    expect(emptyForm).toContain('Envelope controle');
+    expect(emptyForm).toContain('technisch type, grootte en hashstatus');
+    expect(emptyForm).toContain('Bestandsnaam, broninhoud, OCR-tekst en medische context');
+    expect(emptyForm).not.toContain('echo-foto-privenaam.jpg');
+    expect(emptyForm).not.toContain('base64-bijlage-inhoud');
     expect(emptyForm).toContain('name="lokaleOcr" type="checkbox" value="ja"');
     expect(emptyForm).toContain('id="dossier-concept-preview"');
     expect(emptyForm).toContain('name="conceptBevestigd" type="checkbox" value="ja" required');
@@ -9337,6 +9345,9 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-upload-console__context:not([open]) > p {');
     expect(css).toContain('.dossier-upload-console__body {');
+    expect(css).toContain('.attachment-envelope-status {');
+    expect(css).toContain('[data-attachment-envelope-validation="valid"]');
+    expect(css).toContain('[data-attachment-envelope-validation="invalid"]');
     expect(css).toContain('[data-hub-workflow="dossier-upload"] .hub-workflow-tabs {');
     expect(css).toContain(
       '[data-hub-workflow="dossier-upload"] .hub-workflow-tabs::-webkit-scrollbar',

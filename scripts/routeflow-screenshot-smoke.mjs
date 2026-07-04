@@ -1141,6 +1141,8 @@ const targets = [
       '#dossier-upload-form',
       '[data-dossier-upload-group="document-basis"]',
       '[data-dossier-upload-file-choice="ready"]',
+      '[data-attachment-envelope-surface="dossier-upload"]',
+      '[data-attachment-envelope-validation="idle"]',
       '[data-dossier-upload-metadata="collapsed"]',
       '[data-dossier-upload-metadata="collapsed"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-optional="koppelingen"]',

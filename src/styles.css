@@ -22027,6 +22027,7 @@ summary[class*="__summary"]:focus-visible,
 
 #dossier-concept-preview [data-dossier-upload-validation] {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   align-items: start;
   justify-content: space-between;
@@ -22036,6 +22037,50 @@ summary[class*="__summary"]:focus-visible,
   border-radius: 8px;
   background: var(--surface);
   overflow-wrap: anywhere;
+}
+
+#dossier-concept-preview [data-attachment-envelope-validation] {
+  flex: 1 1 100%;
+  min-width: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+#dossier-concept-preview [data-attachment-envelope-validation="valid"] {
+  color: var(--accent-strong);
+}
+
+#dossier-concept-preview [data-attachment-envelope-validation="invalid"] {
+  color: var(--danger);
+}
+
+.attachment-envelope-status {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface));
+}
+
+.attachment-envelope-status div {
+  display: grid;
+  gap: 3px;
+}
+
+.attachment-envelope-status strong {
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.attachment-envelope-status span,
+.attachment-envelope-status p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
 }
 
 #dossier-concept-preview [data-dossier-upload-validation="accepted"] {

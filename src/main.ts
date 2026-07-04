@@ -26,6 +26,7 @@ import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { exporteerAfsprakenAlsIcs, importeerAfsprakenUitIcs } from './domain/agenda';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
+import { evaluateAttachmentEnvelopeMetadata } from './domain/attachmentEnvelope';
 import { maakConsultPrintHtml } from './domain/consultExport';
 import { ConsultVerslagStore } from './domain/consultVerslagStore';
 import { CycleDataStore } from './domain/cycleDataStore';
@@ -1150,6 +1151,14 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
       : `${file.name} · ${
           profiel ? DOSSIER_UPLOAD_PROFIEL_LABELS[profiel] : 'Onbekend profiel'
         } · ${file.type || 'onbekend bestandstype'} · ${formatBytes(file.size)}`;
+    const envelopeCheck = evaluateAttachmentEnvelopeMetadata({
+      contentType: rejected ? undefined : file.type || undefined,
+      sizeBytes: rejected ? undefined : file.size,
+    });
+    const envelopeStatus = document.createElement('small');
+    envelopeStatus.dataset.attachmentEnvelopeValidation = envelopeCheck.status;
+    envelopeStatus.textContent = `${envelopeCheck.label}: ${envelopeCheck.detail}`;
+    item.append(envelopeStatus);
     list.append(item);
   }
 

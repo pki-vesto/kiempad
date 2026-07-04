@@ -2199,3 +2199,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   workspaces with a sticky route header on desktop and tablet, so upload,
   review, imaging and timeline no longer read as one continuous main-column
   page.
+- Partial G585/#936: Dossier upload now shows privacy-safe attachment envelope
+  metadata feedback for central encrypted storage, including type/size/hash
+  status and generic backend error copy without filenames, source content,
+  OCR text or medical context.

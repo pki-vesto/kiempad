@@ -85,4 +85,16 @@ describe('dossier upload validation', () => {
     expect(failure).toContain('broninhoud is niet gelogd');
     expect(failure).not.toContain('request-body-too-large');
   });
+
+  it('beschrijft centrale attachment-envelope fouten zonder technische payload of bestandsnaam', () => {
+    const failure = describeDossierUploadFailure(
+      new Error('Record-body mist encrypted envelope voor echo-foto-privenaam.jpg'),
+    );
+
+    expect(failure).toContain('technische bijlagemetadata geweigerd');
+    expect(failure).toContain('Controleer type en grootte');
+    expect(failure).not.toContain('Record-body');
+    expect(failure).not.toContain('echo-foto-privenaam.jpg');
+    expect(failure).not.toContain('encrypted envelope');
+  });
 });
