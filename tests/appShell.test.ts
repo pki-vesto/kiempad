@@ -10387,6 +10387,10 @@ describe('app shell', () => {
     expect(queue).toContain('data-status-badge-state="concept"');
     expect(queue).toContain('data-status-badge-state="reviewed"');
     expect(queue).toContain('data-status-badge-state="hoog"');
+    expect(queue).toContain('Kiempad ordent je dossier; je kliniek blijft leidend.');
+    expect(queue).not.toContain(
+      'Deze wachtrij sorteert op OCR-confidence en reviewstatus. De lijst toont geen OCR-tekst, broninhoud of medisch advies.',
+    );
     expect(queue).toContain('Beeldbron verborgen tot ontgrendeling');
     expect(queue).not.toContain('secret-review-echo.jpg');
     expect(queue).not.toContain('GEVOELIGE OCR TEKST');
@@ -10848,7 +10852,8 @@ describe('app shell', () => {
     expect(panel).toContain('data-dossier-status-kind="review"');
     expect(panel).toContain('data-status-badge-state="concept"');
     expect(panel).toContain('data-status-badge-tone="warning"');
-    expect(panel).toContain(
+    expect(panel).toContain('Kiempad ordent je beelden; je kliniek blijft leidend.');
+    expect(panel).not.toContain(
       'Classificatie is beschrijvend: echo per afspraak, geen beeldanalyse of medisch advies.',
     );
     expect(panel).not.toContain('Portaal bron eerste');

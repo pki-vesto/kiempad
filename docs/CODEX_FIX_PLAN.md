@@ -1078,6 +1078,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   disclaimer instead of score/diagnose/behandeladvies/trackingdata caveats.
   Partial G1609/#3163: Dossier start and upload choice now use one short dossier-context
   disclaimer instead of OCR/bestandsinhoud/beeldpayloads/medical-advice caveats.
+  Partial G1610/#3165: Dossier review queue and echo appointment classification now use short
+  dossier/image context disclaimers instead of OCR/broninhoud/beeldanalyse/medical-advice caveats.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
