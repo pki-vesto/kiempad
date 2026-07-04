@@ -6300,6 +6300,23 @@ describe('app shell', () => {
     expect(html).not.toContain('Schema vraagt controle');
   });
 
+  it('gebruikt korte medicatie-import feedbacktitel', () => {
+    const html = renderAppShell('medicatie', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      medicatieImportStatus: 'Import klaar.',
+    });
+
+    expect(html).toContain('Feedback klaar');
+    expect(html).not.toContain('Schemafeedback beschikbaar');
+  });
+
   it('toont één actieve medicationroute tegelijk', () => {
     const html = renderAppShell('medicatie', {
       trajecten: [],

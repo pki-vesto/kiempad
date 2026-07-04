@@ -18543,7 +18543,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           title: state.medicatieImportError
             ? 'Controle nodig'
             : state.medicatieImportStatus
-              ? 'Schemafeedback beschikbaar'
+              ? 'Feedback klaar'
               : 'Schema klaarzetten',
           detail: 'Maak lokale planning uit je schema.',
           status: state.medicatieImportError
