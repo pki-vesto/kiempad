@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1592 — Medicatie historie opent niet automatisch
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Medicatie Historie klapte middelen, voorraad en innameloghistorie automatisch open zodra er medicatie in het dossier stond.
+- **User Impact:** Gebruikers kregen alsnog een lange medicatiepagina terwijl ze alleen de historie-route of routekeuze wilden openen.
+- **Desired Outcome:** De historie-route toont eerst de samenvatting en houdt middelen, voorraad en historie achter een gesloten paneel met vaste hook.
+- **User Value:** Gebruikers starten rustiger in medicatiehistorie en openen de volledige lijst alleen wanneer ze die nodig hebben.
+- **Acceptance Criteria:** Medicatie Historie houdt het middelen/voorraad/historie-paneel standaard gesloten; het paneel heeft de vaste id `medication-history-disclosure`; bestaande medicatielijst, voorraad, instructies en innameloghistorie blijven bereikbaar; app-shell tests bewaken gesloten startstaat en bestaande medicatie-inhoud; geen diagnose, doseringsberekening, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Medicatie historie
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Medication routes, medication disclosures, app-shell tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3128
+
 ### G1591 — Agenda contextpanelen openen niet automatisch
 
 - **Epic:** Onboarding & Daily Use

@@ -6131,6 +6131,11 @@ describe('app shell', () => {
     expect(html).toContain('Komende medicatiemomenten');
     expect(html).toContain('Middel beheren');
     expect(html).toContain('Middelen, voorraad en historie');
+    expect(html).toContain('id="medication-history-disclosure"');
+    expect(html).toContain('Middelen, voorraad en historie tonen');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="medication-history-disclosure" open',
+    );
     expect(html).toContain('Schema importeren');
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Progesteron | 2026-06-23 | 08:00');
