@@ -1833,3 +1833,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the `#medication-planning-followup` disclosure.
 - Partial G1681/#3307: Medication planning route options counter now says medicatie later
   while preserving the planned medication count.
+- Partial G1682/#3309: Medication planning route options helper now says historie teruglezen
+  while preserving the visible history route link.
