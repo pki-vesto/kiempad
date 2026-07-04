@@ -2477,6 +2477,10 @@ async function assertRouteflows(browser, options) {
                 addRouteInactiveBackground: inactiveAddRouteStyle?.backgroundColor ?? '',
                 addRouteFocusBorderColor: activeAddRouteFocusStyle?.borderColor ?? '',
                 addRouteFocusBoxShadow: activeAddRouteFocusStyle?.boxShadow ?? '',
+                addRouteFocusTransitionDuration:
+                  activeAddRouteFocusStyle?.transitionDuration ?? '',
+                addRouteFocusTransitionProperty:
+                  activeAddRouteFocusStyle?.transitionProperty ?? '',
                 routeItemMinHeight: routeItemStyle?.minHeight ?? '',
                 routeItemWidth: routeItem?.getBoundingClientRect().width ?? 0,
                 routeItemPaddingTop: routeItemStyle?.paddingTop ?? '',
@@ -3302,6 +3306,9 @@ async function assertRouteflows(browser, options) {
           evidence.uploadConsole.addRouteFocusBoxShadow === '' ||
           evidence.uploadConsole.addRouteFocusBoxShadow.includes('0px 0px 0px 3px') ||
           evidence.uploadConsole.addRouteFocusBoxShadow.includes('0px 0px 0px 4px') ||
+          evidence.uploadConsole.addRouteFocusTransitionDuration === '' ||
+          evidence.uploadConsole.addRouteFocusTransitionProperty === '' ||
+          !evidence.uploadConsole.addRouteFocusTransitionProperty.includes('box-shadow') ||
           parseFloat(evidence.uploadConsole.routeItemMinHeight) > 60 ||
           evidence.uploadConsole.routeItemWidth > 158 ||
           parseFloat(evidence.uploadConsole.routeItemPaddingTop) > 7)

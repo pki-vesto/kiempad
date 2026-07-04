@@ -9605,6 +9605,9 @@ describe('app shell', () => {
     expect(css).toContain(
       'background: color-mix(in srgb, var(--surface) 99%, var(--surface-subtle));',
     );
+    expect(css).toContain('border-color 120ms ease,');
+    expect(css).toContain('box-shadow 120ms ease,');
+    expect(css).toContain('background-color 120ms ease;');
     expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 44%, var(--border));');
     expect(css).toContain('0 0 0 2px color-mix(in srgb, var(--accent) 32%, transparent)');
     expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 42%, var(--border));');
@@ -9613,6 +9616,10 @@ describe('app shell', () => {
     expect(css).toContain('font-size: 0.64rem;');
     expect(css).toContain('flex: 0 0 min(156px, 64vw);');
     expect(css).toContain('min-height: 60px;');
+    expect(css).toContain('@media (max-width: 420px) and (prefers-reduced-motion: reduce) {');
+    expect(css).toContain(
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route {\n    transition: none;\n  }',
+    );
     expect(css).toContain('.dossier-add-route-disclosure__summary {');
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('.dossier-add-route-disclosure > .dossier-add-route-panel,');
