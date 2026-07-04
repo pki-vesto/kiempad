@@ -40,7 +40,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize',
+      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font',
     );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
@@ -66,6 +66,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileActiveButtonSnapStopStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherTouchPanStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileActiveButtonTextSizeAdjustStable');
+    expect(routeflowScreenshotSmokeScript).toContain('smallMobileActiveButtonFontSmoothingStable');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonWidth');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonLeft');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonRight');
@@ -81,6 +82,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonScrollSnapAlign');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonScrollSnapStop');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonTextSizeAdjust');
+    expect(routeflowScreenshotSmokeScript).toContain('activeButtonFontSmoothing');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonClientWidth');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonScrollWidth');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceStripLeft');

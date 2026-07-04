@@ -1085,8 +1085,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload active button font smoothing
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3463
+
+### G1761 — App-shell mobiel workspace-strip bewaakt reload actieve stripknop tap-highlight op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve knop heeft nu stabiele font-smoothing, maar kan nog expliciet bewaakt worden op rustige tap-highlight instellingen zodat touchfeedback de compacte rij niet visueel verstoort.
+- **User Impact:** Een dominante browser tap-highlight kan bij smalle routeknoppen onrustig ogen na tikken of reloadcontext.
+- **Desired Outcome:** Small-mobile reloads houden de actieve workspace-strip knop met stabiele tap-highlight instellingen.
+- **User Value:** Gebruikers houden een rustige, premium touchervaring in de compacte workspace-strip.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust en actieve knop font-smoothing; actieve workspace-strip knop gebruikt na reload stabiele tap-highlight instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload actieve stripknop tap-highlight; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload active button tap highlight
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3465
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

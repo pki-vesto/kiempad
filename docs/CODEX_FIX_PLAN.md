@@ -1993,3 +1993,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   touch pan behavior, guarded by reload smoke.
 - Partial G1759/#3461: Small-mobile active workspace-strip buttons now declare
   stable text-size-adjust values, guarded by reload smoke.
+- Partial G1760/#3463: Small-mobile active workspace-strip buttons now declare
+  stable font-smoothing, guarded by reload smoke.
