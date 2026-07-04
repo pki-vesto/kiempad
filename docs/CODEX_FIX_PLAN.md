@@ -1773,3 +1773,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   while preserving the Plan badge.
 - Partial G1651/#3247: Medication import default route summary detail now uses direct local
   planning copy while preserving the default title and badge.
+- Partial G1652/#3249: Medication import route header now says schemas are converted locally to
+  planning while preserving the route title.

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1653 — Medicatie import routetitel gebruikt lokale invoercopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import routetitel noemt nog schema importeren terwijl de route lokaal plannen benadrukt.
+- **User Impact:** Gebruikers zien bovenaan nog minder directe lokale invoercontext.
+- **Desired Outcome:** Import routetitel gebruikt lokale invoercopy en behoudt de routeankers.
+- **User Value:** De importroute wordt consistenter met de lokale planningflow.
+- **Acceptance Criteria:** Routetitel noemt lokale invoer; route-id en aria-labelledby blijven behouden; app-shell tests bewaken dat de oude titel niet terugkeert in de importroute.
+- **Affected Screens:** Medicatie import routeheader
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route header, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1652 — Medicatie import routeheader gebruikt directe lokale planningscopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route header, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3249
 
 ### G1651 — Medicatie import standaarddetail gebruikt directe planningscopy
 

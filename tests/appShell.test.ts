@@ -6232,7 +6232,8 @@ describe('app shell', () => {
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Medicatie | 2026-06-23 | 08:00');
     expect(html).not.toContain('Progesteron | 2026-06-23 | 08:00');
-    expect(html).toContain('Zet je kliniekschema om naar planning.');
+    expect(html).toContain('Zet je schema lokaal om naar planning.');
+    expect(html).not.toContain('Zet je kliniekschema om naar planning.');
     expect(html).not.toContain('Importeer geplande momenten uit je eigen klinieklijst.');
     expect(html).toContain('Lokale planning');
     expect(html).not.toContain('Schema klaarzetten');
