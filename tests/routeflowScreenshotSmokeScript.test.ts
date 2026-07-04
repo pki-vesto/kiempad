@@ -40,7 +40,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color-radius',
+      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color-radius-background',
     );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
@@ -61,6 +61,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherBorderStyleStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherBorderColorStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherBorderRadiusStable');
+    expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherBackgroundStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherBoxSizingStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherDisplayStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherMinWidthStable');
@@ -128,6 +129,8 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherBorderStartEndRadius');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherBorderEndStartRadius');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherBorderEndEndRadius');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherBackgroundColor');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherBackgroundImage');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherBoxSizing');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherDisplay');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherMinWidth');
