@@ -42207,6 +42207,11 @@ describe('app shell', () => {
             state: 'success',
             status: 'Recordpakket bevat encrypted payload voor dossierpayload Progesteron 200 mg.',
           },
+          'record-load': {
+            state: 'warning',
+            status:
+              'Recordload cursor bevat central-token passphrase plaintext fertiliteitsnotitie.',
+          },
         },
       }),
     );
@@ -42220,9 +42225,12 @@ describe('app shell', () => {
     expect(syncFeedback).toContain('data-central-sync-feedback-state="error"');
     expect(syncFeedback).toContain('data-central-sync-feedback-kind="record-package"');
     expect(syncFeedback).toContain('data-central-sync-feedback-state="success"');
+    expect(syncFeedback).toContain('data-central-sync-feedback-kind="record-load"');
+    expect(syncFeedback).toContain('data-central-sync-feedback-state="warning"');
     expect(syncFeedback).toContain('Replayconflict bijgewerkt zonder sessie- of recorddetails.');
     expect(syncFeedback).toContain('Sessie bijgewerkt zonder sessie- of recorddetails.');
     expect(syncFeedback).toContain('Recordpakket bijgewerkt zonder sessie- of recorddetails.');
+    expect(syncFeedback).toContain('Recordload bijgewerkt zonder sessie- of recorddetails.');
     expect(syncFeedback).toContain('geen recordinhoud');
 
     expect(backupZone).toContain('data-sync-export-state="central-record-package"');

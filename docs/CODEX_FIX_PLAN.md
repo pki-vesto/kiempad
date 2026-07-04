@@ -2203,3 +2203,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   metadata feedback for central encrypted storage, including type/size/hash
   status and generic backend error copy without filenames, source content,
   OCR text or medical context.
+- Partial G584/#934: Central record pagination now has a reusable load-status
+  iterator plus a generic Back-up route status row for loading, empty-page,
+  complete and error states without passphrases, tokens, cursors, record
+  payloads or medical plaintext.

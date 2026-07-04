@@ -893,7 +893,11 @@ export type AppShellLoadingState = {
   message: string;
 };
 
-type CentralSyncFeedbackKind = 'replay-conflict' | 'stale-session' | 'record-package';
+type CentralSyncFeedbackKind =
+  | 'replay-conflict'
+  | 'stale-session'
+  | 'record-package'
+  | 'record-load';
 
 type CentralSyncFeedbackItem = {
   state: 'idle' | 'success' | 'warning' | 'error';
@@ -3069,6 +3073,11 @@ const CENTRAL_SYNC_FEEDBACK_DEFAULTS: Record<
     defaultState: 'idle',
     defaultCopy: 'Recordpakketstatus klaar voor handmatige versleutelde overdracht.',
   },
+  'record-load': {
+    label: 'Recordload',
+    defaultState: 'idle',
+    defaultCopy: 'Centrale recordpagina’s worden alleen als versleutelde status geladen.',
+  },
 };
 
 function renderCentralSyncFeedback(state: AppShellState): string {
@@ -3078,7 +3087,7 @@ function renderCentralSyncFeedback(state: AppShellState): string {
     <section class="policy-panel embedded-summary" aria-label="Centrale overdrachtstatus" data-central-sync-feedback="central-encrypted">
       <h2>Centrale overdrachtstatus</h2>
       <dl class="summary-list">
-        ${(['replay-conflict', 'stale-session', 'record-package'] as const)
+        ${(['replay-conflict', 'stale-session', 'record-package', 'record-load'] as const)
           .map((kind) => renderCentralSyncFeedbackRow(kind, state.centralSyncFeedback?.[kind]))
           .join('')}
       </dl>
