@@ -2141,3 +2141,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1820/#3583: Dossier upload active route titles now keep CanvasText
   in small-mobile forced-colors mode with a calmer title weight, preserving
   focus and the selected-route indicator.
+- Partial G1821/#3585: Dossier upload active route context lines now keep
+  CanvasText with a calmer forced-colors weight on small-mobile so context
+  remains readable without competing with the active title or focus cue.
