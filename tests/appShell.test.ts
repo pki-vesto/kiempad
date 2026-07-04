@@ -9644,7 +9644,7 @@ describe('app shell', () => {
       '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    span {\n    color: CanvasText;\n    font-weight: 720;\n    line-height: 1.16;\n  }',
     );
     expect(css).toContain(
-      '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    small {\n    align-self: end;\n    color: CanvasText;\n    font-weight: 680;\n    line-height: 1.18;\n    text-decoration: none;\n  }',
+      '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    small {\n    align-self: end;\n    color: CanvasText;\n    font-weight: 680;\n    line-height: 1.18;\n    text-decoration: none;\n    text-decoration-line: none;\n  }',
     );
     expect(css).toContain('.dossier-add-route-disclosure__summary {');
     expect(css).toContain('min-height: 44px;');
