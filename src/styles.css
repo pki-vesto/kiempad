@@ -21143,6 +21143,8 @@ summary[class*="__summary"]:focus-visible,
     height: 22px;
     min-height: 22px;
     place-items: center;
+    align-items: center;
+    justify-items: center;
     padding: 0;
     border: 1px solid Highlight;
     border-radius: var(--radius-pill);

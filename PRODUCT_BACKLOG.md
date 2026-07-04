@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1520 |
+| ☑ klaar | 1521 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1719** |
+| **Totaal** | **1720** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1881,13 +1881,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1717 | Premium Claude Design UI: dossier upload beeldcontext forced-colors badge cijfer blijft rustig in fontgewicht | P1 | F5 | ☑ |
 | G1718 | Premium Claude Design UI: dossier upload beeldcontext forced-colors badge cijfer behoudt compact formaat | P1 | F5 | ☑ |
 | G1719 | Premium Claude Design UI: dossier upload beeldcontext forced-colors badge regelhoogte blijft compact | P1 | F5 | ☑ |
-| G1720 | Premium Claude Design UI: dossier upload beeldcontext forced-colors badge centrering blijft stabiel met compacte regelhoogte | P1 | F5 | ☐ |
+| G1720 | Premium Claude Design UI: dossier upload beeldcontext forced-colors badge centrering blijft stabiel met compacte regelhoogte | P1 | F5 | ☑ |
+| G1721 | Premium Claude Design UI: dossier upload beeldcontext forced-colors badge nulpadding blijft stabiel | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1719** (id's G001 t/m G1720; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1720** (id's G001 t/m G1721; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
