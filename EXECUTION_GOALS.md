@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1693 — Medicatie planning routeopties helper gebruikt natuurlijke planningterm
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties helper gebruikt planningaanvullen als compacte term, maar deze leest minder natuurlijk.
+- **User Impact:** Gebruikers kunnen struikelen over een te compacte samenstelling in de routehelper.
+- **Desired Outcome:** De helper gebruikt een natuurlijke korte planningterm die scanbaar blijft.
+- **User Value:** De routeopties blijven kort zonder onnatuurlijke copy.
+- **Acceptance Criteria:** Helper gebruikt een natuurlijke korte planningterm; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1692 — Medicatie planning routeopties helper gebruikt korte planningterm
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3329
 
 ### G1691 — Medicatie planning routeopties helper noemt aanvullen met routecontext
 
