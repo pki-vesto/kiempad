@@ -40,7 +40,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin',
+      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block',
     );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
@@ -76,6 +76,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherPaddingInlineStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherPaddingBlockStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherMarginInlineStable');
+    expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherMarginBlockStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherAlignItemsStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherJustifyContentStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileActiveButtonTextSizeAdjustStable');
@@ -120,6 +121,8 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherJustifyContent');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherColumnGap');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherRowGap');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherMarginBlockStart');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherMarginBlockEnd');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherMarginInlineStart');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherMarginInlineEnd');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherPaddingBlockStart');
