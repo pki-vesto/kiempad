@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1665 — Medicatie planning routeheader noemt afvinken expliciet
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De planningrouteheader zegt komende afvinkmomenten, maar de toelichting blijft nog generiek.
+- **User Impact:** Gebruikers zien minder snel dat deze route bedoeld is om toekomstige afvinkmomenten te controleren.
+- **Desired Outcome:** De routeheader-toelichting noemt toekomstige afvinkmomenten controleren zonder extra layout.
+- **User Value:** De planningroute wordt sneller scanbaar voor dagelijks medicatiegebruik.
+- **Acceptance Criteria:** Routeheader-toelichting noemt controleren of klaarzetten van komende afvinkmomenten; bestaande planningroute blijft zichtbaar; app-shell tests bewaken de nieuwe copy.
+- **Affected Screens:** Medicatie planning routeheader
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1664 — Medicatie planning lege tekst noemt beheer als eerste stap
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3273
 
 ### G1663 — Medicatie planning lege empty-state titel noemt vervolgplanning
 

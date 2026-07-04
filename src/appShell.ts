@@ -18476,7 +18476,7 @@ function renderMedicatieScreen(state: AppShellState): string {
               plannedLogs.length > 0
                 ? renderDoseLogList(plannedLogs.slice(0, 1), state.medicatie)
                 : renderEmptyState(
-                    'Nog geen vervolgplanning buiten vandaag; beheer of lokale invoer helpt verder.',
+                    'Nog geen vervolgplanning buiten vandaag; begin in Beheer of plan via lokale invoer.',
                     {
                       title: 'Geen vervolgplanning',
                       cta: { href: '#medicatie?route=beheer', label: 'Beheer en invoer openen' },
