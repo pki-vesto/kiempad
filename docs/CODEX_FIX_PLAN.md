@@ -1951,3 +1951,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   back/forward history flow and verifies active workspace-strip context after navigation.
 - Partial G1738/#3419: Mobile and small-mobile routeflow smoke now reload the Vragen
   deep-link and verify the active workspace-strip button and panel layout remain stable.
+- Partial G1739/#3421: Reload routeflow smoke now also verifies the active workspace-strip
+  button does not receive focus after mobile and small-mobile deep-link reloads.
