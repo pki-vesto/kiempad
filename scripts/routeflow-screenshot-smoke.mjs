@@ -2470,6 +2470,7 @@ async function assertRouteflows(browser, options) {
                 addRouteActiveBackground: activeAddRouteStyle?.backgroundColor ?? '',
                 addRouteActiveBoxShadow: activeAddRouteStyle?.boxShadow ?? '',
                 addRouteInactiveBorderColor: inactiveAddRouteStyle?.borderColor ?? '',
+                addRouteInactiveBackground: inactiveAddRouteStyle?.backgroundColor ?? '',
                 routeItemMinHeight: routeItemStyle?.minHeight ?? '',
                 routeItemWidth: routeItem?.getBoundingClientRect().width ?? 0,
                 routeItemPaddingTop: routeItemStyle?.paddingTop ?? '',
@@ -3285,6 +3286,9 @@ async function assertRouteflows(browser, options) {
             evidence.uploadConsole.addRouteInactiveBorderColor ||
           evidence.uploadConsole.addRouteActiveBackground === '' ||
           evidence.uploadConsole.addRouteActiveBackground === 'rgba(0, 0, 0, 0)' ||
+          evidence.uploadConsole.addRouteInactiveBackground === '' ||
+          evidence.uploadConsole.addRouteActiveBackground !==
+            evidence.uploadConsole.addRouteInactiveBackground ||
           !evidence.uploadConsole.addRouteActiveBoxShadow.includes('inset') ||
           evidence.uploadConsole.addRouteActiveBoxShadow.includes('0px -2px') ||
           evidence.uploadConsole.addRouteActiveBoxShadow.includes('0px -3px') ||
