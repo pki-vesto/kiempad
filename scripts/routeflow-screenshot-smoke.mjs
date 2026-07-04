@@ -3271,6 +3271,11 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       activeButtonMatchesFocusVisible: Boolean(activeButton?.matches(':focus-visible')),
       activeButtonOutlineStyle: activeButtonStyle?.outlineStyle ?? '',
       activeButtonOutlineWidth: activeButtonStyle?.outlineWidth ?? '',
+      activeButtonOverflowX: activeButtonStyle?.overflowX ?? '',
+      activeButtonTextOverflow: activeButtonStyle?.textOverflow ?? '',
+      activeButtonWhiteSpace: activeButtonStyle?.whiteSpace ?? '',
+      activeButtonClientWidth: Math.round(activeButton?.clientWidth ?? 0),
+      activeButtonScrollWidth: Math.round(activeButton?.scrollWidth ?? 0),
       activePanelVisible: Boolean(
         activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
       ),
@@ -3336,6 +3341,13 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       !reloadLayout.activeButtonMatchesFocusVisible &&
       (reloadLayout.activeButtonOutlineStyle === 'none' ||
         reloadLayout.activeButtonOutlineWidth === '0px'));
+  const smallMobileActiveButtonTextClipped =
+    viewportLabel !== 'small-mobile' ||
+    (reloadLayout.activeButtonOverflowX === 'hidden' &&
+      reloadLayout.activeButtonTextOverflow === 'ellipsis' &&
+      reloadLayout.activeButtonWhiteSpace === 'nowrap' &&
+      reloadLayout.activeButtonClientWidth <= reloadLayout.activeButtonWidth &&
+      reloadLayout.activeButtonScrollWidth <= reloadLayout.activeButtonWidth + 1);
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3348,6 +3360,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileActiveButtonWidthCompact ||
     !smallMobileActiveButtonPositionVisible ||
     !smallMobileActiveButtonFocusRingCalm ||
+    !smallMobileActiveButtonTextClipped ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3368,6 +3381,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileActiveButtonWidthCompact,
           smallMobileActiveButtonPositionVisible,
           smallMobileActiveButtonFocusRingCalm,
+          smallMobileActiveButtonTextClipped,
         },
       )}).`,
     );
@@ -3380,7 +3394,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
