@@ -40967,6 +40967,10 @@ describe('app shell', () => {
     expect(html).toContain('data-decision-focus-shell="ready"');
     expect(html).toContain('data-decision-console="ready"');
     expect(html).toContain('Eerst opties structureren, daarna keuze vastleggen');
+    expect(html).toContain('Kiempad ordent je keuzes; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Voorbereiden, vergelijken, kiezen en teruglezen blijven in één beslisruimte zonder score, voorkeur of behandeladvies.',
+    );
     expect(html).not.toContain('data-decision-focus-region="workbench"');
     expect(html).toContain('data-decision-focus-region="workspace"');
     expect(html).not.toContain('data-decision-console-region="workbench"');
@@ -41012,6 +41016,9 @@ describe('app shell', () => {
     expect(html).toContain('href="#decision-prepare-followup"');
     expect(html).toContain('data-decision-prepare-layout="single-input"');
     expect(html).toContain('data-decision-prepare-primary="decision-form"');
+    expect(html).not.toContain(
+      'Onderwerp, artsvraag en minimaal twee opties blijven in één lokale invoer. Kiempad voegt geen score of behandeladvies toe.',
+    );
     expect(html).toContain('data-decision-prepare-followup="collapsed"');
     expect(html).toContain('id="decision-prepare-followup"');
     expect(html).toContain('Vervolgcontext openen');
@@ -41024,6 +41031,7 @@ describe('app shell', () => {
     expect(html).not.toContain('<details id="decision-prepare-followup" open');
     expect(html).toContain('aria-label="Afwegingen vergelijken route-samenvatting"');
     expect(html).toContain('data-decision-route-summary="compare"');
+    expect(html).not.toContain('Bekijk voors en tegens per optie zonder behandeladvies of score.');
     expect(html).toContain('Opties, voors en tegens openen');
     expect(html).toContain('aria-label="Afwegingen keuze route-samenvatting"');
     expect(html).toContain('data-decision-route-summary="choice"');

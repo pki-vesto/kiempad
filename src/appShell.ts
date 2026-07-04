@@ -227,6 +227,8 @@ const DAILY_CONTEXT_DISCLAIMER = 'Kiempad ordent je dag; je kliniek blijft leide
 
 const DOSSIER_CONTEXT_DISCLAIMER = 'Kiempad ordent je dossier; je kliniek blijft leidend.';
 
+const DECISION_CONTEXT_DISCLAIMER = 'Kiempad ordent je keuzes; je kliniek blijft leidend.';
+
 const APPOINTMENT_CONTEXT_DISCLAIMER = 'Kiempad ordent je afspraak; je kliniek blijft leidend.';
 
 const MEDICATION_CONTEXT_DISCLAIMER = 'Kiempad toont je planning; je kliniekschema blijft leidend.';
@@ -2077,7 +2079,7 @@ function renderAfwegingenScreen(state: AppShellState): string {
         <div class="decision-prepare-console" data-decision-prepare-layout="single-input">
           <div class="summary-panel decision-prepare-primary" data-decision-prepare-primary="decision-form">
             <h3>Beslisnotitie toevoegen</h3>
-            <p class="small-print">Onderwerp, artsvraag en minimaal twee opties blijven in één lokale invoer. Kiempad voegt geen score of behandeladvies toe.</p>
+            <p class="small-print">${DECISION_CONTEXT_DISCLAIMER}</p>
             ${renderDecisionForm(state)}
           </div>
           <details id="decision-prepare-followup" class="kp-disclosure decision-prepare-followup" data-decision-prepare-followup="collapsed">
@@ -2100,7 +2102,7 @@ function renderAfwegingenScreen(state: AppShellState): string {
         <header class="decision-route-section__header">
           <p class="kp-card__eyebrow">Vergelijken</p>
           <h2 id="afwegingen-route-compare-title">Opties vergelijken</h2>
-          <p>Bekijk voors en tegens per optie zonder behandeladvies of score.</p>
+          <p>${DECISION_CONTEXT_DISCLAIMER}</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Afwegingenroute',
@@ -2205,7 +2207,7 @@ function renderDecisionFocusShell(input: { workspace: string }): string {
       <header class="decision-focus-shell__header">
         <p class="kp-card__eyebrow">Keuzefocus</p>
         <h2 id="decision-focus-shell-title">Eerst opties structureren, daarna keuze vastleggen</h2>
-        <p>Voorbereiden, vergelijken, kiezen en teruglezen blijven in één beslisruimte zonder score, voorkeur of behandeladvies.</p>
+        <p>${DECISION_CONTEXT_DISCLAIMER}</p>
       </header>
       <div class="decision-focus-shell__body" data-decision-console="ready">
         <div class="decision-focus-shell__workspace" data-decision-focus-region="workspace" data-decision-console-region="workspace">
