@@ -42741,6 +42741,12 @@ describe('app shell', () => {
     expect(tabletCss).toContain('grid-template-rows: auto minmax(0, 1fr);');
     expect(tabletCss).toContain('.screen-stage__chrome {');
     expect(tabletCss).toContain('position: sticky;');
+    expect(tabletCss).toContain('max-height: min(24svh, 172px);');
+    expect(tabletCss).toContain('overflow-y: auto;');
+    expect(tabletCss).toContain('overscroll-behavior: contain;');
+    expect(tabletCss).toContain('.screen-stage__chrome > .page-header {');
+    expect(tabletCss).toContain('.screen-stage__chrome > .page-header .page-header__intro {');
+    expect(tabletCss).toContain('-webkit-line-clamp: 2;');
     expect(tabletCss).toContain('.screen-stage__panel {');
     expect(tabletCss).toContain('overflow-y: auto;');
     expect(tabletCss).toContain('overscroll-behavior: contain;');

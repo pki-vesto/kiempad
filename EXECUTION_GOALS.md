@@ -515,17 +515,34 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Epic:** Premium Claude Design UI
 - **Problem:** Desktop panel-scroll is nu stabieler, maar tablet chrome kan nog apart bewaakt worden tegen een te hoge routekop boven de paneelscroll.
 - **User Impact:** Een hoge tablet routekop kan de bounded tablet werkruimte alsnog als lange pagina laten voelen.
-- **Desired Outcome:** Tablet `.screen-stage__chrome` blijft compact boven de actieve panel-scrollzone.
+- **Desired Outcome:** Tablet `.screen-stage__chrome` blijft hoogtebegrensd en compact boven de actieve panel-scrollzone.
 - **User Value:** Tabletgebruikers houden meer ruimte over voor de actieve taak.
-- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; tablet `.screen-stage__chrome` blijft compact boven de actieve panel-scrollzone; tablet page-header/routekop veroorzaakt geen lange-pagina gevoel; desktop panel-scroll en mobiele bottom-nav regels blijven behouden; app-shell CSS tests bewaken tablet chrome compactheid; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; tablet `.screen-stage__chrome` blijft hoogtebegrensd en compact boven de actieve panel-scrollzone; tablet page-header intro's worden geklemd zodat de routekop geen lange-pagina gevoel veroorzaakt; desktop panel-scroll en mobiele bottom-nav regels blijven behouden; app-shell CSS tests bewaken tablet chrome compactheid; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
 - **Affected Screens:** App-shell, alle hoofdschermen
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** App shell, tablet layout, screen-stage chrome
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3397
+
+### G1728 — App-shell tablet paneel behoudt stabiele scrollruimte zonder horizontale druk
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Tablet chrome is nu compact begrensd, maar de actieve tablet paneel-scrollruimte kan nog expliciet bewaakt worden tegen horizontale druk.
+- **User Impact:** Onstabiele tablet scrollruimte kan content laten springen of alsnog een pagina-gevoel geven.
+- **Desired Outcome:** Tablet `.screen-stage__panel` behoudt stabiele scrollruimte met verborgen horizontale overflow en contained overscroll.
+- **User Value:** Tabletgebruikers ervaren de actieve taak als rustig werkpaneel.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; tablet `.screen-stage__panel` behoudt stable scrollbar-gutter en min-height 0; de tablet panel-scrollzone verbergt horizontale overflow en houdt overscroll contained; desktop panel-scroll en mobiele bottom-nav regels blijven behouden; app-shell CSS tests bewaken tablet panel-scrollruimte; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, tablet layout, screen-stage panel
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3399
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
