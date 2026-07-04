@@ -1126,6 +1126,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   control-needed copy instead of longer schema-check wording.
   Partial G1633/#3211: Medication import route summary feedback title now uses short
   feedback-ready copy instead of longer schemafeedback wording.
+  Partial G1634/#3213: Medication import route summary feedback badge now uses a
+  short OK label instead of the longer Feedback label.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

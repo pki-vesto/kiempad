@@ -6313,8 +6313,16 @@ describe('app shell', () => {
       medicatieImportStatus: 'Import klaar.',
     });
 
+    const importSummary = html.slice(
+      html.indexOf('data-medication-route-summary="import"'),
+      html.indexOf('id="medicatie-import-form"'),
+    );
     expect(html).toContain('Feedback klaar');
     expect(html).not.toContain('Schemafeedback beschikbaar');
+    expect(importSummary).toContain('<span class="command-route-summary__status">OK</span>');
+    expect(importSummary).not.toContain(
+      '<span class="command-route-summary__status">Feedback</span>',
+    );
   });
 
   it('toont één actieve medicationroute tegelijk', () => {

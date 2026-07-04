@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1635 — Medicatie import foutbadge gebruikt korte checklabel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import route-samenvatting gebruikt bij importfouten nog het statuslabel Check.
+- **User Impact:** Gebruikers zien in de compacte samenvatting nog Engelstalige statuscopy.
+- **Desired Outcome:** Import foutbadge gebruikt een kort Nederlands checklabel en behoudt de foutstatus.
+- **User Value:** Importfouten blijven consistent Nederlands en scanbaar.
+- **Acceptance Criteria:** Import foutbadge gebruikt kort Nederlands checklabel; app-shell tests bewaken dat het oude statuslabel niet terugkeert in de importfoutstatus.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1634 — Medicatie import statusbadge gebruikt korte feedbacklabel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3213
 
 ### G1633 — Medicatie import statustitel gebruikt korte feedbackcopy
 
