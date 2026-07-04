@@ -2047,3 +2047,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   visibility, guarded by CSS and reload smoke.
 - Partial G1786/#3515: Small-mobile workspace-strip switchers now keep visible
   display settings, guarded by CSS and reload smoke.
+- Partial G1787/#3517: Small-mobile workspace-strip switchers now keep stable
+  position settings, guarded by CSS and reload smoke.
