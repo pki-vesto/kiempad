@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1674 — Medicatie planning routeopties teller noemt later medicatie compact
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties teller gebruikt dezelfde later-medicatie copy als de samenvatting, maar staat in een kleine disclosurekop.
+- **User Impact:** De teller kan in de compacte kop wat lang lezen.
+- **Desired Outcome:** De teller blijft compact en noemt nog steeds latere medicatiecontext.
+- **User Value:** De follow-up kop blijft rustiger zonder context te verliezen.
+- **Acceptance Criteria:** Teller noemt latere medicatie compact; bestaande follow-up anchor blijft behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1673 — Medicatie planning routeopties helper noemt lokale import
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3291
 
 ### G1672 — Medicatie planning routekeuze titel noemt opties
 
