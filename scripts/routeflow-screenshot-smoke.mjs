@@ -3314,6 +3314,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
         workspaceSwitcherStyle?.scrollPaddingInlineStart ?? '',
       workspaceSwitcherScrollPaddingInlineEnd: workspaceSwitcherStyle?.scrollPaddingInlineEnd ?? '',
       workspaceSwitcherScrollSnapType: workspaceSwitcherStyle?.scrollSnapType ?? '',
+      workspaceSwitcherTouchAction: workspaceSwitcherStyle?.touchAction ?? '',
       bottomNavTop: Math.round(bottomNavTop),
       viewportWidth,
       viewportHeight,
@@ -3403,6 +3404,8 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       parseFloat(reloadLayout.activeButtonScrollMarginInlineEnd) >= 6);
   const smallMobileActiveButtonSnapStopStable =
     viewportLabel !== 'small-mobile' || reloadLayout.activeButtonScrollSnapStop === 'normal';
+  const smallMobileSwitcherTouchPanStable =
+    viewportLabel !== 'small-mobile' || reloadLayout.workspaceSwitcherTouchAction === 'pan-x';
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3424,6 +3427,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileSwitcherScrollPaddingStable ||
     !smallMobileActiveButtonScrollMarginStable ||
     !smallMobileActiveButtonSnapStopStable ||
+    !smallMobileSwitcherTouchPanStable ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3453,6 +3457,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileSwitcherScrollPaddingStable,
           smallMobileActiveButtonScrollMarginStable,
           smallMobileActiveButtonSnapStopStable,
+          smallMobileSwitcherTouchPanStable,
         },
       )}).`,
     );
@@ -3465,7 +3470,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
