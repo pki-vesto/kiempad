@@ -9054,7 +9054,12 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-image-context:target {');
     expect(css).toContain('scroll-margin-top: 18px;');
     expect(css).toContain('.dossier-upload-image-next-step {');
+    expect(css).toContain('align-items: flex-start;');
     expect(css).toContain('.dossier-upload-image-next-step span {');
+    expect(css).toContain('min-height: 34px;');
+    expect(css).toContain('max-width: 100%;');
+    expect(css).toContain('pointer-events: none;');
+    expect(css).toContain('white-space: normal;');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-lab-fields');
     expect(css).toContain('.consult-upload-report-choice');
     expect(css).toContain('.consult-upload-report-fields__body');

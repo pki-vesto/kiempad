@@ -21547,13 +21547,15 @@ summary[class*="__summary"]:focus-visible,
   flex-wrap: wrap;
   gap: 6px;
   padding: 0 10px 10px;
+  align-items: flex-start;
 }
 
 .dossier-upload-image-next-step span {
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  padding: 4px 8px;
+  max-width: 100%;
+  min-height: 34px;
+  padding: 6px 10px;
   border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--accent) 6%, var(--surface));
@@ -21561,6 +21563,8 @@ summary[class*="__summary"]:focus-visible,
   font-size: 0.74rem;
   font-weight: 780;
   line-height: 1.2;
+  pointer-events: none;
+  white-space: normal;
 }
 
 .dossier-upload-optional.dossier-upload-metadata-fields,

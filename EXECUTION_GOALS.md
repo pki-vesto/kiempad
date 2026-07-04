@@ -99,8 +99,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontext summary chips, upload action path, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3349
+
+### G1704 — Dossier upload beeldcontext velden tonen scanbare volgorde
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De beeldcontextchips hebben nu stabiele ruimte, maar de velden kunnen nog sterker dezelfde volgorde volgen.
+- **User Impact:** Gebruikers kunnen alsnog even zoeken welke invoer bij welke veilige metadatachip hoort.
+- **Desired Outcome:** Beeldcontextvelden volgen visueel de samenvattingsvolgorde context, bronlabel, cyclusdag.
+- **User Value:** Echo's, foto's en scans toevoegen voelt consistenter en sneller.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; beeldcontextvelden volgen visueel de samenvattingsvolgorde context, bronlabel, cyclusdag; desktop, tablet en mobile tonen geen overlap; tests dekken lege en gevulde uploadcontext plus locked imaging state; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontextvelden, upload action path, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3351
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 

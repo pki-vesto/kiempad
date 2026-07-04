@@ -1879,3 +1879,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1702/#3347: Dossier upload image context now shows a compact safe next-step
   summary for context, source label and cycle day without exposing filenames, OCR text or
   image payloads.
+- Partial G1703/#3349: Image-context chips now keep comfortable non-interactive spacing with
+  fixed minimum height, wrapping and routeflow evidence across desktop, tablet and mobile.
