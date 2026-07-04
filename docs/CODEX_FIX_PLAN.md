@@ -1062,6 +1062,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the day overview, advice workbench, advice list and action planner.
   Partial G1601/#3146: Agenda planning and Medication planning now use short task-context
   disclaimers in their primary task panels instead of long medical-advice caveats.
+  Partial G1602/#3148: Traject phase planning now uses one short treatment-context disclaimer in
+  the primary phase panel instead of a long treatment-advice/kansberekening caveat.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

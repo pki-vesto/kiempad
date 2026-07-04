@@ -41911,6 +41911,10 @@ describe('app shell', () => {
     expect(html).toContain('data-treatment-phase-layout="single-input"');
     expect(html).toContain('id="treatment-phase-primary"');
     expect(html).toContain('data-treatment-phase-primary="current-phase"');
+    expect(html).toContain('Kiempad ordent je trajectfase; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Markeer alleen de feitelijke trajectfase. Kiempad geeft geen behandeladvies, kansberekening of medische conclusie.',
+    );
     expect(html).toContain('data-treatment-phase-card="stimulatie"');
     expect(html).toContain('id="treatment-phase-followup"');
     expect(html).toContain('data-treatment-phase-followup="collapsed"');
