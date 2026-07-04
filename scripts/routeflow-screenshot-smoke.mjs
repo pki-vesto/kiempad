@@ -3384,8 +3384,9 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     reloadLayout.workspaceSwitcherOverscrollBehaviorX === 'contain';
   const smallMobileSwitcherSnapStable =
     viewportLabel !== 'small-mobile' ||
-    (['x', 'x proximity'].includes(reloadLayout.workspaceSwitcherScrollSnapType) &&
-      reloadLayout.activeButtonScrollSnapAlign === 'start');
+    ['x', 'x proximity'].includes(reloadLayout.workspaceSwitcherScrollSnapType);
+  const smallMobileActiveButtonSnapAlignStable =
+    viewportLabel !== 'small-mobile' || reloadLayout.activeButtonScrollSnapAlign === 'start';
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3403,6 +3404,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileSwitcherScrollbarHidden ||
     !smallMobileSwitcherOverscrollContained ||
     !smallMobileSwitcherSnapStable ||
+    !smallMobileActiveButtonSnapAlignStable ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3428,6 +3430,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileSwitcherScrollbarHidden,
           smallMobileSwitcherOverscrollContained,
           smallMobileSwitcherSnapStable,
+          smallMobileActiveButtonSnapAlignStable,
         },
       )}).`,
     );
@@ -3440,7 +3443,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,

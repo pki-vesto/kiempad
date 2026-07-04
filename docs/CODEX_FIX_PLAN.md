@@ -1981,3 +1981,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   horizontal overscroll and reload smoke verifies the computed overscroll guard.
 - Partial G1753/#3449: Small-mobile workspace-strip switchers now use x proximity
   scroll snap with start-aligned buttons, guarded by reload smoke.
+- Partial G1754/#3451: Small-mobile reload smoke now guards the active workspace-strip
+  button snap-align separately from the switcher snap setting.
