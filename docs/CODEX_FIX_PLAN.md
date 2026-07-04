@@ -2165,3 +2165,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1828/#3599: Dossier upload active route micro-labels now keep
   normal letter spacing in their own small-mobile forced-colors rule, reducing
   the risk of cramped cards or over-emphasized microcopy.
+- Partial G1829/#3601: Dossier upload active route micro-labels now keep a
+  normal font variant in their own small-mobile forced-colors rule, preventing
+  future small-caps drift from competing with the route title.

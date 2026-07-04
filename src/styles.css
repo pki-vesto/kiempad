@@ -27635,6 +27635,7 @@ summary[class*="__summary"]:focus-visible,
     small {
     align-self: end;
     color: CanvasText;
+    font-variant: normal;
     font-weight: 680;
     letter-spacing: normal;
     line-height: 1.18;
