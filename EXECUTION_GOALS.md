@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1612 — Afwegingen keuzehulp gebruikt korte contextdisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Afwegingen keuzehulp toont nog lange caveats over behandeladvies in context- en gesprekspanelen.
+- **User Impact:** Gebruikers zien defensieve tekst in een scherm dat vooral argumenten, vragen en besluitcontext moet ordenen.
+- **Desired Outcome:** Afwegingen gebruikt korte keuzecontextcopy zonder herhaalde behandeladviesformuleringen.
+- **User Value:** Gebruikers kunnen afwegingen en gesprekspunten sneller scannen zonder juridische ruis.
+- **Acceptance Criteria:** Afwegingen contextpanelen vervangen lange behandeladvieszinnen door een korte keuzecontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zinnen.
+- **Affected Screens:** Afwegingen keuzehulp, Afwegingen gesprekcontext
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Decision support panels, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1611 — Welzijn registratie gebruikt korte vastlegcontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Wellbeing log route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3167
 
 ### G1610 — Dossier review en echo-classificatie gebruiken korte contextdisclaimers
 

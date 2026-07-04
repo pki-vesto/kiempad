@@ -38264,7 +38264,8 @@ describe('app shell', () => {
     expect(html).toContain('name="intensiteit" type="number" min="1" max="5"');
     expect(html).toContain('Cyclusmeting toevoegen');
     expect(html).toContain('id="cycle-data-form"');
-    expect(html).toContain('Feitelijke registratie zonder interpretatie of medisch advies.');
+    expect(html).toContain('Kiempad ordent je welzijn; je kliniek blijft leidend.');
+    expect(html).not.toContain('Feitelijke registratie zonder interpretatie of medisch advies.');
     expect(html).toContain('2026-06-23');
     expect(html).toContain('2 logs');
     expect(html).toContain('Gemiddelde intensiteit 4/5');
