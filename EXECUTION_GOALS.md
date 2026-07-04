@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1588 — Vragen en traject tonen verplichte velden vooraf
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Vraag- en trajectformulieren hadden verplichte velden, maar toonden nog geen compacte required-map vóór bewaren.
+- **User Impact:** Gebruikers zien pas laat welke minimale invoer nodig is als browservalidatie ingrijpt.
+- **Desired Outcome:** Vragen en trajecten tonen vóór hun action row een required-map met de verplichte velden in `--clay-ink`.
+- **User Value:** Gebruikers kunnen consultvragen en trajectpogingen rustiger vastleggen met vooraf zichtbare minimale invoer.
+- **Acceptance Criteria:** Vraagformulier toont een required-map vóór de action row; vraag required-map noemt Vraag; trajectformulier toont een required-map vóór de action row; traject required-map noemt Naam, Startdatum en Pogingnummer; de maps gebruiken gedeelde `.form-required-map` styling met clay-ink; app-shell tests bewaken markup en CSS-contract; routeflow smoke blijft desktop/tablet/mobile valideren; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Vragen, Traject beheer
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Question form, treatment form, required map styling
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3120
+
 ### G1587 — Agenda en medicatie tonen verplichte velden vooraf
 
 - **Epic:** Onboarding & Daily Use

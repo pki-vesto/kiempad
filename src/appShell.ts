@@ -17101,6 +17101,7 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
           <textarea name="antwoord" rows="4">${escapeHtml(vraag?.antwoord ?? '')}</textarea>
         </label>
       </section>
+      ${renderFormRequiredMap('question-item', 'Verplicht voor vraag', ['Vraag'])}
       <div class="command-form-actions">
         <button type="submit">${vraag ? 'Bewaar vraag' : 'Voeg vraag toe'}</button>
         ${
@@ -20403,6 +20404,7 @@ function renderTrajectForm(
           </select>
         </label>
       </section>
+      ${renderFormRequiredMap('treatment-item', 'Verplicht voor traject', ['Naam', 'Startdatum', 'Pogingnummer'])}
       <div class="command-form-actions">
         <button type="submit">${submitLabel ?? (traject ? 'Bewaar traject' : 'Maak traject aan')}</button>
         ${
