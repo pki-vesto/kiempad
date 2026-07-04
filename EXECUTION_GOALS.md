@@ -813,8 +813,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload chrome
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3431
+
+### G1745 — App-shell mobiel workspace-strip bewaakt reload workspace-strip hoogte op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Chrome compactheid wordt bewaakt, maar de workspace-strip zelf kan nog expliciet op compacte hoogte worden gecontroleerd.
+- **User Impact:** Als alleen de strip te hoog wordt, verdwijnt actieve inhoud alsnog te ver naar beneden op kleine schermen.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip zelf compact zonder horizontale of verticale druk.
+- **User Value:** Gebruikers zien na verversen direct compacte routecontext en voldoende taakruimte.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, rustige scrollposities en compacte chrome; workspace-strip hoogte blijft na reload binnen compacte grenzen op small-mobile; tests of smoke checks bewaken small-mobile reload workspace-strip hoogte; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload strip height
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3433
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
