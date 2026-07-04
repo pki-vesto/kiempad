@@ -8296,6 +8296,7 @@ describe('app shell', () => {
     expect(addSection).toContain(
       'data-dossier-upload-image-field-order="context-source-cycle-day"',
     );
+    expect(addSection).toContain('data-dossier-upload-image-open-fields="compact-rhythm"');
     expect(addSection).toContain('data-dossier-upload-image-field="context"');
     expect(addSection).toContain('data-dossier-upload-image-field="source"');
     expect(addSection).toContain('data-dossier-upload-image-field="cycle-day"');
@@ -8398,6 +8399,7 @@ describe('app shell', () => {
     expect(populatedAddSection).toContain(
       'data-dossier-upload-image-field-order="context-source-cycle-day"',
     );
+    expect(populatedAddSection).toContain('data-dossier-upload-image-open-fields="compact-rhythm"');
     expect(populatedAddSection).toContain('data-dossier-upload-image-field="context"');
     expect(populatedAddSection).toContain('data-dossier-upload-image-field="source"');
     expect(populatedAddSection).toContain('data-dossier-upload-image-field="cycle-day"');
@@ -8469,6 +8471,7 @@ describe('app shell', () => {
     expect(lockedAddSection).toContain(
       'data-dossier-upload-image-field-order="context-source-cycle-day"',
     );
+    expect(lockedAddSection).toContain('data-dossier-upload-image-open-fields="compact-rhythm"');
     expect(lockedAddSection).toContain('data-dossier-upload-image-field="context"');
     expect(lockedAddSection).toContain('data-dossier-upload-image-field="source"');
     expect(lockedAddSection).toContain('data-dossier-upload-image-field="cycle-day"');
@@ -9115,6 +9118,17 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-image-field-label {');
     expect(css).toContain('box-sizing: border-box;');
     expect(css).toContain('flex: 0 0 22px;');
+    expect(css).toContain(
+      '.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]',
+    );
+    expect(css).toContain('margin: 0 6px 6px;');
+    expect(css).toContain('padding: 6px;');
+    expect(css).toContain(
+      '.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]::before',
+    );
+    expect(css).toContain('clip: rect(0 0 0 0);');
+    expect(css).toContain('min-height: 40px;');
+    expect(css).toContain('padding-block: 8px;');
     expect(css).toContain('@media (max-width: 420px) {');
     expect(css).toContain('font-size: 0.78rem;');
     expect(css).toContain('min-height: 22px;');

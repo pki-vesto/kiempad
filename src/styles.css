@@ -21606,6 +21606,38 @@ summary[class*="__summary"]:focus-visible,
   line-height: 1;
 }
 
+.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"] {
+  margin: 0 6px 6px;
+  padding: 6px;
+  gap: 6px;
+}
+
+.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]::before {
+  display: none;
+}
+
+.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"] legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]
+  label[data-dossier-upload-image-field] {
+  gap: 4px;
+}
+
+.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]
+  label[data-dossier-upload-image-field]
+  > input {
+  min-height: 40px;
+  padding-block: 8px;
+}
+
 @media (max-width: 420px) {
   .dossier-upload-group[data-dossier-upload-image-field-order="context-source-cycle-day"] {
     gap: 8px;

@@ -1885,3 +1885,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   context, source label and cycle-day field labels while preserving upload form contracts.
 - Partial G1705/#3353: Numbered image-context field labels now use a compact rhythm with
   small-mobile routeflow evidence for label height, badge size and parent overflow.
+- Partial G1706/#3355: Open image-context fields now use a compact rhythm, visually compress
+  duplicate fieldset chrome and routeflow-check label/input spacing across viewports.

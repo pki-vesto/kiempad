@@ -1231,7 +1231,10 @@ const targets = [
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
-    openSelectors: ['[data-dossier-upload-optional="beeldcontext"]'],
+    openSelectors: [
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-image-fields="collapsed"]',
+    ],
     requiredSelectors: [
       '[data-dossier-upload-console="ready"]',
       '[data-dossier-upload-console="ready"][data-dossier-add-flow="document"]',
@@ -1247,6 +1250,7 @@ const targets = [
       '[data-dossier-upload-image-fields="collapsed"]',
       '[data-dossier-upload-image-fields="collapsed"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-image-field-order="context-source-cycle-day"]',
+      '[data-dossier-upload-image-open-fields="compact-rhythm"]',
       '[data-dossier-upload-image-field="context"]',
       '[data-dossier-upload-image-field="source"]',
       '[data-dossier-upload-image-field="cycle-day"]',
@@ -1254,12 +1258,12 @@ const targets = [
     closedDetailsSelectors: [
       '[data-dossier-upload-metadata="collapsed"]',
       '[data-dossier-upload-optional="koppelingen"]',
-      '[data-dossier-upload-image-fields="collapsed"]',
       '[data-dossier-upload-optional="embryo-labcontext"]',
       '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
     imageSummaryChips: true,
     imageFieldLabels: true,
+    imageOpenFields: true,
     smallMobileViewport: true,
     desktopHiddenSelectors: [
       '.dossier-split-workspace .domain-split-workspace__rail',
@@ -2217,6 +2221,52 @@ async function assertRouteflows(browser, options) {
               };
             })
           : null;
+        const imageOpenFields = routeflow.imageOpenFields
+          ? (() => {
+              const fieldset = document.querySelector(
+                '[data-dossier-upload-image-open-fields="compact-rhythm"]',
+              );
+              const fieldsetRect = fieldset?.getBoundingClientRect();
+              const fieldsetStyle = fieldset ? getComputedStyle(fieldset) : null;
+              const rows = [
+                ...document.querySelectorAll(
+                  '[data-dossier-upload-image-open-fields="compact-rhythm"] label[data-dossier-upload-image-field]',
+                ),
+              ].map((label) => {
+                const labelRect = label.getBoundingClientRect();
+                const heading = label.querySelector('.dossier-upload-image-field-label');
+                const input = label.querySelector('input');
+                const headingRect = heading?.getBoundingClientRect();
+                const inputRect = input?.getBoundingClientRect();
+                const inputStyle = input ? getComputedStyle(input) : null;
+                return {
+                  field: label.getAttribute('data-dossier-upload-image-field') ?? '',
+                  labelVisible: labelRect.width > 0 && labelRect.height > 0,
+                  headingVisible: Boolean(headingRect && headingRect.width > 0 && headingRect.height > 0),
+                  inputVisible: Boolean(inputRect && inputRect.width > 0 && inputRect.height > 0),
+                  labelHeight: labelRect.height,
+                  headingBottom: headingRect?.bottom ?? 0,
+                  inputTop: inputRect?.top ?? 0,
+                  inputHeight: inputRect?.height ?? 0,
+                  inputWidth: inputRect?.width ?? 0,
+                  labelWidth: labelRect.width,
+                  inputMinHeight: inputStyle?.minHeight ?? '',
+                  inputPaddingBlockStart: inputStyle?.paddingBlockStart ?? '',
+                  overlapsHeading: Boolean(headingRect && inputRect && inputRect.top < headingRect.bottom - 1),
+                  inputOverflowsLabel: Boolean(inputRect && inputRect.right > labelRect.right + 1),
+                };
+              });
+              return {
+                visible: Boolean(fieldsetRect && fieldsetRect.width > 0 && fieldsetRect.height > 0),
+                height: fieldsetRect?.height ?? 0,
+                width: fieldsetRect?.width ?? 0,
+                rowGap: fieldsetStyle?.rowGap ?? '',
+                scrollWidth: fieldset?.scrollWidth ?? 0,
+                clientWidth: fieldset?.clientWidth ?? 0,
+                rows,
+              };
+            })()
+          : null;
         const dossierConsole = routeflow.dossierConsole
           ? (() => {
               const body = document.querySelector('[data-dossier-console="ready"]');
@@ -2485,6 +2535,7 @@ async function assertRouteflows(browser, options) {
           uploadConsole,
           imageSummaryChips,
           imageFieldLabels,
+          imageOpenFields,
           dossierConsole,
           knowledgeConsole,
           consultConsole,
@@ -2565,6 +2616,32 @@ async function assertRouteflows(browser, options) {
         throw new Error(
           `${options.label}/${target.screen}: beeldcontext-veldlabels missen compacte mobile layout (${JSON.stringify(
             evidence.imageFieldLabels,
+          )}).`,
+        );
+      }
+      if (
+        evidence.imageOpenFields &&
+        (!evidence.imageOpenFields.visible ||
+          evidence.imageOpenFields.rows.length !== 3 ||
+          evidence.imageOpenFields.scrollWidth > evidence.imageOpenFields.clientWidth + 1 ||
+          evidence.imageOpenFields.height > (options.label === 'small-mobile' ? 235 : 250) ||
+          evidence.imageOpenFields.rows.some(
+            (row) =>
+              !row.labelVisible ||
+              !row.headingVisible ||
+              !row.inputVisible ||
+              row.labelHeight > 70 ||
+              row.inputHeight > 44 ||
+              row.inputWidth > row.labelWidth + 1 ||
+              row.inputMinHeight !== '40px' ||
+              row.inputPaddingBlockStart !== '8px' ||
+              row.overlapsHeading ||
+              row.inputOverflowsLabel,
+          ))
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: geopende beeldcontextvelden missen compact ritme (${JSON.stringify(
+            evidence.imageOpenFields,
           )}).`,
         );
       }
