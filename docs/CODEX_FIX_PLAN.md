@@ -2105,3 +2105,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1808/#3559: Dossier upload active route cards now use a calmer
   one-pixel small-mobile active line with lower accent mix, guarded by CSS tests
   and routeflow active-shadow width evidence.
+- Partial G1809/#3561: Dossier upload active route cards now use a calmer
+  small-mobile active border while routeflow compares active and inactive
+  borders to preserve route distinction.

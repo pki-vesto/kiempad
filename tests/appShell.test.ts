@@ -9605,7 +9605,7 @@ describe('app shell', () => {
     expect(css).toContain(
       'background: color-mix(in srgb, var(--surface) 99%, var(--surface-subtle));',
     );
-    expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 54%, var(--border));');
+    expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 42%, var(--border));');
     expect(css).toContain('background: color-mix(in srgb, var(--surface) 99%, var(--accent) 1%);');
     expect(css).toContain('inset 0 -1px 0 color-mix(in srgb, var(--accent) 46%, transparent)');
     expect(css).toContain('inset 0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent)');

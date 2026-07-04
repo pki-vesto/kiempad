@@ -1918,8 +1918,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, active route border styling, small-mobile CSS, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3561
+
+### G1810 — Dossier upload small-mobile routekaart actieve achtergrond rustiger
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve routekaart blijft herkenbaar, maar de actieve achtergrondtint kan op small-mobile nog subtieler zonder de huidige keuze te verbergen.
+- **User Impact:** De actieve kaart kan door achtergrondtint en rand samen nog iets meer aandacht vragen dan nodig.
+- **Desired Outcome:** De actieve achtergrond blijft onderscheidend, maar leest rustiger naast de andere routekaarten.
+- **User Value:** Gebruikers houden oriëntatie in de uploadroute zonder dat de actieve kaart de keuzehub overheerst.
+- **Acceptance Criteria:** Actieve route blijft zichtbaar; actieve achtergrond is rustiger dan desktop en blijft onderscheidend van inactieve kaarten; routekaarten blijven scanbaar zonder horizontale overflow; app-shell tests of routeflow smoke bewaken actieve achtergrond en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, active route background styling, small-mobile CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3563
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

@@ -2306,6 +2306,9 @@ async function assertRouteflows(browser, options) {
               const activeAddRoute = selector?.querySelector(
                 '.dossier-add-route[href="#dossier-upload-form"]',
               );
+              const inactiveAddRoute = selector?.querySelector(
+                '.dossier-add-route:not([href="#dossier-upload-form"])',
+              );
               const routeItem = consoleElement?.querySelector('.dossier-upload-action-path__item');
               const documentPanel = consoleElement?.querySelector(
                 '[data-dossier-add-route-panel="dossier-upload"]',
@@ -2346,6 +2349,9 @@ async function assertRouteflows(browser, options) {
               const addRouteRect = addRoute?.getBoundingClientRect();
               const addRouteStyle = addRoute ? getComputedStyle(addRoute) : null;
               const activeAddRouteStyle = activeAddRoute ? getComputedStyle(activeAddRoute) : null;
+              const inactiveAddRouteStyle = inactiveAddRoute
+                ? getComputedStyle(inactiveAddRoute)
+                : null;
               const addRouteLabels = Array.from(
                 selector?.querySelectorAll('.dossier-add-route strong, .dossier-add-route span, .dossier-add-route small') ??
                   [],
@@ -2463,6 +2469,7 @@ async function assertRouteflows(browser, options) {
                 addRouteActiveBorderColor: activeAddRouteStyle?.borderColor ?? '',
                 addRouteActiveBackground: activeAddRouteStyle?.backgroundColor ?? '',
                 addRouteActiveBoxShadow: activeAddRouteStyle?.boxShadow ?? '',
+                addRouteInactiveBorderColor: inactiveAddRouteStyle?.borderColor ?? '',
                 routeItemMinHeight: routeItemStyle?.minHeight ?? '',
                 routeItemWidth: routeItem?.getBoundingClientRect().width ?? 0,
                 routeItemPaddingTop: routeItemStyle?.paddingTop ?? '',
@@ -3273,6 +3280,9 @@ async function assertRouteflows(browser, options) {
           parseFloat(evidence.uploadConsole.addRouteStrongFontSize) > 13 ||
           evidence.uploadConsole.addRouteLabelMaxLength > 15 ||
           !evidence.uploadConsole.addRouteActiveBorderColor ||
+          evidence.uploadConsole.addRouteInactiveBorderColor === '' ||
+          evidence.uploadConsole.addRouteActiveBorderColor ===
+            evidence.uploadConsole.addRouteInactiveBorderColor ||
           evidence.uploadConsole.addRouteActiveBackground === '' ||
           evidence.uploadConsole.addRouteActiveBackground === 'rgba(0, 0, 0, 0)' ||
           !evidence.uploadConsole.addRouteActiveBoxShadow.includes('inset') ||
