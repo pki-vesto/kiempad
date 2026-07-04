@@ -1742,3 +1742,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 > `assets:check`), preserve all bound `id`/`name`/`data-*`/`aria-*`/asserted classes when
 > restructuring markup, and never weaken the vault-gate error sanitization / support-handoff
 > contract. Network: none. Data: local/encrypted only. Medical: disclaimers preserved.
+
+- Partial G1637/#3219: Medication import route summary secondary action now uses a short Plan
+  label while preserving the planning route.
