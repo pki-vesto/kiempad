@@ -2431,6 +2431,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Status:** ☐ open
 - **Issue:** #3621
 
+### G1840 — Dossier routepanelen als bounded werkruimte
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De Dossier split-workspace begrensde wel de hoofdkolommen, maar de actieve route kon op desktop en tablet nog voelen als één lange doorlopende main-kolom.
+- **User Impact:** Gebruikers moesten binnen Dossier alsnog scrollen alsof upload, review, beelden en tijdlijn één canvas vormen, waardoor de routekeuze minder taakgericht aanvoelt.
+- **Desired Outcome:** De actieve Dossier route gebruikt een eigen bounded scrollpaneel met sticky routekop, terwijl verborgen routes uit de layout blijven en de split-workspace main zelf rustig op zijn plaats blijft.
+- **User Value:** Dossier voelt meer als een set duidelijke werkzones in plaats van als één lange pagina, waardoor uploaden, reviewen, beelden bekijken en tijdlijn lezen beter te overzien zijn.
+- **Acceptance Criteria:** Dossier split-workspace main gebruikt verborgen overflow zodat de route zelf het scrollvlak is; actieve Dossier routes hebben een stabiele min/max hoogte, eigen scroll, rustige rand/achtergrond en `overscroll-behavior: contain`; routekop blijft sticky binnen het routepaneel; verborgen routes blijven `display: none`; app-shell tests bewaken de CSS-contracten; desktop, tablet en mobiel behouden bestaande routehooks zonder overlap; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayloads, secrets of trackingdata worden toegevoegd.
+- **Affected Screens:** Dossier
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier split workspace, Dossier route sections, app-shell CSS, app-shell tests
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☑ done
+- **Issue:** #3623
+
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
 - **Epic:** Onboarding & Daily Use
