@@ -762,8 +762,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload panel position
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3425
+
+### G1742 — App-shell mobiel workspace-strip bewaakt reload paneel scrollstart op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Paneelpositie na reload wordt bewaakt, maar de interne scrollstart van het actieve paneel kan nog expliciet rustig gehouden worden.
+- **User Impact:** Als een small-mobile reload midden in een paneel opent, kan de gebruiker context missen en eerst moeten terugscrollen.
+- **Desired Outcome:** Small-mobile reloads starten het actieve paneel op een voorspelbare, rustige scrollpositie.
+- **User Value:** Gebruikers kunnen een opgeslagen deep-link verversen en direct bij de bovenkant van de relevante context verder.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext en zichtbare paneelpositie; actieve screen-stage panel start na reload op een rustige, voorspelbare scrollpositie; tests of smoke checks bewaken small-mobile reload-paneel scrollstart; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload panel scrollstart
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3427
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
