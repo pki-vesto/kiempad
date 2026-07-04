@@ -1084,6 +1084,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   disclaimer instead of a feitelijke-registratie/interpretatie/medical-advice caveat.
   Partial G1612/#3169: Afwegingen prepare, compare and focus panels now use one short
   decision-context disclaimer instead of score/stuuradvies/behandeladvies caveats.
+  Partial G1613/#3171: Fertility timeline reader mode now uses the short dossier-context
+  disclaimer instead of OCR/bestandsinhoud/beeldpayloads/behandeladvies caveats.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

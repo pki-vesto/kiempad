@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1614 — Research invoer gebruikt korte contextdisclaimers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Research invoer en samenvattingspanelen tonen nog lange caveats over behandeladvies, diagnose en bewijsweging.
+- **User Impact:** Gebruikers zien defensieve tekst in researchpanelen die vooral bron, publicatiedatum en begrijpelijke context moeten tonen.
+- **Desired Outcome:** Research invoer en samenvattingspanelen gebruiken korte researchcontextzinnen zonder herhaalde behandeladviesformuleringen.
+- **User Value:** Gebruikers kunnen researchbronnen sneller scannen en vastleggen zonder juridische ruis.
+- **Acceptance Criteria:** Research invoer en researchsamenvattingspanelen vervangen lange behandeladvies/diagnose/bewijswegingzinnen door korte researchcontextcopy; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zinnen.
+- **Affected Screens:** Kennis research, Research invoer, Research samenvattingen
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Knowledge research panels, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1613 — Dossier leesmodus gebruikt korte contextdisclaimer
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier reader mode, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3171
 
 ### G1612 — Afwegingen keuzehulp gebruikt korte contextdisclaimer
 

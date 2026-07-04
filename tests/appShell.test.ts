@@ -5159,6 +5159,10 @@ describe('app shell', () => {
     expect(timelineReader).toContain('Consult');
     expect(timelineReader).toContain('1 item');
     expect(timelineReader).toContain('Export klaar');
+    expect(timelineReader).toContain('Kiempad ordent je dossier; je kliniek blijft leidend.');
+    expect(timelineReader).not.toContain(
+      'Deze leesmodus toont alleen aantallen en routes; geen OCR-tekst, bestandsinhoud, beeldpayloads of behandeladvies.',
+    );
     expect(timelineReader).not.toContain('base64');
     expect(timelineReader).not.toMatch(/diagnose|dosering|behandelkeuzeadvies|OCR-payload/i);
     expect(html.indexOf('data-fertility-timeline-reader="ready"')).toBeLessThan(
