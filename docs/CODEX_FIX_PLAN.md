@@ -1915,3 +1915,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   inline-grid layout with line-height 1 to prevent compact line-height shifts.
 - Partial G1720/#3383: Focused forced-colors image-context badges now explicitly keep
   align-items and justify-items centered alongside place-items and line-height guards.
+- Partial G1721/#3385: Focused forced-colors image-context badges now explicitly keep
+  border-box sizing alongside padding 0 and the fixed 22px badgebox.
