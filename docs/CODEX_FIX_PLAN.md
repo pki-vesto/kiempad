@@ -2138,3 +2138,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1819/#3581: Dossier upload active route micro-labels now keep a
   calmer forced-colors tone with CanvasText, lighter weight and no underline
   while the active route indicator remains visible.
+- Partial G1820/#3583: Dossier upload active route titles now keep CanvasText
+  in small-mobile forced-colors mode with a calmer title weight, preserving
+  focus and the selected-route indicator.

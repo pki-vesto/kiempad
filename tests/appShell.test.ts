@@ -9638,6 +9638,9 @@ describe('app shell', () => {
       '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    :is(strong, span, small) {\n    color: CanvasText;\n  }',
     );
     expect(css).toContain(
+      '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    strong {\n    font-weight: 760;\n  }',
+    );
+    expect(css).toContain(
       '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    small {\n    font-weight: 700;\n    text-decoration: none;\n  }',
     );
     expect(css).toContain('.dossier-add-route-disclosure__summary {');

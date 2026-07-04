@@ -27591,6 +27591,21 @@ summary[class*="__summary"]:focus-visible,
 
   .dossier-upload-console[data-dossier-add-flow="document"]
     .dossier-add-route[href="#dossier-upload-form"]
+    strong,
+  .dossier-upload-console[data-dossier-add-flow="consult"]
+    .dossier-add-route[href="#consult-verslag-form"]
+    strong,
+  .dossier-upload-console[data-dossier-add-flow="embryo-quality"]
+    .dossier-add-route[href="#embryo-quality-form"]
+    strong,
+  .dossier-upload-console[data-dossier-add-flow="embryo-status"]
+    .dossier-add-route[href="#embryo-status-event-form"]
+    strong {
+    font-weight: 760;
+  }
+
+  .dossier-upload-console[data-dossier-add-flow="document"]
+    .dossier-add-route[href="#dossier-upload-form"]
     small,
   .dossier-upload-console[data-dossier-add-flow="consult"]
     .dossier-add-route[href="#consult-verslag-form"]
