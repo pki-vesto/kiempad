@@ -6326,7 +6326,10 @@ describe('app shell', () => {
     expect(html).not.toContain('Schema controleren');
     expect(html).not.toContain('Bekijk lokale planning en importfeedback.');
     expect(html).not.toContain('Schema vraagt controle');
-    expect(importSummary).toContain('<span class="command-route-summary__status">Let op</span>');
+    expect(importSummary).toContain('<span class="command-route-summary__status">Lokaal</span>');
+    expect(importSummary).not.toContain(
+      '<span class="command-route-summary__status">Let op</span>',
+    );
     expect(importSummary).not.toContain('<span class="command-route-summary__status">Check</span>');
   });
 

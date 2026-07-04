@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1649 — Medicatie import standaardbadge gebruikt korte planningscopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import standaardbadge gebruikt nog algemene schemacopy naast de lokale planningcontext.
+- **User Impact:** Gebruikers zien in de lege importstaat minder direct dat het om planningklaarzetten gaat.
+- **Desired Outcome:** Import standaardbadge gebruikt korte planningscopy en behoudt de routesamenvatting.
+- **User Value:** De importstate wordt consequenter met de lokale planningflow.
+- **Acceptance Criteria:** Standaardbadge gebruikt korte planningscopy; standaardtitel blijft zichtbaar; app-shell tests bewaken dat de oude badgecopy niet terugkeert in de importroute.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1648 — Medicatie import foutbadge gebruikt lokale aandachtcopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3241
 
 ### G1647 — Medicatie import fouttitel gebruikt lokale correctiecopy
 
