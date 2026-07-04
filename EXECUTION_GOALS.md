@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1590 — Traject graphcontext opent als compacte panelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Traject context-route toonde graphfilters, node schema, rebuildrapport, relaties en export als één lange graphstapel zodra graphcontext werd geopend.
+- **User Impact:** Gebruikers moeten door technische graphdetails scrollen voordat duidelijk is welke graph-taak ze willen openen.
+- **Desired Outcome:** De graphweergave toont eerst alleen titel, nodes/relaties-samenvatting en compacte vervolgpanelen voor filters, schema, relaties en export.
+- **User Value:** Gebruikers kunnen graphcontext rustiger verkennen en openen alleen de technische laag die ze nodig hebben.
+- **Acceptance Criteria:** Knowledge graph toont direct alleen titel, nodes/relaties-samenvatting en compacte panelkeuze; graphfilters staan achter een gesloten vervolgpanel; node schema en rebuildrapport staan achter een gesloten vervolgpanel; relaties staan achter een gesloten vervolgpanel; graph-export staat achter een gesloten vervolgpanel; app-shell tests bewaken hooks, gesloten startstaat, bestaande relatie/provenance-inhoud en styling; geen diagnose, dosering, kansberekening, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Traject context, Fertility knowledge graph
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Treatment context route, graph rendering, graph export
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3124
+
 ### G1589 — Traject context opent als compacte timeline-keuze
 
 - **Epic:** Onboarding & Daily Use

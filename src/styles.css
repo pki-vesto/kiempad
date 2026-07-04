@@ -1522,6 +1522,48 @@ h2 {
   white-space: nowrap;
 }
 
+.fertility-graph-console__panels {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.fertility-graph-console__details {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-field);
+  background: var(--surface-subtle);
+}
+
+.fertility-graph-console__summary {
+  min-height: 48px;
+}
+
+.fertility-graph-console__summary span {
+  min-width: 0;
+}
+
+.fertility-graph-console__summary small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.fertility-graph-console__summary em {
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 760;
+  white-space: nowrap;
+}
+
+.fertility-graph-console__body {
+  display: grid;
+  gap: 10px;
+}
+
 @media (min-width: 761px) {
   .fertility-timeline-reader,
   .daily-advice-action-planner,
