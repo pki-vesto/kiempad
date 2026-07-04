@@ -1072,6 +1072,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   short upload/conversation context disclaimers instead of long medical caveats.
   Partial G1606/#3156: Traject context artsvragen and graph-node schema now use short
   conversation/graph context disclaimers instead of long medical caveats.
+  Partial G1607/#3158: Consult source review now uses the short conversation-context disclaimer
+  instead of a bronherleiding/medical-advice caveat.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

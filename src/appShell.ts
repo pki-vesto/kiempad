@@ -11647,7 +11647,7 @@ function renderConsultSamenvattingBronparagraaf(verslag: ConsultVerslag): string
         <div><dt>Datum</dt><dd>${escapeHtml(bronParagraaf.datum)}</dd></div>
         <div><dt>Review</dt><dd>${escapeHtml(bronParagraaf.reviewStatus)}</dd></div>
       </dl>
-      <p class="small-print">Controleer de bronparagraaf samen met de conceptsamenvatting; dit is bronherleiding, geen medisch advies.</p>
+      <p class="small-print">${QUESTION_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1607 — Consult bronreview gebruikt korte contextdisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De consultsamenvatting bronparagraaf review gebruikte een lange bronherleiding/geen-medisch-advies zin.
+- **User Impact:** Gebruikers zagen zware disclaimertekst in een reviewblok dat vooral broncontrole en samenvattingsstatus moet tonen.
+- **Desired Outcome:** De bronreview gebruikt dezelfde korte gesprekscontextzin als andere consultvoorbereiding.
+- **User Value:** Gebruikers kunnen bronparagraaf, reviewstatus en correcties sneller scannen.
+- **Acceptance Criteria:** De bronparagraaf review toont de korte gesprekscontextzin; de oude zin over bronherleiding en geen medisch advies verdwijnt uit dit panel; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zin.
+- **Affected Screens:** Consultsamenvatting review, Consult bronparagraaf review
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Consultation intelligence, source review panel, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3158
+
 ### G1606 — Traject context gebruikt korte contextdisclaimers
 
 - **Epic:** Onboarding & Daily Use

@@ -10546,6 +10546,10 @@ describe('app shell', () => {
     expect(section).toContain('Bronnen voor conceptsamenvatting: consulttekst.');
     expect(section).toContain('Datum</dt><dd>2026-06-23T15:05:00.000Z</dd>');
     expect(section).toContain('Review</dt><dd>gereviewd</dd>');
+    expect(section).toContain('Kiempad helpt je gesprek voorbereiden; je kliniek blijft leidend.');
+    expect(section).not.toContain(
+      'Controleer de bronparagraaf samen met de conceptsamenvatting; dit is bronherleiding, geen medisch advies.',
+    );
     expect(section).toContain('class="compact-form consult-samenvatting-review-form"');
     expect(section).toContain('name="samenvattingReviewActie" value="corrigeren"');
     expect(section).toContain('name="samenvattingReviewActie" value="verwerpen"');
