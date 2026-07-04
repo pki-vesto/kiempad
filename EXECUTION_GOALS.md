@@ -150,8 +150,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontextvelden, open field details, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3355
+
+### G1707 — Dossier upload beeldcontext invoervelden houden focusruimte
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De geopende beeldcontextvelden houden nu compact ritme, maar keyboardfocus op context, bronlabel en cyclusdag kan nog expliciet worden bewaakt.
+- **User Impact:** Keyboardgebruikers kunnen bij focus op beeldcontextinputs alsnog layoutdruk of overlappende focusringen ervaren.
+- **Desired Outcome:** Beeldcontextinputs houden stabiele focusruimte in de geopende veldgroep zonder overlap of horizontale druk.
+- **User Value:** Echo's, foto's en scans invullen blijft voorspelbaar voor toetsenbordgebruikers.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; beeldcontextinputs houden stabiele focusruimte in de geopende veldgroep; desktop, tablet en mobile tonen geen horizontale druk of overlappende focusringen; tests dekken lege en gevulde uploadcontext plus locked imaging state; routeflow-smoke dekt focusbare geopende beeldvelden; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontextinputs, focus spacing, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3357
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 

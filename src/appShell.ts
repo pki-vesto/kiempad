@@ -3556,7 +3556,7 @@ function renderDossierScreen(state: AppShellState): string {
                 <span>Beeldvelden openen</span>
                 <small>Context, bron en cyclusdag</small>
               </summary>
-              <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 4 · beeld" data-dossier-upload-image-field-order="context-source-cycle-day">
+              <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 4 · beeld" data-dossier-upload-image-field-order="context-source-cycle-day" data-dossier-upload-image-open-fields="compact-rhythm">
                 <legend>Beeldcontext</legend>
               <label data-dossier-upload-image-field="context">
                 <span class="dossier-upload-image-field-label"><span>1</span> Beeldcontext</span>
