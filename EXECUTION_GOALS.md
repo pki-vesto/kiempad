@@ -609,8 +609,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, mobile layout, workspace strip active button
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3407
+
+### G1733 — App-shell mobiel workspace-strip scrollpositie brengt actieve knop in beeld
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve mobiele workspace-strip knop is duidelijk, maar kan bij routewissels nog buiten de eerste zichtbare swipepositie vallen.
+- **User Impact:** Gebruikers kunnen context missen wanneer de actieve werkruimteknop buiten beeld begint op smalle schermen.
+- **Desired Outcome:** Mobiele workspace-strip houdt de actieve knop zichtbaar of direct bereikbaar binnen de compacte swipe-rij.
+- **User Value:** Gebruikers zien sneller waar ze zijn zonder extra navigatiehoogte.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; actieve workspace-strip knop blijft duidelijk en wordt niet visueel buiten beeld geduwd op smalle viewports; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; tests of smoke checks bewaken zichtbaarheid/bereikbaarheid van de actieve mobiele stripknop; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, mobile layout, workspace strip active route visibility
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3409
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

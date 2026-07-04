@@ -3134,7 +3134,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.workspace-strip__switcher a,');
     expect(mobileCss).toContain('flex: 0 0 min(148px, 58vw);');
     expect(mobileCss).toContain('min-height: 32px;');
+    expect(mobileCss).toContain('justify-content: center;');
     expect(mobileCss).toContain('text-overflow: ellipsis;');
+    expect(mobileCss).toContain('.workspace-strip__switcher a[aria-current="page"],');
+    expect(mobileCss).toContain(
+      'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);',
+    );
     expect(mobileCss).toContain('.workspace-strip__description {');
     expect(mobileCss).toContain('display: none;');
     expect(mobileCss).toContain('.workspace-map__grid {');
