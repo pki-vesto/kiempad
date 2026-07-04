@@ -1802,8 +1802,11 @@ describe('app shell', () => {
     );
     expect(html).toContain('data-screen-stage-screen="agenda"');
     expect(html).toContain('data-screen-stage-group="Vandaag"');
+    expect(html).toContain('data-screen-stage-layout="bounded-workspace"');
+    expect(html).toContain('class="screen-stage__chrome" data-screen-stage-chrome="sticky"');
     expect(html).toContain('class="screen-stage__panel"');
     expect(html).toContain('data-screen-stage-panel="active"');
+    expect(html).toContain('data-screen-stage-scroll="active-workspace"');
     expect(html).toContain('aria-label="Agenda actief scherm"');
     expect(html).toContain('aria-label="Werkruimtes en schermen"');
     for (const screen of SCREENS) {
@@ -1891,7 +1894,8 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('data-screen-stage-screen="dossier"');
-    expect(html).toContain('data-screen-stage-panel="active" aria-busy="true"');
+    expect(html).toContain('data-screen-stage-panel="active"');
+    expect(html).toContain('data-screen-stage-scroll="active-workspace" aria-busy="true"');
     expect(html).toContain('data-screen-loading="true"');
     expect(html).toContain('data-loading-state="reload"');
     expect(html).toContain('Werkruimte bijwerken');
@@ -2374,16 +2378,16 @@ describe('app shell', () => {
       '.content:has([data-notification-focus-shell="ready"]) > .workspace-map,',
     );
     expect(desktopCss).toContain(
-      '.content:has([data-schedule-focus-shell="ready"]) > .page-header,',
+      '.content:has([data-schedule-focus-shell="ready"]) > .screen-stage__chrome > .page-header,',
     );
     expect(desktopCss).toContain(
-      '.content:has([data-notification-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-notification-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain(
       '.content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-eventlog-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-eventlog-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.eventlog-focus-shell {');
     expect(mobileCss).toContain('.eventlog-focus-shell__body {');
@@ -2392,7 +2396,7 @@ describe('app shell', () => {
       '.content:has([data-notification-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-notification-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-notification-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.notification-focus-shell {');
     expect(mobileCss).toContain('.notification-focus-shell__body {');
@@ -2401,7 +2405,7 @@ describe('app shell', () => {
       '.content:has([data-question-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-question-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-question-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.question-focus-shell {');
     expect(mobileCss).toContain('.question-focus-shell__body {');
@@ -2413,7 +2417,7 @@ describe('app shell', () => {
       '.content:has([data-finance-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-finance-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-finance-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.finance-focus-shell {');
     expect(mobileCss).toContain('.finance-focus-shell__body {');
@@ -2433,7 +2437,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain(
       '.content:has([data-backup-focus-shell="ready"]) > .workspace-map,',
     );
-    expect(mobileCss).toContain('.content:has([data-backup-focus-shell="ready"]) > .page-header {');
+    expect(mobileCss).toContain(
+      '.content:has([data-backup-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
+    );
     expect(mobileCss).toContain('.backup-focus-shell {');
     expect(mobileCss).toContain('.backup-focus-shell__body {');
     expect(mobileCss).toContain('.backup-focus-shell__workspace .domain-split-workspace,');
@@ -2441,7 +2447,7 @@ describe('app shell', () => {
       '.content:has([data-schedule-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-schedule-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-schedule-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.schedule-focus-shell {');
     expect(mobileCss).toContain('.schedule-focus-shell__body {');
@@ -2454,7 +2460,7 @@ describe('app shell', () => {
       '.content:has([data-medication-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-medication-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-medication-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.medication-focus-shell {');
     expect(mobileCss).toContain('.medication-focus-shell__body {');
@@ -3042,12 +3048,14 @@ describe('app shell', () => {
     expect(css).toContain('height: 100vh;');
     expect(css).toContain('overflow: hidden;');
     expect(css).toContain('max-height: calc(100vh - 48px);');
+    expect(css).toContain('grid-template-rows: auto minmax(0, 1fr);');
+    expect(css).toContain('.screen-stage__chrome {');
     expect(css).toContain('overflow-y: auto;');
     expect(css).toContain('scrollbar-gutter: stable;');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
     expect(css).toContain('.workspace-strip--compact {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
-    expect(css).toContain('.content > .workspace-strip {');
+    expect(css).toContain('.screen-stage__chrome > .workspace-strip {');
     expect(css).toContain('position: sticky;');
     expect(css).toContain('.app-sidebar > .workspace-strip {');
     expect(css).toContain('display: none;');
@@ -3074,16 +3082,17 @@ describe('app shell', () => {
     expect(css).toContain('.binary-switch {');
     expect(css).toContain('.binary-switch__input:checked + .binary-switch__track');
     expect(css).toContain('.binary-switch__input:focus-visible + .binary-switch__track');
-    expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-strip,');
     expect(css).toContain(
-      '.content:has([data-notification-focus-shell="ready"]) > .workspace-strip {',
+      '.content:has([data-start-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,',
     );
     expect(css).toContain(
-      '.content:has([data-start-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,',
+      '.content:has([data-notification-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip {',
     );
-    expect(css).toContain(
-      '.content:has([data-notification-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick {',
-    );
+    expect(css).toContain('.content:has([data-start-focus-shell="ready"])');
+    expect(css).toContain('.content:has([data-notification-focus-shell="ready"])');
+    expect(css).toContain('> .screen-stage__chrome\n  > .workspace-strip');
+    expect(css).toContain('.workspace-strip__description,');
+    expect(css).toContain('.workspace-strip__quick {');
     expect(css).toContain('@media (min-width: 761px) {');
     expect(css).toContain('.start-focus-shell,');
     expect(css).toContain('.notification-focus-shell {');
@@ -5408,7 +5417,7 @@ describe('app shell', () => {
       '.content:has([data-treatment-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-treatment-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-treatment-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.treatment-focus-shell {');
     expect(mobileCss).toContain('box-shadow: none;');
@@ -9315,7 +9324,7 @@ describe('app shell', () => {
       '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-dossier-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-dossier-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('box-shadow: none;');
     expect(mobileCss).toContain('.dossier-focus-shell__header h2 {');
@@ -38698,7 +38707,7 @@ describe('app shell', () => {
       '.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-wellbeing-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-wellbeing-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.wellbeing-focus-shell {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__body {');
@@ -38718,7 +38727,7 @@ describe('app shell', () => {
       '.content:has([data-decision-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-decision-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-decision-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.decision-focus-shell {');
     expect(mobileCss).toContain('.decision-focus-shell__body {');
@@ -40377,7 +40386,7 @@ describe('app shell', () => {
       '.content:has([data-knowledge-focus-shell="ready"]) > .workspace-map,',
     );
     expect(mobileCss).toContain(
-      '.content:has([data-knowledge-focus-shell="ready"]) > .page-header {',
+      '.content:has([data-knowledge-focus-shell="ready"]) > .screen-stage__chrome > .page-header {',
     );
     expect(mobileCss).toContain('.knowledge-focus-shell {');
     expect(mobileCss).toContain('box-shadow: none;');

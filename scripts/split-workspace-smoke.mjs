@@ -161,7 +161,7 @@ async function assertSplitWorkspaces(browser, options) {
         const workspace = document.querySelector(`[data-${prefix}-split-workspace="ready"]`);
         const workspaceStrip = document.querySelector('[data-workspace-strip="ready"]');
         const contentWorkspaceStrip = document.querySelector(
-          '.content > [data-workspace-strip="ready"]',
+          '.content > .screen-stage__chrome > [data-workspace-strip="ready"]',
         );
         const workspaceStripDescription = workspaceStrip?.querySelector(
           '.workspace-strip__description',

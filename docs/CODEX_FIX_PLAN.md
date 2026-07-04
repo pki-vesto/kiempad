@@ -1865,3 +1865,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   so the standalone label keeps compact planning context.
 - Partial G1697/#3339: Medication planning route options helper now says planning aanvullen
   for more human-readable planning context while preserving the import route.
+- Partial G1699/#3341: App shell now uses a bounded workspace layout with sticky screen chrome
+  and an active-panel scroll area, reducing the long-page feel across routes.

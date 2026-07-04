@@ -1844,10 +1844,13 @@ async function assertRouteflows(browser, options) {
         const rootRect = rootElement?.getBoundingClientRect();
         const appShell = document.querySelector('.app-shell');
         const content = document.querySelector('.content');
+        const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
         const appShellRect = appShell?.getBoundingClientRect();
         const contentRect = content?.getBoundingClientRect();
+        const activePanelRect = activePanel?.getBoundingClientRect();
         const appShellStyle = appShell ? getComputedStyle(appShell) : null;
         const contentStyle = content ? getComputedStyle(content) : null;
+        const activePanelStyle = activePanel ? getComputedStyle(activePanel) : null;
         const required = routeflow.requiredSelectors.map((selector) => {
           const element = rootElement?.matches(selector)
             ? rootElement
@@ -2427,6 +2430,13 @@ async function assertRouteflows(browser, options) {
             contentMaxHeight: contentStyle?.maxHeight ?? '',
             contentOverflowY: contentStyle?.overflowY ?? '',
             contentScrolls: Boolean(content && content.scrollHeight > content.clientHeight + 1),
+            activePanelVisible: Boolean(
+              activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
+            ),
+            activePanelOverflowY: activePanelStyle?.overflowY ?? '',
+            activePanelScrolls: Boolean(
+              activePanel && activePanel.scrollHeight > activePanel.clientHeight + 1,
+            ),
             bodyScrolls:
               document.documentElement.scrollHeight > document.documentElement.clientHeight + 1 ||
               document.body.scrollHeight > document.body.clientHeight + 1,
@@ -2469,8 +2479,10 @@ async function assertRouteflows(browser, options) {
           Math.abs(evidence.appFrame.shellHeight - evidence.appFrame.viewportHeight) > 1 ||
           evidence.appFrame.shellOverflow !== 'hidden' ||
           !evidence.appFrame.contentVisible ||
-          evidence.appFrame.contentOverflowY !== 'auto' ||
+          evidence.appFrame.contentOverflowY !== 'hidden' ||
           evidence.appFrame.contentMaxHeight === 'none' ||
+          !evidence.appFrame.activePanelVisible ||
+          evidence.appFrame.activePanelOverflowY !== 'auto' ||
           evidence.appFrame.bodyScrolls)
       ) {
         throw new Error(

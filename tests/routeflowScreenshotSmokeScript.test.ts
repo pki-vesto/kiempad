@@ -18,6 +18,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('appFrame');
     expect(routeflowScreenshotSmokeScript).toContain('desktop app-workspace is niet begrensd');
     expect(routeflowScreenshotSmokeScript).toContain('bodyScrolls');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-screen-stage-scroll="active-workspace"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('activePanelOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('[data-start-launchpad="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'daily-advice-console'");
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');

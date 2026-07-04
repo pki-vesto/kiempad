@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De app voelt ondanks routes nog als een lange browserpagina doordat de buitenste contentkolom meescrolt.
+- **User Impact:** Gebruikers verliezen overzicht en ervaren de nieuwe themalaag als te druk.
+- **Desired Outcome:** De actieve werkruimte krijgt een bounded shell met sticky chrome en een eigen scrollzone.
+- **User Value:** Navigatie, routekop en actieve taak blijven beter gescheiden en scanbaar.
+- **Acceptance Criteria:** Main shell exposeert bounded-workspace hooks; desktop/tablet content scrollt in het actieve paneel; mobiele layout behoudt bottom-nav ruimte; app-shell tests bewaken hooks en CSS.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, workspace strip, screen-stage panel, CSS breakpoints
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☑ klaar
+- **Issue:** #3341
+
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
 - **Epic:** Onboarding & Daily Use
