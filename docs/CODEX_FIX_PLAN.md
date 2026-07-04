@@ -2009,3 +2009,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   min-width, guarded by reload smoke.
 - Partial G1767/#3477: Small-mobile workspace-strip switchers now keep a
   bounded max-width, guarded by CSS and reload smoke.
+- Partial G1768/#3479: Small-mobile workspace-strip switchers now keep stable
+  flex-shrink, guarded by CSS and reload smoke.
