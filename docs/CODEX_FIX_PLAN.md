@@ -2162,3 +2162,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1827/#3597: Dossier upload active route micro-labels now
   explicitly keep text-decoration-line disabled in their own small-mobile
   forced-colors rule, preventing accidental underline drift on the active card.
+- Partial G1828/#3599: Dossier upload active route micro-labels now keep
+  normal letter spacing in their own small-mobile forced-colors rule, reducing
+  the risk of cramped cards or over-emphasized microcopy.
