@@ -2111,3 +2111,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1810/#3563: Dossier upload active route cards now share the same
   small-mobile surface background as inactive cards while border/shadow keep the
   active route visible, guarded by routeflow background comparison.
+- Partial G1811/#3565: Dossier upload active route cards now use a calmer
+  small-mobile inset shadow with lower accent mix while keeping the one-pixel
+  active line and active border distinction.
