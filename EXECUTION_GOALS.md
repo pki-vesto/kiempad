@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1596 — Backup importmeldingen openen niet automatisch
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Backup importroute klapte import- en exportmeldingen automatisch open zodra er status of foutfeedback was.
+- **User Impact:** Gebruikers kregen een extra detailpaneel bovenop de importkeuze terwijl de route-samenvatting al aangeeft dat er een melding is.
+- **Desired Outcome:** Importmeldingen blijven bereikbaar achter een gesloten detailpaneel met vaste hook, terwijl status/fout nog in de route zichtbaar blijft.
+- **User Value:** Gebruikers houden de herstelroute rustig en openen details alleen wanneer ze de melding willen lezen.
+- **Acceptance Criteria:** Het import-feedback detailpaneel blijft standaard gesloten; het paneel heeft de vaste id `backup-import-feedback-disclosure`; de route-samenvatting blijft fout/status zichtbaar maken; bestaande status- en foutfeedback blijft beschikbaar na expliciet openen; app-shell tests bewaken gesloten startstaat en feedbackinhoud; geen plaintext payload, herstelzin, sleuteldata, secrets of trackingpayload.
+- **Affected Screens:** Backup import
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Backup routes, backup disclosures, app-shell tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3136
+
 ### G1595 — Traject context timeline opent niet automatisch
 
 - **Epic:** Onboarding & Daily Use

@@ -41197,6 +41197,10 @@ describe('app shell', () => {
     expect(html).toContain('data-backup-route-summary="import"');
     expect(html).toContain('Back-up importformulier openen');
     expect(html).toContain('Import- en exportmeldingen openen');
+    expect(html).toContain('id="backup-import-feedback-disclosure"');
+    expect(html).not.toContain(
+      '<details id="backup-import-feedback-disclosure" class="kp-disclosure" data-backup-disclosure="import-feedback" open',
+    );
     expect(html).toContain('aria-label="Back-up herstel route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="herstel"');
     expect(html).toContain('Biometrie en herstelinstellingen openen');
@@ -41257,9 +41261,28 @@ describe('app shell', () => {
   });
 
   it('bewaakt backup en import privacy states zonder plaintext payloadcopy', () => {
-    const legacyHtml = renderAppShell('backup');
+    const legacyHtml = renderAppShell('backup', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      backupStatus: 'Import voltooid.',
+      backupError: 'Bestand kon niet worden gelezen.',
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeBackupRoute: 'import',
+    });
     const legacyZone = extractBackupImportPrivacyZone(legacyHtml);
 
+    expect(legacyHtml).toContain('Check melding');
+    expect(legacyHtml).toContain('Import voltooid.');
+    expect(legacyHtml).toContain('Bestand kon niet worden gelezen.');
+    expect(legacyHtml).toContain('id="backup-import-feedback-disclosure"');
+    expect(legacyHtml).not.toContain(
+      '<details id="backup-import-feedback-disclosure" class="kp-disclosure" data-backup-disclosure="import-feedback" open',
+    );
     expect(legacyZone).toContain('id="export-backup"');
     expect(legacyZone).toContain('data-backup-export-state="legacy-encrypted-vault"');
     expect(legacyZone).toContain('id="export-sync"');

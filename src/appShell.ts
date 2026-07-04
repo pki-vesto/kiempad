@@ -2663,7 +2663,7 @@ function renderBackupScreen(state: AppShellState): string {
             </form>
           </div>
         </details>
-        <details class="kp-disclosure" data-backup-disclosure="import-feedback"${state.backupStatus || state.backupError ? ' open' : ''}>
+        <details id="backup-import-feedback-disclosure" class="kp-disclosure" data-backup-disclosure="import-feedback">
           <summary class="kp-disclosure__summary">Import- en exportmeldingen openen</summary>
           <div class="kp-disclosure__body">
             ${renderStatusFeedback('backup', state.backupStatus, state.backupError)}
