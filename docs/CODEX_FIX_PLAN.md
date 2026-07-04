@@ -1096,6 +1096,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   and route summary instead of dosage calculation or advice wording.
   Partial G1618/#3181: Medication focus shell and workbench now use short status context
   instead of repeated dosage advice or calculation wording.
+  Partial G1619/#3183: Medication management route now uses short clinic-text context in
+  the header and route summary instead of dose-advice or interpretation wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1620 — Medicatie schemaformulier gebruikt korte planningshulp
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Het medicatie schemaformulier toont nog langere small-print over doseringen en geplande afvinkmomenten.
+- **User Impact:** Gebruikers zien bij schema-invoer opnieuw defensieve copy terwijl het veld vooral datum, tijd en aantal dagen moet ondersteunen.
+- **Desired Outcome:** Schemaformulier gebruikt korte planningshulp en behoudt het invoerdoel.
+- **User Value:** Medicatieplanning voelt rustiger en sneller in te vullen.
+- **Acceptance Criteria:** Schemaformulier small-print gebruikt korte planningshulp; app-shell tests bewaken dat de oude dosering/berekenzin niet terugkeert in het schemaformulier.
+- **Affected Screens:** Medicatie beheer schemaformulier
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication form planning section, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1619 — Medicatie beheerroute gebruikt korte kliniektekstcontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication management route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3183
 
 ### G1618 — Medicatie werkbank gebruikt korte statuscontext
 
