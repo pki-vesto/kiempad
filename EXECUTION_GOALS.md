@@ -430,16 +430,16 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Epic:** Premium Claude Design UI
 - **Problem:** Het gefocuste forced-colors badge houdt nu outline rustig, maar tekstuitlijning kan nog expliciet bewaakt worden naast de vaste badgebox.
 - **User Impact:** Afwijkende tekstuitlijning kan het badgecijfer uit het midden trekken tijdens hoogcontrastfocus.
-- **Desired Outcome:** Het focus-within badge houdt text-align center naast de vaste badgebox zonder layoutshift.
+- **Desired Outcome:** Het focus-within badge houdt text-align center en text-align-last center naast de vaste badgebox zonder layoutshift.
 - **User Value:** De beeldcontextvolgorde blijft rustig scanbaar tijdens hoogcontrastfocus.
-- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; het focus-within badge houdt text-align center naast de vaste badgebox zonder layoutshift; desktop, tablet, mobile en small-mobile tonen geen horizontale druk in geopende beeldvelden; tests dekken lege en gevulde uploadcontext plus locked imaging state; CSS-smoke bewaakt text-align center en vaste badgebox bij forced-colors focus; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; het focus-within badge houdt text-align center en text-align-last center naast de vaste badgebox zonder layoutshift; desktop, tablet, mobile en small-mobile tonen geen horizontale druk in geopende beeldvelden; tests dekken lege en gevulde uploadcontext plus locked imaging state; CSS-smoke bewaakt text-align center, text-align-last center en vaste badgebox bij forced-colors focus; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
 - **Affected Screens:** Dossierupload
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Dossier UI, beeldcontext badgetekstuitlijning, forced-colors focus, CSS smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3389
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
@@ -475,6 +475,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 90
 - **Status:** ☑ done
 - **Issue:** #3391
+
+### G1725 — App-shell desktop routekop blijft compact boven paneelscroll
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Tablet/small-desktop is nu expliciet bounded, maar desktop routekopcompactheid kan nog apart bewaakt worden boven de actieve paneelscroll.
+- **User Impact:** Als de routekop te groot wordt, voelt de desktop opnieuw als een lange pagina met te veel chrome boven de taak.
+- **Desired Outcome:** Desktop routekop/chrome blijft compact boven de actieve panel-scrollzone.
+- **User Value:** Gebruikers houden context zonder dat de kop de werkruimte domineert.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; desktop routekop/chrome blijft compact boven de actieve panel-scrollzone; de actieve screen-stage panel scrollt zonder horizontale overflow; tablet en mobiele bounded-workspace regels blijven behouden; app-shell CSS tests bewaken desktop chrome compactheid en paneelscroll; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, desktop layout, screen-stage chrome, screen-stage panel
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3393
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
