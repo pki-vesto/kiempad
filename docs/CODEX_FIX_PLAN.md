@@ -1779,3 +1779,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the import route id and aria-labelledby contract.
 - Partial G1654/#3253: Medication import follow-up navigation now labels the import link as
   Lokale invoer plannen while preserving the `#medicatie?route=import` href.
+- Partial G1655/#3255: Medication follow-up helper now names local planning import while keeping
+  today, beheer, import and history route choices understandable.

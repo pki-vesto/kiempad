@@ -6182,7 +6182,8 @@ describe('app shell', () => {
     expect(html).toContain('data-medication-planning-followup="collapsed"');
     expect(html).toContain('Planning nog leeg');
     expect(html).toContain('Vervolgcontext openen');
-    expect(html).toContain('Kies daarna vandaag, beheer, import of historie.');
+    expect(html).toContain('Kies vandaag, beheer, lokale planningimport of historie.');
+    expect(html).not.toContain('Kies daarna vandaag, beheer, import of historie.');
     expect(html).not.toContain(
       'Bekijk vandaag, beheer, import, historie of extra latere momenten pas na de hoofdtaak.',
     );
@@ -6228,6 +6229,8 @@ describe('app shell', () => {
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="medication-history-disclosure" open',
     );
+    expect(html).toContain('Kies vandaag, beheer, lokale planningimport of historie.');
+    expect(html).not.toContain('Kies daarna vandaag, beheer, import of historie.');
     expect(html).toContain('href="#medicatie?route=import">Lokale invoer plannen</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Schema importeren</a>');
     expect(html).toContain('id="medicatie-import-form"');

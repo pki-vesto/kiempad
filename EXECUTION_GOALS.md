@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1656 — Medicatie import vervolgcontext titel noemt routekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie vervolgcontext titel is nog generiek en noemt niet dat de gebruiker een route kiest.
+- **User Impact:** Gebruikers moeten uit de helpertekst afleiden dat dit routekeuzes zijn.
+- **Desired Outcome:** Vervolgcontext titel noemt routekeuze kort zonder de disclosure structuur te wijzigen.
+- **User Value:** De vervolgcontext wordt sneller scanbaar en consequenter met de routedeling.
+- **Acceptance Criteria:** Vervolgcontext titel noemt routekeuze; helper en links blijven zichtbaar; app-shell tests bewaken de nieuwe titelcopy.
+- **Affected Screens:** Medicatie vervolgcontext
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1655 — Medicatie import vervolgcontext microcopy noemt lokale planning
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3255
 
 ### G1654 — Medicatie import navigatie gebruikt lokale invoercopy
 
