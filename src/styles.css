@@ -23667,6 +23667,7 @@ summary[class*="__summary"]:focus-visible,
     overscroll-behavior-x: contain;
     padding-block: 0;
     padding-inline: 0;
+    position: static;
     scroll-padding-inline: 8px;
     scroll-snap-type: x proximity;
     scrollbar-width: none;
