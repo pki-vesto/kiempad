@@ -2292,8 +2292,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card forced-colors active micro-label font style, small-mobile CSS, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3605
+
+### G1832 — Dossier upload small-mobile routekaart forced-colors actieve micro-label witruimte rustig
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na expliciete forced-colors micro-labeltekststijl kan de actieve micro-label-witruimte nog zelfstandiger worden bewaakt zodat toekomstige nowrap-regels geen breedtedruk op de compacte routekaart zetten.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen moeten het micro-label rustig kunnen lezen zonder dat witruimteregels de routekaart laten wringen.
+- **Desired Outcome:** Actieve routekaart-micro-labels behouden systeemkleurcontrast, normale tekststijl, normale tekstvariant, rustig gewicht, normale letterspatiëring, compacte regelhoogte, stabiele uitlijning, geen extra decoratie, normale teksttransformatie en normale witruimte naast titel, context, focus en actieve indicator.
+- **User Value:** De uploadkeuze blijft compact en voorspelbaar op kleine schermen.
+- **Acceptance Criteria:** Actieve routekaart-micro-labels gebruiken expliciet normale white-space in hun eigen forced-colors regel; focus, actieve route, titel, context en micro-label blijven onderscheidbaar; small-mobile routekaarten behouden compacte afmetingen zonder onbedoelde nowrap-druk; app-shell tests of routeflow smoke bewaken actieve micro-label-witruimte en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card forced-colors active micro-label white-space, small-mobile CSS, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3607
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
