@@ -27645,6 +27645,7 @@ summary[class*="__summary"]:focus-visible,
     text-decoration-line: none;
     text-transform: none;
     white-space: normal;
+    word-break: normal;
   }
 }
 
