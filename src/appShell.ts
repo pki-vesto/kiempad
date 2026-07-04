@@ -229,6 +229,8 @@ const APPOINTMENT_CONTEXT_DISCLAIMER = 'Kiempad ordent je afspraak; je kliniek b
 
 const MEDICATION_CONTEXT_DISCLAIMER = 'Kiempad toont je planning; je kliniekschema blijft leidend.';
 
+const TREATMENT_CONTEXT_DISCLAIMER = 'Kiempad ordent je trajectfase; je kliniek blijft leidend.';
+
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
 function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
@@ -19136,7 +19138,7 @@ function renderTrajectScreen(state: AppShellState): string {
         <div class="treatment-phase-console" data-treatment-phase-layout="single-input">
           <div id="treatment-phase-primary" class="summary-panel treatment-phase-primary" data-treatment-phase-primary="current-phase">
             <h3>${escapeHtml(selectedCurrentPhaseLabel)}</h3>
-            <p class="small-print">Markeer alleen de feitelijke trajectfase. Kiempad geeft geen behandeladvies, kansberekening of medische conclusie.</p>
+            <p class="small-print">${TREATMENT_CONTEXT_DISCLAIMER}</p>
             ${
               selected && selectedCurrentPhase
                 ? `<article class="treatment-phase-primary__card" data-treatment-phase-card="${escapeAttribute(selectedCurrentPhase.fase)}" data-treatment-phase-state="current">

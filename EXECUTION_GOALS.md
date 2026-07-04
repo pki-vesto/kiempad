@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1602 — Trajectfase gebruikt korte taakdisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Faseplanning toonde een lange medische grenszin direct onder de actuele fasetaak.
+- **User Impact:** Gebruikers zagen defensieve disclaimertekst waar ze alleen snel de feitelijke trajectfase willen controleren.
+- **Desired Outcome:** De faseplanning gebruikt één korte trajectcontextzin die Kiempad positioneert als ordening en de kliniek leidend houdt.
+- **User Value:** Gebruikers kunnen de actuele fase en vervolgtijdlijn sneller scannen.
+- **Acceptance Criteria:** Faseplanning vervangt de lange behandeladvies/kansberekening/medische-conclusiezin door een korte trajectcontextzin; de actuele fasetaak en vervolgtijdlijn blijven functioneel gelijk; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zin.
+- **Affected Screens:** Traject faseplanning
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Treatment route, treatment phase panel, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3148
+
 ### G1601 — Agenda en medicatie gebruiken korte taakdisclaimers
 
 - **Epic:** Onboarding & Daily Use
