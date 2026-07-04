@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1640 — Medicatie import placeholder gebruikt generieke voorbeeldcopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import placeholder noemt een specifiek middel waardoor het voorbeeld minder generiek oogt.
+- **User Impact:** Gebruikers kunnen het voorbeeld sneller als inhoudelijk advies lezen dan als formaatvoorbeeld.
+- **Desired Outcome:** Import placeholder gebruikt generieke voorbeeldcopy en behoudt het vereiste formaat.
+- **User Value:** Het invoerveld voelt neutraler en duidelijker als format-hulp.
+- **Acceptance Criteria:** Import placeholder gebruikt generieke voorbeeldcopy; datum- en tijdformaat blijven zichtbaar; app-shell tests bewaken dat de oude placeholdercopy niet terugkeert.
+- **Affected Screens:** Medicatie import formulier
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import form, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1639 — Medicatie import formulierlabel gebruikt korte invoercopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import form, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3223
 
 ### G1638 — Medicatie import disclosure gebruikt korte actiecopy
 
