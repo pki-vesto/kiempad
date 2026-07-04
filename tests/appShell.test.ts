@@ -6825,7 +6825,8 @@ describe('app shell', () => {
     expect(html).toContain('Open vragen');
     expect(html).toContain('Actiepunten');
     expect(html).toContain('Gespreksblad');
-    expect(html).toContain(
+    expect(html).toContain('Kiempad helpt je gesprek voorbereiden; je kliniek blijft leidend.');
+    expect(html).not.toContain(
       'Deze laag toont alleen voorbereidingstaken en tellingen; geen diagnose, behandeladvies, transcriptpayload of behandelkeuze.',
     );
     expect(html.indexOf('data-consult-prep-board="ready"')).toBeLessThan(
@@ -6857,7 +6858,7 @@ describe('app shell', () => {
     expect(html).toContain('Consultactiepunt');
     expect(html).toContain('Voorbereidend consult');
     expect(html).toContain('controleer de vragen voordat je ze met je kliniek bespreekt');
-    expect(html).toContain('Geen behandeladvies of behandelkeuze.');
+    expect(html).not.toContain('Kiempad geeft geen diagnose, behandeladvies of behandelkeuze.');
     expect(html).toContain('Wanneer horen we de uitslag?');
     expect(html).toContain('Antwoord: De kliniek belt morgen.');
   });

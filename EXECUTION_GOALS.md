@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1599 — Vragen gebruikt korte standaard gespreksdisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Vragen en consultvoorbereiding herhaalden lange defensieve disclaimers over diagnose, behandeladvies, transcriptpayload en behandelkeuze.
+- **User Impact:** Gebruikers moesten door juridische copy heen lezen op schermen die juist snel scanbaar moeten zijn voor gesprekvoorbereiding.
+- **Desired Outcome:** Vraagbeheer en consultvoorbereiding gebruiken één korte standaardzin die de rol van Kiempad en de kliniek helder maakt.
+- **User Value:** Gebruikers zien sneller hun vragen, actiepunten en gespreksblad zonder dat noodzakelijke context de UI domineert.
+- **Acceptance Criteria:** Vraagbeheer gebruikt dezelfde korte gesprekscontext-disclaimer als consultvoorbereiding; lange defensieve zinnen over diagnose, behandeladvies, transcriptpayload en behandelkeuze verdwijnen uit deze route; de bestaande waarschuwing bij gegenereerde vragen blijft zichtbaar; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude herhaling.
+- **Affected Screens:** Vragen beheer, Consultvoorbereiding, Consult gespreksblad
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Question routes, consult prep board, consult prep wizard, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+
 ### G1598 — Kosten gebruikt korte standaarddisclaimer
 
 - **Epic:** Onboarding & Daily Use

@@ -1055,6 +1055,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-059** — Shorten + standardize disclaimers to one sentence per context (N59/N95). **P2 · M**
   Partial G1598/#3140: Kosten now uses one short financial-context disclaimer across overview,
   add and reimbursement routes while keeping the 2026 eigen-risico amount visible.
+  Partial G1599/#3142: Vragen and consult preparation now use one short conversation-context
+  disclaimer across question management, the prep board and the prep wizard while keeping the
+  generated-question warning visible.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

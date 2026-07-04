@@ -220,6 +220,9 @@ export const DISCLAIMER =
 const FINANCE_CONTEXT_DISCLAIMER =
   'Kiempad bewaart lokale administratie; je polis en verzekeraar blijven leidend.';
 
+const QUESTION_CONTEXT_DISCLAIMER =
+  'Kiempad helpt je gesprek voorbereiden; je kliniek blijft leidend.';
+
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
 function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
@@ -16604,7 +16607,7 @@ function renderVragenScreen(state: AppShellState): string {
         <div class="question-management-console" data-question-management-layout="single-input">
           <div class="summary-panel question-management-primary" data-question-management-primary="vraag-form">
             <h3>${selected ? 'Vraag bewerken' : 'Vraag toevoegen'}</h3>
-            <p class="small-print">Leg alleen de vraag, afspraakcontext, prioriteit en eventueel antwoord vast. Kiempad geeft geen diagnose of behandeladvies.</p>
+            <p class="small-print">${QUESTION_CONTEXT_DISCLAIMER}</p>
             ${renderVraagForm(selected, state.afspraken)}
           </div>
           <details id="question-management-followup" class="kp-disclosure question-management-followup" data-question-management-followup="collapsed">
@@ -16963,7 +16966,7 @@ function renderConsultPrepBoard(input: {
           )
           .join('')}
       </nav>
-      <p class="small-print">Deze laag toont alleen voorbereidingstaken en tellingen; geen diagnose, behandeladvies, transcriptpayload of behandelkeuze.</p>
+      <p class="small-print">${QUESTION_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }
@@ -16986,7 +16989,7 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
             cta: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
           },
         )}
-        <p class="small-print">Kiempad geeft geen diagnose, behandeladvies of behandelkeuze.</p>
+        <p class="small-print">${QUESTION_CONTEXT_DISCLAIMER}</p>
       </section>
     `;
   }
@@ -17018,7 +17021,7 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
         <textarea readonly rows="10">${escapeHtml(packet)}</textarea>
       </label>
       <a class="inline-action" href="#traject">Open timeline en graph exports</a>
-      <p class="small-print">${escapeHtml(vragenlijst.waarschuwing)} Kiempad geeft geen diagnose, behandeladvies of behandelkeuze.</p>
+      <p class="small-print">${escapeHtml(vragenlijst.waarschuwing)} ${QUESTION_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }
