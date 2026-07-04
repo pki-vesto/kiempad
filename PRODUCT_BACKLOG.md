@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1391 |
+| ☑ klaar | 1392 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -1753,12 +1753,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1589 | Traject context opent als compacte timeline-keuze | P1 | F5 | ☑ |
 | G1590 | Traject graphcontext opent als compacte panelen | P1 | F5 | ☑ |
 | G1591 | Agenda contextpanelen openen niet automatisch | P1 | F5 | ☑ |
+| G1592 | Medicatie historie opent niet automatisch | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1590** (id's G001 t/m G1591; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1591** (id's G001 t/m G1592; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

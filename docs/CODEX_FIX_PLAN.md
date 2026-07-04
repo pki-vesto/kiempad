@@ -1113,6 +1113,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   and compact action row. Partial G1385/#2544: Medicatie folds the innames workbench into the same
   split-view as route context, so desktop opens as one rail/main/context workspace instead of a
   separate focus-region plus nested route workspace.
+  Partial G1592/#3128: Medicatie Historie keeps middelen, voorraad and innameloghistorie closed by
+  default with stable id instead of auto-expanding when medication exists.
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**
   Partial G1369/#2512: Open questions have a dedicated toolbar with Print/PDF next to the section
   heading, and the primary question textarea renders as a compact input card. Partial G1387/#2548:

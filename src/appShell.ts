@@ -18543,7 +18543,8 @@ function renderMedicatieScreen(state: AppShellState): string {
         ${renderMedicatieStatus(state.medicatieStatus, 'historie')}
         ${disclosure({
           summary: 'Middelen, voorraad en historie tonen',
-          open: state.medicatie.length > 0,
+          id: 'medication-history-disclosure',
+          open: false,
           body:
             (state.medicatie.length > 0
               ? renderMedicatieList(state.medicatie)
