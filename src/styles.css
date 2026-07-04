@@ -23653,6 +23653,7 @@ summary[class*="__summary"]:focus-visible,
     max-width: 100%;
     overflow-x: auto;
     overscroll-behavior-x: contain;
+    padding-inline: 0;
     scroll-padding-inline: 8px;
     scroll-snap-type: x proximity;
     scrollbar-width: none;
