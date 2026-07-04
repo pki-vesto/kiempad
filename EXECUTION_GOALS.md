@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1697 — Medicatie planning routeopties helper houdt planningcontext menselijk
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De helper gebruikt planningaanvulling, maar die samenstelling kan minder menselijk lezen dan een korte contextfrase.
+- **User Impact:** Gebruikers krijgen planningcontext, maar de routeoptie voelt nog wat formeel.
+- **Desired Outcome:** De helper behoudt planningcontext met menselijker korte copy.
+- **User Value:** De routeopties blijven duidelijk en prettig scanbaar.
+- **Acceptance Criteria:** Helper gebruikt menselijkere planningcontext; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1696 — Medicatie planning routeopties helper koppelt aanvulling aan planning
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3337
 
 ### G1695 — Medicatie planning routeopties helper gebruikt natuurlijk zelfstandig label
 
