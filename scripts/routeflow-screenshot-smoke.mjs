@@ -3235,11 +3235,16 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   await waitForActiveWorkspaceStripButton(page, 'Vragen');
 
   const reloadLayout = await page.evaluate(() => {
+    const activeButton = document.querySelector(
+      '[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]',
+    );
     const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
     const activePanelRect = activePanel?.getBoundingClientRect();
     const activePanelStyle = activePanel ? getComputedStyle(activePanel) : null;
     return {
       hash: window.location.hash,
+      activeButtonFocused: document.activeElement === activeButton,
+      activeElementTag: document.activeElement?.tagName ?? '',
       activePanelVisible: Boolean(
         activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
       ),
@@ -3252,6 +3257,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
 
   if (
     reloadLayout.hash !== '#vragen?route=voorbereiden' ||
+    reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
     reloadLayout.horizontalOverflow
