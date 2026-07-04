@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1685 — Medicatie planning routeopties helper noemt planning bij invoer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties helper noemt lokale invoer, maar niet dat deze invoer de planningroute ondersteunt.
+- **User Impact:** Gebruikers herkennen minder snel waarom lokale invoer in de planningfollow-up staat.
+- **Desired Outcome:** Helper benoemt lokale planninginvoer compact zonder de links te verlengen.
+- **User Value:** De routeopties geven meer context bij dezelfde compacte navigatie.
+- **Acceptance Criteria:** Helper noemt lokale planninginvoer compact; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1684 — Medicatie planning routeopties importlink noemt invoer lokaal
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3313
 
 ### G1683 — Medicatie planning routeopties import helper noemt lokaal kort
 

@@ -6121,7 +6121,8 @@ describe('app shell', () => {
     expect(planningFollowupLinks).not.toContain(
       'href="#medicatie?route=beheer">Middel beheren</a>',
     );
-    expect(html).toContain('href="#medicatie?route=import"');
+    expect(planningFollowupLinks).toContain('href="#medicatie?route=import">Lokale invoer</a>');
+    expect(planningFollowupLinks).not.toContain('href="#medicatie?route=import">Lokale import</a>');
     expect(html).toContain('href="#medicatie?route=historie">Historie teruglezen</a>');
     expect(html).not.toContain('href="#medicatie?route=historie">Historie openen</a>');
     expect(html).toContain('id="medicatie-route-vandaag"');
@@ -6248,7 +6249,8 @@ describe('app shell', () => {
     );
     expect(html).toContain('href="#medicatie?route=vandaag"');
     expect(html).toContain('href="#medicatie?route=beheer"');
-    expect(html).toContain('href="#medicatie?route=import">Lokale import</a>');
+    expect(html).toContain('href="#medicatie?route=import">Lokale invoer</a>');
+    expect(html).not.toContain('href="#medicatie?route=import">Lokale import</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Lokale invoer plannen</a>');
     expect(html).toContain('href="#medicatie?route=historie"');
     expect(html.indexOf('id="medication-planning-primary"')).toBeLessThan(
@@ -6296,7 +6298,8 @@ describe('app shell', () => {
     expect(html).not.toContain('Routeopties: afvinken, beheer, lokale import of historie.');
     expect(html).not.toContain('Routeopties: vandaag, beheer, lokale planningimport of historie.');
     expect(html).not.toContain('Kies daarna vandaag, beheer, import of historie.');
-    expect(html).toContain('href="#medicatie?route=import">Lokale import</a>');
+    expect(html).toContain('href="#medicatie?route=import">Lokale invoer</a>');
+    expect(html).not.toContain('href="#medicatie?route=import">Lokale import</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Schema importeren</a>');
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Medicatie | 2026-06-23 | 08:00');
