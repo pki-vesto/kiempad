@@ -1791,3 +1791,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the beheer route href.
 - Partial G1660/#3265: Medication planning route summary secondary action now says Routekeuze
   while preserving the `#medication-planning-followup` href.
+- Partial G1661/#3267: Medication planning route summary primary action now says Volgende while
+  preserving the `#medication-planning-primary` href.
