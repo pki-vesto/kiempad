@@ -595,6 +595,9 @@ async function mount(): Promise<void> {
 
   render(app, state);
   window.addEventListener('hashchange', () => render(app, state));
+  window.addEventListener('popstate', () => {
+    requestAnimationFrame(() => alignActiveWorkspaceStripButton(app));
+  });
 }
 
 function formatStorageBootstrapError(error: unknown): string {
