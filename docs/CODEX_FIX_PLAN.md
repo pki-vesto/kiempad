@@ -1876,3 +1876,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1701/#3345: The dossier upload image action now targets the image-context step
   directly, keeps the document upload contract intact and adds routeflow coverage for the
   dedicated image-context anchor across desktop, tablet and mobile.
+- Partial G1702/#3347: Dossier upload image context now shows a compact safe next-step
+  summary for context, source label and cycle day without exposing filenames, OCR text or
+  image payloads.
