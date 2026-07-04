@@ -23645,6 +23645,7 @@ summary[class*="__summary"]:focus-visible,
     flex-wrap: nowrap;
     justify-content: flex-start;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
   }
 

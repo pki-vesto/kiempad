@@ -40,7 +40,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar',
+      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll',
     );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
@@ -58,6 +58,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileActiveButtonTextClipped');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherScrollWidthContained');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherScrollbarHidden');
+    expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherOverscrollContained');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonWidth');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonLeft');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonRight');
@@ -80,6 +81,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherOverflowX');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherFlexWrap');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollbarWidth');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherOverscrollBehaviorX');
     expect(routeflowScreenshotSmokeScript).toContain('activePanelVisibleHeight');
     expect(routeflowScreenshotSmokeScript).toContain('activePanelScrollTop');
     expect(routeflowScreenshotSmokeScript).toContain('documentScrollY');
