@@ -6170,7 +6170,12 @@ describe('app shell', () => {
     expect(html).not.toContain('Geen toekomstige momenten buiten vandaag');
     expect(html).toContain('0 later medicatie');
     expect(html).not.toContain('class="command-route-summary__status">0 later</span>');
-    expect(html).toContain('Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.');
+    expect(html).toContain(
+      'Nog geen vervolgplanning; open Routekeuze voor Beheer of lokale invoer.',
+    );
+    expect(html).not.toContain(
+      'Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.',
+    );
     expect(html).not.toContain('Nog geen vervolgplanning; voeg momenten toe via Beheer of Import.');
     expect(html).toContain(
       'Nog geen vervolgplanning buiten vandaag; begin in Beheer of plan via lokale invoer.',
