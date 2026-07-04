@@ -184,8 +184,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontextinputs, forced-colors focus, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3359
+
+### G1709 — Dossier upload beeldcontext labelnummers blijven leesbaar in forced colors
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De beeldcontextinputs hebben nu forced-colors focus, maar de genummerde veldlabels kunnen nog explicieter contrast krijgen in hoogcontrastmodus.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen kunnen de volgorde van context, bronlabel en cyclusdag minder snel scannen.
+- **Desired Outcome:** De genummerde beeldcontextlabels blijven leesbaar in forced-colors mode zonder overlap of horizontale druk.
+- **User Value:** Echo's, foto's en scans invullen blijft ook met hoogcontrastinstellingen overzichtelijk.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; beeldcontext labelnummers gebruiken forced-colors systeemkleuren met voldoende contrast; desktop, tablet en mobile tonen geen horizontale druk of overlappende labels; tests dekken lege en gevulde uploadcontext plus locked imaging state; CSS-smoke dekt forced-colors styling voor de genummerde beeldlabels; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontextlabels, forced-colors contrast, CSS smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3361
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 

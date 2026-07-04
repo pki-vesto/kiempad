@@ -9084,6 +9084,7 @@ describe('app shell', () => {
     const selector = extractDossierAddRouteSelector(html);
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    const forcedColorsCss = extractCssMediaBlock(css, 'forced-colors: active');
 
     expect(selector).toContain('href="#dossier-upload-form"');
     expect(selector).toContain('href="#consult-verslag-form"');
@@ -9133,6 +9134,17 @@ describe('app shell', () => {
     expect(css).toContain('> input:focus-visible {');
     expect(css).toContain('outline-offset: 1px;');
     expect(css).toContain('box-shadow: 0 0 0 3px');
+    expect(forcedColorsCss).toContain(
+      '.dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]',
+    );
+    expect(forcedColorsCss).toContain('label[data-dossier-upload-image-field]');
+    expect(forcedColorsCss).toContain('> input:focus,');
+    expect(forcedColorsCss).toContain('> input:focus-visible {');
+    expect(forcedColorsCss).toContain('border-color: Highlight;');
+    expect(forcedColorsCss).toContain('outline: 2px solid Highlight;');
+    expect(forcedColorsCss).toContain('outline-offset: 1px;');
+    expect(forcedColorsCss).toContain('box-shadow: 0 0 0 2px Canvas;');
+    expect(forcedColorsCss).toContain('forced-color-adjust: auto;');
     expect(css).toContain('@media (max-width: 420px) {');
     expect(css).toContain('font-size: 0.78rem;');
     expect(css).toContain('min-height: 22px;');
