@@ -18674,9 +18674,11 @@ function renderMedicationPlanningWorkbench(input: {
         : 'Geen dagmomenten';
   const context = input.nextDoseLog
     ? `${input.nextDoseLog.status === 'genomen' ? 'Genomen' : input.nextDoseLog.status === 'overgeslagen' ? 'Overgeslagen' : 'Gepland'} · volgens je planning`
-    : input.hasImportFeedback
-      ? 'Bekijk lokale planning en importfeedback.'
-      : 'Voeg een middel toe of importeer een eigen schema.';
+    : input.importError
+      ? 'Controleer lokaal met importfeedback.'
+      : input.hasImportFeedback
+        ? 'Bekijk lokale planning en importfeedback.'
+        : 'Voeg een middel toe of importeer een eigen schema.';
 
   return `
     <section class="planning-workbench medication-planning-workbench" aria-label="Medicatie innameswerkbank" data-medication-first-viewport="planning-workbench">

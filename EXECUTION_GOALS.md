@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1647 — Medicatie import fouttitel gebruikt lokale correctiecopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import routesamenvatting gebruikt bij fouten nog algemene controlecopy.
+- **User Impact:** Gebruikers zien bij importfouten minder duidelijk dat correctie lokaal gebeurt.
+- **Desired Outcome:** Import fouttitel gebruikt korte lokale correctiecopy en behoudt de foutstatus.
+- **User Value:** De foutstaat sluit beter aan op de lokale importflow.
+- **Acceptance Criteria:** Fouttitel noemt lokale correctie; foutbadge blijft zichtbaar; app-shell tests bewaken dat de oude fouttitel niet terugkeert in de importroute.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1646 — Medicatie import foutcontext noemt importfeedback
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning workbench, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3237
 
 ### G1645 — Medicatie import foutcontext noemt lokale controle
 
