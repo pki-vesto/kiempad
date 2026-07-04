@@ -3251,6 +3251,11 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     const screenStageChromeRect = screenStageChrome?.getBoundingClientRect();
     const workspaceStrip = document.querySelector('[data-workspace-strip="ready"]');
     const workspaceStripRect = workspaceStrip?.getBoundingClientRect();
+    const workspaceSwitcher = document.querySelector(
+      '[data-workspace-strip="ready"] .workspace-strip__switcher',
+    );
+    const workspaceSwitcherRect = workspaceSwitcher?.getBoundingClientRect();
+    const workspaceSwitcherStyle = workspaceSwitcher ? getComputedStyle(workspaceSwitcher) : null;
     const bottomNav = document.querySelector('.primary-nav');
     const bottomNavRect = bottomNav?.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
@@ -3290,6 +3295,13 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       workspaceStripHeight: Math.round(workspaceStripRect?.height ?? 0),
       workspaceStripLeft: Math.round(workspaceStripRect?.left ?? 0),
       workspaceStripRight: Math.round(workspaceStripRect?.right ?? 0),
+      workspaceStripWidth: Math.round(workspaceStripRect?.width ?? 0),
+      workspaceSwitcherLeft: Math.round(workspaceSwitcherRect?.left ?? 0),
+      workspaceSwitcherRight: Math.round(workspaceSwitcherRect?.right ?? 0),
+      workspaceSwitcherClientWidth: Math.round(workspaceSwitcher?.clientWidth ?? 0),
+      workspaceSwitcherScrollWidth: Math.round(workspaceSwitcher?.scrollWidth ?? 0),
+      workspaceSwitcherOverflowX: workspaceSwitcherStyle?.overflowX ?? '',
+      workspaceSwitcherFlexWrap: workspaceSwitcherStyle?.flexWrap ?? '',
       bottomNavTop: Math.round(bottomNavTop),
       viewportWidth,
       viewportHeight,
@@ -3348,6 +3360,15 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       reloadLayout.activeButtonWhiteSpace === 'nowrap' &&
       reloadLayout.activeButtonClientWidth <= reloadLayout.activeButtonWidth &&
       reloadLayout.activeButtonScrollWidth <= reloadLayout.activeButtonWidth + 1);
+  const smallMobileSwitcherScrollWidthContained =
+    viewportLabel !== 'small-mobile' ||
+    (reloadLayout.workspaceSwitcherOverflowX === 'auto' &&
+      reloadLayout.workspaceSwitcherFlexWrap === 'nowrap' &&
+      reloadLayout.workspaceSwitcherClientWidth > 0 &&
+      reloadLayout.workspaceSwitcherClientWidth <= reloadLayout.workspaceStripWidth &&
+      reloadLayout.workspaceSwitcherScrollWidth >= reloadLayout.workspaceSwitcherClientWidth &&
+      reloadLayout.workspaceSwitcherLeft >= reloadLayout.workspaceStripLeft - 1 &&
+      reloadLayout.workspaceSwitcherRight <= reloadLayout.workspaceStripRight + 1);
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3361,6 +3382,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileActiveButtonPositionVisible ||
     !smallMobileActiveButtonFocusRingCalm ||
     !smallMobileActiveButtonTextClipped ||
+    !smallMobileSwitcherScrollWidthContained ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3382,6 +3404,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileActiveButtonPositionVisible,
           smallMobileActiveButtonFocusRingCalm,
           smallMobileActiveButtonTextClipped,
+          smallMobileSwitcherScrollWidthContained,
         },
       )}).`,
     );
@@ -3394,7 +3417,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,

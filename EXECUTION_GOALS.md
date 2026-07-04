@@ -915,8 +915,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher scroll width
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3443
+
+### G1751 — App-shell mobiel workspace-strip bewaakt reload switcher scrollbar verberging op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Switcher-scrollbreedte wordt bewaakt, maar de scrollbar-verberging kan nog expliciet gecontroleerd worden.
+- **User Impact:** Een zichtbare scrollbar in de compacte strip kan ruimte en visuele druk toevoegen op kleine schermen.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher swipebaar zonder zichtbare scrollbar.
+- **User Value:** Gebruikers ervaren de strip als rustige swipe-rij zonder extra chrome.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, nette knoptekstafkapping en contained switcher scrollbreedte; workspace-strip switcher scrollbar blijft na reload verborgen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher scrollbar verberging; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher scrollbar
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3445
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
