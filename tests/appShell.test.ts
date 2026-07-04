@@ -9129,6 +9129,10 @@ describe('app shell', () => {
     expect(css).toContain('clip: rect(0 0 0 0);');
     expect(css).toContain('min-height: 40px;');
     expect(css).toContain('padding-block: 8px;');
+    expect(css).toContain('> input:focus,');
+    expect(css).toContain('> input:focus-visible {');
+    expect(css).toContain('outline-offset: 1px;');
+    expect(css).toContain('box-shadow: 0 0 0 3px');
     expect(css).toContain('@media (max-width: 420px) {');
     expect(css).toContain('font-size: 0.78rem;');
     expect(css).toContain('min-height: 22px;');

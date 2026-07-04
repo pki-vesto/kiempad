@@ -1264,6 +1264,7 @@ const targets = [
     imageSummaryChips: true,
     imageFieldLabels: true,
     imageOpenFields: true,
+    imageOpenFieldFocus: true,
     smallMobileViewport: true,
     desktopHiddenSelectors: [
       '.dossier-split-workspace .domain-split-workspace__rail',
@@ -1862,6 +1863,71 @@ async function assertRouteflows(browser, options) {
       await page.evaluate((selector) => {
         document.querySelector(selector)?.scrollIntoView({ block: 'center', inline: 'nearest' });
       }, target.rootSelector);
+      let imageOpenFieldFocus = null;
+      if (target.imageOpenFieldFocus) {
+        const focusSelector =
+          '[data-dossier-upload-image-open-fields="compact-rhythm"] label[data-dossier-upload-image-field] > input';
+        await page.evaluate(() => {
+          for (const selector of [
+            '[data-dossier-upload-optional="beeldcontext"]',
+            '[data-dossier-upload-image-fields="collapsed"]',
+          ]) {
+            const details = document.querySelector(selector);
+            if (details instanceof HTMLDetailsElement) details.open = true;
+          }
+        });
+        const inputCount = await page.locator(focusSelector).count();
+        const rows = [];
+        const baseline = await page.evaluate(() => {
+          const fieldset = document.querySelector(
+            '[data-dossier-upload-image-open-fields="compact-rhythm"]',
+          );
+          const fieldsetRect = fieldset?.getBoundingClientRect();
+          return {
+            documentOverflowBefore:
+              document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
+              document.body.scrollWidth > document.body.clientWidth + 1,
+            fieldsetHeightBefore: fieldsetRect?.height ?? 0,
+            fieldsetWidthBefore: fieldsetRect?.width ?? 0,
+          };
+        });
+        for (let index = 0; index < inputCount; index += 1) {
+          await page.locator(focusSelector).nth(index).click({ force: true });
+          await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(resolve)));
+          rows.push(
+            await page.locator(focusSelector).nth(index).evaluate((input, base) => {
+              const fieldset = document.querySelector(
+                '[data-dossier-upload-image-open-fields="compact-rhythm"]',
+              );
+              const label = input.closest('label[data-dossier-upload-image-field]');
+              const fieldsetAfter = fieldset?.getBoundingClientRect();
+              const inputRect = input.getBoundingClientRect();
+              const labelRect = label?.getBoundingClientRect();
+              const style = getComputedStyle(input);
+              return {
+                field: label?.getAttribute('data-dossier-upload-image-field') ?? '',
+                active: document.activeElement === input,
+                inputHeight: inputRect.height,
+                inputWidth: inputRect.width,
+                labelWidth: labelRect?.width ?? 0,
+                fieldsetHeightBefore: base.fieldsetHeightBefore,
+                fieldsetHeightAfter: fieldsetAfter?.height ?? 0,
+                fieldsetWidthBefore: base.fieldsetWidthBefore,
+                fieldsetWidthAfter: fieldsetAfter?.width ?? 0,
+                outlineStyle: style.outlineStyle,
+                outlineWidth: style.outlineWidth,
+                outlineOffset: style.outlineOffset,
+                boxShadow: style.boxShadow,
+                inputOverflowsLabel: Boolean(labelRect && inputRect.right > labelRect.right + 1),
+                horizontalOverflow:
+                  document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1,
+              };
+            }, baseline),
+          );
+        }
+        imageOpenFieldFocus = { documentOverflowBefore: baseline.documentOverflowBefore, rows };
+      }
       if (target.dailyAdviceFeedbackNavigation) {
         await assertDailyAdviceFeedbackNavigation(page);
       }
@@ -2536,6 +2602,7 @@ async function assertRouteflows(browser, options) {
           imageSummaryChips,
           imageFieldLabels,
           imageOpenFields,
+          imageOpenFieldFocus: null,
           dossierConsole,
           knowledgeConsole,
           consultConsole,
@@ -2569,6 +2636,7 @@ async function assertRouteflows(browser, options) {
             document.body.scrollWidth > document.body.clientWidth + 1,
         };
       }, { routeflow: target, viewportLabel: options.label });
+      evidence.imageOpenFieldFocus = imageOpenFieldFocus;
 
       if (pageErrors.length > 0) {
         throw new Error(
@@ -2642,6 +2710,31 @@ async function assertRouteflows(browser, options) {
         throw new Error(
           `${options.label}/${target.screen}: geopende beeldcontextvelden missen compact ritme (${JSON.stringify(
             evidence.imageOpenFields,
+          )}).`,
+        );
+      }
+      if (
+        evidence.imageOpenFieldFocus &&
+        (evidence.imageOpenFieldFocus.documentOverflowBefore ||
+          evidence.imageOpenFieldFocus.rows.length !== 3 ||
+          evidence.imageOpenFieldFocus.rows.some(
+            (row) =>
+              !row.active ||
+              row.inputHeight > 40 ||
+              row.inputWidth > row.labelWidth + 1 ||
+              Math.abs(row.fieldsetHeightAfter - row.fieldsetHeightBefore) > 1 ||
+              Math.abs(row.fieldsetWidthAfter - row.fieldsetWidthBefore) > 1 ||
+              row.outlineStyle === 'none' ||
+              row.outlineWidth !== '2px' ||
+              row.outlineOffset !== '1px' ||
+              row.boxShadow === 'none' ||
+              row.inputOverflowsLabel ||
+              row.horizontalOverflow,
+          ))
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: beeldcontextinput-focusruimte is instabiel (${JSON.stringify(
+            evidence.imageOpenFieldFocus,
           )}).`,
         );
       }

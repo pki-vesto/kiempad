@@ -167,8 +167,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontextinputs, focus spacing, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3357
+
+### G1708 — Dossier upload beeldcontext focus blijft zichtbaar in forced colors
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De beeldcontextinputs houden nu stabiele focusruimte, maar forced-colors focus kan nog expliciet worden bewaakt.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen kunnen anders minder zeker zien welk beeldcontextveld actief is.
+- **Desired Outcome:** Beeldcontextinputs houden zichtbare focus in forced-colors mode zonder overlap of horizontale druk.
+- **User Value:** Context, bronlabel en cyclusdag blijven toegankelijk en voorspelbaar bij hoogcontrastgebruik.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; beeldcontextinputs houden zichtbare focus in forced-colors mode; desktop, tablet en mobile tonen geen horizontale druk of overlappende focusringen; tests dekken lege en gevulde uploadcontext plus locked imaging state; routeflow- of CSS-smoke dekt forced-colors focus voor geopende beeldvelden; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontextinputs, forced-colors focus, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3359
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 
