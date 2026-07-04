@@ -3546,6 +3546,11 @@ function renderDossierScreen(state: AppShellState): string {
               <span>Beeldcontext</span>
               <small>Volgende stap voor echo, foto of scan</small>
             </summary>
+            <div class="dossier-upload-image-next-step" data-dossier-upload-image-summary="safe-next-step" aria-label="Veilige beeldmetadata">
+              <span data-dossier-upload-image-summary-item="context">Context</span>
+              <span data-dossier-upload-image-summary-item="source">Bronlabel</span>
+              <span data-dossier-upload-image-summary-item="cycle-day">Cyclusdag</span>
+            </div>
             <details class="dossier-upload-optional dossier-upload-image-fields" data-dossier-upload-image-fields="collapsed">
               <summary class="dossier-upload-optional__summary">
                 <span>Beeldvelden openen</span>

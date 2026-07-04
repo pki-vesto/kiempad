@@ -82,8 +82,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontextvelden, upload action path, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3347
+
+### G1703 — Dossier upload beeldcontext chips behouden touchruimte
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De beeldcontext-samenvatting is nu scanbaar, maar de chips moeten op kleinere schermen blijvend voldoende ruimte houden.
+- **User Impact:** Gebruikers kunnen metadatachips anders als krappe of aanklikbare controls lezen.
+- **Desired Outcome:** Beeldcontext-chips behouden vaste min-height, wrapping en geen overlap naast de beeldvelden.
+- **User Value:** Beeldmateriaal toevoegen blijft rustig en voorspelbaar op desktop, tablet en mobiel.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; beeldcontext-chips behouden vaste min-height, wrapping en geen overlap naast de beeldvelden; desktop, tablet en mobile tonen geen overlap; tests dekken lege en gevulde uploadcontext plus locked imaging state; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontext summary chips, upload action path, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3349
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 

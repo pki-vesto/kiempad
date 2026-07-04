@@ -8277,6 +8277,14 @@ describe('app shell', () => {
     expect(addSection).toContain('id="dossier-upload-image-context"');
     expect(addSection).toContain('data-dossier-upload-image-next-step="ready"');
     expect(addSection).toContain('data-dossier-upload-image-context-summary="ready"');
+    expect(addSection).toContain('data-dossier-upload-image-summary="safe-next-step"');
+    expect(addSection).toContain('aria-label="Veilige beeldmetadata"');
+    expect(addSection).toContain('data-dossier-upload-image-summary-item="context"');
+    expect(addSection).toContain('data-dossier-upload-image-summary-item="source"');
+    expect(addSection).toContain('data-dossier-upload-image-summary-item="cycle-day"');
+    expect(addSection).toContain('Context</span>');
+    expect(addSection).toContain('Bronlabel</span>');
+    expect(addSection).toContain('Cyclusdag</span>');
     expect(addSection).toContain('data-dossier-upload-optional="beeldcontext"');
     expect(addSection).toContain('data-dossier-upload-image-fields="collapsed"');
     expect(addSection).toContain('Beeldvelden openen');
@@ -8350,6 +8358,7 @@ describe('app shell', () => {
       /secret-route\.pdf|secret-route-consult\.txt|secret-route-embryo\.jpg|OCR-payload|diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i,
     );
     expect(populatedAddSection).toContain('data-dossier-upload-action-path="ready"');
+    expect(populatedAddSection).toContain('data-dossier-upload-image-summary="safe-next-step"');
     expect(populatedAddSection).not.toMatch(
       /secret-route\.pdf|secret-route-consult\.txt|secret-route-embryo\.jpg|OCR-payload|diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i,
     );
@@ -8414,6 +8423,7 @@ describe('app shell', () => {
     expect(lockedSelector).not.toContain('cm91dGUtc2VsZWN0b3I=');
     expect(lockedAddSection).toContain('data-dossier-upload-action="image"');
     expect(lockedAddSection).toContain('href="#dossier-upload-image-context"');
+    expect(lockedAddSection).toContain('data-dossier-upload-image-summary="safe-next-step"');
     expect(lockedAddSection).not.toContain('locked-route-selector-secret.jpg');
     expect(lockedAddSection).not.toContain('cm91dGUtc2VsZWN0b3I=');
   });
@@ -9043,6 +9053,8 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-optional.dossier-upload-image-fields');
     expect(css).toContain('.dossier-upload-image-context:target {');
     expect(css).toContain('scroll-margin-top: 18px;');
+    expect(css).toContain('.dossier-upload-image-next-step {');
+    expect(css).toContain('.dossier-upload-image-next-step span {');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-lab-fields');
     expect(css).toContain('.consult-upload-report-choice');
     expect(css).toContain('.consult-upload-report-fields__body');

@@ -21542,6 +21542,27 @@ summary[class*="__summary"]:focus-visible,
   scroll-margin-top: 18px;
 }
 
+.dossier-upload-image-next-step {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 10px 10px;
+}
+
+.dossier-upload-image-next-step span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 780;
+  line-height: 1.2;
+}
+
 .dossier-upload-optional.dossier-upload-metadata-fields,
 .dossier-upload-optional.dossier-upload-link-fields,
 .dossier-upload-optional.dossier-upload-image-fields,
