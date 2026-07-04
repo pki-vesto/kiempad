@@ -2051,3 +2051,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   position settings, guarded by CSS and reload smoke.
 - Partial G1788/#3519: Small-mobile workspace-strip switchers now keep stable
   inset settings, guarded by CSS and reload smoke.
+- Partial G1789/#3521: Small-mobile workspace-strip switchers now keep stable
+  z-index settings, guarded by CSS and reload smoke.

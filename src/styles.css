@@ -23674,6 +23674,7 @@ summary[class*="__summary"]:focus-visible,
     scrollbar-width: none;
     touch-action: pan-x;
     visibility: visible;
+    z-index: auto;
   }
 
   .workspace-strip__switcher::-webkit-scrollbar,
