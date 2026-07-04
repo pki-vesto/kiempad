@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1667 — Medicatie planning routebadge noemt planningstatus
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De planningroutesamenvatting gebruikt nog een generieke Later-eyebrow naast de explicietere medicatiestatus.
+- **User Impact:** Gebruikers zien minder snel dat de kaart over de medicatieplanning gaat.
+- **Desired Outcome:** De routebadge benoemt planning of medicatieplanning compact.
+- **User Value:** De planningroute leest consistenter als medicatieplanning.
+- **Acceptance Criteria:** Routebadge noemt planning of medicatieplanning; bestaande route-samenvatting blijft zichtbaar; app-shell tests bewaken de nieuwe badgecopy.
+- **Affected Screens:** Medicatie planning route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1666 — Medicatie planning samenvattingstatus noemt later korter
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3277
 
 ### G1665 — Medicatie planning routeheader noemt afvinken expliciet
 

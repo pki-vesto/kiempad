@@ -18462,7 +18462,7 @@ function renderMedicatieScreen(state: AppShellState): string {
               ? `${plannedLogs.length} toekomstig moment${plannedLogs.length === 1 ? '' : 'en'}`
               : 'Geen toekomstige momenten buiten vandaag',
           detail: 'Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.',
-          status: `${plannedLogs.length} later`,
+          status: `${plannedLogs.length} later medicatie`,
           primary: { href: '#medication-planning-primary', label: 'Volgende' },
           secondary: { href: '#medication-planning-followup', label: 'Routekeuze' },
           data: { 'medication-route-summary': 'planning' },
@@ -18490,7 +18490,7 @@ function renderMedicatieScreen(state: AppShellState): string {
                 <strong>Routekeuze openen</strong>
                 <small>Kies vandaag, beheer, lokale planningimport of historie.</small>
               </span>
-              <em>${plannedLogs.length} later</em>
+              <em>${plannedLogs.length} later medicatie</em>
             </summary>
             <div class="kp-disclosure__body medication-planning-followup__body">
               <nav class="medication-planning-followup__links" aria-label="Medicatie vervolgcontext">
