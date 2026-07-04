@@ -1955,3 +1955,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   button does not receive focus after mobile and small-mobile deep-link reloads.
 - Partial G1740/#3423: Small-mobile reload smoke now records an explicit reload-hash
   guard and labels the screenshot evidence separately for deep-link hash stability.
+- Partial G1741/#3425: Small-mobile reload smoke now also measures active panel
+  viewport position against the fixed bottom nav before capturing the route evidence.
