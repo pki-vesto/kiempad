@@ -9160,6 +9160,8 @@ describe('app shell', () => {
     expect(forcedColorsCss).toContain('border-radius: var(--radius-pill);');
     expect(forcedColorsCss).toContain('border-color: Highlight;');
     expect(forcedColorsCss).toContain('background: Canvas;');
+    expect(forcedColorsCss).toContain('background-color: Canvas;');
+    expect(forcedColorsCss).toContain('background-image: none;');
     expect(forcedColorsCss).toContain('color: CanvasText;');
     expect(forcedColorsCss).toContain('box-shadow: none;');
     expect(forcedColorsCss).toContain('line-height: 1;');

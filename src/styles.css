@@ -21147,6 +21147,8 @@ summary[class*="__summary"]:focus-visible,
     border-radius: var(--radius-pill);
     border-color: Highlight;
     background: Canvas;
+    background-color: Canvas;
+    background-image: none;
     color: CanvasText;
     box-shadow: none;
     line-height: 1;
