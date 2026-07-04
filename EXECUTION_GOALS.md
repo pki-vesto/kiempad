@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1669 — Medicatie planning samenvattingdetail noemt routekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lege planningdetail noemt Beheer en lokale invoer, maar niet dat Routekeuze de vervolgplek in dezelfde kaart is.
+- **User Impact:** Gebruikers moeten meer zoeken naar de vervolgroutes in de planningkaart.
+- **Desired Outcome:** De lege samenvattingdetail noemt Routekeuze als plek voor vervolgopties.
+- **User Value:** De planningkaart wordt zelfstandiger en sneller te begrijpen.
+- **Acceptance Criteria:** Samenvattingdetail noemt Routekeuze of vervolgopties; Beheer en lokale invoer blijven zichtbaar; app-shell tests bewaken de nieuwe detailcopy.
+- **Affected Screens:** Medicatie planning route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1668 — Medicatie planning lege titel noemt buiten vandaag
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3281
 
 ### G1667 — Medicatie planning routebadge noemt planningstatus
 

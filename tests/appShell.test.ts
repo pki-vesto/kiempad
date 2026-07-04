@@ -6166,6 +6166,8 @@ describe('app shell', () => {
     expect(html).not.toContain('Bekijk toekomstige afvinkmomenten uit eigen invoer of import.');
     expect(html).toContain('class="command-route-summary__eyebrow">Medicatieplanning</p>');
     expect(html).not.toContain('class="command-route-summary__eyebrow">Later</p>');
+    expect(html).toContain('Geen planning buiten vandaag');
+    expect(html).not.toContain('Geen toekomstige momenten buiten vandaag');
     expect(html).toContain('0 later medicatie');
     expect(html).not.toContain('class="command-route-summary__status">0 later</span>');
     expect(html).toContain('Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.');
