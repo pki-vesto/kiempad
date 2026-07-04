@@ -18562,7 +18562,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Historie</p>
           <h2 id="medicatie-route-historie-title">Middelen, voorraad en historie</h2>
-          <p>Bekijk middelen, voorraad, instructies en innameloghistorie los van het beheerscherm.</p>
+          <p>Lees middelen, voorraad en innames terug.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Teruglezen',

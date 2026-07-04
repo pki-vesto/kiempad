@@ -6219,6 +6219,10 @@ describe('app shell', () => {
     expect(html).toContain('Komende medicatiemomenten');
     expect(html).toContain('Middel beheren');
     expect(html).toContain('Middelen, voorraad en historie');
+    expect(html).toContain('Lees middelen, voorraad en innames terug.');
+    expect(html).not.toContain(
+      'Bekijk middelen, voorraad, instructies en innameloghistorie los van het beheerscherm.',
+    );
     expect(html).toContain('id="medication-history-disclosure"');
     expect(html).toContain('Middelen, voorraad en historie tonen');
     expect(html).not.toContain(
