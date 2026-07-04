@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1676 — Medicatie planning routeopties historielink noemt teruglezen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties historielink zegt Historie openen, maar sluit minder aan op de terugleescontext elders in de medicatieroute.
+- **User Impact:** Gebruikers herkennen minder snel dat historie een terugleesroute is.
+- **Desired Outcome:** Historielink benoemt teruglezen kort en behoudt de historielink.
+- **User Value:** Routeopties blijven duidelijker scanbaar.
+- **Acceptance Criteria:** Historielink noemt teruglezen of historie compact; bestaande historie href blijft behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1675 — Medicatie planning routeopties navigatie noemt import lokaal
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3295
 
 ### G1674 — Medicatie planning routeopties teller noemt later medicatie compact
 

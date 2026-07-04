@@ -1819,3 +1819,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   local planning import visible.
 - Partial G1674/#3293: Medication planning follow-up counter now uses compact later copy while
   the route summary keeps the later medicatie status.
+- Partial G1675/#3295: Medication planning route options import link now says Lokale import while
+  preserving the `#medicatie?route=import` href.
