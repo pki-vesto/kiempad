@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1595 |
+| ☑ klaar | 1596 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -1954,15 +1954,16 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1790 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher overflow-y op small-mobile | P1 | F5 | ☑ |
 | G1791 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher overflow-inline op small-mobile | P1 | F5 | ☑ |
 | G1792 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher overflow-block op small-mobile | P1 | F5 | ☑ |
-| G1793 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher overscroll-behavior-inline op small-mobile | P1 | F5 | ☐ |
+| G1793 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher overscroll-behavior-inline op small-mobile | P1 | F5 | ☑ |
 | G1794 | Premium Claude Design UI: startscherm focus-shell tegen alles-op-een-pagina gevoel | P1 | F5 | ☑ |
 | G1795 | Premium Claude Design UI: screen-stage centrale medische disclaimer en minder dagadvies-herhaling | P1 | F5 | ☑ |
+| G1796 | Premium Claude Design UI: Dagadvies mobiele lijst compacter na centrale disclaimer | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1794** (id's G001 t/m G1795; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1795** (id's G001 t/m G1796; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

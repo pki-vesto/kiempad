@@ -40,7 +40,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-overflowy-overflowinline-overflowblock-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-visible-position-inset-zindex-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color-radius-background-shadow-filter-backdrop-opacity-visibility',
+      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-overscrollinline-overflowy-overflowinline-overflowblock-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-visible-position-inset-zindex-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color-radius-background-shadow-filter-backdrop-opacity-visibility',
     );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
@@ -179,6 +179,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherPaddingInlineEnd');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollbarWidth');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherOverscrollBehaviorX');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherOverscrollBehaviorInline');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'smallMobileSwitcherOverscrollInlineContained',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollPaddingInlineStart');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollPaddingInlineEnd');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollSnapType');
