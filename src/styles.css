@@ -23648,6 +23648,7 @@ summary[class*="__summary"]:focus-visible,
     border-radius: 0;
     border-style: none;
     border-width: 0;
+    box-shadow: none;
     box-sizing: border-box;
     flex-basis: auto;
     flex-grow: 0;
