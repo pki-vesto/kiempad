@@ -2057,3 +2057,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   overflow-y settings, guarded by CSS and reload smoke.
 - Partial G1791/#3525: Small-mobile workspace-strip switchers now keep stable
   overflow-inline settings, guarded by CSS and reload smoke.
+- Partial G1792/#3527: Small-mobile workspace-strip switchers now keep stable
+  overflow-block settings, guarded by CSS and reload smoke.
