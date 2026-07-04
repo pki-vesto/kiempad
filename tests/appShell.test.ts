@@ -9644,7 +9644,7 @@ describe('app shell', () => {
       '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    span {\n    color: CanvasText;\n    font-weight: 720;\n    line-height: 1.16;\n  }',
     );
     expect(css).toContain(
-      '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    small {\n    align-self: end;\n    color: CanvasText;\n    font-style: normal;\n    font-variant: normal;\n    font-weight: 680;\n    hyphens: manual;\n    letter-spacing: normal;\n    line-height: 1.18;\n    overflow-wrap: normal;\n    tab-size: 8;\n    text-decoration: none;\n    text-decoration-line: none;\n    text-transform: none;\n    white-space: normal;\n    word-break: normal;\n  }',
+      '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    small {\n    align-self: end;\n    color: CanvasText;\n    font-family: inherit;\n    font-style: normal;\n    font-variant: normal;\n    font-weight: 680;\n    hyphens: manual;\n    letter-spacing: normal;\n    line-height: 1.18;\n    overflow-wrap: normal;\n    tab-size: 8;\n    text-decoration: none;\n    text-decoration-line: none;\n    text-transform: none;\n    white-space: normal;\n    word-break: normal;\n  }',
     );
     expect(css).toContain('.dossier-add-route-disclosure__summary {');
     expect(css).toContain('min-height: 44px;');
