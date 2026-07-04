@@ -40,7 +40,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll',
+      'workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap',
     );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
@@ -59,6 +59,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherScrollWidthContained');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherScrollbarHidden');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherOverscrollContained');
+    expect(routeflowScreenshotSmokeScript).toContain('smallMobileSwitcherSnapStable');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonWidth');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonLeft');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonRight');
@@ -69,6 +70,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonOverflowX');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonTextOverflow');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonWhiteSpace');
+    expect(routeflowScreenshotSmokeScript).toContain('activeButtonScrollSnapAlign');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonClientWidth');
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonScrollWidth');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceStripLeft');
@@ -82,6 +84,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherFlexWrap');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollbarWidth');
     expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherOverscrollBehaviorX');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceSwitcherScrollSnapType');
     expect(routeflowScreenshotSmokeScript).toContain('activePanelVisibleHeight');
     expect(routeflowScreenshotSmokeScript).toContain('activePanelScrollTop');
     expect(routeflowScreenshotSmokeScript).toContain('documentScrollY');
