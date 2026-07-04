@@ -10738,7 +10738,7 @@ function renderDossierReviewWachtrij(
           })
           .join('')}
       </ol>
-      <p class="small-print">Deze wachtrij sorteert op OCR-confidence en reviewstatus. De lijst toont geen OCR-tekst, broninhoud of medisch advies.</p>
+      <p class="small-print">${DOSSIER_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }
@@ -11007,7 +11007,7 @@ function renderEchoAfspraakClassificaties(
           })
           .join('')}
       </ol>
-      <p class="small-print">Classificatie is beschrijvend: echo per afspraak, geen beeldanalyse of medisch advies.</p>
+      <p class="small-print">${IMAGING_CONTEXT_DISCLAIMER}</p>
     </section>
   `;
 }

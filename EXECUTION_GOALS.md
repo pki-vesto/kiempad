@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1611 — Welzijn registratie gebruikt korte vastlegcontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Welzijn registratie toont nog een lange caveat over feitelijke registratie, interpretatie en medisch advies.
+- **User Impact:** Gebruikers zien defensieve tekst in een vastlegpaneel dat vooral check-in, symptomen en signalen rustig moet registreren.
+- **Desired Outcome:** Welzijn registratie gebruikt dezelfde korte welzijnscontextzin als de welzijnfocus.
+- **User Value:** Gebruikers kunnen sneller welzijn vastleggen zonder herhaalde medische caveats.
+- **Acceptance Criteria:** Het welzijn-vastlegpaneel vervangt de lange feitelijke-registratie/interpretatie/medisch-advieszin door de korte welzijnscontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zin.
+- **Affected Screens:** Welzijn vastleggen
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Wellbeing log route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1610 — Dossier review en echo-classificatie gebruiken korte contextdisclaimers
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier review queue, echo appointment classification, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3165
 
 ### G1609 — Dossier gebruikt korte start- en keuzecontextdisclaimers
 
