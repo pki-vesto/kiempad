@@ -1853,3 +1853,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   without repeating the Planninginvoer link label.
 - Partial G1691/#3327: Medication planning route options helper now says planning
   aanvullen so the short action keeps compact planning context.
+- Partial G1692/#3329: Medication planning route options helper now says planningaanvullen
+  while preserving the Planninginvoer link and import route.
