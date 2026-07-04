@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1579 |
+| ☑ klaar | 1580 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1778** |
+| **Totaal** | **1779** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1940,13 +1940,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1776 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher border-width op small-mobile | P1 | F5 | ☑ |
 | G1777 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher border-style op small-mobile | P1 | F5 | ☑ |
 | G1778 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher border-color op small-mobile | P1 | F5 | ☑ |
-| G1779 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher border-radius op small-mobile | P1 | F5 | ☐ |
+| G1779 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher border-radius op small-mobile | P1 | F5 | ☑ |
+| G1780 | Premium Claude Design UI: app-shell mobiel workspace-strip bewaakt reload switcher background op small-mobile | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1778** (id's G001 t/m G1779; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1779** (id's G001 t/m G1780; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

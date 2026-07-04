@@ -3332,6 +3332,11 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       workspaceSwitcherBorderInlineStartColor:
         workspaceSwitcherStyle?.borderInlineStartColor ?? '',
       workspaceSwitcherBorderInlineEndColor: workspaceSwitcherStyle?.borderInlineEndColor ?? '',
+      workspaceSwitcherBorderStartStartRadius:
+        workspaceSwitcherStyle?.borderStartStartRadius ?? '',
+      workspaceSwitcherBorderStartEndRadius: workspaceSwitcherStyle?.borderStartEndRadius ?? '',
+      workspaceSwitcherBorderEndStartRadius: workspaceSwitcherStyle?.borderEndStartRadius ?? '',
+      workspaceSwitcherBorderEndEndRadius: workspaceSwitcherStyle?.borderEndEndRadius ?? '',
       workspaceSwitcherBoxSizing: workspaceSwitcherStyle?.boxSizing ?? '',
       workspaceSwitcherDisplay: workspaceSwitcherStyle?.display ?? '',
       workspaceSwitcherMinWidth: workspaceSwitcherStyle?.minWidth ?? '',
@@ -3450,6 +3455,12 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     switcherBorderColorValues.every((color) =>
       ['rgba(0, 0, 0, 0)', 'transparent'].includes(color),
     );
+  const smallMobileSwitcherBorderRadiusStable =
+    viewportLabel !== 'small-mobile' ||
+    (parseFloat(reloadLayout.workspaceSwitcherBorderStartStartRadius) <= 0 &&
+      parseFloat(reloadLayout.workspaceSwitcherBorderStartEndRadius) <= 0 &&
+      parseFloat(reloadLayout.workspaceSwitcherBorderEndStartRadius) <= 0 &&
+      parseFloat(reloadLayout.workspaceSwitcherBorderEndEndRadius) <= 0);
   const smallMobileSwitcherBoxSizingStable =
     viewportLabel !== 'small-mobile' || reloadLayout.workspaceSwitcherBoxSizing === 'border-box';
   const smallMobileSwitcherDisplayStable =
@@ -3543,6 +3554,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileSwitcherBorderWidthStable ||
     !smallMobileSwitcherBorderStyleStable ||
     !smallMobileSwitcherBorderColorStable ||
+    !smallMobileSwitcherBorderRadiusStable ||
     !smallMobileSwitcherBoxSizingStable ||
     !smallMobileSwitcherDisplayStable ||
     !smallMobileSwitcherMinWidthStable ||
@@ -3593,6 +3605,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileSwitcherBorderWidthStable,
           smallMobileSwitcherBorderStyleStable,
           smallMobileSwitcherBorderColorStable,
+          smallMobileSwitcherBorderRadiusStable,
           smallMobileSwitcherBoxSizingStable,
           smallMobileSwitcherDisplayStable,
           smallMobileSwitcherMinWidthStable,
@@ -3630,7 +3643,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin-block-border-style-color-radius`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
