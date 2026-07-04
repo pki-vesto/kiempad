@@ -2015,3 +2015,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   flex-grow, guarded by CSS and reload smoke.
 - Partial G1770/#3483: Small-mobile workspace-strip switchers now keep stable
   flex-basis, guarded by CSS and reload smoke.
+- Partial G1771/#3485: Small-mobile workspace-strip switchers now keep stable
+  box-sizing, guarded by CSS and reload smoke.
