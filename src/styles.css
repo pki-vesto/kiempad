@@ -23655,7 +23655,10 @@ summary[class*="__summary"]:focus-visible,
 
   .workspace-strip__switcher a,
   .workspace-strip__quick a {
-    flex: 0 0 auto;
+    flex: 0 0 min(148px, 58vw);
+    min-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .workspace-strip__description {

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1531 |
+| ☑ klaar | 1532 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1730** |
+| **Totaal** | **1731** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1892,13 +1892,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1728 | Premium Claude Design UI: app-shell tablet paneel behoudt stabiele scrollruimte zonder horizontale druk | P1 | F5 | ☑ |
 | G1729 | Premium Claude Design UI: app-shell mobiel screen-stage behoudt rustige paneelruimte boven bottom-nav | P1 | F5 | ☑ |
 | G1730 | Premium Claude Design UI: app-shell mobiel workspace-strip behoudt compacte hoogte boven content | P1 | F5 | ☑ |
-| G1731 | Premium Claude Design UI: app-shell mobiel workspace-strip knoppen blijven compact swipebaar | P1 | F5 | ☐ |
+| G1731 | Premium Claude Design UI: app-shell mobiel workspace-strip knoppen blijven compact swipebaar | P1 | F5 | ☑ |
+| G1732 | Premium Claude Design UI: app-shell mobiel workspace-strip actieve knop blijft duidelijk in compacte rij | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1730** (id's G001 t/m G1731; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1731** (id's G001 t/m G1732; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

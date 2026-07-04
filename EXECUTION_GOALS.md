@@ -583,17 +583,34 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Epic:** Premium Claude Design UI
 - **Problem:** De mobiele workspace-strip is nu hoogtebegrensd, maar de stripknoppen kunnen nog expliciet bewaakt worden zodat ze compact en swipebaar blijven.
 - **User Impact:** Te brede of hoge stripknoppen kunnen de actieve content verdringen of horizontale pagina-overflow veroorzaken.
-- **Desired Outcome:** Mobiele workspace-strip switcher en quick links blijven compact horizontaal swipebaar.
+- **Desired Outcome:** Mobiele workspace-strip switcher en quick links blijven compact, ellipsized en horizontaal swipebaar.
 - **User Value:** Gebruikers houden context zonder dat de strip de taak domineert.
-- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele workspace-strip switcher en quick links blijven horizontaal swipebaar; stripknoppen blijven compact zonder horizontale pagina-overflow; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele stripknoppen; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele workspace-strip switcher en quick links blijven horizontaal swipebaar; stripknoppen blijven compact met ellipsis zonder horizontale pagina-overflow; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken mobiele stripknoppen; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
 - **Affected Screens:** App-shell, alle hoofdschermen
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** App shell, mobile layout, workspace strip buttons
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3405
+
+### G1732 — App-shell mobiel workspace-strip actieve knop blijft duidelijk in compacte rij
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Mobiele stripknoppen zijn nu compact swipebaar, maar de actieve knop kan nog expliciet bewaakt worden binnen die compacte rij.
+- **User Impact:** Als de actieve state te subtiel of te groot wordt, verliezen gebruikers context of neemt de strip opnieuw te veel ruimte in.
+- **Desired Outcome:** Mobiele actieve workspace-strip knop behoudt duidelijke state zonder extra hoogte.
+- **User Value:** Gebruikers zien waar ze zijn zonder dat de compacte strip de taak domineert.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele actieve workspace-strip knop behoudt duidelijke state zonder extra hoogte; stripknoppen blijven compact swipebaar zonder horizontale pagina-overflow; actieve screen-stage panel behoudt bottom-nav clearance; desktop en tablet bounded-workspace regels blijven behouden; app-shell CSS tests bewaken actieve mobiele stripknop; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, mobile layout, workspace strip active button
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3407
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
