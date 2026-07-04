@@ -42748,6 +42748,7 @@ describe('app shell', () => {
     expect(tabletCss).toContain('.screen-stage__chrome > .page-header .page-header__intro {');
     expect(tabletCss).toContain('-webkit-line-clamp: 2;');
     expect(tabletCss).toContain('.screen-stage__panel {');
+    expect(tabletCss).toContain('overflow-x: hidden;');
     expect(tabletCss).toContain('overflow-y: auto;');
     expect(tabletCss).toContain('overscroll-behavior: contain;');
     expect(tabletCss).toContain('scrollbar-gutter: stable;');
