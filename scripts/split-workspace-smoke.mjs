@@ -198,6 +198,9 @@ async function assertSplitWorkspaces(browser, options) {
         const mainStyle = main ? getComputedStyle(main) : null;
         const contextStyle = contextColumn ? getComputedStyle(contextColumn) : null;
         const activeRect = active?.getBoundingClientRect();
+        const activeStyle = active ? getComputedStyle(active) : null;
+        const activeHeader = active?.querySelector('.dossier-route-section__header');
+        const activeHeaderStyle = activeHeader ? getComputedStyle(activeHeader) : null;
         const stripRect = workspaceStrip?.getBoundingClientRect();
         const workspaceRect = workspace?.getBoundingClientRect();
         const stripDescriptionRect = workspaceStripDescription?.getBoundingClientRect();
@@ -241,6 +244,10 @@ async function assertSplitWorkspaces(browser, options) {
           mainOverflowY: mainStyle?.overflowY ?? '',
           mainMaxHeight: mainStyle?.maxHeight ?? '',
           contextOverflowY: contextStyle?.overflowY ?? '',
+          activeOverflowY: activeStyle?.overflowY ?? '',
+          activeMaxHeight: activeStyle?.maxHeight ?? '',
+          activeOverscrollBehavior: activeStyle?.overscrollBehavior ?? '',
+          activeHeaderPosition: activeHeaderStyle?.position ?? '',
           activeRouteVisible: Boolean(
             activeRect && activeRect.width > 0 && activeRect.height > 0 && routeId,
           ),
@@ -292,6 +299,7 @@ async function assertSplitWorkspaces(browser, options) {
       if (
         options.label === 'desktop' &&
         !contextOptional &&
+        route.prefix !== 'dossier' &&
         (result.mainOverflowY !== 'auto' ||
           result.contextOverflowY !== 'auto' ||
           result.mainMaxHeight === 'none')
@@ -301,6 +309,25 @@ async function assertSplitWorkspaces(browser, options) {
             mainOverflowY: result.mainOverflowY,
             contextOverflowY: result.contextOverflowY,
             mainMaxHeight: result.mainMaxHeight,
+          })}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        route.prefix === 'dossier' &&
+        (result.mainOverflowY !== 'hidden' ||
+          result.activeOverflowY !== 'auto' ||
+          result.activeMaxHeight === 'none' ||
+          result.activeOverscrollBehavior !== 'contain' ||
+          result.activeHeaderPosition !== 'sticky')
+      ) {
+        throw new Error(
+          `${options.label}/${route.screen}: Dossier routepaneel mist begrensde route-scroll (${JSON.stringify({
+            mainOverflowY: result.mainOverflowY,
+            activeOverflowY: result.activeOverflowY,
+            activeMaxHeight: result.activeMaxHeight,
+            activeOverscrollBehavior: result.activeOverscrollBehavior,
+            activeHeaderPosition: result.activeHeaderPosition,
           })}).`,
         );
       }

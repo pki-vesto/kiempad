@@ -9308,7 +9308,16 @@ describe('app shell', () => {
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace__main {');
+    expect(css).toContain('align-content: start;');
     expect(css).toContain('max-height: min(780px, calc(100vh - 204px));');
+    expect(css).toContain('overflow: hidden;');
+    expect(css).toContain('.dossier-focus-shell__workspace .dossier-route-section {');
+    expect(css).toContain('max-height: min(760px, calc(100vh - 224px));');
+    expect(css).toContain('min-height: min(560px, calc(100vh - 276px));');
+    expect(css).toContain('overscroll-behavior: contain;');
+    expect(css).toContain('.dossier-focus-shell__workspace .dossier-route-section[hidden] {');
+    expect(css).toContain('.dossier-focus-shell__workspace .dossier-route-section__header {');
+    expect(css).toContain('backdrop-filter: blur(14px);');
     expect(css).toContain('.status-badge--dossier {');
     expect(css).toContain('.dossier-status-row {');
     expect(css).toContain('.dossier-focus-shell__orientation > .dossier-route-stage {');
