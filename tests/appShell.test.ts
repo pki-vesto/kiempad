@@ -6319,7 +6319,8 @@ describe('app shell', () => {
       html.indexOf('data-medication-route-summary="import"'),
       html.indexOf('id="medicatie-import-form"'),
     );
-    expect(html).toContain('Controle nodig');
+    expect(importSummary).toContain('Lokaal corrigeren');
+    expect(importSummary).not.toContain('Controle nodig');
     expect(html).toContain('Lokaal controleren');
     expect(html).toContain('Controleer lokaal met importfeedback.');
     expect(html).not.toContain('Schema controleren');
