@@ -2105,8 +2105,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card forced-colors active title tone, small-mobile CSS, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3583
+
+### G1821 — Dossier upload small-mobile routekaart forced-colors actieve contextregel rustiger
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na rustiger forced-colors actieve titeltoon kan de actieve routekaart-contextregel nog explicieter worden bewaakt zodat de context leesbaar blijft zonder te concurreren met titel, focus of actieve indicator.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen moeten de routekaartcontext snel kunnen lezen zonder dat de contextregel te zwaar oogt.
+- **Desired Outcome:** Actieve routekaart-contextregels houden systeemkleurcontrast en een rustig fontgewicht naast focus en actieve route-indicator.
+- **User Value:** De compacte uploadkeuze blijft scanbaar met duidelijke titel, context en actieve route.
+- **Acceptance Criteria:** Actieve routekaart-contextregels gebruiken forced-colors systeemkleur en rustig gewicht; focus, actieve route, titel en context blijven onderscheidbaar; small-mobile routekaarten behouden compacte afmetingen; app-shell tests of routeflow smoke bewaken actieve contexttoon en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card forced-colors active context tone, small-mobile CSS, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3585
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
