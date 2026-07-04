@@ -1086,6 +1086,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   decision-context disclaimer instead of score/stuuradvies/behandeladvies caveats.
   Partial G1613/#3171: Fertility timeline reader mode now uses the short dossier-context
   disclaimer instead of OCR/bestandsinhoud/beeldpayloads/behandeladvies caveats.
+  Partial G1614/#3173: Research input placeholders, scientific/patient summaries and trend
+  dashboard now use short research-context copy instead of behandeladvies/diagnose/bewijsweging caveats.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

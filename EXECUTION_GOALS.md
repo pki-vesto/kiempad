@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1615 — Research kaartvelden gebruiken korte placeholdercopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Research tekstvelden kunnen nog defensieve placeholdercopy krijgen zodra aanvullende researchvelden worden uitgebreid.
+- **User Impact:** Gebruikers kunnen formulierhulpjes verwarren met juridische waarschuwingen in plaats van inhoudelijke invoerrichting.
+- **Desired Outcome:** Research tekstvelden gebruiken inhoudelijke, korte placeholders zonder behandeladviesformuleringen.
+- **User Value:** Gebruikers kunnen sneller researchnotities, samenvattingen en relevantie vastleggen.
+- **Acceptance Criteria:** Research tekstvelden houden korte inhoudelijke placeholders; app-shell tests bewaken dat behandeladviesformuleringen niet terugkeren in researchplaceholdercopy.
+- **Affected Screens:** Kennis research invoer
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Knowledge research form, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1614 — Research invoer gebruikt korte contextdisclaimers
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge research panels, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3173
 
 ### G1613 — Dossier leesmodus gebruikt korte contextdisclaimer
 

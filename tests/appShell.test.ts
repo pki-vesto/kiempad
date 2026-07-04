@@ -39221,6 +39221,16 @@ describe('app shell', () => {
     expect(html).toContain('name="researchEenvoudigeSamenvatting"');
     expect(html).toContain('scientificSummary, patientSummary en sourceCitation');
     expect(html).toContain('name="researchRelevantieVoorGebruiker"');
+    expect(html).toContain('placeholder="Doel, methode, belangrijkste bevindingen en beperkingen"');
+    expect(html).toContain(
+      'placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken?"',
+    );
+    expect(html).not.toContain(
+      'placeholder="Doel, methode, belangrijkste bevindingen en beperkingen; geen behandeladvies"',
+    );
+    expect(html).not.toContain(
+      'placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."',
+    );
     expect(html).toContain(
       'class="form-required-map" data-form-required-map="knowledge-research" aria-label="Verplicht voor research"',
     );
@@ -40276,7 +40286,10 @@ describe('app shell', () => {
     expect(html).toContain('scientificSummary: Prospectieve cohortstudie');
     expect(html).toContain('AI-concept · brongekoppeld');
     expect(html).toContain('Conceptsamenvatting met bronverwijzing');
-    expect(html).toContain('Dit is geen behandeladvies');
+    expect(html).toContain('Kiempad ordent researchcontext; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Handmatig vastgelegde researchpublicaties met bron, publicatiedatum en herverificatiecontext. Dit is geen behandeladvies.',
+    );
   });
 
   it('markeert verouderde researchkaarten met herverificatieplanning', () => {
@@ -40360,7 +40373,10 @@ describe('app shell', () => {
     expect(html).toContain('patientSummary: Dit artikel legt uit welke labfactoren zijn bekeken');
     expect(html).toContain('Handmatig concept · brongekoppeld');
     expect(html).toContain('Patientvriendelijke conceptsamenvatting in gewone taal');
-    expect(html).toContain('Dit is geen diagnose of behandeladvies');
+    expect(html).toContain('Kiempad ordent researchcontext; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Begrijpelijke Nederlandse uitleg per publicatie, met bron, datum en lekencontext. Dit is geen diagnose of behandeladvies.',
+    );
   });
 
   it('rendert researchrelevantie gekoppeld aan lokale dossiercontext zonder behandeladvies', () => {
@@ -40509,7 +40525,10 @@ describe('app shell', () => {
     expect(html).toContain('data-research-trend-item="research-ivf-embryo"');
     expect(html).toContain('IVF embryo-cultuur');
     expect(html).toContain('2026-05-10 · https://voorbeeld.test/ivf-embryo');
-    expect(html).toContain('Dit is geen bewijsweging of behandeladvies');
+    expect(html).toContain('Kiempad ordent researchcontext; je kliniek blijft leidend.');
+    expect(html).not.toContain(
+      'Lokale trefwoordgroepering van opgeslagen researchitems. Dit is geen bewijsweging of behandeladvies.',
+    );
   });
 
   it('bewaakt research trend dashboard states met lege research, trendcontext en bronverwijzing', () => {
