@@ -23643,6 +23643,7 @@ summary[class*="__summary"]:focus-visible,
   .workspace-strip__switcher,
   .workspace-strip__quick {
     align-items: center;
+    box-sizing: border-box;
     flex-basis: auto;
     flex-grow: 0;
     flex-shrink: 1;
