@@ -3186,6 +3186,7 @@ async function assertWorkspaceStripDirectLinkFocus(page, viewportLabel) {
     const activeButton = document.querySelector(
       '[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]',
     );
+    const activeButtonRect = activeButton?.getBoundingClientRect();
     const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
     const activePanelRect = activePanel?.getBoundingClientRect();
     return {
@@ -3240,6 +3241,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     const activeButton = document.querySelector(
       '[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]',
     );
+    const activeButtonRect = activeButton?.getBoundingClientRect();
     const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
     const activePanelRect = activePanel?.getBoundingClientRect();
     const activePanelStyle = activePanel ? getComputedStyle(activePanel) : null;
@@ -3249,6 +3251,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     const workspaceStripRect = workspaceStrip?.getBoundingClientRect();
     const bottomNav = document.querySelector('.primary-nav');
     const bottomNavRect = bottomNav?.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const bottomNavTop = bottomNavRect?.top ?? viewportHeight;
     const activePanelVisibleHeight =
@@ -3259,6 +3262,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       hash: window.location.hash,
       activeButtonFocused: document.activeElement === activeButton,
       activeElementTag: document.activeElement?.tagName ?? '',
+      activeButtonWidth: Math.round(activeButtonRect?.width ?? 0),
       activePanelVisible: Boolean(
         activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
       ),
@@ -3272,6 +3276,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       screenStageChromeHeight: Math.round(screenStageChromeRect?.height ?? 0),
       workspaceStripHeight: Math.round(workspaceStripRect?.height ?? 0),
       bottomNavTop: Math.round(bottomNavTop),
+      viewportWidth,
       viewportHeight,
       activePanelOverflowY: activePanelStyle?.overflowY ?? '',
       horizontalOverflow:
@@ -3307,6 +3312,10 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     viewportLabel !== 'small-mobile' ||
     (reloadLayout.workspaceStripHeight > 0 &&
       reloadLayout.workspaceStripHeight <= Math.min(138, reloadLayout.viewportHeight * 0.28));
+  const smallMobileActiveButtonWidthCompact =
+    viewportLabel !== 'small-mobile' ||
+    (reloadLayout.activeButtonWidth > 0 &&
+      reloadLayout.activeButtonWidth <= Math.min(148, reloadLayout.viewportWidth * 0.58) + 1);
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3316,6 +3325,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileBodyScrollStable ||
     !smallMobileChromeCompact ||
     !smallMobileWorkspaceStripHeightCompact ||
+    !smallMobileActiveButtonWidthCompact ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3333,6 +3343,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileBodyScrollStable,
           smallMobileChromeCompact,
           smallMobileWorkspaceStripHeightCompact,
+          smallMobileActiveButtonWidthCompact,
         },
       )}).`,
     );
@@ -3345,7 +3356,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,

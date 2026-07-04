@@ -1965,3 +1965,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   remains compact enough to leave visible active panel space after deep-link reloads.
 - Partial G1745/#3433: Small-mobile reload smoke now verifies the workspace-strip
   height itself stays within the compact mobile bound after deep-link reloads.
+- Partial G1746/#3435: Small-mobile reload smoke now verifies the active
+  workspace-strip button width stays within the compact swipe-row bound.
