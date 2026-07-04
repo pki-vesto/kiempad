@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1632 — Medicatie import fouttitel gebruikt korte controlecopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import route-samenvatting gebruikt bij importfouten nog langere titelcopy over schema dat controle vraagt.
+- **User Impact:** Gebruikers zien extra woorden op het moment dat ze vooral snel de fout moeten herstellen.
+- **Desired Outcome:** Import fouttitel gebruikt korte controlecopy en behoudt de foutoriëntatie.
+- **User Value:** Importfouten blijven rustiger en sneller scanbaar.
+- **Acceptance Criteria:** Import fouttitel gebruikt korte controlecopy; app-shell tests bewaken dat de oude fouttitel niet terugkeert.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1631 — Medicatie import samenvattingstitel gebruikt korte schematitel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3207
 
 ### G1630 — Medicatie import knop gebruikt korte actiecopy
 

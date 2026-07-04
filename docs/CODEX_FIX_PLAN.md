@@ -1120,6 +1120,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   instead of explaining local conversion to planning moments.
   Partial G1630/#3205: Medication import form submit button now uses short action
   copy instead of repeating schema import wording.
+  Partial G1631/#3207: Medication import route summary title now uses a short schema
+  title instead of longer own-schema local-import wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

@@ -18544,7 +18544,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             ? 'Schema vraagt controle'
             : state.medicatieImportStatus
               ? 'Schemafeedback beschikbaar'
-              : 'Eigen schema lokaal importeren',
+              : 'Schema klaarzetten',
           detail: 'Maak lokale planning uit je schema.',
           status: state.medicatieImportError
             ? 'Check'
