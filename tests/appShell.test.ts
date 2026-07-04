@@ -6165,7 +6165,11 @@ describe('app shell', () => {
     expect(html).not.toContain('Bekijk toekomstige afvinkmomenten uit eigen invoer of import.');
     expect(html).toContain('Nog geen vervolgplanning; gebruik Beheer of lokale invoer plannen.');
     expect(html).not.toContain('Nog geen vervolgplanning; voeg momenten toe via Beheer of Import.');
-    expect(html).toContain('Nog geen vervolgplanning buiten vandaag.');
+    expect(html).toContain(
+      'Nog geen vervolgplanning buiten vandaag; beheer of lokale invoer helpt verder.',
+    );
+    expect(html).not.toContain('Nog geen vervolgplanning buiten vandaag.');
+    expect(html).toContain('href="#medicatie?route=beheer">Medicatie beheren</a>');
     expect(html).not.toContain(
       'Het eerstvolgende planningsmoment staat vooraan. Vandaag, beheer, import en historie open je pas als vervolgcontext.',
     );

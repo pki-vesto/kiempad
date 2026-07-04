@@ -18475,10 +18475,13 @@ function renderMedicatieScreen(state: AppShellState): string {
             ${
               plannedLogs.length > 0
                 ? renderDoseLogList(plannedLogs.slice(0, 1), state.medicatie)
-                : renderEmptyState('Nog geen vervolgplanning buiten vandaag.', {
-                    title: 'Geen komende momenten',
-                    cta: { href: '#medicatie?route=beheer', label: 'Medicatie beheren' },
-                  })
+                : renderEmptyState(
+                    'Nog geen vervolgplanning buiten vandaag; beheer of lokale invoer helpt verder.',
+                    {
+                      title: 'Geen komende momenten',
+                      cta: { href: '#medicatie?route=beheer', label: 'Medicatie beheren' },
+                    },
+                  )
             }
           </div>
           <details id="medication-planning-followup" class="kp-disclosure medication-planning-followup" data-medication-planning-followup="collapsed">

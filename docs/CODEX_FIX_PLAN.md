@@ -1785,3 +1785,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the helper copy, counter and route links.
 - Partial G1657/#3259: Medication empty planning summary now points to Beheer or local input
   planning instead of the generic Import route.
+- Partial G1658/#3261: Medication empty planning CTA context now says local input can help while
+  preserving the visible Beheer CTA.
