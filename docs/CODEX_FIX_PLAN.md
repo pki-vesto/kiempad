@@ -2075,3 +2075,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1798/#3539: Dossier upload now uses a tighter small-mobile route
   selector and action path with routeflow evidence for route card dimensions,
   active state, selector containment and compact spacing.
+- Partial G1799/#3541: Dossier upload route cards now use shorter visible labels
+  for document, consult, embryo and status while the longer active context remains
+  available and routeflow guards small-mobile label length.

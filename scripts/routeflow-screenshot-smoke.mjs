@@ -2325,6 +2325,11 @@ async function assertRouteflows(browser, options) {
               const addRouteRect = addRoute?.getBoundingClientRect();
               const addRouteStyle = addRoute ? getComputedStyle(addRoute) : null;
               const activeAddRouteStyle = activeAddRoute ? getComputedStyle(activeAddRoute) : null;
+              const addRouteLabels = Array.from(
+                selector?.querySelectorAll('.dossier-add-route strong, .dossier-add-route span, .dossier-add-route small') ??
+                  [],
+                (label) => label.textContent?.trim() ?? '',
+              );
               const routeItemStyle = routeItem ? getComputedStyle(routeItem) : null;
               const documentStyle = documentPanel ? getComputedStyle(documentPanel) : null;
               const consultStyle = consultPanel ? getComputedStyle(consultPanel) : null;
@@ -2395,6 +2400,8 @@ async function assertRouteflows(browser, options) {
                 addRouteStrongFontSize:
                   addRoute?.querySelector('strong') &&
                   getComputedStyle(addRoute.querySelector('strong')).fontSize,
+                addRouteLabelMaxLength: Math.max(0, ...addRouteLabels.map((label) => label.length)),
+                addRouteLabels,
                 addRouteActiveBorderColor: activeAddRouteStyle?.borderColor ?? '',
                 routeItemMinHeight: routeItemStyle?.minHeight ?? '',
                 routeItemWidth: routeItem?.getBoundingClientRect().width ?? 0,
@@ -3176,6 +3183,7 @@ async function assertRouteflows(browser, options) {
           parseFloat(evidence.uploadConsole.addRouteMinHeight) > 52 ||
           parseFloat(evidence.uploadConsole.addRoutePaddingTop) > 6 ||
           parseFloat(evidence.uploadConsole.addRouteStrongFontSize) > 13 ||
+          evidence.uploadConsole.addRouteLabelMaxLength > 15 ||
           !evidence.uploadConsole.addRouteActiveBorderColor ||
           parseFloat(evidence.uploadConsole.routeItemMinHeight) > 60 ||
           evidence.uploadConsole.routeItemWidth > 158 ||
