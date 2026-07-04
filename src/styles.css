@@ -21536,6 +21536,12 @@ summary[class*="__summary"]:focus-visible,
   border-style: dashed;
 }
 
+.dossier-upload-image-context:target {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border-strong));
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--accent) 72%, transparent);
+  scroll-margin-top: 18px;
+}
+
 .dossier-upload-optional.dossier-upload-metadata-fields,
 .dossier-upload-optional.dossier-upload-link-fields,
 .dossier-upload-optional.dossier-upload-image-fields,

@@ -1873,3 +1873,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1700/#3343: Dossier upload now opens with a visible action path for document,
   consult, image and embryo intake inside the bounded workspace; routeflow guards the action
   path on desktop, tablet and mobile.
+- Partial G1701/#3345: The dossier upload image action now targets the image-context step
+  directly, keeps the document upload contract intact and adds routeflow coverage for the
+  dedicated image-context anchor across desktop, tablet and mobile.

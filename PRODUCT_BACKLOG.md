@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1501 |
+| ☑ klaar | 1502 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1700** |
+| **Totaal** | **1701** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1862,13 +1862,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1698 | Medicatie planning routeopties helper houdt context maar korter | P2 | F5 | ☐ |
 | G1699 | Premium Claude Design UI: app-shell als bounded werkruimte in plaats van lange pagina | P1 | F5 | ☑ |
 | G1700 | Premium Claude Design UI: dossier upload actiepad zichtbaarder na bounded workspace | P1 | F5 | ☑ |
-| G1701 | Premium Claude Design UI: dossier upload beeldactie opent beeldcontext directer | P1 | F5 | ☐ |
+| G1701 | Premium Claude Design UI: dossier upload beeldactie opent beeldcontext directer | P1 | F5 | ☑ |
+| G1702 | Premium Claude Design UI: dossier upload beeldcontext samenvatting toont veilige next step | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1700** (id's G001 t/m G1701; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1701** (id's G001 t/m G1702; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

@@ -497,6 +497,7 @@ export function normalizeScreenId(value: string | null | undefined): ScreenId {
       'dossier-route-imaging',
       'dossier-route-timeline',
       'dossier-upload-form',
+      'dossier-upload-image-context',
       'consult-verslag-form',
       'embryo-quality-form',
       'embryo-status-event-form',
@@ -634,6 +635,7 @@ export function normalizeDossierRoute(value: string | null | undefined): Dossier
     [
       'dossier-route-upload',
       'dossier-upload-form',
+      'dossier-upload-image-context',
       'consult-verslag-form',
       'embryo-quality-form',
       'embryo-status-event-form',
@@ -668,7 +670,9 @@ export function normalizeDossierRoute(value: string | null | undefined): Dossier
 
 export function normalizeDossierAddFlow(value: string | null | undefined): DossierAddFlow {
   const target = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
-  if (target === 'dossier-upload-form') return 'document';
+  if (target === 'dossier-upload-form' || target === 'dossier-upload-image-context') {
+    return 'document';
+  }
   if (target === 'consult-verslag-form' || target === 'consult-context-fields') return 'consult';
   if (target === 'embryo-quality-form') return 'embryo-quality';
   if (target === 'embryo-status-event-form') return 'embryo-status';
@@ -3537,10 +3541,10 @@ function renderDossierScreen(state: AppShellState): string {
               </fieldset>
             </details>
           </details>
-          <details class="dossier-upload-optional" data-dossier-upload-optional="beeldcontext">
-            <summary class="dossier-upload-optional__summary">
+          <details id="dossier-upload-image-context" class="dossier-upload-optional dossier-upload-image-context" data-dossier-upload-optional="beeldcontext" data-dossier-upload-image-next-step="ready">
+            <summary class="dossier-upload-optional__summary" data-dossier-upload-image-context-summary="ready">
               <span>Beeldcontext</span>
-              <small>Echo, foto of scan beschrijven</small>
+              <small>Volgende stap voor echo, foto of scan</small>
             </summary>
             <details class="dossier-upload-optional dossier-upload-image-fields" data-dossier-upload-image-fields="collapsed">
               <summary class="dossier-upload-optional__summary">
@@ -5055,10 +5059,10 @@ function renderDossierUploadActionPath(activeFlow: DossierAddFlow): string {
     {
       id: 'image',
       flow: 'document',
-      href: '#dossier-upload-form',
+      href: '#dossier-upload-image-context',
       label: 'Beeld',
       title: 'Echo of foto toevoegen',
-      detail: 'Upload met beeldcontext',
+      detail: 'Spring naar beeldcontext',
     },
     {
       id: 'embryo',
