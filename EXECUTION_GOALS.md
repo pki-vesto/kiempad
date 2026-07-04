@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1675 — Medicatie planning routeopties navigatie noemt import lokaal
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties navigatie gebruikt Middel beheren naast Lokale invoer plannen, maar mist in de importlink nog dezelfde korte lokale context als de helper.
+- **User Impact:** Gebruikers scannen de importoptie minder snel als lokale routeoptie.
+- **Desired Outcome:** De importlink in routeopties blijft kort en noemt lokale context.
+- **User Value:** De routeopties blijven consistent tussen helper en links.
+- **Acceptance Criteria:** Importlink noemt lokale context; bestaande import href blijft behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1674 — Medicatie planning routeopties teller noemt later medicatie compact
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3293
 
 ### G1673 — Medicatie planning routeopties helper noemt lokale import
 
