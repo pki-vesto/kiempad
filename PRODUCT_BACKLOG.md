@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1609 |
+| ☑ klaar | 1610 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1808** |
+| **Totaal** | **1809** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1970,13 +1970,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1806 | Premium Claude Design UI: Dossier upload small-mobile route selector achtergrond rustiger | P1 | F5 | ☑ |
 | G1807 | Premium Claude Design UI: Dossier upload small-mobile routekaart achtergrondcontrast rustiger | P1 | F5 | ☑ |
 | G1808 | Premium Claude Design UI: Dossier upload small-mobile routekaart actieve lijn rustiger | P1 | F5 | ☑ |
-| G1809 | Premium Claude Design UI: Dossier upload small-mobile routekaart actieve randcontrast rustiger | P1 | F5 | ☐ |
+| G1809 | Premium Claude Design UI: Dossier upload small-mobile routekaart actieve randcontrast rustiger | P1 | F5 | ☑ |
+| G1810 | Premium Claude Design UI: Dossier upload small-mobile routekaart actieve achtergrond rustiger | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1808** (id's G001 t/m G1809; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1809** (id's G001 t/m G1810; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

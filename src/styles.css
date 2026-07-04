@@ -27473,7 +27473,7 @@ summary[class*="__summary"]:focus-visible,
     .dossier-add-route[href="#embryo-quality-form"],
   .dossier-upload-console[data-dossier-add-flow="embryo-status"]
     .dossier-add-route[href="#embryo-status-event-form"] {
-    border-color: color-mix(in srgb, var(--accent) 54%, var(--border));
+    border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
     background: color-mix(in srgb, var(--surface) 99%, var(--accent) 1%);
     box-shadow:
       inset 0 -1px 0 color-mix(in srgb, var(--accent) 46%, transparent),
