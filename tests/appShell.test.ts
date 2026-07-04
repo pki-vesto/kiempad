@@ -6226,7 +6226,8 @@ describe('app shell', () => {
     );
     expect(html).toContain('href="#medicatie?route=vandaag"');
     expect(html).toContain('href="#medicatie?route=beheer"');
-    expect(html).toContain('href="#medicatie?route=import"');
+    expect(html).toContain('href="#medicatie?route=import">Lokale import</a>');
+    expect(html).not.toContain('href="#medicatie?route=import">Lokale invoer plannen</a>');
     expect(html).toContain('href="#medicatie?route=historie"');
     expect(html.indexOf('id="medication-planning-primary"')).toBeLessThan(
       html.indexOf('id="medication-planning-followup"'),
@@ -6268,7 +6269,7 @@ describe('app shell', () => {
     );
     expect(html).toContain('Routeopties: vandaag, beheer, lokale planningimport of historie.');
     expect(html).not.toContain('Kies daarna vandaag, beheer, import of historie.');
-    expect(html).toContain('href="#medicatie?route=import">Lokale invoer plannen</a>');
+    expect(html).toContain('href="#medicatie?route=import">Lokale import</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Schema importeren</a>');
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Medicatie | 2026-06-23 | 08:00');
