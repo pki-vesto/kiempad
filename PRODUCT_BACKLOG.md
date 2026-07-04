@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1438 |
+| ☑ klaar | 1439 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1637** |
+| **Totaal** | **1638** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1799,13 +1799,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1635 | Medicatie import foutbadge gebruikt korte checklabel | P2 | F5 | ☑ |
 | G1636 | Medicatie import primaire actie gebruikt korte beheerlabel | P2 | F5 | ☑ |
 | G1637 | Medicatie import secundaire actie gebruikt korte planninglabel | P2 | F5 | ☑ |
-| G1638 | Medicatie import disclosure gebruikt korte actiecopy | P2 | F5 | ☐ |
+| G1638 | Medicatie import disclosure gebruikt korte actiecopy | P2 | F5 | ☑ |
+| G1639 | Medicatie import formulierlabel gebruikt korte invoercopy | P2 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1637** (id's G001 t/m G1638; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1638** (id's G001 t/m G1639; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

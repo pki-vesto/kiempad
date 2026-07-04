@@ -1745,3 +1745,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 
 - Partial G1637/#3219: Medication import route summary secondary action now uses a short Plan
   label while preserving the planning route.
+- Partial G1638/#3221: Medication import disclosure summary now uses a short Importeren action
+  label while preserving the import form.

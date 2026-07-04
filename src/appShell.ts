@@ -18556,7 +18556,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           data: { 'medication-route-summary': 'import' },
           ariaLabel: 'Medicatie-import route-samenvatting',
         })}
-        ${disclosure({ summary: 'Schema importeren', body: renderMedicatieImportForm(state) })}
+        ${disclosure({ summary: 'Importeren', body: renderMedicatieImportForm(state) })}
       </section>`,
     `<section id="medicatie-route-historie" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-historie-title" data-medication-route="historie"${renderMedicationRouteVisibility(activeMedicationRoute, 'historie')}>
         <header class="medication-route-section__header command-route-section__header">
