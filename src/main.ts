@@ -1,5 +1,6 @@
 import {
   type AppShellLoadingState,
+  type AppShellState,
   normalizeBackupRoute,
   normalizeDailyRecommendationFeedbackFilter,
   normalizeDecisionRoute,
@@ -108,6 +109,8 @@ import {
 } from './notificationRuntime';
 import { importeerVersleuteldeExport, maakVersleuteldeExport } from './storage/backup';
 import { CentralReplayConflictError } from './storage/centralDatabase';
+import type { CentralFetchSessionRenewalStatus } from './storage/centralFetchClient';
+import { describeCentralSessionRenewalFeedback } from './storage/centralSessionRenewalFeedback';
 import { type ClientStorageMode, openClientStorage } from './storage/clientStorage';
 import { EncryptedRecordRepository } from './storage/encryptedRepository';
 import type { EncryptedStorageDriver } from './storage/records';
@@ -182,6 +185,7 @@ type RuntimeState = {
   dailyRecommendationRouteFocusPendingFocus?: boolean;
   dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
+  centralSyncFeedback?: AppShellState['centralSyncFeedback'];
   settingsOpen: boolean;
   webAuthnStatus: WebAuthnViewStatus;
   loadingState?: AppShellLoadingState;
@@ -259,6 +263,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
         ? normalizeDailyRecommendationFeedbackFilter(window.location.hash)
         : state.dailyRecommendationFeedbackFilter,
     vraagStatus: state.vraagStatus,
+    centralSyncFeedback: deriveCentralSyncFeedback(state),
     loadingState: state.loadingState,
     webAuthnStatus: state.webAuthnStatus,
     storageMode: state.storageMode,
@@ -350,6 +355,28 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.error = undefined;
     void refreshWebAuthnStatus(state).then(() => render(root, state));
   });
+}
+
+function deriveCentralSyncFeedback(state: RuntimeState): AppShellState['centralSyncFeedback'] {
+  const feedback = { ...(state.centralSyncFeedback ?? {}) };
+  const renewalStatus = getCentralSessionRenewalStatus(state.driver);
+  if (renewalStatus) {
+    const renewalFeedback = describeCentralSessionRenewalFeedback(renewalStatus);
+    feedback['stale-session'] = {
+      state: renewalFeedback.state,
+      status: renewalFeedback.message,
+    };
+  }
+  return feedback;
+}
+
+function getCentralSessionRenewalStatus(
+  driver: EncryptedStorageDriver,
+): CentralFetchSessionRenewalStatus | undefined {
+  if (!('getSessionRenewalStatus' in driver)) return undefined;
+  const getter = driver.getSessionRenewalStatus;
+  if (typeof getter !== 'function') return undefined;
+  return getter.call(driver) as CentralFetchSessionRenewalStatus;
 }
 
 function alignActiveWorkspaceStripButton(root: HTMLElement): void {

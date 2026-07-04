@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1642 |
+| ☑ klaar | 1643 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1841** |
+| **Totaal** | **1842** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -745,7 +745,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G580 | Fertility Intelligence: historische tijdlijnitem reviewactie | P1 | F5 | ☐ |
 | G581 | Fertility Intelligence: imaging metadata reviewcorrectie | P1 | F5 | ☐ |
 | G582 | Product Quality & Automation: active goal floor CI gate | P1 | F5 | ☐ |
-| G583 | Central Encrypted Platform: central session renewal status UI | P1 | F5 | ☐ |
+| G583 | Central Encrypted Platform: central session renewal status UI | P1 | F5 | ☑ |
 | G584 | Central Encrypted Platform: paginated record load status UI | P1 | F5 | ☑ |
 | G585 | Central Encrypted Platform: attachment envelope metadata UI feedback | P1 | F5 | ☑ |
 | G586 | Central Encrypted Platform: replay conflict recovery status UI | P1 | F5 | ☐ |
@@ -2004,12 +2004,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1840 | Premium Claude Design UI: Dossier routepanelen als bounded werkruimte | P1 | F5 | ☑ |
 | G1841 | Central Encrypted Platform: attachment envelope batch status UI | P1 | F5 | ☐ |
 | G1842 | Central Encrypted Platform: central record load progress in runtime bootstrap | P1 | F5 | ☐ |
+| G1843 | Central Encrypted Platform: central session renewal toast and retry affordance | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1841** (id's G001 t/m G1842; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1842** (id's G001 t/m G1843; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
