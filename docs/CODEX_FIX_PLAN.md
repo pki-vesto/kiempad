@@ -1953,3 +1953,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   deep-link and verify the active workspace-strip button and panel layout remain stable.
 - Partial G1739/#3421: Reload routeflow smoke now also verifies the active workspace-strip
   button does not receive focus after mobile and small-mobile deep-link reloads.
+- Partial G1740/#3423: Small-mobile reload smoke now records an explicit reload-hash
+  guard and labels the screenshot evidence separately for deep-link hash stability.
