@@ -1957,3 +1957,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   guard and labels the screenshot evidence separately for deep-link hash stability.
 - Partial G1741/#3425: Small-mobile reload smoke now also measures active panel
   viewport position against the fixed bottom nav before capturing the route evidence.
+- Partial G1742/#3427: Small-mobile reload smoke now verifies the active screen-stage
+  panel starts at a calm internal scroll position after deep-link reloads.

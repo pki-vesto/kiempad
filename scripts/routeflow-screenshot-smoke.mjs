@@ -3261,6 +3261,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       activePanelTop: Math.round(activePanelRect?.top ?? 0),
       activePanelBottom: Math.round(activePanelRect?.bottom ?? 0),
       activePanelVisibleHeight: Math.round(activePanelVisibleHeight),
+      activePanelScrollTop: Math.round(activePanel?.scrollTop ?? 0),
       bottomNavTop: Math.round(bottomNavTop),
       viewportHeight,
       activePanelOverflowY: activePanelStyle?.overflowY ?? '',
@@ -3281,11 +3282,14 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       reloadLayout.activePanelTop < reloadLayout.bottomNavTop - 96 &&
       reloadLayout.activePanelVisibleHeight >=
         Math.min(180, Math.max(96, reloadLayout.viewportHeight * 0.26)));
+  const smallMobilePanelScrollStartStable =
+    viewportLabel !== 'small-mobile' || reloadLayout.activePanelScrollTop <= 1;
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
     !smallMobileReloadHashStable ||
     !smallMobilePanelPositionStable ||
+    !smallMobilePanelScrollStartStable ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3299,6 +3303,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileExpectedHash,
           smallMobileActualHash,
           smallMobilePanelPositionStable,
+          smallMobilePanelScrollStartStable,
         },
       )}).`,
     );
@@ -3311,7 +3316,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,

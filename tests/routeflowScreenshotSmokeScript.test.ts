@@ -39,14 +39,18 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-history');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
-    expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload-hash-panel');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'workspace-strip-reload-hash-panel-scrollstart',
+    );
     expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain('activeButtonFocused');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileReloadHashStable');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileExpectedHash');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobileActualHash');
     expect(routeflowScreenshotSmokeScript).toContain('smallMobilePanelPositionStable');
+    expect(routeflowScreenshotSmokeScript).toContain('smallMobilePanelScrollStartStable');
     expect(routeflowScreenshotSmokeScript).toContain('activePanelVisibleHeight');
+    expect(routeflowScreenshotSmokeScript).toContain('activePanelScrollTop');
     expect(routeflowScreenshotSmokeScript).toContain('bottomNavTop');
     expect(routeflowScreenshotSmokeScript).toContain("options.label === 'small-mobile'");
     expect(routeflowScreenshotSmokeScript).toContain("page.goBack({ waitUntil: 'networkidle' })");
