@@ -22235,6 +22235,10 @@ summary[class*="__summary"]:focus-visible,
     padding: 7px 9px;
   }
 
+  .dossier-add-route-group__summary span {
+    font-weight: 800;
+  }
+
   .dossier-add-route-group__summary::after {
     width: 18px;
     height: 18px;
@@ -22245,7 +22249,9 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .dossier-add-route-group__summary small {
+    color: var(--text-muted);
     font-size: 0.7rem;
+    font-weight: 680;
     line-height: 1.18;
   }
 

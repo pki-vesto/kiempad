@@ -1816,8 +1816,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route group summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3549
+
+### G1804 — Dossier upload small-mobile route summary focus-ring rustiger
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De focus-ring van de Dossier upload routegroep-summary kan op small-mobile rustiger zonder toetsenbordzichtbaarheid te verliezen.
+- **User Impact:** Focusstijl kan visueel concurreren met de routekaarten wanneer gebruikers met toetsenbord of assistive tech navigeren.
+- **Desired Outcome:** Keyboard focus blijft duidelijk zichtbaar, maar de focusstijl sluit beter aan op de compacte summary.
+- **User Value:** Gebruikers behouden toegankelijke navigatie zonder extra visuele drukte.
+- **Acceptance Criteria:** Keyboard focus blijft duidelijk zichtbaar; focusstijl concurreert minder met routekaarten op small-mobile; route-summary blijft herkenbaar als klikbaar element; app-shell tests of routeflow smoke bewaken de focus-styling.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route group summary, focus styles
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3551
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
