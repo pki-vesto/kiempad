@@ -15826,7 +15826,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central fetch client, app shell, storage bootstrap, tests
 - **ADR Needed:** no
 - **Score:** 113
+- **Status:** ☑ done
+- **Issue:** #934
+
+### G1842 — Central record load progress in runtime bootstrap
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Na een paginated record load statusmodel en Back-up UI-status kan de live unlock/reload bootstrap nog explicieter voortgang tussen centrale recordpagina's tonen.
+- **User Impact:** Gebruikers met grotere centrale datasets zien tijdens unlock/reload nog niet per pagina dat Kiempad encrypted records laadt zonder plaintext te tonen.
+- **Desired Outcome:** Runtime loading state toont generieke pagina-voortgang voor centrale versleutelde recordloads zonder recordinhoud, passphrase, token, cursorwaarde of medische plaintext.
+- **User Value:** Grote centrale datasets voelen voorspelbaarder tijdens openen en herladen.
+- **Acceptance Criteria:** Runtime loading state toont pagina-voortgang generiek bij centrale recordloads; status gebruikt het G584 statusmodel of een compatibele wrapper; tests dekken voortgang, lege pagina en fout zonder passphrase, token, cursorwaarde, base64, OCR-tekst of medische plaintext; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Vault unlock, app reload, Back-up
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** main bootstrap, central record load status, app shell loading state, tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
+- **Issue:** #3627
 
 ### G585 — attachment envelope metadata UI feedback
 
