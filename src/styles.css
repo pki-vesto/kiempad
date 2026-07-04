@@ -22036,6 +22036,7 @@ summary[class*="__summary"]:focus-visible,
     .dossier-add-route-selector {
     display: flex;
     gap: 8px;
+    margin-bottom: 6px;
     overflow-x: auto;
     padding-bottom: 2px;
     scroll-snap-type: x proximity;
@@ -22048,7 +22049,8 @@ summary[class*="__summary"]:focus-visible,
 
   .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route {
     flex: 0 0 min(194px, 72vw);
-    min-height: 76px;
+    min-height: 68px;
+    padding: 8px;
     scroll-snap-align: start;
   }
 
@@ -22056,20 +22058,47 @@ summary[class*="__summary"]:focus-visible,
     flex-wrap: wrap;
   }
 
+  .dossier-add-route-disclosure {
+    border-radius: 12px;
+  }
+
+  .dossier-add-route-disclosure__summary {
+    min-height: 44px;
+    padding: 8px 10px;
+  }
+
+  .dossier-add-route-disclosure__summary small {
+    font-size: 0.7rem;
+  }
+
+  .dossier-add-route-disclosure__summary::after {
+    width: 22px;
+    height: 22px;
+  }
+
+  .dossier-add-route-disclosure > .dossier-add-route-panel,
+  .dossier-add-route-disclosure > #dossier-route-review {
+    padding: 0 8px 8px;
+  }
+
   .dossier-upload-group,
   .dossier-subform-group {
     grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  .dossier-add-route-panel .data-form {
     gap: 8px;
-    padding: 10px;
-    border-radius: 12px;
   }
 
   .consult-upload-report-fields__body,
   .embryo-quality-identification-fields__body,
   .embryo-status-basis-fields__body {
     grid-template-columns: 1fr;
-    gap: 8px;
-    padding: 0 10px 10px;
+    gap: 7px;
+    padding: 0 8px 8px;
   }
 
   .dossier-upload-group[data-dossier-field-section],
@@ -22086,11 +22115,101 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .dossier-add-route-panel {
-    padding-bottom: 8px;
+    padding-bottom: 6px;
   }
 
   .dossier-add-route-panel + .dossier-add-route-panel {
-    margin-top: 8px;
+    margin-top: 6px;
+  }
+
+  .dossier-upload-optional.dossier-upload-metadata-fields,
+  .dossier-upload-optional.dossier-upload-link-fields,
+  .dossier-upload-optional.dossier-upload-image-fields,
+  .dossier-upload-optional.dossier-upload-lab-fields,
+  .dossier-upload-optional.embryo-quality-identification-fields,
+  .dossier-upload-optional.embryo-quality-assessment-fields,
+  .dossier-upload-optional.embryo-quality-link-fields,
+  .dossier-upload-optional.embryo-status-basis-fields,
+  .dossier-upload-optional.embryo-status-source-fields,
+  .dossier-upload-optional.embryo-status-link-fields,
+  .dossier-upload-optional.dossier-upload-submit-feedback-details {
+    margin: 0 6px 8px;
+    border-radius: 10px;
+  }
+
+  .dossier-upload-optional__summary {
+    min-height: 40px;
+    padding: 7px 9px;
+  }
+
+  .dossier-upload-optional__summary small {
+    font-size: 0.7rem;
+  }
+
+  .dossier-upload-optional__summary::after {
+    width: 22px;
+    height: 22px;
+  }
+
+  .dossier-upload-optional > .dossier-upload-group {
+    margin: 0 6px 8px;
+  }
+
+  .dossier-upload-completion[data-dossier-upload-completion-choice="ready"],
+  .dossier-upload-completion[data-consult-upload-completion-choice="ready"],
+  .dossier-upload-completion[data-embryo-quality-completion-choice="ready"],
+  .dossier-upload-completion[data-embryo-status-completion-choice="ready"] {
+    gap: 7px;
+  }
+
+  .dossier-upload-completion-status-choice {
+    margin: 0 6px 8px;
+    border-radius: 10px;
+  }
+
+  .dossier-upload-completion-status-choice__summary {
+    min-height: 40px;
+    padding: 8px 10px;
+  }
+
+  .dossier-upload-completion-status-choice__summary small,
+  .dossier-upload-completion-status-choice__summary em {
+    font-size: 0.7rem;
+  }
+
+  .dossier-upload-completion-status-choice__body {
+    gap: 6px;
+    padding-bottom: 8px;
+  }
+
+  .dossier-upload-submit-feedback-details > .dossier-submit-feedback,
+  .dossier-upload-completion-status-choice__body > .dossier-submit-feedback {
+    margin: 0 6px 8px;
+  }
+
+  .dossier-required-map,
+  .form-required-map {
+    gap: 6px;
+    padding: 8px;
+    border-radius: 10px;
+  }
+
+  .dossier-required-map span[role="listitem"],
+  .form-required-map span[role="listitem"] {
+    min-height: 28px;
+    padding: 4px 8px;
+    font-size: 0.74rem;
+  }
+
+  .dossier-upload-image-next-step {
+    gap: 5px;
+    padding: 0 8px 8px;
+  }
+
+  .dossier-upload-image-next-step span {
+    min-height: 34px;
+    padding: 5px 8px;
+    font-size: 0.7rem;
   }
 
   .dossier-submit-action {
@@ -24238,8 +24357,8 @@ summary[class*="__summary"]:focus-visible,
 
   .dossier-upload-action-path__item {
     flex: 0 0 min(178px, 72vw);
-    min-height: 78px;
-    padding: 9px;
+    min-height: 68px;
+    padding: 8px;
     scroll-snap-align: start;
   }
 

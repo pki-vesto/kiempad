@@ -1714,8 +1714,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload console, mobile layout, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3537
+
+### G1798 — Dossier upload routekeuze small-mobile selector compacter
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De routekeuze in Dossier upload kan op small-mobile nog compacter zonder de routeherkenning te verliezen.
+- **User Impact:** Gebruikers zien minder uploadcontext boven de vouw wanneer routekaarten te veel hoogte innemen.
+- **Desired Outcome:** De routekeuze blijft horizontaal scanbaar met compactere routekaarten, duidelijke actieve staat en stabiele labels.
+- **User Value:** Gebruikers kunnen sneller kiezen tussen document, consult, embryo en review op kleine schermen.
+- **Acceptance Criteria:** De routekeuze blijft horizontaal scanbaar op small-mobile; routekaarten behouden duidelijke labels en actieve staat; er is geen horizontale overflow of tekstoverlap; routeflow screenshot smoke bewaakt mobile en small-mobile.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, mobile layout, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3539
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
