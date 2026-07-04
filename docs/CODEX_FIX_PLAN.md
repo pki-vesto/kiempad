@@ -2043,3 +2043,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   backdrop-filter, guarded by CSS and reload smoke.
 - Partial G1784/#3511: Small-mobile workspace-strip switchers now keep stable
   opacity, guarded by CSS and reload smoke.
+- Partial G1785/#3513: Small-mobile workspace-strip switchers now keep stable
+  visibility, guarded by CSS and reload smoke.
