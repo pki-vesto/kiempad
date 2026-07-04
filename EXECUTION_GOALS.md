@@ -15812,7 +15812,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, central fetch client, storage bootstrap, tests
 - **ADR Needed:** no
 - **Score:** 113
+- **Status:** ☑ done
+- **Issue:** #932
+
+### G1843 — Central session renewal toast and retry affordance
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Na veilige centrale sessie-renewal status in de Back-up UI kan een mislukte renewal nog directer een herlaad- of retryactie tonen.
+- **User Impact:** Gebruikers begrijpen de status, maar moeten bij een mislukte centrale sessievernieuwing nog zelf bedenken welke herstelactie past.
+- **Desired Outcome:** Bij failed renewal toont Kiempad een generieke herlaad/retry affordance zonder token, sessie-id of payloaddetails.
+- **User Value:** Herstel bij centrale sessieverval wordt duidelijker zonder legacy fallback of plaintext.
+- **Acceptance Criteria:** UI toont alleen bij failed renewal een generieke herlaad/retry affordance; geen passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload of medische plaintext in copy of testfixtures; tests dekken active, refreshed en failed states; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Back-up, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, central session renewal feedback, Back-up UI, tests
+- **ADR Needed:** no
+- **Score:** 105
 - **Status:** ☐ open
+- **Issue:** #3629
 
 ### G584 — paginated record load status UI
 

@@ -2207,3 +2207,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record
   payloads or medical plaintext.
+- Partial G583/#932: Central session renewal status is now mapped from the
+  central fetch driver into the Back-up central sync status, showing active,
+  refreshed, refreshing and failed states without tokens, passphrases,
+  session ids, fallback plaintext or medical payloads.

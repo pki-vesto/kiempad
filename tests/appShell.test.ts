@@ -42201,7 +42201,7 @@ describe('app shell', () => {
           'stale-session': {
             state: 'error',
             error:
-              'Stale session met passphrase API-sleutel base64 dossier payload behandelkeuzeadvies.',
+              'Centrale sessie kon niet worden vernieuwd. Herlaad Kiempad en probeer opnieuw; er is geen lokale plaintext fallback gestart.',
           },
           'record-package': {
             state: 'success',
@@ -42228,7 +42228,7 @@ describe('app shell', () => {
     expect(syncFeedback).toContain('data-central-sync-feedback-kind="record-load"');
     expect(syncFeedback).toContain('data-central-sync-feedback-state="warning"');
     expect(syncFeedback).toContain('Replayconflict bijgewerkt zonder sessie- of recorddetails.');
-    expect(syncFeedback).toContain('Sessie bijgewerkt zonder sessie- of recorddetails.');
+    expect(syncFeedback).toContain('geen lokale plaintext fallback');
     expect(syncFeedback).toContain('Recordpakket bijgewerkt zonder sessie- of recorddetails.');
     expect(syncFeedback).toContain('Recordload bijgewerkt zonder sessie- of recorddetails.');
     expect(syncFeedback).toContain('geen recordinhoud');

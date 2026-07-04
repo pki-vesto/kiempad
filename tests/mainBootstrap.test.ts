@@ -156,4 +156,12 @@ describe('main bootstrap', () => {
     expect(mainSource).not.toContain('OCR_RAW_PAYLOAD');
     expect(mainSource).not.toContain('kiempad-session-forged');
   });
+
+  it('geeft centrale sessie-renewal status als veilige syncstatus door aan de shell', () => {
+    expect(mainSource).toContain('describeCentralSessionRenewalFeedback');
+    expect(mainSource).toContain('deriveCentralSyncFeedback(state)');
+    expect(mainSource).toContain("feedback['stale-session']");
+    expect(mainSource).toContain('getCentralSessionRenewalStatus(state.driver)');
+    expect(mainSource).not.toContain('central-token secret passphrase');
+  });
 });
