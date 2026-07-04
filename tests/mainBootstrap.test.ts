@@ -124,6 +124,23 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('target.focus({ preventScroll: true })');
   });
 
+  it('brengt de actieve mobiele workspace-strip knop na render horizontaal in beeld', () => {
+    expect(mainSource).toContain('alignActiveWorkspaceStripButton(root)');
+    expect(mainSource).toContain(
+      'requestAnimationFrame(() => alignActiveWorkspaceStripButton(root))',
+    );
+    expect(mainSource).toContain('function alignActiveWorkspaceStripButton(root: HTMLElement)');
+    expect(mainSource).toContain(
+      '\'[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]\'',
+    );
+    expect(mainSource).toContain("activeWorkspaceButton.closest('.workspace-strip__switcher')");
+    expect(mainSource).toContain('switcher.scrollLeft =');
+    expect(mainSource).toContain('activeWorkspaceButton.offsetLeft');
+    expect(mainSource).toContain(
+      "activeWorkspaceButton.scrollIntoView({ block: 'nearest', inline: 'center' })",
+    );
+  });
+
   it('mapt centrale replayconflicten naar generieke herstelcopy zonder plaintext fallback', () => {
     expect(mainSource).toContain('CentralReplayConflictError');
     expect(mainSource).toContain('formatCentralReplayRecoveryStatus(error)');

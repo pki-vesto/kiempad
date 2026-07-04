@@ -22,6 +22,15 @@ describe('routeflow screenshot smoke script', () => {
       '[data-screen-stage-scroll="active-workspace"]',
     );
     expect(routeflowScreenshotSmokeScript).toContain('activePanelOverflowY');
+    expect(routeflowScreenshotSmokeScript).toContain('workspaceStripActive');
+    expect(routeflowScreenshotSmokeScript).toContain('waitForActiveWorkspaceStripButton(page)');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'async function waitForActiveWorkspaceStripButton',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('inStripViewport');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'actieve workspace-strip knop staat niet zichtbaar in de compacte swipe-rij',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('[data-start-launchpad="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'daily-advice-console'");
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');

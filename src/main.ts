@@ -269,6 +269,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
       createNotificationDetailMap(state),
     ),
   });
+  alignActiveWorkspaceStripButton(root);
+  requestAnimationFrame(() => alignActiveWorkspaceStripButton(root));
   bindBinarySwitchControls(root);
   bindSettingsControls(root, state);
   bindThemeControls(root, state);
@@ -347,6 +349,22 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.error = undefined;
     void refreshWebAuthnStatus(state).then(() => render(root, state));
   });
+}
+
+function alignActiveWorkspaceStripButton(root: HTMLElement): void {
+  const activeWorkspaceButton = root.querySelector<HTMLAnchorElement>(
+    '[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]',
+  );
+  if (!activeWorkspaceButton) return;
+
+  const switcher = activeWorkspaceButton.closest('.workspace-strip__switcher');
+  if (switcher instanceof HTMLElement) {
+    switcher.scrollLeft =
+      activeWorkspaceButton.offsetLeft -
+      switcher.clientWidth / 2 +
+      activeWorkspaceButton.clientWidth / 2;
+  }
+  activeWorkspaceButton.scrollIntoView({ block: 'nearest', inline: 'center' });
 }
 
 function bindBinarySwitchControls(root: HTMLElement): void {
