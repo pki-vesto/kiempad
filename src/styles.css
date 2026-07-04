@@ -23649,6 +23649,7 @@ summary[class*="__summary"]:focus-visible,
     scroll-padding-inline: 8px;
     scroll-snap-type: x proximity;
     scrollbar-width: none;
+    touch-action: pan-x;
   }
 
   .workspace-strip__switcher::-webkit-scrollbar,

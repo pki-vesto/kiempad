@@ -1051,8 +1051,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher touch pan
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3459
+
+### G1759 — App-shell mobiel workspace-strip bewaakt reload actieve stripknop text-size-adjust op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele touch-pan, maar de actieve knop kan nog expliciet bewaakt worden tegen browser-tekstvergroting die de compacte swipe-rij onrustig maakt.
+- **User Impact:** Als de browser tekst in de actieve knop automatisch vergroot, kan de compacte rij gaan schuiven of tekstafkapping onvoorspelbaar worden.
+- **Desired Outcome:** Small-mobile reloads houden de actieve workspace-strip knop met stabiele text-size-adjust instellingen.
+- **User Value:** Gebruikers houden een voorspelbare, compacte actieve routeknop na reload.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop en switcher touch-pan; actieve workspace-strip knop gebruikt na reload stabiele text-size-adjust instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload actieve stripknop text-size-adjust; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload active button text size adjust
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3461
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
