@@ -3279,6 +3279,8 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       activeButtonOverflowX: activeButtonStyle?.overflowX ?? '',
       activeButtonTextOverflow: activeButtonStyle?.textOverflow ?? '',
       activeButtonWhiteSpace: activeButtonStyle?.whiteSpace ?? '',
+      activeButtonScrollMarginInlineStart: activeButtonStyle?.scrollMarginInlineStart ?? '',
+      activeButtonScrollMarginInlineEnd: activeButtonStyle?.scrollMarginInlineEnd ?? '',
       activeButtonScrollSnapAlign: activeButtonStyle?.scrollSnapAlign ?? '',
       activeButtonClientWidth: Math.round(activeButton?.clientWidth ?? 0),
       activeButtonScrollWidth: Math.round(activeButton?.scrollWidth ?? 0),
@@ -3394,6 +3396,10 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     viewportLabel !== 'small-mobile' ||
     (parseFloat(reloadLayout.workspaceSwitcherScrollPaddingInlineStart) >= 6 &&
       parseFloat(reloadLayout.workspaceSwitcherScrollPaddingInlineEnd) >= 6);
+  const smallMobileActiveButtonScrollMarginStable =
+    viewportLabel !== 'small-mobile' ||
+    (parseFloat(reloadLayout.activeButtonScrollMarginInlineStart) >= 6 &&
+      parseFloat(reloadLayout.activeButtonScrollMarginInlineEnd) >= 6);
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3413,6 +3419,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileSwitcherSnapStable ||
     !smallMobileActiveButtonSnapAlignStable ||
     !smallMobileSwitcherScrollPaddingStable ||
+    !smallMobileActiveButtonScrollMarginStable ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3440,6 +3447,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileSwitcherSnapStable,
           smallMobileActiveButtonSnapAlignStable,
           smallMobileSwitcherScrollPaddingStable,
+          smallMobileActiveButtonScrollMarginStable,
         },
       )}).`,
     );
@@ -3452,7 +3460,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
