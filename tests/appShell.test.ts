@@ -6221,7 +6221,8 @@ describe('app shell', () => {
     expect(html).toContain('data-medication-planning-followup="collapsed"');
     expect(html).toContain('Vervolgplanning leeg');
     expect(html).not.toContain('Planning nog leeg');
-    expect(html).toContain('Routeopties openen');
+    expect(html).toContain('Route kiezen');
+    expect(html).not.toContain('Routeopties openen');
     expect(html).not.toContain('Routekeuze openen');
     expect(html).toContain('<em>0 later</em>');
     expect(html).not.toContain('<em>0 later medicatie</em>');
