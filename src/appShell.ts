@@ -18496,7 +18496,7 @@ function renderMedicatieScreen(state: AppShellState): string {
               <nav class="medication-planning-followup__links" aria-label="Medicatie vervolgcontext">
                 <a href="#medicatie?route=vandaag">Afvinken</a>
                 <a href="#medicatie?route=beheer">Beheer</a>
-                <a href="#medicatie?route=import">Lokale import</a>
+                <a href="#medicatie?route=import">Lokale invoer</a>
                 <a href="#medicatie?route=historie">Historie teruglezen</a>
               </nav>
               ${
