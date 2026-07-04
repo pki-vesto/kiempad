@@ -1923,3 +1923,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   text-align-last centered alongside text-align center for stable number placement.
 - Partial G1724/#3391: Tablet and small-desktop app-shell now uses a viewport-height
   bounded workspace so only the active screen-stage panel scrolls, reducing the long-page feel.
+- Partial G1725/#3393: Desktop screen-stage chrome is now height-bounded with contained
+  overflow and two-line page-header intros, keeping the route header compact above panel scroll.

@@ -481,17 +481,34 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Epic:** Premium Claude Design UI
 - **Problem:** Tablet/small-desktop is nu expliciet bounded, maar desktop routekopcompactheid kan nog apart bewaakt worden boven de actieve paneelscroll.
 - **User Impact:** Als de routekop te groot wordt, voelt de desktop opnieuw als een lange pagina met te veel chrome boven de taak.
-- **Desired Outcome:** Desktop routekop/chrome blijft compact boven de actieve panel-scrollzone.
+- **Desired Outcome:** Desktop routekop/chrome blijft compact en begrensd boven de actieve panel-scrollzone.
 - **User Value:** Gebruikers houden context zonder dat de kop de werkruimte domineert.
-- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; desktop routekop/chrome blijft compact boven de actieve panel-scrollzone; de actieve screen-stage panel scrollt zonder horizontale overflow; tablet en mobiele bounded-workspace regels blijven behouden; app-shell CSS tests bewaken desktop chrome compactheid en paneelscroll; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; desktop routekop/chrome blijft compact en begrensd boven de actieve panel-scrollzone; lange page-header intro's worden in desktop chrome geklemd; de actieve screen-stage panel scrollt zonder horizontale overflow; tablet en mobiele bounded-workspace regels blijven behouden; app-shell CSS tests bewaken desktop chrome compactheid en paneelscroll; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
 - **Affected Screens:** App-shell, alle hoofdschermen
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** App shell, desktop layout, screen-stage chrome, screen-stage panel
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3393
+
+### G1726 — App-shell desktop paneel behoudt stabiele scrollruimte zonder horizontale druk
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De desktop routekop is nu compact begrensd, maar de actieve paneel-scrollruimte kan nog expliciet bewaakt worden tegen horizontale druk.
+- **User Impact:** Onstabiele scrollruimte kan content laten springen of alsnog breedte verliezen tijdens scrollen.
+- **Desired Outcome:** Desktop `.screen-stage__panel` behoudt stabiele scrollruimte zonder horizontale overflow.
+- **User Value:** De actieve taak voelt rustiger en voorspelbaarder als werkpaneel.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; desktop `.screen-stage__panel` behoudt stable scrollbar-gutter en min-height 0; de panel-scrollzone veroorzaakt geen horizontale overflow; tablet bounded-workspace en mobiele bottom-nav regels blijven behouden; app-shell CSS tests bewaken desktop panel-scrollruimte; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, desktop layout, screen-stage panel
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3395
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
