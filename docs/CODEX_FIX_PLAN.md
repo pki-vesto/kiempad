@@ -1102,6 +1102,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   helper copy instead of dosage calculation wording.
   Partial G1621/#3187: Medication empty state now uses short first-medication start context
   instead of dosage calculation wording.
+  Partial G1622/#3189: Medication history empty state now uses short dossier context instead
+  of clinic-prescription wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

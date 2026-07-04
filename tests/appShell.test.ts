@@ -2483,8 +2483,12 @@ describe('app shell', () => {
     expect(html).toContain(
       'Nog geen dagmomenten. Voeg je eerste middel toe vanuit het kliniekschema.',
     );
+    expect(html).toContain('Nog geen middelen in je medicatiedossier.');
     expect(html).not.toContain(
       'Nog geen medicatie. Doseringen worden nooit door Kiempad berekend.',
+    );
+    expect(html).not.toContain(
+      'Nog geen medicatie. Voeg via Beheer een middel toe zoals de kliniek het voorschrijft.',
     );
   });
 

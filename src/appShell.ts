@@ -18586,13 +18586,10 @@ function renderMedicatieScreen(state: AppShellState): string {
           body:
             (state.medicatie.length > 0
               ? renderMedicatieList(state.medicatie)
-              : renderEmptyState(
-                  'Nog geen medicatie. Voeg via Beheer een middel toe zoals de kliniek het voorschrijft.',
-                  {
-                    title: 'Geen medicatie',
-                    cta: { href: '#medicatie?route=beheer', label: 'Medicatie toevoegen' },
-                  },
-                )) + renderPolicyPanel(),
+              : renderEmptyState('Nog geen middelen in je medicatiedossier.', {
+                  title: 'Geen medicatie',
+                  cta: { href: '#medicatie?route=beheer', label: 'Medicatie toevoegen' },
+                })) + renderPolicyPanel(),
         })}
       </section>`,
   ];

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1623 — Medicatie planning lege staat gebruikt korte vervolgcontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning lege staat gebruikt nog langere uitleg over toekomstige momenten buiten vandaag.
+- **User Impact:** Gebruikers zien in de planningroute meer tekst dan nodig wanneer er nog geen vervolgplanning is.
+- **Desired Outcome:** Planning lege staat gebruikt korte vervolgcontext en duidelijke beheerroute.
+- **User Value:** Medicatieplanning blijft rustiger en beter scanbaar zonder geplande momenten.
+- **Acceptance Criteria:** Medicatie planning lege staat gebruikt korte vervolgcontext; app-shell tests bewaken dat de oude lege-planningzin niet terugkeert.
+- **Affected Screens:** Medicatie planning lege staat
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1622 — Medicatie historie lege staat gebruikt korte dossiercontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication history route, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3189
 
 ### G1621 — Medicatie lege staat gebruikt korte startcontext
 
