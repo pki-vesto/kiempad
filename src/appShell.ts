@@ -18536,7 +18536,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
           <h2 id="medicatie-route-import-title">Schema importeren</h2>
-          <p>Importeer geplande momenten uit je eigen klinieklijst.</p>
+          <p>Zet je kliniekschema om naar planning.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Import',

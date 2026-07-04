@@ -6231,7 +6231,8 @@ describe('app shell', () => {
     expect(html).toContain('Schema importeren');
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Progesteron | 2026-06-23 | 08:00');
-    expect(html).toContain('Importeer geplande momenten uit je eigen klinieklijst.');
+    expect(html).toContain('Zet je kliniekschema om naar planning.');
+    expect(html).not.toContain('Importeer geplande momenten uit je eigen klinieklijst.');
     expect(html).toContain('Import maakt alleen planningmomenten aan vanuit je eigen schema.');
     expect(html).toContain(
       'Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad zet dit lokaal om naar planningmomenten.',
