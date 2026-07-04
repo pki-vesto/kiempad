@@ -1833,8 +1833,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route group summary, focus styles
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3551
+
+### G1805 — Dossier upload small-mobile route selector top border rustiger
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De bovenrand van de Dossier upload route-selector kan op small-mobile rustiger zonder de scheiding tussen summary en routekaarten te verliezen.
+- **User Impact:** De selector-rand vraagt nog aandacht terwijl de routekaarten de primaire actie moeten zijn.
+- **Desired Outcome:** De selector blijft visueel gescheiden van de summary met een subtielere top border.
+- **User Value:** Gebruikers scannen sneller naar de concrete routekaarten.
+- **Acceptance Criteria:** De selector blijft visueel gescheiden van de summary; de bovenrand concurreert minder met de routekaarten op small-mobile; routekaarten en actieve route blijven herkenbaar; app-shell tests of routeflow smoke bewaken de selector-randstyling.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, small-mobile CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3553
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
