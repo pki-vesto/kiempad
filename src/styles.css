@@ -23670,6 +23670,7 @@ summary[class*="__summary"]:focus-visible,
     scroll-snap-type: x proximity;
     scrollbar-width: none;
     touch-action: pan-x;
+    visibility: visible;
   }
 
   .workspace-strip__switcher::-webkit-scrollbar,
