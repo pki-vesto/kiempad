@@ -27530,7 +27530,9 @@ summary[class*="__summary"]:focus-visible,
 }
 
 @media (max-width: 420px) and (prefers-reduced-motion: reduce) {
-  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route {
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route,
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
+    .dossier-add-route:focus-visible {
     transition: none;
   }
 }

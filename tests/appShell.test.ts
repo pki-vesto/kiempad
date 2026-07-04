@@ -9618,7 +9618,7 @@ describe('app shell', () => {
     expect(css).toContain('min-height: 60px;');
     expect(css).toContain('@media (max-width: 420px) and (prefers-reduced-motion: reduce) {');
     expect(css).toContain(
-      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route {\n    transition: none;\n  }',
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route,\n  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]\n    .dossier-add-route:focus-visible {\n    transition: none;\n  }',
     );
     expect(css).toContain('.dossier-add-route-disclosure__summary {');
     expect(css).toContain('min-height: 44px;');
