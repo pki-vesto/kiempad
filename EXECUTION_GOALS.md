@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1694 — Medicatie planning routeopties helper noemt planningaanvulling als zelfstandig woord
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De helper gebruikt planning aanvullen, maar een zelfstandig woord kan de routeoptie rustiger laten lezen.
+- **User Impact:** Gebruikers scannen een actiefrase waar een kort zelfstandig label mogelijk rustiger is.
+- **Desired Outcome:** De helper gebruikt een natuurlijke zelfstandige planningterm zonder link of href te wijzigen.
+- **User Value:** De routeopties lezen rustiger en blijven compact.
+- **Acceptance Criteria:** Helper gebruikt een zelfstandig planninglabel; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1693 — Medicatie planning routeopties helper gebruikt natuurlijke planningterm
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3331
 
 ### G1692 — Medicatie planning routeopties helper gebruikt korte planningterm
 
