@@ -18453,7 +18453,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Planning</p>
           <h2 id="medicatie-route-planning-title">Komende medicatiemomenten</h2>
-          <p>Bekijk toekomstige afvinkmomenten uit eigen invoer of import.</p>
+          <p>Bekijk komende afvinkmomenten.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Later',
