@@ -1053,6 +1053,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Replace generic owner labels with names + "Samen" in personal tracking contexts. Depends on
   CFX-006. **P1 · M**
 - **CFX-059** — Shorten + standardize disclaimers to one sentence per context (N59/N95). **P2 · M**
+  Partial G1598/#3140: Kosten now uses one short financial-context disclaimer across overview,
+  add and reimbursement routes while keeping the 2026 eigen-risico amount visible.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

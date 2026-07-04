@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1598 — Kosten gebruikt korte standaarddisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kosten herhaalde lange financieel-advies en polisdisclaimers in overzicht, toevoegen en vergoeding.
+- **User Impact:** Gebruikers lezen dezelfde waarschuwing meerdere keren, waardoor de kostenroute zwaarder en minder scanbaar voelt.
+- **Desired Outcome:** Kosten gebruikt één korte standaardzin voor financiële context en houdt het eigen-risicobedrag apart zichtbaar.
+- **User Value:** Gebruikers begrijpen de grens sneller zonder door lange herhalende disclaimers te lezen.
+- **Acceptance Criteria:** Kosten gebruikt één korte standaardzin voor financiële context; de zin vervangt lange herhaalde financieel-advies/poliszinnen in overzicht, toevoegen en vergoeding; eigen-risico bedragcontext blijft zichtbaar; app-shell tests bewaken de nieuwe copy en dat de oude lange herhaling weg is; geen financieel advies, trackingpayload of secrets.
+- **Affected Screens:** Kosten overzicht, Kosten toevoegen, Kosten vergoeding
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Finance routes, finance copy, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3140
+
 ### G1597 — Kostenhistorie gebruikt bedragcellen met euro-adornment
 
 - **Epic:** Onboarding & Daily Use
