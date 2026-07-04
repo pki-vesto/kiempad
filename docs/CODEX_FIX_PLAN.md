@@ -1857,3 +1857,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   while preserving the Planninginvoer link and import route.
 - Partial G1693/#3331: Medication planning route options helper now returns to the
   natural planning aanvullen phrase while preserving the import route.
+- Partial G1694/#3333: Medication planning route options helper now says planningaanvulling
+  as a standalone label while preserving the import route.
