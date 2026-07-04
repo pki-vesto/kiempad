@@ -2461,6 +2461,8 @@ async function assertRouteflows(browser, options) {
                 addRouteLabelMaxLength: Math.max(0, ...addRouteLabels.map((label) => label.length)),
                 addRouteLabels,
                 addRouteActiveBorderColor: activeAddRouteStyle?.borderColor ?? '',
+                addRouteActiveBackground: activeAddRouteStyle?.backgroundColor ?? '',
+                addRouteActiveBoxShadow: activeAddRouteStyle?.boxShadow ?? '',
                 routeItemMinHeight: routeItemStyle?.minHeight ?? '',
                 routeItemWidth: routeItem?.getBoundingClientRect().width ?? 0,
                 routeItemPaddingTop: routeItemStyle?.paddingTop ?? '',
@@ -3271,6 +3273,9 @@ async function assertRouteflows(browser, options) {
           parseFloat(evidence.uploadConsole.addRouteStrongFontSize) > 13 ||
           evidence.uploadConsole.addRouteLabelMaxLength > 15 ||
           !evidence.uploadConsole.addRouteActiveBorderColor ||
+          evidence.uploadConsole.addRouteActiveBackground === '' ||
+          evidence.uploadConsole.addRouteActiveBackground === 'rgba(0, 0, 0, 0)' ||
+          !evidence.uploadConsole.addRouteActiveBoxShadow.includes('inset') ||
           parseFloat(evidence.uploadConsole.routeItemMinHeight) > 60 ||
           evidence.uploadConsole.routeItemWidth > 158 ||
           parseFloat(evidence.uploadConsole.routeItemPaddingTop) > 7)

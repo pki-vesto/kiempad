@@ -243,6 +243,8 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('addRouteBorderColor');
     expect(routeflowScreenshotSmokeScript).toContain('addRouteBackground');
     expect(routeflowScreenshotSmokeScript).toContain('addRouteActiveBorderColor');
+    expect(routeflowScreenshotSmokeScript).toContain('addRouteActiveBackground');
+    expect(routeflowScreenshotSmokeScript).toContain('addRouteActiveBoxShadow');
     expect(routeflowScreenshotSmokeScript).toContain('addRouteLabelMaxLength');
     expect(routeflowScreenshotSmokeScript).toContain('activeGroupPaddingTop');
     expect(routeflowScreenshotSmokeScript).toContain('optionalSummaryMinHeight');

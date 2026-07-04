@@ -2099,3 +2099,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1806/#3555: Dossier upload route selector now uses a transparent
   small-mobile selector background while route cards keep their own subtle
   border and surface, guarded by CSS tests and routeflow computed evidence.
+- Partial G1807/#3557: Dossier upload route cards now use calmer small-mobile
+  surface contrast and a softer active card cue, guarded by CSS tests and
+  routeflow active-card background/shadow evidence.
