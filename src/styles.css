@@ -23658,6 +23658,7 @@ summary[class*="__summary"]:focus-visible,
     flex-shrink: 1;
     flex-wrap: nowrap;
     gap: 6px;
+    inset: auto;
     justify-content: flex-start;
     margin-block: 0;
     margin-inline: 0;
