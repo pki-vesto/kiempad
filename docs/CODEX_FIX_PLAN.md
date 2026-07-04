@@ -1863,3 +1863,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   as a natural standalone label while preserving the import route.
 - Partial G1696/#3337: Medication planning route options helper now says planningaanvulling
   so the standalone label keeps compact planning context.
+- Partial G1697/#3339: Medication planning route options helper now says planning aanvullen
+  for more human-readable planning context while preserving the import route.

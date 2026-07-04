@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1698 — Medicatie planning routeopties helper houdt context maar korter
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De helper gebruikt planning aanvullen, maar kan nog korter zonder de planningcontext kwijt te raken.
+- **User Impact:** De routeopties blijven iets langer dan nodig op kleine schermen.
+- **Desired Outcome:** De helper behoudt planningcontext met een kortere menselijk leesbare term.
+- **User Value:** Gebruikers scannen de routeopties sneller zonder betekenisverlies.
+- **Acceptance Criteria:** Helper gebruikt kortere planningcontext; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1697 — Medicatie planning routeopties helper houdt planningcontext menselijk
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3339
 
 ### G1696 — Medicatie planning routeopties helper koppelt aanvulling aan planning
 
