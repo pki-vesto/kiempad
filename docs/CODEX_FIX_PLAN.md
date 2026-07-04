@@ -2171,3 +2171,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1830/#3603: Dossier upload active route micro-labels now keep
   text-transform disabled in their own small-mobile forced-colors rule, keeping
   the small label from becoming louder than the active route title.
+- Partial G1831/#3605: Dossier upload active route micro-labels now keep a
+  normal font style in their own small-mobile forced-colors rule, preventing
+  accidental italic emphasis from competing with the title or context.
