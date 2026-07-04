@@ -1991,3 +1991,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   stable scroll-snap-stop value, guarded by reload smoke.
 - Partial G1758/#3459: Small-mobile workspace-strip switchers now declare horizontal
   touch pan behavior, guarded by reload smoke.
+- Partial G1759/#3461: Small-mobile active workspace-strip buttons now declare
+  stable text-size-adjust values, guarded by reload smoke.

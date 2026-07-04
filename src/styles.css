@@ -23667,6 +23667,8 @@ summary[class*="__summary"]:focus-visible,
     scroll-snap-align: start;
     scroll-snap-stop: normal;
     text-overflow: ellipsis;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   .workspace-strip__switcher a[aria-current="page"],
