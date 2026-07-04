@@ -8228,7 +8228,7 @@ describe('app shell', () => {
     );
     expect(addSection).toContain('data-dossier-add-route-group-summary="ready"');
     expect(addSection).toContain('Toevoegroute kiezen');
-    expect(addSection).toContain('Document, consult, embryo score of status');
+    expect(addSection).toContain('Document, consult, embryo of status');
     expect(addSection).not.toContain(
       '<details class="dossier-add-route-group" data-dossier-add-route-group="collapsed" open>',
     );
@@ -8242,13 +8242,13 @@ describe('app shell', () => {
     expect(selector).toContain('data-dossier-add-route-kind="embryo-quality"');
     expect(selector).toContain('data-dossier-add-route-kind="embryo-status"');
     expect(selector).toContain('Document');
-    expect(selector).toContain('Onderzoek, echo, foto');
+    expect(selector).toContain('Onderzoek/beeld');
     expect(selector).toContain('Consult');
-    expect(selector).toContain('Gesprek of notitie');
-    expect(selector).toContain('Embryo score');
-    expect(selector).toContain('Kwaliteit met bron');
+    expect(selector).toContain('Gesprek/notitie');
+    expect(selector).toContain('Embryo');
+    expect(selector).toContain('Kwaliteit');
     expect(selector).toContain('Status');
-    expect(selector).toContain('Moment of update');
+    expect(selector).toContain('Moment/update');
     expect(selector).toContain('data-dossier-add-route-cue="document"');
     expect(selector).toContain('data-dossier-add-route-cue="consult"');
     expect(selector).toContain('data-dossier-add-route-cue="embryo-quality"');
@@ -8256,7 +8256,6 @@ describe('app shell', () => {
     expect(selector).toContain('Upload');
     expect(selector).toContain('Tekst');
     expect(selector).toContain('Score');
-    expect(selector).toContain('Koppelen');
     expect(addSection).toContain('data-dossier-add-route-active-contexts="ready"');
     expect(addSection).toContain('aria-live="polite"');
     expect(addSection).toContain('data-dossier-add-route-active-context="dossier-upload"');

@@ -1748,8 +1748,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, small-mobile layout, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3541
+
+### G1800 — Dossier upload small-mobile route contextregel korter
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De contextregel boven de Dossier upload routekeuze kan op small-mobile nog korter zonder de keuzehulp te verliezen.
+- **User Impact:** Gebruikers zien op kleine schermen nog onnodige regelhoogte boven de concrete routekaarten.
+- **Desired Outcome:** De routegroep-summary blijft duidelijk, maar gebruikt kortere contextcopy die sneller scant.
+- **User Value:** Gebruikers komen sneller bij de uploadroute zonder betekenisverlies.
+- **Acceptance Criteria:** De routegroep-summary blijft duidelijk maken dat de gebruiker een toevoegroute kiest; de contextregel past op small-mobile zonder onnodige regelhoogte; de routekaarten en actieve context blijven aanwezig; app-shell tests of routeflow smoke bewaken de copy en layout.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route group summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3543
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
