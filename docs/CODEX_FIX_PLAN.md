@@ -2072,3 +2072,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1797/#3537: Dossier upload now uses tighter mobile disclosure,
   group, completion and image-context panel spacing while routeflow screenshots
   guard compact panels and overflow on mobile and small-mobile.
+- Partial G1798/#3539: Dossier upload now uses a tighter small-mobile route
+  selector and action path with routeflow evidence for route card dimensions,
+  active state, selector containment and compact spacing.

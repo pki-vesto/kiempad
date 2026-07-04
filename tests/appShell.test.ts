@@ -9571,6 +9571,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.dossier-upload-action-path__item {');
     expect(mobileCss).toContain('flex: 0 0 min(178px, 72vw);');
     expect(mobileCss).toContain('min-height: 68px;');
+    expect(css).toContain('@media (max-width: 420px) {');
+    expect(css).toContain('flex: 0 0 min(136px, 60vw);');
+    expect(css).toContain('min-height: 52px;');
+    expect(css).toContain('font-size: 0.64rem;');
+    expect(css).toContain('flex: 0 0 min(156px, 64vw);');
+    expect(css).toContain('min-height: 60px;');
     expect(css).toContain('.dossier-add-route-disclosure__summary {');
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('.dossier-add-route-disclosure > .dossier-add-route-panel,');
