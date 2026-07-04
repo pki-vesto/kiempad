@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1403 |
+| ☑ klaar | 1404 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1602** |
+| **Totaal** | **1603** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1765,12 +1765,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1601 | Agenda en medicatie gebruiken korte taakdisclaimers | P2 | F5 | ☑ |
 | G1602 | Trajectfase gebruikt korte taakdisclaimer | P2 | F5 | ☑ |
 | G1603 | Trajectwerkbank gebruikt korte contextdisclaimer | P2 | F5 | ☑ |
+| G1604 | Beelden vergelijken gebruikt korte contextdisclaimer | P2 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1602** (id's G001 t/m G1603; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1603** (id's G001 t/m G1604; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

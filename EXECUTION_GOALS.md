@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1604 — Beelden vergelijken gebruikt korte contextdisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lege Beelden-vergelijken kaart gebruikte een lange interpretatie/kans/behandeladviesdisclaimer.
+- **User Impact:** Gebruikers zagen defensieve copy voordat er beeldmomenten naast elkaar stonden.
+- **Desired Outcome:** De lege vergelijkkaart gebruikt één korte beeldcontextzin die Kiempad positioneert als ordening en de kliniek leidend houdt.
+- **User Value:** Gebruikers begrijpen sneller dat ze eerst beeldmomenten moeten toevoegen zonder door zware disclaimertekst te lezen.
+- **Acceptance Criteria:** De lege imaging-compare state toont een korte beeldcontextdisclaimer; de oude zin 'Geen beeldinterpretatie, kansberekening of behandeladvies.' verdwijnt uit dit panel; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zin.
+- **Affected Screens:** Dossier Beelden vergelijken
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Imaging comparison panel, dossier route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3152
+
 ### G1603 — Trajectwerkbank gebruikt korte contextdisclaimer
 
 - **Epic:** Onboarding & Daily Use

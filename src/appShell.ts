@@ -231,6 +231,8 @@ const MEDICATION_CONTEXT_DISCLAIMER = 'Kiempad toont je planning; je klinieksche
 
 const TREATMENT_CONTEXT_DISCLAIMER = 'Kiempad ordent je trajectfase; je kliniek blijft leidend.';
 
+const IMAGING_CONTEXT_DISCLAIMER = 'Kiempad ordent je beelden; je kliniek blijft leidend.';
+
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
 function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
@@ -11069,7 +11071,7 @@ function renderImagingVergelijking(
           <strong>Nog niets naast elkaar</strong>
           <p>Upload eerst twee echo’s, foto’s, scans of embryo-afbeeldingen. Kiempad toont daarna alleen datum, type, context en veilige bronmetadata.</p>
         </div>
-        <p class="small-print">Geen beeldinterpretatie, kansberekening of behandeladvies.</p>
+        <p class="small-print">${IMAGING_CONTEXT_DISCLAIMER}</p>
       </section>
     `;
   }

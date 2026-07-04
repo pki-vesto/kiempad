@@ -10976,7 +10976,10 @@ describe('app shell', () => {
     expect(emptyCompare).toContain(
       'Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.',
     );
-    expect(emptyCompare).toContain('Geen beeldinterpretatie, kansberekening of behandeladvies.');
+    expect(emptyCompare).toContain('Kiempad ordent je beelden; je kliniek blijft leidend.');
+    expect(emptyCompare).not.toContain(
+      'Geen beeldinterpretatie, kansberekening of behandeladvies.',
+    );
 
     const filteredHtml = renderAppShell('dossier', {
       trajecten: [
