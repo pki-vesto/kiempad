@@ -23646,6 +23646,7 @@ summary[class*="__summary"]:focus-visible,
     flex-wrap: nowrap;
     gap: 6px;
     justify-content: flex-start;
+    max-width: 100%;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-padding-inline: 8px;
