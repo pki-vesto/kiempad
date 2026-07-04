@@ -3300,8 +3300,11 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       workspaceSwitcherRight: Math.round(workspaceSwitcherRect?.right ?? 0),
       workspaceSwitcherClientWidth: Math.round(workspaceSwitcher?.clientWidth ?? 0),
       workspaceSwitcherScrollWidth: Math.round(workspaceSwitcher?.scrollWidth ?? 0),
+      workspaceSwitcherClientHeight: Math.round(workspaceSwitcher?.clientHeight ?? 0),
+      workspaceSwitcherOffsetHeight: Math.round(workspaceSwitcher?.offsetHeight ?? 0),
       workspaceSwitcherOverflowX: workspaceSwitcherStyle?.overflowX ?? '',
       workspaceSwitcherFlexWrap: workspaceSwitcherStyle?.flexWrap ?? '',
+      workspaceSwitcherScrollbarWidth: workspaceSwitcherStyle?.scrollbarWidth ?? '',
       bottomNavTop: Math.round(bottomNavTop),
       viewportWidth,
       viewportHeight,
@@ -3369,6 +3372,10 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       reloadLayout.workspaceSwitcherScrollWidth >= reloadLayout.workspaceSwitcherClientWidth &&
       reloadLayout.workspaceSwitcherLeft >= reloadLayout.workspaceStripLeft - 1 &&
       reloadLayout.workspaceSwitcherRight <= reloadLayout.workspaceStripRight + 1);
+  const smallMobileSwitcherScrollbarHidden =
+    viewportLabel !== 'small-mobile' ||
+    (reloadLayout.workspaceSwitcherScrollbarWidth === 'none' &&
+      reloadLayout.workspaceSwitcherOffsetHeight - reloadLayout.workspaceSwitcherClientHeight <= 1);
 
   if (
     reloadLayout.hash !== expectedReloadHash ||
@@ -3383,6 +3390,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileActiveButtonFocusRingCalm ||
     !smallMobileActiveButtonTextClipped ||
     !smallMobileSwitcherScrollWidthContained ||
+    !smallMobileSwitcherScrollbarHidden ||
     reloadLayout.activeButtonFocused ||
     !reloadLayout.activePanelVisible ||
     reloadLayout.activePanelOverflowY !== 'auto' ||
@@ -3405,6 +3413,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileActiveButtonFocusRingCalm,
           smallMobileActiveButtonTextClipped,
           smallMobileSwitcherScrollWidthContained,
+          smallMobileSwitcherScrollbarHidden,
         },
       )}).`,
     );
@@ -3417,7 +3426,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
