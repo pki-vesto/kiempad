@@ -1442,8 +1442,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher box-shadow
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3505
+
+### G1782 — App-shell mobiel workspace-strip bewaakt reload switcher filter op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele box-shadow, maar filter kan nog expliciet bewaakt worden zodat de routebalk geen onverwachte visuele effecten krijgt.
+- **User Impact:** Als filter actief wordt, kunnen contrast, blur of andere effecten de routebalk onrustig maken.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele filter instellingen.
+- **User Value:** Gebruikers houden een routebalk zonder onverwachte visuele effecten.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing, actieve knop tap-highlight, compacte switcher gap, gecentreerde align-items, links startende justify-content, flex display, min-width 0, max-width 100%, flex-shrink 1, flex-grow 0, flex-basis auto, border-box sizing, nul padding-inline, nul padding-block, nul margin-inline, nul margin-block, nul border-width, rustige border-style, transparante border-color, vlakke border-radius, transparante background en geen box-shadow; workspace-strip switcher houdt na reload stabiele filter instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher filter; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher filter
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3507
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
