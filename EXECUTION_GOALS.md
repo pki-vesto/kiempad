@@ -711,8 +711,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, mobile layout, workspace strip reload navigation
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3419
+
+### G1739 — App-shell mobiel workspace-strip bewaakt reload-focus zonder knopfocus
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Reload op mobiele deep-links houdt de actieve knop zichtbaar, maar focusgedrag kan nog expliciet bewaakt worden.
+- **User Impact:** Als reload focus op de stripknop zet, ervaren gebruikers een onrustige start en mogelijk verkeerde toetsenbordcontext.
+- **Desired Outcome:** Reload houdt de actieve stripcontext zichtbaar zonder focus op de stripknop.
+- **User Value:** Gebruikers kunnen links herladen zonder onverwachte focusverplaatsing.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; mobiele en small-mobile workspace-strip behouden compacte swipebare knoppen zonder pagina-overflow; actieve workspace-strip knop blijft zichtbaar na reload op een deep-link; reload zet focus niet op de workspace-strip knop; actieve screen-stage panel behoudt bottom-nav clearance; tests of smoke checks bewaken reload-focus zonder knopfocus; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, mobile layout, workspace strip reload focus
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3421
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

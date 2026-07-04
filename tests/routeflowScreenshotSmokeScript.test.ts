@@ -33,8 +33,13 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'assertWorkspaceStripDirectLinkFocus(page, options.label)',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'assertWorkspaceStripReloadContext(page, options.label)',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-history');
     expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-direct-link');
+    expect(routeflowScreenshotSmokeScript).toContain('workspace-strip-reload');
+    expect(routeflowScreenshotSmokeScript).toContain("page.reload({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain("options.label === 'small-mobile'");
     expect(routeflowScreenshotSmokeScript).toContain("page.goBack({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain(
@@ -42,6 +47,9 @@ describe('routeflow screenshot smoke script', () => {
     );
     expect(routeflowScreenshotSmokeScript).toContain(
       'mobiele workspace-strip directe link veroorzaakt onrustige focus of overflow',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'mobiele workspace-strip reload verliest actieve context of layout',
     );
     expect(routeflowScreenshotSmokeScript).toContain('inStripViewport');
     expect(routeflowScreenshotSmokeScript).toContain(
