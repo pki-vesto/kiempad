@@ -6235,7 +6235,8 @@ describe('app shell', () => {
     expect(html).not.toContain('Importeer geplande momenten uit je eigen klinieklijst.');
     expect(html).toContain('Maak lokale planning uit je schema.');
     expect(html).not.toContain('Import maakt alleen planningmomenten aan vanuit je eigen schema.');
-    expect(html).toContain(
+    expect(html).toContain('Formaat: Medicatie | YYYY-MM-DD | HH:MM.');
+    expect(html).not.toContain(
       'Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad zet dit lokaal om naar planningmomenten.',
     );
     expect(html).not.toContain(

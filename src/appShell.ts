@@ -18788,7 +18788,7 @@ function renderMedicatieImportForm(state: AppShellState): string {
         Klinieklijstje
         <textarea name="schemaImport" rows="5" placeholder="Progesteron | 2026-06-23 | 08:00" required></textarea>
       </label>
-      <p class="small-print">Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad zet dit lokaal om naar planningmomenten.</p>
+      <p class="small-print">Formaat: Medicatie | YYYY-MM-DD | HH:MM.</p>
       <button type="submit">Importeer schema</button>
     </form>
     ${renderStatusFeedback(
