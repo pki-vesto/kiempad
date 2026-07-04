@@ -2479,7 +2479,7 @@ describe('app shell', () => {
     expect(html).toContain('Geen medisch advies');
     expect(html).toContain(DISCLAIMER);
     expect(html).toContain('geen vervanging van medisch advies');
-    expect(html).toContain('Doseringen worden nooit door Kiempad berekend');
+    expect(html).toContain('Maak afvinkmomenten vanaf startdatum, tijdstip en aantal dagen.');
   });
 
   it('toont de passphrase-kluis met geen-herstel-uitleg', () => {
@@ -6241,7 +6241,16 @@ describe('app shell', () => {
     expect(html).toContain('Notitie: in overleg niet gezet');
     expect(html).toContain('Historie van innames');
     expect(html).toContain('plek links');
-    expect(html).toContain('Doseringen worden nooit door Kiempad berekend');
+    const medicationPlanningSection = html.slice(
+      html.indexOf('data-medication-form-section="planning"'),
+      html.indexOf('class="form-required-map" data-form-required-map="medication-item"'),
+    );
+    expect(medicationPlanningSection).toContain(
+      'Maak afvinkmomenten vanaf startdatum, tijdstip en aantal dagen.',
+    );
+    expect(medicationPlanningSection).not.toContain(
+      'Doseringen worden nooit door Kiempad berekend. Het schema maakt alleen geplande afvinkmomenten op basis van wat je zelf invoert.',
+    );
   });
 
   it('toont één actieve medicationroute tegelijk', () => {

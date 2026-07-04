@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1621 — Medicatie lege staat gebruikt korte startcontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie lege staat gebruikt nog een lange zin over doseringen nooit berekenen.
+- **User Impact:** Nieuwe gebruikers zien een defensieve waarschuwing voordat ze een eerste middel toevoegen.
+- **Desired Outcome:** Medicatie lege staat gebruikt korte startcontext met duidelijke eerste actie.
+- **User Value:** De lege medicatieroute voelt uitnodigender en taakgerichter.
+- **Acceptance Criteria:** Medicatie lege staat gebruikt korte startcontext; app-shell tests bewaken dat de oude dosering/berekenzin niet terugkeert in de lege staat.
+- **Affected Screens:** Medicatie lege staat
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Screen config, medication empty state, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1620 — Medicatie schemaformulier gebruikt korte planningshulp
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication form planning section, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3185
 
 ### G1619 — Medicatie beheerroute gebruikt korte kliniektekstcontext
 

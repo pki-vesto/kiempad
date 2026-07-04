@@ -18873,7 +18873,7 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
           Aantal dagen voor geplande logs
           <input name="schemaAantalDagen" type="number" min="0" step="1" value="0" />
         </label>
-        <p class="small-print">Doseringen worden nooit door Kiempad berekend. Het schema maakt alleen geplande afvinkmomenten op basis van wat je zelf invoert.</p>
+        <p class="small-print">Maak afvinkmomenten vanaf startdatum, tijdstip en aantal dagen.</p>
       </section>
       ${renderFormRequiredMap('medication-item', 'Verplicht voor medicatie', ['Naam'])}
       <div class="medication-form-actions">
