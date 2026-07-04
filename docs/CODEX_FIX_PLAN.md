@@ -1973,3 +1973,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   workspace-strip button does not match focus states or show an outline focus ring.
 - Partial G1749/#3441: Small-mobile reload smoke now verifies active workspace-strip
   button text uses hidden overflow, ellipsis and nowrap without exceeding button width.
+- Partial G1750/#3443: Small-mobile reload smoke now verifies the workspace-strip
+  switcher scroll width is contained inside the strip as an internal swipe row.
