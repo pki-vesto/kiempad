@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1657 — Medicatie planning lege status noemt lokale importroute
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie planning lege status verwijst nog algemeen naar Import terwijl de route lokale invoer plannen heet.
+- **User Impact:** Gebruikers zien bij een lege planning minder direct dat lokale invoer de juiste vervolgroute is.
+- **Desired Outcome:** Lege planningstatus noemt lokale importroute kort en behoudt de beheerroute.
+- **User Value:** De lege planningstaat wordt consistenter met de nieuwe routecopy.
+- **Acceptance Criteria:** Lege planningstatus noemt lokale invoer of lokale planningimport; beheerroute blijft zichtbaar; app-shell tests bewaken dat de oude algemene Import-copy niet terugkeert in die status.
+- **Affected Screens:** Medicatie planning lege status
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1656 — Medicatie import vervolgcontext titel noemt routekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3257
 
 ### G1655 — Medicatie import vervolgcontext microcopy noemt lokale planning
 

@@ -1781,3 +1781,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Lokale invoer plannen while preserving the `#medicatie?route=import` href.
 - Partial G1655/#3255: Medication follow-up helper now names local planning import while keeping
   today, beheer, import and history route choices understandable.
+- Partial G1656/#3257: Medication follow-up disclosure title now says Routekeuze openen while
+  preserving the helper copy, counter and route links.

@@ -6181,7 +6181,12 @@ describe('app shell', () => {
     expect(html).toContain('id="medication-planning-followup"');
     expect(html).toContain('data-medication-planning-followup="collapsed"');
     expect(html).toContain('Planning nog leeg');
-    expect(html).toContain('Vervolgcontext openen');
+    expect(html).toContain('Routekeuze openen');
+    const medicationFollowupSection = html.slice(
+      html.indexOf('id="medication-planning-followup"'),
+      html.indexOf('href="#medicatie?route=vandaag"'),
+    );
+    expect(medicationFollowupSection).not.toContain('Vervolgcontext openen');
     expect(html).toContain('Kies vandaag, beheer, lokale planningimport of historie.');
     expect(html).not.toContain('Kies daarna vandaag, beheer, import of historie.');
     expect(html).not.toContain(
