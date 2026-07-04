@@ -364,7 +364,6 @@ function alignActiveWorkspaceStripButton(root: HTMLElement): void {
       switcher.clientWidth / 2 +
       activeWorkspaceButton.clientWidth / 2;
   }
-  activeWorkspaceButton.scrollIntoView({ block: 'nearest', inline: 'center' });
 }
 
 function bindBinarySwitchControls(root: HTMLElement): void {

@@ -1943,3 +1943,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the compact swipe row, and routeflow smoke checks mobile active-strip visibility before screenshots.
 - Partial G1734/#3411: Mobile history navigation now re-aligns the active workspace-strip
   button, and routeflow smoke covers Start-to-Vragen back/forward active-strip context.
+- Partial G1735/#3413: Active workspace-strip alignment now avoids link scrollIntoView
+  side effects, and routeflow smoke covers calm mobile direct-link active-strip focus.

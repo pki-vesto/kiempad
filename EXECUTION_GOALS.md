@@ -660,8 +660,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, mobile layout, workspace strip direct-link navigation
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3413
+
+### G1736 — App-shell mobiel workspace-strip bewaakt directe link op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Directe links zijn op mobile bewaakt, maar small-mobile kan nog expliciet dezelfde rustige stripcontext krijgen.
+- **User Impact:** Op zeer smalle schermen kunnen gebruikers bij een directe link sneller context verliezen als de actieve stripknop niet zichtbaar blijft.
+- **Desired Outcome:** Small-mobile deep-links houden de actieve workspace-strip context zichtbaar zonder pagina-overflow.
+- **User Value:** Gebruikers landen ook op kleine toestellen direct in de juiste context.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; actieve workspace-strip knop blijft zichtbaar bij directe deep-link opening op small-mobile; actieve screen-stage panel behoudt bottom-nav clearance; desktop, tablet en mobile bounded-workspace regels blijven behouden; tests of smoke checks bewaken directe-link stripcontext op small-mobile; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip direct-link navigation
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3415
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

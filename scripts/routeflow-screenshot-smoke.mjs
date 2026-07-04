@@ -3124,6 +3124,7 @@ async function assertRouteflows(browser, options) {
 
     if (options.label === 'mobile') {
       checked.push(await assertWorkspaceStripHistoryNavigation(page));
+      checked.push(await assertWorkspaceStripDirectLinkFocus(page));
     }
 
     return { viewport: options.label, checked: checked.length, targets: checked };
@@ -3167,6 +3168,53 @@ async function assertWorkspaceStripHistoryNavigation(page) {
 
   return {
     screen: 'workspace-strip-history',
+    selectors: 3,
+    screenshotBytes: screenshot.byteLength,
+  };
+}
+
+async function assertWorkspaceStripDirectLinkFocus(page) {
+  await page.goto(`${url}#vragen?route=voorbereiden`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#vragen?route=voorbereiden');
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+  await waitForActiveWorkspaceStripButton(page, 'Vragen');
+
+  const directLinkFocus = await page.evaluate(() => {
+    const activeButton = document.querySelector(
+      '[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]',
+    );
+    const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
+    const activePanelRect = activePanel?.getBoundingClientRect();
+    return {
+      activeButtonFocused: document.activeElement === activeButton,
+      activeElementTag: document.activeElement?.tagName ?? '',
+      activePanelVisible: Boolean(
+        activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
+      ),
+      horizontalOverflow:
+        document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
+        document.body.scrollWidth > document.body.clientWidth + 1,
+    };
+  });
+
+  if (
+    directLinkFocus.activeButtonFocused ||
+    !directLinkFocus.activePanelVisible ||
+    directLinkFocus.horizontalOverflow
+  ) {
+    throw new Error(
+      `mobiele workspace-strip directe link veroorzaakt onrustige focus of overflow (${JSON.stringify(
+        directLinkFocus,
+      )}).`,
+    );
+  }
+
+  const screenshot = await page.locator('[data-question-focus-shell="ready"]').screenshot({
+    animations: 'disabled',
+  });
+
+  return {
+    screen: 'workspace-strip-direct-link',
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
   };
