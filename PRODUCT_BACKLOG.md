@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1643 |
+| ☑ klaar | 1645 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1842** |
+| **Totaal** | **1844** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -748,7 +748,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G583 | Central Encrypted Platform: central session renewal status UI | P1 | F5 | ☑ |
 | G584 | Central Encrypted Platform: paginated record load status UI | P1 | F5 | ☑ |
 | G585 | Central Encrypted Platform: attachment envelope metadata UI feedback | P1 | F5 | ☑ |
-| G586 | Central Encrypted Platform: replay conflict recovery status UI | P1 | F5 | ☐ |
+| G586 | Central Encrypted Platform: replay conflict recovery status UI | P1 | F5 | ☑ |
 | G587 | Central Encrypted Platform: bootstrap smoke CI command | P1 | F5 | ☑ |
 | G588 | Central Encrypted Platform: missing key metadata recovery UI | P1 | F5 | ☑ |
 | G589 | Central Encrypted Platform: bootstrap smoke failure diagnostics | P1 | F5 | ☑ |
@@ -2004,13 +2004,15 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1840 | Premium Claude Design UI: Dossier routepanelen als bounded werkruimte | P1 | F5 | ☑ |
 | G1841 | Central Encrypted Platform: attachment envelope batch status UI | P1 | F5 | ☐ |
 | G1842 | Central Encrypted Platform: central record load progress in runtime bootstrap | P1 | F5 | ☐ |
-| G1843 | Central Encrypted Platform: central session renewal toast and retry affordance | P1 | F5 | ☐ |
+| G1843 | Central Encrypted Platform: central session renewal toast and retry affordance | P1 | F5 | ☑ |
+| G1844 | Central Encrypted Platform: central replay conflict recovery reload affordance | P1 | F5 | ☐ |
+| G1845 | Central Encrypted Platform: central session renewal recovery focus feedback | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1842** (id's G001 t/m G1843; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1844** (id's G001 t/m G1845; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

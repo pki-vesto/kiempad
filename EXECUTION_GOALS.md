@@ -15829,8 +15829,42 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, central session renewal feedback, Back-up UI, tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3629
+
+### G1844 — Central replay conflict recovery reload affordance
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Replay-conflict recovery heeft generieke statuscopy, maar nog geen directe herstelactie in de centrale Back-up statusrij.
+- **User Impact:** Gebruikers moeten bij replay/stale-write conflicten nog zelf bepalen dat herladen de juiste volgende stap is.
+- **Desired Outcome:** Bij replay-conflict recovery toont Kiempad een generieke reload/retry affordance zonder sessie-, token- of payloaddetails.
+- **User Value:** Herstel bij achterlopende centrale writes wordt sneller en begrijpelijker zonder plaintext fallback.
+- **Acceptance Criteria:** UI toont alleen bij replay-conflict recovery een generieke herlaad/retry affordance; geen passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload, filename of medische plaintext in copy of testfixtures; tests dekken idle, warning/error replay-conflict states; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Back-up, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, central sync feedback, Back-up UI, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3631
+
+### G1845 — Central session renewal recovery focus feedback
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Na een sessie-renewal herstelactie kan de gebruiker nog niet expliciet zien waar de status na reload terug te vinden is.
+- **User Impact:** Gebruikers krijgen wel een herlaadactie, maar missen daarna mogelijk een rustige focus- of statuscue in de Back-up omgeving.
+- **Desired Outcome:** Kiempad kan na sessie-renewal herstel een generieke focus/statuscue tonen die de centrale sessiestatus terugvindbaar maakt.
+- **User Value:** Het herstelpad voelt afgerond zonder technische sessiedetails of payloadinformatie.
+- **Acceptance Criteria:** Terugkeer naar Back-up kan een generieke focus/statuscue tonen voor sessie-renewal herstel; cue verschijnt niet bij normale actieve sessie; geen passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload, filename of medische plaintext in copy of testfixtures; tests dekken zichtbaarheid en normale afwezigheid; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Back-up, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, central session renewal feedback, route focus, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3632
 
 ### G584 — paginated record load status UI
 
@@ -15908,7 +15942,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, storage bootstrap, central API, tests
 - **ADR Needed:** no
 - **Score:** 113
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #938
 
 ### G587 — bootstrap smoke CI command
 

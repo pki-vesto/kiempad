@@ -3107,8 +3107,12 @@ function renderCentralSyncFeedbackRow(
     item?.error ?? item?.status ?? defaults.defaultCopy,
     fallback,
   );
+  const action =
+    kind === 'stale-session' && state === 'error'
+      ? '<button class="secondary-button" type="button" data-central-session-renewal-action="reload">Herlaad Kiempad</button>'
+      : '';
 
-  return `<div data-central-sync-feedback-kind="${kind}" data-central-sync-feedback-state="${state}"><dt>${defaults.label}</dt><dd>${escapeHtml(copy)}</dd></div>`;
+  return `<div data-central-sync-feedback-kind="${kind}" data-central-sync-feedback-state="${state}"><dt>${defaults.label}</dt><dd><span>${escapeHtml(copy)}</span>${action}</dd></div>`;
 }
 
 function renderWebAuthnSettings(state: AppShellState): string {
