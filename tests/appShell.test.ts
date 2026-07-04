@@ -5085,6 +5085,9 @@ describe('app shell', () => {
     expect(html).toContain('Volgende actie');
     expect(html).toContain('Laatste context');
     expect(html).toContain('Werkgrens');
+    expect(html).toContain('Kiempad ordent je trajectfase; je kliniek blijft leidend.');
+    expect(html).not.toContain('Kiempad toont context en administratie, geen medisch advies.');
+    expect(html).not.toContain('Feitelijke voorbereiding, geen behandeladvies.');
     expect(html).toContain('Fasen openen');
     expect(html).toContain('aria-label="Trajectcontext"');
     expect(html).toContain('aria-label="Behandelwerkbank acties"');

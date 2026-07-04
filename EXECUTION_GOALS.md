@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1603 — Trajectwerkbank gebruikt korte contextdisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Traject werkbank en de Volgende actie snapshot herhaalden aparte medische grenszinnen in de eerste viewport.
+- **User Impact:** Gebruikers zagen disclaimerherhaling tussen fase, volgende actie en trajectcontext terwijl ze vooral de actuele trajectstatus willen scannen.
+- **Desired Outcome:** De Traject werkbank gebruikt dezelfde korte trajectcontextzin als de faseplanning.
+- **User Value:** Gebruikers krijgen een rustiger trajectoverzicht met consistente contextcopy.
+- **Acceptance Criteria:** De Trajectcontext-kaart vervangt de lange geen-medisch-advieszin door de korte trajectcontextzin; de Volgende actie snapshot vervangt de korte geen-behandeladvieszin door dezelfde trajectcontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude herhaling.
+- **Affected Screens:** Traject werkbank, Traject snapshot
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Treatment workbench, treatment snapshot, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3150
+
 ### G1602 — Trajectfase gebruikt korte taakdisclaimer
 
 - **Epic:** Onboarding & Daily Use
