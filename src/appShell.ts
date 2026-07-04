@@ -18536,7 +18536,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
           <h2 id="medicatie-route-import-title">Schema importeren</h2>
-          <p>Importeer geplande momenten uit eigen klinieklijst zonder doseringen over te nemen of te berekenen.</p>
+          <p>Importeer geplande momenten uit je eigen klinieklijst.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Import',
@@ -18545,8 +18545,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             : state.medicatieImportStatus
               ? 'Schemafeedback beschikbaar'
               : 'Eigen schema lokaal importeren',
-          detail:
-            'Import maakt alleen geplande momenten aan; doseringen worden niet overgenomen of berekend.',
+          detail: 'Import maakt alleen planningmomenten aan vanuit je eigen schema.',
           status: state.medicatieImportError
             ? 'Check'
             : state.medicatieImportStatus
@@ -18792,7 +18791,7 @@ function renderMedicatieImportForm(state: AppShellState): string {
         Klinieklijstje
         <textarea name="schemaImport" rows="5" placeholder="Progesteron | 2026-06-23 | 08:00" required></textarea>
       </label>
-      <p class="small-print">Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad neemt geen dosering over of berekent niets.</p>
+      <p class="small-print">Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad zet dit lokaal om naar planningmomenten.</p>
       <button type="submit">Importeer schema</button>
     </form>
     ${renderStatusFeedback(
