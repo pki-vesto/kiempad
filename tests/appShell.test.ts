@@ -6296,8 +6296,14 @@ describe('app shell', () => {
       medicatieImportError: 'Controleer de importregels.',
     });
 
+    const importSummary = html.slice(
+      html.indexOf('data-medication-route-summary="import"'),
+      html.indexOf('id="medicatie-import-form"'),
+    );
     expect(html).toContain('Controle nodig');
     expect(html).not.toContain('Schema vraagt controle');
+    expect(importSummary).toContain('<span class="command-route-summary__status">Let op</span>');
+    expect(importSummary).not.toContain('<span class="command-route-summary__status">Check</span>');
   });
 
   it('gebruikt korte medicatie-import feedbacktitel', () => {
