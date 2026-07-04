@@ -21139,6 +21139,7 @@ summary[class*="__summary"]:focus-visible,
     .dossier-upload-image-field-label
     span {
     display: inline-grid;
+    box-sizing: border-box;
     width: 22px;
     height: 22px;
     min-height: 22px;
