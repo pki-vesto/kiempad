@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1629 — Medicatie import formulier gebruikt korte regelhulp
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Het medicatie importformulier gebruikt nog een lange helperzin over regelopbouw en lokale omzetting naar planningmomenten.
+- **User Impact:** Gebruikers moeten extra tekst lezen bij het invoeren van een simpel importschema.
+- **Desired Outcome:** Importformulier gebruikt korte regelhulp en behoudt het voorbeeldformaat.
+- **User Value:** Schema-import voelt rustiger en sneller invulbaar.
+- **Acceptance Criteria:** Importformulier helper gebruikt korte regelhulp; voorbeeldformaat blijft zichtbaar; app-shell tests bewaken dat de oude helperzin niet terugkeert.
+- **Affected Screens:** Medicatie importformulier
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import form, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1628 — Medicatie import samenvatting gebruikt korte importcontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3201
 
 ### G1627 — Medicatie import routeheader gebruikt korte schemacontext
 

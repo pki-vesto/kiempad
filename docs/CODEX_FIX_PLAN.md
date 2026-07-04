@@ -1114,6 +1114,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   instead of management-screen/instruction-log wording.
   Partial G1627/#3199: Medication import route header now uses short schema context
   instead of planned-moment clinic-list wording.
+  Partial G1628/#3201: Medication import route summary now uses short local-planning
+  context instead of longer own-schema planning-moment wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
