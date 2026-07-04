@@ -2394,8 +2394,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card forced-colors active micro-label font-family, small-mobile CSS, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3617
+
+### G1838 — Dossier upload small-mobile routekaart forced-colors actieve micro-label font-synthese rustig
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na expliciet forced-colors micro-label-lettertype kan font-synthese nog zelfstandiger worden bewaakt zodat browsers geen gesynthetiseerde bold/italic-nadruk toevoegen aan het kleine label.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen moeten het micro-label rustig kunnen lezen zonder kunstmatig zwaardere of schuine glyphs.
+- **Desired Outcome:** Actieve routekaart-micro-labels behouden systeemkleurcontrast, geerfd lettertype, normale tekststijl, normale tekstvariant, rustig gewicht, handmatige hyphenation, normale letterspatiëring, compacte regelhoogte, stabiele uitlijning, normale overflow-wrap, normale tabgrootte, normale word-break, geen extra decoratie, normale teksttransformatie en normale witruimte naast titel, context, focus en actieve indicator.
+- **User Value:** De uploadkeuze blijft compact en typografisch voorspelbaar op kleine schermen.
+- **Acceptance Criteria:** Actieve routekaart-micro-labels gebruiken expliciet normale font-synthesis in hun eigen forced-colors regel; focus, actieve route, titel, context en micro-label blijven onderscheidbaar; small-mobile routekaarten behouden compacte afmetingen zonder gesynthetiseerde extra nadruk; app-shell tests of routeflow smoke bewaken actieve micro-label-font-synthesis en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card forced-colors active micro-label font-synthesis, small-mobile CSS, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3619
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

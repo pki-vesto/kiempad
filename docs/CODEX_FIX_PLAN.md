@@ -2189,3 +2189,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1836/#3615: Dossier upload active route micro-labels now keep the
   normal tab-size in their own small-mobile forced-colors rule, preventing
   unexpected tab width from adding pressure inside compact route cards.
+- Partial G1837/#3617: Dossier upload active route micro-labels now inherit the
+  route card font family in their own small-mobile forced-colors rule,
+  preventing monospace or system font drift from widening compact labels.
