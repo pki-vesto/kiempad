@@ -23650,6 +23650,7 @@ summary[class*="__summary"]:focus-visible,
     flex-wrap: nowrap;
     gap: 6px;
     justify-content: flex-start;
+    margin-inline: 0;
     max-width: 100%;
     overflow-x: auto;
     overscroll-behavior-x: contain;

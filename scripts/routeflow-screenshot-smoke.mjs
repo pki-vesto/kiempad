@@ -3327,6 +3327,8 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
       workspaceSwitcherJustifyContent: workspaceSwitcherStyle?.justifyContent ?? '',
       workspaceSwitcherColumnGap: workspaceSwitcherStyle?.columnGap ?? '',
       workspaceSwitcherRowGap: workspaceSwitcherStyle?.rowGap ?? '',
+      workspaceSwitcherMarginInlineStart: workspaceSwitcherStyle?.marginInlineStart ?? '',
+      workspaceSwitcherMarginInlineEnd: workspaceSwitcherStyle?.marginInlineEnd ?? '',
       workspaceSwitcherPaddingBlockStart: workspaceSwitcherStyle?.paddingBlockStart ?? '',
       workspaceSwitcherPaddingBlockEnd: workspaceSwitcherStyle?.paddingBlockEnd ?? '',
       workspaceSwitcherPaddingInlineStart: workspaceSwitcherStyle?.paddingInlineStart ?? '',
@@ -3459,6 +3461,10 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     viewportLabel !== 'small-mobile' ||
     (parseFloat(reloadLayout.workspaceSwitcherPaddingBlockStart) <= 0 &&
       parseFloat(reloadLayout.workspaceSwitcherPaddingBlockEnd) <= 0);
+  const smallMobileSwitcherMarginInlineStable =
+    viewportLabel !== 'small-mobile' ||
+    (parseFloat(reloadLayout.workspaceSwitcherMarginInlineStart) <= 0 &&
+      parseFloat(reloadLayout.workspaceSwitcherMarginInlineEnd) <= 0);
   const smallMobileSwitcherAlignItemsStable =
     viewportLabel !== 'small-mobile' || reloadLayout.workspaceSwitcherAlignItems === 'center';
   const smallMobileSwitcherJustifyContentStable =
@@ -3505,6 +3511,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
     !smallMobileSwitcherGapStable ||
     !smallMobileSwitcherPaddingInlineStable ||
     !smallMobileSwitcherPaddingBlockStable ||
+    !smallMobileSwitcherMarginInlineStable ||
     !smallMobileSwitcherAlignItemsStable ||
     !smallMobileSwitcherJustifyContentStable ||
     !smallMobileActiveButtonTextSizeAdjustStable ||
@@ -3550,6 +3557,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
           smallMobileSwitcherGapStable,
           smallMobileSwitcherPaddingInlineStable,
           smallMobileSwitcherPaddingBlockStable,
+          smallMobileSwitcherMarginInlineStable,
           smallMobileSwitcherAlignItemsStable,
           smallMobileSwitcherJustifyContentStable,
           smallMobileActiveButtonTextSizeAdjustStable,
@@ -3567,7 +3575,7 @@ async function assertWorkspaceStripReloadContext(page, viewportLabel) {
   return {
     screen:
       viewportLabel === 'small-mobile'
-        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block`
+        ? `${viewportLabel}-workspace-strip-reload-hash-panel-scrollstart-body-chrome-strip-button-position-focus-text-switcher-scrollbar-overscroll-snap-active-align-padding-margin-stop-touch-textsize-font-tap-gap-align-justify-display-minwidth-maxwidth-shrink-grow-basis-box-padding-block-margin`
         : `${viewportLabel}-workspace-strip-reload`,
     selectors: 3,
     screenshotBytes: screenshot.byteLength,
