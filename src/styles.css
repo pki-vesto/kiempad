@@ -22229,36 +22229,38 @@ summary[class*="__summary"]:focus-visible,
     display: flex;
     grid-template-columns: none;
     flex-wrap: nowrap;
-    margin-bottom: 8px;
+    gap: 6px;
+    margin-bottom: 6px;
+    padding: 4px;
   }
 
   .dossier-add-route-selector {
     flex-wrap: nowrap;
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 6px;
+    margin-bottom: 8px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
   }
 
   .dossier-add-route {
-    flex: 0 0 min(148px, 66vw);
+    flex: 0 0 min(136px, 60vw);
     gap: 2px;
-    min-height: 58px;
-    padding: 7px;
+    min-height: 52px;
+    padding: 6px 7px;
     scroll-snap-align: start;
   }
 
   .dossier-add-route strong {
-    font-size: 0.84rem;
+    font-size: 0.8rem;
   }
 
   .dossier-add-route span {
-    font-size: 0.72rem;
-    line-height: 1.2;
+    font-size: 0.68rem;
+    line-height: 1.16;
   }
 
   .dossier-add-route small {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
   }
 
   .dossier-add-route strong,
@@ -27402,6 +27404,59 @@ summary[class*="__summary"]:focus-visible,
 
   .timeline-export-panel textarea {
     min-height: 220px;
+  }
+}
+
+@media (max-width: 420px) {
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
+    .dossier-add-route-selector {
+    gap: 6px;
+    margin-bottom: 6px;
+    padding: 4px;
+  }
+
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route {
+    flex: 0 0 min(136px, 60vw);
+    min-height: 52px;
+    padding: 6px 7px;
+  }
+
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route strong {
+    font-size: 0.8rem;
+  }
+
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route span {
+    font-size: 0.68rem;
+    line-height: 1.16;
+  }
+
+  .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route small {
+    font-size: 0.64rem;
+  }
+
+  .dossier-upload-action-path {
+    gap: 6px;
+  }
+
+  .dossier-upload-action-path__item {
+    flex: 0 0 min(156px, 64vw);
+    gap: 3px;
+    min-height: 60px;
+    padding: 7px;
+  }
+
+  .dossier-upload-action-path__item span {
+    padding: 1px 5px;
+    font-size: 0.6rem;
+  }
+
+  .dossier-upload-action-path__item strong {
+    font-size: 0.8rem;
+  }
+
+  .dossier-upload-action-path__item small {
+    font-size: 0.68rem;
+    line-height: 1.18;
   }
 }
 

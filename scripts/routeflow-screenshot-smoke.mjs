@@ -2295,6 +2295,10 @@ async function assertRouteflows(browser, options) {
               const consoleElement = document.querySelector('[data-dossier-upload-console="ready"]');
               const body = consoleElement?.querySelector('[data-dossier-upload-console-region="body"]');
               const selector = consoleElement?.querySelector('.dossier-add-route-selector');
+              const addRoute = selector?.querySelector('.dossier-add-route');
+              const activeAddRoute = selector?.querySelector(
+                '.dossier-add-route[href="#dossier-upload-form"]',
+              );
               const routeItem = consoleElement?.querySelector('.dossier-upload-action-path__item');
               const documentPanel = consoleElement?.querySelector(
                 '[data-dossier-add-route-panel="dossier-upload"]',
@@ -2318,6 +2322,9 @@ async function assertRouteflows(browser, options) {
               const embryoStatusRect = embryoStatusPanel?.getBoundingClientRect();
               const bodyStyle = body ? getComputedStyle(body) : null;
               const selectorStyle = selector ? getComputedStyle(selector) : null;
+              const addRouteRect = addRoute?.getBoundingClientRect();
+              const addRouteStyle = addRoute ? getComputedStyle(addRoute) : null;
+              const activeAddRouteStyle = activeAddRoute ? getComputedStyle(activeAddRoute) : null;
               const routeItemStyle = routeItem ? getComputedStyle(routeItem) : null;
               const documentStyle = documentPanel ? getComputedStyle(documentPanel) : null;
               const consultStyle = consultPanel ? getComputedStyle(consultPanel) : null;
@@ -2379,7 +2386,19 @@ async function assertRouteflows(browser, options) {
                 documentMaxHeight: documentStyle?.maxHeight ?? '',
                 selectorDisplay: selectorStyle?.display ?? '',
                 selectorGap: selectorStyle?.gap ?? '',
+                selectorPaddingTop: selectorStyle?.paddingTop ?? '',
+                selectorScrollWidth: selector?.scrollWidth ?? 0,
+                selectorClientWidth: selector?.clientWidth ?? 0,
+                addRouteWidth: addRouteRect?.width ?? 0,
+                addRouteMinHeight: addRouteStyle?.minHeight ?? '',
+                addRoutePaddingTop: addRouteStyle?.paddingTop ?? '',
+                addRouteStrongFontSize:
+                  addRoute?.querySelector('strong') &&
+                  getComputedStyle(addRoute.querySelector('strong')).fontSize,
+                addRouteActiveBorderColor: activeAddRouteStyle?.borderColor ?? '',
                 routeItemMinHeight: routeItemStyle?.minHeight ?? '',
+                routeItemWidth: routeItem?.getBoundingClientRect().width ?? 0,
+                routeItemPaddingTop: routeItemStyle?.paddingTop ?? '',
                 activePanelVisible: Boolean(
                   activePanelRect && activePanelRect.width > 0 && activePanelRect.height > 0,
                 ),
@@ -3144,6 +3163,26 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: mobiele uploadpanelen zijn niet compact of veroorzaken overflow (${JSON.stringify(evidence.uploadConsole)}).`,
+        );
+      }
+      if (
+        options.label === 'small-mobile' &&
+        evidence.uploadConsole &&
+        (!evidence.uploadConsole.selectorVisible ||
+          parseFloat(evidence.uploadConsole.selectorGap) > 6 ||
+          parseFloat(evidence.uploadConsole.selectorPaddingTop) > 4 ||
+          evidence.uploadConsole.selectorClientWidth > evidence.uploadConsole.viewportWidth ||
+          evidence.uploadConsole.addRouteWidth > 138 ||
+          parseFloat(evidence.uploadConsole.addRouteMinHeight) > 52 ||
+          parseFloat(evidence.uploadConsole.addRoutePaddingTop) > 6 ||
+          parseFloat(evidence.uploadConsole.addRouteStrongFontSize) > 13 ||
+          !evidence.uploadConsole.addRouteActiveBorderColor ||
+          parseFloat(evidence.uploadConsole.routeItemMinHeight) > 60 ||
+          evidence.uploadConsole.routeItemWidth > 158 ||
+          parseFloat(evidence.uploadConsole.routeItemPaddingTop) > 7)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: dossier upload routekeuze is niet compact genoeg op small-mobile (${JSON.stringify(evidence.uploadConsole)}).`,
         );
       }
       if (

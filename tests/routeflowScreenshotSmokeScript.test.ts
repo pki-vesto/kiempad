@@ -223,11 +223,17 @@ describe('routeflow screenshot smoke script', () => {
       'mobiele dagadvieslijst is niet compact of verliest acties/disclaimer',
     );
     expect(routeflowScreenshotSmokeScript).toContain('routeItemMinHeight');
+    expect(routeflowScreenshotSmokeScript).toContain('addRouteMinHeight');
+    expect(routeflowScreenshotSmokeScript).toContain('selectorPaddingTop');
+    expect(routeflowScreenshotSmokeScript).toContain('addRouteActiveBorderColor');
     expect(routeflowScreenshotSmokeScript).toContain('activeGroupPaddingTop');
     expect(routeflowScreenshotSmokeScript).toContain('optionalSummaryMinHeight');
     expect(routeflowScreenshotSmokeScript).toContain('completionGap');
     expect(routeflowScreenshotSmokeScript).toContain(
       'mobiele uploadpanelen zijn niet compact of veroorzaken overflow',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'dossier upload routekeuze is niet compact genoeg op small-mobile',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-daily-advice-primary-action-choice="ready"]',
