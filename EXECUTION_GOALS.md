@@ -2343,8 +2343,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card forced-colors active micro-label word-break, small-mobile CSS, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3611
+
+### G1835 — Dossier upload small-mobile routekaart forced-colors actieve micro-label afbreektekens rustig
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na expliciete forced-colors micro-label-woordbreekmodus kan automatische afbreking met koppeltekens nog zelfstandiger worden bewaakt zodat het kleine label niet onrustig wordt door toekomstige hyphenation-regels.
+- **User Impact:** Gebruikers met hoogcontrastinstellingen moeten het micro-label rustig kunnen lezen zonder onverwachte afbreektekens in de compacte routekaart.
+- **Desired Outcome:** Actieve routekaart-micro-labels behouden systeemkleurcontrast, normale tekststijl, normale tekstvariant, rustig gewicht, normale letterspatiëring, compacte regelhoogte, stabiele uitlijning, normale overflow-wrap, normale word-break, geen extra decoratie, normale teksttransformatie en normale witruimte naast titel, context, focus en actieve indicator.
+- **User Value:** De uploadkeuze blijft compact en typografisch rustig op kleine schermen.
+- **Acceptance Criteria:** Actieve routekaart-micro-labels gebruiken expliciet normale hyphens in hun eigen forced-colors regel; focus, actieve route, titel, context en micro-label blijven onderscheidbaar; small-mobile routekaarten behouden compacte afmetingen zonder automatische afbreektekens; app-shell tests of routeflow smoke bewaken actieve micro-label-hyphens en routekaartstaat.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload route selector, route card forced-colors active micro-label hyphens, small-mobile CSS, app-shell tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3613
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 

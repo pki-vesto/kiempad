@@ -2180,3 +2180,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1833/#3609: Dossier upload active route micro-labels now keep normal
   overflow wrapping in their own small-mobile forced-colors rule, preventing
   aggressive word breaks from disrupting compact route cards.
+- Partial G1834/#3611: Dossier upload active route micro-labels now keep normal
+  word-break behavior in their own small-mobile forced-colors rule, preventing
+  abrupt break-all style regressions in compact route cards.
