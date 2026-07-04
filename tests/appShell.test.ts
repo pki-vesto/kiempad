@@ -9154,12 +9154,15 @@ describe('app shell', () => {
     expect(forcedColorsCss).toContain('width: 22px;');
     expect(forcedColorsCss).toContain('height: 22px;');
     expect(forcedColorsCss).toContain('min-height: 22px;');
+    expect(forcedColorsCss).toContain('place-items: center;');
     expect(forcedColorsCss).toContain('padding: 0;');
     expect(forcedColorsCss).toContain('border-color: Highlight;');
     expect(forcedColorsCss).toContain('background: Canvas;');
     expect(forcedColorsCss).toContain('color: CanvasText;');
     expect(forcedColorsCss).toContain('box-shadow: none;');
+    expect(forcedColorsCss).toContain('line-height: 1;');
     expect(forcedColorsCss).toContain('outline: 0;');
+    expect(forcedColorsCss).toContain('text-align: center;');
     expect(css).toContain('@media (max-width: 420px) {');
     expect(css).toContain('font-size: 0.78rem;');
     expect(css).toContain('min-height: 22px;');
