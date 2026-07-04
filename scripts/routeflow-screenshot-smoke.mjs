@@ -3276,6 +3276,8 @@ async function assertRouteflows(browser, options) {
           evidence.uploadConsole.addRouteActiveBackground === '' ||
           evidence.uploadConsole.addRouteActiveBackground === 'rgba(0, 0, 0, 0)' ||
           !evidence.uploadConsole.addRouteActiveBoxShadow.includes('inset') ||
+          evidence.uploadConsole.addRouteActiveBoxShadow.includes('0px -2px') ||
+          evidence.uploadConsole.addRouteActiveBoxShadow.includes('0px -3px') ||
           parseFloat(evidence.uploadConsole.routeItemMinHeight) > 60 ||
           evidence.uploadConsole.routeItemWidth > 158 ||
           parseFloat(evidence.uploadConsole.routeItemPaddingTop) > 7)
