@@ -1823,3 +1823,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the `#medicatie?route=import` href.
 - Partial G1676/#3297: Medication planning route options history link now says Historie
   teruglezen while preserving the `#medicatie?route=historie` href.
+- Partial G1677/#3299: Medication planning route options beheer link now says Beheer while
+  preserving the `#medicatie?route=beheer` href.

@@ -6105,7 +6105,12 @@ describe('app shell', () => {
     expect(html).toContain('class="command-task-route__badge">3</strong>');
     expect(html).toContain('class="command-task-route__badge">schema</strong>');
     expect(html).toContain('href="#medicatie?route=planning"');
-    expect(html).toContain('href="#medicatie?route=beheer"');
+    const planningFollowupLinks =
+      html.match(/<nav class="medication-planning-followup__links"[\s\S]*?<\/nav>/)?.[0] ?? '';
+    expect(planningFollowupLinks).toContain('href="#medicatie?route=beheer">Beheer</a>');
+    expect(planningFollowupLinks).not.toContain(
+      'href="#medicatie?route=beheer">Middel beheren</a>',
+    );
     expect(html).toContain('href="#medicatie?route=import"');
     expect(html).toContain('href="#medicatie?route=historie">Historie teruglezen</a>');
     expect(html).not.toContain('href="#medicatie?route=historie">Historie openen</a>');

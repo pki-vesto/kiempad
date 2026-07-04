@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1678 — Medicatie planning routeopties vandaaglink noemt afvinken kort
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties vandaaglink zegt Vandaag afvinken, terwijl de route al in de vandaagcontext staat.
+- **User Impact:** Gebruikers scannen de routeopties minder rustig door dubbele context.
+- **Desired Outcome:** Vandaaglink blijft compact en benoemt de actie kort.
+- **User Value:** Routeopties worden sneller leesbaar en minder tekstzwaar.
+- **Acceptance Criteria:** Vandaaglink noemt afvinken compact; bestaande vandaag href blijft behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1677 — Medicatie planning routeopties beheerlink noemt beheren kort
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3299
 
 ### G1676 — Medicatie planning routeopties historielink noemt teruglezen
 
