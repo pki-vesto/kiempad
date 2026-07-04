@@ -23664,6 +23664,7 @@ summary[class*="__summary"]:focus-visible,
     margin-inline: 0;
     max-width: 100%;
     opacity: 1;
+    overflow-block: hidden;
     overflow-inline: auto;
     overflow-x: auto;
     overflow-y: hidden;

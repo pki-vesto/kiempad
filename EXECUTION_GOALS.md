@@ -1629,8 +1629,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, small-mobile layout, workspace strip reload switcher overflow-block
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3527
+
+### G1793 — App-shell mobiel workspace-strip bewaakt reload switcher overscroll-behavior-inline op small-mobile
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De switcher heeft nu stabiele overflow-block, maar overscroll-behavior-inline kan nog expliciet bewaakt worden zodat horizontaal swipen contained blijft zonder pagina-onrust.
+- **User Impact:** Als overscroll-behavior-inline wijzigt, kan de routebalk op kleine schermen onrustig doorscrollen naar de pagina.
+- **Desired Outcome:** Small-mobile reloads houden de workspace-strip switcher met stabiele overscroll-behavior-inline-instellingen.
+- **User Value:** Gebruikers houden een compacte routebalk die voorspelbaar horizontaal swipebaar blijft.
+- **Acceptance Criteria:** Bestaande app-shell hooks blijven intact; small-mobile workspace-strip behoudt compacte swipebare knoppen zonder pagina-overflow; reload op een deep-link behoudt hash, actieve stripcontext, contained overscroll, rustige switcher snap, actieve knop snap-align, switcher scroll-padding, actieve knop scroll-margin, actieve knop snap-stop, switcher touch-pan, actieve knop text-size-adjust, actieve knop font-smoothing, actieve knop tap-highlight, compacte switcher gap, gecentreerde align-items, links startende justify-content, flex display zichtbaar, static position, auto inset, auto z-index, horizontale overflow auto, verticale overflow verborgen, stabiele overflow-inline, stabiele overflow-block, min-width 0, max-width 100%, flex-shrink 1, flex-grow 0, flex-basis auto, border-box sizing, nul padding-inline, nul padding-block, nul margin-inline, nul margin-block, nul border-width, rustige border-style, transparante border-color, vlakke border-radius, transparante background, geen box-shadow, geen filter, geen backdrop-filter, volledige opacity en zichtbare visibility; workspace-strip switcher houdt na reload stabiele overscroll-behavior-inline-instellingen op small-mobile; tests of smoke checks bewaken small-mobile reload switcher overscroll-behavior-inline; routeflow screenshot smoke blijft groen op desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** App-shell, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, small-mobile layout, workspace strip reload switcher overscroll-behavior-inline
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3529
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
