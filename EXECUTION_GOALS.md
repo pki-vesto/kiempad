@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1606 — Traject context gebruikt korte contextdisclaimers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Traject context herhaalde lange medische grenszinnen in de artsvragen-laag en het graph-node schema.
+- **User Impact:** Gebruikers moesten door zware disclaimertekst heen in een contextlaag die vooral bronrelaties en gesprekspunten moet tonen.
+- **Desired Outcome:** Artsvragen en graph-node schema gebruiken korte contextzinnen die aansluiten bij gesprekvoorbereiding en graphcontext.
+- **User Value:** Gebruikers kunnen sneller contextsignalen en graphmetadata scannen zonder herhaalde medische caveats.
+- **Acceptance Criteria:** De artsvragen-laag gebruikt de korte gesprekscontextzin in plaats van diagnose/dosering/kans/behandelkeuze-copy; het graph-node schema gebruikt een korte graphcontextzin in plaats van de medische-advieszin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zinnen.
+- **Affected Screens:** Traject context, Fertility timeline artsvragen, Fertility graph node schema
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Fertility timeline context, graph schema, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3156
+
 ### G1605 — Uploadflows gebruiken korte contextdisclaimers
 
 - **Epic:** Onboarding & Daily Use
