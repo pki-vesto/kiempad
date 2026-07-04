@@ -9156,6 +9156,7 @@ describe('app shell', () => {
     expect(forcedColorsCss).toContain('min-height: 22px;');
     expect(forcedColorsCss).toContain('place-items: center;');
     expect(forcedColorsCss).toContain('padding: 0;');
+    expect(forcedColorsCss).toContain('border-radius: var(--radius-pill);');
     expect(forcedColorsCss).toContain('border-color: Highlight;');
     expect(forcedColorsCss).toContain('background: Canvas;');
     expect(forcedColorsCss).toContain('color: CanvasText;');
