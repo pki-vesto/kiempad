@@ -214,6 +214,14 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'daily-advice-console'");
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceCompactList');
+    expect(routeflowScreenshotSmokeScript).toContain('listChoicePaddingTop');
+    expect(routeflowScreenshotSmokeScript).toContain('fullListBodyGap');
+    expect(routeflowScreenshotSmokeScript).toContain('ghostActionsVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('disclaimerVisible');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'mobiele dagadvieslijst is niet compact of verliest acties/disclaimer',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-daily-advice-primary-action-choice="ready"]',
     );

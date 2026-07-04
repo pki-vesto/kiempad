@@ -981,6 +981,32 @@ const targets = [
     dailyAdviceFeedbackNavigation: true,
   },
   {
+    screen: 'daily-advice-mobile-compact-list',
+    hash: '#start-recommendations',
+    rootSelector: '[data-daily-advice-focus-shell="ready"]',
+    expectedText: 'Open volledige suggestielijst',
+    openSelectors: [
+      '[data-daily-advice-followup="collapsed"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-advice-full-list="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-daily-advice-focus-shell="ready"]',
+      '[data-daily-advice-console="ready"]',
+      '[data-daily-advice-followup="collapsed"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-advice-list-choice="ready"]',
+      '[data-daily-advice-full-list="collapsed"]',
+      '[data-daily-advice-list-mode="dual-owner-cards"]',
+      '.daily-recommendation-list--dual-owner .kp-recommendation-card',
+      '.daily-recommendation-list--dual-owner .rec-action--primary',
+      '.daily-recommendation-list--dual-owner .rec-action--ghost',
+      '.daily-recommendation-list--dual-owner .rec-overflow__toggle',
+    ],
+    dailyAdviceCompactList: true,
+    smallMobileViewport: true,
+  },
+  {
     screen: 'dossier-imaging',
     hash: '#dossier?route=imaging',
     rootSelector: '#dossier-route-imaging',
@@ -1860,6 +1886,14 @@ async function assertRouteflows(browser, options) {
       }
 
       await waitForStableRouteflowRoot(page, target.rootSelector);
+      if (target.openSelectors) {
+        await page.evaluate((selectors) => {
+          for (const selector of selectors) {
+            const details = document.querySelector(selector);
+            if (details instanceof HTMLDetailsElement) details.open = true;
+          }
+        }, target.openSelectors);
+      }
       await page.evaluate((selector) => {
         document.querySelector(selector)?.scrollIntoView({ block: 'center', inline: 'nearest' });
       }, target.rootSelector);
@@ -2168,6 +2202,67 @@ async function assertRouteflows(browser, options) {
                 plannerOverflowY: plannerStyle?.overflowY ?? '',
                 listOverflowY: listStyle?.overflowY ?? '',
                 listMaxHeight: listStyle?.maxHeight ?? '',
+              };
+            })()
+          : null;
+        const dailyAdviceCompactList = routeflow.dailyAdviceCompactList
+          ? (() => {
+              const listChoice = document.querySelector('[data-daily-advice-list-choice="ready"]');
+              const fullListBody = document.querySelector('.daily-advice-full-list__body');
+              const list = document.querySelector('[data-daily-advice-list-mode="dual-owner-cards"]');
+              const group = document.querySelector(
+                '.daily-recommendation-list--dual-owner .daily-recommendation-group',
+              );
+              const items = document.querySelector(
+                '.daily-recommendation-list--dual-owner .kp-recommendation-group__items',
+              );
+              const card = document.querySelector(
+                '.daily-recommendation-list--dual-owner .kp-recommendation-card',
+              );
+              const title = card?.querySelector('.kp-recommendation-card__title');
+              const detail = card?.querySelector('.kp-recommendation-card__detail');
+              const actions = card?.querySelector('.rec-actions');
+              const primaryAction = card?.querySelector('.rec-action--primary');
+              const ghostActions = [...(card?.querySelectorAll('.rec-action--ghost') ?? [])];
+              const overflowToggle = card?.querySelector('.rec-overflow__toggle');
+              const disclaimer = document.querySelector('[data-screen-disclaimer="medical-boundary"]');
+              const listChoiceStyle = listChoice ? getComputedStyle(listChoice) : null;
+              const fullListBodyStyle = fullListBody ? getComputedStyle(fullListBody) : null;
+              const groupStyle = group ? getComputedStyle(group) : null;
+              const itemsStyle = items ? getComputedStyle(items) : null;
+              const cardStyle = card ? getComputedStyle(card) : null;
+              const titleStyle = title ? getComputedStyle(title) : null;
+              const detailStyle = detail ? getComputedStyle(detail) : null;
+              const actionsStyle = actions ? getComputedStyle(actions) : null;
+              const primaryActionStyle = primaryAction ? getComputedStyle(primaryAction) : null;
+              const overflowToggleStyle = overflowToggle ? getComputedStyle(overflowToggle) : null;
+              const cardRect = card?.getBoundingClientRect();
+              const listRect = list?.getBoundingClientRect();
+              return {
+                listOpen: Boolean(listRect && listRect.width > 0 && listRect.height > 0),
+                cardVisible: Boolean(cardRect && cardRect.width > 0 && cardRect.height > 0),
+                listChoicePaddingTop: listChoiceStyle?.paddingTop ?? '',
+                listChoiceGap: listChoiceStyle?.gap ?? '',
+                fullListBodyGap: fullListBodyStyle?.gap ?? '',
+                groupPaddingTop: groupStyle?.paddingTop ?? '',
+                itemsGap: itemsStyle?.gap ?? '',
+                cardPaddingTop: cardStyle?.paddingTop ?? '',
+                cardGap: cardStyle?.gap ?? '',
+                titleFontSize: titleStyle?.fontSize ?? '',
+                detailLineHeight: detailStyle?.lineHeight ?? '',
+                actionsDisplay: actionsStyle?.display ?? '',
+                actionsGridTemplateColumns: actionsStyle?.gridTemplateColumns ?? '',
+                primaryActionGridColumnStart: primaryActionStyle?.gridColumnStart ?? '',
+                primaryActionGridColumnEnd: primaryActionStyle?.gridColumnEnd ?? '',
+                ghostActionsVisible: ghostActions.filter((action) => {
+                  const rect = action.getBoundingClientRect();
+                  return rect.width > 0 && rect.height > 0;
+                }).length,
+                overflowToggleMinWidth: overflowToggleStyle?.minWidth ?? '',
+                overflowToggleMinHeight: overflowToggleStyle?.minHeight ?? '',
+                disclaimerVisible: Boolean(disclaimer),
+                cardRight: cardRect?.right ?? 0,
+                listRight: listRect?.right ?? 0,
               };
             })()
           : null;
@@ -2609,6 +2704,7 @@ async function assertRouteflows(browser, options) {
           startCommandCenter,
           startConsole,
           dailyAdviceConsole,
+          dailyAdviceCompactList,
           startLaunchpad,
           uploadConsole,
           imageSummaryChips,
@@ -2920,6 +3016,31 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: dagadviesroute staat niet in begrensde adviesvlakken (${JSON.stringify(evidence.dailyAdviceConsole)}).`,
+        );
+      }
+      if (
+        (options.label === 'mobile' || options.label === 'small-mobile') &&
+        evidence.dailyAdviceCompactList &&
+        (!evidence.dailyAdviceCompactList.listOpen ||
+          !evidence.dailyAdviceCompactList.cardVisible ||
+          parseFloat(evidence.dailyAdviceCompactList.listChoicePaddingTop) > 10 ||
+          parseFloat(evidence.dailyAdviceCompactList.listChoiceGap) > 8 ||
+          parseFloat(evidence.dailyAdviceCompactList.fullListBodyGap) > 8 ||
+          parseFloat(evidence.dailyAdviceCompactList.groupPaddingTop) > 9 ||
+          parseFloat(evidence.dailyAdviceCompactList.itemsGap) > 8 ||
+          parseFloat(evidence.dailyAdviceCompactList.cardPaddingTop) > 11 ||
+          parseFloat(evidence.dailyAdviceCompactList.cardGap) > 7 ||
+          parseFloat(evidence.dailyAdviceCompactList.titleFontSize) > 16 ||
+          parseFloat(evidence.dailyAdviceCompactList.detailLineHeight) > 22 ||
+          evidence.dailyAdviceCompactList.actionsDisplay !== 'grid' ||
+          evidence.dailyAdviceCompactList.ghostActionsVisible < 2 ||
+          parseFloat(evidence.dailyAdviceCompactList.overflowToggleMinWidth) > 42 ||
+          parseFloat(evidence.dailyAdviceCompactList.overflowToggleMinHeight) > 42 ||
+          !evidence.dailyAdviceCompactList.disclaimerVisible ||
+          evidence.dailyAdviceCompactList.cardRight > evidence.dailyAdviceCompactList.listRight + 1)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: mobiele dagadvieslijst is niet compact of verliest acties/disclaimer (${JSON.stringify(evidence.dailyAdviceCompactList)}).`,
         );
       }
       if (

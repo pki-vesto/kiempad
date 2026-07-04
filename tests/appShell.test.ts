@@ -3515,8 +3515,17 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.daily-advice-action-planner {');
     expect(mobileCss).toContain('.daily-advice-action-planner__lanes {');
     expect(mobileCss).toContain('flex: 0 0 min(232px, 78vw);');
+    expect(mobileCss).toContain('.daily-advice-list-choice {');
+    expect(mobileCss).toContain('margin-bottom: 8px;');
+    expect(mobileCss).toContain('.daily-advice-full-list__body {');
+    expect(mobileCss).toContain('.daily-recommendation-list--dual-owner {');
     expect(mobileCss).toContain('.daily-recommendation-dual-owner-lane {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(mobileCss).toContain(
+      'grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(40px, auto);',
+    );
+    expect(mobileCss).toContain('.daily-recommendation-list--dual-owner .rec-action--primary {');
+    expect(mobileCss).toContain('grid-column: 1 / -1;');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
     expect(mobileCss).toContain('margin-top: 0;');
     expect(mobileCss).toContain('.start-task-routes {');

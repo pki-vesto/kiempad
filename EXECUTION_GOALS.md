@@ -1697,8 +1697,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily advice list, mobile layout, screen disclaimer
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3535
+
+### G1797 — Dossier upload mobiele reviewpanelen compacter
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dossier upload reviewpanelen kunnen op mobiel nog als een lange stapel voelen zodra document-, beeld- en consultcontext zichtbaar zijn.
+- **User Impact:** Gebruikers moeten op kleine schermen te veel scrollen om uploadcontext en reviewacties te scannen.
+- **Desired Outcome:** Dossier upload gebruikt compactere mobiele panelspacing met behoud van routekeuze, uploadwaarschuwingen en reviewcontext.
+- **User Value:** Uploaden en controleren voelt rustiger en minder als één lange pagina.
+- **Acceptance Criteria:** Dossier upload behoudt de bestaande routekeuze voor document, consult, embryo en review; mobiele uploadpanelen gebruiken compactere spacing zonder overlap of horizontale overflow; upload-, OCR-, metadata- en beeldwaarschuwingen blijven zichtbaar waar inhoudelijk nodig; routeflow screenshot smoke bewaakt desktop, tablet, mobile en small-mobile.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload console, mobile layout, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☐ open
+- **Issue:** #3537
 
 ### G1698 — Medicatie planning routeopties helper houdt context maar korter
 
