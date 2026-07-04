@@ -1831,3 +1831,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   lokale import and historie consistently with the visible links.
 - Partial G1680/#3305: Medication planning route options title now says Route kiezen while
   preserving the `#medication-planning-followup` disclosure.
+- Partial G1681/#3307: Medication planning route options counter now says medicatie later
+  while preserving the planned medication count.

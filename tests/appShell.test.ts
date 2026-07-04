@@ -6224,8 +6224,8 @@ describe('app shell', () => {
     expect(html).toContain('Route kiezen');
     expect(html).not.toContain('Routeopties openen');
     expect(html).not.toContain('Routekeuze openen');
-    expect(html).toContain('<em>0 later</em>');
-    expect(html).not.toContain('<em>0 later medicatie</em>');
+    expect(html).toContain('<em>0 medicatie later</em>');
+    expect(html).not.toContain('<em>0 later</em>');
     const medicationFollowupSection = html.slice(
       html.indexOf('id="medication-planning-followup"'),
       html.indexOf('href="#medicatie?route=vandaag"'),
