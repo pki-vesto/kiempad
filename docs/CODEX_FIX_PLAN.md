@@ -1130,6 +1130,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   short OK label instead of the longer Feedback label.
   Partial G1635/#3215: Medication import route summary error badge now uses a short
   Dutch attention label instead of the English Check label.
+  Partial G1636/#3217: Medication import route summary primary action now uses a
+  short Beheer label while preserving the manage route.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)

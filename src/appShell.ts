@@ -18551,7 +18551,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             : state.medicatieImportStatus
               ? 'OK'
               : 'Schema',
-          primary: { href: '#medicatie?route=beheer', label: 'Middel beheren' },
+          primary: { href: '#medicatie?route=beheer', label: 'Beheer' },
           secondary: { href: '#medicatie?route=planning', label: 'Planning' },
           data: { 'medication-route-summary': 'import' },
           ariaLabel: 'Medicatie-import route-samenvatting',
