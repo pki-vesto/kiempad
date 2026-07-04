@@ -18485,7 +18485,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             <summary class="kp-disclosure__summary medication-planning-followup__summary">
               <span>
                 <strong>Vervolgcontext openen</strong>
-                <small>Bekijk vandaag, beheer, import, historie of extra latere momenten pas na de hoofdtaak.</small>
+                <small>Kies daarna vandaag, beheer, import of historie.</small>
               </span>
               <em>${plannedLogs.length} later</em>
             </summary>

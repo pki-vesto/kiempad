@@ -6180,6 +6180,10 @@ describe('app shell', () => {
     expect(html).toContain('data-medication-planning-followup="collapsed"');
     expect(html).toContain('Planning nog leeg');
     expect(html).toContain('Vervolgcontext openen');
+    expect(html).toContain('Kies daarna vandaag, beheer, import of historie.');
+    expect(html).not.toContain(
+      'Bekijk vandaag, beheer, import, historie of extra latere momenten pas na de hoofdtaak.',
+    );
     expect(html).toContain('href="#medicatie?route=vandaag"');
     expect(html).toContain('href="#medicatie?route=beheer"');
     expect(html).toContain('href="#medicatie?route=import"');
