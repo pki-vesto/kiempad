@@ -6320,6 +6320,8 @@ describe('app shell', () => {
       html.indexOf('id="medicatie-import-form"'),
     );
     expect(html).toContain('Controle nodig');
+    expect(html).toContain('Lokaal controleren');
+    expect(html).not.toContain('Schema controleren');
     expect(html).not.toContain('Schema vraagt controle');
     expect(importSummary).toContain('<span class="command-route-summary__status">Let op</span>');
     expect(importSummary).not.toContain('<span class="command-route-summary__status">Check</span>');
