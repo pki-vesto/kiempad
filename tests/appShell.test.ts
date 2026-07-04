@@ -6105,6 +6105,8 @@ describe('app shell', () => {
     expect(html).toContain('class="command-task-route__badge">3</strong>');
     expect(html).toContain('class="command-task-route__badge">schema</strong>');
     expect(html).toContain('href="#medicatie?route=planning"');
+    expect(html).toContain('Routeopties: afvinken, beheer, lokale import of historie.');
+    expect(html).not.toContain('Routeopties: vandaag, beheer, lokale planningimport of historie.');
     const planningFollowupLinks =
       html.match(/<nav class="medication-planning-followup__links"[\s\S]*?<\/nav>/)?.[0] ?? '';
     expect(planningFollowupLinks).toContain('href="#medicatie?route=vandaag">Afvinken</a>');
@@ -6228,7 +6230,8 @@ describe('app shell', () => {
       html.indexOf('href="#medicatie?route=vandaag"'),
     );
     expect(medicationFollowupSection).not.toContain('Vervolgcontext openen');
-    expect(html).toContain('Routeopties: vandaag, beheer, lokale planningimport of historie.');
+    expect(html).toContain('Routeopties: afvinken, beheer, lokale import of historie.');
+    expect(html).not.toContain('Routeopties: vandaag, beheer, lokale planningimport of historie.');
     expect(html).not.toContain('Kies vandaag, beheer, lokale planningimport of historie.');
     expect(html).not.toContain('Kies daarna vandaag, beheer, import of historie.');
     expect(html).not.toContain(
@@ -6277,7 +6280,8 @@ describe('app shell', () => {
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="medication-history-disclosure" open',
     );
-    expect(html).toContain('Routeopties: vandaag, beheer, lokale planningimport of historie.');
+    expect(html).toContain('Routeopties: afvinken, beheer, lokale import of historie.');
+    expect(html).not.toContain('Routeopties: vandaag, beheer, lokale planningimport of historie.');
     expect(html).not.toContain('Kies daarna vandaag, beheer, import of historie.');
     expect(html).toContain('href="#medicatie?route=import">Lokale import</a>');
     expect(html).not.toContain('href="#medicatie?route=import">Schema importeren</a>');
