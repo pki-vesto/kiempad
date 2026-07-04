@@ -19223,6 +19223,7 @@ function renderTrajectScreen(state: AppShellState): string {
           graphWeergave
             ? disclosure({
                 summary: 'Graphcontext openen',
+                id: 'treatment-context-graph-disclosure',
                 body: renderTrajectGraphWeergave(graphWeergave, state.trajecten),
               })
             : ''
@@ -20194,21 +20195,69 @@ function renderTrajectGraphWeergave(
 ): string {
   const consultExport = maakFertilityGraphConsultSamenvattingExport(weergave);
   return `
-    <section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject" data-graph-state="${weergave.edges.length > 0 ? 'gevuld' : 'leeg'}">
+    <section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject" data-graph-state="${weergave.edges.length > 0 ? 'gevuld' : 'leeg'}" data-graph-console-layout="compact-panels">
       <h2>Knowledge graph</h2>
-      ${renderTrajectGraphFilterForm(weergave.filter, trajecten)}
       <dl class="summary-list">
         <div><dt>Nodes</dt><dd>${weergave.nodes.length}</dd></div>
         <div><dt>Relaties</dt><dd>${weergave.edges.length}</dd></div>
       </dl>
-      ${renderGraphNodeSchema(weergave)}
-      ${weergave.rebuildRapport ? renderGraphIndexRebuildRapport(weergave.rebuildRapport) : ''}
-      ${
-        weergave.edges.length > 0
-          ? `<ol id="fertility-graph-relationships" class="compact-list" aria-label="Graph-relaties">${weergave.edges.map((edge) => renderTrajectGraphEdge(edge, weergave)).join('')}</ol>`
-          : renderEmptyState('Geen graph-relaties binnen dit filter.', { title: 'Geen relaties' })
-      }
-      ${renderGraphConsultSamenvattingExport(consultExport)}
+      <div class="fertility-graph-console__panels" data-graph-console-panels="ready">
+        <details id="fertility-graph-filter-panel" class="kp-disclosure fertility-graph-console__details" data-graph-panel="filters">
+          <summary class="kp-disclosure__summary fertility-graph-console__summary">
+            <span>
+              <strong>Graphfilters openen</strong>
+              <small>Filter traject, relatietype en periode pas wanneer je relaties wilt versmallen.</small>
+            </span>
+            <em>filter</em>
+          </summary>
+          <div class="kp-disclosure__body fertility-graph-console__body">
+            ${renderTrajectGraphFilterForm(weergave.filter, trajecten)}
+          </div>
+        </details>
+        <details id="fertility-graph-schema-panel" class="kp-disclosure fertility-graph-console__details" data-graph-panel="schema">
+          <summary class="kp-disclosure__summary fertility-graph-console__summary">
+            <span>
+              <strong>Node schema openen</strong>
+              <small>Bronmetadata, reviewstatus en rebuildrapport blijven uit de eerste leeslaag.</small>
+            </span>
+            <em>${weergave.nodes.length} nodes</em>
+          </summary>
+          <div class="kp-disclosure__body fertility-graph-console__body">
+            ${renderGraphNodeSchema(weergave)}
+            ${weergave.rebuildRapport ? renderGraphIndexRebuildRapport(weergave.rebuildRapport) : ''}
+          </div>
+        </details>
+        <details id="fertility-graph-relationships-panel" class="kp-disclosure fertility-graph-console__details" data-graph-panel="relationships">
+          <summary class="kp-disclosure__summary fertility-graph-console__summary">
+            <span>
+              <strong>Relaties openen</strong>
+              <small>Open de relatiekaart alleen wanneer je herkomst en koppelingen wilt nalopen.</small>
+            </span>
+            <em>${weergave.edges.length} relaties</em>
+          </summary>
+          <div class="kp-disclosure__body fertility-graph-console__body">
+            ${
+              weergave.edges.length > 0
+                ? `<ol id="fertility-graph-relationships" class="compact-list" aria-label="Graph-relaties">${weergave.edges.map((edge) => renderTrajectGraphEdge(edge, weergave)).join('')}</ol>`
+                : renderEmptyState('Geen graph-relaties binnen dit filter.', {
+                    title: 'Geen relaties',
+                  })
+            }
+          </div>
+        </details>
+        <details id="fertility-graph-export-panel" class="kp-disclosure fertility-graph-console__details" data-graph-panel="export">
+          <summary class="kp-disclosure__summary fertility-graph-console__summary">
+            <span>
+              <strong>Graph-export openen</strong>
+              <small>Markdown voor consultvoorbereiding blijft een expliciete vervolgstap.</small>
+            </span>
+            <em>export</em>
+          </summary>
+          <div class="kp-disclosure__body fertility-graph-console__body">
+            ${renderGraphConsultSamenvattingExport(consultExport)}
+          </div>
+        </details>
+      </div>
       <p class="small-print">${escapeHtml(weergave.waarschuwing)}</p>
     </section>
   `;

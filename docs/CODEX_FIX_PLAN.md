@@ -581,6 +581,9 @@
 - **CFX-020 treatment context timeline choice — partial in G1589 / issue #3122.** Traject Context
   now opens with the timeline reader first while filters/export, insights, and the full item list
   sit behind closed follow-up panels that routeflow opens explicitly for validation.
+- **CFX-020 treatment graph panel choice — partial in G1590 / issue #3124.** Traject Context
+  graph now opens with a nodes/relations summary first while filters, schema/rebuild,
+  relationships, and export sit behind closed follow-up panels.
 - **Premium Claude Design consultkaart browser evidence — done in G1417 / issue #2269.** Routeflow
   smoke now seeds a synthetic filled consult record through the real upload form and verifies the
   compact consult card header, status chips, sections, source review, screenshot bytes, and
@@ -1088,6 +1091,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   questions with source, date and reviewstatus, while preserving the non-medical boundary.
   Partial G1589/#3122: Traject Context now opens with a compact timeline reader while filters,
   export, insights and full items remain behind closed follow-up panels until explicitly opened.
+  Partial G1590/#3124: Traject Context graph now opens with compact graph panel choices while
+  filters, schema/rebuild, relationships and export stay behind closed follow-up panels.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without
