@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1689 — Medicatie planning routeopties helper noemt toevoegen rustiger
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties helper noemt Planninginvoer toevoegen, maar kan nog rustiger uitleggen dat het om aanvullen gaat.
+- **User Impact:** Gebruikers kunnen de invoerroute nog als zware importactie lezen in plaats van als lichte planningaanvulling.
+- **Desired Outcome:** De helper houdt de route kort en positioneert invoer als rustig aanvullen.
+- **User Value:** Planning bijwerken voelt minder technisch en meer als dagelijkse onderhoudstaak.
+- **Acceptance Criteria:** Helper benoemt Planninginvoer als rustige aanvulactie; zichtbare links en hrefs blijven behouden; app-shell tests bewaken de copy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1688 — Medicatie planning routeopties helper noemt importactie als invoer
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3321
 
 ### G1687 — Medicatie planning routeopties helper noemt planninginvoer gelijk
 
