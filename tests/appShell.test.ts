@@ -9155,6 +9155,8 @@ describe('app shell', () => {
     expect(forcedColorsCss).toContain('width: 22px;');
     expect(forcedColorsCss).toContain('height: 22px;');
     expect(forcedColorsCss).toContain('min-height: 22px;');
+    expect(forcedColorsCss).toContain('align-items: center;');
+    expect(forcedColorsCss).toContain('justify-items: center;');
     expect(forcedColorsCss).toContain('place-items: center;');
     expect(forcedColorsCss).toContain('padding: 0;');
     expect(forcedColorsCss).toContain('border: 1px solid Highlight;');
