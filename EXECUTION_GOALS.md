@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1668 — Medicatie planning lege titel noemt buiten vandaag
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lege planningtitel noemt geen toekomstige momenten, maar legt niet uit dat vandaag apart staat.
+- **User Impact:** Gebruikers kunnen denken dat er helemaal geen medicatieplanning is, terwijl vandaag een eigen route heeft.
+- **Desired Outcome:** De lege routesamenvattingtitel noemt buiten vandaag kort en duidelijk.
+- **User Value:** De planningroute voelt minder dubbel met de vandaagroute.
+- **Acceptance Criteria:** Lege routesamenvattingtitel noemt buiten vandaag; bestaande vandaagroute blijft zichtbaar; app-shell tests bewaken de nieuwe titelcopy.
+- **Affected Screens:** Medicatie planning route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1667 — Medicatie planning routebadge noemt planningstatus
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3279
 
 ### G1666 — Medicatie planning samenvattingstatus noemt later korter
 
