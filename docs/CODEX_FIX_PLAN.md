@@ -1813,3 +1813,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preserving the `#medication-planning-primary` anchor.
 - Partial G1671/#3287: Medication planning summary secondary action now says Routeopties while
   preserving the `#medication-planning-followup` anchor.
+- Partial G1672/#3289: Medication planning follow-up title now says Routeopties openen while
+  preserving the `#medication-planning-followup` disclosure anchor.

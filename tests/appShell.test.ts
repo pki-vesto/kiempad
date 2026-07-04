@@ -6209,7 +6209,8 @@ describe('app shell', () => {
     expect(html).toContain('data-medication-planning-followup="collapsed"');
     expect(html).toContain('Vervolgplanning leeg');
     expect(html).not.toContain('Planning nog leeg');
-    expect(html).toContain('Routekeuze openen');
+    expect(html).toContain('Routeopties openen');
+    expect(html).not.toContain('Routekeuze openen');
     const medicationFollowupSection = html.slice(
       html.indexOf('id="medication-planning-followup"'),
       html.indexOf('href="#medicatie?route=vandaag"'),
