@@ -9641,7 +9641,7 @@ describe('app shell', () => {
       '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    strong {\n    font-weight: 760;\n  }',
     );
     expect(css).toContain(
-      '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    span {\n    color: CanvasText;\n    font-weight: 720;\n  }',
+      '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    span {\n    color: CanvasText;\n    font-weight: 720;\n    line-height: 1.16;\n  }',
     );
     expect(css).toContain(
       '.dossier-upload-console[data-dossier-add-flow="embryo-status"]\n    .dossier-add-route[href="#embryo-status-event-form"]\n    small {\n    font-weight: 700;\n    text-decoration: none;\n  }',
