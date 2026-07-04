@@ -18470,7 +18470,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         })}
         <div class="medication-planning-console" data-medication-planning-layout="single-input">
           <div id="medication-planning-primary" class="summary-panel medication-planning-primary" data-medication-planning-primary="next-dose">
-            <h3>${plannedLogs.length > 0 ? 'Eerstvolgend medicatiemoment' : 'Planning nog leeg'}</h3>
+            <h3>${plannedLogs.length > 0 ? 'Eerstvolgend medicatiemoment' : 'Vervolgplanning leeg'}</h3>
             <p class="small-print">${MEDICATION_CONTEXT_DISCLAIMER}</p>
             ${
               plannedLogs.length > 0

@@ -1793,3 +1793,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   while preserving the `#medication-planning-followup` href.
 - Partial G1661/#3267: Medication planning route summary primary action now says Volgende while
   preserving the `#medication-planning-primary` href.
+- Partial G1662/#3269: Medication empty planning primary panel title now says Vervolgplanning
+  leeg while preserving the future next-dose title.
