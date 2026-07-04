@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1479 |
+| ☑ klaar | 1480 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1678** |
+| **Totaal** | **1679** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1840,13 +1840,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1676 | Medicatie planning routeopties historielink noemt teruglezen | P2 | F5 | ☑ |
 | G1677 | Medicatie planning routeopties beheerlink noemt beheren kort | P2 | F5 | ☑ |
 | G1678 | Medicatie planning routeopties vandaaglink noemt afvinken kort | P2 | F5 | ☑ |
-| G1679 | Medicatie planning routeopties helper noemt afvinken compact | P2 | F5 | ☐ |
+| G1679 | Medicatie planning routeopties helper noemt afvinken compact | P2 | F5 | ☑ |
+| G1680 | Medicatie planning routeopties titel noemt kiezen compact | P2 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1678** (id's G001 t/m G1679; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1679** (id's G001 t/m G1680; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

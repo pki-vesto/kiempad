@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1680 — Medicatie planning routeopties titel noemt kiezen compact
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De routeopties titel zegt openen, terwijl de gebruiker in dit paneel vooral een route kiest.
+- **User Impact:** Gebruikers lezen de disclosure minder als keuzehulp.
+- **Desired Outcome:** Titel benoemt routekeuze compact en behoudt het disclosuregedrag.
+- **User Value:** De planningfollow-up voelt meer als een kleine keuzehub.
+- **Acceptance Criteria:** Titel noemt kiezen of routekeuze compact; bestaande disclosure id blijft behouden; app-shell tests bewaken de titelcopy.
+- **Affected Screens:** Medicatie planning follow-up
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication planning follow-up, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1679 — Medicatie planning routeopties helper noemt afvinken compact
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3303
 
 ### G1678 — Medicatie planning routeopties vandaaglink noemt afvinken kort
 
