@@ -2298,6 +2298,7 @@ async function assertRouteflows(browser, options) {
               const routeGroupSummary = consoleElement?.querySelector(
                 '[data-dossier-add-route-group-summary="ready"]',
               );
+              const routeGroupSummaryTitle = routeGroupSummary?.querySelector('span');
               const routeGroupSummaryContext = routeGroupSummary?.querySelector('small');
               const selector = consoleElement?.querySelector('.dossier-add-route-selector');
               const addRoute = selector?.querySelector('.dossier-add-route');
@@ -2333,6 +2334,9 @@ async function assertRouteflows(browser, options) {
                 : null;
               const routeGroupSummaryMarkerStyle = routeGroupSummary
                 ? getComputedStyle(routeGroupSummary, '::after')
+                : null;
+              const routeGroupSummaryTitleStyle = routeGroupSummaryTitle
+                ? getComputedStyle(routeGroupSummaryTitle)
                 : null;
               const routeGroupSummaryContextStyle = routeGroupSummaryContext
                 ? getComputedStyle(routeGroupSummaryContext)
@@ -2423,6 +2427,11 @@ async function assertRouteflows(browser, options) {
                 routeGroupSummaryMarkerBackground:
                   routeGroupSummaryMarkerStyle?.backgroundColor ?? '',
                 routeGroupSummaryMarkerContent: routeGroupSummaryMarkerStyle?.content ?? '',
+                routeGroupSummaryTitleColor: routeGroupSummaryTitleStyle?.color ?? '',
+                routeGroupSummaryTitleFontWeight: routeGroupSummaryTitleStyle?.fontWeight ?? '',
+                routeGroupSummaryContextColor: routeGroupSummaryContextStyle?.color ?? '',
+                routeGroupSummaryContextFontWeight:
+                  routeGroupSummaryContextStyle?.fontWeight ?? '',
                 routeGroupSummaryContextText: routeGroupSummaryContext?.textContent?.trim() ?? '',
                 routeGroupSummaryContextLength:
                   routeGroupSummaryContext?.textContent?.trim().length ?? 0,
@@ -3225,6 +3234,10 @@ async function assertRouteflows(browser, options) {
           evidence.uploadConsole.routeGroupSummaryMarkerBackground !== 'rgba(0, 0, 0, 0)' ||
           evidence.uploadConsole.routeGroupSummaryMarkerBorderColor === '' ||
           !['"+"', '"-"'].includes(evidence.uploadConsole.routeGroupSummaryMarkerContent) ||
+          evidence.uploadConsole.routeGroupSummaryTitleColor === '' ||
+          parseFloat(evidence.uploadConsole.routeGroupSummaryTitleFontWeight) > 800 ||
+          evidence.uploadConsole.routeGroupSummaryContextColor === '' ||
+          parseFloat(evidence.uploadConsole.routeGroupSummaryContextFontWeight) > 680 ||
           evidence.uploadConsole.routeGroupSummaryContextLength > 36 ||
           parseFloat(evidence.uploadConsole.routeGroupSummaryContextLineHeight) > 15 ||
           !evidence.uploadConsole.selectorVisible ||
