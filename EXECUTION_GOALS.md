@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1636 — Medicatie import primaire actie gebruikt korte beheerlabel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import route-samenvatting gebruikt nog de langere primaire actiecopy Middel beheren.
+- **User Impact:** Gebruikers zien herhaalde beheercontext naast de compacte importtaak.
+- **Desired Outcome:** Import primaire actie gebruikt kort beheerlabel en behoudt de beheerroute.
+- **User Value:** De importroute blijft compacter en directer scanbaar.
+- **Acceptance Criteria:** Import primaire actie gebruikt kort beheerlabel; link naar beheer blijft behouden; app-shell tests bewaken dat de oude actiecopy niet terugkeert in de importroute.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1635 — Medicatie import foutbadge gebruikt korte checklabel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import route summary, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3215
 
 ### G1634 — Medicatie import statusbadge gebruikt korte feedbacklabel
 

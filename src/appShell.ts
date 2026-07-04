@@ -18547,7 +18547,7 @@ function renderMedicatieScreen(state: AppShellState): string {
               : 'Schema klaarzetten',
           detail: 'Maak lokale planning uit je schema.',
           status: state.medicatieImportError
-            ? 'Check'
+            ? 'Let op'
             : state.medicatieImportStatus
               ? 'OK'
               : 'Schema',

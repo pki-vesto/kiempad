@@ -1128,6 +1128,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   feedback-ready copy instead of longer schemafeedback wording.
   Partial G1634/#3213: Medication import route summary feedback badge now uses a
   short OK label instead of the longer Feedback label.
+  Partial G1635/#3215: Medication import route summary error badge now uses a short
+  Dutch attention label instead of the English Check label.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
