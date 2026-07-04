@@ -2480,6 +2480,12 @@ describe('app shell', () => {
     expect(html).toContain(DISCLAIMER);
     expect(html).toContain('geen vervanging van medisch advies');
     expect(html).toContain('Maak afvinkmomenten vanaf startdatum, tijdstip en aantal dagen.');
+    expect(html).toContain(
+      'Nog geen dagmomenten. Voeg je eerste middel toe vanuit het kliniekschema.',
+    );
+    expect(html).not.toContain(
+      'Nog geen medicatie. Doseringen worden nooit door Kiempad berekend.',
+    );
   });
 
   it('toont de passphrase-kluis met geen-herstel-uitleg', () => {

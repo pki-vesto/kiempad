@@ -1100,6 +1100,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the header and route summary instead of dose-advice or interpretation wording.
   Partial G1620/#3185: Medication form planning small-print now uses short date/time/day
   helper copy instead of dosage calculation wording.
+  Partial G1621/#3187: Medication empty state now uses short first-medication start context
+  instead of dosage calculation wording.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
