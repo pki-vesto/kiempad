@@ -1899,3 +1899,5 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   22px box with zero padding so small-mobile focus cannot add height or width pressure.
 - Partial G1712/#3367: Focused forced-colors image-context badges now explicitly preserve
   centered placement with place-items, line-height and text-align guards.
+- Partial G1713/#3369: Focused forced-colors image-context badges now explicitly keep the
+  shared pill radius while preserving the fixed compact badge box.

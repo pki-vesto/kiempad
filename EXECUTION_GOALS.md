@@ -269,8 +269,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, beeldcontext badgeradius, forced-colors focus, CSS smoke
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3369
+
+### G1714 — Dossier upload beeldcontext forced-colors badge rand blijft rustig tijdens focus
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het gefocuste forced-colors badge behoudt nu de pilvorm, maar de rand kan nog expliciet worden bewaakt als rustige enkele systeemkleur-rand.
+- **User Impact:** Een extra outline of shadow op het badge kan naast de inputfocus visuele druk geven.
+- **Desired Outcome:** Het focus-within badge houdt een enkele systeemkleur-rand zonder extra shadow of outline.
+- **User Value:** Hoogcontrastfocus blijft duidelijk zonder drukke dubbele focuscues.
+- **Acceptance Criteria:** Bestaande documentupload form-id's, input names en data-hooks blijven intact; het focus-within badge houdt een enkele systeemkleur-rand zonder extra shadow of outline; desktop, tablet, mobile en small-mobile tonen geen horizontale druk in geopende beeldvelden; tests dekken lege en gevulde uploadcontext plus locked imaging state; CSS-smoke bewaakt de badge-rand bij forced-colors focus; `assets:check` blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, beeldcontext badgerand, forced-colors focus, CSS smoke
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3371
 
 ### G1699 — App-shell voelt als echte werkruimte in plaats van lange pagina
 
