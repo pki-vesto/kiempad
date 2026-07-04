@@ -836,6 +836,12 @@ h3 {
   background: transparent;
 }
 
+.screen-stage__chrome {
+  display: grid;
+  min-width: 0;
+  gap: 14px;
+}
+
 .screen-stage__panel {
   display: grid;
   min-width: 0;
@@ -863,7 +869,7 @@ h3 {
   border-radius: 14px;
 }
 
-.content > .workspace-strip {
+.screen-stage__chrome > .workspace-strip {
   position: sticky;
   z-index: 8;
   top: 0;
@@ -17975,70 +17981,144 @@ h2 {
 .content:has([data-backup-focus-shell="ready"]) > .workspace-map,
 .content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,
 .content:has([data-notification-focus-shell="ready"]) > .workspace-map,
-.content:has([data-dossier-focus-shell="ready"]) > .page-header,
-.content:has([data-knowledge-focus-shell="ready"]) > .page-header,
-.content:has([data-treatment-focus-shell="ready"]) > .page-header,
-.content:has([data-question-focus-shell="ready"]) > .page-header,
-.content:has([data-schedule-focus-shell="ready"]) > .page-header,
-.content:has([data-medication-focus-shell="ready"]) > .page-header,
-.content:has([data-wellbeing-focus-shell="ready"]) > .page-header,
-.content:has([data-decision-focus-shell="ready"]) > .page-header,
-.content:has([data-finance-focus-shell="ready"]) > .page-header,
-.content:has([data-backup-focus-shell="ready"]) > .page-header,
-.content:has([data-eventlog-focus-shell="ready"]) > .page-header,
-.content:has([data-notification-focus-shell="ready"]) > .page-header {
+.content:has([data-dossier-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-knowledge-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-treatment-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-question-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-schedule-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-medication-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-wellbeing-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-decision-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-finance-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-backup-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-eventlog-focus-shell="ready"]) > .screen-stage__chrome > .page-header,
+.content:has([data-notification-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
   display: none;
 }
 
-.content:has([data-start-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-dossier-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-knowledge-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-treatment-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-question-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-schedule-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-medication-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-decision-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-finance-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-backup-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-eventlog-focus-shell="ready"]) > .workspace-strip,
-.content:has([data-notification-focus-shell="ready"]) > .workspace-strip {
+.content:has([data-start-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-dossier-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-knowledge-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-treatment-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-question-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-schedule-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-medication-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-wellbeing-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-decision-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-finance-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-backup-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-eventlog-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip,
+.content:has([data-notification-focus-shell="ready"]) > .screen-stage__chrome > .workspace-strip {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 8px;
   padding: 8px 10px;
   border-radius: 14px;
 }
 
-.content:has([data-start-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-dossier-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-knowledge-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-treatment-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-question-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-schedule-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-start-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-dossier-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-knowledge-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-treatment-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-question-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-schedule-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
 .content:has([data-medication-focus-shell="ready"])
+  > .screen-stage__chrome
   > .workspace-strip
   .workspace-strip__description,
-.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-decision-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-finance-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-backup-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
-.content:has([data-eventlog-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-wellbeing-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-decision-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-finance-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-backup-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-eventlog-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__description,
 .content:has([data-notification-focus-shell="ready"])
+  > .screen-stage__chrome
   > .workspace-strip
   .workspace-strip__description,
-.content:has([data-start-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-dossier-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-knowledge-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-treatment-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-question-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-schedule-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-medication-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-decision-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-finance-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-backup-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-eventlog-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
-.content:has([data-notification-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick {
+.content:has([data-start-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-dossier-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-knowledge-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-treatment-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-question-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-schedule-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-medication-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-wellbeing-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-decision-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-finance-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-backup-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-eventlog-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick,
+.content:has([data-notification-focus-shell="ready"])
+  > .screen-stage__chrome
+  > .workspace-strip
+  .workspace-strip__quick {
   display: none;
 }
 
@@ -23048,12 +23128,12 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
     min-width: 0;
     max-height: calc(100vh - 48px);
-    overflow-y: auto;
+    overflow: hidden;
     padding: 14px;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
   }
 
   .content[data-screen-stage="ready"] {
@@ -23061,13 +23141,32 @@ summary[class*="__summary"]:focus-visible,
     gap: 14px;
   }
 
-  .content > .workspace-strip {
+  .screen-stage__chrome {
+    position: sticky;
+    top: 0;
+    z-index: 28;
+    gap: 10px;
+    min-width: 0;
+    padding-bottom: 2px;
+    background: linear-gradient(
+      180deg,
+      var(--page-bg) 0%,
+      color-mix(in srgb, var(--page-bg) 90%, transparent) 78%,
+      transparent 100%
+    );
+  }
+
+  .screen-stage__chrome > .workspace-strip {
     top: 14px;
   }
 
   .screen-stage__panel {
-    min-height: min(720px, calc(100vh - 188px));
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
     padding: 2px;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
   }
 }
 
@@ -23288,7 +23387,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-dossier-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-dossier-focus-shell="ready"]) > .page-header {
+  .content:has([data-dossier-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -24785,7 +24884,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-wellbeing-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-wellbeing-focus-shell="ready"]) > .page-header {
+  .content:has([data-wellbeing-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -24986,7 +25085,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-decision-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-decision-focus-shell="ready"]) > .page-header {
+  .content:has([data-decision-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -25538,7 +25637,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-knowledge-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-knowledge-focus-shell="ready"]) > .page-header {
+  .content:has([data-knowledge-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -25576,7 +25675,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-eventlog-focus-shell="ready"]) > .page-header {
+  .content:has([data-eventlog-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -25610,7 +25709,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-notification-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-notification-focus-shell="ready"]) > .page-header {
+  .content:has([data-notification-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -25644,7 +25743,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-treatment-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-treatment-focus-shell="ready"]) > .page-header {
+  .content:has([data-treatment-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -25682,7 +25781,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-schedule-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-schedule-focus-shell="ready"]) > .page-header {
+  .content:has([data-schedule-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -25716,7 +25815,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-backup-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-backup-focus-shell="ready"]) > .page-header {
+  .content:has([data-backup-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -25750,7 +25849,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-finance-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-finance-focus-shell="ready"]) > .page-header {
+  .content:has([data-finance-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -25779,7 +25878,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-medication-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-medication-focus-shell="ready"]) > .page-header {
+  .content:has([data-medication-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 
@@ -26392,7 +26491,7 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .content:has([data-question-focus-shell="ready"]) > .workspace-map,
-  .content:has([data-question-focus-shell="ready"]) > .page-header {
+  .content:has([data-question-focus-shell="ready"]) > .screen-stage__chrome > .page-header {
     display: none;
   }
 

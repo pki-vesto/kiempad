@@ -984,19 +984,21 @@ export function renderAppShell(
       </div>
       ${state.settingsOpen ? renderSettingsSheet(state) : ''}
 
-      <main class="content" id="inhoud" tabindex="-1" data-screen-stage="ready" data-screen-stage-screen="${escapeAttribute(activeId)}" data-screen-stage-group="${escapeAttribute(activeGroup?.label ?? 'Onbekend')}">
-        ${renderWorkspaceStrip(activeId)}
-        ${
-          activeId === 'start'
-            ? ''
-            : pageHeader({
-                title: screenTitle,
-                intro: screenIntro,
-                titleId: 'screen-title',
-              })
-        }
+      <main class="content" id="inhoud" tabindex="-1" data-screen-stage="ready" data-screen-stage-screen="${escapeAttribute(activeId)}" data-screen-stage-group="${escapeAttribute(activeGroup?.label ?? 'Onbekend')}" data-screen-stage-layout="bounded-workspace">
+        <div class="screen-stage__chrome" data-screen-stage-chrome="sticky">
+          ${renderWorkspaceStrip(activeId)}
+          ${
+            activeId === 'start'
+              ? ''
+              : pageHeader({
+                  title: screenTitle,
+                  intro: screenIntro,
+                  titleId: 'screen-title',
+                })
+          }
+        </div>
 
-        <section class="screen-stage__panel" aria-label="${escapeAttribute(activeScreen.label)} actief scherm" data-screen-stage-panel="active"${state.loadingState ? ' aria-busy="true" data-screen-loading="true"' : ''}>
+        <section class="screen-stage__panel" aria-label="${escapeAttribute(activeScreen.label)} actief scherm" data-screen-stage-panel="active" data-screen-stage-scroll="active-workspace"${state.loadingState ? ' aria-busy="true" data-screen-loading="true"' : ''}>
           ${screenContent}
         </section>
       </main>

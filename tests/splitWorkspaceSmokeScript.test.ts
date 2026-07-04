@@ -29,6 +29,9 @@ describe('split workspace smoke script', () => {
 
     expect(splitWorkspaceSmokeScript).toContain('-split-workspace="ready"]');
     expect(splitWorkspaceSmokeScript).toContain('[data-workspace-strip="ready"]');
+    expect(splitWorkspaceSmokeScript).toContain(
+      '.content > .screen-stage__chrome > [data-workspace-strip="ready"]',
+    );
     expect(splitWorkspaceSmokeScript).toContain('data-compact-workspace-deck');
     expect(splitWorkspaceSmokeScript).toContain('workspaceStripInContent');
     expect(splitWorkspaceSmokeScript).toContain('workspaceStripBeforeWorkspace');
