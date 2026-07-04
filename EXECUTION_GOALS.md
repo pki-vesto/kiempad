@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1613 — Dossier leesmodus gebruikt korte contextdisclaimer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier leesmodus toont nog een lange caveat over OCR-tekst, bestandsinhoud, beeldpayloads en behandeladvies.
+- **User Impact:** Gebruikers zien defensieve tekst in een leesmodus die vooral routes en aantallen rustig moet ordenen.
+- **Desired Outcome:** Dossier leesmodus gebruikt dezelfde korte dossiercontextzin als het startoverzicht.
+- **User Value:** Gebruikers kunnen dossierleesroutes sneller scannen zonder herhaalde payloadopsommingen.
+- **Acceptance Criteria:** Dossier leesmodus vervangt de lange OCR/bestandsinhoud/beeldpayloads/behandeladvieszin door de korte dossiercontextzin; app-shell tests bewaken de nieuwe copy en het verdwijnen van de oude zin.
+- **Affected Screens:** Dossier leesmodus
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Dossier reader mode, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1612 — Afwegingen keuzehulp gebruikt korte contextdisclaimer
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Decision support panels, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3169
 
 ### G1611 — Welzijn registratie gebruikt korte vastlegcontext
 
