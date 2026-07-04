@@ -140,9 +140,7 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain("activeWorkspaceButton.closest('.workspace-strip__switcher')");
     expect(mainSource).toContain('switcher.scrollLeft =');
     expect(mainSource).toContain('activeWorkspaceButton.offsetLeft');
-    expect(mainSource).toContain(
-      "activeWorkspaceButton.scrollIntoView({ block: 'nearest', inline: 'center' })",
-    );
+    expect(mainSource).not.toContain('activeWorkspaceButton.scrollIntoView');
   });
 
   it('mapt centrale replayconflicten naar generieke herstelcopy zonder plaintext fallback', () => {

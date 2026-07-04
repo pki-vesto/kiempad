@@ -28,10 +28,15 @@ describe('routeflow screenshot smoke script', () => {
       'async function waitForActiveWorkspaceStripButton',
     );
     expect(routeflowScreenshotSmokeScript).toContain('assertWorkspaceStripHistoryNavigation(page)');
+    expect(routeflowScreenshotSmokeScript).toContain('assertWorkspaceStripDirectLinkFocus(page)');
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'workspace-strip-history'");
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'workspace-strip-direct-link'");
     expect(routeflowScreenshotSmokeScript).toContain("page.goBack({ waitUntil: 'networkidle' })");
     expect(routeflowScreenshotSmokeScript).toContain(
       "page.goForward({ waitUntil: 'networkidle' })",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'mobiele workspace-strip directe link veroorzaakt onrustige focus of overflow',
     );
     expect(routeflowScreenshotSmokeScript).toContain('inStripViewport');
     expect(routeflowScreenshotSmokeScript).toContain(
