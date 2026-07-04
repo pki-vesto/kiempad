@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1631 — Medicatie import samenvattingstitel gebruikt korte schematitel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De medicatie import route-samenvattingstitel gebruikt nog langere copy over eigen schema lokaal importeren.
+- **User Impact:** Gebruikers lezen herhaalde importcontext naast de routeheader, samenvatting en formulieractie.
+- **Desired Outcome:** Import route-samenvattingstitel gebruikt korte schematitel en behoudt de importoriëntatie.
+- **User Value:** De importroute blijft compacter en directer scanbaar.
+- **Acceptance Criteria:** Import route-samenvattingstitel gebruikt korte schematitel; app-shell tests bewaken dat de oude lange titel niet terugkeert.
+- **Affected Screens:** Medicatie import route-samenvatting
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Medication import route summary, app-shell tests
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** pending
+
 ### G1630 — Medicatie import knop gebruikt korte actiecopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,8 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication import form, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
-- **Issue:** pending
+- **Status:** ☑ klaar
+- **Issue:** #3205
 
 ### G1629 — Medicatie import formulier gebruikt korte regelhulp
 

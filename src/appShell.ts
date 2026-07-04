@@ -18789,7 +18789,7 @@ function renderMedicatieImportForm(state: AppShellState): string {
         <textarea name="schemaImport" rows="5" placeholder="Progesteron | 2026-06-23 | 08:00" required></textarea>
       </label>
       <p class="small-print">Formaat: Medicatie | YYYY-MM-DD | HH:MM.</p>
-      <button type="submit">Importeer schema</button>
+      <button type="submit">Importeer</button>
     </form>
     ${renderStatusFeedback(
       'medicatie-import',
