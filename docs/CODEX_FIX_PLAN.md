@@ -1096,6 +1096,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   export, insights and full items remain behind closed follow-up panels until explicitly opened.
   Partial G1590/#3124: Traject Context graph now opens with compact graph panel choices while
   filters, schema/rebuild, relationships and export stay behind closed follow-up panels.
+  Partial G1594/#3132: Trajectoverzicht keeps status distribution and active attempts closed by
+  default with a stable id instead of auto-expanding when active treatments exist.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without

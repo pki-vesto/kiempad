@@ -19073,7 +19073,8 @@ function renderTrajectScreen(state: AppShellState): string {
         })}
         ${disclosure({
           summary: 'Statusverdeling en actieve pogingen',
-          open: actieveTrajecten.length > 0,
+          id: 'treatment-overview-disclosure',
+          open: false,
           body: `${
             renderTrajectOverzicht(overzicht) ||
             renderEmptyState('Nog geen poging vastgelegd.', {
