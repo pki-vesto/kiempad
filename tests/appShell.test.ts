@@ -6254,6 +6254,10 @@ describe('app shell', () => {
     expect(importRouteSection).not.toContain('>Schema importeren</summary>');
     expect(importRouteSection).toContain('Schema');
     expect(importRouteSection).not.toContain('Klinieklijstje');
+    expect(importRouteSummary).toContain('<span class="command-route-summary__status">Plan</span>');
+    expect(importRouteSummary).not.toContain(
+      '<span class="command-route-summary__status">Schema</span>',
+    );
     expect(html).toContain('Voorbeeldformaat: Medicatie | YYYY-MM-DD | HH:MM.');
     expect(html).not.toContain('Formaat: Medicatie | YYYY-MM-DD | HH:MM.');
     expect(importRouteSection).toContain('<button type="submit">Zet lokaal klaar</button>');
