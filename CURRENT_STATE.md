@@ -302,6 +302,9 @@
   inactieve gefocuste mobiele Traject-badges houden expliciete CanvasText
   outlines, zodat statusfocus leesbaar blijft zonder actieve route-outlinekleur
   te erven.
+- **G1914 Traject mobile forced-colors inactive focus badge font weight:**
+  inactieve gefocuste mobiele Traject-badges gebruiken een rustiger 740-gewicht,
+  zodat statuslabels leesbaar blijven zonder actieve route-emphasis te kopiëren.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
