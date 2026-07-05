@@ -71,6 +71,10 @@
   herkende ziekenhuisdocumenttype als conceptcontext controleren, corrigeren of
   bewust op onbekend zetten; de gereviewde waarde wordt encrypted bewaard en
   gebruikt voor dossierindex en zoeken zonder medisch advies.
+- **G570 Consultnotitie tekstimport reviewstatus:** de consultupload-context laat
+  tekstveldnotities als concept of gereviewde bronmetadata bewaren, zodat
+  samenvattingen, actiepunten en vragen duidelijk op gecontroleerde broncontext
+  kunnen leunen zonder medische adviesinhoud.
 - **G1331 Dossier zoekconsole:** de Dossier-zoekroute groepeert zoeken,
   privacycontrole en inhoudsindex in drie herkenbare panelen. De route opent als
   compacte zoekwerkruimte in plaats van losse formulier-, privacy- en indexblokken.

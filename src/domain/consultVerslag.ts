@@ -21,6 +21,7 @@ export type ConsultVerslagInput = {
   auteur?: string;
   context?: string;
   notitie?: string;
+  importReviewStatus?: NonNullable<ConsultVerslag['importMetadata']>['reviewStatus'];
   uploadedAt?: string;
 };
 
@@ -90,6 +91,7 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
   const pogingId = input.pogingId?.trim() || trajectId;
   const auteur = input.auteur?.trim();
   const context = input.context?.trim();
+  const importReviewStatus = input.importReviewStatus ?? 'concept';
   const samenvattingCorrectie = input.samenvattingCorrectie?.trim();
   const inhoudBase64 = input.inhoudBase64?.trim();
   const mimeType = input.mimeType?.trim();
@@ -126,7 +128,7 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
     notitie: notitie || undefined,
     importMetadata: {
       bron: tekst ? 'tekstveld' : 'bestand',
-      reviewStatus: 'concept',
+      reviewStatus: importReviewStatus,
       bronLabel: tekst
         ? 'Tekstveld consultnotitie'
         : `Bestand: ${bestandsNaam || 'bestand zonder naam'}`,
