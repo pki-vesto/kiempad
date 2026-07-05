@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1991 offline cache metadata missing-term release-state guard: release-state
+  evidence koppelt nu het G1990 `offline cache metadata missing-term error
+  contract` aan `knowledge-research-offline-cache-metadata`,
+  `data-research-offline-cache-metadata` en veilige technische labels.
 - G1990 offline cache metadata missing-term error contract: de exacte
   foutmelding voor ontbrekende release-evidence termen is nu als compact
   maintenance-contract gesnapshott met alleen

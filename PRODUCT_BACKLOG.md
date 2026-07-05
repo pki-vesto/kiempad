@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1782 |
+| ☑ klaar | 1783 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **1990** |
+| **Totaal** | **1991** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2152,13 +2152,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1988 | Research Intelligence: offline cache metadata release evidence freshness guard | P1 | F5 | ☑ |
 | G1989 | Research Intelligence: offline cache metadata release evidence missing-term fixture | P1 | F5 | ☑ |
 | G1990 | Research Intelligence: offline cache metadata missing-term error contract | P1 | F5 | ☑ |
-| G1991 | Research Intelligence: offline cache metadata missing-term release-state guard | P1 | F5 | ☐ |
+| G1991 | Research Intelligence: offline cache metadata missing-term release-state guard | P1 | F5 | ☑ |
+| G1992 | Research Intelligence: offline cache metadata release-state missing-term fixture | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1990** (id's G001 t/m G1991; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1991** (id's G001 t/m G1992; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

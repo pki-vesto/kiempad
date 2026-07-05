@@ -502,6 +502,13 @@ const OFFLINE_CACHE_METADATA_RELEASE_TERMS = [
 ] as const;
 const OFFLINE_CACHE_METADATA_RELEASE_MISSING_TERM_ERROR =
   'Offline cache metadata release-evidence ontbreekt voor termen: knowledge-research-offline-cache-metadata, data-research-offline-cache-metadata';
+const OFFLINE_CACHE_METADATA_RELEASE_STATE_TERMS = [
+  'G1990',
+  'offline cache metadata missing-term error contract',
+  'knowledge-research-offline-cache-metadata',
+  'data-research-offline-cache-metadata',
+  'veilige technische labels',
+] as const;
 const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS = [
   'G1095',
   'missing-term fixture',
@@ -4242,6 +4249,44 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G1990');
   });
 
+  it('bewaakt G1991 offline cache metadata missing-term release-state guard', () => {
+    const releaseStateEvidence = [
+      'G1991 offline-cache-metadata-missing-term-release-state',
+      'sources=CHANGELOG.md,CURRENT_STATE.md',
+      'references=G1990',
+      `terms=${OFFLINE_CACHE_METADATA_RELEASE_STATE_TERMS.slice(1).join('|')}`,
+    ].join('\n');
+
+    for (const releaseDoc of [changelog, currentState]) {
+      const releaseStateContext = extractOfflineCacheMetadataReleaseStateContext(releaseDoc);
+
+      for (const releaseStateTerm of OFFLINE_CACHE_METADATA_RELEASE_STATE_TERMS) {
+        expect(releaseStateContext).toContain(releaseStateTerm);
+      }
+    }
+
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(releaseStateEvidence).not.toContain(forbiddenEvidenceTerm);
+    }
+
+    expect(releaseStateEvidence).toMatchInlineSnapshot(`
+      "G1991 offline-cache-metadata-missing-term-release-state
+      sources=CHANGELOG.md,CURRENT_STATE.md
+      references=G1990
+      terms=offline cache metadata missing-term error contract|knowledge-research-offline-cache-metadata|data-research-offline-cache-metadata|veilige technische labels"
+    `);
+    expect(backlog).toContain('G1991');
+    expect(executionGoals).toContain('G1991');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',
@@ -6106,6 +6151,26 @@ function extractOfflineCacheMetadataReleaseContext(releaseDoc: string): string {
   if (missingTerms.length > 0) {
     throw new Error(
       `Offline cache metadata release-evidence ontbreekt voor termen: ${missingTerms.join(', ')}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractOfflineCacheMetadataReleaseStateContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3,4}\s+/)
+    .filter((line) =>
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_TERMS.some((term) => line.includes(term)),
+    );
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms = OFFLINE_CACHE_METADATA_RELEASE_STATE_TERMS.filter(
+    (term) => !matchingContext.includes(term),
+  );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Offline cache metadata release-state ontbreekt voor termen: ${missingTerms.join(', ')}`,
     );
   }
 
