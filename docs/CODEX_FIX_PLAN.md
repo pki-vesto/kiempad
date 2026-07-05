@@ -245,6 +245,9 @@
 - **Treatment mobile rail forced-colors inactive focus cue outline color contrast polish — done in G1916 / issue #3774.**
   Inactive focused mobile Traject cue pills now use CanvasText outlines, preserving external focus
   contrast against the route canvas after the calmer cue weight.
+- **Treatment mobile rail forced-colors inactive focus cue border color contrast polish — done in G1917 / issue #3776.**
+  Inactive focused mobile Traject cue pills now keep CanvasText block and inline borders, aligning
+  all cue border sides with the external focus outline contrast layer.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

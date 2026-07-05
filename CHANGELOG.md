@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1917 Premium Claude Design UI: inactieve gefocuste mobiele Traject-cues
+  houden in forced-colors CanvasText block- en inline-randen, zodat alle
+  cue-zijden aansluiten op de externe focuscontrastlaag.
 - G1916 Premium Claude Design UI: inactieve gefocuste mobiele Traject-cues
   gebruiken in forced-colors CanvasText outlines, zodat de externe focusrand
   contrasteert met de route-canvaslaag na het lagere cuegewicht.

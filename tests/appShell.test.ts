@@ -5951,6 +5951,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('margin-top: 4px;');
     expect(mobileCss).toContain('border-width: 1px;');
     expect(mobileCss).toContain('border-style: solid;');
+    expect(mobileCss).toContain('border-block-color: CanvasText;');
+    expect(mobileCss).toContain('border-inline-color: CanvasText;');
     expect(mobileCss).toContain('font-weight: 700;');
     expect(mobileCss).toContain('outline-color: CanvasText;');
     expect(mobileCss).toContain('outline-offset: 1px;');

@@ -313,6 +313,9 @@
   inactieve gefocuste mobiele Traject-cues gebruiken CanvasText outlines, zodat
   de externe focusrand contrasteert met de route-canvaslaag na het lagere
   cuegewicht.
+- **G1917 Traject mobile forced-colors inactive focus cue border contrast:**
+  inactieve gefocuste mobiele Traject-cues houden CanvasText block- en
+  inline-randen, zodat alle cue-zijden aansluiten op de externe focuscontrastlaag.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
