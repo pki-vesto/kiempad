@@ -536,6 +536,8 @@ const OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_RELEASE_TERMS
   'offline cache metadata missing-term error contract',
   'veilige technische labels',
 ] as const;
+const OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_RELEASE_MISSING_TERM_ERROR =
+  'Offline cache metadata release-state contract error-contract releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels';
 const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS = [
   'G1095',
   'missing-term fixture',
@@ -4651,6 +4653,11 @@ describe('onderhoudsdocumentatie', () => {
         partialErrorContractReleaseState,
       ),
     ).toThrow(
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_RELEASE_MISSING_TERM_ERROR,
+    );
+    expect(
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_RELEASE_MISSING_TERM_ERROR,
+    ).toBe(
       'Offline cache metadata release-state contract error-contract releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels',
     );
     for (const presentContractTerm of [
@@ -4679,6 +4686,40 @@ describe('onderhoudsdocumentatie', () => {
     }
     expect(backlog).toContain('G2001');
     expect(executionGoals).toContain('G2001');
+  });
+
+  it('bewaakt G2002 offline cache metadata release-state contract error-contract missing-term foutmeldingcontract', () => {
+    const errorContract = [
+      'G2002 offline-cache-metadata-release-state-contract-error-contract-missing-term-error-contract',
+      'references=G2001',
+      `error=${OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_RELEASE_MISSING_TERM_ERROR}`,
+      'safeTerms=offline cache metadata missing-term error contract|veilige technische labels',
+    ].join('\n');
+
+    expect(
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_RELEASE_MISSING_TERM_ERROR,
+    ).toBe(
+      'Offline cache metadata release-state contract error-contract releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels',
+    );
+    expect(errorContract).toMatchInlineSnapshot(`
+      "G2002 offline-cache-metadata-release-state-contract-error-contract-missing-term-error-contract
+      references=G2001
+      error=Offline cache metadata release-state contract error-contract releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels
+      safeTerms=offline cache metadata missing-term error contract|veilige technische labels"
+    `);
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(errorContract).not.toContain(forbiddenEvidenceTerm);
+    }
+    expect(backlog).toContain('G2002');
+    expect(executionGoals).toContain('G2002');
   });
 
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
