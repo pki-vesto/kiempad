@@ -12692,6 +12692,12 @@ h2 {
   overflow-wrap: anywhere;
 }
 
+[data-central-session-renewal-recovery-focus-target="ready"]:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 68%, var(--border-strong));
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
 .backup-route-section .data-form,
 .backup-route-section .data-form label,
 .backup-route-section .data-form input,
@@ -21183,6 +21189,13 @@ summary[class*="__summary"]:focus-visible,
 }
 
 @media (forced-colors: active) {
+  [data-central-session-renewal-recovery-focus-target="ready"]:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+    box-shadow: none;
+    forced-color-adjust: auto;
+  }
+
   .dossier-upload-group[data-dossier-upload-image-open-fields="compact-rhythm"]
     label[data-dossier-upload-image-field]
     > input:focus,
