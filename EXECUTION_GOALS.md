@@ -16318,8 +16318,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Finance history UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 82
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3678
+
+### G1869 — Premium Claude Design UI: medication history first-viewport intake board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De medicatiehistorie kan nog als lange stapel openen wanneer vandaag, planning, actieve medicatie en doseerhistorie tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke medicatielaag eerst relevant is.
+- **Desired Outcome:** Medicatiehistorie opent met een compact first-viewport intake board voor vandaag, planning, actieve medicatie en doseerhistorie.
+- **User Value:** Medicatiebeheer voelt sneller navigeerbaar zonder medication-, planning-, intake-, active-medication- of historyhooks te verliezen.
+- **Acceptance Criteria:** Medication history opent met compacte lanes voor vandaag, planning, actieve medicatie en doseerhistorie; volledige medicatie- en detaillijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande medication-, planning-, intake-, active-medication- en historyhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen doseringsadvies, diagnose, behandelkeuzeadvies, token, secret of medische plaintext wordt toegevoegd.
+- **Affected Screens:** Medicatie
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Medication history UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 81
+- **Status:** ☐ open
+- **Issue:** #3680
 
 ### G586 — replay conflict recovery status UI
 

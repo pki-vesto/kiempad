@@ -2139,6 +2139,13 @@ describe('app shell', () => {
     expect(css).toContain('.finance-add-followup {');
     expect(css).toContain('.finance-add-followup__summary {');
     expect(css).toContain('.finance-add-followup__body {');
+    expect(css).toContain('.finance-history-cost-board {');
+    expect(css).toContain('.finance-history-cost-board__header {');
+    expect(css).toContain('.finance-history-cost-board__lanes {');
+    expect(css).toContain('.finance-history-cost-board__lane {');
+    expect(css).toContain('.finance-history-cost-board__lane:hover,');
+    expect(css).toContain('.finance-history-cost-board__lane:focus-visible {');
+    expect(css).toContain('.finance-history-cost-board__lane em {');
     expect(css).toContain('.finance-form-section {');
     expect(css).toContain('.finance-form-section--primary {');
     expect(css).toContain('.finance-amount-input {');
@@ -2437,6 +2444,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.finance-focus-shell {');
     expect(mobileCss).toContain('.finance-focus-shell__body {');
     expect(mobileCss).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).toContain('.finance-history-cost-board__lanes {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.finance-history-cost-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(mobileCss).toContain('.finance-form-section {');
     expect(mobileCss).toContain('.finance-form-actions {');
     expect(mobileCss).toContain('.finance-form-actions button {');
@@ -41740,6 +41751,28 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Kosten historie route-samenvatting"');
     expect(html).toContain('data-finance-route-summary="historie"');
     expect(html).toContain('Kostenhistorie en bewerken openen');
+    expect(html).toContain('aria-label="Kostenhistorie kostenbord"');
+    expect(html).toContain('data-finance-history-cost-board="first-viewport"');
+    expect(html).toContain('Kies eerst je kostenlaag');
+    expect(html).toContain(
+      'Open totalen, vergoeding, eigen risico of eerdere kosten zonder meteen alle factuurregels te tonen.',
+    );
+    expect(html).toContain('aria-label="Kostenhistorie laag kiezen"');
+    expect(html).toContain('data-finance-history-cost-lane="totals"');
+    expect(html).toContain('href="#kosten-route-overzicht"');
+    expect(html).toContain('2 lokale kostenpost(en) vastgelegd.');
+    expect(html).toContain('data-finance-history-cost-lane="reimbursement"');
+    expect(html).toContain('href="#kosten-vergoeding-disclosure"');
+    expect(html).toContain('1 vergoed');
+    expect(html).toContain('0 post(en) hebben nog onbekende status.');
+    expect(html).toContain('data-finance-history-cost-lane="own-risk"');
+    expect(html).toContain('Resterend lokaal bijgehouden: €');
+    expect(html).toContain('data-finance-history-cost-lane="history"');
+    expect(html).toContain('href="#kosten-historie-disclosure"');
+    expect(html).toContain('2 post(en)');
+    expect(html.indexOf('data-finance-history-cost-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-finance-disclosure="historie"'),
+    );
     expect(html).toContain('Lokale kostenbibliotheek');
     expect(html).toContain('Vergoeding en eigen risico');
     expect(html).toContain('Kostenhistorie');
