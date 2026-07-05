@@ -798,6 +798,12 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void saveEmbryoStatusEventFromForm(event.currentTarget, root, state);
   });
+  root.querySelectorAll<HTMLFormElement>('.embryo-source-label-correction-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveEmbryoBronlabelCorrectieFromForm(event.currentTarget, root, state);
+    });
+  });
 
   root.querySelector('#consult-verslag-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -1575,6 +1581,42 @@ async function saveEmbryoStatusEventFromForm(
     state.dossierError = formatRecoverableStorageError(
       error,
       'Embryo-status vastleggen is mislukt.',
+    );
+    render(root, state);
+  }
+}
+
+async function saveEmbryoBronlabelCorrectieFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+  const data = new FormData(target);
+  const documentId = optionalString(data.get('dossierDocumentId'));
+  const bronLabel = optionalString(data.get('embryoBronCorrectieLabel'));
+  const datum = optionalString(data.get('embryoBronCorrectieDatum'));
+  const reviewStatus = parseEmbryoReviewStatus(data.get('embryoBronCorrectieReviewStatus'));
+  if (!documentId || !bronLabel || !datum) return;
+
+  try {
+    await state.dossierStore.updateEmbryoKwaliteitBronCorrectie(documentId, {
+      bronLabel,
+      datum,
+      reviewStatus,
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Embryokwaliteit bronmetadata bijgewerkt',
+      detail: `Embryokwaliteit bronmetadata ${beschrijfRecordOpslag(state)} als dossiermetadata.`,
+    });
+    state.dossierStatus = `Embryokwaliteit bronmetadata ${beschrijfRecordOpslag(state)}.`;
+    state.dossierError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError = formatRecoverableStorageError(
+      error,
+      'Embryokwaliteit bronmetadata bewaren is mislukt.',
     );
     render(root, state);
   }

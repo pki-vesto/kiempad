@@ -39513,6 +39513,16 @@ describe('app shell', () => {
     expect(html).toContain(
       'Status: Teruggeplaatst · Bron: Labrapport · Datum: 2026-05-04 · Reviewstatus: Gereviewd',
     );
+    expect(html).toContain('data-embryo-source-label-correction="ready"');
+    expect(html).toContain('data-embryo-source-label-correction-form="ready"');
+    expect(html).toContain('Bronlabelcorrectie embryokwaliteit');
+    expect(html).toContain('name="embryoBronCorrectieLabel"');
+    expect(html).toContain('name="embryoBronCorrectieDatum"');
+    expect(html).toContain('name="embryoBronCorrectieReviewStatus"');
+    expect(html).toContain('Bronmetadata bewaren');
+    expect(html).toContain(
+      'Pas alleen bronlabel, datum en reviewstatus aan; de kliniekwaarde blijft ongewijzigd.',
+    );
     expect(html).toContain('data-embryo-status-event-id="doc-embryo-2"');
     expect(html).toContain(
       'Status: Ingevroren · Bron: Labrapport · Datum: 2026-05-04 · Reviewstatus: Concept',

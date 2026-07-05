@@ -21,6 +21,39 @@ export class DossierStore {
     return document;
   }
 
+  async updateEmbryoKwaliteitBronCorrectie(
+    documentId: string,
+    correctie: NonNullable<NonNullable<DossierDocument['embryo']>['kwaliteitBronCorrectie']>,
+  ): Promise<DossierDocument> {
+    const record = await this.documenten.get(documentId);
+    if (!record?.value.embryo) {
+      throw new Error('Embryokwaliteitsrecord niet gevonden.');
+    }
+
+    const updated: DossierDocument = {
+      ...record.value,
+      embryo: {
+        ...record.value.embryo,
+        bron: correctie.bronLabel,
+        reviewStatus: correctie.reviewStatus,
+        kliniekBeoordeling: record.value.embryo.kliniekBeoordeling
+          ? {
+              ...record.value.embryo.kliniekBeoordeling,
+              bron: correctie.bronLabel,
+              datum: correctie.datum,
+            }
+          : undefined,
+        kwaliteitBronCorrectie: correctie,
+      },
+      metadata: {
+        ...record.value.metadata,
+        documentDatum: correctie.datum,
+      },
+    };
+    await this.documenten.saveWithId(updated);
+    return updated;
+  }
+
   async delete(id: string): Promise<void> {
     await this.documenten.delete(id);
   }

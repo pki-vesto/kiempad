@@ -15,6 +15,15 @@ export type EmbryoDossierItem = {
     bronLabel?: string;
     reviewStatus: 'concept' | 'gereviewd';
   }[];
+  kwaliteitBronCorrecties: {
+    documentId: string;
+    kwaliteit: string;
+    bronLabel: string;
+    datum: string;
+    reviewStatus: 'concept' | 'gereviewd';
+    origineleBronLabel?: string;
+    origineleDatum: string;
+  }[];
   laatsteDatum: string;
   kwaliteiten: string[];
   kwaliteitBronLabels: string[];
@@ -167,6 +176,9 @@ function bouwEmbryoDossier(
       .filter((document) => document.embryo?.kwaliteit)
       .map((document) => beschrijfKwaliteitBronLabel(document)),
   );
+  const kwaliteitBronCorrecties = dossierDocumenten
+    .filter((document) => document.embryo?.kwaliteit)
+    .map((document) => beschrijfKwaliteitBronCorrectie(document));
   const statussen = uniekeWaarden(
     dossierDocumenten
       .map((document) => document.embryo?.status)
@@ -180,12 +192,16 @@ function bouwEmbryoDossier(
     dossierDocumenten.map((document) => document.embryo?.kliniekTerminologie).filter(isString),
   );
   const bronnen = uniekeWaarden(
-    dossierDocumenten.map((document) => document.embryo?.bron).filter(isString),
+    dossierDocumenten
+      .map((document) =>
+        document.embryo ? bepaalEmbryoBronCorrectie(document).bronLabel : undefined,
+      )
+      .filter(isString),
   );
   const bronLabels = uniekeWaarden(
     dossierDocumenten
       .flatMap((document) => [
-        document.embryo?.bron,
+        bepaalEmbryoBronCorrectie(document).bronLabel,
         document.embryo?.aliasCorrectie?.bronLabel,
         document.beeldMetadata?.bron,
         document.metadata.bronbestand,
@@ -240,6 +256,7 @@ function bouwEmbryoDossier(
     bronLabels,
     kliniekIds,
     aliasCorrecties,
+    kwaliteitBronCorrecties,
     laatsteDatum: bepaalDatum(dossierDocumenten[dossierDocumenten.length - 1] ?? eerste),
     kwaliteiten,
     kwaliteitBronLabels,
@@ -346,21 +363,54 @@ function extraheerKliniekTekst(detail: string): string | undefined {
 }
 
 function beschrijfKwaliteitBronLabel(document: DossierDocument): string {
-  const reviewStatus = document.embryo?.reviewStatus ?? 'concept';
-  const bron = document.embryo?.bron ?? document.metadata.bronbestand;
-  const datum = bepaalDatum(document);
+  const correctie = bepaalEmbryoBronCorrectie(document);
   const kwaliteit = document.embryo?.kwaliteit ?? 'onbekend';
-  const reviewLabel = reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
-  return `${kwaliteit} · bronlabel ${bron} · ${datum} · ${reviewLabel}`;
+  const reviewLabel = correctie.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
+  return `${kwaliteit} · bronlabel ${correctie.bronLabel} · ${correctie.datum} · ${reviewLabel}`;
+}
+
+function beschrijfKwaliteitBronCorrectie(
+  document: DossierDocument,
+): EmbryoDossierItem['kwaliteitBronCorrecties'][number] {
+  const correctie = bepaalEmbryoBronCorrectie(document);
+  return {
+    documentId: document.id,
+    kwaliteit: document.embryo?.kwaliteit ?? 'onbekend',
+    bronLabel: correctie.bronLabel,
+    datum: correctie.datum,
+    reviewStatus: correctie.reviewStatus,
+    origineleBronLabel: document.embryo?.bron,
+    origineleDatum:
+      document.embryo?.kliniekBeoordeling?.datum ??
+      document.metadata.documentDatum ??
+      document.datum,
+  };
 }
 
 function bepaalBron(document: DossierDocument): string {
   return (
-    document.embryo?.bron ??
+    bepaalEmbryoBronCorrectie(document).bronLabel ??
     document.beeldMetadata?.bron ??
     document.metadata.bronbestand ??
     document.bestandsNaam
   );
+}
+
+function bepaalEmbryoBronCorrectie(document: DossierDocument): {
+  bronLabel: string;
+  datum: string;
+  reviewStatus: 'concept' | 'gereviewd';
+} {
+  const correctie = document.embryo?.kwaliteitBronCorrectie;
+  return {
+    bronLabel:
+      correctie?.bronLabel ??
+      document.embryo?.bron ??
+      document.metadata.bronbestand ??
+      document.bestandsNaam,
+    datum: correctie?.datum ?? document.embryo?.kliniekBeoordeling?.datum ?? bepaalDatum(document),
+    reviewStatus: correctie?.reviewStatus ?? document.embryo?.reviewStatus ?? 'concept',
+  };
 }
 
 function selecteerRelevanteAfspraken(

@@ -55,13 +55,21 @@ describe('embryoDossier', () => {
         kwaliteitBronLabels: ['4AA · bronlabel Labrapport · 2026-06-12 · concept'],
         statussen: ['teruggeplaatst'],
         statusEvents: [
-          {
+          expect.objectContaining({
             id: 'doc-kwaliteit',
             datum: '2026-06-12',
             status: 'teruggeplaatst',
             bron: 'Labrapport',
             reviewStatus: 'concept',
-          },
+          }),
+        ],
+        kwaliteitBronCorrecties: [
+          expect.objectContaining({
+            documentId: 'doc-kwaliteit',
+            bronLabel: 'Labrapport',
+            datum: '2026-06-12',
+            reviewStatus: 'concept',
+          }),
         ],
         meetmomenten: ['Dag 5 blastocyst'],
         kliniekTerminologieen: ['Gardner-score'],
@@ -190,6 +198,52 @@ describe('embryoDossier', () => {
       vergelijking: bouwEmbryoVergelijkingen(dossiers)[0]?.embryos,
     });
     expect(aliasSurface).not.toMatch(/\b(diagnose|kans|behandelkeuzeadvies|beste)\b/i);
+  });
+
+  it('gebruikt gecorrigeerde bronlabels voor embryokwaliteit zonder kliniekwaarde te wijzigen', () => {
+    const embryo = maakDossierDocument('doc-broncorrectie', {
+      datum: '2026-06-12',
+      titel: 'Embryokwaliteit broncorrectie',
+      categorie: 'embryo',
+      bestandsNaam: 'embryo-broncorrectie.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '4AA',
+        bron: 'Oud lablabel',
+        reviewStatus: 'concept',
+        kwaliteitBronCorrectie: {
+          bronLabel: 'Gereviewd portaalrapport',
+          datum: '2026-06-13',
+          reviewStatus: 'gereviewd',
+        },
+      },
+    });
+
+    const dossier = bouwEmbryoDossiers([embryo])[0];
+
+    expect(dossier).toMatchObject({
+      kwaliteiten: ['4AA'],
+      bronnen: ['Gereviewd portaalrapport'],
+      bronLabels: expect.arrayContaining(['Gereviewd portaalrapport']),
+      kwaliteitBronLabels: ['4AA · bronlabel Gereviewd portaalrapport · 2026-06-13 · gereviewd'],
+      kwaliteitBronCorrecties: [
+        expect.objectContaining({
+          documentId: 'doc-broncorrectie',
+          kwaliteit: '4AA',
+          bronLabel: 'Gereviewd portaalrapport',
+          datum: '2026-06-13',
+          reviewStatus: 'gereviewd',
+          origineleBronLabel: 'Oud lablabel',
+        }),
+      ],
+    });
+    expect(JSON.stringify(dossier?.kwaliteitBronCorrecties)).not.toMatch(
+      /\b(diagnose|kans|behandelkeuzeadvies|beste)\b/i,
+    );
   });
 
   it('bouwt een chronologische embryo-historie van bevruchting tot eindstatus', () => {
