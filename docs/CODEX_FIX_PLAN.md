@@ -134,6 +134,11 @@
   dossiers, measurements, status, and sources cards stay visible before embryo grids and detail
   cards while the scan container remains bounded across desktop, tablet, and mobile without
   ranking, chance-calculation, or treatment-advice text in the evidence.
+- **Research trend-scan overflow evidence — done in G1928 / issue #3802.** Kennis Research
+  routeflow coverage now opens the trend route and measures the compact trend scan directly:
+  topics, publications, sources, and latest cards stay visible before trend grids and detail cards
+  while the scan container remains bounded across desktop, tablet, and mobile without diagnosis,
+  treatment-choice advice, or source payload text in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1755 |
+| ☑ klaar | 1756 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1954** |
+| **Totaal** | **1955** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2089,7 +2089,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1925 | Premium Claude Design UI: daily recommendation owner scan routeflow overflow evidence | P1 | F5 | ☑ |
 | G1926 | Premium Claude Design UI: consult review scan routeflow overflow evidence | P1 | F5 | ☑ |
 | G1927 | Premium Claude Design UI: embryo tracking scan routeflow overflow evidence | P1 | F5 | ☑ |
-| G1928 | Premium Claude Design UI: research trend scan routeflow overflow evidence | P1 | F5 | ☐ |
+| G1928 | Premium Claude Design UI: research trend scan routeflow overflow evidence | P1 | F5 | ☑ |
 | G1929 | Fertility Intelligence: dossierupload size feedback routeflow overflow evidence | P1 | F5 | ☐ |
 | G1930 | Fertility Intelligence: ziekenhuisdocumenttype reviewcorrectie routeflow evidence | P1 | F5 | ☐ |
 | G1931 | Fertility Intelligence: consultnotitie tekstimport reviewstatus routeflow evidence | P1 | F5 | ☐ |
@@ -2117,12 +2117,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1953 | Premium Claude Design UI: treatment mobile rail forced-colors cue text fill release evidence | P1 | F5 | ☐ |
 | G1954 | Premium Claude Design UI: consult review scan release evidence | P1 | F5 | ☐ |
 | G1955 | Premium Claude Design UI: embryo tracking scan release evidence | P1 | F5 | ☐ |
+| G1956 | Premium Claude Design UI: research trend scan release evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1954** (id's G001 t/m G1955; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1955** (id's G001 t/m G1956; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

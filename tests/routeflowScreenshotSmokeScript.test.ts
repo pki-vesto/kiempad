@@ -238,6 +238,14 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-research-trend-scan-density="mobile-compact"]',
     );
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'knowledge-research-trend-scan'");
+    expect(routeflowScreenshotSmokeScript).toContain('researchTrendScanOverflow');
+    expect(routeflowScreenshotSmokeScript).toContain('scanBeforeDetail');
+    expect(routeflowScreenshotSmokeScript).toContain('sourceListPresent');
+    expect(routeflowScreenshotSmokeScript).toContain('researchFormPresent');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'research trend-scan mist routeflow-overflow evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceCompactList');

@@ -17322,7 +17322,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research UI, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 26
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3802
 
 ### G1929 — Fertility Intelligence: dossierupload size feedback routeflow overflow evidence
@@ -17647,6 +17647,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 26
 - **Status:** ☐ open
 - **Issue:** #3856
+
+### G1956 — Premium Claude Design UI: research trend scan release evidence
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De research trend-scan heeft routeflow-overflow evidence, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de research trend-scan bescherming verliezen zonder dat reviewers zien dat scan cards of page-level overflow onvoldoende bewaakt worden.
+- **Desired Outcome:** Release-evidence documenteert dat de research trend-scan op desktop, tablet en mobiel gecontroleerd blijft zonder diagnose, behandelkeuzeadvies of bronpayloads.
+- **User Value:** Gebruikers houden een rustige Researchtrendsroute waarin onderwerpen, publicaties, bronnen en laatste update snel scanbaar blijven na thema- of layoutwijzigingen.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar `data-research-trend-scan="ready"` en de research trend-scan overflow evidence; evidence bevestigt vier zichtbare scan cards voor topics, publications, sources en latest; evidence bevestigt scan-before-grid/detail ordering en containerbegrenzing op desktop, tablet en mobile; trend dashboard, source rows, research forms en data-hooks blijven intact; evidence bevat geen diagnose, behandelkeuzeadvies, medische payloads, OCR-tekst, secrets, tokens of broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Kennis, Research Intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research UI, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 26
+- **Status:** ☐ open
+- **Issue:** #3858
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 

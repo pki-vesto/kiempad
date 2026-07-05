@@ -167,6 +167,54 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-research-trend-scan',
+    hash: '#kennis?route=read',
+    rootSelector: '[data-knowledge-focus-shell="ready"]',
+    expectedText: 'Researchtrends',
+    openSelectors: [
+      '[data-knowledge-research-detail-choice="collapsed"]',
+      '[data-knowledge-research-trends-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-research-trend-dashboard="ready"]',
+      '[data-research-trend-scan="ready"]',
+      '[data-research-trend-scan-density="mobile-compact"]',
+      '[data-research-trend-grid="ready"]',
+    ],
+    presentSelectors: [
+      '[data-research-trend-scan-card="topics"]',
+      '[data-research-trend-scan-card="publications"]',
+      '[data-research-trend-scan-card="sources"]',
+      '[data-research-trend-scan-card="latest"]',
+      '[data-research-trend-card]',
+      '[data-research-trend-item]',
+      '[data-research-source-component="source-list"]',
+      '#research-item-form',
+      '#research-network-form',
+    ],
+    closedDetailsSelectors: [
+      '[data-knowledge-task-route-choice="collapsed"]',
+      '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-research-workflow-choice="collapsed"]',
+      '[data-knowledge-research-route-status-choice="collapsed"]',
+      '[data-knowledge-research-lane-choice="collapsed"]',
+      '[data-knowledge-research-followup="collapsed"]',
+      '[data-knowledge-research-followup-context-choice="collapsed"]',
+      '[data-knowledge-research-sources-choice="collapsed"]',
+      '[data-knowledge-research-summaries-choice="collapsed"]',
+    ],
+    knowledgeConsole: true,
+    researchTrendScanOverflow: true,
+    desktopHiddenSelectors: [
+      '.knowledge-focus-shell__header p:last-child',
+      '.knowledge-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.knowledge-research-reader__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+      '[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small',
+    ],
+  },
+  {
     screen: 'knowledge-status',
     hash: '#kennis?route=read',
     rootSelector: '.content',
@@ -3693,6 +3741,70 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const researchTrendScanOverflow = routeflow.researchTrendScanOverflow
+          ? (() => {
+              const scan = rootElement?.querySelector('[data-research-trend-scan="ready"]');
+              const scanCards = [
+                ...(rootElement?.querySelectorAll('[data-research-trend-scan-card]') ?? []),
+              ].map((scanCard) => {
+                const rect = scanCard.getBoundingClientRect();
+                return {
+                  id: scanCard.getAttribute('data-research-trend-scan-card') ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  text: scanCard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                };
+              });
+              const dashboard = rootElement?.querySelector('[data-research-trend-dashboard="ready"]');
+              const grid = rootElement?.querySelector('[data-research-trend-grid="ready"]');
+              const detailCard = rootElement?.querySelector('[data-research-trend-card]');
+              const trendItem = rootElement?.querySelector('[data-research-trend-item]');
+              const sourceList = rootElement?.querySelector('[data-research-source-component="source-list"]');
+              const researchForm = rootElement?.querySelector('#research-item-form');
+              const networkForm = rootElement?.querySelector('#research-network-form');
+              const scanRect = scan?.getBoundingClientRect();
+              const dashboardRect = dashboard?.getBoundingClientRect();
+              const gridRect = grid?.getBoundingClientRect();
+              const detailCardRect = detailCard?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const scanStyle = scan ? getComputedStyle(scan) : null;
+              const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
+              const rootText = rootElement?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
+                scanCardIds: scanCards.map((scanCard) => scanCard.id),
+                visibleScanCards: scanCards.filter((scanCard) => scanCard.visible).length,
+                scanDisplay: scanStyle?.display ?? '',
+                scanOverflowX: scanStyle?.overflowX ?? '',
+                scanBeforeGrid:
+                  Boolean(scan && grid && scanRect && gridRect) &&
+                  Boolean(scan.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  scanRect.top <= gridRect.top + 1,
+                scanBeforeDetail:
+                  Boolean(scan && detailCard && scanRect && detailCardRect) &&
+                  Boolean(scan.compareDocumentPosition(detailCard) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  scanRect.top <= detailCardRect.top + 1,
+                dashboardVisible: Boolean(
+                  dashboardRect && dashboardRect.width > 0 && dashboardRect.height > 0,
+                ),
+                scanContained:
+                  Boolean(rootRect && scanRect) &&
+                  scanRect.left >= rootRect.left - 1 &&
+                  scanRect.right <= rootRect.right + 1,
+                hasInternalScroll:
+                  scan instanceof HTMLElement ? scan.scrollWidth > scan.clientWidth + 1 : false,
+                detailCardVisible: Boolean(
+                  detailCardRect && detailCardRect.width > 0 && detailCardRect.height > 0,
+                ),
+                trendItemPresent: Boolean(trendItem),
+                sourceListPresent: Boolean(sourceList),
+                researchFormPresent: Boolean(researchForm),
+                networkFormPresent: Boolean(networkForm),
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|diagnose stellen|dosering aanpassen|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  `${scanText} ${rootText}`,
+                ),
+              };
+            })()
+          : null;
         const embryoImageClassificationReview = routeflow.embryoImageClassificationReview
           ? (() => {
               const panel = document.querySelector('[data-dossier-imaging-disclosure="repository"]');
@@ -3995,6 +4107,7 @@ async function assertRouteflows(browser, options) {
           consultConsole,
           filledConsultCard,
           embryoTrackingScanOverflow,
+          researchTrendScanOverflow,
           embryoImageClassificationReview,
           wellbeingConsole,
           treatmentConsole,
@@ -4732,6 +4845,30 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: embryo tracking-scan mist routeflow-overflow evidence of lekt gevoelige tekst (${JSON.stringify(evidence.embryoTrackingScanOverflow)}).`,
+        );
+      }
+      if (
+        evidence.researchTrendScanOverflow &&
+        (!evidence.researchTrendScanOverflow.scanVisible ||
+          evidence.researchTrendScanOverflow.visibleScanCards !== 4 ||
+          !evidence.researchTrendScanOverflow.scanCardIds.includes('topics') ||
+          !evidence.researchTrendScanOverflow.scanCardIds.includes('publications') ||
+          !evidence.researchTrendScanOverflow.scanCardIds.includes('sources') ||
+          !evidence.researchTrendScanOverflow.scanCardIds.includes('latest') ||
+          !['flex', 'grid'].includes(evidence.researchTrendScanOverflow.scanDisplay) ||
+          !evidence.researchTrendScanOverflow.scanBeforeGrid ||
+          !evidence.researchTrendScanOverflow.scanBeforeDetail ||
+          !evidence.researchTrendScanOverflow.dashboardVisible ||
+          !evidence.researchTrendScanOverflow.scanContained ||
+          !evidence.researchTrendScanOverflow.detailCardVisible ||
+          !evidence.researchTrendScanOverflow.trendItemPresent ||
+          !evidence.researchTrendScanOverflow.sourceListPresent ||
+          !evidence.researchTrendScanOverflow.researchFormPresent ||
+          !evidence.researchTrendScanOverflow.networkFormPresent ||
+          evidence.researchTrendScanOverflow.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: research trend-scan mist routeflow-overflow evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchTrendScanOverflow)}).`,
         );
       }
       if (
