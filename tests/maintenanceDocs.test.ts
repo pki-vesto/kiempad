@@ -4940,6 +4940,40 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G2007');
   });
 
+  it('bewaakt G2008 offline cache metadata release-state contract error-contract error error missing-term foutmeldingcontract', () => {
+    const errorContract = [
+      'G2008 offline-cache-metadata-release-state-contract-error-contract-error-error-missing-term-error-contract',
+      'references=G2007',
+      `error=${OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_ERROR_ERROR_RELEASE_MISSING_TERM_ERROR}`,
+      'safeTerms=offline cache metadata missing-term error contract|veilige technische labels',
+    ].join('\n');
+
+    expect(
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_ERROR_ERROR_RELEASE_MISSING_TERM_ERROR,
+    ).toBe(
+      'Offline cache metadata release-state contract error-contract error error releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels',
+    );
+    expect(errorContract).toMatchInlineSnapshot(`
+      "G2008 offline-cache-metadata-release-state-contract-error-contract-error-error-missing-term-error-contract
+      references=G2007
+      error=Offline cache metadata release-state contract error-contract error error releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels
+      safeTerms=offline cache metadata missing-term error contract|veilige technische labels"
+    `);
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(errorContract).not.toContain(forbiddenEvidenceTerm);
+    }
+    expect(backlog).toContain('G2008');
+    expect(executionGoals).toContain('G2008');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',
