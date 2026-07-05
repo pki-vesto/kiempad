@@ -509,6 +509,8 @@ const OFFLINE_CACHE_METADATA_RELEASE_STATE_TERMS = [
   'data-research-offline-cache-metadata',
   'veilige technische labels',
 ] as const;
+const OFFLINE_CACHE_METADATA_RELEASE_STATE_MISSING_TERM_ERROR =
+  'Offline cache metadata release-state ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels';
 const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS = [
   'G1095',
   'missing-term fixture',
@@ -4285,6 +4287,46 @@ describe('onderhoudsdocumentatie', () => {
     `);
     expect(backlog).toContain('G1991');
     expect(executionGoals).toContain('G1991');
+  });
+
+  it('geeft ontbrekende G1992 offline cache metadata release-state termen technisch terug', () => {
+    const partialReleaseState =
+      'G1990 koppelt knowledge-research-offline-cache-metadata en data-research-offline-cache-metadata.';
+
+    expect(() => extractOfflineCacheMetadataReleaseStateContext(partialReleaseState)).toThrow(
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_MISSING_TERM_ERROR,
+    );
+    expect(OFFLINE_CACHE_METADATA_RELEASE_STATE_MISSING_TERM_ERROR).toBe(
+      'Offline cache metadata release-state ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels',
+    );
+    expect(OFFLINE_CACHE_METADATA_RELEASE_STATE_MISSING_TERM_ERROR).toContain(
+      'offline cache metadata missing-term error contract',
+    );
+    expect(OFFLINE_CACHE_METADATA_RELEASE_STATE_MISSING_TERM_ERROR).toContain(
+      'veilige technische labels',
+    );
+    for (const safeSelectorTerm of [
+      'knowledge-research-offline-cache-metadata',
+      'data-research-offline-cache-metadata',
+    ]) {
+      expect(partialReleaseState).toContain(safeSelectorTerm);
+    }
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(OFFLINE_CACHE_METADATA_RELEASE_STATE_MISSING_TERM_ERROR).not.toContain(
+        forbiddenEvidenceTerm,
+      );
+      expect(partialReleaseState).not.toContain(forbiddenEvidenceTerm);
+    }
+    expect(backlog).toContain('G1992');
+    expect(executionGoals).toContain('G1992');
   });
 
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {

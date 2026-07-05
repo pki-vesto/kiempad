@@ -110,6 +110,11 @@
   koppelt het G1990 `offline cache metadata missing-term error contract` aan
   `knowledge-research-offline-cache-metadata`,
   `data-research-offline-cache-metadata` en veilige technische labels.
+- **G1992 offline cache metadata release-state missing-term fixture:** de
+  maintenance-test geeft compact terug wanneer het G1990 contractlabel of
+  `veilige technische labels` uit release-state evidence ontbreekt, zonder
+  diagnose, dosering, kansberekening, behandelkeuzeadvies, secret,
+  gezondheidsdata of plaintext medische payload.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.
