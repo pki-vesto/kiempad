@@ -11255,6 +11255,26 @@ describe('app shell', () => {
     expect(section).toContain('data-consult-card-section="samenvatting"');
     expect(section).toContain('data-consult-card-section="actiepunten"');
     expect(section).toContain('data-consult-card-section="correctieverschil"');
+    expect(section).toContain('data-consult-review-board="first-viewport"');
+    expect(section).toContain('aria-label="Consult review werkbank"');
+    expect(section).toContain('Reviewwerkbank');
+    expect(section).toContain('Lees eerst per taak');
+    expect(section).toContain('data-consult-review-board-lane="transcript"');
+    expect(section).toContain('href="#consult-review-consult-review-state-tekst"');
+    expect(section).toContain('data-consult-review-board-lane="summary"');
+    expect(section).toContain('href="#consult-review-consult-review-state-samenvatting"');
+    expect(section).toContain('data-consult-review-board-lane="actions"');
+    expect(section).toContain('href="#consult-review-consult-review-state-actiepunten"');
+    expect(section).toContain('data-consult-review-board-lane="source"');
+    expect(section).toContain('href="#consult-review-consult-review-state-broncontext"');
+    expect(section).toContain('Tekst klaar');
+    expect(section).toContain('Concept klaar');
+    expect(section).toContain('1 punt');
+    expect(section).toContain('1 bron');
+    expect(section).toContain('id="consult-review-consult-review-state-tekst"');
+    expect(section).toContain('id="consult-review-consult-review-state-samenvatting"');
+    expect(section).toContain('id="consult-review-consult-review-state-actiepunten"');
+    expect(section).toContain('id="consult-review-consult-review-state-broncontext"');
     expect(section).toContain('Consult review state');
     expect(section).toContain('Consultdatum: 2026-05-08');
     expect(section).toContain(
@@ -11310,9 +11330,18 @@ describe('app shell', () => {
 
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    expect(css).toContain('.consult-review-board {');
+    expect(css).toContain('.consult-review-board__lanes {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.consult-review-board__lane {');
+    expect(css).toContain('min-height: 76px;');
     expect(css).toContain('.consult-review-layout__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(240px, 0.76fr);');
     expect(css).toContain('.consult-review-layout__panel[data-consult-review-panel="summary"]');
+    expect(mobileCss).toContain('.consult-review-board__lanes {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.consult-review-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(156px, 70vw);');
     expect(mobileCss).toContain('.consult-review-layout__header,');
     expect(mobileCss).toContain('.consult-review-layout__body {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
