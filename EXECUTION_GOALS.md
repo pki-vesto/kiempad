@@ -16641,8 +16641,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, workbench, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 63
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3716
+
+### G1888 — Premium Claude Design UI: treatment task routes first-viewport route density polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De Traject route-rail kan nog als compacte maar dichte navigatiestrook voelen wanneer overzicht, fasen, vergoeding, context en beheer tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten alsnog routebadges en actieve states scannen voordat duidelijk is welke trajectroute eerst relevant is.
+- **Desired Outcome:** De Traject route-rail opent met duidelijkere first-viewport density-cues voor overzicht, fasen, vergoeding, context en beheer.
+- **User Value:** Routekeuze voelt rustiger zonder bestaande hrefs, aria-current states, command-task route hooks of privacygrenzen te verliezen.
+- **Acceptance Criteria:** De Traject route-rail opent met compacte visuele density-cues voor overzicht, fasen, vergoeding, context en beheer; routelabels, badges en actieve states blijven bereikbaar zonder als dichte first-viewport navigatieblok te lezen; mobile en desktop behouden bestaande route hrefs, aria-current states, command-task route hooks en privacy boundaries; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw treatment payload wordt toegevoegd.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 62
+- **Status:** ☐ open
+- **Issue:** #3718
 
 ### G586 — replay conflict recovery status UI
 
