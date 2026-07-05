@@ -183,4 +183,12 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('Centrale sessieherstelactie verwerkt.');
     expect(mainSource).not.toContain('central-token secret passphrase sessie-id recordpayload');
   });
+
+  it('verplaatst focus na sessie-renewal recovery naar het veilige backup focusdoel', () => {
+    expect(mainSource).toContain('centralSessionRenewalRecoveryPendingFocus');
+    expect(mainSource).toContain('focusCentralSessionRenewalRecoveryStatus(root, state)');
+    expect(mainSource).toContain('function focusCentralSessionRenewalRecoveryStatus');
+    expect(mainSource).toContain('[data-central-session-renewal-recovery-focus-target="ready"]');
+    expect(mainSource).toContain('status.focus({ preventScroll: true })');
+  });
 });

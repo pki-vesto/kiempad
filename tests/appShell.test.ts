@@ -42318,6 +42318,8 @@ describe('app shell', () => {
     expect(recoveryHtml).toContain('Controleer de centrale overdrachtstatus hieronder');
     expect(recoveryHtml).toContain('Laatste actie verwerkt');
     expect(recoveryHtml).toContain('data-central-session-renewal-recovery-announcement="polite"');
+    expect(recoveryHtml).toContain('data-central-session-renewal-recovery-focus-target="ready"');
+    expect(recoveryHtml).toContain('tabindex="-1"');
     expect(recoveryHtml).toContain('role="status" aria-live="polite" aria-atomic="true"');
     expect(recoveryBackupZone).not.toContain('central-token');
     expect(recoveryBackupZone).not.toContain('passphrase');

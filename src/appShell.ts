@@ -3168,7 +3168,7 @@ function renderStatusFeedback(
   const centralSessionRenewalRecoveryAnnouncement =
     kind === 'backup' && status?.startsWith('Centrale sessieherstelactie verwerkt.');
   const announcementAttributes = centralSessionRenewalRecoveryAnnouncement
-    ? ' role="status" aria-live="polite" aria-atomic="true" data-central-session-renewal-recovery-announcement="polite"'
+    ? ' role="status" aria-live="polite" aria-atomic="true" tabindex="-1" data-central-session-renewal-recovery-announcement="polite" data-central-session-renewal-recovery-focus-target="ready"'
     : '';
 
   return `
