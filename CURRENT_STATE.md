@@ -66,6 +66,11 @@
 - **G1331 Dossier zoekconsole:** de Dossier-zoekroute groepeert zoeken,
   privacycontrole en inhoudsindex in drie herkenbare panelen. De route opent als
   compacte zoekwerkruimte in plaats van losse formulier-, privacy- en indexblokken.
+- **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
+  changelog en current state noemt `npm run smoke:routeflows`,
+  `attachmentEnvelopeBatchForcedColorsEvidence` en
+  `attachmentEnvelopeEvidencePrivacyPattern`, zodat payloadvrije
+  forced-colors batch evidence traceerbaar blijft bij releasevoorbereiding.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

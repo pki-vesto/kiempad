@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1659 |
+| ☑ klaar | 1660 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1858** |
+| **Totaal** | **1859** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2020,13 +2020,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1856 | Central Encrypted Platform: attachment envelope forced-colors small-mobile overflow evidence | P1 | F5 | ☑ |
 | G1857 | Central Encrypted Platform: attachment envelope forced-colors evidence cleanup audit | P1 | F5 | ☑ |
 | G1858 | Central Encrypted Platform: attachment envelope forced-colors evidence docs audit | P1 | F5 | ☑ |
-| G1859 | Central Encrypted Platform: attachment envelope forced-colors evidence release note audit | P1 | F5 | ☐ |
+| G1859 | Central Encrypted Platform: attachment envelope forced-colors evidence release note audit | P1 | F5 | ☑ |
+| G1860 | Central Encrypted Platform: attachment envelope forced-colors release evidence freshness guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1858** (id's G001 t/m G1859; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1859** (id's G001 t/m G1860; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

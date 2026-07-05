@@ -3968,6 +3968,26 @@ describe('onderhoudsdocumentatie', () => {
     expect(routeflowScreenshotSmokeScript).toContain('hasVerticalOverflow');
   });
 
+  it('documenteert G1859 attachment-envelope forced-colors release evidence', () => {
+    const releaseEvidenceTerms = [
+      'G1859 attachment-envelope forced-colors release evidence',
+      'forced-colors batch evidence',
+      'attachmentEnvelopeBatchForcedColorsEvidence',
+      'attachmentEnvelopeEvidencePrivacyPattern',
+      'npm run smoke:routeflows',
+      'payloadvrije',
+    ] as const;
+
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(goalCompletionAudit + runbook).toContain('Attachment-envelope forced-colors evidence');
+    expect(backlog).toContain('G1859');
+    expect(executionGoals).toContain('G1859');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',
