@@ -1456,6 +1456,42 @@ const targets = [
     ],
   },
   {
+    screen: 'dossier-import-inbox-retry',
+    hash: '#dossier-route-review',
+    rootSelector: '#dossier-route-upload',
+    expectedText: 'Import-inbox',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    prepare: 'dossier-import-inbox-retry',
+    openSelectors: [
+      '[data-dossier-add-route-disclosure="review"]',
+      '[data-dossier-review-followup="collapsed"]',
+      '[data-dossier-review-context-choice="collapsed"]',
+      '#dossier-inbox-disclosure',
+    ],
+    requiredSelectors: [
+      '#dossier-inbox-disclosure',
+      '[data-dossier-import-inbox-item="ocr_wacht"]',
+      '[data-dossier-import-retry-state="ocr_wacht"]',
+      '[data-dossier-import-actionbar="retry-available"]',
+      '[data-dossier-import-retry-form="available"]',
+      '[data-dossier-import-retry-action="available"]',
+      '[data-attachment-delete-kind="dossier-import"]',
+    ],
+    presentSelectors: [
+      '.dossier-inbox-overview',
+      '[data-dossier-import-inbox-item="klaar_voor_review"]',
+      '[data-dossier-import-actionbar="retry-unavailable"]',
+    ],
+    dossierConsole: true,
+    dossierImportInboxRetry: true,
+    smallMobileViewport: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
     screen: 'dossier-search',
     hash: '#dossier?route=search',
     rootSelector: '#dossier-route-search',
@@ -2015,6 +2051,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'question-artscheck-review-status') {
         await prepareQuestionArtscheckReviewStatus(page, target.hash);
+      }
+      if (target.prepare === 'dossier-import-inbox-retry') {
+        await prepareDossierImportInboxRetry(page, target.hash);
       }
       if (target.prepare === 'central-session-renewal-recovery-focus') {
         await prepareCentralSessionRenewalRecoveryFocus(page, target.hash);
@@ -2582,6 +2621,69 @@ async function assertRouteflows(browser, options) {
                   (itemRect && listRect ? itemRect.right > listRect.right + 1 : true) ||
                   (formRect && itemRect ? formRect.right > itemRect.right + 1 : true) ||
                   (buttonRect && itemRect ? buttonRect.right > itemRect.right + 1 : true),
+              };
+            })()
+          : null;
+        const dossierImportInboxRetry = routeflow.dossierImportInboxRetry
+          ? (() => {
+              const inbox = document.querySelector('#dossier-inbox-disclosure');
+              const retryItem = document.querySelector('[data-dossier-import-inbox-item="ocr_wacht"]');
+              const completedItem = document.querySelector(
+                '[data-dossier-import-inbox-item="klaar_voor_review"]',
+              );
+              const retryState = retryItem?.querySelector('[data-dossier-import-retry-state="ocr_wacht"]');
+              const actionbar = retryItem?.querySelector('[data-dossier-import-actionbar="retry-available"]');
+              const retryForm = retryItem?.querySelector('[data-dossier-import-retry-form="available"]');
+              const retryButton = retryItem?.querySelector('[data-dossier-import-retry-action="available"]');
+              const deleteButton = retryItem?.querySelector('[data-attachment-delete-kind="dossier-import"]');
+              const completedRetryButton = completedItem?.querySelector(
+                '[data-dossier-import-retry-action="available"]',
+              );
+              const inboxRect = inbox?.getBoundingClientRect();
+              const retryRect = retryItem?.getBoundingClientRect();
+              const actionbarRect = actionbar?.getBoundingClientRect();
+              const retryButtonRect = retryButton?.getBoundingClientRect();
+              const deleteButtonRect = deleteButton?.getBoundingClientRect();
+              const actionbarStyle =
+                actionbar instanceof HTMLElement ? getComputedStyle(actionbar) : null;
+              const retryButtonStyle =
+                retryButton instanceof HTMLElement ? getComputedStyle(retryButton) : null;
+              const retryText = [retryState, actionbar]
+                .map((element) => element?.textContent?.replace(/\s+/g, ' ').trim() ?? '')
+                .join(' ');
+              return {
+                inboxOpen: inbox instanceof HTMLDetailsElement ? inbox.open : false,
+                retryItemVisible: Boolean(retryRect && retryRect.width > 0 && retryRect.height > 0),
+                retryStateVisible:
+                  retryState instanceof HTMLElement &&
+                  retryState.getAttribute('data-dossier-import-retry-state') === 'ocr_wacht',
+                actionbarVisible: Boolean(
+                  actionbarRect && actionbarRect.width > 0 && actionbarRect.height > 0,
+                ),
+                retryFormAvailable: retryForm instanceof HTMLFormElement,
+                retryButtonVisible: Boolean(
+                  retryButtonRect && retryButtonRect.width > 0 && retryButtonRect.height > 0,
+                ),
+                deleteButtonVisible: Boolean(
+                  deleteButtonRect && deleteButtonRect.width > 0 && deleteButtonRect.height > 0,
+                ),
+                completedHasRetryAction: Boolean(completedRetryButton),
+                actionbarDisplay: actionbarStyle?.display ?? '',
+                actionbarGridTemplateColumns: actionbarStyle?.gridTemplateColumns ?? '',
+                retryButtonWhiteSpace: retryButtonStyle?.whiteSpace ?? '',
+                retryButtonText: retryButton?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                deleteButtonText: deleteButton?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                hasForbiddenText: /(\.pdf|\.jpg|\.jpeg|OCR_RAW|MEDISCHE PAYLOAD|diagnose|dosering|behandelkeuzeadvies|secret|token|base64|routeflow-wacht|routeflow-klaar)/i.test(
+                  retryText,
+                ),
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  (retryRect && inboxRect ? retryRect.right > inboxRect.right + 1 : true) ||
+                  (actionbarRect && retryRect ? actionbarRect.right > retryRect.right + 1 : true) ||
+                  (retryButtonRect && retryRect ? retryButtonRect.right > retryRect.right + 1 : true) ||
+                  (deleteButtonRect && retryRect ? deleteButtonRect.right > retryRect.right + 1 : true),
               };
             })()
           : null;
@@ -3352,6 +3454,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceCompactList,
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
+          dossierImportInboxRetry,
           startLaunchpad,
           uploadConsole,
           attachmentEnvelopeBatchStatus,
@@ -3737,6 +3840,29 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: artscheckvraag-reviewstatus mist scanbare routeflow-evidence of lekt medische payload (${JSON.stringify(evidence.questionArtscheckReviewStatus)}).`,
+        );
+      }
+      if (
+        evidence.dossierImportInboxRetry &&
+        (!evidence.dossierImportInboxRetry.inboxOpen ||
+          !evidence.dossierImportInboxRetry.retryItemVisible ||
+          !evidence.dossierImportInboxRetry.retryStateVisible ||
+          !evidence.dossierImportInboxRetry.actionbarVisible ||
+          !evidence.dossierImportInboxRetry.retryFormAvailable ||
+          !evidence.dossierImportInboxRetry.retryButtonVisible ||
+          !evidence.dossierImportInboxRetry.deleteButtonVisible ||
+          evidence.dossierImportInboxRetry.completedHasRetryAction ||
+          (options.label === 'desktop' && evidence.dossierImportInboxRetry.actionbarDisplay !== 'flex') ||
+          ((options.label === 'mobile' || options.label === 'small-mobile') &&
+            evidence.dossierImportInboxRetry.actionbarDisplay !== 'grid') ||
+          evidence.dossierImportInboxRetry.retryButtonWhiteSpace !== 'normal' ||
+          evidence.dossierImportInboxRetry.retryButtonText !== 'Probeer opnieuw' ||
+          evidence.dossierImportInboxRetry.deleteButtonText !== 'Verwijder' ||
+          evidence.dossierImportInboxRetry.hasForbiddenText ||
+          evidence.dossierImportInboxRetry.hasHorizontalOverflow)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: import-inbox retry mist scanbare routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierImportInboxRetry)}).`,
         );
       }
       if (
@@ -4858,6 +4984,71 @@ async function prepareFilledConsultCard(page, targetHash) {
     () => {
       const field = document.querySelector('#consult-verslag-form textarea[name="tekst"]');
       return field instanceof HTMLTextAreaElement && field.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareDossierImportInboxRetry(page, targetHash) {
+  await page.goto(`${url}#dossier-upload-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#dossier-upload-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'routeflow-wacht.pdf',
+    mimeType: 'application/pdf',
+    buffer: Buffer.from('safe synthetic import retry fixture'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-06-27');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('Import retry wachtitem');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('labuitslag');
+  await page.locator('#dossier-upload-form [name="lokaleOcr"]').check();
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'routeflow-klaar.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('safe synthetic completed import fixture'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-06-28');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('Import retry klaaritem');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('behandelverslag');
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
     },
     undefined,
     { timeout: 10_000 },
