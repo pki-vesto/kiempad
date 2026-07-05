@@ -10418,6 +10418,13 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-source-board__lanes {');
     expect(css).toContain('.knowledge-research-source-board__lane {');
     expect(css).toContain('.knowledge-research-source-board__lane:hover,');
+    expect(css).toContain('.literature-query-builder {');
+    expect(css).toContain('.literature-query-builder__header,');
+    expect(css).toContain('.literature-query-builder__grid {');
+    expect(css).toContain('.literature-query-builder__preview,');
+    expect(css).toContain('.literature-query-builder__context {');
+    expect(css).toContain('.literature-query-builder__form {');
+    expect(css).toContain('.literature-query-builder__excluded {');
     expect(css).toContain('.knowledge-research-followup {');
     expect(css).toContain('.knowledge-research-followup__summary {');
     expect(css).toContain('.knowledge-research-followup__body {');
@@ -10429,6 +10436,11 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.knowledge-research-source-board {');
     expect(mobileCss).toContain('.knowledge-research-source-board__lanes {');
     expect(mobileCss).toContain('.knowledge-research-source-board__lane {');
+    expect(mobileCss).toContain('.literature-query-builder {');
+    expect(mobileCss).toContain('.literature-query-builder__header,');
+    expect(mobileCss).toContain('.literature-query-builder__grid {');
+    expect(mobileCss).toContain('.literature-query-builder__excluded {');
+    expect(mobileCss).toContain('.literature-query-builder__excluded span {');
     expect(mobileCss).toContain('.dossier-focus-shell {');
     expect(mobileCss).toContain(
       '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
@@ -40666,6 +40678,22 @@ describe('app shell', () => {
     expect(html).toContain(
       'href="#knowledge-research-followup" data-knowledge-research-source-lane="context"',
     );
+    expect(html).toContain('id="knowledge-literature-query-builder"');
+    expect(html).toContain('data-literature-query-builder="ready"');
+    expect(html).toContain('data-literature-query-preview="ready"');
+    expect(html).toContain('data-literature-query-context="deidentified"');
+    expect(html).toContain('id="literature-query-builder-form"');
+    expect(html).toContain('name="literatureQueryTerms"');
+    expect(html).toContain('name="literatureQueryBron"');
+    expect(html).toContain('name="literatureQueryDatum"');
+    expect(html).toContain('data-literature-query-excluded-context="ready"');
+    expect(html).toContain('geen dossierdocumenttekst');
+    expect(html).toContain('geen consulttekst');
+    expect(html).toContain('geen OCR-tekst of bronbestand');
+    expect(html).toContain('Bewaar query als researchconcept');
+    expect(html).toContain(
+      'href="#knowledge-research-sources" data-form-cancel-action="literature-query"',
+    );
     expect(html).toContain('id="knowledge-research-primary-focus"');
     expect(html).toContain('data-knowledge-research-primary-focus="ready"');
     expect(html).toContain('data-knowledge-research-reader="ready"');
@@ -40701,6 +40729,9 @@ describe('app shell', () => {
       html.indexOf('data-knowledge-research-followup="collapsed"'),
     );
     expect(html.indexOf('data-knowledge-research-source-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-literature-query-builder="ready"'),
+    );
+    expect(html.indexOf('data-literature-query-builder="ready"')).toBeLessThan(
       html.indexOf('data-knowledge-research-primary-focus="ready"'),
     );
     expect(html.indexOf('data-knowledge-research-followup="collapsed"')).toBeLessThan(
@@ -41435,6 +41466,9 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-reader__lanes {');
     expect(css).toContain('.knowledge-research-reader__lane {');
     expect(css).toContain('grid-template-rows: auto auto 1fr auto;');
+    expect(css).toContain('.literature-query-builder {');
+    expect(css).toContain('.literature-query-builder__preview,');
+    expect(css).toContain('.literature-query-builder__excluded {');
     expect(css).toContain('.knowledge-research-context-choice {');
     expect(css).toContain('.knowledge-research-context-choice__summary {');
     expect(css).toContain('.knowledge-research-context-choice__body {');

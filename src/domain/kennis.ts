@@ -85,6 +85,12 @@ export type PubMedQueryPreview = {
   waarschuwing: string;
 };
 
+export type LiteratuurDiscoveryQuery = PubMedQueryPreview & {
+  contextBronnen: Array<'traject' | 'consult' | 'document'>;
+  contextLabels: string[];
+  opslagNotitie: string;
+};
+
 export type WetenschappelijkeResearchSamenvatting = {
   id: string;
   titel: string;
@@ -534,6 +540,62 @@ export function bouwPubMedQueryPreview(input: {
     waarschuwing: input.netwerkOptIn
       ? 'Conceptpreview na expliciete opt-in; controleer of de zoektermen algemeen blijven voordat je PubMed handmatig opent.'
       : 'Conceptpreview zonder netwerkactie; Kiempad opent PubMed niet zolang netwerkresearch uit staat.',
+  };
+}
+
+export function bouwLiteratuurDiscoveryQuery(input: {
+  dossierContextBronnen: readonly ResearchDossierContextBron[];
+  netwerkOptIn: boolean;
+  datum?: string;
+  zoektermen?: readonly string[];
+}): LiteratuurDiscoveryQuery {
+  const contextTypes = uniekeContextTypes(input.dossierContextBronnen);
+  const contextTermen = contextTypes.flatMap((type) => {
+    if (type === 'traject') return ['IVF', 'ICSI'];
+    if (type === 'consult') return ['fertility', 'ovarian stimulation'];
+    return ['embryo', 'fertility'];
+  });
+  const preview = bouwPubMedQueryPreview({
+    netwerkOptIn: input.netwerkOptIn,
+    datum: input.datum,
+    zoektermen: input.zoektermen ?? [
+      'fertility',
+      'IVF',
+      'ICSI',
+      'embryo',
+      'male factor',
+      ...contextTermen,
+    ],
+  });
+  const contextLabels = contextTypes.map((type) => {
+    if (type === 'traject') return 'actief traject aanwezig';
+    if (type === 'consult') return 'consultcontext aanwezig';
+    return 'dossierdocumentcontext aanwezig';
+  });
+
+  return {
+    ...preview,
+    id: 'literatuur-discovery-query-zonder-dossierplaintext',
+    contextBronnen: contextTypes,
+    contextLabels:
+      contextLabels.length > 0 ? contextLabels : ['geen lokale context gebruikt in query'],
+    uitgeslotenContext: [
+      ...preview.uitgeslotenContext,
+      'geen trajectnaam',
+      'geen consulttitel',
+      'geen documenttitel',
+      'geen OCR-tekst of bronbestand',
+    ],
+    correctieVelden: ['zoektermen', 'datum', 'bron', 'reviewstatus'],
+    opslagNotitie: [
+      `Literatuurquery: ${preview.query}`,
+      `Bron: ${preview.bron}`,
+      `Querydatum: ${preview.datum}`,
+      `Gede-identificeerde context: ${
+        contextLabels.length > 0 ? contextLabels.join(' · ') : 'geen lokale context'
+      }`,
+      'Reviewstatus: concept te controleren; pas zoektermen handmatig aan voor openen of delen.',
+    ].join('\n'),
   };
 }
 
@@ -1192,6 +1254,14 @@ function uniekeResearchZoektermen(zoektermen: readonly string[]): string[] {
   return veiligeTermen.length > 0
     ? veiligeTermen
     : ['fertility', 'IVF', 'ICSI', 'embryo', 'male factor'];
+}
+
+function uniekeContextTypes(
+  bronnen: readonly ResearchDossierContextBron[],
+): Array<'traject' | 'consult' | 'document'> {
+  const seen = new Set<'traject' | 'consult' | 'document'>();
+  for (const bron of bronnen) seen.add(bron.type);
+  return [...seen].sort((a, b) => a.localeCompare(b, 'nl-NL'));
 }
 
 function herkomstVolgorde(herkomst: ResearchBron['herkomst']): number {
