@@ -30780,6 +30780,8 @@ summary[class*="__summary"]:focus-visible,
       border-width: 1px;
       border-style: solid;
       border-color: CanvasText;
+      border-block-color: CanvasText;
+      border-inline-color: CanvasText;
       background: ButtonFace;
       color: ButtonText;
       font-weight: 700;
