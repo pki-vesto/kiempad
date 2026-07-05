@@ -16165,8 +16165,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs, release audit, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 92
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3660
+
+### G1860 — Attachment envelope forced-colors release evidence freshness guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De releasecontext noemt nu de attachment-envelope forced-colors evidence, maar toekomstige routeflow- of release-doc wijzigingen kunnen die veilige technische labels weer laten driften.
+- **User Impact:** Releasevoorbereiding kan regressie-evidence minder snel herkennen als de labels uit changelog, current state of auditdocs uit elkaar lopen.
+- **Desired Outcome:** Bewaak dat release/auditdocs de attachment-envelope forced-colors evidence synchroon en payloadvrij blijven noemen.
+- **User Value:** Gebruikers profiteren van stabielere uploadfeedback omdat regressiedekking bij releasechecks vindbaar blijft.
+- **Acceptance Criteria:** Release/auditdocs houden de attachment-envelope forced-colors evidence termen synchroon met routeflow evidence; maintenance coverage faalt wanneer veilige technische labels uit release evidence verdwijnen; evidence vermijdt filename, token, secret, base64, OCR-tekst, recordpayload en medische plaintext; backlog/docs verwijzen naar het doel.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, release audit, routeflow smoke, maintenance tests
+- **ADR Needed:** no
+- **Score:** 91
+- **Status:** ☐ open
+- **Issue:** #3662
 
 ### G586 — replay conflict recovery status UI
 

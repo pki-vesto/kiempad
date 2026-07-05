@@ -2236,6 +2236,11 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   `attachmentEnvelopeBatchForcedColorsEvidence` and
   `attachmentEnvelopeEvidencePrivacyPattern`, with a maintenance-doc test for
   the forced-colors batch evidence scope and privacy boundary.
+- Partial G1859/#3660: Changelog and current-state releasecontext now mention
+  the attachment-envelope forced-colors batch evidence with
+  `npm run smoke:routeflows`, `attachmentEnvelopeBatchForcedColorsEvidence` and
+  `attachmentEnvelopeEvidencePrivacyPattern`, and maintenance docs guard that
+  payload-free release evidence remains discoverable.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record
