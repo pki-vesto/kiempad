@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1867 Premium Claude Design UI: beslisgeschiedenis opent nu met een compact
+  eerste-viewport reviewbord voor opties, keuze, notities en beslisverslagen.
+  De volledige vergelijk-, keuze- en geschiedenislijsten blijven bereikbaar via
+  bestaande ankers zonder als eerste lange beslisstapel te starten.
 - G1866 Premium Claude Design UI: welzijnsgeschiedenis opent nu met een compact
   eerste-viewport signaalbord voor recente signalen, symptomen, cyclusmetingen
   en mentale check-ins. De volledige historie blijft bereikbaar als vervolgcontext

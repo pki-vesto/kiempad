@@ -59,6 +59,10 @@
   workflow context now starts with one route-choice layer while the full Vandaag/Dagadvies/Vragen/
   Research workflow tabs sit behind a closed route-header disclosure, preserving tab hooks and
   hashes.
+- **Decision history first-viewport review board — done in G1867 / issue #3676.** Afwegingen
+  Geschiedenis now opens with one compact review board for options, chosen decisions, notes, and
+  prior reports before the full history disclosure, preserving compare, choice, form, and history
+  anchors on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

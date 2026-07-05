@@ -95,6 +95,11 @@
   met een compact signaalbord voor recente signalen, symptomen, cyclusmetingen en
   mentale check-ins. Detailhistorie blijft via bestaande disclosures bereikbaar
   zonder als één lange welzijnsstapel te openen.
+- **G1867 Beslisgeschiedenis reviewbord:** de Afwegingen-geschiedenisroute start
+  met een compact reviewbord voor opties, keuze, notities en beslisverslagen.
+  Volledige beslisdetails blijven via bestaande compare-, choice-, form- en
+  historyankers bereikbaar zonder de eerste viewport als lange beslisstapel te
+  vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

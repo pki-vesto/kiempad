@@ -16301,8 +16301,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Decision history UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 83
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3676
+
+### G1868 — Premium Claude Design UI: finance history first-viewport cost board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De kostenhistorie kan nog als lange stapel openen wanneer totalen, vergoeding, eigen risico en eerdere kosten tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke kostenlaag eerst relevant is.
+- **Desired Outcome:** Kostenhistorie opent met een compact first-viewport cost board voor totalen, vergoeding, eigen risico/poliscontext en eerdere kosten.
+- **User Value:** Kosteninzicht voelt sneller navigeerbaar zonder finance-, reimbursement-, cost form- of historyhooks te verliezen.
+- **Acceptance Criteria:** Finance history opent met compacte lanes voor totalen, vergoeding, eigen risico/poliscontext en kostenhistorie; volledige kosten- en detaillijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande finance-, reimbursement-, cost form- en historyhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen financieel advies, polisinterpretatie, token, secret of medische plaintext wordt toegevoegd.
+- **Affected Screens:** Kosten
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Finance history UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 82
+- **Status:** ☐ open
+- **Issue:** #3678
 
 ### G586 — replay conflict recovery status UI
 
