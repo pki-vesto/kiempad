@@ -925,6 +925,7 @@ const targets = [
       '[data-daily-advice-feedback-workflow-status="ready"]',
       '[data-daily-recommendation-list-filter-header="ready"]',
     ],
+    dailyAdviceOwnerScanOverflow: true,
   },
   {
     screen: 'daily-advice-feedback-filter-route',
@@ -2627,6 +2628,57 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const dailyAdviceOwnerScanOverflow = routeflow.dailyAdviceOwnerScanOverflow
+          ? (() => {
+              const scan = document.querySelector('[data-daily-advice-owner-scan="ready"]');
+              const cards = [
+                ...document.querySelectorAll('[data-daily-advice-owner-scan-card]'),
+              ].map((card) => {
+                const rect = card.getBoundingClientRect();
+                return {
+                  owner: card.getAttribute('data-daily-advice-owner-scan-card') ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  left: rect.left,
+                  right: rect.right,
+                  top: rect.top,
+                  bottom: rect.bottom,
+                  text: card.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                };
+              });
+              const scanRect = scan?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const decisionLane = document.querySelector('[data-daily-advice-decision-lane]');
+              const listDetails = document.querySelector('[data-daily-advice-full-list="collapsed"]');
+              const decisionRect = decisionLane?.getBoundingClientRect();
+              const scanStyle = scan ? getComputedStyle(scan) : null;
+              const hasForbiddenText = /diagnose|dosering|behandelkeuzeadvies|secret|token|OCR_RAW|base64|routeflow/i.test(
+                cards.map((card) => card.text).join(' '),
+              );
+              return {
+                scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
+                cardOwners: cards.map((card) => card.owner),
+                visibleCards: cards.filter((card) => card.visible).length,
+                scanDisplay: scanStyle?.display ?? '',
+                scanOverflowX: scanStyle?.overflowX ?? '',
+                scanScrollWidth: scan instanceof HTMLElement ? scan.scrollWidth : 0,
+                scanClientWidth: scan instanceof HTMLElement ? scan.clientWidth : 0,
+                cardsBeforeDecision:
+                  Boolean(scan && decisionLane && scanRect && decisionRect) &&
+                  scan.compareDocumentPosition(decisionLane) === Node.DOCUMENT_POSITION_FOLLOWING &&
+                  scanRect.bottom <= decisionRect.top + 1,
+                cardsBeforeList:
+                  Boolean(scan && listDetails) &&
+                  Boolean(scan.compareDocumentPosition(listDetails) & Node.DOCUMENT_POSITION_FOLLOWING),
+                scanContained:
+                  Boolean(rootRect && scanRect) &&
+                  scanRect.left >= rootRect.left - 1 &&
+                  scanRect.right <= rootRect.right + 1,
+                hasInternalScroll:
+                  scan instanceof HTMLElement ? scan.scrollWidth > scan.clientWidth + 1 : false,
+                hasForbiddenText,
+              };
+            })()
+          : null;
         const dailyAdviceSupplementArtscheckAction = routeflow.dailyAdviceSupplementArtscheckAction
           ? (() => {
               const list = document.querySelector('[data-daily-advice-list-mode="dual-owner-cards"]');
@@ -3807,6 +3859,7 @@ async function assertRouteflows(browser, options) {
           startConsole,
           dailyAdviceConsole,
           dailyAdviceCompactList,
+          dailyAdviceOwnerScanOverflow,
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
           dossierImportInboxRetry,
@@ -4129,6 +4182,23 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: dagadviesroute staat niet in begrensde adviesvlakken (${JSON.stringify(evidence.dailyAdviceConsole)}).`,
+        );
+      }
+      if (
+        evidence.dailyAdviceOwnerScanOverflow &&
+        (!evidence.dailyAdviceOwnerScanOverflow.scanVisible ||
+          evidence.dailyAdviceOwnerScanOverflow.visibleCards !== 3 ||
+          !evidence.dailyAdviceOwnerScanOverflow.cardOwners.includes('vrouw') ||
+          !evidence.dailyAdviceOwnerScanOverflow.cardOwners.includes('man') ||
+          !evidence.dailyAdviceOwnerScanOverflow.cardOwners.includes('samen') ||
+          !['flex', 'grid'].includes(evidence.dailyAdviceOwnerScanOverflow.scanDisplay) ||
+          !evidence.dailyAdviceOwnerScanOverflow.cardsBeforeDecision ||
+          !evidence.dailyAdviceOwnerScanOverflow.cardsBeforeList ||
+          !evidence.dailyAdviceOwnerScanOverflow.scanContained ||
+          evidence.dailyAdviceOwnerScanOverflow.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: dagadvies owner-scan mist routeflow-overflow evidence (${JSON.stringify(evidence.dailyAdviceOwnerScanOverflow)}).`,
         );
       }
       if (

@@ -17580,6 +17580,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Status:** ☐ open
 - **Issue:** #3848
 
+### G1952 — Premium Claude Design UI: daily recommendation owner scan release evidence
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De Dagadvies owner-scan heeft routeflow-overflow evidence, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de owner-scan bescherming verliezen zonder dat reviewers zien dat vrouw/man/samen kaarten of page-level overflow onvoldoende bewaakt worden.
+- **Desired Outcome:** Release-evidence documenteert dat de Dagadvies owner-scan op desktop, tablet en mobiel gecontroleerd blijft zonder medische payloads of broninhoud.
+- **User Value:** Gebruikers houden een rustige Dagadviesroute waarin persoonlijke en gezamenlijke suggesties snel scanbaar blijven na thema- of layoutwijzigingen.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar `data-daily-advice-owner-scan="ready"` en de owner-scan overflow evidence; evidence bevestigt drie zichtbare owner cards voor vrouw, man en samen; evidence bevestigt scan-before-decision/list ordering en containerbegrenzing op desktop, tablet en mobile; evidence bevat geen medische payloads, OCR-tekst, secrets, tokens of broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Start, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Recommendations UI, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 26
+- **Status:** ☐ open
+- **Issue:** #3850
+
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 
 - **Epic:** Daily Recommendations
@@ -17747,7 +17764,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations UI, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 26
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3796
 
 ### G586 — replay conflict recovery status UI

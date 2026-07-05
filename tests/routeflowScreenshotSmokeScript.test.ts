@@ -215,6 +215,13 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-daily-advice-owner-scan-density="mobile-compact"]',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceOwnerScanOverflow');
+    expect(routeflowScreenshotSmokeScript).toContain('cardsBeforeDecision');
+    expect(routeflowScreenshotSmokeScript).toContain('cardsBeforeList');
+    expect(routeflowScreenshotSmokeScript).toContain('scanContained');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'dagadvies owner-scan mist routeflow-overflow evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-consult-review-scan-density="mobile-compact"]',
     );
