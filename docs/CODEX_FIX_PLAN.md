@@ -2219,3 +2219,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Herlaad Kiempad action in the Back-up central sync status for warning/error
   states, while idle states stay quiet and sanitized copy keeps record payloads,
   filenames, tokens and medical plaintext out of the UI.
+- Partial G1845/#3632: Central session renewal recovery now stores a one-time
+  browser-session focus marker before reload, returns to the Back-up status
+  route, and shows a generic recovery cue in the Back-up status area without
+  tokens, passphrases, session ids, record payloads or medical plaintext.

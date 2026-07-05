@@ -192,6 +192,8 @@ type RuntimeState = {
   error?: string;
 };
 
+const CENTRAL_SESSION_RENEWAL_RECOVERY_FOCUS_KEY = 'kiempad.central-session-renewal-recovery-focus';
+
 function render(root: HTMLElement, state: RuntimeState): void {
   if (!state.session.isUnlocked()) {
     root.innerHTML = renderVaultGate(state.hasVault, state.error, state.webAuthnStatus, {
@@ -619,6 +621,10 @@ async function mount(): Promise<void> {
     notificaties: await getNotificationRuntimeStatus(),
     webAuthnStatus: await buildWebAuthnStatus(session),
   };
+  if (consumeCentralSessionRenewalRecoveryFocus()) {
+    state.backupStatus =
+      'Centrale sessieherstelactie verwerkt. Controleer de centrale overdrachtstatus hieronder.';
+  }
 
   render(app, state);
   window.addEventListener('hashchange', () => render(app, state));
@@ -645,13 +651,44 @@ function formatRecoverableStorageError(error: unknown, fallback: string): string
   );
 }
 
+function markCentralSessionRenewalRecoveryFocus(): void {
+  try {
+    window.sessionStorage.setItem(CENTRAL_SESSION_RENEWAL_RECOVERY_FOCUS_KEY, '1');
+  } catch {
+    return;
+  }
+}
+
+function consumeCentralSessionRenewalRecoveryFocus(): boolean {
+  try {
+    const marked =
+      window.sessionStorage.getItem(CENTRAL_SESSION_RENEWAL_RECOVERY_FOCUS_KEY) === '1';
+    window.sessionStorage.removeItem(CENTRAL_SESSION_RENEWAL_RECOVERY_FOCUS_KEY);
+    return marked;
+  } catch {
+    return false;
+  }
+}
+
+function reloadToCentralSessionRenewalRecoveryFocus(): void {
+  markCentralSessionRenewalRecoveryFocus();
+  window.history.replaceState(null, '', '#backup?route=controleren');
+  window.location.reload();
+}
+
 function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
   root
     .querySelectorAll<HTMLButtonElement>(
       '[data-central-session-renewal-action="reload"], [data-central-replay-conflict-action="reload"]',
     )
     .forEach((button) => {
-      button.addEventListener('click', () => window.location.reload());
+      button.addEventListener('click', () => {
+        if (button.dataset.centralSessionRenewalAction === 'reload') {
+          reloadToCentralSessionRenewalRecoveryFocus();
+          return;
+        }
+        window.location.reload();
+      });
     });
 
   root.querySelector('#export-backup')?.addEventListener('click', () => {
