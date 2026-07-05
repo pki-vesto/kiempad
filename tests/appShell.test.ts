@@ -10655,6 +10655,31 @@ describe('app shell', () => {
     expect(forcedColorsCss).not.toContain('behandelkeuzeadvies');
   });
 
+  it('bewaakt forced-colors states voor embryo-beeldclassificatie review', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+    const forcedColorsCss = extractCssMediaBlock(css, 'forced-colors: active');
+
+    expect(forcedColorsCss).toContain('.imaging-metadata-review-form {');
+    expect(forcedColorsCss).toContain('border-color: CanvasText;');
+    expect(forcedColorsCss).toContain('background: Canvas;');
+    expect(forcedColorsCss).toContain('forced-color-adjust: auto;');
+    expect(forcedColorsCss).toContain('.imaging-classification-review {');
+    expect(forcedColorsCss).toContain('border: 2px solid Highlight;');
+    expect(forcedColorsCss).toContain('outline: 1px solid CanvasText;');
+    expect(forcedColorsCss).toContain('.imaging-classification-review strong {');
+    expect(forcedColorsCss).toContain('text-decoration-thickness: 2px;');
+    expect(forcedColorsCss).toContain('.imaging-metadata-review-form input,');
+    expect(forcedColorsCss).toContain('.imaging-metadata-review-form select {');
+    expect(forcedColorsCss).toContain('background: Field;');
+    expect(forcedColorsCss).toContain('color: FieldText;');
+    expect(forcedColorsCss).toContain('.imaging-metadata-review-form input:focus-visible,');
+    expect(forcedColorsCss).toContain('.imaging-metadata-review-form select:focus-visible {');
+    expect(forcedColorsCss).toContain('outline: 2px solid Highlight;');
+    expect(forcedColorsCss).not.toContain('kwaliteitsscore');
+    expect(forcedColorsCss).not.toContain('selectieadvies');
+    expect(forcedColorsCss).not.toContain('beeldpayload');
+  });
+
   it('bewaakt target- en focuscue parity voor dossier-feedback return in standaard, reduced-motion en forced-colors context', () => {
     const populatedDocument: DossierDocument = {
       id: 'cue-parity-populated',
