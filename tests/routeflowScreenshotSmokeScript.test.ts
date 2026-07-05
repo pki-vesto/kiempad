@@ -642,6 +642,17 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('prepareEmbryoImageClassificationReview');
     expect(routeflowScreenshotSmokeScript).toContain('embryoImageClassificationReview: true');
     expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-imaging-metadata-review-locked'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataReviewLocked');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-imaging-metadata-review="locked"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-attachment-preview-kind="imaging-preview"][data-attachment-preview-state="locked"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-attachment-preview-kind="imaging-thumbnail"][data-attachment-preview-state="locked"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
       'embryoImageClassificationForcedColorsEvidence: true',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
@@ -650,8 +661,21 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-embryo-image-classification-review="concept"]',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataBron');
+    expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataDatum');
+    expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataPogingId');
+    expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataAfspraakId');
     expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataEmbryoLabel');
     expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataEmbryoId');
+    expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataExifStatus');
+    expect(routeflowScreenshotSmokeScript).toContain('Beeldmetadata bewaren');
+    expect(routeflowScreenshotSmokeScript).toContain('focusRows.length !== 9');
+    expect(routeflowScreenshotSmokeScript).toContain('lockedThumbnailVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('readyFormPresent');
+    expect(routeflowScreenshotSmokeScript).toContain('hasImageElement');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'imaging metadata locked-review mist privacy-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       'embryo-beeldclassificatie review mist routeflow-evidence',
     );

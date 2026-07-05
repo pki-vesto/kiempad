@@ -17424,7 +17424,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging repository, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3815
 
 ### G1935 — Fertility Intelligence: historische tijdlijnreview routeflow evidence
@@ -17749,6 +17749,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3868
+
+### G1962 — Fertility Intelligence: imaging metadata reviewcorrectie release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De imaging metadata reviewcorrectie heeft routeflow-evidence, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge beeldtype, bron, datum, poging, afspraak, EXIF-status, reviewstatus of bewaaractie opnieuw verbergen, laten overlappen of locked bronprivacy breken.
+- **Desired Outcome:** Release-evidence documenteert dat de imaging metadata reviewflow op desktop, tablet en mobile gecontroleerd blijft zonder beeldpayloads, plaintext bronbestandsnamen of medische interpretatie.
+- **User Value:** Gebruikers houden beeldrecords betrouwbaar gekoppeld aan bron, poging en afspraak terwijl locked previews bronwaarden blijven beschermen.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar `data-imaging-metadata-review="ready"` en `data-imaging-metadata-review="locked"`; evidence bevestigt beeldtype, bron, datum, poging, afspraak, EXIF-status, reviewstatus en bewaaractie; locked previews tonen geen thumbnail, beeldpayload of plaintext bronbestandsnaam; bestaande imaging filter, vergelijking, tijdlijnkoppeling en previewhooks blijven intact; evidence bevat geen secrets, medische bronpayloads, OCR-tekst, beeldpayloads of plaintext gezondheidsdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Beelden, Beeldenoverzicht
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging repository, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3870
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 
