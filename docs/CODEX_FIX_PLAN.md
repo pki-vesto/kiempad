@@ -2215,3 +2215,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Herlaad Kiempad action in the Back-up central sync status, bound to an app
   reload without exposing tokens, passphrases, session ids, cursors, payloads
   or medical plaintext. G586/#938 was also reconciled as already delivered.
+- Partial G1844/#3631: Replay-conflict recovery states now show the same direct
+  Herlaad Kiempad action in the Back-up central sync status for warning/error
+  states, while idle states stay quiet and sanitized copy keeps record payloads,
+  filenames, tokens and medical plaintext out of the UI.

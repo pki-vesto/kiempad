@@ -3110,7 +3110,9 @@ function renderCentralSyncFeedbackRow(
   const action =
     kind === 'stale-session' && state === 'error'
       ? '<button class="secondary-button" type="button" data-central-session-renewal-action="reload">Herlaad Kiempad</button>'
-      : '';
+      : kind === 'replay-conflict' && (state === 'warning' || state === 'error')
+        ? '<button class="secondary-button" type="button" data-central-replay-conflict-action="reload">Herlaad Kiempad</button>'
+        : '';
 
   return `<div data-central-sync-feedback-kind="${kind}" data-central-sync-feedback-state="${state}"><dt>${defaults.label}</dt><dd><span>${escapeHtml(copy)}</span>${action}</dd></div>`;
 }

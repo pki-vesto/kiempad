@@ -15846,7 +15846,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, central sync feedback, Back-up UI, tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3631
 
 ### G1845 — Central session renewal recovery focus feedback
@@ -15865,6 +15865,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 105
 - **Status:** ☐ open
 - **Issue:** #3632
+
+### G1846 — Central replay conflict recovery focus feedback
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Na een replay-conflict herstelactie kan de gebruiker nog niet expliciet zien waar de status na reload terug te vinden is.
+- **User Impact:** Gebruikers krijgen wel een herlaadactie, maar missen daarna mogelijk een rustige focus- of statuscue in de Back-up omgeving.
+- **Desired Outcome:** Kiempad kan na replay-conflict recovery een generieke focus/statuscue tonen die de centrale conflictstatus terugvindbaar maakt.
+- **User Value:** Het herstelpad voelt afgerond zonder technische replaymetadata of payloadinformatie.
+- **Acceptance Criteria:** Terugkeer naar Back-up kan een generieke focus/statuscue tonen voor replay-conflict herstel; cue verschijnt niet bij normale idle replay-conflict status; geen passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload, filename of medische plaintext in copy of testfixtures; tests dekken zichtbaarheid en normale afwezigheid; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Back-up, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, central sync feedback, route focus, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3634
 
 ### G584 — paginated record load status UI
 
