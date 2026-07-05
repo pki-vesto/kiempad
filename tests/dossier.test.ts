@@ -117,6 +117,7 @@ describe('dossier', () => {
       grootte: '4 KB',
       importstatus: 'klaar_voor_review',
       importstatusLabel: 'Klaar voor review',
+      retryBeschikbaar: false,
       veiligBestandslabel: 'Beeldbron verborgen tot ontgrendeling',
       duplicaatReview: {
         status: 'duplicaat_review',
@@ -132,6 +133,8 @@ describe('dossier', () => {
       bronlabel: 'labuitslag-mei.pdf',
       importstatus: 'ocr_wacht',
       importstatusLabel: 'Wacht op lokale OCR',
+      retryBeschikbaar: true,
+      retryStatusLabel: 'Nog geen retry uitgevoerd',
       veiligBestandslabel: 'Labuitslag · 2 KB',
       duplicaatReview: {
         status: 'duplicaat_review',
@@ -140,6 +143,70 @@ describe('dossier', () => {
       },
     });
     expect(inbox.map((item) => item.veiligBestandslabel).join(' ')).not.toContain('cGRm');
+  });
+
+  it('toont importretry alleen voor wachtende of foutstatussen zonder broninhoud', () => {
+    const wacht = maakDossierDocument('doc-retry-wacht', {
+      datum: '2026-05-01',
+      titel: 'Retry wacht',
+      categorie: 'onderzoek',
+      uploadProfiel: 'pdf',
+      bestandsNaam: 'retry-wacht-secret.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'c2VjcmV0LXBheWxvYWQ=',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+      },
+    });
+    const fout = maakDossierDocument('doc-retry-fout', {
+      datum: '2026-05-02',
+      titel: 'Retry fout',
+      categorie: 'onderzoek',
+      bestandsNaam: 'retry-fout-secret.bin',
+      mimeType: 'application/octet-stream',
+      grootteBytes: 1024,
+      inhoudBase64: 'ZmFpbHVyZS1wYXlsb2Fk',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+      },
+    });
+    const klaar = maakDossierDocument('doc-retry-klaar', {
+      datum: '2026-05-03',
+      titel: 'Retry klaar',
+      categorie: 'onderzoek',
+      bestandsNaam: 'retry-klaar-secret.txt',
+      mimeType: 'text/plain',
+      grootteBytes: 512,
+      inhoudBase64: 'dGVrc3Q=',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'Lokale tekst',
+      },
+    });
+
+    const inbox = bouwDossierImportInbox([wacht, fout, klaar]);
+
+    expect(inbox.find((item) => item.id === 'doc-retry-wacht')).toMatchObject({
+      importstatus: 'ocr_wacht',
+      retryBeschikbaar: true,
+    });
+    expect(inbox.find((item) => item.id === 'doc-retry-fout')).toMatchObject({
+      importstatus: 'ocr_niet_ondersteund',
+      retryBeschikbaar: true,
+    });
+    expect(inbox.find((item) => item.id === 'doc-retry-klaar')).toMatchObject({
+      importstatus: 'ocr_uitgelezen',
+      retryBeschikbaar: false,
+    });
+    expect(
+      inbox
+        .map(
+          (item) =>
+            `${item.importstatusLabel} ${item.retryStatusLabel} ${item.veiligBestandslabel}`,
+        )
+        .join(' '),
+    ).not.toMatch(/c2VjcmV0|ZmFpbHVyZS|Lokale tekst/);
   });
 
   it('groepeert dossieruploads voor duplicaatreview op SHA-256 checksum zonder inhoud te vergelijken', () => {

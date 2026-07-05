@@ -399,6 +399,72 @@ describe('DossierStore', () => {
     );
   });
 
+  it('zet import-inbox retry per bestand versleuteld opnieuw klaar zonder plaintext payload', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-01',
+      titel: 'Retry rapport met private diagnose',
+      categorie: 'onderzoek',
+      uploadProfiel: 'pdf',
+      bestandsNaam: 'retry-private-rapport.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cHJpdmF0ZS1wYXlsb2Fk',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        verwerktOp: '2026-07-05T08:00:00.000Z',
+      },
+    });
+
+    const result = await store.retryImportInboxStap(saved.id, '2026-07-05T09:00:00.000Z');
+    const raw = await driver.getRecord(saved.id);
+
+    expect(result.status).toBe('opnieuw_klaargezet');
+    expect(result.document.ocr).toMatchObject({
+      status: 'wacht_op_lokale_ocr',
+      reviewStatus: 'concept',
+      verwerktOp: '2026-07-05T09:00:00.000Z',
+    });
+    expect(result.document.metadata.importRetry).toMatchObject({
+      status: 'opnieuw_klaargezet',
+      bron: 'retry-private-rapport.pdf',
+      datum: '2026-05-01',
+      type: 'PDF',
+      bijgewerktOp: '2026-07-05T09:00:00.000Z',
+      poging: 1,
+    });
+    expect(raw?.payload.ciphertext).not.toContain('Retry rapport');
+    expect(raw?.payload.ciphertext).not.toContain('retry-private-rapport.pdf');
+    expect(raw?.payload.ciphertext).not.toContain('opnieuw_klaargezet');
+    expect(raw?.payload.ciphertext).not.toContain('cHJpdmF0ZS1wYXlsb2Fk');
+    expect(JSON.stringify(result.document.metadata.importRetry)).not.toMatch(
+      /\bdiagnose|dosering|behandelkeuzeadvies|private-payload\b/i,
+    );
+  });
+
+  it('weigert import-inbox retry voor afgeronde OCR-records met veilige foutmelding', async () => {
+    const { store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-01',
+      titel: 'Afgeronde OCR',
+      categorie: 'onderzoek',
+      bestandsNaam: 'afgerond-secret.txt',
+      mimeType: 'text/plain',
+      grootteBytes: 512,
+      inhoudBase64: 'c2VjcmV0',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'Privetekst met diagnose',
+      },
+    });
+
+    await expect(store.retryImportInboxStap(saved.id, '2026-07-05T09:00:00.000Z')).rejects.toThrow(
+      'Importretry is niet beschikbaar voor uitgelezen OCR-records.',
+    );
+  });
+
   it('bewaart gereviewde ziekenhuisdocumenttype-correcties versleuteld zonder medische payload', async () => {
     const { driver, store } = await setupStore();
 

@@ -8224,6 +8224,11 @@ describe('app shell', () => {
     expect(html).toContain('Bronlabel: bloed-lab-uitslag.pdf');
     expect(html).toContain('data-dossier-status-kind="import"');
     expect(html).toContain('data-status-badge-state="ocr_wacht"');
+    expect(html).toContain('data-dossier-import-retry-state="ocr_wacht"');
+    expect(html).toContain('Retry: Nog geen retry uitgevoerd');
+    expect(html).toContain('class="dossier-import-retry-form"');
+    expect(html).toContain('data-dossier-import-retry-action="available"');
+    expect(html).toContain('aria-label="Probeer importstap opnieuw voor record doc-1"');
     expect(html).toContain('Veilige metadata: Labuitslag · 2 KB');
     expect(html).toContain('class="phase-button secondary delete-dossier-document"');
     expect(html).toContain('data-dossier-document-id="doc-1"');

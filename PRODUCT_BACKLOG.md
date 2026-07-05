@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1737 |
+| ☑ klaar | 1739 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1936** |
+| **Totaal** | **1938** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -739,7 +739,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G574 | Daily Recommendations: supplement artscheck actieflow | P1 | F5 | ☐ |
 | G575 | Research Intelligence: research source allowlist review evidence | P1 | F5 | ☐ |
 | G576 | Daily Recommendations: artscheck vraag reviewstatus | P1 | F5 | ☐ |
-| G577 | Fertility Intelligence: import-inbox retry per bestand | P1 | F5 | ☐ |
+| G577 | Fertility Intelligence: import-inbox retry per bestand | P1 | F5 | ☑ |
 | G578 | Fertility Intelligence: OCR-review correctieformulier | P1 | F5 | ☑ |
 | G579 | Fertility Intelligence: metadata-normalisatie correctieformulier | P1 | F5 | ☑ |
 | G580 | Fertility Intelligence: historische tijdlijnitem reviewactie | P1 | F5 | ☑ |
@@ -1859,7 +1859,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1695 | Medicatie planning routeopties helper gebruikt natuurlijk zelfstandig label | P2 | F5 | ☑ |
 | G1696 | Medicatie planning routeopties helper koppelt aanvulling aan planning | P2 | F5 | ☑ |
 | G1697 | Medicatie planning routeopties helper houdt planningcontext menselijk | P2 | F5 | ☑ |
-| G1698 | Medicatie planning routeopties helper houdt context maar korter | P2 | F5 | ☐ |
+| G1698 | Medicatie planning routeopties helper houdt context maar korter | P2 | F5 | ☑ |
 | G1699 | Premium Claude Design UI: app-shell als bounded werkruimte in plaats van lange pagina | P1 | F5 | ☑ |
 | G1700 | Premium Claude Design UI: dossier upload actiepad zichtbaarder na bounded workspace | P1 | F5 | ☑ |
 | G1701 | Premium Claude Design UI: dossier upload beeldactie opent beeldcontext directer | P1 | F5 | ☑ |
@@ -2099,12 +2099,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1935 | Fertility Intelligence: historische tijdlijnreview routeflow evidence | P1 | F5 | ☐ |
 | G1936 | Fertility Intelligence: metadata-normalisatie correctieformulier routeflow evidence | P1 | F5 | ☐ |
 | G1937 | Fertility Intelligence: OCR-review correctieformulier routeflow evidence | P1 | F5 | ☐ |
+| G1938 | Fertility Intelligence: import-inbox retry routeflow overflow evidence | P1 | F5 | ☐ |
+| G1939 | Fertility Intelligence: import-inbox retry eventlog redaction evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1936** (id's G001 t/m G1937; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1938** (id's G001 t/m G1939; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

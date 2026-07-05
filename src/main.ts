@@ -832,6 +832,12 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       showDossierDeleteConfirmation(button, root, state);
     });
   });
+  root.querySelectorAll<HTMLFormElement>('.dossier-import-retry-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void retryDossierImportFromForm(event.currentTarget, root, state);
+    });
+  });
 
   root.querySelector('#imaging-filter-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -1262,6 +1268,40 @@ async function deleteDossierDocument(
       error,
       'Dossierdocument verwijderen is mislukt.',
     );
+    render(root, state);
+  }
+}
+
+async function retryDossierImportFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+  const documentId = optionalString(new FormData(target).get('dossierDocumentId'));
+  if (!documentId) return;
+
+  try {
+    const result = await state.dossierStore.retryImportInboxStap(
+      documentId,
+      new Date().toISOString(),
+    );
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Dossierimport retry',
+      detail: `Importretry record-id ${result.document.id}; status ${result.status}.`,
+    });
+    state.dossierStatus =
+      result.status === 'opnieuw_klaargezet'
+        ? 'Importstap opnieuw klaargezet voor lokale verwerking.'
+        : 'Importretry vastgelegd; dit bestandstype heeft nog geen lokale OCR-route.';
+    state.dossierError =
+      result.status === 'niet_ondersteund'
+        ? 'Deze importstap kan nog niet opnieuw worden verwerkt voor dit bestandstype.'
+        : undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError = formatRecoverableStorageError(error, 'Importretry is mislukt.');
     render(root, state);
   }
 }
