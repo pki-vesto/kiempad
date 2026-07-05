@@ -196,6 +196,11 @@
   en de foutmeldingcontext `Offline cache metadata release-state contract error-contract error error error releasecontext ontbreekt voor termen`
   in changelog en current-state blijven staan met alleen `offline cache metadata
   missing-term error contract` en `veilige technische labels`.
+- **G2013 offline cache metadata release-state contract error-contract error
+  error error error missing-term fixture:** de maintenance-test meldt compact
+  wanneer de veilige labels `offline cache metadata missing-term error
+  contract` of `veilige technische labels` uit G2012 error-contract error
+  error error error release-evidence verdwijnen.
 - **G2011 offline cache metadata release-state contract error-contract error
   error error missing-term error contract:** de exacte G2010 error-contract
   error error error release missing-term foutmelding is als
