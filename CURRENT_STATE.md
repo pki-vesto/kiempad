@@ -81,6 +81,9 @@
   een lokale update-datum, bron, reviewstatus, correctievelden en uitleg voor leken,
   zodat gebruikers trendmetadata kunnen controleren zonder medisch advies of
   keuzehulp.
+- **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
+  conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
+  zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.
 - **G488 Dagadvies personalisatiefeedback:** lokale feedbackstatussen uit encrypted
   eventlogs tonen per suggestie hoe Kiempad de status gebruikt, inclusief uitleg
   dat niet-passend lager prioriteert maar vergelijkbare suggesties niet

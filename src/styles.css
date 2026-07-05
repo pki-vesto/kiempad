@@ -1423,6 +1423,44 @@ h2 {
   background: var(--surface-raised);
 }
 
+.research-clinician-questions {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--category) 14%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--category) 5%, var(--surface));
+}
+
+.research-clinician-questions > strong {
+  color: var(--text-strong);
+}
+
+.research-clinician-questions ol {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-clinician-questions li {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.research-clinician-questions span {
+  min-width: 0;
+  color: var(--text);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
 .timeline-list > li {
   display: grid;
   justify-content: stretch;

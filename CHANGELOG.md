@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G546 Research Intelligence: researchrelevantie toont nu neutrale vragen voor
+  de kliniek met bron, datum, reviewstatus, correctievelden en uitleg voor leken.
 - G541 Research Intelligence: researchsamenvattingen tonen nu een parsed
   broncitatieblok met bron, datum, reviewstatus, citationtype, origineel en
   correctievelden.

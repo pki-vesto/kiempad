@@ -42732,6 +42732,31 @@ describe('app shell', () => {
     expect(html).toContain('contextmatch_onzeker_geen_causaliteit');
     expect(html).toContain('Uitleg voor leken');
     expect(html).toContain('Deze relevantie is een controleerbare koppeling');
+    expect(html).toContain('data-research-clinician-questions="ready"');
+    expect(html).toContain('data-research-clinician-questions-count="3"');
+    expect(html).toContain('Vragen voor de kliniek');
+    expect(html).toContain(
+      'data-research-clinician-question="research-eigen-researchvraag-context"',
+    );
+    expect(html).toContain('data-research-clinician-question-metadata="ready"');
+    expect(html).toContain(
+      'Welke punten uit &quot;Eigen artikel embryo-cultuur&quot; zijn zinvol om te bespreken naast Traject: Poging 1?',
+    );
+    expect(html).toContain(
+      'Welke onzekerheden of beperkingen uit deze publicatie moeten we meenemen in onze vragen?',
+    );
+    expect(html).toContain(
+      'Welke extra informatie is volgens de kliniek nodig als context nu ontbreekt: Recent consultverslag ontbreekt en Recent dossierdocument ontbreekt?',
+    );
+    expect(html).toContain('<dt>Bron</dt><dd>https://voorbeeld.test/embryo-cultuur</dd>');
+    expect(html).toContain('<dt>Datum</dt><dd>2026-05-10</dd>');
+    expect(html).toContain('<dt>Reviewstatus</dt><dd>concept_te_controleren</dd>');
+    expect(html).toContain(
+      '<dt>Correctievelden</dt><dd>vraagtekst · contextfactoren · bron · publicatieDatum · reviewstatus</dd>',
+    );
+    expect(html).toContain(
+      'Deze vraag is een concept voor het gesprek met de kliniek; controleer of hij past bij jullie situatie.',
+    );
     expect(html).toContain('class="research-relevance-review-form compact-form"');
     expect(html).toContain('data-research-relevance-id="research-eigen"');
     expect(html).toContain('name="researchRelevanceCorrection"');
