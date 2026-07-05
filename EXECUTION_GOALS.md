@@ -15699,7 +15699,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations, vragen, herinneringen, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ completed
 
 ### G575 — research source allowlist review evidence
 
@@ -17527,6 +17527,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3826
+
+### G1941 — Daily Recommendations: supplement artscheck actieflow routeflow evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** Supplementchecklistregels hebben nu een eigen artscheckvraagactie, maar routeflow-bewijs moet nog bewaken dat de per-regel actie naast bron/disclaimer/artschecklabel scanbaar blijft.
+- **User Impact:** Zonder visuele evidence kan een latere themawijziging de per-regel actie laten overlappen met checklistcopy of laten verdwijnen in de dagadvieskaart.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de supplement-artscheckactie zonder dosering, interactieclaim, behandelvervanging of medische payload.
+- **User Value:** Gebruikers kunnen supplementvragen veilig blijven omzetten naar consultvoorbereiding zonder dat Kiempad als supplement- of doseringsadvies voelt.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-supplement-artscheck-action="available"` en `name="recommendationAction" value="supplementArtscheck"` op desktop en mobiel; checklistlabel, bron/disclaimer en actieknop blijven scanbaar zonder page-level horizontale overflow; gewone checklistregels zonder artscheck tonen geen per-regel actie; tests en fixtures blijven vrij van secrets, medische payloads, dosering, interactieclaims en behandelkeuzeadvies; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dagadvies, Start
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations, supplement checklist, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3828
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 
