@@ -101,6 +101,11 @@
   cachebron, datum, reviewstatus, cachetype en correctievelden als veilige
   context zonder diagnose, dosering, kansberekening, behandelkeuzeadvies,
   secret, gezondheidsdata of plaintext medische payload.
+- **G1990 offline cache metadata missing-term contract:** de exacte foutmelding
+  voor ontbrekende offline-cache release-evidence termen is als compact
+  maintenance-contract gesnapshott met alleen
+  `knowledge-research-offline-cache-metadata` en
+  `data-research-offline-cache-metadata` als veilige technische labels.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.
