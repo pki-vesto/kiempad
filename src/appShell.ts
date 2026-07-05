@@ -12994,7 +12994,7 @@ function renderKennisScreen(state: AppShellState): string {
                 <em>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} samenvattingen</em>
               </summary>
               <div class="knowledge-research-context-choice__body">
-                <details class="kp-disclosure knowledge-research-sources-choice" data-knowledge-research-disclosure="sources" data-knowledge-research-sources-choice="collapsed">
+                <details id="knowledge-research-sources" class="kp-disclosure knowledge-research-sources-choice" data-knowledge-research-disclosure="sources" data-knowledge-research-sources-choice="collapsed">
                   <summary class="kp-disclosure__summary knowledge-research-sources-choice__summary">
                     <span>
                       <strong>Bronnenkeuze openen</strong>
@@ -13017,9 +13017,15 @@ function renderKennisScreen(state: AppShellState): string {
                     <em>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} items</em>
                   </summary>
                   <div class="kp-disclosure__body">
+                    ${renderKnowledgeResearchSummaryReadingBoard({
+                      scientific: researchSamenvattingen.length,
+                      patient: eenvoudigeResearchSamenvattingen.length,
+                      relevance: researchRelevantie.length,
+                      sources: researchBronnen.length,
+                    })}
                     <div class="knowledge-route-grid knowledge-route-grid--research">
-                      <div class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
-                      <div class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
+                      <div id="knowledge-research-scientific-summaries" class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
+                      <div id="knowledge-research-patient-summaries" class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
                     </div>
                   </div>
                 </details>
@@ -13572,6 +13578,66 @@ function renderKnowledgeResearchReader(input: {
         <p class="small-print">Kiempad toont hier geen dossierplaintext of OCR-tekst en geeft geen behandeladvies; gebruik de lagen als voorbereiding op gesprek met je kliniek.</p>
       </div>
     </details>
+  `;
+}
+
+function renderKnowledgeResearchSummaryReadingBoard(input: {
+  scientific: number;
+  patient: number;
+  relevance: number;
+  sources: number;
+}): string {
+  const lanes = [
+    {
+      id: 'scientific',
+      href: '#knowledge-research-scientific-summaries',
+      label: 'Wetenschappelijk',
+      value: `${input.scientific} item${input.scientific === 1 ? '' : 's'}`,
+      detail: 'Methode en beperkingen',
+    },
+    {
+      id: 'simple',
+      href: '#knowledge-research-patient-summaries',
+      label: 'Eenvoudig',
+      value: `${input.patient} uitleg${input.patient === 1 ? '' : 'en'}`,
+      detail: 'Gewone taal per bron',
+    },
+    {
+      id: 'relevance',
+      href: '#knowledge-research-trends',
+      label: 'Relevantie',
+      value: `${input.relevance} context${input.relevance === 1 ? '' : 's'}`,
+      detail: 'Bespreekpunten, geen advies',
+    },
+    {
+      id: 'source',
+      href: '#knowledge-research-sources',
+      label: 'Broncontext',
+      value: `${input.sources} bron${input.sources === 1 ? '' : 'nen'}`,
+      detail: 'Citation en allowlist',
+    },
+  ];
+
+  return `
+    <section class="research-summary-reading-board" aria-label="Research samenvatting leesbord" data-research-summary-reading-board="first-viewport">
+      <header class="research-summary-reading-board__header">
+        <p class="kp-card__eyebrow">Leesbord</p>
+        <h3>Kies eerst hoe je wilt lezen</h3>
+      </header>
+      <nav class="research-summary-reading-board__lanes" aria-label="Research samenvatting routes">
+        ${lanes
+          .map(
+            (
+              lane,
+            ) => `<a class="research-summary-reading-board__lane" href="${escapeAttribute(lane.href)}" data-research-summary-reading-lane="${escapeAttribute(lane.id)}">
+              <span>${escapeHtml(lane.label)}</span>
+              <strong>${escapeHtml(lane.value)}</strong>
+              <small>${escapeHtml(lane.detail)}</small>
+            </a>`,
+          )
+          .join('')}
+      </nav>
+    </section>
   `;
 }
 

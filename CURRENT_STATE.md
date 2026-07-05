@@ -74,6 +74,11 @@
   transcript- en reviewdetails een compacte eerste-viewport werkbank met routes
   naar verslag, samenvatting, actiepunten en broncontext. Mobiel blijft de werkbank
   horizontaal scanbaar zonder bestaande consultankers of reviewformulieren te breken.
+- **G1862 researchsamenvatting leesbord:** de researchsamenvattingenroute toont
+  vóór de wetenschappelijke en eenvoudige lijsten een compact leesbord voor
+  wetenschappelijke samenvatting, eenvoudige uitleg, relevantie en broncontext.
+  Mobiel blijft het bord horizontaal scanbaar en de bestaande bron-/trendanchors
+  blijven intact.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

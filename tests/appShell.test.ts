@@ -9582,6 +9582,11 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-followup {');
     expect(css).toContain('.knowledge-research-followup__summary {');
     expect(css).toContain('.knowledge-research-followup__body {');
+    expect(css).toContain('.research-summary-reading-board {');
+    expect(css).toContain('.research-summary-reading-board__lanes {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.research-summary-reading-board__lane {');
+    expect(css).toContain('min-height: 78px;');
     expect(mobileCss).toContain('.dossier-focus-shell {');
     expect(mobileCss).toContain(
       '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
@@ -9603,6 +9608,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.dossier-route-snapshot__card {');
     expect(mobileCss).toContain('flex: 0 0 min(230px, 76vw);');
     expect(mobileCss).toContain('.dossier-upload-triage {');
+    expect(mobileCss).toContain('.research-summary-reading-board__lanes {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.research-summary-reading-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(164px, 72vw);');
     expect(mobileCss).toContain('.dossier-upload-action-path {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.dossier-upload-action-path__item {');
@@ -39579,9 +39588,26 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-research-summaries-choice="collapsed"');
     expect(html).toContain('Samenvattingkeuze openen');
     expect(html).toContain('Wetenschappelijke en eenvoudige uitleg.');
+    expect(html).toContain('data-research-summary-reading-board="first-viewport"');
+    expect(html).toContain('aria-label="Research samenvatting leesbord"');
+    expect(html).toContain('Leesbord');
+    expect(html).toContain('Kies eerst hoe je wilt lezen');
+    expect(html).toContain('data-research-summary-reading-lane="scientific"');
+    expect(html).toContain('href="#knowledge-research-scientific-summaries"');
+    expect(html).toContain('data-research-summary-reading-lane="simple"');
+    expect(html).toContain('href="#knowledge-research-patient-summaries"');
+    expect(html).toContain('data-research-summary-reading-lane="relevance"');
+    expect(html).toContain('href="#knowledge-research-trends"');
+    expect(html).toContain('data-research-summary-reading-lane="source"');
+    expect(html).toContain('href="#knowledge-research-sources"');
+    expect(html).toContain('id="knowledge-research-scientific-summaries"');
+    expect(html).toContain('id="knowledge-research-patient-summaries"');
     expect(html).toContain('data-research-summary-component="scientific-list"');
     expect(html).toContain('data-research-summary-component="patient-list"');
     expect(html.indexOf('data-knowledge-research-summaries-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-research-summary-reading-board="first-viewport"'),
+    );
+    expect(html.indexOf('data-research-summary-reading-board="first-viewport"')).toBeLessThan(
       html.indexOf('data-research-summary-component="scientific-list"'),
     );
     expect(html).not.toContain(

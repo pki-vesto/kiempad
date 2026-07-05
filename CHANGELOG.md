@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1862 Premium Claude Design UI: researchsamenvattingen openen nu met een
+  eerste-viewport leesbord voor wetenschappelijke samenvatting, eenvoudige uitleg,
+  relevantie en broncontext. De volledige lijsten, bronnen en trends blijven via
+  bestaande anchors bereikbaar zonder als één lange leesstapel te starten.
 - G1861 Premium Claude Design UI: consultkaarten openen nu met een compacte
   reviewwerkbank voor verslag, samenvatting, actiepunten en broncontext. De
   langere transcript-, correctie- en bronpanelen blijven bereikbaar via anchors
