@@ -30421,6 +30421,7 @@ summary[class*="__summary"]:focus-visible,
       "context admin";
     gap: 7px;
     padding: 7px;
+    isolation: isolate;
   }
 
   .treatment-task-routes:has([data-command-route-group="planning"][aria-current="page"]) {
@@ -30458,6 +30459,26 @@ summary[class*="__summary"]:focus-visible,
 
   .treatment-task-route[aria-current="page"] {
     min-height: 80px;
+    transform: translateY(-1px);
+    box-shadow:
+      0 10px 22px color-mix(in srgb, var(--accent) 14%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--accent) 36%, transparent);
+    scroll-margin-top: 12px;
+  }
+
+  .treatment-task-route {
+    transition:
+      background var(--motion),
+      border-color var(--motion),
+      box-shadow var(--motion),
+      color var(--motion),
+      transform var(--motion);
+  }
+
+  .treatment-task-route:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent) 70%, transparent);
+    outline-offset: 3px;
+    transform: translateY(-1px);
   }
 
   .treatment-task-route[data-command-route-group="planning"] {

@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1891 Premium Claude Design UI: de mobiele Traject route-rail heeft nu
+  duidelijkere actieve/focusfeedback met ring, subtiele lift, scroll-margin en
+  geïsoleerde stacking. Routehooks, routegroepen en privacygrenzen blijven
+  intact.
 - G1890 Premium Claude Design UI: de mobiele Traject route-rail promoveert de
   actieve route bovenaan over de volle breedte, ook wanneer Fasen, Vergoeding,
   Context of Beheer actief is. Routegroepen, hrefs, badges, aria-current
