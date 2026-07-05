@@ -99,6 +99,7 @@ export type WetenschappelijkeResearchSamenvatting = {
   wetenschappelijkeSamenvatting: string;
   scientificSummary: string;
   sourceCitation: string;
+  broncitatie: ResearchBroncitatie;
   aiConcept: boolean;
   waarschuwing: string;
 };
@@ -111,9 +112,22 @@ export type EenvoudigeResearchSamenvatting = {
   eenvoudigeSamenvatting: string;
   patientSummary: string;
   sourceCitation: string;
+  broncitatie: ResearchBroncitatie;
   leesniveauGuard: PatientvriendelijkeSamenvattingLeesniveauGuard;
   aiConcept: boolean;
   waarschuwing: string;
+};
+
+export type ResearchBroncitatie = {
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  citationTekst: string;
+  citationType: 'url_met_publicatiedatum' | 'url_zonder_publicatiedatum' | 'tekstuele_bron';
+  gevondenUrl?: string;
+  gevondenDatum?: string;
+  correctieVelden: string[];
+  uitlegVoorLeken: string;
 };
 
 export type PatientvriendelijkeSamenvattingLeesniveauGuard = {
@@ -655,6 +669,16 @@ export function bouwWetenschappelijkeResearchSamenvattingen(
           item.researchPublicatie.bron,
           item.researchPublicatie.publicatieDatum,
         ),
+      broncitatie: parseResearchBroncitatie({
+        sourceCitation:
+          item.researchPublicatie.sourceCitation ??
+          bouwResearchSourceCitation(
+            item.researchPublicatie.bron,
+            item.researchPublicatie.publicatieDatum,
+          ),
+        bron: item.researchPublicatie.bron,
+        publicatieDatum: item.researchPublicatie.publicatieDatum,
+      }),
       aiConcept: item.ai_gegenereerd,
       waarschuwing:
         'Conceptsamenvatting met bronverwijzing; controleer publicatie en kliniekcontext. Dit is geen diagnose, dosering of behandelkeuzeadvies.',
@@ -694,6 +718,16 @@ export function bouwEenvoudigeResearchSamenvattingen(
           item.researchPublicatie.bron,
           item.researchPublicatie.publicatieDatum,
         ),
+      broncitatie: parseResearchBroncitatie({
+        sourceCitation:
+          item.researchPublicatie.sourceCitation ??
+          bouwResearchSourceCitation(
+            item.researchPublicatie.bron,
+            item.researchPublicatie.publicatieDatum,
+          ),
+        bron: item.researchPublicatie.bron,
+        publicatieDatum: item.researchPublicatie.publicatieDatum,
+      }),
       leesniveauGuard: bouwPatientvriendelijkeSamenvattingLeesniveauGuard({
         tekst:
           item.researchPublicatie.patientSummary ?? item.researchPublicatie.eenvoudigeSamenvatting,
@@ -747,6 +781,35 @@ export function bouwPatientvriendelijkeSamenvattingLeesniveauGuard(input: {
       status === 'begrijpelijk_concept'
         ? 'Deze samenvatting gebruikt korte zinnen en gewone woorden genoeg voor een eerste lezing; controleer de tekst nog zelf.'
         : 'Deze samenvatting heeft extra controle nodig op lengte of vaktaal voordat hij prettig leesbaar is.',
+  };
+}
+
+export function parseResearchBroncitatie(input: {
+  sourceCitation: string;
+  bron: string;
+  publicatieDatum: string;
+}): ResearchBroncitatie {
+  const citationTekst = input.sourceCitation.trim();
+  const gevondenUrl =
+    citationTekst.match(/https?:\/\/[^\s,;]+/i)?.[0]?.replace(/[.)\]]$/, '') ?? undefined;
+  const gevondenDatum = citationTekst.match(/\b\d{4}-\d{2}-\d{2}\b/)?.[0] ?? undefined;
+  const citationType = gevondenUrl
+    ? gevondenDatum
+      ? 'url_met_publicatiedatum'
+      : 'url_zonder_publicatiedatum'
+    : 'tekstuele_bron';
+
+  return {
+    bron: gevondenUrl ?? input.bron,
+    datum: gevondenDatum ?? input.publicatieDatum,
+    reviewStatus: 'concept_te_controleren',
+    citationTekst,
+    citationType,
+    gevondenUrl,
+    gevondenDatum,
+    correctieVelden: ['sourceCitation', 'bron', 'publicatieDatum', 'reviewstatus'],
+    uitlegVoorLeken:
+      'Deze broncitatie is automatisch gesplitst in bron en datum zodat je de verwijzing handmatig kunt controleren.',
   };
 }
 

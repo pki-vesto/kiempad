@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G541 Research Intelligence research item broncitatie parser — done in G541 / issue #872.** Researchsamenvattingen tonen nu een parsed broncitatieblok met bron, datum, reviewstatus, citationtype, origineel en correctievelden.
 - **G542 Research Intelligence patientvriendelijke samenvatting leesniveau guard — done in G542 / issue #873.** Eenvoudige researchsamenvattingen tonen nu een leesniveauguard met bron, datum, reviewstatus, vaktaalsignalering, correctievelden en lekenuitleg.
 - **G543 Research Intelligence trend update timestamp — done in G543 / issue #874.** Researchtrendkaarten tonen nu per onderwerp een controleerbare update-timestamp met datum, bron, reviewstatus, correctievelden en lekenuitleg op basis van lokale researchbibliotheekmetadata.
 - **G552 Daily Recommendations feedbackanalytics — done in G552 / issue #883.** De Dagadvies-werkbank toont nu lokale feedbackanalytics zonder tracking met statusverdeling, eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en no-tracking copy op basis van encrypted eventlogs.

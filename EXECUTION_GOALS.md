@@ -15233,7 +15233,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, knowledge, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #872
 
 ### G542 — patientvriendelijke samenvatting leesniveau guard
 
@@ -18200,6 +18201,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3906
+
+### G1985 — Research Intelligence: source citation parser routeflow evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** De research broncitatie-parser is zichtbaar in researchsamenvattingen, maar routeflow-bewijs moet expliciet blijven vastleggen dat bron, datum, reviewstatus, citationtype en correctievelden bereikbaar blijven na UI-wijzigingen.
+- **User Impact:** Gebruikers kunnen anders minder goed controleren waar researchsamenvattingen op steunen.
+- **Desired Outcome:** Routeflow- en release-evidence noemen de source citation parser, inclusief data-hooks, bronherleiding en niet-medische grens.
+- **User Value:** Gebruikers blijven controleren waar researchsamenvattingen op steunen voordat ze die als gesprekvoorbereiding gebruiken.
+- **Acceptance Criteria:** Evidence noemt `data-research-source-citation-parser`; evidence noemt bron, datum, reviewstatus, citationtype en correctievelden; evidence bewaakt dat geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt getoond; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research summaries, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3908
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

@@ -25,6 +25,7 @@ import {
   maakEigenKennisItem,
   maakResearchKennisItem,
   markeerKennisItemGeverifieerd,
+  parseResearchBroncitatie,
   RESEARCH_SOURCE_REGISTRY,
 } from '../src/domain/kennis';
 
@@ -285,6 +286,18 @@ describe('kennis domeinregels', () => {
         scientificSummary:
           'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
         sourceCitation: 'https://voorbeeld.test/embryo-cultuur · publicatiedatum 2026-05-10',
+        broncitatie: {
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          datum: '2026-05-10',
+          reviewStatus: 'concept_te_controleren',
+          citationTekst: 'https://voorbeeld.test/embryo-cultuur · publicatiedatum 2026-05-10',
+          citationType: 'url_met_publicatiedatum',
+          gevondenUrl: 'https://voorbeeld.test/embryo-cultuur',
+          gevondenDatum: '2026-05-10',
+          correctieVelden: ['sourceCitation', 'bron', 'publicatieDatum', 'reviewstatus'],
+          uitlegVoorLeken:
+            'Deze broncitatie is automatisch gesplitst in bron en datum zodat je de verwijzing handmatig kunt controleren.',
+        },
         aiConcept: false,
         waarschuwing:
           'Conceptsamenvatting met bronverwijzing; controleer publicatie en kliniekcontext. Dit is geen diagnose, dosering of behandelkeuzeadvies.',
@@ -315,6 +328,18 @@ describe('kennis domeinregels', () => {
         patientSummary:
           'Dit artikel beschrijft welke labfactoren zijn bekeken. Het bewijst geen beste behandeling.',
         sourceCitation: 'https://voorbeeld.test/embryo-cultuur · publicatiedatum 2026-05-10',
+        broncitatie: {
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          datum: '2026-05-10',
+          reviewStatus: 'concept_te_controleren',
+          citationTekst: 'https://voorbeeld.test/embryo-cultuur · publicatiedatum 2026-05-10',
+          citationType: 'url_met_publicatiedatum',
+          gevondenUrl: 'https://voorbeeld.test/embryo-cultuur',
+          gevondenDatum: '2026-05-10',
+          correctieVelden: ['sourceCitation', 'bron', 'publicatieDatum', 'reviewstatus'],
+          uitlegVoorLeken:
+            'Deze broncitatie is automatisch gesplitst in bron en datum zodat je de verwijzing handmatig kunt controleren.',
+        },
         leesniveauGuard: {
           bron: 'https://voorbeeld.test/embryo-cultuur',
           datum: '2026-05-10',
@@ -850,6 +875,40 @@ describe('kennis domeinregels', () => {
       'statistisch significant',
     ]);
     expect(controleNodig.uitlegVoorLeken).toContain('extra controle nodig');
+  });
+
+  it('parset research broncitatie met bron, datum en reviewstatus', () => {
+    expect(
+      parseResearchBroncitatie({
+        sourceCitation: 'Zie https://pubmed.ncbi.nlm.nih.gov/123456/ publicatie 2026-05-10.',
+        bron: 'https://voorbeeld.test/fallback',
+        publicatieDatum: '2026-04-01',
+      }),
+    ).toEqual({
+      bron: 'https://pubmed.ncbi.nlm.nih.gov/123456/',
+      datum: '2026-05-10',
+      reviewStatus: 'concept_te_controleren',
+      citationTekst: 'Zie https://pubmed.ncbi.nlm.nih.gov/123456/ publicatie 2026-05-10.',
+      citationType: 'url_met_publicatiedatum',
+      gevondenUrl: 'https://pubmed.ncbi.nlm.nih.gov/123456/',
+      gevondenDatum: '2026-05-10',
+      correctieVelden: ['sourceCitation', 'bron', 'publicatieDatum', 'reviewstatus'],
+      uitlegVoorLeken:
+        'Deze broncitatie is automatisch gesplitst in bron en datum zodat je de verwijzing handmatig kunt controleren.',
+    });
+
+    expect(
+      parseResearchBroncitatie({
+        sourceCitation: 'Klinieknotitie zonder link',
+        bron: 'lokale notitie',
+        publicatieDatum: '2026-04-01',
+      }),
+    ).toMatchObject({
+      bron: 'lokale notitie',
+      datum: '2026-04-01',
+      reviewStatus: 'concept_te_controleren',
+      citationType: 'tekstuele_bron',
+    });
   });
 
   it('maakt eigen kennisitems in gekozen categorie', () => {

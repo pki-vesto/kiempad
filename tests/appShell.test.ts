@@ -42542,6 +42542,23 @@ describe('app shell', () => {
       'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
     );
     expect(html).toContain('sourceCitation: Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.');
+    expect(html).toContain('data-research-source-citation-parser="ready"');
+    expect(html).toContain('data-research-source-citation-review="concept_te_controleren"');
+    expect(html).toContain('data-research-source-citation-type="tekstuele_bron"');
+    expect(html).toContain('data-research-source-citation-source="ready"');
+    expect(html).toContain('data-research-source-citation-date="2026-05-10"');
+    expect(html).toContain('<dt>Broncitatie</dt><dd>https://voorbeeld.test/embryo-cultuur</dd>');
+    expect(html).toContain('<dt>Datum</dt><dd>2026-05-10</dd>');
+    expect(html).toContain('<dt>Reviewstatus</dt><dd>concept_te_controleren</dd>');
+    expect(html).toContain(
+      '<dt>Origineel</dt><dd>Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.</dd>',
+    );
+    expect(html).toContain(
+      '<dt>Correctievelden</dt><dd>sourceCitation · bron · publicatieDatum · reviewstatus</dd>',
+    );
+    expect(html).toContain(
+      'Deze broncitatie is automatisch gesplitst in bron en datum zodat je de verwijzing handmatig kunt controleren.',
+    );
     expect(html).toContain('scientificSummary: Prospectieve cohortstudie');
     expect(html).toContain('AI-concept · brongekoppeld');
     expect(html).toContain('Conceptsamenvatting met bronverwijzing');
@@ -42630,6 +42647,9 @@ describe('app shell', () => {
     );
     expect(html).toContain('sourceCitation: Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.');
     expect(html).toContain('patientSummary: Dit artikel legt uit welke labfactoren zijn bekeken');
+    expect(html).toContain('data-research-source-citation-parser="ready"');
+    expect(html).toContain('data-research-source-citation-review="concept_te_controleren"');
+    expect(html).toContain('data-research-source-citation-date="2026-05-10"');
     expect(html).toContain('data-research-summary-reading-level-guard="ready"');
     expect(html).toContain('data-research-summary-reading-level-status="begrijpelijk_concept"');
     expect(html).toContain('data-research-summary-reading-level-review="concept_te_controleren"');

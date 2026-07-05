@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G541 Research Intelligence: researchsamenvattingen tonen nu een parsed
+  broncitatieblok met bron, datum, reviewstatus, citationtype, origineel en
+  correctievelden.
 - G542 Research Intelligence: eenvoudige researchsamenvattingen tonen nu een
   patientvriendelijke leesniveauguard met bron, datum, reviewstatus,
   vaktaalsignalering, correctievelden en uitleg voor leken.

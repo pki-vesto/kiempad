@@ -26987,6 +26987,44 @@ summary[class*="__summary"]:focus-visible,
   overflow-wrap: anywhere;
 }
 
+.research-source-citation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 9px;
+  border: 1px solid color-mix(in srgb, var(--category) 15%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--category) 5%, var(--surface));
+}
+
+.research-source-citation div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.research-source-citation dt,
+.research-source-citation dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.research-source-citation dt {
+  color: var(--text-faint);
+  font-size: 0.66rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.research-source-citation dd {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.25;
+}
+
 .research-summary-reading-level {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -32379,6 +32417,10 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .kp-research-summary-card__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .research-source-citation {
     grid-template-columns: 1fr;
   }
 
