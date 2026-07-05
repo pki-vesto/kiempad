@@ -266,6 +266,77 @@ describe('DossierStore', () => {
     );
   });
 
+  it('corrigeert metadata-normalisatie versleuteld zonder originele waarden te overschrijven', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-01',
+      titel: 'Onzeker metadata rapport',
+      categorie: 'onderzoek',
+      uploadProfiel: 'fertiliteitsrapport',
+      bestandsNaam: 'onzeker-metadata.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRmLWdlaGVpbQ==',
+      metadataCorrectie: {
+        datum: '2026-05-02',
+        bron: 'Oude bron',
+        documenttype: 'Fertiliteitsrapport',
+        onzekerheid: 'hoog',
+      },
+    });
+
+    const updated = await store.updateMetadataNormalisatieCorrectie(saved.id, {
+      datum: '2026-05-09',
+      bron: 'Gereviewde kliniekexport',
+      documenttype: 'Labuitslag',
+      onderzoekstype: 'Hormoonwaarde',
+      pogingId: 'poging-gecorrigeerd',
+      afspraakId: 'afspraak-gecorrigeerd',
+      onzekerheid: 'laag',
+    });
+    const raw = await driver.getRecord(saved.id);
+    const listed = await store.list();
+
+    expect(updated.metadata.normalisatie).toMatchObject({
+      datum: '2026-05-09',
+      bron: 'Gereviewde kliniekexport',
+      documenttype: 'Labuitslag',
+      onderzoekstype: 'Hormoonwaarde',
+      pogingId: 'poging-gecorrigeerd',
+      afspraakId: 'afspraak-gecorrigeerd',
+      onzekerheid: 'laag',
+      overschrevenDoorGebruiker: true,
+    });
+    expect(updated.metadata.normalisatie?.origineleWaarden).toMatchObject({
+      datum: '2026-05-01',
+      bron: 'onzeker-metadata.pdf',
+      documenttype: 'Fertiliteitsrapport',
+    });
+    expect(bouwDossierIndex(listed)[0]).toMatchObject({
+      datum: '2026-05-09',
+      bron: 'Gereviewde kliniekexport',
+      documenttype: 'Labuitslag',
+      trajectId: 'poging-gecorrigeerd',
+      afspraakId: 'afspraak-gecorrigeerd',
+      onzekerheid: 'laag',
+    });
+    expect(bouwDossierTijdlijn(listed)[0]).toMatchObject({
+      datum: '2026-05-09',
+      documenttype: 'Labuitslag',
+      bron: 'metadata',
+    });
+    expect(raw?.payload.ciphertext).not.toContain('Onzeker metadata rapport');
+    expect(raw?.payload.ciphertext).not.toContain('onzeker-metadata.pdf');
+    expect(raw?.payload.ciphertext).not.toContain('Oude bron');
+    expect(raw?.payload.ciphertext).not.toContain('Gereviewde kliniekexport');
+    expect(raw?.payload.ciphertext).not.toContain('poging-gecorrigeerd');
+    expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
+    expect(JSON.stringify(updated.metadata.normalisatie)).not.toMatch(
+      /\bdiagnose|dosering|behandelkeuzeadvies\b/i,
+    );
+  });
+
   it('bewaart gereviewde ziekenhuisdocumenttype-correcties versleuteld zonder medische payload', async () => {
     const { driver, store } = await setupStore();
 

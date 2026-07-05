@@ -167,6 +167,70 @@ export class DossierStore {
     return updated;
   }
 
+  async updateMetadataNormalisatieCorrectie(
+    documentId: string,
+    correctie: {
+      datum: string;
+      bron: string;
+      documenttype: string;
+      onzekerheid: NonNullable<DossierDocument['metadata']['normalisatie']>['onzekerheid'];
+      onderzoekstype?: string;
+      pogingId?: string;
+      afspraakId?: string;
+    },
+  ): Promise<DossierDocument> {
+    const record = await this.documenten.get(documentId);
+    if (!record?.value) {
+      throw new Error('Dossierdocument niet gevonden.');
+    }
+
+    const document = record.value;
+    const bestaandeNormalisatie = document.metadata.normalisatie;
+    const origineleWaarden = bestaandeNormalisatie?.origineleWaarden ?? {
+      datum: document.metadata.documentDatum ?? document.datum,
+      bron: document.metadata.bronbestand ?? document.bestandsNaam,
+      documenttype:
+        document.metadata.documenttype ??
+        (document.uploadProfiel
+          ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+          : DOSSIER_CATEGORIE_LABELS[document.categorie]),
+      pogingId: document.metadata.trajectId ?? document.trajectId,
+      afspraakId: document.afspraakId,
+    };
+    const updatedNormalisatie: NonNullable<DossierDocument['metadata']['normalisatie']> = {
+      ...bestaandeNormalisatie,
+      datum: correctie.datum,
+      bron: correctie.bron,
+      documenttype: correctie.documenttype,
+      onderzoekstype: correctie.onderzoekstype,
+      labwaarden: bestaandeNormalisatie?.labwaarden,
+      pogingId: correctie.pogingId,
+      afspraakId: correctie.afspraakId,
+      onzekerheid: correctie.onzekerheid,
+      origineleWaarden,
+      overschrevenDoorGebruiker: true,
+    };
+    const bestaandeTijdlijnReview = document.metadata.historischeTijdlijnReview;
+    const updated: DossierDocument = {
+      ...document,
+      afspraakId: correctie.afspraakId ?? document.afspraakId,
+      trajectId: correctie.pogingId ?? document.trajectId,
+      metadata: {
+        ...document.metadata,
+        normalisatie: updatedNormalisatie,
+        historischeTijdlijnReview: bestaandeTijdlijnReview
+          ? {
+              ...bestaandeTijdlijnReview,
+              datum: correctie.datum,
+              bron: correctie.bron,
+            }
+          : bestaandeTijdlijnReview,
+      },
+    };
+    await this.documenten.saveWithId(updated);
+    return updated;
+  }
+
   async delete(id: string): Promise<void> {
     await this.documenten.delete(id);
   }

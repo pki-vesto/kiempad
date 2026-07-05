@@ -22030,7 +22030,8 @@ a.action-card:active {
   min-width: 0;
 }
 
-.historical-timeline-review-form {
+.historical-timeline-review-form,
+.metadata-normalization-correction-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
@@ -22043,11 +22044,15 @@ a.action-card:active {
 
 .historical-timeline-review-form > strong,
 .historical-timeline-review-form > p,
-.historical-timeline-review-form > dl {
+.historical-timeline-review-form > dl,
+.metadata-normalization-correction-form > strong,
+.metadata-normalization-correction-form > p,
+.metadata-normalization-correction-form > dl {
   grid-column: 1 / -1;
 }
 
-.historical-timeline-review-form label {
+.historical-timeline-review-form label,
+.metadata-normalization-correction-form label {
   display: grid;
   min-width: 0;
   gap: 5px;
@@ -22057,17 +22062,21 @@ a.action-card:active {
 }
 
 .historical-timeline-review-form input,
-.historical-timeline-review-form select {
+.historical-timeline-review-form select,
+.metadata-normalization-correction-form input,
+.metadata-normalization-correction-form select {
   width: 100%;
   min-width: 0;
 }
 
-.historical-timeline-review-form button {
+.historical-timeline-review-form button,
+.metadata-normalization-correction-form button {
   justify-self: start;
 }
 
 @media (max-width: 640px) {
-  .historical-timeline-review-form {
+  .historical-timeline-review-form,
+  .metadata-normalization-correction-form {
     grid-template-columns: minmax(0, 1fr);
   }
 }

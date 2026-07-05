@@ -860,6 +860,14 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       void saveHistorischeTijdlijnReviewFromForm(event.currentTarget, root, state);
     });
   });
+  root
+    .querySelectorAll<HTMLFormElement>('.metadata-normalization-correction-form')
+    .forEach((form) => {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        void saveMetadataNormalisatieCorrectieFromForm(event.currentTarget, root, state);
+      });
+    });
 }
 
 function showDossierDeleteConfirmation(
@@ -1708,6 +1716,48 @@ async function saveHistorischeTijdlijnReviewFromForm(
     state.dossierError = formatRecoverableStorageError(
       error,
       'Historische tijdlijnreview bewaren is mislukt.',
+    );
+    render(root, state);
+  }
+}
+
+async function saveMetadataNormalisatieCorrectieFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+  const data = new FormData(target);
+  const documentId = optionalString(data.get('dossierDocumentId'));
+  const datum = optionalString(data.get('metadataNormalisatieDatum'));
+  const bron = optionalString(data.get('metadataNormalisatieBron'));
+  const documenttype = optionalString(data.get('metadataNormalisatieDocumenttype'));
+  if (!documentId || !datum || !bron || !documenttype) return;
+
+  try {
+    await state.dossierStore.updateMetadataNormalisatieCorrectie(documentId, {
+      datum,
+      bron,
+      documenttype,
+      onderzoekstype: optionalString(data.get('metadataNormalisatieOnderzoekstype')),
+      pogingId: optionalString(data.get('metadataNormalisatiePogingId')),
+      afspraakId: optionalString(data.get('metadataNormalisatieAfspraakId')),
+      onzekerheid: parseMetadataNormalisatieOnzekerheid(
+        data.get('metadataNormalisatieOnzekerheid'),
+      ),
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Metadata-normalisatie bijgewerkt',
+      detail: `Dossiermetadata ${beschrijfRecordOpslag(state)} zonder medische interpretatie.`,
+    });
+    state.dossierStatus = `Metadata-normalisatie ${beschrijfRecordOpslag(state)}.`;
+    state.dossierError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError = formatRecoverableStorageError(
+      error,
+      'Metadata-normalisatie bewaren is mislukt.',
     );
     render(root, state);
   }
@@ -3872,6 +3922,13 @@ function parseHistorischeTijdlijnZichtbaarheid(
   value: FormDataEntryValue | null,
 ): NonNullable<DossierDocument['metadata']['historischeTijdlijnReview']>['zichtbaarheid'] {
   return value === 'verborgen' ? 'verborgen' : 'zichtbaar';
+}
+
+function parseMetadataNormalisatieOnzekerheid(
+  value: FormDataEntryValue | null,
+): NonNullable<DossierDocument['metadata']['normalisatie']>['onzekerheid'] {
+  if (value === 'laag' || value === 'middel' || value === 'hoog') return value;
+  return 'middel';
 }
 
 function parseEmbryoStatus(

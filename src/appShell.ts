@@ -12972,6 +12972,7 @@ function renderDossierMetadata(document: DossierDocument, state: AppShellState):
         ? `<p class="linked-note">Originele metadatawaarden: ${origineleWaarden.map(escapeHtml).join(' · ')}</p>`
         : ''
     }
+    ${renderMetadataNormalisatieCorrectieForm(document, state)}
     ${
       labwaarden.length > 0
         ? `<div class="linked-note" data-labvalue-normalization-state="${labwaarden.some((labwaarde) => labwaarde.reviewStatus === 'concept') ? 'concept-review' : 'gereviewd'}"><strong>Genormaliseerde labwaarden</strong><ul class="compact-list">${labwaarden
@@ -12985,6 +12986,88 @@ function renderDossierMetadata(document: DossierDocument, state: AppShellState):
         : ''
     }
     <p class="linked-note">Metadata-bronnen: ${metadata.extractieBronnen.map(escapeHtml).join(', ')}</p>
+  `;
+}
+
+function renderMetadataNormalisatieCorrectieForm(
+  document: DossierDocument,
+  state: AppShellState,
+): string {
+  if (state.imagingPreviewLocked && document.categorie === 'beeld') {
+    return `
+      <section class="linked-note metadata-normalization-correction-form" data-metadata-normalization-correction="locked">
+        <strong>Metadata-normalisatie</strong>
+        <p class="small-print">Ontgrendel de lokale kluis om datum, bron, documenttype en koppelingen te corrigeren zonder bronbestandsnaam te tonen.</p>
+      </section>
+    `;
+  }
+
+  const normalisatie = document.metadata.normalisatie;
+  const documenttype =
+    normalisatie?.documenttype ??
+    document.metadata.documenttype ??
+    (document.uploadProfiel
+      ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+      : DOSSIER_CATEGORIE_LABELS[document.categorie]);
+  const datum = normalisatie?.datum ?? document.metadata.documentDatum ?? document.datum;
+  const bron = normalisatie?.bron ?? document.metadata.bronbestand ?? document.bestandsNaam;
+  const onderzoekstype = normalisatie?.onderzoekstype ?? '';
+  const pogingId =
+    normalisatie?.pogingId ?? document.metadata.trajectId ?? document.trajectId ?? '';
+  const afspraakId = normalisatie?.afspraakId ?? document.afspraakId ?? '';
+  const onzekerheid = normalisatie?.onzekerheid ?? 'middel';
+  const origineleWaarden = normalisatie?.origineleWaarden ?? {
+    datum: document.metadata.documentDatum ?? document.datum,
+    bron: document.metadata.bronbestand ?? document.bestandsNaam,
+    documenttype,
+    pogingId: document.metadata.trajectId ?? document.trajectId,
+    afspraakId: document.afspraakId,
+  };
+
+  return `
+    <form class="linked-note metadata-normalization-correction-form" data-metadata-normalization-correction="ready">
+      <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(document.id)}" />
+      <strong>Metadata-normalisatie</strong>
+      <p class="small-print">Corrigeer alleen vindbaarheid en tijdlijnmetadata; Kiempad geeft geen diagnose, dosering of behandelkeuzeadvies.</p>
+      <dl class="summary-list">
+        <div><dt>Originele datum</dt><dd>${escapeHtml(origineleWaarden.datum)}</dd></div>
+        <div><dt>Originele bron</dt><dd>${escapeHtml(origineleWaarden.bron)}</dd></div>
+        <div><dt>Origineel type</dt><dd>${escapeHtml(origineleWaarden.documenttype)}</dd></div>
+      </dl>
+      <label>
+        Datum
+        <input name="metadataNormalisatieDatum" type="date" required value="${escapeAttribute(datum)}" />
+      </label>
+      <label>
+        Bron
+        <input name="metadataNormalisatieBron" autocomplete="off" required value="${escapeAttribute(bron)}" />
+      </label>
+      <label>
+        Documenttype
+        <input name="metadataNormalisatieDocumenttype" autocomplete="off" required value="${escapeAttribute(documenttype)}" />
+      </label>
+      <label>
+        Onderzoekstype
+        <input name="metadataNormalisatieOnderzoekstype" autocomplete="off" value="${escapeAttribute(onderzoekstype)}" />
+      </label>
+      <label>
+        Poging
+        <input name="metadataNormalisatiePogingId" autocomplete="off" value="${escapeAttribute(pogingId)}" />
+      </label>
+      <label>
+        Afspraak
+        <input name="metadataNormalisatieAfspraakId" autocomplete="off" value="${escapeAttribute(afspraakId)}" />
+      </label>
+      <label>
+        Onzekerheid
+        <select name="metadataNormalisatieOnzekerheid">
+          <option value="laag"${onzekerheid === 'laag' ? ' selected' : ''}>Laag - gecontroleerd</option>
+          <option value="middel"${onzekerheid === 'middel' ? ' selected' : ''}>Middel - deels herkend</option>
+          <option value="hoog"${onzekerheid === 'hoog' ? ' selected' : ''}>Hoog - onzeker</option>
+        </select>
+      </label>
+      <button type="submit" class="secondary-button">Normalisatie bewaren</button>
+    </form>
   `;
 }
 
