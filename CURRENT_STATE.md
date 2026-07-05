@@ -271,6 +271,9 @@
   gefocuste mobiele Traject-titels krijgen expliciete forced-colors breedte-
   en ellipsisregels naast badgepills, zodat de labelkolom stabiel blijft
   tijdens keyboardfocus.
+- **G1906 Traject mobile forced-colors inactive focus label weight:** inactieve
+  gefocuste mobiele Traject-titels houden een rustiger forced-colors gewicht en
+  geen underline, zodat keyboardfocus niet op actieve route-emphasis lijkt.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

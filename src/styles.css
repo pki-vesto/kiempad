@@ -30730,7 +30730,10 @@ summary[class*="__summary"]:focus-visible,
       flex: 1 1 auto;
       max-width: calc(100% - 92px);
       min-width: 0;
+      color: CanvasText;
+      font-weight: 760;
       overflow: hidden;
+      text-decoration: none;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
