@@ -16199,8 +16199,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult review UI, Claude Design, routeflow smoke, app-shell tests
 - **ADR Needed:** no
 - **Score:** 89
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3664
+
+### G1862 — Premium Claude Design UI: research summary first-viewport reading board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Researchsamenvattingen kunnen nog als volledige leesstapel openen waarbij wetenschappelijke samenvatting, eenvoudige uitleg, relevantie en broncontext tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is of zij wetenschappelijke details, eenvoudige uitleg of persoonlijke relevantie willen lezen.
+- **Desired Outcome:** Research/Kennis opent samenvattingen met een compacte first-viewport leeswerkbank voor wetenschappelijke samenvatting, eenvoudige samenvatting, relevantie en broncontext.
+- **User Value:** Research voelt rustiger en sneller bruikbaar zonder bronverwijzingen of reviewcontext te verliezen.
+- **Acceptance Criteria:** Researchsamenvattingen openen met compacte lanes voor wetenschappelijke samenvatting, eenvoudige samenvatting, relevantie en broncontext; volledige summary/source/trend details blijven bereikbaar zonder als één lange pagina te openen; mobile en desktop behouden bestaande anchors en privacyhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, filename, token, secret of externe netwerkcall wordt toegevoegd.
+- **Affected Screens:** Kennis/Research
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research summary UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 88
+- **Status:** ☐ open
+- **Issue:** #3666
 
 ### G586 — replay conflict recovery status UI
 

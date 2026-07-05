@@ -70,6 +70,10 @@
   micro-labels houden op small-mobile forced-colors expliciet
   `font-optical-sizing: auto`, zodat het kleine actieve label compact blijft naast
   titel, context en focuscue.
+- **G1861 consult reviewwerkbank:** gevulde consultkaarten tonen boven de
+  transcript- en reviewdetails een compacte eerste-viewport werkbank met routes
+  naar verslag, samenvatting, actiepunten en broncontext. Mobiel blijft de werkbank
+  horizontaal scanbaar zonder bestaande consultankers of reviewformulieren te breken.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

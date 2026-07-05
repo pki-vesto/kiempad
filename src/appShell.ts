@@ -11612,6 +11612,7 @@ function renderDossierTijdlijnItem(
 }
 
 function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): string {
+  const reviewAnchorBase = makeConsultReviewAnchorBase(verslag.id);
   const afspraak = verslag.afspraakId
     ? state.afspraken.find((item) => item.afspraak.id === verslag.afspraakId)?.afspraak
     : undefined;
@@ -11661,8 +11662,15 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
             ${statusChips.map((chip) => `<span>${escapeHtml(chip)}</span>`).join('')}
           </div>
         </header>
+        ${renderConsultReviewBoard({
+          anchorBase: reviewAnchorBase,
+          hasText: Boolean(verslag.tekst),
+          hasSummary: Boolean(verslag.samenvatting),
+          actionCount: verslag.actiepunten?.length ?? 0,
+          sourceCount: verslag.samenvatting?.bronnen.length ?? 0,
+        })}
         <p class="linked-note consult-card__metadata">${details.map(escapeHtml).join(' · ')}</p>
-        <section class="consult-card__section" data-consult-card-section="tekst">
+        <section id="${escapeAttribute(`${reviewAnchorBase}-tekst`)}" class="consult-card__section" data-consult-card-section="tekst">
           <h4>Verslagtekst</h4>
           ${
             verslag.tekst
@@ -11670,9 +11678,9 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
               : '<p class="small-print">Bestand opgeslagen; tekst wordt pas zichtbaar na lokale extractie of handmatige invoer.</p>'
           }
         </section>
-        ${renderConsultSamenvatting(verslag)}
+        ${renderConsultSamenvatting(verslag, reviewAnchorBase)}
         ${renderConsultSamenvattingVerschil(vergelijkConsultSamenvatting(verslag))}
-        ${renderConsultActiepunten(verslag)}
+        ${renderConsultActiepunten(verslag, reviewAnchorBase)}
         ${renderConsultInzichten(inzichten)}
         ${verslag.notitie ? `<p class="small-print">Notitie: ${escapeHtml(verslag.notitie)}</p>` : ''}
       </div>
@@ -11680,7 +11688,77 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
   `;
 }
 
-function renderConsultSamenvatting(verslag: ConsultVerslag): string {
+function makeConsultReviewAnchorBase(id: string): string {
+  const safeId = id
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return `consult-review-${safeId || 'item'}`;
+}
+
+function renderConsultReviewBoard(input: {
+  anchorBase: string;
+  hasText: boolean;
+  hasSummary: boolean;
+  actionCount: number;
+  sourceCount: number;
+}): string {
+  const lanes = [
+    {
+      id: 'transcript',
+      href: `${input.anchorBase}-tekst`,
+      label: 'Verslag',
+      value: input.hasText ? 'Tekst klaar' : 'Upload bewaard',
+      detail: 'Transcript of uploadstatus',
+    },
+    {
+      id: 'summary',
+      href: `${input.anchorBase}-samenvatting`,
+      label: 'Samenvatting',
+      value: input.hasSummary ? 'Concept klaar' : 'Nog leeg',
+      detail: 'Controleer eerst lokaal',
+    },
+    {
+      id: 'actions',
+      href: `${input.anchorBase}-actiepunten`,
+      label: 'Acties',
+      value: `${input.actionCount} punt${input.actionCount === 1 ? '' : 'en'}`,
+      detail: 'Taken en vragen',
+    },
+    {
+      id: 'source',
+      href: `${input.anchorBase}-broncontext`,
+      label: 'Broncontext',
+      value: `${input.sourceCount} bron${input.sourceCount === 1 ? '' : 'nen'}`,
+      detail: 'Herleiding zonder advies',
+    },
+  ];
+
+  return `
+    <section class="consult-review-board" data-consult-review-board="first-viewport" aria-label="Consult review werkbank">
+      <header class="consult-review-board__header">
+        <p class="kp-card__eyebrow">Reviewwerkbank</p>
+        <h4>Lees eerst per taak</h4>
+      </header>
+      <nav class="consult-review-board__lanes" aria-label="Consult review routes">
+        ${lanes
+          .map(
+            (
+              lane,
+            ) => `<a class="consult-review-board__lane" href="#${escapeAttribute(lane.href)}" data-consult-review-board-lane="${escapeAttribute(lane.id)}">
+              <span>${escapeHtml(lane.label)}</span>
+              <strong>${escapeHtml(lane.value)}</strong>
+              <small>${escapeHtml(lane.detail)}</small>
+            </a>`,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
+}
+
+function renderConsultSamenvatting(verslag: ConsultVerslag, anchorBase: string): string {
   if (!verslag.samenvatting) {
     return '<p class="small-print">Nog geen conceptsamenvatting: voeg consulttekst of notitie toe voor lokale samenvatting.</p>';
   }
@@ -11695,7 +11773,7 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
   const correctie = verslag.samenvattingCorrectie?.tekst ?? '';
 
   return `
-    <section class="linked-note consult-card__section consult-review-layout" data-consult-card-section="samenvatting" data-consult-summary-review-state="${escapeAttribute(reviewStatus)}" data-consult-review-layout="ready">
+    <section id="${escapeAttribute(`${anchorBase}-samenvatting`)}" class="linked-note consult-card__section consult-review-layout" data-consult-card-section="samenvatting" data-consult-summary-review-state="${escapeAttribute(reviewStatus)}" data-consult-review-layout="ready">
       <header class="consult-review-layout__header">
         <div>
           <p class="kp-card__eyebrow">Reviewlaag</p>
@@ -11716,7 +11794,7 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
           <small>Reviewstatus: ${escapeHtml(reviewLabel)} · Bronnen: ${verslag.samenvatting.bronnen.map(escapeHtml).join(', ')} · ${escapeHtml(verslag.samenvatting.waarschuwing)}</small>
           ${review?.reden ? `<p class="small-print">Reviewreden: ${escapeHtml(review.reden)}</p>` : ''}
         </article>
-        <div class="consult-review-layout__panel" data-consult-review-panel="source">
+        <div id="${escapeAttribute(`${anchorBase}-broncontext`)}" class="consult-review-layout__panel" data-consult-review-panel="source">
           ${renderConsultSamenvattingBronparagraaf(verslag)}
         </div>
         <div class="consult-review-layout__panel" data-consult-review-panel="actions">
@@ -11822,13 +11900,13 @@ function consultInzichtSoortLabel(soort: ConsultInzichtKoppeling['soort']): stri
   return 'Onderzoek';
 }
 
-function renderConsultActiepunten(verslag: ConsultVerslag): string {
+function renderConsultActiepunten(verslag: ConsultVerslag, anchorBase: string): string {
   if (!verslag.actiepunten || verslag.actiepunten.length === 0) {
     return '<p class="small-print">Nog geen lokale actiepunten herkend in dit consult.</p>';
   }
 
   return `
-    <section class="linked-note consult-card__section" data-consult-card-section="actiepunten">
+    <section id="${escapeAttribute(`${anchorBase}-actiepunten`)}" class="linked-note consult-card__section" data-consult-card-section="actiepunten">
       <h4>Conceptactiepunten</h4>
       <ul class="compact-list">
         ${verslag.actiepunten

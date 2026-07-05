@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1861 Premium Claude Design UI: consultkaarten openen nu met een compacte
+  reviewwerkbank voor verslag, samenvatting, actiepunten en broncontext. De
+  langere transcript-, correctie- en bronpanelen blijven bereikbaar via anchors
+  zonder als eerste één lange consultstapel te lezen.
 - G1839 Premium Claude Design UI: actieve Dossier-upload routekaart-micro-labels
   houden op small-mobile forced-colors nu expliciet `font-optical-sizing: auto`,
   zodat het kleine actieve label compact blijft naast titel, context en focuscue.

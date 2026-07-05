@@ -14794,6 +14794,88 @@ h2 {
   margin: 0;
 }
 
+.consult-review-board {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 94%, var(--accent) 6%);
+}
+
+.consult-review-board__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.consult-review-board__header h4,
+.consult-review-board__header p {
+  margin: 0;
+}
+
+.consult-review-board__header h4 {
+  color: var(--text-strong);
+  font-size: 0.92rem;
+}
+
+.consult-review-board__lanes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.consult-review-board__lane {
+  display: grid;
+  min-width: 0;
+  min-height: 76px;
+  gap: 3px;
+  align-content: start;
+  padding: 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  border-radius: 8px;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+.consult-review-board__lane:hover,
+.consult-review-board__lane:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+  outline: 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.consult-review-board__lane span,
+.consult-review-board__lane strong,
+.consult-review-board__lane small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.consult-review-board__lane span {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.consult-review-board__lane strong {
+  color: var(--text-strong);
+  font-size: 0.88rem;
+  line-height: 1.18;
+}
+
+.consult-review-board__lane small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
 .consult-card__section {
   display: grid;
   gap: 7px;
@@ -26910,6 +26992,24 @@ summary[class*="__summary"]:focus-visible,
   .consult-card__status {
     justify-content: flex-start;
     max-width: none;
+  }
+
+  .consult-review-board__lanes {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .consult-review-board__lanes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .consult-review-board__lane {
+    flex: 0 0 min(156px, 70vw);
+    min-height: 72px;
+    scroll-snap-align: start;
   }
 
   .consult-review-layout__header,

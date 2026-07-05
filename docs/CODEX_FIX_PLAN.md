@@ -2244,6 +2244,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   `npm run smoke:routeflows`, `attachmentEnvelopeBatchForcedColorsEvidence` and
   `attachmentEnvelopeEvidencePrivacyPattern`, and maintenance docs guard that
   payload-free release evidence remains discoverable.
+- Partial G1861/#3664: Filled consult cards now start with a compact
+  first-viewport review board linking to transcript, summary, action points and
+  source context, while the longer consult review panels keep their existing
+  forms, anchors and privacy boundaries.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record
