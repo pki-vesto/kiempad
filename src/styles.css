@@ -30612,6 +30612,43 @@ summary[class*="__summary"]:focus-visible,
     }
   }
 
+  @media (forced-colors: active) {
+    .treatment-task-route {
+      border-color: CanvasText;
+      background: Canvas;
+      color: CanvasText;
+      box-shadow: none;
+    }
+
+    .treatment-task-route::before {
+      background: CanvasText;
+    }
+
+    .treatment-task-route[aria-current="page"] {
+      border-color: Highlight;
+      background: Highlight;
+      color: HighlightText;
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+      box-shadow: none;
+    }
+
+    .treatment-task-route[aria-current="page"]::before {
+      background: HighlightText;
+    }
+
+    .treatment-task-route:focus-visible {
+      border-color: Highlight;
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
+      box-shadow: none;
+    }
+
+    .treatment-task-route :is(span, strong, small, em) {
+      color: inherit;
+    }
+  }
+
   .schedule-history-planning-board {
     padding: 12px;
   }

@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1893 Premium Claude Design UI: de mobiele Traject route-rail gebruikt in
+  forced-colors systeemkleuren voor kaart, actieve route, focusring en
+  density-indicator, zodat routegroep en actieve staat in high-contrast
+  zichtbaar blijven.
 - G1892 Premium Claude Design UI: de mobiele Traject route-rail schakelt bij
   `prefers-reduced-motion` routekaarttransities en lift-transforms uit, terwijl
   actieve/focus-ringen en routegroepen zichtbaar blijven.

@@ -172,6 +172,10 @@
 - **Treatment mobile rail reduced-motion route polish — done in G1892 / issue #3726.**
   The mobile Traject route rail now disables route-card transitions and lift transforms under
   `prefers-reduced-motion`, while keeping active/focus rings and route groups visible.
+- **Treatment mobile rail forced-colors route polish — done in G1893 / issue #3728.**
+  The mobile Traject route rail now uses system colors for route cards, active route, focus ring
+  and density indicator under forced-colors, so route grouping and active state remain visible in
+  high-contrast contexts.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

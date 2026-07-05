@@ -220,6 +220,10 @@
   route-rail schakelt bij `prefers-reduced-motion` routekaarttransities en
   lift-transforms uit, terwijl actieve/focus-ringen en routegroepen zichtbaar
   blijven.
+- **G1893 Traject mobile forced-colors route polish:** de mobiele Traject
+  route-rail gebruikt in forced-colors systeemkleuren voor kaart, actieve
+  route, focusring en density-indicator, zodat routegroep en actieve staat in
+  high-contrast zichtbaar blijven.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
