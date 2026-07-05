@@ -1246,6 +1246,35 @@ describe('dossier', () => {
     );
   });
 
+  it('houdt embryo-beeldclassificatie als concept zonder score of selectieadvies', () => {
+    const document = maakDossierDocument('img-embryo-concept', {
+      datum: '2026-05-02',
+      titel: 'Embryo 1 labfoto',
+      categorie: 'beeld',
+      bestandsNaam: 'embryo-1.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'ZW1icnlvLWltYWdl',
+    });
+
+    const [item] = bouwImagingRepository([document]);
+
+    expect(item).toMatchObject({
+      id: 'img-embryo-concept',
+      soort: 'embryo_afbeelding',
+      document: {
+        beeldMetadata: {
+          soort: 'embryo_afbeelding',
+          reviewStatus: 'concept',
+        },
+      },
+    });
+    expect(item?.tijdlijnKoppeling.embryoLabel).toBeUndefined();
+
+    const serialized = JSON.stringify(item);
+    expect(serialized).not.toMatch(/kwaliteitsscore|selectieadvies|kansberekening|rangorde/i);
+  });
+
   it('bouwt een feitelijke beeldvergelijking zonder medische interpretatie', () => {
     const oud = maakDossierDocument('img-oud', {
       datum: '2026-05-01',

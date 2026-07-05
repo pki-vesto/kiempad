@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1741 |
+| ☑ klaar | 1742 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1940** |
+| **Totaal** | **1941** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -627,7 +627,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G469 | Fertility Intelligence: tijdlijnreconstructie uit historische records | P0 | F5 | ☑ |
 | G470 | Fertility Intelligence: fertility dossier packet per behandeltraject | P1 | F5 | ☑ |
 | G471 | Fertility Intelligence: ultrasound upload metadata schema | P0 | F5 | ☑ |
-| G472 | Fertility Intelligence: embryo image classification review | P1 | F5 | ☐ |
+| G472 | Fertility Intelligence: embryo image classification review | P1 | F5 | ☑ |
 | G473 | Fertility Intelligence: beeldvergelijking zonder medische interpretatie | P1 | F5 | ☐ |
 | G474 | Fertility Intelligence: imaging timeline privacy boundary | P0 | F5 | ☑ |
 | G475 | Fertility Intelligence: consult transcript import en bronkoppeling | P0 | F5 | ☑ |
@@ -2103,12 +2103,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1939 | Fertility Intelligence: import-inbox retry eventlog redaction evidence | P1 | F5 | ☐ |
 | G1940 | Daily Recommendations: artscheck vraag reviewstatus routeflow evidence | P1 | F5 | ☐ |
 | G1941 | Daily Recommendations: supplement artscheck actieflow routeflow evidence | P1 | F5 | ☐ |
+| G1942 | Fertility Intelligence: embryo image classification review routeflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1940** (id's G001 t/m G1941; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1941** (id's G001 t/m G1942; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

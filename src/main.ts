@@ -1709,6 +1709,10 @@ async function saveImagingMetadataCorrectieFromForm(
       pogingId: optionalString(data.get('imagingMetadataPogingId')),
       afspraakId: optionalString(data.get('imagingMetadataAfspraakId')),
       trajectId: optionalString(data.get('imagingMetadataTrajectId')),
+      embryoLabel: optionalString(data.get('imagingMetadataEmbryoLabel')),
+      embryoId: optionalString(data.get('imagingMetadataEmbryoId')),
+      embryoDag: optionalPositiveNumber(data.get('imagingMetadataEmbryoDag')),
+      laboratoriumContext: optionalString(data.get('imagingMetadataLaboratoriumContext')),
       exifStatus: parseImagingExifStatus(data.get('imagingMetadataExifStatus')),
       reviewStatus: parseImagingReviewStatus(data.get('imagingMetadataReviewStatus')),
     });
