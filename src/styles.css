@@ -31385,6 +31385,7 @@ summary[class*="__summary"]:focus-visible,
       align-self: flex-start;
       max-width: min(96px, 42%);
       text-align: center;
+      -webkit-text-fill-color: Highlight;
     }
 
     .treatment-task-route[aria-current="page"] small {
@@ -31486,9 +31487,11 @@ summary[class*="__summary"]:focus-visible,
       background-color: ButtonFace;
       color: ButtonText;
       -webkit-text-fill-color: ButtonText;
+      forced-color-adjust: auto;
       font-weight: 700;
       outline-color: CanvasText;
       outline-offset: 1px;
+      text-decoration-color: ButtonText;
     }
 
     .treatment-task-route[aria-current="page"]:focus-visible {

@@ -5953,6 +5953,7 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('max-width: min(96px, 42%);');
     expect(mobileCss).toContain('text-align: center;');
+    expect(mobileCss).toContain('-webkit-text-fill-color: Highlight;');
     expect(mobileCss).toContain('.treatment-task-route[aria-current="page"] small {');
     expect(mobileCss).toContain('margin-top: -1px;');
     expect(mobileCss).toContain('padding-right: 4px;');
@@ -6024,9 +6025,11 @@ describe('app shell', () => {
     expect(mobileCss).toContain('border-inline-color: CanvasText;');
     expect(mobileCss).toContain('background-color: ButtonFace;');
     expect(mobileCss).toContain('-webkit-text-fill-color: ButtonText;');
+    expect(mobileCss).toContain('forced-color-adjust: auto;');
     expect(mobileCss).toContain('font-weight: 700;');
     expect(mobileCss).toContain('outline-color: CanvasText;');
     expect(mobileCss).toContain('outline-offset: 1px;');
+    expect(mobileCss).toContain('text-decoration-color: ButtonText;');
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');
