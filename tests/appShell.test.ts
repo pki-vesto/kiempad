@@ -3395,6 +3395,10 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-focus-shell__body {');
     expect(css).toContain('.daily-advice-primary-action-choice {');
     expect(css).toContain('.daily-advice-focus-shell__decision,');
+    expect(css).toContain('.daily-advice-selection-board {');
+    expect(css).toContain('.daily-advice-selection-board__lanes {');
+    expect(css).toContain('.daily-advice-selection-board__lane {');
+    expect(css).toContain('.daily-advice-selection-board__lane:hover,');
     expect(css).toContain('.daily-advice-decision-board {');
     expect(css).toContain('.daily-advice-decision-board__header {');
     expect(css).toContain('.daily-advice-decision-board__lanes {');
@@ -3653,6 +3657,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(mobileCss).toContain('overflow: visible;');
     expect(mobileCss).toContain('.daily-advice-owner-card {');
+    expect(mobileCss).toContain('.daily-advice-selection-board {');
+    expect(mobileCss).toContain('.daily-advice-selection-board__lanes {');
+    expect(mobileCss).toContain('.daily-advice-selection-board__lane {');
     expect(mobileCss).toContain('.daily-advice-decision-board {');
     expect(mobileCss).toContain('.daily-advice-decision-board__header {');
     expect(mobileCss).toContain('.daily-advice-decision-board__lanes {');
@@ -3816,6 +3823,30 @@ describe('app shell', () => {
     const emptyContextRecommendations = extractDailyRecommendationsSection(emptyContextHtml);
 
     expect(emptyContextRecommendations).toContain('Te doen vandaag');
+    expect(emptyContextRecommendations).toContain(
+      'aria-label="Dagadvies selectie startlaag" data-daily-advice-selection-board="first-viewport"',
+    );
+    expect(emptyContextRecommendations).toContain('Kies eerst je advieslaag');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-selection-lane="today"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-selection-lane="owners"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-selection-lane="feedback"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-selection-lane="artscheck"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-selection-lane="context"');
+    expect(emptyContextRecommendations).toContain(
+      'href="#start-today" data-daily-advice-selection-lane="today"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'href="#daily-advice-owner-details" data-daily-advice-selection-lane="owners"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'href="#daily-recommendation-feedback-filter-form" data-daily-advice-selection-lane="feedback"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'href="#vragen" data-daily-advice-selection-lane="artscheck"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'href="#daily-advice-followup" data-daily-advice-selection-lane="context"',
+    );
     expect(emptyContextRecommendations).toContain('id="daily-advice-primary-action-choice"');
     expect(emptyContextRecommendations).toContain(
       'data-daily-advice-primary-action-choice="ready"',
@@ -3839,6 +3870,9 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).not.toContain(
       '<details id="daily-advice-followup" class="kp-disclosure daily-advice-followup" data-daily-advice-followup="collapsed" open',
     );
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-selection-board="first-viewport"'),
+    ).toBeLessThan(emptyContextRecommendations.indexOf('id="daily-advice-primary-action-choice"'));
     expect(
       emptyContextRecommendations.indexOf('id="daily-advice-primary-action-choice"'),
     ).toBeLessThan(emptyContextRecommendations.indexOf('id="daily-advice-followup"'));
