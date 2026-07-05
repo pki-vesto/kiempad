@@ -106,6 +106,10 @@
   maintenance-contract gesnapshott met alleen
   `knowledge-research-offline-cache-metadata` en
   `data-research-offline-cache-metadata` als veilige technische labels.
+- **G1991 offline cache metadata release-state guard:** release-state evidence
+  koppelt het G1990 `offline cache metadata missing-term error contract` aan
+  `knowledge-research-offline-cache-metadata`,
+  `data-research-offline-cache-metadata` en veilige technische labels.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.
