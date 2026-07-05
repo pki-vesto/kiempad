@@ -15737,6 +15737,7 @@ function renderResearchTrendGroepen(groepen: readonly ResearchTrendGroep[]): str
           <div><dt>Items</dt><dd>${itemCount}</dd></div>
         </dl>
       </header>
+      ${renderResearchTrendScan(groepen)}
       ${
         groepen.length > 0
           ? `<div class="research-trend-dashboard__grid" data-research-trend-grid="ready">${groepen
@@ -15747,6 +15748,63 @@ function renderResearchTrendGroepen(groepen: readonly ResearchTrendGroep[]): str
             })
       }
     </section>
+  `;
+}
+
+function renderResearchTrendScan(groepen: readonly ResearchTrendGroep[]): string {
+  const itemCount = groepen.reduce((total, groep) => total + groep.items.length, 0);
+  const sourceCount = new Set(
+    groepen.flatMap((groep) => groep.items.map((item) => item.bron).filter(Boolean)),
+  ).size;
+  const latestDate = groepen
+    .flatMap((groep) => groep.items.map((item) => item.publicatieDatum).filter(Boolean))
+    .sort()
+    .at(-1);
+  const cards = [
+    {
+      id: 'topics',
+      label: 'Onderwerpen',
+      value: String(groepen.length),
+      detail: groepen.length === 0 ? 'Nog geen trends' : 'Lokale trefwoorden',
+      href: '#knowledge-research-trends',
+    },
+    {
+      id: 'publications',
+      label: 'Publicaties',
+      value: String(itemCount),
+      detail: 'Conceptcontext',
+      href: '#knowledge-research-summaries',
+    },
+    {
+      id: 'sources',
+      label: 'Bronnen',
+      value: String(sourceCount),
+      detail: 'Bronverwijzing zichtbaar',
+      href: '#knowledge-research-sources',
+    },
+    {
+      id: 'latest',
+      label: 'Laatste update',
+      value: latestDate ?? '-',
+      detail: 'Geen bewijsweging',
+      href: '#knowledge-research-trends',
+    },
+  ];
+
+  return `
+    <nav class="research-trend-scan" data-research-trend-scan="ready" aria-label="Research trend overzicht">
+      ${cards
+        .map(
+          (
+            card,
+          ) => `<a class="research-trend-scan__card" href="${escapeAttribute(card.href)}" data-research-trend-scan-card="${escapeAttribute(card.id)}">
+            <span>${escapeHtml(card.label)}</span>
+            <strong>${escapeHtml(card.value)}</strong>
+            <small>${escapeHtml(card.detail)}</small>
+          </a>`,
+        )
+        .join('')}
+    </nav>
   `;
 }
 

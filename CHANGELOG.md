@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G559 Premium Claude Design UI: Researchtrends starten met een compacte
+  trend-scan voor onderwerpen, publicaties, bronnen en laatste update voordat
+  de losse trendkaarten verschijnen.
 - G558 Premium Claude Design UI: Embryo-dossiers starten met een compacte
   tracking-scan voor dossiers, meetmomenten, status-events en bronnen voordat
   vergelijkingen en detailkaarten verschijnen.

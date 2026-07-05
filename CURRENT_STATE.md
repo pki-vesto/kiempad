@@ -80,6 +80,9 @@
 - **G558 embryo tracking-scan:** de Embryo-dossiers-sectie start met een compacte
   scanlaag voor dossiers, meetmomenten, status-events en bronnen, zodat
   embryohistorie eerst als overzicht leest voordat vergelijkingen en detailkaarten volgen.
+- **G559 research trend-scan:** het researchtrenddashboard start met een compacte
+  scanlaag voor onderwerpen, publicaties, bronnen en laatste update, zodat trends
+  eerst als overzicht lezen voordat de losse trendkaarten volgen.
 - **G1862 researchsamenvatting leesbord:** de researchsamenvattingenroute toont
   vóór de wetenschappelijke en eenvoudige lijsten een compact leesbord voor
   wetenschappelijke samenvatting, eenvoudige uitleg, relevantie en broncontext.
