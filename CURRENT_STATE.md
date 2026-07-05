@@ -147,6 +147,10 @@
   fixture:** de maintenance-test meldt compact wanneer de veilige labels
   `offline cache metadata missing-term error contract` of `veilige technische
   labels` uit G1996 contracterror release-evidence verdwijnen.
+- **G1999 offline cache metadata release-state contract error missing-term error
+  contract:** de exacte G1998 contracterror release missing-term foutmelding is
+  als compact maintenance-contract gesnapshott met veilige labels `offline cache
+  metadata missing-term error contract` en `veilige technische labels`.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.
