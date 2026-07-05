@@ -153,6 +153,10 @@
   The Traject side workbench now opens with one compact route board for current phase, next action,
   timeline, safety boundary and route actions before the full workbench cards, preserving workbench
   anchors, route hooks, phase hero, stats and disclaimer boundaries on desktop and mobile.
+- **Treatment task routes first-viewport route density polish — done in G1888 / issue #3718.**
+  The Traject route rail now shows compact cue chips and stable density indicators for overview,
+  phases, reimbursement, context and management, preserving route hrefs, badges, aria-current
+  states, command-task hooks and privacy boundaries on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

@@ -198,6 +198,11 @@
   werkgrens en routeacties. De bestaande workbenchankers, phase hero, stats,
   actielinks en disclaimergrenzen blijven bereikbaar zonder de eerste viewport
   als dichte contextkolom te vullen.
+- **G1888 Traject route density cues:** de Traject route-rail toont nu per
+  route een compacte cue-chip en vaste density-indicator voor overzicht,
+  fasen, vergoeding, context en beheer. Hrefs, badges, aria-current states,
+  command-task hooks en privacygrenzen blijven intact terwijl de rail minder
+  als één dichte navigatiestrook leest.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

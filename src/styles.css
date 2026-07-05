@@ -15304,6 +15304,23 @@ h2 {
   white-space: nowrap;
 }
 
+.command-task-route__cue {
+  justify-self: start;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 2px 7px;
+  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface-muted) 86%, transparent);
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 850;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .domain-split-workspace {
   display: grid;
   grid-template-columns: minmax(184px, 0.5fr) minmax(0, 2.28fr) minmax(216px, 0.66fr);
@@ -18269,14 +18286,44 @@ h2 {
 }
 
 .treatment-task-route {
+  position: relative;
   display: grid;
-  gap: 3px;
+  grid-template-rows: auto auto auto;
+  gap: 4px;
   min-width: 0;
-  padding: 10px 12px;
+  min-height: 92px;
+  padding: 10px 12px 10px 16px;
   border: 1px solid transparent;
   border-radius: 8px;
   color: var(--text);
   text-decoration: none;
+}
+
+.treatment-task-route::before {
+  position: absolute;
+  top: 11px;
+  bottom: 11px;
+  left: 7px;
+  width: 3px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--text-faint) 48%, transparent);
+  content: "";
+}
+
+.treatment-task-route[data-command-route-density="empty"]::before {
+  background: color-mix(in srgb, var(--border-strong) 64%, transparent);
+}
+
+.treatment-task-route[data-command-route-density="filled"]::before {
+  background: color-mix(in srgb, var(--accent) 74%, var(--surface-raised));
+}
+
+.treatment-task-route[data-command-route-density="action"]::before {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 76%, var(--surface-raised)),
+    color-mix(in srgb, var(--info) 64%, var(--accent))
+  );
 }
 
 .treatment-task-route:focus-visible,
@@ -18288,6 +18335,10 @@ h2 {
 .treatment-task-route[aria-current="page"] {
   border-color: var(--accent);
   background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.treatment-task-route[aria-current="page"]::before {
+  background: var(--accent);
 }
 
 .treatment-task-route span {
@@ -18303,6 +18354,25 @@ h2 {
   font-size: 0.78rem;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.treatment-task-route .command-task-route__cue {
+  margin-top: 2px;
+  border-color: color-mix(in srgb, var(--border-strong) 54%, transparent);
+  background: color-mix(in srgb, var(--surface-raised) 84%, var(--surface-muted));
+}
+
+.treatment-task-route[data-command-route-density="filled"] .command-task-route__cue,
+.treatment-task-route[aria-current="page"] .command-task-route__cue {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border-strong));
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface-raised));
+  color: var(--accent-strong);
+}
+
+.treatment-task-route[data-command-route-density="action"] .command-task-route__cue {
+  border-color: color-mix(in srgb, var(--info) 36%, var(--border-strong));
+  background: color-mix(in srgb, var(--info) 10%, var(--surface-raised));
+  color: var(--text);
 }
 
 .treatment-route-section {
