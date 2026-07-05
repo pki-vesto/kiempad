@@ -2256,17 +2256,21 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
       });
     });
 
-  root.querySelectorAll<HTMLFormElement>('.daily-recommendation-action-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void handleDailyRecommendationAction(
-        event.currentTarget,
-        (event as SubmitEvent).submitter,
-        root,
-        state,
-      );
+  root
+    .querySelectorAll<HTMLFormElement>(
+      '.daily-recommendation-action-form, .supplement-artscheck-action-form',
+    )
+    .forEach((form) => {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        void handleDailyRecommendationAction(
+          event.currentTarget,
+          (event as SubmitEvent).submitter,
+          root,
+          state,
+        );
+      });
     });
-  });
 }
 
 function dismissDailyRecommendationRouteFocusStatus(root: HTMLElement, state: RuntimeState): void {
@@ -3407,6 +3411,33 @@ async function handleDailyRecommendationAction(
       detail: `${titel} (${recommendationId})`,
     });
     state.dailyRecommendationStatus = `Artscheckvraag gemaakt: ${titel}.`;
+    await reloadAndRender(root, state);
+  }
+
+  if (action === 'supplementArtscheck' && state.vraagStore) {
+    const checklistIndex = String(data.get('supplementChecklistIndex') ?? '0').trim() || '0';
+    await state.vraagStore.save({
+      vraag: maakArtscheckVraagVoorAanbeveling({
+        titel: `Supplementvraag bij ${titel}`,
+        detail:
+          'Bespreek deze supplementchecklistregel met kliniek, arts of apotheek. Kiempad geeft geen hoeveelheid, interactieclaim of behandelvervanging.',
+        bron: String(data.get('bron') ?? ''),
+      }),
+      beantwoord: false,
+      artscheckMetadata: {
+        bron: 'daily_recommendation',
+        bronId: `${recommendationId}:supplement:${checklistIndex}`,
+        bronLabel: `Supplement artscheck: ${titel}`,
+        datum: new Date().toISOString(),
+        reviewStatus: 'concept',
+      },
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Supplementregel omgezet naar artscheck',
+      detail: `${recommendationId}:supplement:${checklistIndex}; reviewstatus concept.`,
+    });
+    state.dailyRecommendationStatus = `Supplementvraag klaargezet voor artscheck: ${titel}.`;
     await reloadAndRender(root, state);
   }
 }

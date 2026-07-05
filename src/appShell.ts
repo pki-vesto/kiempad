@@ -18387,13 +18387,8 @@ function renderDailyRecommendationItem(
       ${
         item.checklist
           ? `<ol class="compact-list rec-checklist">${item.checklist
-              .map(
-                (checklistItem) => `
-                  <li>
-                    <span>${escapeHtml(checklistItem.label)}</span>
-                    <small>Bron: ${escapeHtml(checklistItem.bron)} · ${escapeHtml(checklistItem.disclaimer)}${checklistItem.artscheck ? ` · ${escapeHtml(checklistItem.artscheck.label)}` : ''}</small>
-                  </li>
-                `,
+              .map((checklistItem, index) =>
+                renderDailyRecommendationChecklistItem(item, checklistItem, index),
               )
               .join('')}</ol>`
           : ''
@@ -18455,6 +18450,32 @@ function renderDailyRecommendationItem(
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
     `,
   });
+}
+
+function renderDailyRecommendationChecklistItem(
+  item: DailyRecommendation,
+  checklistItem: NonNullable<DailyRecommendation['checklist']>[number],
+  index: number,
+): string {
+  return `
+                  <li data-recommendation-checklist-item="${escapeAttribute(checklistItem.artscheck ? 'artscheck-required' : 'standard')}">
+                    <span>${escapeHtml(checklistItem.label)}</span>
+                    <small>Bron: ${escapeHtml(checklistItem.bron)} · ${escapeHtml(checklistItem.disclaimer)}${checklistItem.artscheck ? ` · ${escapeHtml(checklistItem.artscheck.label)}` : ''}</small>
+                    ${
+                      checklistItem.artscheck
+                        ? `<form class="supplement-artscheck-action-form compact-form" data-supplement-artscheck-action="available">
+                            <input type="hidden" name="recommendationId" value="${escapeAttribute(item.id)}" />
+                            <input type="hidden" name="titel" value="${escapeAttribute(item.titel)}" />
+                            <input type="hidden" name="detail" value="${escapeAttribute(item.detail)}" />
+                            <input type="hidden" name="bron" value="${escapeAttribute(checklistItem.bron)}" />
+                            <input type="hidden" name="supplementChecklistIndex" value="${escapeAttribute(String(index))}" />
+                            <input type="hidden" name="supplementChecklistLabel" value="${escapeAttribute(checklistItem.label)}" />
+                            <button class="rec-action rec-action--menu rec-action--artscheck" type="submit" name="recommendationAction" value="supplementArtscheck">Maak artscheckvraag</button>
+                          </form>`
+                        : ''
+                    }
+                  </li>
+                `;
 }
 
 function renderDailyRecommendationActions(item: DailyRecommendation): string {

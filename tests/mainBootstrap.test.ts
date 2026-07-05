@@ -100,6 +100,15 @@ describe('main bootstrap', () => {
       "submitter instanceof HTMLButtonElement && submitter.value === 'reset'",
     );
     expect(mainSource).toContain("action === 'artscheck' && state.vraagStore");
+    expect(mainSource).toContain("action === 'supplementArtscheck' && state.vraagStore");
+    expect(mainSource).toContain(
+      "'.daily-recommendation-action-form, .supplement-artscheck-action-form'",
+    );
+    expect(mainSource).toContain('Supplementregel omgezet naar artscheck');
+    expect(mainSource).toContain('Supplementvraag klaargezet voor artscheck:');
+    expect(mainSource).toContain(
+      'Kiempad geeft geen hoeveelheid, interactieclaim of behandelvervanging.',
+    );
     expect(mainSource).toContain('maakArtscheckVraagVoorAanbeveling({');
     expect(mainSource).toContain("gebeurtenis: 'Suggestie omgezet naar artscheck'");
     expect(mainSource).toContain('Artscheckvraag gemaakt:');

@@ -4087,6 +4087,19 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('Mannelijke leefstijl- en voorbereidingskaart');
     expect(emptyContextRecommendations).toContain('Voeding en supplementen checklijst');
     expect(emptyContextRecommendations).toContain('Artscheck verplicht voor supplementvragen');
+    expect(emptyContextRecommendations).toContain(
+      'data-recommendation-checklist-item="artscheck-required"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'class="supplement-artscheck-action-form compact-form"',
+    );
+    expect(emptyContextRecommendations).toContain('data-supplement-artscheck-action="available"');
+    expect(emptyContextRecommendations).toContain('name="supplementChecklistIndex"');
+    expect(emptyContextRecommendations).toContain('name="supplementChecklistLabel"');
+    expect(emptyContextRecommendations).toContain(
+      'name="recommendationAction" value="supplementArtscheck"',
+    );
+    expect(emptyContextRecommendations).toContain('Maak artscheckvraag');
     expect(emptyContextRecommendations).toContain('name="recommendationAction" value="bewaar"');
     expect(emptyContextRecommendations).toContain(
       'name="recommendationAction" value="herinnering"',
