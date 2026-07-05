@@ -17666,6 +17666,7 @@ function renderDailyAdviceWorkbench(
   options: {
     compact?: boolean;
     feedbackStatussen?: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>;
+    eventLogs?: readonly EventLog[];
   } = {},
 ): string {
   const owners: readonly DailyRecommendationOwner[] = ['vrouw', 'man', 'samen'];
@@ -17687,7 +17688,11 @@ function renderDailyAdviceWorkbench(
     0,
   );
   const compactClass = options.compact ? ' daily-advice-workbench--compact' : '';
-  const feedbackSummary = bouwDailyAdviceFeedbackSummary(overview, options.feedbackStatussen ?? {});
+  const feedbackSummary = bouwDailyAdviceFeedbackSummary(
+    overview,
+    options.feedbackStatussen ?? {},
+    options.eventLogs ?? [],
+  );
 
   return `
     <section class="daily-advice-workbench${compactClass}" aria-label="Dagadvies werkbank" data-daily-advice-workbench="owner-routes">
@@ -17729,36 +17734,77 @@ function renderDailyAdviceWorkbench(
 type DailyAdviceFeedbackSummary = {
   total: number;
   statussen: Partial<Record<FertilityTimelineAanbevelingFeedbackStatus, number>>;
+  eigenaars: Partial<Record<DailyRecommendationOwner, number>>;
+  laatsteDatum?: string;
+  bron: string;
+  reviewStatus: 'concept_te_controleren';
 };
 
 function bouwDailyAdviceFeedbackSummary(
   overview: DailyRecommendationOverview,
   feedbackStatussen: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>,
+  eventLogs: readonly EventLog[],
 ): DailyAdviceFeedbackSummary {
-  const summary: DailyAdviceFeedbackSummary = { total: 0, statussen: {} };
+  const summary: DailyAdviceFeedbackSummary = {
+    total: 0,
+    statussen: {},
+    eigenaars: {},
+    bron: 'Encrypted lokaal eventlog',
+    reviewStatus: 'concept_te_controleren',
+  };
   for (const owner of ['vrouw', 'man', 'samen'] as const) {
     for (const item of overview[owner]) {
       const status = feedbackStatussen[item.id];
       if (!status) continue;
       summary.total += 1;
       summary.statussen[status] = (summary.statussen[status] ?? 0) + 1;
+      summary.eigenaars[owner] = (summary.eigenaars[owner] ?? 0) + 1;
     }
   }
+  summary.laatsteDatum = bepaalLaatsteDailyAdviceFeedbackDatum(eventLogs);
   return summary;
 }
 
 function renderDailyAdviceFeedbackSummary(summary: DailyAdviceFeedbackSummary): string {
-  const parts = Object.entries(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS)
+  const statusParts = Object.entries(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS)
     .map(([status, label]) => {
       const count = summary.statussen[status as FertilityTimelineAanbevelingFeedbackStatus] ?? 0;
       return count > 0 ? `${label}: ${count}` : '';
     })
     .filter(Boolean)
     .join(' · ');
+  const ownerParts = (['vrouw', 'man', 'samen'] as const)
+    .map((owner) => {
+      const count = summary.eigenaars[owner] ?? 0;
+      return count > 0 ? `${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}: ${count}` : '';
+    })
+    .filter(Boolean)
+    .join(' · ');
 
   return `
-    <p class="small-print" data-daily-advice-feedback-summary="ready">Lokale feedback: ${escapeHtml(parts)}.</p>
+    <section class="daily-advice-feedback-analytics" aria-label="Lokale dagadvies feedbackanalytics" data-daily-advice-feedback-analytics="ready" data-daily-advice-feedback-analytics-total="${summary.total}" data-daily-advice-feedback-analytics-review="${summary.reviewStatus}">
+      <header class="daily-advice-feedback-analytics__header">
+        <p class="kp-card__eyebrow">Lokale feedback</p>
+        <h4>Feedback zonder tracking</h4>
+        <span data-daily-advice-feedback-summary-count="ready">${summary.total} feedback</span>
+      </header>
+      <dl class="daily-advice-feedback-analytics__grid" data-daily-advice-feedback-summary="ready">
+        <div><dt>Statussen</dt><dd>${escapeHtml(statusParts || 'Nog geen statusverdeling')}</dd></div>
+        <div><dt>Eigenaars</dt><dd>${escapeHtml(ownerParts || 'Nog geen eigenaarverdeling')}</dd></div>
+        <div><dt>Laatste feedback</dt><dd>${escapeHtml(summary.laatsteDatum ?? 'Nog geen datum')}</dd></div>
+        <div><dt>Bron</dt><dd>${escapeHtml(summary.bron)}</dd></div>
+        <div><dt>Reviewstatus</dt><dd>${escapeHtml(summary.reviewStatus)}</dd></div>
+        <div><dt>Tracking</dt><dd>Geen externe analytics of cookies.</dd></div>
+      </dl>
+      <p class="small-print">Lokale feedback: ${escapeHtml(statusParts)}.</p>
+    </section>
   `;
+}
+
+function bepaalLaatsteDailyAdviceFeedbackDatum(eventLogs: readonly EventLog[]): string | undefined {
+  return eventLogs
+    .filter((event) => bepaalAanbevelingFeedbackStatus(event.gebeurtenis))
+    .sort((a, b) => b.datum.localeCompare(a.datum))[0]?.datum;
 }
 
 function renderDailyAdviceSnapshot(
@@ -17913,6 +17959,7 @@ function renderDailyAdviceConsole(
     }),
     workbench: renderDailyAdviceWorkbench(visibleOverview, {
       feedbackStatussen,
+      eventLogs: state.eventLogs ?? [],
     }),
     planner: renderDailyAdviceActionPlanner(visibleOverview),
     list: `

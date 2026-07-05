@@ -5849,6 +5849,76 @@ h2 {
   color: var(--category-strong);
 }
 
+.daily-advice-feedback-analytics {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+}
+
+.daily-advice-feedback-analytics__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 10px;
+}
+
+.daily-advice-feedback-analytics__header h4,
+.daily-advice-feedback-analytics__header p {
+  margin: 0;
+}
+
+.daily-advice-feedback-analytics__header h4 {
+  color: var(--text-strong);
+  font-size: 0.95rem;
+}
+
+.daily-advice-feedback-analytics__header span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 760;
+}
+
+.daily-advice-feedback-analytics__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+}
+
+.daily-advice-feedback-analytics__grid div {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+  padding: 7px;
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.daily-advice-feedback-analytics__grid dt,
+.daily-advice-feedback-analytics__grid dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.daily-advice-feedback-analytics__grid dt {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.daily-advice-feedback-analytics__grid dd {
+  color: var(--text);
+  font-size: 0.78rem;
+  line-height: 1.32;
+}
+
 .daily-advice-owner-choice {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -29240,6 +29310,21 @@ summary[class*="__summary"]:focus-visible,
 
   .daily-advice-workbench__summary {
     justify-content: start;
+  }
+
+  .daily-advice-feedback-analytics {
+    gap: 7px;
+    padding: 8px;
+  }
+
+  .daily-advice-feedback-analytics__header {
+    display: grid;
+    gap: 4px;
+  }
+
+  .daily-advice-feedback-analytics__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
   }
 
   .daily-advice-owner-choice {
