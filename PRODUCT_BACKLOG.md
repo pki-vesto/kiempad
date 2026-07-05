@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1691 |
+| ☑ klaar | 1692 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1890** |
+| **Totaal** | **1891** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2052,13 +2052,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1888 | Premium Claude Design UI: treatment task routes first-viewport route density polish | P1 | F5 | ☑ |
 | G1889 | Premium Claude Design UI: treatment mobile rail first-viewport route grouping | P1 | F5 | ☑ |
 | G1890 | Premium Claude Design UI: treatment mobile rail active thumb reach polish | P1 | F5 | ☑ |
-| G1891 | Premium Claude Design UI: treatment mobile rail route transition focus polish | P1 | F5 | ☐ |
+| G1891 | Premium Claude Design UI: treatment mobile rail route transition focus polish | P1 | F5 | ☑ |
+| G1892 | Premium Claude Design UI: treatment mobile rail reduced-motion route polish | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1890** (id's G001 t/m G1891; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1891** (id's G001 t/m G1892; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

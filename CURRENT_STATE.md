@@ -212,6 +212,10 @@
   Traject route-rail de actieve route bovenaan over de volle breedte, ook
   wanneer Fasen, Vergoeding, Context of Beheer actief is. De routegroepen,
   hrefs, badges, aria-current states en desktop density-cues blijven intact.
+- **G1891 Traject mobile route focus polish:** de mobiele Traject route-rail
+  heeft nu duidelijkere actieve/focusfeedback met ring, subtiele lift,
+  scroll-margin en geïsoleerde stacking, zodat routewissels minder abrupt
+  voelen zonder routehooks of privacygrenzen te wijzigen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
