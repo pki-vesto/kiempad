@@ -4121,13 +4121,28 @@ function renderDossierScreen(state: AppShellState): string {
                         <p>${escapeHtml(item.datum)} · ${escapeHtml(item.type)} · ${escapeHtml(item.grootte)}</p>
                         <p class="linked-note dossier-status-row">Bronlabel: ${escapeHtml(state.imagingPreviewLocked && item.document.categorie === 'beeld' ? item.veiligBestandslabel : item.bronlabel)} ${renderDossierImportStatusBadge(item.importstatus, item.importstatusLabel)}</p>
                         ${
+                          item.retryBeschikbaar
+                            ? `<p class="linked-note dossier-status-row" data-dossier-import-retry-state="${escapeAttribute(item.importstatus)}">Retry: ${escapeHtml(item.retryStatusLabel)}</p>`
+                            : ''
+                        }
+                        ${
                           item.duplicaatReview
                             ? `<p class="linked-note dossier-status-row" data-dossier-duplicate-review-state="${escapeAttribute(item.duplicaatReview.status)}">Duplicaatreview: ${renderDossierStatusBadge({ label: item.duplicaatReview.statusLabel, state: item.duplicaatReview.status, tone: item.duplicaatReview.status === 'duplicaat_review' ? 'warning' : 'success', data: { 'dossier-status-kind': 'duplicate' } })} Checksum ${escapeHtml(item.duplicaatReview.checksumPrefix)} ${renderDossierReviewStatusBadge(item.duplicaatReview.reviewStatus)}</p>`
                             : '<p class="linked-note" data-dossier-duplicate-review-state="geen-checksum">Duplicaatreview: checksum ontbreekt voor deze legacy-import.</p>'
                         }
                         <small>Veilige metadata: ${escapeHtml(item.veiligBestandslabel)}</small>
                       </div>
-                      <button class="phase-button secondary delete-dossier-document" type="button" data-attachment-delete-kind="dossier-import" data-attachment-delete-state="available" data-dossier-document-id="${escapeAttribute(item.id)}" data-dossier-document-title="${escapeAttribute(item.titel)}" aria-expanded="false">Verwijder</button>
+                      <div class="button-row">
+                        ${
+                          item.retryBeschikbaar
+                            ? `<form class="dossier-import-retry-form" data-dossier-import-retry-form="available">
+                                <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(item.id)}" />
+                                <button class="phase-button secondary" type="submit" data-dossier-import-retry-action="available" aria-label="Probeer importstap opnieuw voor record ${escapeAttribute(item.id)}">Probeer opnieuw</button>
+                              </form>`
+                            : ''
+                        }
+                        <button class="phase-button secondary delete-dossier-document" type="button" data-attachment-delete-kind="dossier-import" data-attachment-delete-state="available" data-dossier-document-id="${escapeAttribute(item.id)}" data-dossier-document-title="${escapeAttribute(item.titel)}" aria-expanded="false">Verwijder</button>
+                      </div>
                     </li>
                   `,
                     )

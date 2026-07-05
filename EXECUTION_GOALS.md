@@ -2462,7 +2462,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication planning follow-up, app-shell tests
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
+- **Status:** ☑ completed
 - **Issue:** pending
 
 ### G1697 — Medicatie planning routeopties helper houdt planningcontext menselijk
@@ -15741,7 +15741,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, import-inbox, eventlog, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ completed
 
 ### G578 — OCR-review correctieformulier
 
@@ -17476,6 +17476,40 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3821
+
+### G1938 — Fertility Intelligence: import-inbox retry routeflow overflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De import-inbox heeft nu een retry-actie per bestand voor wachtende of foutstatussen, maar routeflow-bewijs moet nog bewaken dat retrystatus, actieknop en verwijderactie samen scanbaar blijven.
+- **User Impact:** Zonder visuele routeflow-evidence kan een latere themewijziging de retryknop naast verwijderen laten overlappen of de veilige statuscopy onder de fold onduidelijk maken.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de import-inbox retry-actie zonder bestandsinhoud, OCR-payloads of medische plaintext.
+- **User Value:** Gebruikers kunnen een mislukte of wachtende importstap per bestand blijven herstellen zonder de hele upload opnieuw te doen.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-dossier-import-retry-action="available"` en `data-dossier-import-retry-state` op desktop en mobiel; retry- en verwijderactie blijven scanbaar zonder page-level horizontale overflow; afgeronde of reviewklare imports tonen geen retryactie; tests en fixtures blijven vrij van secrets, OCR-tekst, bestandsinhoud, medische payloads en plaintext gezondheidsdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier review, import-inbox
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier import-inbox, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3823
+
+### G1939 — Fertility Intelligence: import-inbox retry eventlog redaction evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De import-inbox retry schrijft nu alleen technische status en record-id naar het eventlog, maar regressiebewijs moet nog bewaken dat toekomstige logcopy geen bestandsnaam, OCR-tekst of medische payload opneemt.
+- **User Impact:** Zonder redaction evidence kan een latere foutafhandelingswijziging gevoelige importdetails in logs of testfixtures laten lekken.
+- **Desired Outcome:** Test- of audit-evidence bewaakt dat importretry-eventlogs beperkt blijven tot technische status en record-id.
+- **User Value:** Gebruikers kunnen importstappen herstellen met vertrouwen dat herstelpogingen geen broninhoud of medische gegevens in logcontext tonen.
+- **Acceptance Criteria:** Tests of auditdocs controleren de importretry-eventlogcopy voor technische status en record-id; eventlogcopy bevat geen bestandsnaam, OCR-tekst, base64, dossierpayload, diagnose, dosering, behandelkeuzeadvies, secrets of plaintext gezondheidsdata; bestaande retryactie, storagepad en UI-hooks blijven intact; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier review, import-inbox, eventlog
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier import-inbox, eventlog, tests
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3824
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

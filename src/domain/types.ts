@@ -302,6 +302,14 @@ export interface DossierDocument {
         bron: string;
       };
     };
+    importRetry?: {
+      status: 'opnieuw_klaargezet' | 'niet_ondersteund';
+      bron: string;
+      datum: IsoDate;
+      type: string;
+      bijgewerktOp: IsoDate;
+      poging: number;
+    };
   };
   beeldMetadata?: {
     datum: IsoDate;

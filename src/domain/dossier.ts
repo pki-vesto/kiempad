@@ -128,6 +128,8 @@ export type DossierImportInboxItem = {
   importstatus: 'klaar_voor_review' | 'ocr_wacht' | 'ocr_uitgelezen' | 'ocr_niet_ondersteund';
   importstatusLabel: string;
   veiligBestandslabel: string;
+  retryBeschikbaar: boolean;
+  retryStatusLabel: string;
   duplicaatReview?: {
     status: 'uniek' | 'duplicaat_review';
     statusLabel: string;
@@ -494,6 +496,8 @@ export function bouwDossierImportInbox(
         vergrendeld && document.categorie === 'beeld'
           ? 'Beeldbron verborgen tot ontgrendeling'
           : `${type} · ${formatBytes(document.grootteBytes)}`,
+      retryBeschikbaar: importstatus === 'ocr_wacht' || importstatus === 'ocr_niet_ondersteund',
+      retryStatusLabel: beschrijfDossierImportRetry(document),
       duplicaatReview: duplicaatReview.get(document.id),
       document,
     };
@@ -1678,4 +1682,13 @@ function beschrijfDossierImportstatus(status: DossierImportInboxItem['importstat
     case 'klaar_voor_review':
       return 'Klaar voor review';
   }
+}
+
+function beschrijfDossierImportRetry(document: DossierDocument): string {
+  const retry = document.metadata.importRetry;
+  if (!retry) return 'Nog geen retry uitgevoerd';
+  if (retry.status === 'niet_ondersteund') {
+    return `Retry ${retry.poging}: bestandstype niet ondersteund`;
+  }
+  return `Retry ${retry.poging}: opnieuw klaargezet`;
 }

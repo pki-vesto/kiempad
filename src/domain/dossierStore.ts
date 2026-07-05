@@ -277,6 +277,61 @@ export class DossierStore {
     return updated;
   }
 
+  async retryImportInboxStap(
+    documentId: string,
+    bijgewerktOp: string,
+  ): Promise<{ document: DossierDocument; status: 'opnieuw_klaargezet' | 'niet_ondersteund' }> {
+    const record = await this.documenten.get(documentId);
+    if (!record?.value) {
+      throw new Error('Dossierdocument niet gevonden.');
+    }
+    const document = record.value;
+    if (!document.ocr) {
+      throw new Error('Importretry is alleen beschikbaar voor OCR-wacht- of foutstatussen.');
+    }
+    if (document.ocr.status === 'tekst_uitgelezen') {
+      throw new Error('Importretry is niet beschikbaar voor uitgelezen OCR-records.');
+    }
+
+    const status =
+      document.ocr.bron === 'pdf' || document.ocr.bron === 'afbeelding'
+        ? 'opnieuw_klaargezet'
+        : 'niet_ondersteund';
+    const poging = (document.metadata.importRetry?.poging ?? 0) + 1;
+    const documenttype =
+      document.metadata.documenttype ??
+      (document.uploadProfiel
+        ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+        : DOSSIER_CATEGORIE_LABELS[document.categorie]);
+    const updated: DossierDocument = {
+      ...document,
+      ocr: {
+        ...document.ocr,
+        status: status === 'opnieuw_klaargezet' ? 'wacht_op_lokale_ocr' : 'niet_ondersteund',
+        explicieteLokaleVerwerking: true,
+        reviewStatus: 'concept',
+        waarschuwing:
+          status === 'opnieuw_klaargezet'
+            ? 'Lokale OCR-stap is opnieuw klaargezet; er is geen cloudverwerking gestart.'
+            : 'Dit bestandstype heeft nog geen lokale OCR-route; de retry is technisch vastgelegd.',
+        verwerktOp: bijgewerktOp,
+      },
+      metadata: {
+        ...document.metadata,
+        importRetry: {
+          status,
+          bron: document.metadata.bronbestand ?? document.bestandsNaam,
+          datum: document.metadata.documentDatum ?? document.datum,
+          type: documenttype,
+          bijgewerktOp,
+          poging,
+        },
+      },
+    };
+    await this.documenten.saveWithId(updated);
+    return { document: updated, status };
+  }
+
   async delete(id: string): Promise<void> {
     await this.documenten.delete(id);
   }
