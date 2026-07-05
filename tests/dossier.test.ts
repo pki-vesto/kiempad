@@ -1595,6 +1595,7 @@ describe('dossier', () => {
       mimeType: 'application/pdf',
       grootteBytes: 2048,
       inhoudBase64: 'cGRm',
+      trajectId: 'traject-1',
       notitie: 'Besproken met Erasmus MC',
       ocr: {
         explicieteLokaleVerwerking: true,
@@ -1610,6 +1611,7 @@ describe('dossier', () => {
       mimeType: 'image/jpeg',
       grootteBytes: 1024,
       inhoudBase64: 'anBn',
+      trajectId: 'traject-2',
       notitie: 'Geen labtekst uit UMC Utrecht',
     });
 
@@ -1630,6 +1632,12 @@ describe('dossier', () => {
     expect(zoekDossierDocumenten([match, geenMatch], 'amh', { kliniek: 'UMC Utrecht' })).toEqual(
       [],
     );
+    expect(
+      zoekDossierDocumenten([match, geenMatch], '', { pogingId: 'traject-1' }).map(
+        (result) => result.document.id,
+      ),
+    ).toEqual(['doc-match']);
+    expect(zoekDossierDocumenten([match, geenMatch], 'amh', { pogingId: 'traject-2' })).toEqual([]);
   });
 
   it('formatteert bestandsgrootte compact', () => {

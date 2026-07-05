@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2018/G513 historische records zoekfilter op poging: Dossier Zoeken heeft nu
+  een aparte pogingfilter naast vrije tekst en kliniekfiltering, met actieve
+  filterchips en compacte resultaatcontext zonder bronpayload of behandeladvies.
 - G512 historische records zoekfilter op kliniek: Dossier Zoeken heeft nu een
   aparte kliniekfilter met veilige resultaatcontext voor bron, datum en
   reviewstatus, naast vrije tekst zoeken en zonder bronpayload of behandeladvies.

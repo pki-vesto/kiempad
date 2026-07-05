@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G2018/G513 Fertility Intelligence historische records zoekfilter op poging — done in G2018 / issue #3974.** Dossier Zoeken heeft nu een aparte pogingfilter naast vrije tekst en kliniekfiltering, met actieve filterchips en compacte resultaatcontext zonder bronpayload of behandeladvies.
 - **G512 Fertility Intelligence historische records zoekfilter op kliniek — done in G512 / issue #843.** Dossier Zoeken heeft nu een aparte kliniekfilter met veilige resultaatcontext voor bron, datum en reviewstatus, naast vrije tekst zoeken en zonder bronpayload of behandeladvies.
 - **G2016 Fertility Intelligence consultvraagkoppeling zichtbaar in vragenroute — done in G2016 / issue #3970.** De Vragen-route toont consult-linked vraagmetadata met bronlabel, datum en reviewstatus in open vragen, alle vragen en het geselecteerde vraagformulier zonder medische payload of behandeladvies.
 - **G522 Fertility Intelligence consultdocument koppelen aan open vragen — done in G522 / issue #853.** Consultkaarten tonen nu een compacte open-vragenroute voor vragen die aan dezelfde consultafspraak hangen, inclusief bronlabel, datum, reviewstatus en een lokaal bewaarformulier voor de koppeling zonder consultpayload of behandeladvies.

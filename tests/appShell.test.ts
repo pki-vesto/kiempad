@@ -8527,6 +8527,7 @@ describe('app shell', () => {
       dossierStatus: '1 dossierbestand in de lokale kluis opgeslagen.',
       dossierZoekterm: 'erasmus',
       dossierKliniekFilter: 'Erasmus MC',
+      dossierPogingFilter: 'traject-1',
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
@@ -8546,11 +8547,16 @@ describe('app shell', () => {
     expect(html).toContain('value="erasmus"');
     expect(html).toContain('name="dossierKliniekFilter"');
     expect(html).toContain('<option value="Erasmus MC" selected>Erasmus MC</option>');
+    expect(html).toContain('name="dossierPogingFilter"');
+    expect(html).toContain('<option value="traject-1" selected>Poging 1</option>');
     expect(html).toContain('data-dossier-clinic-filter-state="active"');
+    expect(html).toContain('data-dossier-attempt-filter-state="active"');
     expect(html).toContain('data-dossier-clinic-filter-chip="active"');
+    expect(html).toContain('data-dossier-attempt-filter-chip="active"');
     expect(html).toContain('Kliniek: Erasmus MC');
+    expect(html).toContain('Poging: Poging 1');
     expect(html).toContain('data-dossier-search-clear="filters"');
-    expect(html).toContain('1 resultaat voor "erasmus" binnen Erasmus MC');
+    expect(html).toContain('1 resultaat voor "erasmus" binnen Erasmus MC in Poging 1');
     expect(html).toContain('data-dossier-clinic-filter-results="ready"');
     expect(html).toContain('data-dossier-clinic-filter-result="gereviewd"');
     expect(html).toContain('Bron: Erasmus MC');

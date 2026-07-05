@@ -218,6 +218,10 @@
   aparte kliniekfilter met veilige resultaatcontext voor bron, datum en
   reviewstatus, zodat historische records per kliniek scanbaar worden zonder
   bronpayload of behandeladvies.
+- **G2018/G513 historische records zoekfilter op poging:** Dossier Zoeken toont
+  nu een aparte pogingfilter naast vrije tekst en kliniekfiltering, met actieve
+  filterchips en compacte resultaatcontext voor bron, datum en reviewstatus
+  zonder bronpayload of behandeladvies.
 - **G2011 offline cache metadata release-state contract error-contract error
   error error missing-term error contract:** de exacte G2010 error-contract
   error error error release missing-term foutmelding is als
