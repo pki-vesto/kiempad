@@ -133,8 +133,16 @@
   contractrelease-evidence verdwijnen.
 - **G1996 offline cache metadata release-state contract missing-term error
   contract:** de exacte G1995 contractrelease missing-term foutmelding is als
-  compact maintenance-contract gesnapshott met veilige labels `offline cache
-  metadata missing-term error contract` en `veilige technische labels`.
+  `offline-cache-metadata-release-state-contract-missing-term-error-contract`
+  gesnapshott; de contractcontext bewaakt `Offline cache metadata release-state contract releasecontext ontbreekt voor termen`
+  met veilige labels `offline cache metadata missing-term error contract` en
+  `veilige technische labels`.
+- **G1997 offline cache metadata release-state contract error release guard:**
+  release-evidence bewaakt dat het G1996
+  `offline-cache-metadata-release-state-contract-missing-term-error-contract`
+  en de foutmeldingcontext `Offline cache metadata release-state contract releasecontext ontbreekt voor termen`
+  in changelog en current-state blijven staan met alleen `offline cache metadata
+  missing-term error contract` en `veilige technische labels`.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.
