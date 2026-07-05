@@ -5950,6 +5950,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('border-style: solid;');
     expect(mobileCss).toContain('font-weight: 720;');
     expect(mobileCss).toContain('outline-color: ButtonText;');
+    expect(mobileCss).toContain('outline-offset: 1px;');
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');

@@ -286,6 +286,10 @@
   gefocuste mobiele Traject-cues houden expliciete solid systeemranden en
   ButtonText outlines, zodat cue-affordance duidelijk blijft zonder actieve
   route-outlines te kopiëren.
+- **G1910 Traject mobile forced-colors inactive focus cue outline offset:**
+  inactieve gefocuste mobiele Traject-cues gebruiken een compacte one-pixel
+  outline-offset, zodat keyboardfocus leesbaar blijft zonder actieve
+  route-spacing te kopiëren.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
