@@ -15482,7 +15482,9 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #3791
+
 ### G560 — daily recommendation dual-owner cards
 
 - **Epic:** Premium Claude Design UI
@@ -17242,6 +17244,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3788
+
+### G1923 — Premium Claude Design UI: research trend scan mobile density polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De nieuwe research trend-scan maakt trendgroepen sneller scanbaar, maar de mobiele dichtheid kan nog expliciet worden verfijnd en bewaakt.
+- **User Impact:** Gebruikers op kleine schermen kunnen alsnog extra horizontaal scannen als research-scan-tegels later te breed of te lang worden.
+- **Desired Outcome:** Research trend-scan blijft compact, leesbaar en zonder overlap op mobiel terwijl lege en gevulde trendstaten duidelijk blijven.
+- **User Value:** Gebruikers houden snel overzicht over onderwerpen, publicaties, bronnen en laatste update zonder meteen losse trendkaarten te lezen.
+- **Acceptance Criteria:** Mobile research trend scan tiles remain readable without horizontal page overflow; empty and populated research trend states remain visually distinct; existing trend dashboard, source rows, research forms and data-hooks remain intact; app-shell or routeflow tests cover scan density or no-overlap behavior; backlog health remains at 100+ open goals.
+- **Affected Screens:** Kennis, Research Intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research UI, Knowledge UI, Claude Design, app-shell tests
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3790
 
 ### G586 — replay conflict recovery status UI
 

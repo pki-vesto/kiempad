@@ -42117,6 +42117,14 @@ describe('app shell', () => {
     expect(emptyDashboard).toContain('Researchtrend status');
     expect(emptyDashboard).toContain('<dt>Groepen</dt><dd>0</dd>');
     expect(emptyDashboard).toContain('<dt>Items</dt><dd>0</dd>');
+    expect(emptyDashboard).toContain('data-research-trend-scan="ready"');
+    expect(emptyDashboard).toContain('aria-label="Research trend overzicht"');
+    expect(emptyDashboard).toContain('data-research-trend-scan-card="topics"');
+    expect(emptyDashboard).toContain('data-research-trend-scan-card="publications"');
+    expect(emptyDashboard).toContain('data-research-trend-scan-card="sources"');
+    expect(emptyDashboard).toContain('data-research-trend-scan-card="latest"');
+    expect(emptyDashboard).toContain('Nog geen trends');
+    expect(emptyDashboard).toContain('Geen bewijsweging');
     expect(emptyDashboard).toContain(
       'Nog geen researchtrends gevonden in opgeslagen researchitems.',
     );
@@ -42182,6 +42190,16 @@ describe('app shell', () => {
     expect(contextualDashboard).toContain('data-research-trend-card="mannelijke_factor"');
     expect(contextualDashboard).toContain('data-research-trend-item="research-ivf-icsi-embryo"');
     expect(contextualDashboard).toContain('data-research-trend-item="research-man-leefstijl-bron"');
+    expect(contextualDashboard).toContain('data-research-trend-scan="ready"');
+    expect(contextualDashboard).toContain('data-research-trend-scan-card="topics"');
+    expect(contextualDashboard).toContain('data-research-trend-scan-card="publications"');
+    expect(contextualDashboard).toContain('data-research-trend-scan-card="sources"');
+    expect(contextualDashboard).toContain('data-research-trend-scan-card="latest"');
+    expect(contextualDashboard).toContain('<span>Onderwerpen</span>');
+    expect(contextualDashboard).toContain('Lokale trefwoorden');
+    expect(contextualDashboard).toContain('Conceptcontext');
+    expect(contextualDashboard).toContain('Bronverwijzing zichtbaar');
+    expect(contextualDashboard).toContain('2026-05-10');
     expect(contextualDashboard).toContain('IVF');
     expect(contextualDashboard).toContain('ICSI');
     expect(contextualDashboard).toContain('Embryo');
@@ -42203,10 +42221,16 @@ describe('app shell', () => {
 
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    expect(css).toContain('.research-trend-scan {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.research-trend-scan__card {');
     expect(css).toContain('.research-trend-dashboard__grid {');
     expect(css).toContain('.research-trend-card {');
     expect(css).toContain('.research-trend-card__item {');
     expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+    expect(mobileCss).toContain('.research-trend-scan {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.research-trend-scan__card {');
     expect(mobileCss).toContain('.research-trend-dashboard__grid {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
   });
