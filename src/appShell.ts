@@ -14853,6 +14853,7 @@ function renderKennisScreen(state: AppShellState): string {
                     <em>${researchTrendGroepen.length} groepen</em>
                   </summary>
                   <div class="kp-disclosure__body">
+                    ${renderResearchClinicianQuestionScan(researchRelevantie)}
                     <div class="knowledge-route-grid knowledge-route-grid--research">
                       <div class="summary-panel">${renderResearchRelevantieVoorGebruiker(researchRelevantie)}</div>
                       <div class="summary-panel">${renderResearchDossierRelaties(researchDossierRelaties)}</div>
@@ -15815,6 +15816,71 @@ function renderKnowledgeResearchSummaryReadingBoard(input: {
           )
           .join('')}
       </nav>
+    </section>
+  `;
+}
+
+function renderResearchClinicianQuestionScan(
+  items: readonly ResearchRelevantieVoorGebruiker[],
+): string {
+  const vragen = items.flatMap((item) => item.artsBespreekVragen.map((vraag) => vraag));
+  const bronnen = new Set(vragen.map((vraag) => vraag.bron).filter(Boolean));
+  const reviewStatussen = Array.from(
+    new Set(vragen.map((vraag) => vraag.reviewStatus).filter(Boolean)),
+  );
+  const correctieVelden = Array.from(
+    new Set(vragen.flatMap((vraag) => vraag.correctieVelden).filter(Boolean)),
+  );
+  const eersteVraag = vragen[0];
+  const lanes = [
+    {
+      id: 'questions',
+      label: 'Artsvragen',
+      value: `${vragen.length} vraag${vragen.length === 1 ? '' : 'en'}`,
+      detail: eersteVraag ? eersteVraag.vraag : 'Nog geen bespreekvragen uit researchcontext.',
+    },
+    {
+      id: 'source',
+      label: 'Bron en datum',
+      value: eersteVraag ? eersteVraag.bron : 'Geen bron',
+      detail: eersteVraag ? eersteVraag.datum : 'Nog geen publicatiedatum',
+    },
+    {
+      id: 'review',
+      label: 'Reviewstatus',
+      value: reviewStatussen.length > 0 ? reviewStatussen.join(' · ') : 'nog geen review',
+      detail: `${bronnen.size} bron${bronnen.size === 1 ? '' : 'nen'} gekoppeld`,
+    },
+    {
+      id: 'corrections',
+      label: 'Correctievelden',
+      value: `${correctieVelden.length} veld${correctieVelden.length === 1 ? '' : 'en'}`,
+      detail: correctieVelden.length > 0 ? correctieVelden.join(' · ') : 'Nog niets te controleren',
+    },
+  ];
+
+  return `
+    <section class="research-clinician-question-scan" aria-label="Research artsvragen scan" data-research-clinician-question-scan="ready" data-research-clinician-question-scan-count="${escapeAttribute(String(vragen.length))}">
+      <header class="research-clinician-question-scan__header">
+        <div>
+          <p class="kp-card__eyebrow">Artsvragen</p>
+          <h3>Kliniekvragen eerst scannen</h3>
+        </div>
+        <p>Vraagtekst, bron, datum, reviewstatus en correctievelden blijven zichtbaar als gesprekshulp, zonder medische conclusie of behandelrichting.</p>
+      </header>
+      <div class="research-clinician-question-scan__grid">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="research-clinician-question-scan__card" href="#knowledge-research-trends" data-research-clinician-question-scan-card="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.value)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </div>
     </section>
   `;
 }
@@ -17000,14 +17066,17 @@ function renderResearchRelevantieVoorGebruiker(
                           .map(
                             (vraag) => `
                               <li data-research-clinician-question="${escapeAttribute(vraag.id)}">
-                                <span>${escapeHtml(vraag.vraag)}</span>
-                                <dl class="metadata-list compact-list" data-research-clinician-question-metadata="ready">
-                                  <div><dt>Bron</dt><dd>${escapeHtml(vraag.bron)}</dd></div>
-                                  <div><dt>Datum</dt><dd>${escapeHtml(vraag.datum)}</dd></div>
-                                  <div><dt>Reviewstatus</dt><dd>${escapeHtml(vraag.reviewStatus)}</dd></div>
-                                  <div><dt>Correctievelden</dt><dd>${vraag.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
-                                  <div><dt>Uitleg voor leken</dt><dd>${escapeHtml(vraag.uitlegVoorLeken)}</dd></div>
-                                </dl>
+                                <div class="research-clinician-question-text">${escapeHtml(vraag.vraag)}</div>
+                                <div class="research-clinician-question-metadata" data-research-clinician-question-metadata="ready">
+                                  <div class="research-clinician-question-metadata__summary">Bron ${escapeHtml(vraag.bron)} · Datum ${escapeHtml(vraag.datum)} · Reviewstatus ${escapeHtml(vraag.reviewStatus)} · Correctievelden ${vraag.correctieVelden.map(escapeHtml).join(' · ')}</div>
+                                  <dl class="metadata-list compact-list">
+                                    <div><dt>Bron</dt><dd>${escapeHtml(vraag.bron)}</dd></div>
+                                    <div><dt>Datum</dt><dd>${escapeHtml(vraag.datum)}</dd></div>
+                                    <div><dt>Reviewstatus</dt><dd>${escapeHtml(vraag.reviewStatus)}</dd></div>
+                                    <div><dt>Correctievelden</dt><dd>${vraag.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+                                    <div><dt>Uitleg voor leken</dt><dd>${escapeHtml(vraag.uitlegVoorLeken)}</dd></div>
+                                  </dl>
+                                </div>
                               </li>
                             `,
                           )

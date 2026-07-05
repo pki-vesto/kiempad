@@ -84,6 +84,11 @@
 - **G545 researchbibliotheek offline cache metadata:** researchbronnen tonen
   cachebron, datum, reviewstatus, cachetype en correctievelden, zodat lokale
   researchbronnen controleerbaar blijven zonder netwerkactie.
+- **G1986 clinician question generator routeflow evidence:** de Kennis
+  Researchroute toont een compacte artsvragen-scan vóór de relevantiedetails en
+  routeflow-smoke bewaakt `data-research-clinician-questions`, vraagtekst, bron,
+  datum, reviewstatus en correctievelden zonder secrets, plaintext payload of
+  medisch advies.
 - **G1987 offline cache metadata routeflow evidence:** de routeflow-smoke opent
   de researchbronnenlaag en bewaakt cachebron, datum, reviewstatus, cachetype,
   correctievelden en niet-medische payloadgrens voor offline cache metadata.

@@ -18237,7 +18237,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research relevance, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3910
 
 ### G1987 — Research Intelligence: offline cache metadata routeflow evidence

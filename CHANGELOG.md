@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1986 clinician question generator routeflow evidence: Kennis Research toont nu
+  een compacte artsvragen-scan voor vraagtekst, bron, datum, reviewstatus en
+  correctievelden vóór de researchrelevantie-details. Routeflow-smoke bewaakt
+  `data-research-clinician-questions` en de scan op desktop, tablet en mobiel
+  zonder secrets, plaintext payload of medisch advies.
 - G2017 consultvraagkoppeling routeflow evidence: Vragen/Open toont nu een
   compacte consultkoppelingen-scan die gereviewde consultvragen,
   conceptkoppelingen en gewone open vragen scheidt. Routeflow-smoke maakt via
