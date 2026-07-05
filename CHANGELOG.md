@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G560 Premium Claude Design UI: Dagadvies toont nu een eerste-viewport
+  owner-scan met aparte kaarten voor vrouw, man en samen voordat beslislinks of
+  de volledige suggestielijst worden geopend.
 - G559 Premium Claude Design UI: Researchtrends starten met een compacte
   trend-scan voor onderwerpen, publicaties, bronnen en laatste update voordat
   de losse trendkaarten verschijnen.

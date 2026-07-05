@@ -83,6 +83,10 @@
 - **G559 research trend-scan:** het researchtrenddashboard start met een compacte
   scanlaag voor onderwerpen, publicaties, bronnen en laatste update, zodat trends
   eerst als overzicht lezen voordat de losse trendkaarten volgen.
+- **G560 dagadvies owner-scan:** de Dagadviesroute toont in de eerste laag nu drie
+  compacte kaarten voor vrouw, man en samen, zodat persoonlijke en gezamenlijke
+  suggesties eerst scanbaar zijn voordat de gebruiker beslislinks of de volledige
+  suggestielijst opent.
 - **G1862 researchsamenvatting leesbord:** de researchsamenvattingenroute toont
   vóór de wetenschappelijke en eenvoudige lijsten een compact leesbord voor
   wetenschappelijke samenvatting, eenvoudige uitleg, relevantie en broncontext.

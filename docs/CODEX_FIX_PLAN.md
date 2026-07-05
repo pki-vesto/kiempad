@@ -263,6 +263,9 @@
 - **Research trend dashboard scan — done in G559 / issue #3791.** Researchtrends now open with
   a compact scan for topics, publications, source references, and latest update before detailed
   trend cards.
+- **Daily recommendation dual-owner scan — done in G560 / issue #3793.** Dagadvies now shows a
+  first-viewport owner scan for vrouw, man, and samen before the decision lanes and full
+  suggestion list, keeping feedback filters, owner workbench hooks, and non-medical copy intact.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

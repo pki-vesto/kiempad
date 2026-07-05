@@ -15497,7 +15497,9 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #3793
+
 ### G561 — active goal floor maintenance test
 
 - **Epic:** Product Quality & Automation
@@ -17261,6 +17263,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3790
+
+### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De nieuwe dagadvies eigenaarsscan maakt vrouw-, man- en samenroutes sneller scanbaar, maar de mobiele dichtheid kan nog expliciet worden verfijnd en bewaakt.
+- **User Impact:** Gebruikers op kleine schermen kunnen alsnog te veel horizontaal scannen als owner-scan-tegels later te breed of te lang worden.
+- **Desired Outcome:** Dagadvies owner-scan blijft compact, leesbaar en zonder overlap op mobiel terwijl vrouw, man en samen direct herkenbaar blijven.
+- **User Value:** Gebruikers houden snel overzicht over persoonlijke en gezamenlijke suggesties zonder meteen de volledige suggestielijst te openen.
+- **Acceptance Criteria:** Mobile owner-scan tiles remain readable without horizontal page overflow; vrouw/man/samen scan cards remain visible before the detailed list; existing feedback filter, owner workbench, forms and data-hooks remain intact; app-shell or routeflow tests cover scan density or no-overlap behavior; backlog health remains at 100+ open goals.
+- **Affected Screens:** Start, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Recommendations UI, Claude Design, app-shell tests
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3794
 
 ### G586 — replay conflict recovery status UI
 
