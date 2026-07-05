@@ -2263,6 +2263,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   first-viewport decision board for phase planning, fertility timeline,
   reimbursement and graph context, while full timeline and graph details remain
   reachable as follow-up context.
+- Partial G1866/#3674: Wellbeing history now starts with a compact
+  first-viewport signal board for recent signals, symptoms, cycle data and
+  mental check-ins, while full history details remain reachable as follow-up
+  context.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record

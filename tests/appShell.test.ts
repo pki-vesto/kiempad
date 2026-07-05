@@ -39004,14 +39004,17 @@ describe('app shell', () => {
     expect(html).toContain('Trendperiodes openen');
     expect(html).toContain('aria-label="Welzijn geschiedenis route-samenvatting"');
     expect(html).toContain('data-wellbeing-route-summary="history"');
-    expect(html).toContain('data-wellbeing-history-board="ready"');
+    expect(html).toContain('data-wellbeing-history-board="first-viewport"');
     expect(html).toContain('aria-label="Welzijn geschiedenis startlaag"');
     expect(html).toContain('Kies eerst je welzijnslaag');
-    expect(html).toContain('data-wellbeing-history-lane="checkins"');
+    expect(html).toContain('data-wellbeing-history-lane="recent"');
     expect(html).toContain('data-wellbeing-history-lane="symptoms"');
     expect(html).toContain('data-wellbeing-history-lane="cycle"');
-    expect(html).toContain('data-wellbeing-history-lane="trends"');
-    expect(html).toContain('Terugleesbord');
+    expect(html).toContain('data-wellbeing-history-lane="checkins"');
+    expect(html).not.toContain('data-wellbeing-history-lane="trends"');
+    expect(html).toContain('Signaalbord');
+    expect(html).toContain('recente signalen, symptomen, cyclusmetingen of mentale check-ins');
+    expect(html).toContain('href="#welzijn-route-overview"');
     expect(html).toContain('Kiempad ordent je welzijn; je kliniek blijft leidend.');
     expect(html).not.toContain(
       'Overzicht, geschiedenis en invoer blijven in één rustige welzijnsruimte zonder score, diagnose of behandeladvies.',
@@ -39019,7 +39022,7 @@ describe('app shell', () => {
     expect(html).not.toContain(
       'Deze laag toont alleen lokale tellingen en datums; geen notities, diagnose, score, behandeladvies of trackingdata.',
     );
-    expect(html.indexOf('data-wellbeing-history-board="ready"')).toBeLessThan(
+    expect(html.indexOf('data-wellbeing-history-board="first-viewport"')).toBeLessThan(
       html.indexOf('data-wellbeing-disclosure="checkins"'),
     );
     expect(html).toContain('Mentale check-ins openen');

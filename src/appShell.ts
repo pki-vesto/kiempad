@@ -12373,7 +12373,6 @@ function renderWelzijnScreen(state: AppShellState): string {
           checkInCount: checkIns.length,
           symptomCount: logs.length,
           cycleCount: cycleData.length,
-          trendCount: trends.length,
           daysWithSymptoms: perDag.length,
           latestDate: overzicht.laatsteDatum,
         })}
@@ -12623,18 +12622,18 @@ function renderWellbeingHistoryBoard(input: {
   checkInCount: number;
   symptomCount: number;
   cycleCount: number;
-  trendCount: number;
   daysWithSymptoms: number;
   latestDate: string | undefined;
 }): string {
   const latest = input.latestDate ?? 'Nog geen datum';
+  const signalCount = input.checkInCount + input.symptomCount + input.cycleCount;
   const lanes = [
     {
-      id: 'checkins',
-      href: '#welzijn-history-checkins',
-      label: 'Check-ins',
-      title: `${input.checkInCount} check-in${input.checkInCount === 1 ? '' : 's'}`,
-      detail: 'Lees stemming per dag terug zonder score of advies.',
+      id: 'recent',
+      href: '#welzijn-route-overview',
+      label: 'Recent',
+      title: `${signalCount} signaal${signalCount === 1 ? '' : 'en'}`,
+      detail: 'Laatste lokale welzijnsdatum en eigenaarcontext eerst scannen.',
       cue: latest,
     },
     {
@@ -12654,23 +12653,23 @@ function renderWellbeingHistoryBoard(input: {
       cue: 'Geen duiding',
     },
     {
-      id: 'trends',
-      href: '#welzijn-overview-trends-disclosure',
-      label: 'Trends',
-      title: `${input.trendCount} periode${input.trendCount === 1 ? '' : 's'}`,
-      detail: 'Trendperiodes tonen alleen aantallen, geen diagnose of conclusie.',
-      cue: 'Feiten',
+      id: 'checkins',
+      href: '#welzijn-history-checkins',
+      label: 'Check-ins',
+      title: `${input.checkInCount} check-in${input.checkInCount === 1 ? '' : 's'}`,
+      detail: 'Mentale check-ins teruglezen zonder score of behandeladvies.',
+      cue: 'Stemming',
     },
   ];
 
   return `
-    <section class="wellbeing-history-board" aria-label="Welzijn geschiedenis startlaag" data-wellbeing-history-board="ready">
+    <section class="wellbeing-history-board" aria-label="Welzijn geschiedenis startlaag" data-wellbeing-history-board="first-viewport">
       <header class="wellbeing-history-board__header">
         <div>
-          <p class="kp-card__eyebrow">Terugleesbord</p>
+          <p class="kp-card__eyebrow">Signaalbord</p>
           <h3>Kies eerst je welzijnslaag</h3>
         </div>
-        <p>Open check-ins, symptomen, cyclusmetingen of trendperiodes zonder meteen alle registraties te tonen.</p>
+        <p>Open recente signalen, symptomen, cyclusmetingen of mentale check-ins zonder meteen alle registraties te tonen.</p>
       </header>
       <nav class="wellbeing-history-board__lanes" aria-label="Welzijnsgeschiedenis kiezen">
         ${lanes

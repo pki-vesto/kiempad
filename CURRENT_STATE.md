@@ -91,6 +91,10 @@
   compact beslisbord voor faseplanning, fertility timeline, vergoeding en graph.
   De volledige timeline- en graphdisclosures blijven bereikbaar zonder de eerste
   viewport als lange contextstapel te vullen.
+- **G1866 Welzijnsgeschiedenis signaalbord:** de welzijnsgeschiedenisroute start
+  met een compact signaalbord voor recente signalen, symptomen, cyclusmetingen en
+  mentale check-ins. Detailhistorie blijft via bestaande disclosures bereikbaar
+  zonder als één lange welzijnsstapel te openen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
