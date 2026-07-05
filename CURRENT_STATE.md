@@ -294,6 +294,10 @@
   inactieve gefocuste mobiele Traject-badges gebruiken een compacte one-pixel
   outline-offset, zodat statusfocus leesbaar blijft zonder actieve
   route-spacing te kopiëren.
+- **G1912 Traject mobile forced-colors inactive focus badge border style:**
+  inactieve gefocuste mobiele Traject-badges gebruiken expliciete one-pixel
+  solid systeemranden, zodat status-affordance voorspelbaar blijft in
+  forced-colors mobile.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

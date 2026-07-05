@@ -30765,6 +30765,8 @@ summary[class*="__summary"]:focus-visible,
     }
 
     .treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__badge {
+      border-width: 1px;
+      border-style: solid;
       border-color: CanvasText;
       background: Canvas;
       color: CanvasText;
