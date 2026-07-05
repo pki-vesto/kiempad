@@ -298,7 +298,11 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindAfwegingControls(root, state);
   bindKostenControls(root, state);
   bindBackupControls(root, state);
-  if (state.centralSessionRenewalRecoveryPendingFocus) {
+  if (
+    !state.loadingState &&
+    (state.centralSessionRenewalRecoveryPendingFocus ||
+      state.backupStatus?.startsWith('Centrale sessieherstelactie verwerkt.'))
+  ) {
     focusCentralSessionRenewalRecoveryStatus(root, state);
   }
   if (state.dailyRecommendationRouteFocusPendingFocus) {
@@ -682,12 +686,21 @@ function reloadToCentralSessionRenewalRecoveryFocus(): void {
 }
 
 function focusCentralSessionRenewalRecoveryStatus(root: HTMLElement, state: RuntimeState): void {
-  const status = root.querySelector<HTMLElement>(
-    '[data-central-session-renewal-recovery-focus-target="ready"]',
-  );
-  if (!status) return;
-  state.centralSessionRenewalRecoveryPendingFocus = false;
-  status.focus({ preventScroll: true });
+  requestAnimationFrame(() => {
+    const statuses = [
+      ...root.querySelectorAll<HTMLElement>(
+        '[data-central-session-renewal-recovery-focus-target="ready"]',
+      ),
+    ];
+    const status =
+      statuses.find((candidate) => {
+        const rect = candidate.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      }) ?? statuses[0];
+    if (!status) return;
+    state.centralSessionRenewalRecoveryPendingFocus = false;
+    status.focus({ preventScroll: true });
+  });
 }
 
 function bindBackupControls(root: HTMLElement, state: RuntimeState): void {

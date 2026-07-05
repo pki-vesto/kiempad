@@ -1572,6 +1572,15 @@ function extractBackupImportPrivacyZone(html: string): string {
   return html.slice(exportStart, herstelStart).replace(/\s+/g, ' ').trim();
 }
 
+function extractBackupControlRouteZone(html: string): string {
+  const controlStart = html.indexOf('<section id="backup-route-controleren"');
+  const exportStart = html.indexOf('<section id="backup-route-export"');
+  if (controlStart < 0 || exportStart < 0) {
+    throw new Error('Back-up controlezone ontbreekt.');
+  }
+  return html.slice(controlStart, exportStart).replace(/\s+/g, ' ').trim();
+}
+
 function extractCentralSyncFeedback(html: string): string {
   const match = html.match(
     /<section class="policy-panel embedded-summary" aria-label="Centrale overdrachtstatus"[\s\S]*?<\/section>/,
@@ -42311,6 +42320,7 @@ describe('app shell', () => {
       }),
     );
     const recoveryBackupZone = extractBackupImportPrivacyZone(recoveryHtml);
+    const recoveryControlZone = extractBackupControlRouteZone(recoveryHtml);
 
     expect(normalHtml).not.toContain('Centrale sessieherstelactie verwerkt');
     expect(normalHtml).not.toContain('data-central-session-renewal-recovery-announcement');
@@ -42321,6 +42331,8 @@ describe('app shell', () => {
     expect(recoveryHtml).toContain('data-central-session-renewal-recovery-focus-target="ready"');
     expect(recoveryHtml).toContain('tabindex="-1"');
     expect(recoveryHtml).toContain('role="status" aria-live="polite" aria-atomic="true"');
+    expect(recoveryControlZone).toContain('data-central-session-renewal-recovery-focus-target');
+    expect(recoveryControlZone).toContain('Centrale sessieherstelactie verwerkt');
     expect(recoveryBackupZone).not.toContain('central-token');
     expect(recoveryBackupZone).not.toContain('passphrase');
     expect(recoveryBackupZone).not.toContain('sessie-id');
