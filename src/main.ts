@@ -1288,6 +1288,7 @@ async function updateAttachmentEnvelopeBatchStatus(form: HTMLFormElement): Promi
       contentType: file.type || undefined,
       sizeBytes: file.size,
     })),
+    'hashing',
   );
   if (files.length === 0) return;
 
@@ -1301,12 +1302,13 @@ async function updateAttachmentEnvelopeBatchStatus(form: HTMLFormElement): Promi
   if (Array.from(fileInput.files ?? []).filter((file) => file.size > 0).length !== files.length) {
     return;
   }
-  renderAttachmentEnvelopeBatchStatus(batch, hashedFiles);
+  renderAttachmentEnvelopeBatchStatus(batch, hashedFiles, 'complete');
 }
 
 function renderAttachmentEnvelopeBatchStatus(
   batch: HTMLElement,
   files: Array<{ contentType?: string; sizeBytes?: number; sha256?: string }>,
+  progress: 'idle' | 'hashing' | 'complete' = 'idle',
 ): void {
   const summary = summarizeAttachmentEnvelopeMetadataBatch(
     files.map((file) => ({
@@ -1316,15 +1318,23 @@ function renderAttachmentEnvelopeBatchStatus(
     })),
   );
   batch.dataset.attachmentEnvelopeBatch = summary.status;
+  batch.dataset.attachmentEnvelopeProgress = summary.total === 0 ? 'idle' : progress;
   batch.replaceChildren();
 
   const title = document.createElement('strong');
-  title.textContent = summary.label;
+  title.textContent =
+    summary.total === 0
+      ? summary.label
+      : progress === 'hashing'
+        ? 'Hashcontrole bezig'
+        : `${summary.label} · hashcontrole klaar`;
   const detail = document.createElement('span');
   detail.textContent =
     summary.total === 0
       ? summary.detail
-      : `${summary.total} items: ${summary.detail} Geen bestandsnamen of broninhoud in deze batchstatus.`;
+      : progress === 'hashing'
+        ? `${summary.total} items: ${summary.detail} Hashcontrole bezig; hashes worden lokaal berekend zonder bestandsnamen of broninhoud.`
+        : `${summary.total} items: ${summary.detail} Hashcontrole klaar. Geen bestandsnamen of broninhoud in deze batchstatus.`;
   batch.append(title, detail);
 }
 

@@ -22092,6 +22092,14 @@ summary[class*="__summary"]:focus-visible,
   color: var(--warning);
 }
 
+.attachment-envelope-status [data-attachment-envelope-progress="hashing"] strong {
+  color: var(--warning);
+}
+
+.attachment-envelope-status [data-attachment-envelope-progress="complete"] strong {
+  color: var(--accent-strong);
+}
+
 .attachment-envelope-status [data-attachment-envelope-batch="invalid"] strong {
   color: var(--danger);
 }

@@ -16063,8 +16063,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload, attachment envelope helper, main runtime
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3648
+
+### G1854 — Attachment envelope batch progress forced-colors evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De attachment-envelope batch progress states onderscheiden hashing, klaar en controle nodig, maar forced-colors bewijs is nog niet expliciet.
+- **User Impact:** Gebruikers in high-contrast/forced-colors mode kunnen progress states missen als kleurregels later terugvallen.
+- **Desired Outcome:** De batch progress states blijven onderscheidbaar in forced-colors zonder bestandsnamen of inhoud te tonen.
+- **User Value:** Grote uploadselecties blijven toegankelijk en voorspelbaar voor high-contrast gebruikers.
+- **Acceptance Criteria:** Hashing, complete en invalid states blijven zichtbaar/onderscheidbaar in forced-colors; tests vermijden filename, token, secret, base64, OCR-tekst, recordpayload en medische plaintext; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Dossier upload, imaging upload, embryo upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell CSS, Dossier upload, attachment envelope tests
+- **ADR Needed:** no
+- **Score:** 97
+- **Status:** ☐ open
+- **Issue:** #3650
 
 ### G586 — replay conflict recovery status UI
 

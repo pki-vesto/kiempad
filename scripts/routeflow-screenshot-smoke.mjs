@@ -2565,6 +2565,8 @@ async function assertRouteflows(browser, options) {
                 visible: Boolean(rect && rect.width > 0 && rect.height > 0),
                 state:
                   batch instanceof HTMLElement ? batch.dataset.attachmentEnvelopeBatch ?? '' : '',
+                progress:
+                  batch instanceof HTMLElement ? batch.dataset.attachmentEnvelopeProgress ?? '' : '',
                 text: batch?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
                 scrollWidth: batch instanceof HTMLElement ? batch.scrollWidth : 0,
                 clientWidth: batch instanceof HTMLElement ? batch.clientWidth : 0,
@@ -3322,9 +3324,11 @@ async function assertRouteflows(browser, options) {
         evidence.attachmentEnvelopeBatchStatus &&
         (!evidence.attachmentEnvelopeBatchStatus.visible ||
           evidence.attachmentEnvelopeBatchStatus.state !== 'invalid' ||
+          evidence.attachmentEnvelopeBatchStatus.progress !== 'complete' ||
           !evidence.attachmentEnvelopeBatchStatus.text.includes(
             '3 items: 2 klaar, 0 hash-pending, 1 controle nodig.',
           ) ||
+          !evidence.attachmentEnvelopeBatchStatus.text.includes('hashcontrole klaar') ||
           !evidence.attachmentEnvelopeBatchStatus.text.includes(
             'Geen bestandsnamen of broninhoud',
           ) ||

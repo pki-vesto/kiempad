@@ -469,9 +469,12 @@ describe('routeflow screenshot smoke script', () => {
       'sessieherstel-focus mist stabiele routeflow-evidence',
     );
     expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeBatchStatus');
+    expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeProgress');
+    expect(routeflowScreenshotSmokeScript).toContain("progress !== 'complete'");
     expect(routeflowScreenshotSmokeScript).toContain(
       '3 items: 2 klaar, 0 hash-pending, 1 controle nodig.',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('hashcontrole klaar');
     expect(routeflowScreenshotSmokeScript).toContain(
       'attachment-envelope batchstatus mist veilige compacte evidence',
     );

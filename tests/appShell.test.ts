@@ -7867,6 +7867,8 @@ describe('app shell', () => {
     expect(emptyForm).toContain('data-attachment-envelope-surface="dossier-upload"');
     expect(emptyForm).toContain('data-attachment-envelope-validation="idle"');
     expect(emptyForm).toContain('data-attachment-envelope-batch="idle"');
+    expect(emptyForm).toContain('data-attachment-envelope-progress="idle"');
+    expect(emptyForm).toContain('role="status" aria-live="polite" aria-atomic="true"');
     expect(emptyForm).toContain('Envelope controle');
     expect(emptyForm).toContain('Batchcontrole wacht');
     expect(emptyForm).toContain('technische bijlagemetadata samen te vatten');
@@ -9362,6 +9364,8 @@ describe('app shell', () => {
     expect(css).toContain('[data-attachment-envelope-validation="invalid"]');
     expect(css).toContain('[data-attachment-envelope-batch="hash-pending"]');
     expect(css).toContain('[data-attachment-envelope-batch="invalid"]');
+    expect(css).toContain('[data-attachment-envelope-progress="hashing"]');
+    expect(css).toContain('[data-attachment-envelope-progress="complete"]');
     expect(css).toContain('[data-hub-workflow="dossier-upload"] .hub-workflow-tabs {');
     expect(css).toContain(
       '[data-hub-workflow="dossier-upload"] .hub-workflow-tabs::-webkit-scrollbar',
