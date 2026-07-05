@@ -1816,6 +1816,35 @@ const targets = [
     consultConsoleMode: 'route-first',
   },
   {
+    screen: 'question-artscheck-review-status',
+    hash: '#vragen?route=alle',
+    rootSelector: '[data-question-focus-shell="ready"]',
+    expectedText: 'Reviewstatus bewaren',
+    prepare: 'question-artscheck-review-status',
+    activeRouteSelector: '[data-question-route="alle"][data-question-route-state="active"]',
+    inactiveRouteSelector: '[data-question-route-state="inactive"]',
+    openSelectors: ['#question-all-disclosure'],
+    requiredSelectors: [
+      '[data-question-focus-shell="ready"]',
+      '#question-all-disclosure',
+      '[data-question-list-item="artscheck"]',
+      '[data-question-list-item="artscheck"] [data-question-artscheck-review="ready"]',
+      '[data-question-list-item="artscheck"] [data-question-artscheck-review-state="concept"]',
+      '[data-question-list-item="artscheck"] [data-question-artscheck-review-form="ready"]',
+      '[data-question-list-item="artscheck"] [data-question-artscheck-review-badge="concept"]',
+      '[data-question-list-item="artscheck"] select[name="artscheckReviewStatus"]',
+      '[data-question-list-item="artscheck"] .question-artscheck-review-form button[type="submit"]',
+      '[data-question-list-item="standard"]',
+    ],
+    questionArtscheckReviewStatus: true,
+    desktopHiddenSelectors: [
+      '.question-focus-shell__header p:last-child',
+      '.question-route-section__header > p:last-child',
+      '.consult-prep-board__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
     screen: 'wellbeing-history',
     hash: '#welzijn?route=history',
     rootSelector: '[data-wellbeing-focus-shell="ready"]',
@@ -1983,6 +2012,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'embryo-image-classification-review') {
         await prepareEmbryoImageClassificationReview(page, target.hash);
+      }
+      if (target.prepare === 'question-artscheck-review-status') {
+        await prepareQuestionArtscheckReviewStatus(page, target.hash);
       }
       if (target.prepare === 'central-session-renewal-recovery-focus') {
         await prepareCentralSessionRenewalRecoveryFocus(page, target.hash);
@@ -2483,6 +2515,72 @@ async function assertRouteflows(browser, options) {
                     document.documentElement.clientWidth + 1 ||
                   document.body.scrollWidth > document.body.clientWidth + 1 ||
                   (itemRect && listRect ? itemRect.right > listRect.right + 1 : true) ||
+                  (buttonRect && itemRect ? buttonRect.right > itemRect.right + 1 : true),
+              };
+            })()
+          : null;
+        const questionArtscheckReviewStatus = routeflow.questionArtscheckReviewStatus
+          ? (() => {
+              const list = document.querySelector('#question-all-disclosure');
+              const artscheckItem = document.querySelector('[data-question-list-item="artscheck"]');
+              const standardItems = [
+                ...document.querySelectorAll('[data-question-list-item="standard"]'),
+              ];
+              const review = artscheckItem?.querySelector('[data-question-artscheck-review="ready"]');
+              const state = artscheckItem?.querySelector(
+                '[data-question-artscheck-review-state="concept"]',
+              );
+              const badge = artscheckItem?.querySelector(
+                '[data-question-artscheck-review-badge="concept"]',
+              );
+              const form = artscheckItem?.querySelector(
+                '[data-question-artscheck-review-form="ready"]',
+              );
+              const select = form?.querySelector('select[name="artscheckReviewStatus"]');
+              const button = form?.querySelector('button[type="submit"]');
+              const itemRect = artscheckItem?.getBoundingClientRect();
+              const reviewRect = review?.getBoundingClientRect();
+              const badgeRect = badge?.getBoundingClientRect();
+              const formRect = form?.getBoundingClientRect();
+              const selectRect = select?.getBoundingClientRect();
+              const buttonRect = button?.getBoundingClientRect();
+              const listRect = list?.getBoundingClientRect();
+              const formStyle = form instanceof HTMLElement ? getComputedStyle(form) : null;
+              const buttonStyle = button instanceof HTMLElement ? getComputedStyle(button) : null;
+              const standardReviewFormCount = standardItems.reduce(
+                (count, item) =>
+                  count + item.querySelectorAll('[data-question-artscheck-review-form]').length,
+                0,
+              );
+              const reviewText = [review, form]
+                .map((element) => element?.textContent?.replace(/\s+/g, ' ').trim() ?? '')
+                .join(' ');
+              return {
+                listOpen: list instanceof HTMLDetailsElement ? list.open : false,
+                itemVisible: Boolean(itemRect && itemRect.width > 0 && itemRect.height > 0),
+                reviewVisible: Boolean(reviewRect && reviewRect.width > 0 && reviewRect.height > 0),
+                stateVisible: state instanceof HTMLElement,
+                badgeVisible: Boolean(badgeRect && badgeRect.width > 0 && badgeRect.height > 0),
+                formVisible: Boolean(formRect && formRect.width > 0 && formRect.height > 0),
+                selectVisible: Boolean(selectRect && selectRect.width > 0 && selectRect.height > 0),
+                buttonVisible: Boolean(buttonRect && buttonRect.width > 0 && buttonRect.height > 0),
+                badgeText: badge?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                selectValue: select instanceof HTMLSelectElement ? select.value : '',
+                buttonText: button?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                formDisplay: formStyle?.display ?? '',
+                formGridTemplateColumns: formStyle?.gridTemplateColumns ?? '',
+                buttonWhiteSpace: buttonStyle?.whiteSpace ?? '',
+                standardItemCount: standardItems.length,
+                standardReviewFormCount,
+                hasForbiddenText: /\b(diagnose|dosering|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD|secret|token|base64)\b/i.test(
+                  reviewText,
+                ),
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  (itemRect && listRect ? itemRect.right > listRect.right + 1 : true) ||
+                  (formRect && itemRect ? formRect.right > itemRect.right + 1 : true) ||
                   (buttonRect && itemRect ? buttonRect.right > itemRect.right + 1 : true),
               };
             })()
@@ -3253,6 +3351,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceConsole,
           dailyAdviceCompactList,
           dailyAdviceSupplementArtscheckAction,
+          questionArtscheckReviewStatus,
           startLaunchpad,
           uploadConsole,
           attachmentEnvelopeBatchStatus,
@@ -3615,6 +3714,29 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: supplement-artscheckactie mist scanbare routeflow-evidence of lekt medische payload (${JSON.stringify(evidence.dailyAdviceSupplementArtscheckAction)}).`,
+        );
+      }
+      if (
+        evidence.questionArtscheckReviewStatus &&
+        (!evidence.questionArtscheckReviewStatus.listOpen ||
+          !evidence.questionArtscheckReviewStatus.itemVisible ||
+          !evidence.questionArtscheckReviewStatus.reviewVisible ||
+          !evidence.questionArtscheckReviewStatus.stateVisible ||
+          !evidence.questionArtscheckReviewStatus.badgeVisible ||
+          !evidence.questionArtscheckReviewStatus.formVisible ||
+          !evidence.questionArtscheckReviewStatus.selectVisible ||
+          !evidence.questionArtscheckReviewStatus.buttonVisible ||
+          evidence.questionArtscheckReviewStatus.badgeText !== 'Concept' ||
+          evidence.questionArtscheckReviewStatus.selectValue !== 'concept' ||
+          evidence.questionArtscheckReviewStatus.buttonText !== 'Reviewstatus bewaren' ||
+          evidence.questionArtscheckReviewStatus.formDisplay !== 'grid' ||
+          evidence.questionArtscheckReviewStatus.standardItemCount < 1 ||
+          evidence.questionArtscheckReviewStatus.standardReviewFormCount !== 0 ||
+          evidence.questionArtscheckReviewStatus.hasForbiddenText ||
+          evidence.questionArtscheckReviewStatus.hasHorizontalOverflow)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: artscheckvraag-reviewstatus mist scanbare routeflow-evidence of lekt medische payload (${JSON.stringify(evidence.questionArtscheckReviewStatus)}).`,
         );
       }
       if (
@@ -4799,6 +4921,57 @@ async function prepareEmbryoImageClassificationReview(page, targetHash) {
     }
   });
   await page.waitForSelector('[data-embryo-image-classification-review="concept"]', {
+    timeout: 10_000,
+  });
+}
+
+async function prepareQuestionArtscheckReviewStatus(page, targetHash) {
+  await page.goto(`${url}#start-recommendations`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#start-recommendations');
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-daily-advice-followup="collapsed"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-advice-full-list="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+  await page
+    .locator(
+      '[data-recommendation-id="samen-voeding-supplement-checklist"] [data-supplement-artscheck-action="available"] button[value="supplementArtscheck"]',
+    )
+    .first()
+    .click();
+  await page.waitForFunction(
+    () => document.body.textContent?.includes('Supplementvraag klaargezet voor artscheck'),
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}#start-today`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#start-today');
+  await waitForStableRouteflowRoot(page, '[data-start-today-route="ready"]');
+  await page.locator('#quick-entry-form select[name="quickType"]').selectOption('vraag');
+  await page.locator('#quick-entry-form input[name="quickText"]').fill('Routeflow gewone consultvraag');
+  await page.locator('#quick-entry-form button[type="submit"]').click();
+  await waitForStableRouteflowRoot(page, '[data-start-today-route="ready"]');
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, targetHash);
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+  await page.evaluate(() => {
+    const details = document.querySelector('#question-all-disclosure');
+    if (details instanceof HTMLDetailsElement) details.open = true;
+  });
+  await page.waitForSelector('[data-question-list-item="artscheck"]', {
+    state: 'attached',
+    timeout: 10_000,
+  });
+  await page.waitForSelector('[data-question-list-item="standard"]', {
+    state: 'attached',
     timeout: 10_000,
   });
 }

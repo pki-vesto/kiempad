@@ -17526,8 +17526,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations, vragen UI, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3826
+
+### G1947 — Daily Recommendations: artscheck vraag reviewstatus release evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** De artscheckvraag-reviewstatus heeft routeflow-evidence, maar release- en onderhoudsdocumentatie kan nog explicieter bewaken dat badge, select en bewaaractie vindbaar blijven in de Vragen-route.
+- **User Impact:** Gebruikers kunnen later regressies missen als releasechecks niet expliciet noemen dat artscheckvragen als concept of gereviewd beheerd kunnen worden zonder extra formulieren op gewone vragen.
+- **Desired Outcome:** Release- of onderhoudsevidence verwijst expliciet naar de artscheckvraag-reviewstatus routeflow target en bewaakt dat gewone vragen geen extra reviewformulier krijgen.
+- **User Value:** Gebruikers blijven bij releases vertrouwen dat artscheckvragen rustig als concept of gereviewd kunnen worden beheerd zonder dat gewone vragen extra formulierlagen krijgen.
+- **Acceptance Criteria:** Release- of onderhoudsdocumentatie noemt de artscheckvraag-reviewstatus evidence expliciet; de verwijzing blijft gekoppeld aan `data-question-artscheck-review`, `data-question-artscheck-review-state` en `data-question-artscheck-review-form`; gewone vragen zonder artscheckmetadata blijven genoemd als no-extra-form controle; geen diagnose, dosering, behandelkeuzeadvies, medische payload, secrets of trackingpayload wordt toegevoegd; backlog/docs blijven synchroon.
+- **Affected Screens:** Vragen, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations, vragen UI, release evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3840
 
 ### G1941 — Daily Recommendations: supplement artscheck actieflow routeflow evidence
 

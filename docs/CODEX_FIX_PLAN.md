@@ -282,6 +282,10 @@
   checklist rows now expose stable label, source/disclaimer, and per-row artscheck action hooks,
   with a compact desktop/mobile layout and routeflow smoke evidence that standard checklist rows
   do not show the extra action or leak dosage, interaction, treatment, tracking, or secret text.
+- **Artscheck question reviewstatus routeflow evidence — done in G1940 / issue #3826.** The
+  Vragen list now keeps artscheck review cards in a stacked, readable layout with compact
+  Concept/Gereviewd badges, and routeflow smoke creates both an artscheck question and a normal
+  question to verify badge, select, save action, no-extra-form behavior, and no horizontal overflow.
 - **Dossierupload size feedback — done in G567 / issue #3804.** The Dossier upload form now
   shows a dedicated preflight size feedback layer with per-file and per-selection limits,
   central 413 context, and recoverable retry copy without filenames, OCR text, encoded content,
