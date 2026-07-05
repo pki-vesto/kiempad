@@ -497,6 +497,11 @@ h3 {
   min-height: 26px;
 }
 
+.status-badge--question {
+  flex: 0 0 auto;
+  min-width: max-content;
+}
+
 .dossier-status-row {
   display: flex;
   flex-wrap: wrap;
@@ -3215,6 +3220,33 @@ h2 {
   margin: 0 0 8px;
   color: var(--text-muted);
   line-height: 1.45;
+}
+
+.question-artscheck-review-summary {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.phase-item[data-question-list-item] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.question-artscheck-review-form {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+  min-width: min(100%, 300px);
+}
+
+.question-artscheck-review-form label,
+.question-artscheck-review-form select {
+  min-width: 0;
+}
+
+.question-artscheck-review-form .phase-button {
+  min-height: 36px;
+  white-space: nowrap;
 }
 
 .phase-item small {
@@ -31799,6 +31831,16 @@ summary[class*="__summary"]:focus-visible,
   .panel-heading,
   .phase-item {
     grid-template-columns: 1fr;
+  }
+
+  .question-artscheck-review-form {
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+  }
+
+  .question-artscheck-review-form .phase-button {
+    width: 100%;
+    white-space: normal;
   }
 
   .panel-heading {

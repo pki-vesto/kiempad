@@ -19405,7 +19405,7 @@ function renderVragenList(bundles: VraagBundle[]): string {
       ${bundles
         .map(
           (bundle) => `
-            <li class="phase-item">
+            <li class="phase-item" data-question-list-item="${escapeAttribute(bundle.vraag.artscheckMetadata ? 'artscheck' : 'standard')}">
               <div>
                 <h3>${escapeHtml(bundle.vraag.vraag)}</h3>
                 <p>${bundle.vraag.beantwoord ? 'Beantwoord' : 'Openstaand'}${bundle.vraag.prioriteit ? ` · Prioriteit ${bundle.vraag.prioriteit}` : ''}${bundle.afspraak ? ` · ${escapeHtml(bundle.afspraak.titel)}` : ''}</p>
@@ -19428,8 +19428,8 @@ function renderVragenList(bundles: VraagBundle[]): string {
 function renderVraagArtscheckMetadataSummary(vraag: VraagBundle['vraag']): string {
   if (!vraag.artscheckMetadata) return '';
   return `
-                <p class="linked-note dossier-status-row" data-question-artscheck-review-state="${escapeAttribute(vraag.artscheckMetadata.reviewStatus)}">
-                  Artscheck: bron ${escapeHtml(vraag.artscheckMetadata.bronLabel)} · ${formatDateTime(vraag.artscheckMetadata.datum)}
+                <p class="linked-note dossier-status-row question-artscheck-review-summary" data-question-artscheck-review="ready" data-question-artscheck-review-state="${escapeAttribute(vraag.artscheckMetadata.reviewStatus)}">
+                  Review
                   ${renderVraagArtscheckReviewBadge(vraag.artscheckMetadata.reviewStatus)}
                 </p>
   `;
@@ -19456,7 +19456,7 @@ function renderVraagArtscheckReviewBadge(
   reviewStatus: NonNullable<VraagBundle['vraag']['artscheckMetadata']>['reviewStatus'],
 ): string {
   return statusBadge({
-    label: reviewStatus === 'gereviewd' ? 'Artscheck gereviewd' : 'Artscheck concept',
+    label: reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept',
     tone: reviewStatus === 'gereviewd' ? 'success' : 'warning',
     className: 'status-badge--question',
     data: {

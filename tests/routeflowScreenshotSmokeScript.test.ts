@@ -242,6 +242,19 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'supplement-artscheckactie mist scanbare routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'question-artscheck-review-status'");
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'question-artscheck-review-status'");
+    expect(routeflowScreenshotSmokeScript).toContain('prepareQuestionArtscheckReviewStatus');
+    expect(routeflowScreenshotSmokeScript).toContain('questionArtscheckReviewStatus');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-question-list-item="artscheck"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-question-list-item="standard"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-question-artscheck-review-form="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('standardReviewFormCount !== 0');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'artscheckvraag-reviewstatus mist scanbare routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('fullListBodyGap');
     expect(routeflowScreenshotSmokeScript).toContain('ghostActionsVisible');
     expect(routeflowScreenshotSmokeScript).toContain('disclaimerVisible');

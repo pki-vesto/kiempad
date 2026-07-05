@@ -3631,6 +3631,13 @@ describe('app shell', () => {
     expect(css).toContain('justify-self: end;');
     expect(css).toContain('.supplement-artscheck-action-form .rec-action {');
     expect(css).toContain('white-space: nowrap;');
+    expect(css).toContain('.question-artscheck-review-summary {');
+    expect(css).toContain('.phase-item[data-question-list-item] {');
+    expect(css).toContain('.question-artscheck-review-form {');
+    expect(css).toContain('grid-template-columns: minmax(150px, 1fr) auto;');
+    expect(css).toContain('.question-artscheck-review-form .phase-button {');
+    expect(css).toContain('.status-badge--question {');
+    expect(css).toContain('min-width: max-content;');
     expect(css).toContain('.start-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.start-snapshot__card {');
@@ -3704,6 +3711,9 @@ describe('app shell', () => {
       '.daily-recommendation-list--dual-owner .supplement-artscheck-action-form .rec-action {',
     );
     expect(mobileCss).toContain('white-space: normal;');
+    expect(mobileCss).toContain('.question-artscheck-review-form {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(mobileCss).toContain('.question-artscheck-review-form .phase-button {');
     expect(mobileCss).toContain('.daily-recommendation-list--dual-owner .rec-action--primary {');
     expect(mobileCss).toContain('grid-column: 1 / -1;');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
@@ -7952,15 +7962,24 @@ describe('app shell', () => {
               },
             },
           },
+          {
+            vraag: {
+              id: 'vraag-standaard',
+              vraag: 'Welke documenten nemen we mee?',
+              beantwoord: false,
+            },
+          },
         ],
       }),
     );
 
     expect(html).toContain('Artscheck-reviewstatus bijgewerkt.');
+    expect(html).toContain('data-question-list-item="artscheck"');
+    expect(html).toContain('data-question-list-item="standard"');
     expect(html).toContain('data-question-artscheck-review="ready"');
     expect(html).toContain('data-question-artscheck-review-state="concept"');
     expect(html).toContain('data-question-artscheck-review-badge="concept"');
-    expect(html).toContain('Artscheck concept');
+    expect(html).toContain('Concept');
     expect(html).toContain('name="artscheckReviewStatus"');
     expect(html).toContain('class="question-artscheck-review-form compact-form"');
     expect(html).toContain('data-question-artscheck-review-form="ready"');
@@ -7971,7 +7990,14 @@ describe('app shell', () => {
       html.indexOf('data-question-artscheck-review-state="concept"'),
       html.indexOf('class="question-priority-form compact-form"'),
     );
+    expect(artscheckSnippet).toContain('Review');
+    expect(artscheckSnippet).not.toContain('Supplement dagadvies');
     expect(artscheckSnippet).not.toMatch(/\bdiagnose|dosering|behandelkeuzeadvies\b/i);
+    const standardSnippet = html.slice(
+      html.indexOf('data-question-list-item="standard"'),
+      html.indexOf('Welke documenten nemen we mee?') + 260,
+    );
+    expect(standardSnippet).not.toContain('data-question-artscheck-review-form="ready"');
   });
 
   it('toont één actieve questionroute tegelijk', () => {
