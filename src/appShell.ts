@@ -119,6 +119,7 @@ import {
   type PubMedQueryPreview,
   type ResearchAggregatiePlan,
   type ResearchBron,
+  type ResearchBroncitatie,
   type ResearchDossierRelatie,
   type ResearchHerverificatieStatus,
   type ResearchKaartMetadata,
@@ -16188,6 +16189,7 @@ function renderWetenschappelijkeResearchSamenvattingen(
         },
         body: `
           <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
+          ${renderResearchBroncitatie(item.broncitatie)}
           <small>scientificSummary: ${escapeHtml(item.scientificSummary)}</small>
           ${metadata ? renderResearchKaartMetadata(metadata) : ''}
           ${herverificatie ? renderResearchHerverificatieStatus(herverificatie) : ''}
@@ -16234,6 +16236,7 @@ function renderEenvoudigeResearchSamenvattingen(
         },
         body: `
           <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
+          ${renderResearchBroncitatie(item.broncitatie)}
           <small>patientSummary: ${escapeHtml(item.patientSummary)}</small>
           ${renderPatientvriendelijkeSamenvattingLeesniveauGuard(item.leesniveauGuard)}
           ${metadata ? renderResearchKaartMetadata(metadata) : ''}
@@ -16243,6 +16246,19 @@ function renderEenvoudigeResearchSamenvattingen(
       });
     }),
   });
+}
+
+function renderResearchBroncitatie(citatie: ResearchBroncitatie): string {
+  return `
+    <dl class="research-source-citation" data-research-source-citation-parser="ready" data-research-source-citation-review="${escapeAttribute(citatie.reviewStatus)}" data-research-source-citation-type="${escapeAttribute(citatie.citationType)}">
+      <div data-research-source-citation-source="ready"><dt>Broncitatie</dt><dd>${escapeHtml(citatie.bron)}</dd></div>
+      <div data-research-source-citation-date="${escapeAttribute(citatie.datum)}"><dt>Datum</dt><dd>${escapeHtml(citatie.datum)}</dd></div>
+      <div><dt>Reviewstatus</dt><dd>${escapeHtml(citatie.reviewStatus)}</dd></div>
+      <div><dt>Origineel</dt><dd>${escapeHtml(citatie.citationTekst)}</dd></div>
+      <div><dt>Correctievelden</dt><dd>${citatie.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+      <div><dt>Uitleg</dt><dd>${escapeHtml(citatie.uitlegVoorLeken)}</dd></div>
+    </dl>
+  `;
 }
 
 function renderPatientvriendelijkeSamenvattingLeesniveauGuard(

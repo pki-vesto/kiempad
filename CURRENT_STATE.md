@@ -71,6 +71,9 @@
   publicatieperiode, bron, update-status, laatste check en relevantie-uitleg naast
   de bestaande trendscan, zodat ontwikkelingen scanbaar blijven zonder
   bewijsweging, diagnose of behandeladvies.
+- **G541 research broncitatie-parser:** researchsamenvattingen tonen parsed
+  broncitatie met bron, datum, reviewstatus, citationtype, origineel en
+  correctievelden, zodat bronherleiding controleerbaar blijft.
 - **G542 researchsamenvatting leesniveauguard:** eenvoudige researchsamenvattingen
   tonen bron, datum, reviewstatus, vaktaalsignalering en corrigeerbare velden,
   zodat de gebruiker kan zien of lekenuitleg begrijpelijk genoeg is.
