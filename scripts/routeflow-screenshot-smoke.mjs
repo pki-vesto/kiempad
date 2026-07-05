@@ -1298,6 +1298,9 @@ const targets = [
       '#dossier-upload-form',
       '[data-dossier-upload-group="document-basis"]',
       '[data-dossier-upload-file-choice="ready"]',
+      '[data-dossier-upload-size-feedback="preflight"]',
+      '[data-dossier-upload-size-limit-grid="ready"]',
+      '[data-dossier-upload-size-retry="safe"]',
       '[data-attachment-envelope-surface="dossier-upload"]',
       '[data-attachment-envelope-validation="idle"]',
       '[data-attachment-envelope-batch]',
@@ -1339,6 +1342,7 @@ const targets = [
     ],
     dossierConsole: true,
     uploadConsole: true,
+    dossierUploadSizeFeedback: true,
     attachmentEnvelopeBatchStatus: true,
     attachmentEnvelopeBatchForcedColorsEvidence: true,
     smallMobileViewport: true,
@@ -3428,6 +3432,77 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const dossierUploadSizeFeedback = routeflow.dossierUploadSizeFeedback
+          ? (() => {
+              const feedback = rootElement?.querySelector(
+                '[data-dossier-upload-size-feedback="preflight"]',
+              );
+              const grid = feedback?.querySelector('[data-dossier-upload-size-limit-grid="ready"]');
+              const limits = [
+                ...(feedback?.querySelectorAll('[data-dossier-upload-size-limit]') ?? []),
+              ].map((limit) => {
+                const rect = limit.getBoundingClientRect();
+                const strong = limit.querySelector('strong');
+                const strongRect = strong?.getBoundingClientRect();
+                return {
+                  id: limit.getAttribute('data-dossier-upload-size-limit') ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  text: limit.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                  right: rect.right,
+                  scrollWidth: limit instanceof HTMLElement ? limit.scrollWidth : 0,
+                  clientWidth: limit instanceof HTMLElement ? limit.clientWidth : 0,
+                  strongVisible: Boolean(
+                    strongRect && strongRect.width > 0 && strongRect.height > 0,
+                  ),
+                  strongRight: strongRect?.right ?? 0,
+                };
+              });
+              const retry = feedback?.querySelector('[data-dossier-upload-size-retry="safe"]');
+              const badge = feedback?.querySelector('[data-dossier-upload-size-status="recoverable"]');
+              const envelope = rootElement?.querySelector(
+                '[data-attachment-envelope-surface="dossier-upload"]',
+              );
+              const feedbackRect = feedback?.getBoundingClientRect();
+              const gridRect = grid?.getBoundingClientRect();
+              const retryRect = retry?.getBoundingClientRect();
+              const badgeRect = badge?.getBoundingClientRect();
+              const envelopeRect = envelope?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const gridStyle = grid ? getComputedStyle(grid) : null;
+              const retryText = retry?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const feedbackText = feedback?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                visible: Boolean(
+                  feedbackRect && feedbackRect.width > 0 && feedbackRect.height > 0,
+                ),
+                gridVisible: Boolean(gridRect && gridRect.width > 0 && gridRect.height > 0),
+                limitIds: limits.map((limit) => limit.id),
+                visibleLimits: limits.filter((limit) => limit.visible).length,
+                allLimitValuesVisible: limits.every((limit) => limit.strongVisible),
+                gridTemplateColumns: gridStyle?.gridTemplateColumns ?? '',
+                retryVisible: Boolean(retryRect && retryRect.width > 0 && retryRect.height > 0),
+                badgeVisible: Boolean(badgeRect && badgeRect.width > 0 && badgeRect.height > 0),
+                beforeEnvelope:
+                  Boolean(feedback && envelope && feedbackRect && envelopeRect) &&
+                  Boolean(feedback.compareDocumentPosition(envelope) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  feedbackRect.top <= envelopeRect.top + 1,
+                contained:
+                  Boolean(rootRect && feedbackRect) &&
+                  feedbackRect.left >= rootRect.left - 1 &&
+                  feedbackRect.right <= rootRect.right + 1,
+                limitCardsContained:
+                  Boolean(feedbackRect) &&
+                  limits.every((limit) => limit.right <= feedbackRect.right + 1),
+                hasInternalLimitOverflow: limits.some(
+                  (limit) => limit.scrollWidth > limit.clientWidth + 1,
+                ),
+                retryTextLength: retryText.length,
+                hasForbiddenText: /\.pdf|\.jpg|\.jpeg|OCR_RAW|BASE64|data:application|passphrase|token|secret|diagnose|behandelkeuzeadvies|MEDISCHE PAYLOAD|routeflow/i.test(
+                  feedbackText,
+                ),
+              };
+            })()
+          : null;
         const imageSummaryChips = routeflow.imageSummaryChips
           ? [
               ...document.querySelectorAll(
@@ -4098,6 +4173,7 @@ async function assertRouteflows(browser, options) {
           startLaunchpad,
           uploadConsole,
           attachmentEnvelopeBatchStatus,
+          dossierUploadSizeFeedback,
           imageSummaryChips,
           imageFieldLabels,
           imageOpenFields,
@@ -4640,6 +4716,32 @@ async function assertRouteflows(browser, options) {
           evidence.attachmentEnvelopeBatchForcedColorsEvidence,
           options.label,
           target.screen,
+        );
+      }
+      if (
+        evidence.dossierUploadSizeFeedback &&
+        (!evidence.dossierUploadSizeFeedback.visible ||
+          !evidence.dossierUploadSizeFeedback.gridVisible ||
+          evidence.dossierUploadSizeFeedback.visibleLimits !== 3 ||
+          !evidence.dossierUploadSizeFeedback.limitIds.includes('file') ||
+          !evidence.dossierUploadSizeFeedback.limitIds.includes('selection') ||
+          !evidence.dossierUploadSizeFeedback.limitIds.includes('central') ||
+          !evidence.dossierUploadSizeFeedback.allLimitValuesVisible ||
+          !evidence.dossierUploadSizeFeedback.retryVisible ||
+          !evidence.dossierUploadSizeFeedback.badgeVisible ||
+          !evidence.dossierUploadSizeFeedback.beforeEnvelope ||
+          !evidence.dossierUploadSizeFeedback.contained ||
+          !evidence.dossierUploadSizeFeedback.limitCardsContained ||
+          evidence.dossierUploadSizeFeedback.hasInternalLimitOverflow ||
+          evidence.dossierUploadSizeFeedback.retryTextLength < 80 ||
+          evidence.dossierUploadSizeFeedback.hasForbiddenText ||
+          (options.label === 'desktop' &&
+            !evidence.dossierUploadSizeFeedback.gridTemplateColumns.includes(' ')) ||
+          ((options.label === 'mobile' || options.label === 'small-mobile') &&
+            evidence.dossierUploadSizeFeedback.gridTemplateColumns.includes(' ')))
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: dossierupload size-feedback mist overflow-evidence of lekt payload (${JSON.stringify(evidence.dossierUploadSizeFeedback)}).`,
         );
       }
       if (

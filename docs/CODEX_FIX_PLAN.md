@@ -139,6 +139,11 @@
   topics, publications, sources, and latest cards stay visible before trend grids and detail cards
   while the scan container remains bounded across desktop, tablet, and mobile without diagnosis,
   treatment-choice advice, or source payload text in the evidence.
+- **Dossierupload size-feedback overflow evidence — done in G1929 / issue #3805.** Dossierupload
+  routeflow coverage now measures the preflight size-feedback directly: file, selection, and
+  central limit cards, recoverable badge, retry copy, and envelope ordering stay visible and
+  bounded across desktop, tablet, mobile, and small-mobile without filenames, OCR text, or
+  attachment payloads in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

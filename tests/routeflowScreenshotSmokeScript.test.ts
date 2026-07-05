@@ -342,6 +342,18 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-full-list="collapsed"]');
     expect(routeflowScreenshotSmokeScript).toContain('openDailyAdviceListDetails');
     expect(routeflowScreenshotSmokeScript).toContain('uploadConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain('dossierUploadSizeFeedback: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-dossier-upload-size-feedback="preflight"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-dossier-upload-size-limit-grid="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('beforeEnvelope');
+    expect(routeflowScreenshotSmokeScript).toContain('limitCardsContained');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'dossierupload size-feedback mist overflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('closedDetailsSelectors');
     expect(routeflowScreenshotSmokeScript).toContain(
       'upload-console toont niet precies de gekozen werkstroom',
