@@ -10869,6 +10869,13 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.research-summary-reading-board__lane {');
     expect(css).toContain('min-height: 78px;');
+    expect(css).toContain('.research-clinician-question-scan {');
+    expect(css).toContain('.research-clinician-question-scan__grid {');
+    expect(css).toContain('.research-clinician-question-scan__card {');
+    expect(css).toContain('min-height: 86px;');
+    expect(css).toContain('.research-clinician-question-metadata,');
+    expect(css).toContain('.research-clinician-questions .metadata-list {');
+    expect(css).toContain('.research-clinician-question-metadata__summary {');
     expect(mobileCss).toContain('.knowledge-research-source-board {');
     expect(mobileCss).toContain('.knowledge-research-source-board__lanes {');
     expect(mobileCss).toContain('.knowledge-research-source-board__lane {');
@@ -10902,6 +10909,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.research-summary-reading-board__lane {');
     expect(mobileCss).toContain('flex: 0 0 min(164px, 72vw);');
+    expect(mobileCss).toContain('.research-clinician-question-scan__grid {');
+    expect(mobileCss).toContain('flex: 0 0 min(184px, 74vw);');
     expect(mobileCss).toContain('.dossier-upload-action-path {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.dossier-upload-action-path__item {');
@@ -43039,6 +43048,16 @@ describe('app shell', () => {
     expect(html).toContain('contextmatch_onzeker_geen_causaliteit');
     expect(html).toContain('Uitleg voor leken');
     expect(html).toContain('Deze relevantie is een controleerbare koppeling');
+    expect(html).toContain('data-research-clinician-question-scan="ready"');
+    expect(html).toContain('data-research-clinician-question-scan-count="3"');
+    expect(html).toContain('Kliniekvragen eerst scannen');
+    expect(html).toContain('data-research-clinician-question-scan-card="questions"');
+    expect(html).toContain('data-research-clinician-question-scan-card="source"');
+    expect(html).toContain('data-research-clinician-question-scan-card="review"');
+    expect(html).toContain('data-research-clinician-question-scan-card="corrections"');
+    expect(html.indexOf('data-research-clinician-question-scan="ready"')).toBeLessThan(
+      html.indexOf('data-research-relevance-panel="ready"'),
+    );
     expect(html).toContain('data-research-clinician-questions="ready"');
     expect(html).toContain('data-research-clinician-questions-count="3"');
     expect(html).toContain('Vragen voor de kliniek');
@@ -43046,6 +43065,7 @@ describe('app shell', () => {
       'data-research-clinician-question="research-eigen-researchvraag-context"',
     );
     expect(html).toContain('data-research-clinician-question-metadata="ready"');
+    expect(html).toContain('class="research-clinician-question-metadata__summary"');
     expect(html).toContain(
       'Welke punten uit &quot;Eigen artikel embryo-cultuur&quot; zijn zinvol om te bespreken naast Traject: Poging 1?',
     );

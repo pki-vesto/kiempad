@@ -215,6 +215,53 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-research-clinician-questions',
+    hash: '#kennis?route=read',
+    rootSelector: '[data-knowledge-focus-shell="ready"]',
+    expectedText: 'Kliniekvragen eerst scannen',
+    openSelectors: [
+      '[data-knowledge-research-detail-choice="collapsed"]',
+      '[data-knowledge-research-trends-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-research-clinician-question-scan="ready"]',
+      '[data-research-clinician-question-scan-card="questions"]',
+      '[data-research-clinician-question-scan-card="source"]',
+      '[data-research-clinician-question-scan-card="review"]',
+      '[data-research-clinician-question-scan-card="corrections"]',
+      '[data-research-relevance-panel="ready"]',
+      '[data-research-clinician-questions="ready"]',
+    ],
+    presentSelectors: [
+      '[data-research-clinician-question]',
+      '[data-research-relevance-id]',
+      '[data-research-trend-dashboard="ready"]',
+      '[data-research-source-component="source-list"]',
+    ],
+    closedDetailsSelectors: [
+      '[data-knowledge-task-route-choice="collapsed"]',
+      '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-research-workflow-choice="collapsed"]',
+      '[data-knowledge-research-route-status-choice="collapsed"]',
+      '[data-knowledge-research-lane-choice="collapsed"]',
+      '[data-knowledge-research-followup="collapsed"]',
+      '[data-knowledge-research-followup-context-choice="collapsed"]',
+      '[data-knowledge-research-sources-choice="collapsed"]',
+      '[data-knowledge-research-summaries-choice="collapsed"]',
+    ],
+    knowledgeConsole: true,
+    researchClinicianQuestions: true,
+    prepare: 'research-clinician-questions',
+    desktopHiddenSelectors: [
+      '.knowledge-focus-shell__header p:last-child',
+      '.knowledge-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.knowledge-research-reader__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+      '[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small',
+    ],
+  },
+  {
     screen: 'knowledge-research-offline-cache-metadata',
     hash: '#kennis?route=read',
     rootSelector: '[data-knowledge-focus-shell="ready"]',
@@ -2479,6 +2526,9 @@ async function assertRouteflows(browser, options) {
       if (target.prepare === 'question-consult-link-route') {
         await prepareQuestionConsultLinkRoute(page, target.hash);
       }
+      if (target.prepare === 'research-clinician-questions') {
+        await prepareResearchClinicianQuestions(page, target.hash);
+      }
       if (target.prepare === 'dossier-import-inbox-retry') {
         await prepareDossierImportInboxRetry(page, target.hash);
       }
@@ -4404,6 +4454,87 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const researchClinicianQuestions = routeflow.researchClinicianQuestions
+          ? (() => {
+              const scan = rootElement?.querySelector('[data-research-clinician-question-scan="ready"]');
+              const scanCards = [
+                ...(rootElement?.querySelectorAll('[data-research-clinician-question-scan-card]') ??
+                  []),
+              ].map((scanCard) => {
+                const rect = scanCard.getBoundingClientRect();
+                return {
+                  id: scanCard.getAttribute('data-research-clinician-question-scan-card') ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  text: scanCard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                };
+              });
+              const relevancePanel = rootElement?.querySelector('[data-research-relevance-panel="ready"]');
+              const detail = rootElement?.querySelector('[data-research-clinician-questions="ready"]');
+              const question = rootElement?.querySelector('[data-research-clinician-question]');
+              const metadata = rootElement?.querySelector(
+                '[data-research-clinician-question-metadata="ready"]',
+              );
+              const reviewForm = rootElement?.querySelector('[data-research-relevance-id]');
+              const scanRect = scan?.getBoundingClientRect();
+              const relevancePanelRect = relevancePanel?.getBoundingClientRect();
+              const detailRect = detail?.getBoundingClientRect();
+              const questionRect = question?.getBoundingClientRect();
+              const metadataRect = metadata?.getBoundingClientRect();
+              const metadataChildRects = [
+                ...(metadata?.querySelectorAll('div, dt, dd') ?? []),
+              ].map((node) => node.getBoundingClientRect());
+              const rootRect = rootElement?.getBoundingClientRect();
+              const scanStyle = scan ? getComputedStyle(scan) : null;
+              const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
+              const detailText = detail?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const metadataText = metadata?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const allText = `${scanText} ${detailText} ${metadataText}`;
+              return {
+                scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
+                scanCount: scan?.getAttribute('data-research-clinician-question-scan-count') ?? '',
+                scanCardIds: scanCards.map((scanCard) => scanCard.id),
+                visibleScanCards: scanCards.filter((scanCard) => scanCard.visible).length,
+                scanDisplay: scanStyle?.display ?? '',
+                scanOverflowX: scanStyle?.overflowX ?? '',
+                scanBeforeRelevance:
+                  Boolean(scan && relevancePanel && scanRect && relevancePanelRect) &&
+                  Boolean(scan.compareDocumentPosition(relevancePanel) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  scanRect.top <= relevancePanelRect.top + 1,
+                detailVisible: Boolean(detailRect && detailRect.width > 0 && detailRect.height > 0),
+                questionVisible: Boolean(
+                  questionRect && questionRect.width > 0 && questionRect.height > 0,
+                ),
+                metadataVisible: Boolean(
+                  metadataRect && metadataRect.width > 0 && metadataRect.height > 0,
+                ) || metadataChildRects.some(
+                  (rect) => rect.width > 0 && rect.height > 0,
+                ) || metadataText.includes('Bron'),
+                questionCount: detail?.getAttribute('data-research-clinician-questions-count') ?? '',
+                reviewFormPresent: Boolean(reviewForm),
+                scanContained:
+                  Boolean(rootRect && scanRect) &&
+                  scanRect.left >= rootRect.left - 1 &&
+                  scanRect.right <= rootRect.right + 1,
+                hasQuestionText:
+                  allText.includes('Welke punten') ||
+                  allText.includes('Welke onzekerheden') ||
+                  allText.includes('Welke extra informatie'),
+                hasSourceLabel: allText.includes('Bron') || scanText.includes('Bron en datum'),
+                hasDateLabel: allText.includes('Datum') || scanText.includes('2026-'),
+                hasReviewLabel: allText.includes('Reviewstatus'),
+                hasCorrectionFieldsLabel: allText.includes('Correctievelden'),
+                hasCorrectionFields:
+                  allText.includes('vraagtekst') &&
+                  allText.includes('contextfactoren') &&
+                  allText.includes('bron') &&
+                  allText.includes('publicatieDatum') &&
+                  allText.includes('reviewstatus'),
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|diagnose|dosering|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  allText,
+                ),
+              };
+            })()
+          : null;
         const researchOfflineCacheMetadata = routeflow.researchOfflineCacheMetadata
           ? (() => {
               const sourceList = rootElement?.querySelector(
@@ -4914,6 +5045,7 @@ async function assertRouteflows(browser, options) {
           filledConsultCard,
           embryoTrackingScanOverflow,
           researchTrendScanOverflow,
+          researchClinicianQuestions,
           researchOfflineCacheMetadata,
           embryoImageClassificationReview,
           imagingMetadataReviewLocked,
@@ -5857,6 +5989,35 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: research trend-scan mist routeflow-overflow evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchTrendScanOverflow)}).`,
+        );
+      }
+      if (
+        evidence.researchClinicianQuestions &&
+        (!evidence.researchClinicianQuestions.scanVisible ||
+          evidence.researchClinicianQuestions.scanCount !== '3' ||
+          evidence.researchClinicianQuestions.visibleScanCards !== 4 ||
+          !evidence.researchClinicianQuestions.scanCardIds.includes('questions') ||
+          !evidence.researchClinicianQuestions.scanCardIds.includes('source') ||
+          !evidence.researchClinicianQuestions.scanCardIds.includes('review') ||
+          !evidence.researchClinicianQuestions.scanCardIds.includes('corrections') ||
+          !['flex', 'grid'].includes(evidence.researchClinicianQuestions.scanDisplay) ||
+          !evidence.researchClinicianQuestions.scanBeforeRelevance ||
+          !evidence.researchClinicianQuestions.detailVisible ||
+          !evidence.researchClinicianQuestions.questionVisible ||
+          !evidence.researchClinicianQuestions.metadataVisible ||
+          evidence.researchClinicianQuestions.questionCount !== '3' ||
+          !evidence.researchClinicianQuestions.reviewFormPresent ||
+          !evidence.researchClinicianQuestions.scanContained ||
+          !evidence.researchClinicianQuestions.hasQuestionText ||
+          !evidence.researchClinicianQuestions.hasSourceLabel ||
+          !evidence.researchClinicianQuestions.hasDateLabel ||
+          !evidence.researchClinicianQuestions.hasReviewLabel ||
+          !evidence.researchClinicianQuestions.hasCorrectionFieldsLabel ||
+          !evidence.researchClinicianQuestions.hasCorrectionFields ||
+          evidence.researchClinicianQuestions.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: research clinician-question generator mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchClinicianQuestions)}).`,
         );
       }
       if (
@@ -6832,6 +6993,58 @@ async function prepareFilledConsultCard(page, targetHash) {
       const field = document.querySelector('#consult-verslag-form textarea[name="tekst"]');
       return field instanceof HTMLTextAreaElement && field.value === '';
     },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareResearchClinicianQuestions(page, targetHash) {
+  await page.goto(`${url}#traject?route=beheer`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#traject?route=beheer');
+  await waitForStableRouteflowRoot(page, '[data-treatment-focus-shell="ready"]');
+  await page.locator('#traject-form input[name="naam"]').fill('Routeflow context');
+  await page.locator('#traject-form select[name="type"]').selectOption('icsi');
+  await page.locator('#traject-form select[name="status"]').selectOption('lopend');
+  await page.locator('#traject-form input[name="startDatum"]').fill('2026-06-23');
+  await page.locator('#traject-form input[name="pogingNummer"]').fill('1');
+  await page.locator('#traject-form textarea[name="notitie"]').fill('Veilige routeflow context.');
+  await page.locator('#traject-form select[name="teltMeeVoorVergoeding"]').selectOption('true');
+  await page.locator('#traject-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => document.body.textContent?.includes('Routeflow context'),
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}#kennis?route=add`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#kennis?route=add');
+  await waitForStableRouteflowRoot(page, '[data-knowledge-focus-shell="ready"]');
+  await page.evaluate(() => {
+    const details = document.querySelector('[data-knowledge-add-research-input-choice="collapsed"]');
+    if (details instanceof HTMLDetailsElement) details.open = true;
+  });
+  await page.locator('#research-item-form input[name="researchTitel"]').fill('RF bron');
+  await page
+    .locator('#research-item-form input[name="researchBron"]')
+    .fill('https://r.test/a');
+  await page.locator('#research-item-form input[name="researchPublicatieDatum"]').fill('2026-05-10');
+  await page
+    .locator('#research-item-form textarea[name="researchNotitie"]')
+    .fill('Veilige synthetische researchnotitie voor routeflow.');
+  await page
+    .locator('#research-item-form textarea[name="researchWetenschappelijkeSamenvatting"]')
+    .fill('Cohortstudie met methode, bevindingen en beperkingen.');
+  await page
+    .locator('#research-item-form textarea[name="researchEenvoudigeSamenvatting"]')
+    .fill('Dit artikel legt in gewone taal uit wat onderzocht is en wat onzeker blijft.');
+  await page
+    .locator('#research-item-form textarea[name="researchRelevantieVoorGebruiker"]')
+    .fill('Bespreekcontext naast het lokale traject.');
+  await page.locator('#research-item-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => document.body.textContent?.includes('RF bron'),
     undefined,
     { timeout: 10_000 },
   );

@@ -296,6 +296,20 @@ describe('routeflow screenshot smoke script', () => {
       'research trend-scan mist routeflow-overflow evidence',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'knowledge-research-clinician-questions'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('researchClinicianQuestions');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-clinician-question-scan="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-clinician-question-scan-card="questions"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('[data-research-clinician-questions="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'research clinician-question generator mist routeflow-evidence',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
       "screen: 'knowledge-research-offline-cache-metadata'",
     );
     expect(routeflowScreenshotSmokeScript).toContain('researchOfflineCacheMetadata');
