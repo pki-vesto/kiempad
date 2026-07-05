@@ -216,6 +216,10 @@
   heeft nu duidelijkere actieve/focusfeedback met ring, subtiele lift,
   scroll-margin en geïsoleerde stacking, zodat routewissels minder abrupt
   voelen zonder routehooks of privacygrenzen te wijzigen.
+- **G1892 Traject mobile reduced-motion route polish:** de mobiele Traject
+  route-rail schakelt bij `prefers-reduced-motion` routekaarttransities en
+  lift-transforms uit, terwijl actieve/focus-ringen en routegroepen zichtbaar
+  blijven.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

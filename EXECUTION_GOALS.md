@@ -16726,8 +16726,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 58
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3726
+
+### G1893 — Premium Claude Design UI: treatment mobile rail forced-colors route polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De mobiele Traject route-rail heeft reduced-motion gedrag, maar high-contrast/forced-colors gebruikers hebben nog geen expliciet bewaakte route-, focus- en density-cue zichtbaarheid.
+- **User Impact:** Gebruikers in forced-colors mode kunnen actieve route, focusring of density-cue minder duidelijk onderscheiden.
+- **Desired Outcome:** De mobiele Traject route-rail heeft expliciete forced-colors behandeling voor actieve route, focusring en density-cue zichtbaarheid.
+- **User Value:** Routekeuze blijft bruikbaar in high-contrast omgevingen zonder de reguliere mobiele layout te veranderen.
+- **Acceptance Criteria:** Mobile Traject route rail has explicit forced-colors handling for active route, focus ring and density cue visibility; existing route hrefs, aria-current states, badges, command-task hooks, route groups, active-route promotion, focus feedback and reduced-motion behavior remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 57
+- **Status:** ☐ open
+- **Issue:** #3728
 
 ### G586 — replay conflict recovery status UI
 
