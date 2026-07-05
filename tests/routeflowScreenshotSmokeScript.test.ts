@@ -366,6 +366,16 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'ziekenhuisdocumenttype-review mist routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('consultTextImportReview: true');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-consult-text-import-review="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain('select[name="consultImportReviewStatus"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-consult-text-import-review-hint="safe"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('correctionVisible');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'consult tekstimport-review mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('closedDetailsSelectors');
     expect(routeflowScreenshotSmokeScript).toContain(
       'upload-console toont niet precies de gekozen werkstroom',
