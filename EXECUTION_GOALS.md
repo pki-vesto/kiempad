@@ -18473,8 +18473,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research sources, release evidence, maintenance tests
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3938
+
+### G2001 — Research Intelligence: offline cache metadata release-state contract error-contract missing-term fixture
+
+- **Epic:** Research Intelligence
+- **Problem:** De G2000 releaseguard bewaakt G1999 error-contract release-termen, maar ontbrekende release-termen hebben nog geen compacte negatieve fixture.
+- **User Impact:** Beheer kan anders minder snel zien welk veilig G1999 error-contract release-label uit changelog of current-state is verdwenen.
+- **Desired Outcome:** Maintenance-evidence meldt ontbrekende offline cache metadata release-state error-contract release-termen compact en technisch.
+- **User Value:** Onderhoud krijgt duidelijke feedback over error-contract release-drift zonder medische payload of lange documentcontext.
+- **Acceptance Criteria:** Fixture reports missing G1999 error-contract release terms with safe technical labels; fixture avoids diagnosis, dosage, chance calculation, treatment-choice advice, secrets, health payloads and plaintext medical payloads; backlog/docs stay aligned.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research sources, release evidence, maintenance tests
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3940
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
