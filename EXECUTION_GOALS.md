@@ -15401,7 +15401,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, owner labels, tests
 - **ADR Needed:** no
 - **Score:** 106
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #884
 
 ### G554 — daily recommendation policy regression fixtures
 
@@ -18110,6 +18111,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3896
+
+### G1980 — Daily Recommendations: owner visibility routeflow evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G553 toont een lokaal eigenaarspaneel voor dagadvies, maar aparte browser-/routeflow-evidence moet nog bewaken dat verborgen status, bron, datum, reviewstatus en herstelactie zichtbaar blijven.
+- **User Impact:** Een latere thema- of layoutwijziging kan de herstelbare eigenaarfilter laten wegvallen terwijl unit-tests nog groen blijven.
+- **Desired Outcome:** Routeflow- of browser-smoke bewaakt dagadvies met een verborgen eigenaar op desktop, tablet en mobiel.
+- **User Value:** Gebruikers kunnen eigenaarssuggesties tijdelijk verbergen zonder te verliezen waarom dat is ingesteld of hoe zij het herstellen.
+- **Acceptance Criteria:** Evidence opent Dagadvies met een verborgen eigenaar; `data-daily-recommendation-owner-visibility="ready"`, hidden-count, eigenaarstatus, bron, reviewstatus en herstelactie blijven zichtbaar; verborgen eigenaarssuggesties staan niet in de zichtbare suggestielijst terwijl andere eigenaars zichtbaar blijven; geen diagnose, dosering, kansberekening, behandelkeuzeadvies, OCR-tekst, bestandsinhoud, secrets of trackingpayloads; backlog health blijft op minimaal 100 open goals.
+- **Affected Screens:** Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations UI, owner visibility, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3898
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

@@ -201,6 +201,12 @@ type RuntimeState = {
   error?: string;
 };
 
+const DAILY_RECOMMENDATION_OWNER_LABELS: Record<DailyRecommendationOwner, string> = {
+  vrouw: 'Vrouw',
+  man: 'Man',
+  samen: 'Samen',
+};
+
 const CENTRAL_SESSION_RENEWAL_RECOVERY_FOCUS_KEY = 'kiempad.central-session-renewal-recovery-focus';
 
 function render(root: HTMLElement, state: RuntimeState): void {
@@ -2287,6 +2293,20 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
     });
 
   root
+    .querySelectorAll<HTMLFormElement>('[data-daily-recommendation-owner-visibility-card]')
+    .forEach((form) => {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        void handleDailyRecommendationOwnerVisibilityAction(
+          event.currentTarget,
+          (event as SubmitEvent).submitter,
+          root,
+          state,
+        );
+      });
+    });
+
+  root
     .querySelectorAll<HTMLFormElement>(
       '.daily-recommendation-action-form, .supplement-artscheck-action-form',
     )
@@ -2301,6 +2321,35 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
         );
       });
     });
+}
+
+async function handleDailyRecommendationOwnerVisibilityAction(
+  target: EventTarget | null,
+  submitter: HTMLElement | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement)) return;
+  const data = new FormData(target);
+  const owner = parseDailyRecommendationOwner(data.get('dailyRecommendationOwner'));
+  if (!owner) return;
+  const action =
+    submitter instanceof HTMLButtonElement
+      ? submitter.value
+      : String(data.get('dailyRecommendationOwnerVisibilityAction') ?? '');
+  const ownerLabel = DAILY_RECOMMENDATION_OWNER_LABELS[owner];
+  const gebeurtenis =
+    action === 'toon' ? 'Dagadvies eigenaar hersteld' : 'Dagadvies eigenaar verborgen';
+  await state.eventLogStore?.record({
+    categorie: 'systeem',
+    gebeurtenis,
+    detail: `Eigenaar: ${owner}; bron: Dagadvies eigenaarfilter; reviewstatus concept_te_controleren`,
+  });
+  state.dailyRecommendationStatus =
+    action === 'toon'
+      ? `Dagadvies voor ${ownerLabel} weer zichtbaar.`
+      : `Dagadvies voor ${ownerLabel} lokaal verborgen.`;
+  await reloadAndRender(root, state);
 }
 
 function dismissDailyRecommendationRouteFocusStatus(root: HTMLElement, state: RuntimeState): void {
@@ -3533,6 +3582,13 @@ function parseDailyRecommendationReviewStatus(
 ): 'concept_te_controleren' {
   if (value === 'concept_te_controleren') return 'concept_te_controleren';
   return 'concept_te_controleren';
+}
+
+function parseDailyRecommendationOwner(
+  value: FormDataEntryValue | null,
+): DailyRecommendationOwner | undefined {
+  if (value === 'vrouw' || value === 'man' || value === 'samen') return value;
+  return undefined;
 }
 
 function bevatDagadviesMedischeClaim(tekst: string): boolean {

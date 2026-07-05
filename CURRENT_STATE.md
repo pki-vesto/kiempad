@@ -75,6 +75,10 @@
   eventlogs tonen per suggestie hoe Kiempad de status gebruikt, inclusief uitleg
   dat niet-passend lager prioriteert maar vergelijkbare suggesties niet
   definitief verbergt.
+- **G553 Dagadvies eigenaarsfilter:** de dagadviesroute toont een zichtbaar
+  eigenaarsfilter waarmee vrouw-, man- of samen-suggesties lokaal verborgen en
+  hersteld kunnen worden; bron, datum en reviewstatus blijven zichtbaar vanuit
+  encrypted eventlogs.
 - **G567 Dossierupload groottefeedback:** de eerste uploadstap toont een aparte
   groottecontrole met per-bestandlimiet, selectielimiet, centrale 413-context en
   herstelbare retry-copy zonder bestandsnamen, OCR-tekst of medische inhoud in de
