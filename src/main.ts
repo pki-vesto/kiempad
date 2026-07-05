@@ -177,6 +177,7 @@ type RuntimeState = {
   dossierError?: string;
   dossierZoekterm?: string;
   imagingFilter?: ImagingRepositoryFilter;
+  imagingPreviewLocked?: boolean;
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
   timelineFilter?: FertilityTimelineFilter;
   agendaStatus?: string;
@@ -241,6 +242,9 @@ function render(root: HTMLElement, state: RuntimeState): void {
     dossierError: state.dossierError,
     dossierZoekterm: state.dossierZoekterm,
     imagingFilter: state.imagingFilter,
+    imagingPreviewLocked:
+      state.imagingPreviewLocked ||
+      new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('preview') === 'locked',
     graphFilter: state.graphFilter,
     timelineFilter: state.timelineFilter,
     activeTreatmentRoute: normalizeTreatmentRoute(window.location.hash),

@@ -633,6 +633,14 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'import-inbox retry mist scanbare routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'dossier-ocr-review-correction'");
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'dossier-ocr-review-correction'");
+    expect(routeflowScreenshotSmokeScript).toContain('data-ocr-review-correction="ready"');
+    expect(routeflowScreenshotSmokeScript).toContain('data-ocr-review-correction="locked"');
+    expect(routeflowScreenshotSmokeScript).toContain('data-ocr-review-field="correction-text"');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'OCR-review correctieflow mist scanbare routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('focusLayout');
     expect(routeflowScreenshotSmokeScript).toContain(
       'focus-workspace staat niet als volle breedte',
