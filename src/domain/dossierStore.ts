@@ -1,6 +1,8 @@
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import { generateRecordId } from '../storage/records';
 import {
+  DOSSIER_CATEGORIE_LABELS,
+  DOSSIER_UPLOAD_PROFIEL_LABELS,
   type DossierDocumentInput,
   maakDossierDocument,
   sorteerDossierDocumenten,
@@ -91,6 +93,74 @@ export class DossierStore {
       metadata: {
         ...record.value.metadata,
         documentDatum: correctie.datum,
+      },
+    };
+    await this.documenten.saveWithId(updated);
+    return updated;
+  }
+
+  async updateHistorischeTijdlijnReview(
+    documentId: string,
+    correctie: {
+      datum: string;
+      bron: string;
+      reviewStatus: NonNullable<
+        DossierDocument['metadata']['historischeTijdlijnReview']
+      >['reviewStatus'];
+      zichtbaarheid: NonNullable<
+        DossierDocument['metadata']['historischeTijdlijnReview']
+      >['zichtbaarheid'];
+      bijgewerktOp: string;
+    },
+  ): Promise<DossierDocument> {
+    const record = await this.documenten.get(documentId);
+    if (!record?.value) {
+      throw new Error('Historisch tijdlijnrecord niet gevonden.');
+    }
+
+    const document = record.value;
+    const bestaandeNormalisatie = document.metadata.normalisatie;
+    const documenttype =
+      bestaandeNormalisatie?.documenttype ??
+      document.metadata.documenttype ??
+      (document.uploadProfiel
+        ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+        : DOSSIER_CATEGORIE_LABELS[document.categorie]);
+    const origineleWaarden = bestaandeNormalisatie?.origineleWaarden ?? {
+      datum: document.metadata.documentDatum ?? document.datum,
+      bron: document.metadata.bronbestand ?? document.bestandsNaam,
+      documenttype,
+    };
+
+    const updated: DossierDocument = {
+      ...document,
+      metadata: {
+        ...document.metadata,
+        normalisatie: {
+          ...bestaandeNormalisatie,
+          datum: correctie.datum,
+          bron: correctie.bron,
+          documenttype,
+          onderzoekstype: bestaandeNormalisatie?.onderzoekstype,
+          labwaarden: bestaandeNormalisatie?.labwaarden,
+          pogingId: bestaandeNormalisatie?.pogingId,
+          afspraakId: bestaandeNormalisatie?.afspraakId,
+          onzekerheid: bestaandeNormalisatie?.onzekerheid ?? 'middel',
+          origineleWaarden,
+          overschrevenDoorGebruiker: true,
+        },
+        historischeTijdlijnReview: {
+          reviewStatus: correctie.reviewStatus,
+          datum: correctie.datum,
+          bron: correctie.bron,
+          zichtbaarheid: correctie.zichtbaarheid,
+          bijgewerktOp: correctie.bijgewerktOp,
+          origineleWaarden: {
+            formulierDatum: document.datum,
+            metadataDatum: document.metadata.documentDatum,
+            bron: document.metadata.bronbestand ?? document.bestandsNaam,
+          },
+        },
       },
     };
     await this.documenten.saveWithId(updated);

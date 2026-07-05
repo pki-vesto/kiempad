@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G580 Fertility Intelligence: de dossier-documenttijdlijn heeft nu een
+  historische tijdlijnreviewkaart waarmee gebruikers datum, bron, reviewstatus
+  en zichtbaarheid kunnen bevestigen, corrigeren of verbergen; locked
+  beelditems tonen alleen veilige unlock-copy zonder bronbestandsnaam.
 - G581 Fertility Intelligence: het Beeldenoverzicht heeft nu een
   beeldmetadata-reviewformulier voor beeldtype, bron, datum, poging, afspraak,
   EXIF-status en reviewstatus; locked previews tonen alleen veilige unlock-copy.

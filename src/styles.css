@@ -22030,6 +22030,48 @@ a.action-card:active {
   min-width: 0;
 }
 
+.historical-timeline-review-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface-2) 72%, var(--surface));
+}
+
+.historical-timeline-review-form > strong,
+.historical-timeline-review-form > p,
+.historical-timeline-review-form > dl {
+  grid-column: 1 / -1;
+}
+
+.historical-timeline-review-form label {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.historical-timeline-review-form input,
+.historical-timeline-review-form select {
+  width: 100%;
+  min-width: 0;
+}
+
+.historical-timeline-review-form button {
+  justify-self: start;
+}
+
+@media (max-width: 640px) {
+  .historical-timeline-review-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .imaging-filter-kit {
   gap: 12px;
   padding: 14px;

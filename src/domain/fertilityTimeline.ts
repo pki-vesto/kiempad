@@ -231,42 +231,48 @@ export function bouwFertilityTimeline(input: {
     }),
   );
 
-  const documentItems = input.dossierDocuments.map((document): FertilityTimelineItem => {
-    const historischConcept = bouwHistorischDocumentConcept(document);
-    return {
-      id: `onderzoek-${document.id}`,
-      datum:
-        historischConcept.conflict?.metadataDatum ??
-        document.metadata.normalisatie?.datum ??
-        document.metadata.documentDatum ??
-        document.datum,
-      soort: 'onderzoek',
-      titel: document.titel,
-      label:
-        document.metadata.normalisatie?.documenttype ??
-        document.metadata.documenttype ??
-        DOSSIER_CATEGORIE_LABELS[document.categorie],
-      detail: document.analyse.samenvatting,
-      context: beschrijfDocumentContext(document, historischConcept),
-      bron: historischConcept.bron,
-      bronverwijzingen: bouwDocumentBronverwijzingen(document, historischConcept),
-      gekoppeldeRecords: [
-        maakKoppeling('dossier', document.id, `Dossierrecord: ${document.titel}`),
-        ...maakTrajectKoppeling(
+  const documentItems = input.dossierDocuments
+    .map((document): FertilityTimelineItem | undefined => {
+      const historischConcept = bouwHistorischDocumentConcept(document);
+      if (historischConcept.reviewStatus === 'verborgen') return undefined;
+      return {
+        id: `onderzoek-${document.id}`,
+        datum:
+          document.metadata.historischeTijdlijnReview?.datum ??
+          historischConcept.conflict?.metadataDatum ??
+          document.metadata.normalisatie?.datum ??
+          document.metadata.documentDatum ??
+          document.datum,
+        soort: 'onderzoek',
+        titel: document.titel,
+        label:
+          document.metadata.normalisatie?.documenttype ??
+          document.metadata.documenttype ??
+          DOSSIER_CATEGORIE_LABELS[document.categorie],
+        detail: document.analyse.samenvatting,
+        context: beschrijfDocumentContext(document, historischConcept),
+        bron: historischConcept.bron,
+        bronverwijzingen: bouwDocumentBronverwijzingen(document, historischConcept),
+        gekoppeldeRecords: [
+          maakKoppeling('dossier', document.id, `Dossierrecord: ${document.titel}`),
+          ...maakTrajectKoppeling(
+            document.metadata.normalisatie?.pogingId ??
+              document.metadata.trajectId ??
+              document.trajectId,
+          ),
+          ...maakAfspraakKoppeling(
+            document.metadata.normalisatie?.afspraakId ?? document.afspraakId,
+          ),
+        ],
+        trajectId:
           document.metadata.normalisatie?.pogingId ??
-            document.metadata.trajectId ??
-            document.trajectId,
-        ),
-        ...maakAfspraakKoppeling(document.metadata.normalisatie?.afspraakId ?? document.afspraakId),
-      ],
-      trajectId:
-        document.metadata.normalisatie?.pogingId ??
-        document.metadata.trajectId ??
-        document.trajectId,
-      recordId: document.id,
-      historischConcept,
-    };
-  });
+          document.metadata.trajectId ??
+          document.trajectId,
+        recordId: document.id,
+        historischConcept,
+      };
+    })
+    .filter((item): item is FertilityTimelineItem => Boolean(item));
 
   const embryoItems = input.dossierDocuments
     .map((document): FertilityTimelineItem | undefined => {
@@ -551,7 +557,8 @@ function bouwDocumentBronverwijzingen(
     maakBronverwijzing(
       'dossiermetadata',
       historischConcept.bron,
-      historischConcept.conflict?.metadataDatum ??
+      document.metadata.historischeTijdlijnReview?.datum ??
+        historischConcept.conflict?.metadataDatum ??
         document.metadata.normalisatie?.datum ??
         document.metadata.documentDatum ??
         document.datum,
@@ -605,6 +612,7 @@ function bouwHistorischDocumentConcept(
   document: DossierDocument,
 ): FertilityTimelineHistorischConcept {
   const normalisatie = document.metadata.normalisatie;
+  const tijdlijnReview = document.metadata.historischeTijdlijnReview;
   const datumBron: FertilityTimelineHistorischConcept['datumBron'] = normalisatie
     ? 'genormaliseerde_metadata'
     : document.metadata.documentDatum
@@ -626,11 +634,12 @@ function bouwHistorischDocumentConcept(
           ? 0.35
           : (document.ocr?.confidenceScore ?? 0.6);
   const reviewStatus: FertilityTimelineHistorischConcept['reviewStatus'] =
-    normalisatie?.overschrevenDoorGebruiker ||
+    tijdlijnReview?.reviewStatus ??
+    (normalisatie?.overschrevenDoorGebruiker ||
     document.ocr?.reviewStatus === 'gereviewd' ||
     confidenceLabel === 'hoog'
       ? 'bevestigd'
-      : 'concept';
+      : 'concept');
   const conflict =
     document.metadata.documentDatum && document.metadata.documentDatum !== document.datum
       ? {
@@ -643,7 +652,11 @@ function bouwHistorischDocumentConcept(
 
   return {
     reviewStatus,
-    bron: normalisatie?.bron ?? document.metadata.bronbestand ?? document.bestandsNaam,
+    bron:
+      tijdlijnReview?.bron ??
+      normalisatie?.bron ??
+      document.metadata.bronbestand ??
+      document.bestandsNaam,
     datumBron,
     confidenceLabel,
     confidenceScore,

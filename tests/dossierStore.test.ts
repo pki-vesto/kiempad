@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { bouwImagingRepository } from '../src/domain/dossier';
+import {
+  bouwDossierIndex,
+  bouwDossierTijdlijn,
+  bouwImagingRepository,
+} from '../src/domain/dossier';
 import { DossierStore } from '../src/domain/dossierStore';
+import { bouwFertilityTimeline } from '../src/domain/fertilityTimeline';
 import type { DossierDocument } from '../src/domain/types';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
 import { MemoryEncryptedStorageDriver } from '../src/storage/memoryDriver';
@@ -179,6 +184,86 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('Gereviewd beeldportaal');
     expect(raw?.payload.ciphertext).not.toContain('afspraak-nieuw');
     expect(raw?.payload.ciphertext).not.toContain('anBnLWdlaGVpbQ');
+  });
+
+  it('corrigeert historische tijdlijnitems versleuteld met zichtbaarheid en auditcontext', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-01',
+      titel: 'Historisch rapport',
+      categorie: 'onderzoek',
+      uploadProfiel: 'fertiliteitsrapport',
+      bestandsNaam: 'historisch-rapport.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRmLWdlaGVpbQ==',
+      metadataCorrectie: {
+        datum: '2026-05-03',
+        bron: 'Oude portaalbron',
+        documenttype: 'Fertiliteitsrapport',
+        onzekerheid: 'hoog',
+      },
+    });
+
+    const updated = await store.updateHistorischeTijdlijnReview(saved.id, {
+      datum: '2026-05-06',
+      bron: 'Gereviewde portaalexport',
+      reviewStatus: 'bevestigd',
+      zichtbaarheid: 'zichtbaar',
+      bijgewerktOp: '2026-07-05T08:00:00.000Z',
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(updated.metadata.normalisatie).toMatchObject({
+      datum: '2026-05-06',
+      bron: 'Gereviewde portaalexport',
+      documenttype: 'Fertiliteitsrapport',
+      overschrevenDoorGebruiker: true,
+    });
+    expect(updated.metadata.historischeTijdlijnReview).toMatchObject({
+      reviewStatus: 'bevestigd',
+      datum: '2026-05-06',
+      bron: 'Gereviewde portaalexport',
+      zichtbaarheid: 'zichtbaar',
+      origineleWaarden: {
+        formulierDatum: '2026-05-01',
+        bron: 'historisch-rapport.pdf',
+      },
+    });
+    expect(bouwDossierTijdlijn(await store.list())[0]).toMatchObject({
+      datum: '2026-05-06',
+      bron: 'metadata',
+    });
+    expect(bouwDossierIndex(await store.list())[0]).toMatchObject({
+      datum: '2026-05-06',
+      bron: 'Gereviewde portaalexport',
+    });
+
+    const hidden = await store.updateHistorischeTijdlijnReview(saved.id, {
+      datum: '2026-05-06',
+      bron: 'Gereviewde portaalexport',
+      reviewStatus: 'verborgen',
+      zichtbaarheid: 'verborgen',
+      bijgewerktOp: '2026-07-05T08:05:00.000Z',
+    });
+    const centralTimeline = bouwFertilityTimeline({
+      trajecten: [],
+      afspraken: [],
+      dossierDocuments: [hidden],
+      consultVerslagen: [],
+      kennisItems: [],
+    });
+
+    expect(centralTimeline.items.some((item) => item.recordId === saved.id)).toBe(false);
+    expect(raw?.payload.ciphertext).not.toContain('Historisch rapport');
+    expect(raw?.payload.ciphertext).not.toContain('historisch-rapport.pdf');
+    expect(raw?.payload.ciphertext).not.toContain('Oude portaalbron');
+    expect(raw?.payload.ciphertext).not.toContain('Gereviewde portaalexport');
+    expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
+    expect(JSON.stringify(updated.metadata.historischeTijdlijnReview)).not.toMatch(
+      /\bdiagnose|dosering|behandelkeuzeadvies\b/i,
+    );
   });
 
   it('bewaart gereviewde ziekenhuisdocumenttype-correcties versleuteld zonder medische payload', async () => {
