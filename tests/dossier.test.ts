@@ -1503,6 +1503,7 @@ describe('dossier', () => {
       ocr: {
         explicieteLokaleVerwerking: true,
         tekst: 'AMH waarde gecontroleerd',
+        reviewStatus: 'gereviewd',
       },
     });
     const geenMatch = maakDossierDocument('doc-geen-match', {

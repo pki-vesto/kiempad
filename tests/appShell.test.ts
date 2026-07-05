@@ -8318,6 +8318,12 @@ describe('app shell', () => {
     expect(html).toContain(
       'Concept: OCR-tekst wordt pas na review gebruikt voor metadata en tijdlijnindex.',
     );
+    expect(html).toContain('data-ocr-review-correction="ready"');
+    expect(html).toContain('name="ocrReviewCorrectieTekst"');
+    expect(html).toContain('name="ocrReviewMetadataNotitie"');
+    expect(html).toContain('name="ocrReviewStatus"');
+    expect(html).toContain('OCR-review bewaren');
+    expect(html).toContain('geen diagnose, dosering of behandelkeuzeadvies');
     expect(html).toContain('PDF of afbeelding is klaargezet voor lokale OCR');
     expect(html).toContain('Lokale OCR-status: klaargezet voor lokale OCR.');
     expect(html).toContain('Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.');

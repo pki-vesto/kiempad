@@ -12769,7 +12769,7 @@ function renderDossierDocument(
         ${renderDossierMetadata(document, state)}
         ${renderAttachmentReviewMetadata(document)}
         ${renderEmbryoDetails(document)}
-        ${renderDossierOcrDetails(document)}
+        ${renderDossierOcrDetails(document, state)}
         ${renderDossierImagePreview(document, state)}
         <p class="linked-note">${escapeHtml(document.analyse.samenvatting)}</p>
         <ul class="compact-list">
@@ -13071,8 +13071,17 @@ function renderMetadataNormalisatieCorrectieForm(
   `;
 }
 
-function renderDossierOcrDetails(document: DossierDocument): string {
+function renderDossierOcrDetails(document: DossierDocument, state: AppShellState): string {
   if (!document.ocr) return '';
+  if (state.imagingPreviewLocked && document.categorie === 'beeld') {
+    return `
+      <section class="linked-note ocr-review-correction-form" data-ocr-review-correction="locked">
+        <strong>OCR-review</strong>
+        <p class="small-print">Ontgrendel de lokale kluis om OCR-tekst, metadata-notitie en reviewstatus te corrigeren zonder beeldbron of OCR-fragment te tonen.</p>
+      </section>
+    `;
+  }
+
   const status =
     document.ocr.status === 'tekst_uitgelezen'
       ? 'Tekst lokaal uitgelezen'
@@ -13100,6 +13109,37 @@ function renderDossierOcrDetails(document: DossierDocument): string {
     <p class="linked-note">${escapeHtml(document.ocr.waarschuwing)}</p>
     ${reviewHint}
     ${tekstPreview}
+    ${renderOcrReviewCorrectieForm(document)}
+  `;
+}
+
+function renderOcrReviewCorrectieForm(document: DossierDocument): string {
+  if (!document.ocr) return '';
+  const tekst = document.ocr.correctie?.tekst ?? document.ocr.tekst ?? '';
+  const metadataNotitie = document.ocr.correctie?.metadataNotitie ?? '';
+  const reviewStatus = document.ocr.reviewStatus;
+  return `
+    <form class="linked-note ocr-review-correction-form" data-ocr-review-correction="ready">
+      <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(document.id)}" />
+      <strong>OCR-review</strong>
+      <p class="small-print">Corrigeer alleen lokaal uitgelezen tekst en metadata-notitie; Kiempad geeft geen diagnose, dosering of behandelkeuzeadvies.</p>
+      <label>
+        Correctietekst
+        <textarea name="ocrReviewCorrectieTekst" rows="3">${escapeHtml(tekst)}</textarea>
+      </label>
+      <label>
+        Metadata-notitie
+        <textarea name="ocrReviewMetadataNotitie" rows="2">${escapeHtml(metadataNotitie)}</textarea>
+      </label>
+      <label>
+        Reviewstatus
+        <select name="ocrReviewStatus">
+          <option value="concept"${reviewStatus === 'concept' ? ' selected' : ''}>Concept - nog controleren</option>
+          <option value="gereviewd"${reviewStatus === 'gereviewd' ? ' selected' : ''}>Gereviewd - gebruiken voor metadata en zoeken</option>
+        </select>
+      </label>
+      <button type="submit" class="secondary-button">OCR-review bewaren</button>
+    </form>
   `;
 }
 

@@ -868,6 +868,12 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
         void saveMetadataNormalisatieCorrectieFromForm(event.currentTarget, root, state);
       });
     });
+  root.querySelectorAll<HTMLFormElement>('.ocr-review-correction-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveOcrReviewCorrectieFromForm(event.currentTarget, root, state);
+    });
+  });
 }
 
 function showDossierDeleteConfirmation(
@@ -1759,6 +1765,37 @@ async function saveMetadataNormalisatieCorrectieFromForm(
       error,
       'Metadata-normalisatie bewaren is mislukt.',
     );
+    render(root, state);
+  }
+}
+
+async function saveOcrReviewCorrectieFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+  const data = new FormData(target);
+  const documentId = optionalString(data.get('dossierDocumentId'));
+  if (!documentId) return;
+
+  try {
+    await state.dossierStore.updateOcrReviewCorrectie(documentId, {
+      tekst: optionalString(data.get('ocrReviewCorrectieTekst')),
+      metadataNotitie: optionalString(data.get('ocrReviewMetadataNotitie')),
+      reviewStatus: parseOcrReviewStatus(data.get('ocrReviewStatus')),
+      bijgewerktOp: new Date().toISOString(),
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'OCR-review bijgewerkt',
+      detail: `OCR-review ${beschrijfRecordOpslag(state)} zonder medische interpretatie.`,
+    });
+    state.dossierStatus = `OCR-review ${beschrijfRecordOpslag(state)}.`;
+    state.dossierError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError = formatRecoverableStorageError(error, 'OCR-review bewaren is mislukt.');
     render(root, state);
   }
 }
@@ -3929,6 +3966,12 @@ function parseMetadataNormalisatieOnzekerheid(
 ): NonNullable<DossierDocument['metadata']['normalisatie']>['onzekerheid'] {
   if (value === 'laag' || value === 'middel' || value === 'hoog') return value;
   return 'middel';
+}
+
+function parseOcrReviewStatus(
+  value: FormDataEntryValue | null,
+): NonNullable<DossierDocument['ocr']>['reviewStatus'] {
+  return value === 'gereviewd' ? 'gereviewd' : 'concept';
 }
 
 function parseEmbryoStatus(

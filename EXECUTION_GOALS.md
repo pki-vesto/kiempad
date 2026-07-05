@@ -15755,7 +15755,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, OCR review, app shell, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #922
 
 ### G579 — metadata-normalisatie correctieformulier
 
@@ -17458,6 +17459,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3819
+
+### G1937 — Fertility Intelligence: OCR-review correctieformulier routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het OCR-review correctieformulier is zichtbaar bij OCR-documenten, maar routeflow-bewijs moet nog bewaken dat correctietekst, metadata-notitie, reviewstatus en locked imaging privacy op desktop en mobiel leesbaar blijven.
+- **User Impact:** Zonder visuele routeflow-evidence kan een latere themewijziging de OCR-reviewvelden laten overlappen, onder de fold onduidelijk maken of concepttekst tonen waar dat niet mag.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de OCR-review correctieflow zonder OCR-payloads of plaintext locked beeldbronnen.
+- **User Value:** Gebruikers kunnen onzeker OCR-werk blijven corrigeren en gereviewd markeren zonder dat toekomstige theme-wijzigingen het formulier laten verdwijnen of privacygrenzen breken.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-ocr-review-correction="ready"` en de locked variant op desktop en mobiel; correctietekst, metadata-notitie, reviewstatus en bewaaractie blijven scanbaar zonder page-level horizontale overflow; locked beelditems tonen geen bronbestandsnaam, thumbnail, beeldpayload, OCR-fragment of plaintext bronwaarde in de OCR-reviewflow; bestaande documentreview-wachtrij, dossierindex, zoekroute, metadata-normalisatie en imaging privacyhooks blijven intact; tests en fixtures blijven vrij van secrets, medische bronpayloads en plaintext gezondheidsdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Documenttijdlijn, Dossier reviewwachtrij
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** OCR review, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3821
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

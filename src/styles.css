@@ -22031,7 +22031,8 @@ a.action-card:active {
 }
 
 .historical-timeline-review-form,
-.metadata-normalization-correction-form {
+.metadata-normalization-correction-form,
+.ocr-review-correction-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
@@ -22047,12 +22048,15 @@ a.action-card:active {
 .historical-timeline-review-form > dl,
 .metadata-normalization-correction-form > strong,
 .metadata-normalization-correction-form > p,
-.metadata-normalization-correction-form > dl {
+.metadata-normalization-correction-form > dl,
+.ocr-review-correction-form > strong,
+.ocr-review-correction-form > p {
   grid-column: 1 / -1;
 }
 
 .historical-timeline-review-form label,
-.metadata-normalization-correction-form label {
+.metadata-normalization-correction-form label,
+.ocr-review-correction-form label {
   display: grid;
   min-width: 0;
   gap: 5px;
@@ -22064,19 +22068,23 @@ a.action-card:active {
 .historical-timeline-review-form input,
 .historical-timeline-review-form select,
 .metadata-normalization-correction-form input,
-.metadata-normalization-correction-form select {
+.metadata-normalization-correction-form select,
+.ocr-review-correction-form textarea,
+.ocr-review-correction-form select {
   width: 100%;
   min-width: 0;
 }
 
 .historical-timeline-review-form button,
-.metadata-normalization-correction-form button {
+.metadata-normalization-correction-form button,
+.ocr-review-correction-form button {
   justify-self: start;
 }
 
 @media (max-width: 640px) {
   .historical-timeline-review-form,
-  .metadata-normalization-correction-form {
+  .metadata-normalization-correction-form,
+  .ocr-review-correction-form {
     grid-template-columns: minmax(0, 1fr);
   }
 }
