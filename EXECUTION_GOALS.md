@@ -14277,7 +14277,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging, timeline, disclaimer, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G474 — imaging timeline privacy boundary
 
@@ -17528,6 +17528,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3872
+
+### G1964 — Fertility Intelligence: beeldvergelijking zonder interpretatie release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De beeldvergelijking toont nu veilige compare-cards met datum, bron, type, notitie en previewstatus zonder interpretatie, maar release-evidence moet nog vastleggen dat deze bescherming in de PR/CI-keten zichtbaar blijft.
+- **User Impact:** Zonder release-evidence kan een latere thema- of routeflowwijziging bronvelden, notities of previewvlakken laten verdwijnen, of score/advies/payloadtekst in compare-evidence toelaten.
+- **Desired Outcome:** Release- of onderhoudsevidence toont dat de imaging compare route datum, bron, type, notitie en veilige previewvlakken bewaakt zonder score, afwijkingslabel, conclusies, beeldpayload of behandeladvies.
+- **User Value:** Gebruikers houden een vergelijkingsweergave die beeldmomenten bespreekbaar maakt met de kliniek zonder dat Kiempad als beoordelaar of arts optreedt.
+- **Acceptance Criteria:** Release-evidence verwijst naar `data-imaging-compare-state="ready"` en de compare routeflow voor twee beeldmomenten; evidence bevestigt datum, bron, type, notitie, context, previewstatus en koppeling per compare-card; evidence bevestigt veilige previewvlakken zonder `data:image`, base64, OCR_RAW of bronbestandsnamen; evidence sluit kwaliteitsscore, selectieadvies, rangorde, afwijkingslabel, kansberekening, behandelkeuzeadvies en medische conclusie uit; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Beelden, Beeldenoverzicht
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging repository, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3874
 
 ### G1948 — Fertility Intelligence: import-inbox retry overflow release evidence
 

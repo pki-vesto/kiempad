@@ -11751,6 +11751,9 @@ function renderImagingCompareMoment(label: string, item: ImagingRepositoryItem):
     item.tijdlijnKoppeling.laboratoriumContext ??
     item.tijdlijnKoppeling.embryoLabel ??
     'Geen aanvullende context vastgelegd';
+  const bron =
+    item.previewState.status === 'locked' ? 'Bron verborgen tot ontgrendeling' : item.bronbestand;
+  const notitie = maakImagingCompareNotitie(item);
   const koppeling = [
     item.tijdlijnKoppeling.cyclusDag ? `Cyclusdag ${item.tijdlijnKoppeling.cyclusDag}` : undefined,
     item.tijdlijnKoppeling.embryoDag ? `Embryodag ${item.tijdlijnKoppeling.embryoDag}` : undefined,
@@ -11759,17 +11762,56 @@ function renderImagingCompareMoment(label: string, item: ImagingRepositoryItem):
   ].filter((value): value is string => Boolean(value));
 
   return `
-    <article class="imaging-compare-card" role="listitem">
-      <p class="imaging-compare-card__label">${escapeHtml(label)}</p>
-      <h3>${escapeHtml(item.datum)} · ${escapeHtml(item.titel)}</h3>
-      <dl class="summary-list imaging-compare-card__metadata">
-        <div><dt>Type</dt><dd>${escapeHtml(classificeerBeeldLabel(item.soort))}</dd></div>
-        <div><dt>Context</dt><dd>${escapeHtml(context)}</dd></div>
-        <div><dt>Preview</dt><dd>${escapeHtml(item.previewState.label)}</dd></div>
-        <div><dt>Koppeling</dt><dd>${escapeHtml(koppeling.length > 0 ? koppeling.join(' · ') : 'Nog niet gekoppeld')}</dd></div>
-      </dl>
+    <article class="imaging-compare-card" role="listitem" data-imaging-compare-card="${escapeAttribute(item.id)}" data-imaging-compare-preview-state="${escapeAttribute(item.previewState.status)}">
+      <div class="imaging-compare-card__body">
+        <p class="imaging-compare-card__label">${escapeHtml(label)}</p>
+        <h3>${escapeHtml(item.datum)} · ${escapeHtml(item.titel)}</h3>
+        <dl class="summary-list imaging-compare-card__metadata">
+          <div data-imaging-compare-field="datum"><dt>Datum</dt><dd>${escapeHtml(item.datum)}</dd></div>
+          <div data-imaging-compare-field="bron"><dt>Bron</dt><dd>${escapeHtml(bron)}</dd></div>
+          <div data-imaging-compare-field="type"><dt>Type</dt><dd>${escapeHtml(classificeerBeeldLabel(item.soort))}</dd></div>
+          <div data-imaging-compare-field="notitie"><dt>Notitie</dt><dd>${escapeHtml(notitie)}</dd></div>
+          <div data-imaging-compare-field="context"><dt>Context</dt><dd>${escapeHtml(context)}</dd></div>
+          <div data-imaging-compare-field="preview"><dt>Preview</dt><dd>${escapeHtml(item.previewState.label)}</dd></div>
+          <div data-imaging-compare-field="koppeling"><dt>Koppeling</dt><dd>${escapeHtml(koppeling.length > 0 ? koppeling.join(' · ') : 'Nog niet gekoppeld')}</dd></div>
+        </dl>
+      </div>
+      <div class="imaging-compare-card__preview" data-imaging-compare-preview="ready">
+        ${renderImagingComparePreviewTile(item)}
+      </div>
     </article>
   `;
+}
+
+function renderImagingComparePreviewTile(item: ImagingRepositoryItem): string {
+  const label =
+    item.previewState.status === 'locked'
+      ? 'Preview vergrendeld'
+      : item.previewState.status === 'thumbnail' || item.previewState.status === 'preview'
+        ? 'Lokale preview beschikbaar'
+        : 'Geen preview opgeslagen';
+  const detail =
+    item.previewState.status === 'locked'
+      ? 'Ontgrendel de versleutelde opslag om het beeld in het overzicht te bekijken.'
+      : item.previewState.status === 'thumbnail' || item.previewState.status === 'preview'
+        ? 'Open het beeldrecord voor de lokale thumbnail uit versleutelde opslag.'
+        : 'Vergelijking gebruikt alleen metadata voor dit beeldmoment.';
+
+  return `
+    <div class="imaging-compare-preview-tile" data-imaging-compare-preview-kind="safe-surface" data-imaging-compare-preview-state="${escapeAttribute(item.previewState.status)}">
+      <strong>${escapeHtml(label)}</strong>
+      <span>${escapeHtml(detail)}</span>
+    </div>
+  `;
+}
+
+function maakImagingCompareNotitie(item: ImagingRepositoryItem): string {
+  const metadataContext = item.context ?? item.tijdlijnKoppeling.laboratoriumContext;
+  if (metadataContext) return metadataContext;
+  if (item.tijdlijnKoppeling.embryoLabel) return item.tijdlijnKoppeling.embryoLabel;
+  if (item.tijdlijnKoppeling.afspraakId) return 'Gekoppeld aan afspraak';
+  if (item.tijdlijnKoppeling.pogingId) return 'Gekoppeld aan traject';
+  return 'Geen notitie vastgelegd';
 }
 
 function renderImagingRepositoryItem(

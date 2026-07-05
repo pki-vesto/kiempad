@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1763 |
+| ☑ klaar | 1764 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1962** |
+| **Totaal** | **1963** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -628,7 +628,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G470 | Fertility Intelligence: fertility dossier packet per behandeltraject | P1 | F5 | ☑ |
 | G471 | Fertility Intelligence: ultrasound upload metadata schema | P0 | F5 | ☑ |
 | G472 | Fertility Intelligence: embryo image classification review | P1 | F5 | ☑ |
-| G473 | Fertility Intelligence: beeldvergelijking zonder medische interpretatie | P1 | F5 | ☐ |
+| G473 | Fertility Intelligence: beeldvergelijking zonder medische interpretatie | P1 | F5 | ☑ |
 | G474 | Fertility Intelligence: imaging timeline privacy boundary | P0 | F5 | ☑ |
 | G475 | Fertility Intelligence: consult transcript import en bronkoppeling | P0 | F5 | ☑ |
 | G476 | Fertility Intelligence: actie-extractie uit consulten als taken en vragen | P0 | F5 | ☑ |
@@ -2125,12 +2125,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1961 | Fertility Intelligence: embryo bronlabel correctieflow release evidence | P1 | F5 | ☐ |
 | G1962 | Fertility Intelligence: imaging metadata reviewcorrectie release evidence | P1 | F5 | ☐ |
 | G1963 | Fertility Intelligence: import-inbox retry eventlog redaction release evidence | P1 | F5 | ☐ |
+| G1964 | Fertility Intelligence: beeldvergelijking zonder interpretatie release evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1962** (id's G001 t/m G1963; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1963** (id's G001 t/m G1964; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
