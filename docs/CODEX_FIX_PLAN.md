@@ -134,6 +134,11 @@
   actions, treatment context and full planning before the existing current-phase card and follow-up
   timeline, preserving phase buttons, treatment forms, route hooks, timeline anchors and graph
   context on desktop and mobile.
+- **Treatment management first-viewport management board — done in G1884 / issue #3710.**
+  Traject/Beheer now opens with one compact management board for current treatment edit, new
+  attempt, archive, treatment context and full management details before the existing management
+  forms and archive list, preserving form ids, input names, archive/restore/delete actions and
+  privacy boundaries on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
