@@ -88,6 +88,15 @@ pad zonder lokale vault-hercreatie.
   OCR-tekst, record payload, medische plaintext, diagnose of behandelkeuzeadvies
   bevatten; houd `attachmentEnvelopeEvidencePrivacyPattern` synchroon met deze
   privacygrens.
+- **Embryo image classification forced-colors focus evidence (G1945):**
+  `npm run smoke:routeflows` gebruikt `scripts/routeflow-screenshot-smoke.mjs` om
+  in de target `dossier-imaging-embryo-classification-review`
+  `embryoImageClassificationForcedColorsFocusEvidence` te verzamelen. De smoke
+  emuleert forced-colors rond de concept-classificatie en focust beeldtype,
+  embryo-label, embryo-id en reviewstatus, met checks op actieve focusringen,
+  zichtbare veldranden, labeltekst en horizontale overflow. Blijvende evidence mag
+  geen kwaliteitsscore, selectieadvies, beeldpayload, OCR-tekst, diagnose,
+  dosering, kansberekening, secret of trackingpayload bevatten.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en
   herlaadt de app-shell.

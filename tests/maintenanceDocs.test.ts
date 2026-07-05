@@ -3988,6 +3988,63 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G1859');
   });
 
+  it('documenteert G1945 embryo image classification forced-colors focus release evidence', () => {
+    const requiredTerms = [
+      'Embryo image classification forced-colors focus evidence',
+      'dossier-imaging-embryo-classification-review',
+      'embryoImageClassificationForcedColorsFocusEvidence',
+      'npm run smoke:routeflows',
+      'beeldtype',
+      'embryo-label',
+      'embryo-id',
+      'reviewstatus',
+      'actieve focusringen',
+      'zichtbare veldranden',
+      'horizontale overflow',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'kwaliteitsscore',
+      'selectieadvies',
+      'beeldpayload',
+      'OCR-tekst',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'secret',
+      'trackingpayload',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1945 embryo image classification forced-colors focus release evidence',
+      'dossier-imaging-embryo-classification-review',
+      'embryoImageClassificationForcedColorsFocusEvidence',
+      'forced-colors focuscontrole',
+      'beeldtype, embryo-label, embryo-id en reviewstatus',
+      'zonder beeldpayload of medische interpretatie',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-imaging-embryo-classification-review'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'embryoImageClassificationForcedColorsEvidence: true',
+    );
+    expect(backlog).toContain('G1945');
+    expect(executionGoals).toContain('G1945');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',

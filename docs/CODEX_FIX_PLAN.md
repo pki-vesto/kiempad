@@ -414,6 +414,12 @@
   same routeflow target now focuses the image type, embryo label, embryo ID, and review status
   controls in forced-colors, verifying active focus rings, visible field borders, underlined
   labels, and no horizontal overflow without adding scores, advice, payloads, or medical text.
+- **Embryo image classification forced-colors focus release evidence — done in G1945 / issue #3836.**
+  Runbook, completion-audit, changelog and current-state releasecontext now explicitly point to
+  `dossier-imaging-embryo-classification-review`,
+  `embryoImageClassificationForcedColorsFocusEvidence` and `npm run smoke:routeflows`, with a
+  maintenance-doc guard for beeldtype, embryo-label, embryo-id and reviewstatus without image
+  payload, quality score, selection advice or medical interpretation.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

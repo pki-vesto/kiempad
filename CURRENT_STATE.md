@@ -390,6 +390,11 @@
   `attachmentEnvelopeBatchForcedColorsEvidence` en
   `attachmentEnvelopeEvidencePrivacyPattern`, zodat payloadvrije
   forced-colors batch evidence traceerbaar blijft bij releasevoorbereiding.
+- **G1945 embryo image classification forced-colors focus release evidence:**
+  releasecontext in changelog en current state noemt `npm run smoke:routeflows`,
+  `dossier-imaging-embryo-classification-review` en
+  `embryoImageClassificationForcedColorsFocusEvidence`, zodat de forced-colors focuscontrole voor beeldtype, embryo-label, embryo-id en reviewstatus vindbaar blijft
+  zonder beeldpayload of medische interpretatie.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
