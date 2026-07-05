@@ -139,6 +139,10 @@
   bord voor vandaag, planning, suggesties, vragen en dashboardcontext. De
   bestaande dagactie, werkbanen, cockpit en setup blijven bereikbaar zonder de
   eerste viewport als lange dashboardstapel te vullen.
+- **G1876 Vragen/Open prep board:** de Open-route in Vragen start met een compact
+  voorbereidingsbord voor open vragen, volgende afspraak, prioriteit,
+  voorbereiding en vraagcontext. De volledige open-vragenlijst blijft bereikbaar
+  achter een vervolgsectie zonder de eerste viewport als vragenstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

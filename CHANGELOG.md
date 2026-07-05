@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1876 Premium Claude Design UI: Vragen/Open opent nu met een compact
+  first-viewport prep board voor open vragen, volgende afspraak, prioriteit,
+  voorbereiding en vraagcontext. De volledige open-vragenlijst blijft bereikbaar
+  achter een vervolgsectie zonder als eerste lange vragenstapel te starten.
 - G1875 Premium Claude Design UI: Start opent nu met een compact
   first-viewport focus board voor vandaag, planning, suggesties, vragen en
   dashboardcontext. De bestaande dagactie, werkbanen, cockpit en setup blijven
