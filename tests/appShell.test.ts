@@ -5909,6 +5909,16 @@ describe('app shell', () => {
     expect(mobileCss).toContain('outline: 1px solid CanvasText;');
     expect(mobileCss).toContain('.treatment-task-route:focus-visible .command-task-route__cue {');
     expect(mobileCss).toContain('margin-top: 3px;');
+    expect(mobileCss).toContain(
+      '.treatment-task-route:not([aria-current="page"]):focus-visible\n      :is(.command-task-route__top > span, small) {',
+    );
+    expect(mobileCss).toContain('font-weight: 780;');
+    expect(mobileCss).toContain('text-decoration: none;');
+    expect(mobileCss).toContain(
+      '.treatment-task-route:not([aria-current="page"]):focus-visible\n      :is(.command-task-route__badge, .command-task-route__cue) {',
+    );
+    expect(mobileCss).toContain('background: ButtonFace;');
+    expect(mobileCss).toContain('color: ButtonText;');
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');
