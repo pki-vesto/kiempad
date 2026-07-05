@@ -87,6 +87,11 @@
   Controleren now opens with one compact recovery board for export status, sync recovery, backup
   reminder, and recovery history before the full status disclosure, preserving export, import,
   status, reminder, sync feedback, and recovery anchors on desktop and mobile.
+- **Settings first-viewport preferences board — done in G1874 / issue #3690.** Instellingen
+  now opens with one compact preferences board for identity, shared mode, theme, notification
+  privacy, and detail settings before the full settings fields disclosure, preserving personal
+  settings, theme, owner labels, example data, and notification privacy routes on desktop and
+  mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

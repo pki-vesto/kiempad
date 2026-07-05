@@ -1979,6 +1979,31 @@ describe('app shell', () => {
     expect(html).toContain('Hoi Sam &amp; Noor');
     expect(html).not.toContain('Hoi Peter &amp; partner');
     expect(html).toContain('data-settings-sheet="ready"');
+    expect(html).toContain(
+      'aria-label="Instellingen preferences board" data-settings-preferences-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je voorkeurlaag');
+    expect(html).toContain('data-settings-preferences-lane="identity"');
+    expect(html).toContain('data-settings-preferences-lane="shared"');
+    expect(html).toContain('data-settings-preferences-lane="theme"');
+    expect(html).toContain('data-settings-preferences-lane="notification"');
+    expect(html).toContain('data-settings-preferences-lane="details"');
+    expect(html).toContain(
+      'href="#settings-detail-disclosure" data-settings-preferences-lane="identity"',
+    );
+    expect(html).toContain(
+      'href="#herinneringen?route=privacy" data-settings-preferences-lane="notification"',
+    );
+    expect(html).toContain(
+      '<details id="settings-detail-disclosure" class="kp-disclosure settings-detail-disclosure" data-settings-detail-disclosure="collapsed">',
+    );
+    expect(html).toContain('Instellingenvelden openen');
+    expect(html.indexOf('data-settings-preferences-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="personal-settings-form"'),
+    );
+    expect(html.indexOf('data-settings-preferences-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="theme-form"'),
+    );
     expect(html).toContain('id="personal-settings-form"');
     expect(html).toContain('name="eigenNaam" type="text" maxlength="60" value="Sam"');
     expect(html).toContain('name="partnerNaam" type="text" maxlength="60" value="Noor"');
@@ -3111,7 +3136,16 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.settings-button,');
     expect(css).toContain('.settings-sheet-backdrop {');
     expect(css).toContain('.settings-sheet {');
+    expect(css).toContain('.settings-preferences-board {');
+    expect(css).toContain('.settings-preferences-board__lanes {');
+    expect(css).toContain('.settings-preferences-board__lane {');
+    expect(css).toContain('.settings-preferences-board__lane:hover,');
+    expect(css).toContain('.settings-detail-disclosure__body {');
     expect(css).toContain('.settings-theme-form {');
+    expect(mobileCss).toContain('.settings-preferences-board__lanes {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.settings-preferences-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(mobileCss).toContain('.theme-form {');
     expect(mobileCss).toContain('.theme-form__label {');
     expect(css).toContain('.theme-form[data-theme-control="compact"] {');

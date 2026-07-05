@@ -819,6 +819,112 @@ h3 {
   margin: 0;
 }
 
+.settings-preferences-board {
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-subtle);
+}
+
+.settings-preferences-board__header {
+  display: grid;
+  gap: 6px;
+}
+
+.settings-preferences-board__header h3,
+.settings-preferences-board__header p {
+  margin: 0;
+}
+
+.settings-preferences-board__header h3 {
+  color: var(--text-strong);
+  font-size: 1rem;
+}
+
+.settings-preferences-board__header > p:last-child {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.settings-preferences-board__lanes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.settings-preferences-board__lane {
+  display: grid;
+  min-height: 132px;
+  align-content: space-between;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+.settings-preferences-board__lane:hover,
+.settings-preferences-board__lane:focus-visible {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 18%, transparent);
+  outline: none;
+}
+
+.settings-preferences-board__lane span,
+.settings-preferences-board__lane strong,
+.settings-preferences-board__lane small,
+.settings-preferences-board__lane em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.settings-preferences-board__lane span {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.settings-preferences-board__lane strong {
+  color: var(--text-strong);
+  font-size: 0.95rem;
+}
+
+.settings-preferences-board__lane small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.settings-preferences-board__lane em {
+  justify-self: start;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal-deep);
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.settings-detail-disclosure {
+  margin: 0;
+}
+
+.settings-detail-disclosure__summary em {
+  white-space: nowrap;
+}
+
+.settings-detail-disclosure__body {
+  display: grid;
+  gap: 14px;
+}
+
 .settings-theme-form {
   justify-content: space-between;
   width: 100%;
@@ -25416,6 +25522,27 @@ summary[class*="__summary"]:focus-visible,
     max-height: min(84vh, 640px);
     padding: 16px;
     border-radius: 18px 18px 10px 10px;
+  }
+
+  .settings-preferences-board {
+    padding: 12px;
+  }
+
+  .settings-preferences-board__lanes {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .settings-preferences-board__lanes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .settings-preferences-board__lane {
+    flex: 0 0 min(204px, 74vw);
+    min-height: 126px;
+    scroll-snap-align: start;
   }
 
   /* mobiele bottom-tabbalk, zoals het prototype */

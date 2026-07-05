@@ -1397,41 +1397,136 @@ function renderSettingsSheet(state: AppShellState): string {
           </div>
           <button class="settings-sheet__close" type="button" data-settings-close="true" aria-label="Sluit instellingen">&times;</button>
         </header>
-        <form id="personal-settings-form" class="data-form compact-form settings-sheet__form" data-settings-feedback-kind="personal">
-          <label>
-            Jouw naam
-            <input name="eigenNaam" type="text" maxlength="60" value="${escapeAttribute(eigenNaam)}" autocomplete="given-name" placeholder="Bijvoorbeeld Peter" />
-          </label>
-          <label>
-            Partnernaam
-            <input name="partnerNaam" type="text" maxlength="60" value="${escapeAttribute(partnerNaam)}" autocomplete="off" placeholder="Bijvoorbeeld partner" />
-          </label>
-          ${renderBinaryToggle({
-            legend: 'Gedeelde modus',
-            name: 'gedeeldeModus',
-            value: String(settings.gedeeldeModus),
-            options: [
-              { value: 'true', label: 'Samen', description: 'Beide namen en gezamenlijke context' },
-              { value: 'false', label: 'Alleen', description: 'Persoonlijke weergave' },
-            ],
-            dataAttribute: 'gedeelde-modus',
-          })}
-          <button type="submit">Bewaar namen</button>
-          ${renderSettingsFeedback(state.settingsFeedback, 'personal')}
-        </form>
-        <form id="theme-form" class="theme-form settings-theme-form" aria-label="Weergavethema" data-theme-control="sheet">
-          <label>
-            <span class="theme-form__label">Thema</span>
-            <select name="thema">
-              ${renderOption('licht', 'Licht', settings.thema)}
-              ${renderOption('donker', 'Donker', settings.thema)}
-            </select>
-          </label>
-          ${renderSettingsFeedback(state.settingsFeedback, 'theme')}
-        </form>
-        ${renderExampleDataPanel(exampleLoaded, 'settings')}
+        ${renderSettingsPreferencesBoard(settings, exampleLoaded)}
+        <details id="settings-detail-disclosure" class="kp-disclosure settings-detail-disclosure" data-settings-detail-disclosure="collapsed">
+          <summary class="kp-disclosure__summary settings-detail-disclosure__summary">
+            <span>
+              <strong>Instellingenvelden openen</strong>
+              <small>Namen, gedeelde modus, thema en voorbeelddata blijven hier bereikbaar.</small>
+            </span>
+            <em>Formulieren</em>
+          </summary>
+          <div class="kp-disclosure__body settings-detail-disclosure__body">
+            <form id="personal-settings-form" class="data-form compact-form settings-sheet__form" data-settings-feedback-kind="personal">
+              <label>
+                Jouw naam
+                <input name="eigenNaam" type="text" maxlength="60" value="${escapeAttribute(eigenNaam)}" autocomplete="given-name" placeholder="Bijvoorbeeld Peter" />
+              </label>
+              <label>
+                Partnernaam
+                <input name="partnerNaam" type="text" maxlength="60" value="${escapeAttribute(partnerNaam)}" autocomplete="off" placeholder="Bijvoorbeeld partner" />
+              </label>
+              ${renderBinaryToggle({
+                legend: 'Gedeelde modus',
+                name: 'gedeeldeModus',
+                value: String(settings.gedeeldeModus),
+                options: [
+                  {
+                    value: 'true',
+                    label: 'Samen',
+                    description: 'Beide namen en gezamenlijke context',
+                  },
+                  { value: 'false', label: 'Alleen', description: 'Persoonlijke weergave' },
+                ],
+                dataAttribute: 'gedeelde-modus',
+              })}
+              <button type="submit">Bewaar namen</button>
+              ${renderSettingsFeedback(state.settingsFeedback, 'personal')}
+            </form>
+            <form id="theme-form" class="theme-form settings-theme-form" aria-label="Weergavethema" data-theme-control="sheet">
+              <label>
+                <span class="theme-form__label">Thema</span>
+                <select name="thema">
+                  ${renderOption('licht', 'Licht', settings.thema)}
+                  ${renderOption('donker', 'Donker', settings.thema)}
+                </select>
+              </label>
+              ${renderSettingsFeedback(state.settingsFeedback, 'theme')}
+            </form>
+            ${renderExampleDataPanel(exampleLoaded, 'settings')}
+          </div>
+        </details>
       </section>
     </div>
+  `;
+}
+
+function renderSettingsPreferencesBoard(settings: AppSettings, exampleLoaded: boolean): string {
+  const profileStatus =
+    settings.profielen.peter || settings.profielen.partner
+      ? 'Profielen ingesteld'
+      : 'Nog basisnamen';
+  const themeLabel = settings.thema === 'donker' ? 'Donker' : 'Licht';
+  const lanes = [
+    {
+      id: 'identity',
+      href: '#settings-detail-disclosure',
+      label: 'Identiteit',
+      title: profileStatus,
+      detail: 'Beheer hoe de startgroet en eigenaarlabels namen tonen.',
+      cue: 'Namen',
+    },
+    {
+      id: 'shared',
+      href: '#settings-detail-disclosure',
+      label: 'Gedeelde modus',
+      title: settings.gedeeldeModus ? 'Samen' : 'Alleen',
+      detail: settings.gedeeldeModus
+        ? 'Gezamenlijke context staat aan voor beide profielen.'
+        : 'Persoonlijke weergave staat voorop.',
+      cue: 'Profielen',
+    },
+    {
+      id: 'theme',
+      href: '#settings-detail-disclosure',
+      label: 'Thema',
+      title: themeLabel,
+      detail: 'Kies licht of donker zonder van scherm te wisselen.',
+      cue: 'Weergave',
+    },
+    {
+      id: 'notification',
+      href: '#herinneringen?route=privacy',
+      label: 'Notificatieprivacy',
+      title: settings.toonNotificatieDetailsOpVergrendelscherm ? 'Details opt-in' : 'Generiek',
+      detail: 'Lockscreen-inhoud beheer je op de privacyroute van herinneringen.',
+      cue: 'Privacy',
+    },
+    {
+      id: 'details',
+      href: '#settings-detail-disclosure',
+      label: 'Details',
+      title: exampleLoaded ? 'Demo geladen' : 'Formulieren',
+      detail: exampleLoaded
+        ? 'Open de velden om demo-records te wissen of instellingen te wijzigen.'
+        : 'Open de velden alleen wanneer je iets wilt aanpassen.',
+      cue: 'Openen',
+    },
+  ];
+
+  return `
+    <section class="settings-preferences-board" aria-label="Instellingen preferences board" data-settings-preferences-board="first-viewport">
+      <header class="settings-preferences-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Voorkeuren</p>
+          <h3>Kies eerst je voorkeurlaag</h3>
+        </div>
+        <p>Identiteit, samen gebruiken, thema, notificatieprivacy en detailvelden staan als aparte keuzes.</p>
+      </header>
+      <nav class="settings-preferences-board__lanes" aria-label="Instellingen voorkeur kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+        <a class="settings-preferences-board__lane" href="${lane.href}" data-settings-preferences-lane="${lane.id}">
+          <span>${lane.label}</span>
+          <strong>${lane.title}</strong>
+          <small>${lane.detail}</small>
+          <em>${lane.cue}</em>
+        </a>`,
+          )
+          .join('')}
+      </nav>
+    </section>
   `;
 }
 
