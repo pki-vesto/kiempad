@@ -14842,7 +14842,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Search, trajectory, tests
 - **ADR Needed:** no
 - **Score:** 107
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G514 — documentreview wachtrij per confidence
 
@@ -18781,8 +18781,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Search, dossier, tests
 - **ADR Needed:** no
 - **Score:** 107
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3974
+
+### G2019 — Fertility Intelligence: dossier zoekfilters gecombineerde routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G512 en G2018 maken kliniek- en pogingfilters zichtbaar in Dossier Zoeken, maar gecombineerde routeflow-evidence bewaakt nog niet dat vrije tekst, kliniek en poging samen compact blijven.
+- **User Impact:** Een latere thema- of filterwijziging kan actieve chips, bron, datum of reviewstatus uit de zoekcontext laten vallen.
+- **Desired Outcome:** Routeflow evidence controleert gecombineerde dossierzoekfilters met actieve chips, bron, datum en reviewstatus op desktop, tablet en mobiel.
+- **User Value:** Gebruikers kunnen historische dossierrecords gericht vinden zonder dat de zoekroute terugvalt naar een lange lijst of bronpayloads opent.
+- **Acceptance Criteria:** Routeflow evidence covers free text, clinic and attempt filters together in Dossier Zoeken; evidence confirms active chips, source, date and review status stay visible without opening source payloads; empty and matching states stay compact on desktop, tablet and mobile without one-long-list behavior; output avoids OCR text payloads, diagnosis, dosage, chance calculation, treatment-choice advice, secrets and plaintext medical payloads; backlog/docs stay aligned.
+- **Affected Screens:** Dossier Zoeken
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Search, dossier, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 107
+- **Status:** ☐ open
+- **Issue:** #3976
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

@@ -849,6 +849,7 @@ export type AppShellState = {
   dossierError?: string;
   dossierZoekterm?: string;
   dossierKliniekFilter?: string;
+  dossierPogingFilter?: string;
   imagingFilter?: ImagingRepositoryFilter;
   imagingPreviewLocked?: boolean;
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
@@ -3603,6 +3604,27 @@ function bouwDossierKliniekFilterOpties(documenten: readonly DossierDocument[]):
   ).sort((a, b) => a.localeCompare(b, 'nl'));
 }
 
+function bouwDossierPogingFilterOpties(
+  documenten: readonly DossierDocument[],
+  trajecten: AppShellState['trajecten'],
+): Array<{ id: string; label: string }> {
+  const trajectLabels = new Map(trajecten.map(({ traject }) => [traject.id, traject.naam]));
+  return Array.from(
+    new Set(
+      documenten
+        .map(
+          (document) =>
+            document.metadata?.normalisatie?.pogingId ??
+            document.metadata?.trajectId ??
+            document.trajectId,
+        )
+        .filter((pogingId): pogingId is string => Boolean(pogingId?.trim())),
+    ),
+  )
+    .sort((a, b) => a.localeCompare(b, 'nl'))
+    .map((id) => ({ id, label: trajectLabels.get(id) ?? id }));
+}
+
 function renderDossierKliniekFilterResultaten(resultaten: readonly DossierZoekResultaat[]): string {
   if (resultaten.length === 0) {
     return `<p class="small-print" data-dossier-clinic-filter-empty="ready">Geen records voor deze kliniekfilter.</p>`;
@@ -3659,10 +3681,18 @@ function renderDossierScreen(state: AppShellState): string {
   const consultVerslagen = state.consultVerslagen ?? [];
   const zoekterm = state.dossierZoekterm ?? '';
   const dossierKliniekFilter = state.dossierKliniekFilter ?? '';
-  const zoekActief = Boolean(zoekterm.trim() || dossierKliniekFilter.trim());
+  const dossierPogingFilter = state.dossierPogingFilter ?? '';
+  const zoekActief = Boolean(
+    zoekterm.trim() || dossierKliniekFilter.trim() || dossierPogingFilter.trim(),
+  );
   const kliniekFilterOpties = bouwDossierKliniekFilterOpties(documenten);
+  const pogingFilterOpties = bouwDossierPogingFilterOpties(documenten, state.trajecten);
+  const dossierPogingFilterLabel =
+    pogingFilterOpties.find((optie) => optie.id === dossierPogingFilter)?.label ??
+    dossierPogingFilter;
   const zoekResultaten = zoekDossierDocumenten(documenten, zoekterm, {
     kliniek: dossierKliniekFilter,
+    pogingId: dossierPogingFilter,
   });
   const zichtbareDocumenten = zoekResultaten.map((resultaat) => resultaat.document);
   const matchMap = new Map(
@@ -4796,7 +4826,7 @@ function renderDossierScreen(state: AppShellState): string {
             <em>${zoekActief ? `${zoekResultaten.length} gevonden` : 'Niet actief'}</em>
           </summary>
           <div class="dossier-search-choice__body">
-        <form id="dossier-search-form" class="data-form dossier-search-kit" data-dossier-search-kit="ready" data-dossier-search-kit-state="${zoekActief ? (zoekResultaten.length > 0 ? 'active-matches' : 'active-empty') : 'idle'}" data-dossier-clinic-filter-state="${dossierKliniekFilter ? 'active' : 'idle'}">
+        <form id="dossier-search-form" class="data-form dossier-search-kit" data-dossier-search-kit="ready" data-dossier-search-kit-state="${zoekActief ? (zoekResultaten.length > 0 ? 'active-matches' : 'active-empty') : 'idle'}" data-dossier-clinic-filter-state="${dossierKliniekFilter ? 'active' : 'idle'}" data-dossier-attempt-filter-state="${dossierPogingFilter ? 'active' : 'idle'}">
           <header class="dossier-search-kit__header">
             <div>
               <p class="kp-card__eyebrow">Zoekopdracht</p>
@@ -4808,7 +4838,7 @@ function renderDossierScreen(state: AppShellState): string {
           <div class="dossier-search-kit__status" aria-label="Zoekstatus">
             ${
               zoekActief
-                ? `${zoekterm ? `<span class="dossier-search-chip" data-dossier-search-chip="query">Zoekterm: ${escapeHtml(zoekterm)}</span>` : ''}${dossierKliniekFilter ? `<span class="dossier-search-chip" data-dossier-search-chip="clinic" data-dossier-clinic-filter-chip="active">Kliniek: ${escapeHtml(dossierKliniekFilter)}</span>` : ''}<span class="dossier-search-chip" data-dossier-search-chip="results">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'}</span>`
+                ? `${zoekterm ? `<span class="dossier-search-chip" data-dossier-search-chip="query">Zoekterm: ${escapeHtml(zoekterm)}</span>` : ''}${dossierKliniekFilter ? `<span class="dossier-search-chip" data-dossier-search-chip="clinic" data-dossier-clinic-filter-chip="active">Kliniek: ${escapeHtml(dossierKliniekFilter)}</span>` : ''}${dossierPogingFilter ? `<span class="dossier-search-chip" data-dossier-search-chip="attempt" data-dossier-attempt-filter-chip="active">Poging: ${escapeHtml(dossierPogingFilterLabel)}</span>` : ''}<span class="dossier-search-chip" data-dossier-search-chip="results">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'}</span>`
                 : '<span class="dossier-search-chip dossier-search-chip--empty" data-dossier-search-chip="idle">Geen zoekterm actief</span>'
             }
           </div>
@@ -4828,6 +4858,20 @@ function renderDossierScreen(state: AppShellState): string {
           ${
             dossierKliniekFilter
               ? `<p class="field-hint" data-dossier-clinic-filter-context="ready">Filtert op gecontroleerde dossiermetadata: instelling, documentdatum en reviewstatus blijven zichtbaar in de resultaatcontext.</p>`
+              : ''
+          }
+          <label data-dossier-attempt-filter="ready">
+            Filter op poging
+            <select name="dossierPogingFilter">
+              <option value="">Alle pogingen</option>
+              ${pogingFilterOpties
+                .map((poging) => renderOption(poging.id, poging.label, dossierPogingFilter))
+                .join('')}
+            </select>
+          </label>
+          ${
+            dossierPogingFilter
+              ? `<p class="field-hint" data-dossier-attempt-filter-context="ready">Filtert op pogingmetadata uit dossiernormalisatie of trajectkoppeling; bron, datum en reviewstatus blijven controleerbaar.</p>`
               : ''
           }
           <div class="dossier-search-kit__actions">
@@ -4867,10 +4911,10 @@ function renderDossierScreen(state: AppShellState): string {
             <div class="dossier-search-result-context" data-dossier-search-results="collapsed">
               ${
                 zoekActief
-                  ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'}${zoekterm ? ` voor "${escapeHtml(zoekterm)}"` : ''}${dossierKliniekFilter ? ` binnen ${escapeHtml(dossierKliniekFilter)}` : ''}. Zoeken gebeurt alleen in de ontgrendelde versleutelde opslag.</p>`
+                  ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'}${zoekterm ? ` voor "${escapeHtml(zoekterm)}"` : ''}${dossierKliniekFilter ? ` binnen ${escapeHtml(dossierKliniekFilter)}` : ''}${dossierPogingFilter ? ` in ${escapeHtml(dossierPogingFilterLabel)}` : ''}. Zoeken gebeurt alleen in de ontgrendelde versleutelde opslag.</p>`
                   : `<p class="small-print">Geen actieve zoekopdracht. Gebruik eerst de zoekcontrole voordat resultaatcontext nodig is.</p>`
               }
-              ${dossierKliniekFilter ? renderDossierKliniekFilterResultaten(zoekResultaten) : ''}
+              ${dossierKliniekFilter || dossierPogingFilter ? renderDossierKliniekFilterResultaten(zoekResultaten) : ''}
               <nav class="dossier-search-result-context__links" aria-label="Dossier zoeken vervolglinks">
                 <a href="#dossier-search-form">Terug naar zoekcontrole</a>
                 <a href="#dossier-route-index-disclosure">Inhoudsindex</a>

@@ -178,6 +178,7 @@ type RuntimeState = {
   dossierError?: string;
   dossierZoekterm?: string;
   dossierKliniekFilter?: string;
+  dossierPogingFilter?: string;
   imagingFilter?: ImagingRepositoryFilter;
   imagingPreviewLocked?: boolean;
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
@@ -250,6 +251,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     dossierError: state.dossierError,
     dossierZoekterm: state.dossierZoekterm,
     dossierKliniekFilter: state.dossierKliniekFilter,
+    dossierPogingFilter: state.dossierPogingFilter,
     imagingFilter: state.imagingFilter,
     imagingPreviewLocked:
       state.imagingPreviewLocked ||
@@ -374,6 +376,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.dossierError = undefined;
     state.dossierZoekterm = undefined;
     state.dossierKliniekFilter = undefined;
+    state.dossierPogingFilter = undefined;
     state.imagingFilter = undefined;
     state.timelineFilter = undefined;
     state.agendaImportStatus = undefined;
@@ -843,11 +846,13 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     const data = new FormData(form);
     state.dossierZoekterm = optionalString(data.get('dossierZoekterm'));
     state.dossierKliniekFilter = optionalString(data.get('dossierKliniekFilter'));
+    state.dossierPogingFilter = optionalString(data.get('dossierPogingFilter'));
     render(root, state);
   });
   root.querySelector('[data-dossier-search-clear="filters"]')?.addEventListener('click', () => {
     state.dossierZoekterm = undefined;
     state.dossierKliniekFilter = undefined;
+    state.dossierPogingFilter = undefined;
     render(root, state);
   });
 
