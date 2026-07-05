@@ -5222,6 +5222,18 @@ describe('app shell', () => {
     expect(html).toContain('Inzichten openen');
     expect(html).toContain('Volledige tijdlijn openen');
     expect(html).toContain('id="treatment-context-timeline-disclosure"');
+    expect(html).toContain('data-treatment-context-decision-board="first-viewport"');
+    expect(html).toContain('aria-label="Behandelcontext beslisbord"');
+    expect(html).toContain('Kies eerst je contextlaag');
+    expect(html).toContain('data-treatment-context-decision-lane="phase"');
+    expect(html).toContain('data-treatment-context-decision-lane="timeline"');
+    expect(html).toContain('data-treatment-context-decision-lane="reimbursement"');
+    expect(html).toContain('data-treatment-context-decision-lane="graph"');
+    expect(html).toContain('href="#treatment-context-timeline-disclosure"');
+    expect(html).toContain('href="#treatment-context-graph-disclosure"');
+    expect(html.indexOf('data-treatment-context-decision-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-context-timeline-disclosure"'),
+    );
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="treatment-context-timeline-disclosure" open',
     );
@@ -5452,6 +5464,13 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-workbench__grid {');
     expect(css).toContain('grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);');
     expect(css).toContain('.treatment-workbench__actions {');
+    expect(css).toContain('.treatment-context-decision-board {');
+    expect(css).toContain('.treatment-context-decision-board__header {');
+    expect(css).toContain('.treatment-context-decision-board__lanes {');
+    expect(css).toContain('.treatment-context-decision-board__lane {');
+    expect(css).toContain('.treatment-context-decision-board__lane:hover,');
+    expect(css).toContain('.treatment-context-decision-board__lane:focus-visible {');
+    expect(css).toContain('.treatment-context-decision-board__lane em {');
     expect(css).toContain('.treatment-task-routes {');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.treatment-workbench :where(.phase-hero__label) {');
@@ -43008,9 +43027,19 @@ describe('app shell', () => {
     expect(html).toContain('data-treatment-route-summary="overzicht"');
     expect(html).toContain('Trajectoverzicht route-samenvatting');
     expect(html).toContain('data-treatment-route-summary="context"');
+    expect(html).toContain('data-treatment-context-decision-board="first-viewport"');
+    expect(html).toContain('aria-label="Behandelcontext beslisbord"');
+    expect(html).toContain('Kies eerst je contextlaag');
+    expect(html).toContain('data-treatment-context-decision-lane="phase"');
+    expect(html).toContain('data-treatment-context-decision-lane="timeline"');
+    expect(html).toContain('data-treatment-context-decision-lane="reimbursement"');
+    expect(html).toContain('data-treatment-context-decision-lane="graph"');
     expect(html).toContain('Fertility timeline openen');
     expect(html).toContain('id="treatment-context-timeline-disclosure"');
     expect(html).toContain('id="treatment-context-graph-disclosure"');
+    expect(html.indexOf('data-treatment-context-decision-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-context-timeline-disclosure"'),
+    );
     expect(html).toContain('Archief tonen');
     expect(html).toContain('data-command-form-section="traject-basis"');
     expect(html).toContain('data-command-form-section="traject-planning"');
@@ -43674,6 +43703,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.treatment-workbench {');
     expect(mobileCss).toContain('.treatment-workbench :where(.phase-hero__subtitle)');
     expect(mobileCss).toContain('.treatment-workbench__next {');
+    expect(mobileCss).toContain('.treatment-context-decision-board {');
+    expect(mobileCss).toContain('.treatment-context-decision-board__lanes {');
+    expect(mobileCss).toContain('.treatment-context-decision-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(mobileCss).toContain('flex: 0 0 82px;');
   });
 

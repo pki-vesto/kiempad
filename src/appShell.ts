@@ -19649,6 +19649,13 @@ function renderTrajectScreen(state: AppShellState): string {
           data: { 'treatment-route-summary': 'context' },
           ariaLabel: 'Timeline en graphcontext route-samenvatting',
         })}
+        ${renderTreatmentContextDecisionBoard({
+          phaseCount: selected?.fasen.length ?? 0,
+          timelineCount: fertilityTimeline.items.length,
+          reimbursementCount: vergoeding.resterend,
+          graphCount: graphWeergave?.edges.length ?? 0,
+          hasGraph: Boolean(graphWeergave),
+        })}
         ${disclosure({
           summary: 'Fertility timeline openen',
           id: 'treatment-context-timeline-disclosure',
@@ -19749,6 +19756,75 @@ function renderTreatmentFocusShell(input: { workspace: string }): string {
           ${input.workspace}
         </div>
       </div>
+    </section>
+  `;
+}
+
+function renderTreatmentContextDecisionBoard(input: {
+  phaseCount: number;
+  timelineCount: number;
+  reimbursementCount: number;
+  graphCount: number;
+  hasGraph: boolean;
+}): string {
+  const lanes = [
+    {
+      id: 'phase',
+      href: '#traject?route=fasen',
+      label: 'Fasen',
+      title: `${input.phaseCount} fase${input.phaseCount === 1 ? '' : 's'}`,
+      detail: 'Faseplanning en actuele trajectstap.',
+      cue: 'Planning',
+    },
+    {
+      id: 'timeline',
+      href: '#treatment-context-timeline-disclosure',
+      label: 'Timeline',
+      title: `${input.timelineCount} item${input.timelineCount === 1 ? '' : 's'}`,
+      detail: 'Fertility timeline als contextlaag.',
+      cue: 'Lezen',
+    },
+    {
+      id: 'reimbursement',
+      href: '#traject?route=vergoeding',
+      label: 'Vergoeding',
+      title: `${input.reimbursementCount} resterend`,
+      detail: 'Eigen administratie; polis blijft leidend.',
+      cue: 'Checken',
+    },
+    {
+      id: 'graph',
+      href: input.hasGraph ? '#treatment-context-graph-disclosure' : '#traject?route=context',
+      label: 'Graph',
+      title: `${input.graphCount} relatie${input.graphCount === 1 ? '' : 's'}`,
+      detail: 'Bronrelaties en kenniscontext.',
+      cue: input.hasGraph ? 'Context' : 'Nog leeg',
+    },
+  ];
+
+  return `
+    <section class="treatment-context-decision-board" aria-label="Behandelcontext beslisbord" data-treatment-context-decision-board="first-viewport">
+      <header class="treatment-context-decision-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Beslisbord</p>
+          <h3>Kies eerst je contextlaag</h3>
+        </div>
+        <p>Open faseplanning, timeline, vergoeding of graph zonder de volledige contextstapel tegelijk te lezen.</p>
+      </header>
+      <nav class="treatment-context-decision-board__lanes" aria-label="Behandelcontext laag kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="treatment-context-decision-board__lane" href="${lane.href}" data-treatment-context-decision-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }
