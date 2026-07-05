@@ -5696,6 +5696,10 @@ describe('app shell', () => {
     expect(css).toContain('flex: 0 0 88px;');
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.treatment-phase-console {');
+    expect(css).toContain('.treatment-phase-board {');
+    expect(css).toContain('.treatment-phase-board__lanes {');
+    expect(css).toContain('.treatment-phase-board__lane {');
+    expect(css).toContain('.treatment-phase-board__lane:hover,');
     expect(css).toContain('.treatment-phase-primary {');
     expect(css).toContain('.treatment-phase-primary__card {');
     expect(css).toContain('.treatment-phase-followup {');
@@ -5738,6 +5742,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.treatment-overview-stage-board {');
     expect(mobileCss).toContain('.treatment-overview-stage-board__lanes {');
     expect(mobileCss).toContain('.treatment-overview-stage-board__lane {');
+    expect(mobileCss).toContain('.treatment-phase-board {');
+    expect(mobileCss).toContain('.treatment-phase-board__lanes {');
+    expect(mobileCss).toContain('.treatment-phase-board__lane {');
     expect(mobileCss).toContain(
       '.content:has([data-treatment-focus-shell="ready"]) > .workspace-map,',
     );
@@ -43591,6 +43598,20 @@ describe('app shell', () => {
     );
     expect(html).toContain('href="#treatment-phase-primary"');
     expect(html).toContain('href="#treatment-phase-followup"');
+    expect(html).toContain(
+      'aria-label="Faseplanning startlaag" data-treatment-phase-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je faselaag');
+    expect(html).toContain('data-treatment-phase-lane="active"');
+    expect(html).toContain('data-treatment-phase-lane="history"');
+    expect(html).toContain('data-treatment-phase-lane="actions"');
+    expect(html).toContain('data-treatment-phase-lane="context"');
+    expect(html).toContain('data-treatment-phase-lane="planning"');
+    expect(html).toContain('href="#treatment-phase-primary" data-treatment-phase-lane="active"');
+    expect(html).toContain('href="#treatment-phase-timeline" data-treatment-phase-lane="history"');
+    expect(html).toContain('href="#traject?route=beheer" data-treatment-phase-lane="actions"');
+    expect(html).toContain('href="#traject?route=context" data-treatment-phase-lane="context"');
+    expect(html).toContain('href="#treatment-phase-followup" data-treatment-phase-lane="planning"');
     expect(html).toContain('data-treatment-phase-layout="single-input"');
     expect(html).toContain('id="treatment-phase-primary"');
     expect(html).toContain('data-treatment-phase-primary="current-phase"');
@@ -43606,6 +43627,13 @@ describe('app shell', () => {
     expect(html).toContain('href="#traject?route=overzicht"');
     expect(html).toContain('href="#traject?route=beheer"');
     expect(html).toContain('href="#traject?route=vergoeding"');
+    expect(html).toContain('id="treatment-phase-timeline"');
+    expect(html.indexOf('data-treatment-phase-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-phase-primary"'),
+    );
+    expect(html.indexOf('data-treatment-phase-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-phase-followup"'),
+    );
     expect(html.indexOf('id="treatment-phase-primary"')).toBeLessThan(
       html.indexOf('id="treatment-phase-followup"'),
     );
