@@ -16624,8 +16624,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, fertility timeline, graph context, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 64
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3714
+
+### G1887 — Premium Claude Design UI: treatment workbench first-viewport route board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De Traject zijwerkbank kan als dichte contextkolom voelen wanneer huidige fase, volgende actie, timeline, werkgrens en routeacties tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten in de contextkolom scannen voordat duidelijk is welke trajectactie of contextlaag eerst relevant is.
+- **Desired Outcome:** De Traject zijwerkbank opent met een compact first-viewport route board voor huidige fase, volgende actie, timeline, werkgrens en routeacties.
+- **User Value:** De trajectwerkbank voelt rustiger en taakgerichter zonder bestaande workbench-ankers, routehooks, phase hero, stats of disclaimergrenzen te verliezen.
+- **Acceptance Criteria:** De Traject zijwerkbank opent met compacte lanes voor huidige fase, volgende actie, timeline, werkgrens en routeacties; volledige workbenchkaarten en actielinks blijven bereikbaar zonder als één dichte first-viewport zij kolom te verschijnen; mobile en desktop behouden bestaande workbench anchors, route hooks, phase hero, stats en disclaimer boundaries; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw treatment payload wordt toegevoegd.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, workbench, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 63
+- **Status:** ☐ open
+- **Issue:** #3716
 
 ### G586 — replay conflict recovery status UI
 

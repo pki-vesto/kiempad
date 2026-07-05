@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1886 Premium Claude Design UI: Traject/Context opent nu met een compact
+  contextbord voor timeline, graph, fasecontext, vergoeding en volledige
+  inzichten. De bestaande timelinefilters, graphankers, bronmetadata,
+  routehooks en privacygrenzen blijven bereikbaar zonder als eerste lange
+  inzichtenstapel te starten.
 - G1885 Premium Claude Design UI: Traject/Vergoeding opent nu met een compact
   vergoedingsbord voor resterende pogingen, meetellende pogingen, poliscontext,
   kostenroute en volledige details. De bestaande vergoedingstekst, kostenlink,
