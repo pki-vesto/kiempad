@@ -887,6 +887,21 @@ export type AppShellState = {
   loadingState?: AppShellLoadingState;
 };
 
+type DailyRecommendationOwnerVisibilityStatus = 'zichtbaar' | 'verborgen';
+
+type DailyRecommendationOwnerVisibilityRecord = {
+  owner: DailyRecommendationOwner;
+  status: DailyRecommendationOwnerVisibilityStatus;
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+};
+
+type DailyRecommendationOwnerVisibility = Record<
+  DailyRecommendationOwner,
+  DailyRecommendationOwnerVisibilityRecord
+>;
+
 export type SettingsFeedbackKind =
   | 'personal'
   | 'theme'
@@ -17835,13 +17850,18 @@ function renderDailyAdviceConsole(
   overview: DailyRecommendationOverview,
 ): string {
   const feedbackStatussen = bouwAanbevelingFeedbackStatussen(state.eventLogs ?? []);
-  const filteredOverview = filterDailyRecommendationOverview(
+  const ownerVisibility = bouwDailyRecommendationOwnerVisibility(state.eventLogs ?? []);
+  const visibleOverview = filterDailyRecommendationOverviewByOwnerVisibility(
     overview,
+    ownerVisibility,
+  );
+  const filteredOverview = filterDailyRecommendationOverview(
+    visibleOverview,
     feedbackStatussen,
     state.dailyRecommendationFeedbackFilter,
   );
   const totalRecommendations = (['vrouw', 'man', 'samen'] as const).reduce(
-    (count, owner) => count + overview[owner].length,
+    (count, owner) => count + visibleOverview[owner].length,
     0,
   );
   const filteredTotalRecommendations = (['vrouw', 'man', 'samen'] as const).reduce(
@@ -17865,12 +17885,12 @@ function renderDailyAdviceConsole(
     status: `${state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''}${routeFocusStatus}`,
     filterStatus: feedbackFilterStatus,
     selectionBoard: renderDailyAdviceSelectionBoard({
-      overview,
+      overview: visibleOverview,
       feedbackFilterActive: Boolean(state.dailyRecommendationFeedbackFilter),
       totalRecommendations,
       filteredTotalRecommendations,
     }),
-    decisionBoard: renderDailyAdviceDecisionBoard(overview),
+    decisionBoard: renderDailyAdviceDecisionBoard(visibleOverview, ownerVisibility, overview),
     workflow: renderHubWorkflowHeader({
       id: 'start-recommendations-workflow-header',
       eyebrow: 'Dagroute',
@@ -17891,10 +17911,10 @@ function renderDailyAdviceConsole(
         { id: 'research', href: '#kennis', label: 'Research', meta: 'Broncontext' },
       ],
     }),
-    workbench: renderDailyAdviceWorkbench(overview, {
+    workbench: renderDailyAdviceWorkbench(visibleOverview, {
       feedbackStatussen,
     }),
-    planner: renderDailyAdviceActionPlanner(overview),
+    planner: renderDailyAdviceActionPlanner(visibleOverview),
     list: `
       <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
@@ -17957,7 +17977,11 @@ function renderDailyRecommendationRouteFocusStatus(status: string): string {
   `;
 }
 
-function renderDailyAdviceDecisionBoard(overview: DailyRecommendationOverview): string {
+function renderDailyAdviceDecisionBoard(
+  overview: DailyRecommendationOverview,
+  ownerVisibility: DailyRecommendationOwnerVisibility,
+  sourceOverview: DailyRecommendationOverview,
+): string {
   const ownerLanes = (['vrouw', 'man', 'samen'] as const).map((owner) => {
     const items = overview[owner];
     const copy = DAILY_RECOMMENDATION_OWNER_COPY[owner];
@@ -18002,6 +18026,7 @@ function renderDailyAdviceDecisionBoard(overview: DailyRecommendationOverview): 
         </div>
         <p>Open alleen de route die je nu nodig hebt; de volledige suggestielijst blijft vervolgcontext.</p>
       </header>
+      ${renderDailyRecommendationOwnerVisibilityPanel(ownerVisibility, sourceOverview)}
       ${renderDailyAdviceOwnerScan(overview)}
       <nav class="daily-advice-decision-board__lanes" aria-label="Dagadvies eigenaar en artscheck kiezen">
         ${lanes
@@ -18017,6 +18042,50 @@ function renderDailyAdviceDecisionBoard(overview: DailyRecommendationOverview): 
           )
           .join('')}
       </nav>
+    </section>
+  `;
+}
+
+function renderDailyRecommendationOwnerVisibilityPanel(
+  ownerVisibility: DailyRecommendationOwnerVisibility,
+  overview: DailyRecommendationOverview,
+): string {
+  const hiddenCount = (['vrouw', 'man', 'samen'] as const).filter(
+    (owner) => ownerVisibility[owner].status === 'verborgen',
+  ).length;
+
+  return `
+    <section class="daily-recommendation-owner-visibility" aria-label="Dagadvies eigenaars zichtbaar houden" data-daily-recommendation-owner-visibility="ready" data-daily-recommendation-owner-visibility-hidden-count="${hiddenCount}">
+      <header class="daily-recommendation-owner-visibility__header">
+        <div>
+          <p class="kp-card__eyebrow">Eigenaarsfilter</p>
+          <h3>Toon alleen relevante eigenaars</h3>
+        </div>
+        <p>Verbergen is lokaal, controleerbaar en omkeerbaar. Kiempad bewaart bron, datum en reviewstatus zonder medische conclusie.</p>
+      </header>
+      <div class="daily-recommendation-owner-visibility__grid">
+        ${(['vrouw', 'man', 'samen'] as const)
+          .map((owner) => {
+            const record = ownerVisibility[owner];
+            const hidden = record.status === 'verborgen';
+            const label = DAILY_RECOMMENDATION_OWNER_LABELS[owner];
+            return `
+              <form class="daily-recommendation-owner-visibility__card" data-daily-recommendation-owner-visibility-card="${owner}" data-daily-recommendation-owner-visibility-state="${record.status}" data-daily-recommendation-owner-visibility-source="${escapeAttribute(record.bron)}" data-daily-recommendation-owner-visibility-review="${record.reviewStatus}">
+                <input type="hidden" name="dailyRecommendationOwner" value="${owner}" />
+                <span>${escapeHtml(label)}</span>
+                <strong>${hidden ? 'Verborgen' : 'Zichtbaar'}</strong>
+                <small>${overview[owner].length} suggestie${overview[owner].length === 1 ? '' : 's'} in dagadvies</small>
+                <dl class="metadata-list compact-list">
+                  <div><dt>Bron</dt><dd>${escapeHtml(record.bron)}</dd></div>
+                  <div><dt>Datum</dt><dd>${escapeHtml(record.datum)}</dd></div>
+                  <div><dt>Reviewstatus</dt><dd>${escapeHtml(record.reviewStatus)}</dd></div>
+                </dl>
+                <button class="rec-action ${hidden ? 'rec-action--primary' : 'rec-action--ghost'}" type="submit" name="dailyRecommendationOwnerVisibilityAction" value="${hidden ? 'toon' : 'verberg'}" data-daily-recommendation-owner-visibility-action="${hidden ? 'restore' : 'hide'}">${hidden ? 'Toon weer' : 'Verberg eigenaar'}</button>
+              </form>
+            `;
+          })
+          .join('')}
+      </div>
     </section>
   `;
 }
@@ -18150,6 +18219,78 @@ function filterDailyRecommendationOverview(
     man: overview.man.filter((item) => feedbackStatussen[item.id] === filter),
     samen: overview.samen.filter((item) => feedbackStatussen[item.id] === filter),
   };
+}
+
+function filterDailyRecommendationOverviewByOwnerVisibility(
+  overview: DailyRecommendationOverview,
+  visibility: DailyRecommendationOwnerVisibility,
+): DailyRecommendationOverview {
+  return {
+    vrouw: visibility.vrouw.status === 'verborgen' ? [] : overview.vrouw,
+    man: visibility.man.status === 'verborgen' ? [] : overview.man,
+    samen: visibility.samen.status === 'verborgen' ? [] : overview.samen,
+  };
+}
+
+function bouwDailyRecommendationOwnerVisibility(
+  eventLogs: readonly EventLog[],
+): DailyRecommendationOwnerVisibility {
+  const visibility: DailyRecommendationOwnerVisibility = {
+    vrouw: maakDefaultDailyRecommendationOwnerVisibility('vrouw'),
+    man: maakDefaultDailyRecommendationOwnerVisibility('man'),
+    samen: maakDefaultDailyRecommendationOwnerVisibility('samen'),
+  };
+  const seen = new Set<DailyRecommendationOwner>();
+
+  for (const event of [...eventLogs].sort((a, b) => b.datum.localeCompare(a.datum))) {
+    const owner = parseDailyRecommendationOwnerVisibilityOwner(event.detail);
+    const status = parseDailyRecommendationOwnerVisibilityStatus(event.gebeurtenis);
+    if (!owner || !status || seen.has(owner)) continue;
+    visibility[owner] = {
+      owner,
+      status,
+      bron: parseDailyRecommendationOwnerVisibilitySource(event.detail),
+      datum: event.datum,
+      reviewStatus: 'concept_te_controleren',
+    };
+    seen.add(owner);
+  }
+
+  return visibility;
+}
+
+function maakDefaultDailyRecommendationOwnerVisibility(
+  owner: DailyRecommendationOwner,
+): DailyRecommendationOwnerVisibilityRecord {
+  return {
+    owner,
+    status: 'zichtbaar',
+    bron: 'Standaard dagadviesselectie',
+    datum: 'Nog niet lokaal aangepast',
+    reviewStatus: 'concept_te_controleren',
+  };
+}
+
+function parseDailyRecommendationOwnerVisibilityOwner(
+  detail: string | undefined,
+): DailyRecommendationOwner | undefined {
+  const owner = detail?.match(/Eigenaar:\s*(vrouw|man|samen)\b/i)?.[1]?.toLocaleLowerCase('nl-NL');
+  if (owner === 'vrouw' || owner === 'man' || owner === 'samen') return owner;
+  return undefined;
+}
+
+function parseDailyRecommendationOwnerVisibilityStatus(
+  gebeurtenis: string,
+): DailyRecommendationOwnerVisibilityStatus | undefined {
+  const normalized = gebeurtenis.toLocaleLowerCase('nl-NL');
+  if (normalized.includes('dagadvies eigenaar verborgen')) return 'verborgen';
+  if (normalized.includes('dagadvies eigenaar hersteld')) return 'zichtbaar';
+  return undefined;
+}
+
+function parseDailyRecommendationOwnerVisibilitySource(detail: string | undefined): string {
+  const bron = detail?.match(/bron:\s*([^;]+)/i)?.[1]?.trim();
+  return bron || 'Dagadvies eigenaarfilter';
 }
 
 function renderDailyRecommendationListFilterHeader(input: {

@@ -3683,6 +3683,14 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.daily-advice-selection-board__lane {');
     expect(mobileCss).toContain('.daily-advice-decision-board {');
     expect(mobileCss).toContain('.daily-advice-decision-board__header {');
+    expect(css).toContain('.daily-recommendation-owner-visibility {');
+    expect(css).toContain('.daily-recommendation-owner-visibility__grid {');
+    expect(css).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
+    expect(css).toContain(
+      '.daily-recommendation-owner-visibility__card[data-daily-recommendation-owner-visibility-state="verborgen"] {',
+    );
+    expect(mobileCss).toContain('.daily-recommendation-owner-visibility__grid {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(mobileCss).toContain('.daily-advice-owner-scan {');
     expect(mobileCss).toContain('.daily-advice-owner-scan__card {');
     expect(mobileCss).toContain('flex: 0 0 min(164px, 58vw);');
@@ -4549,6 +4557,14 @@ describe('app shell', () => {
     expect(html).toContain('data-daily-recommendation-personalization="ready"');
     expect(html).toContain('data-daily-recommendation-personalization-status="gedaan"');
     expect(html).toContain('Personalisatie: Gedaan · Herhaalbaar als context.');
+    expect(html).toContain('data-daily-recommendation-owner-visibility="ready"');
+    expect(html).toContain('data-daily-recommendation-owner-visibility-hidden-count="0"');
+    expect(html).toContain('data-daily-recommendation-owner-visibility-card="vrouw"');
+    expect(html).toContain('data-daily-recommendation-owner-visibility-state="zichtbaar"');
+    expect(html).toContain('Standaard dagadviesselectie');
+    expect(html).toContain('Nog niet lokaal aangepast');
+    expect(html).toContain('Reviewstatus</dt><dd>concept_te_controleren</dd>');
+    expect(html).toContain('name="dailyRecommendationOwnerVisibilityAction" value="verberg"');
     expect(html).toContain('name="recommendationAction" value="gedaan"');
     const feedbackStart = html.indexOf('data-daily-recommendation-feedback-status="gedaan"');
     const feedbackSnippet = html.slice(feedbackStart, feedbackStart + 160);
@@ -4643,6 +4659,104 @@ describe('app shell', () => {
     expect(rejectedRecommendations).toContain('Niet passend · Lager prioriteren, niet verbergen.');
     expect(rejectedRecommendations).toContain('niet definitief verborgen');
     expect(rejectedRecommendations).toContain('Eigen aandachtspunten vastleggen');
+
+    const hiddenOwnerHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [
+        {
+          id: 'event-owner-hidden',
+          datum: '2026-06-24T12:00:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagadvies eigenaar verborgen',
+          detail:
+            'Eigenaar: man; bron: Dagadvies eigenaarfilter; reviewstatus concept_te_controleren',
+        },
+      ],
+      activeStartRoute: 'recommendations',
+    });
+    const hiddenOwnerRecommendations = extractDailyRecommendationsSection(hiddenOwnerHtml);
+
+    expect(hiddenOwnerRecommendations).toContain(
+      'data-daily-recommendation-owner-visibility-hidden-count="1"',
+    );
+    expect(hiddenOwnerRecommendations).toContain(
+      'data-daily-recommendation-owner-visibility-card="man"',
+    );
+    expect(hiddenOwnerRecommendations).toContain(
+      'data-daily-recommendation-owner-visibility-state="verborgen"',
+    );
+    expect(hiddenOwnerRecommendations).toContain(
+      'data-daily-recommendation-owner-visibility-source="Dagadvies eigenaarfilter"',
+    );
+    expect(hiddenOwnerRecommendations).toContain('2026-06-24T12:00:00.000Z');
+    expect(hiddenOwnerRecommendations).toContain('Toon weer');
+    expect(hiddenOwnerRecommendations).toContain(
+      'name="dailyRecommendationOwnerVisibilityAction" value="toon"',
+    );
+    expect(hiddenOwnerRecommendations).not.toContain('data-recommendation-id="man-basisdag"');
+    expect(hiddenOwnerRecommendations).toContain('data-recommendation-id="vrouw-basisdag"');
+    expect(hiddenOwnerRecommendations).toContain(
+      'data-recommendation-id="samen-voeding-supplement-checklist"',
+    );
+    const hiddenOwnerPanelStart = hiddenOwnerRecommendations.indexOf(
+      'data-daily-recommendation-owner-visibility="ready"',
+    );
+    const hiddenOwnerPanel = hiddenOwnerRecommendations.slice(
+      hiddenOwnerPanelStart,
+      hiddenOwnerRecommendations.indexOf('data-daily-advice-owner-scan="ready"'),
+    );
+    expect(hiddenOwnerPanel).not.toMatch(
+      /tracking-payload|diagnose|dosering|kansberekening|behandelkeuzeadvies/i,
+    );
+
+    const restoredOwnerHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [
+        {
+          id: 'event-owner-hidden',
+          datum: '2026-06-24T12:00:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagadvies eigenaar verborgen',
+          detail:
+            'Eigenaar: man; bron: Dagadvies eigenaarfilter; reviewstatus concept_te_controleren',
+        },
+        {
+          id: 'event-owner-restored',
+          datum: '2026-06-24T12:05:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagadvies eigenaar hersteld',
+          detail:
+            'Eigenaar: man; bron: Dagadvies eigenaarfilter; reviewstatus concept_te_controleren',
+        },
+      ],
+      activeStartRoute: 'recommendations',
+    });
+    const restoredOwnerRecommendations = extractDailyRecommendationsSection(restoredOwnerHtml);
+
+    expect(restoredOwnerRecommendations).toContain(
+      'data-daily-recommendation-owner-visibility-hidden-count="0"',
+    );
+    expect(restoredOwnerRecommendations).toContain(
+      'data-daily-recommendation-owner-visibility-card="man"',
+    );
+    expect(restoredOwnerRecommendations).toContain(
+      'data-daily-recommendation-owner-visibility-state="zichtbaar"',
+    );
+    expect(restoredOwnerRecommendations).toContain('data-recommendation-id="man-basisdag"');
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owner="vrouw"',
     );

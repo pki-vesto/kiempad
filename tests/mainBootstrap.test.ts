@@ -61,6 +61,17 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain("gebeurtenis: 'Dagelijkse suggestie gedaan'");
     expect(mainSource).toContain('Suggestie gemarkeerd als gedaan:');
     expect(mainSource).toContain('[data-daily-recommendation-feedback-control="ready"]');
+    expect(mainSource).toContain('[data-daily-recommendation-owner-visibility-card]');
+    expect(mainSource).toContain('handleDailyRecommendationOwnerVisibilityAction');
+    expect(mainSource).toContain(
+      "gebeurtenis =\n    action === 'toon' ? 'Dagadvies eigenaar hersteld' : 'Dagadvies eigenaar verborgen'",
+    );
+    expect(mainSource).toContain(
+      'Eigenaar: $' +
+        '{owner}; bron: Dagadvies eigenaarfilter; reviewstatus concept_te_controleren',
+    );
+    expect(mainSource).toContain('Dagadvies voor $' + '{ownerLabel} lokaal verborgen.');
+    expect(mainSource).toContain('Dagadvies voor $' + '{ownerLabel} weer zichtbaar.');
     expect(mainSource).toContain('[data-daily-advice-feedback-list-open="ready"]');
     expect(mainSource).toContain('openDailyRecommendationListPanel');
     expect(mainSource).toContain('[data-hub-detail-panel="daily-recommendation-list"]');

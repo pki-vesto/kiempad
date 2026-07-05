@@ -6154,6 +6154,91 @@ h2 {
   outline: none;
 }
 
+.daily-recommendation-owner-visibility {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--category) 20%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--category) 7%, transparent), transparent 60%),
+    color-mix(in srgb, var(--surface) 95%, var(--surface-2));
+}
+
+.daily-recommendation-owner-visibility__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.daily-recommendation-owner-visibility__header h3,
+.daily-recommendation-owner-visibility__header p {
+  margin: 0;
+}
+
+.daily-recommendation-owner-visibility__header h3 {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.daily-recommendation-owner-visibility__header p:last-child {
+  max-width: 50ch;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.daily-recommendation-owner-visibility__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.daily-recommendation-owner-visibility__card {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.daily-recommendation-owner-visibility__card span,
+.daily-recommendation-owner-visibility__card strong,
+.daily-recommendation-owner-visibility__card small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.daily-recommendation-owner-visibility__card span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 760;
+}
+
+.daily-recommendation-owner-visibility__card strong {
+  color: var(--text-strong);
+  font-size: 1rem;
+}
+
+.daily-recommendation-owner-visibility__card small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.daily-recommendation-owner-visibility__card[data-daily-recommendation-owner-visibility-state="verborgen"] {
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
 .daily-advice-list-focus-status {
   display: flex;
   flex-wrap: wrap;
@@ -29305,6 +29390,31 @@ summary[class*="__summary"]:focus-visible,
 
   .daily-advice-list-choice__header {
     gap: 2px;
+  }
+
+  .daily-recommendation-owner-visibility {
+    gap: 8px;
+    padding: 9px;
+    border-radius: 10px;
+  }
+
+  .daily-recommendation-owner-visibility__header {
+    display: grid;
+    gap: 6px;
+  }
+
+  .daily-recommendation-owner-visibility__header p:last-child {
+    max-width: none;
+  }
+
+  .daily-recommendation-owner-visibility__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .daily-recommendation-owner-visibility__card {
+    gap: 6px;
+    padding: 9px;
   }
 
   .daily-advice-full-list__body {

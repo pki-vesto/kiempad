@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G553 Daily Recommendations: Dagadvies toont nu een eigenaarsfilter waarmee
+  vrouw-, man- of samen-suggesties lokaal en herstelbaar verborgen kunnen worden,
+  inclusief bron, datum en reviewstatus uit encrypted eventlogs.
 - G488 Daily Recommendations: dagadvieskaarten tonen nu uitlegbare
   personalisatiefeedback op basis van lokale encrypted eventlogstatussen;
   niet-passend verlaagt prioriteit maar verbergt vergelijkbare suggesties niet
