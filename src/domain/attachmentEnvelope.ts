@@ -12,6 +12,16 @@ export type AttachmentEnvelopeMetadataCheck = {
   detail: string;
 };
 
+export type AttachmentEnvelopeBatchSummary = {
+  total: number;
+  valid: number;
+  hashPending: number;
+  invalid: number;
+  status: AttachmentEnvelopeMetadataStatus | 'idle';
+  label: string;
+  detail: string;
+};
+
 export function evaluateAttachmentEnvelopeMetadata(
   input: AttachmentEnvelopeMetadataInput,
 ): AttachmentEnvelopeMetadataCheck {
@@ -42,6 +52,49 @@ export function evaluateAttachmentEnvelopeMetadata(
     status: 'valid',
     label: 'Envelope klaar',
     detail: 'Type, grootte en hash zijn technisch compleet voor versleutelde opslag.',
+  };
+}
+
+export function summarizeAttachmentEnvelopeMetadataBatch(
+  inputs: AttachmentEnvelopeMetadataInput[],
+): AttachmentEnvelopeBatchSummary {
+  const counts = inputs.reduce(
+    (summary, input) => {
+      const check = evaluateAttachmentEnvelopeMetadata(input);
+      if (check.status === 'valid') summary.valid += 1;
+      if (check.status === 'hash-pending') summary.hashPending += 1;
+      if (check.status === 'invalid') summary.invalid += 1;
+      return summary;
+    },
+    { valid: 0, hashPending: 0, invalid: 0 },
+  );
+  const total = inputs.length;
+
+  if (total === 0) {
+    return {
+      total,
+      ...counts,
+      status: 'idle',
+      label: 'Batchcontrole wacht',
+      detail: 'Kies bestanden om technische bijlagemetadata samen te vatten.',
+    };
+  }
+
+  const status: AttachmentEnvelopeBatchSummary['status'] =
+    counts.invalid > 0 ? 'invalid' : counts.hashPending > 0 ? 'hash-pending' : 'valid';
+  const label =
+    status === 'invalid'
+      ? 'Batchcontrole nodig'
+      : status === 'hash-pending'
+        ? 'Batch bijna klaar'
+        : 'Batch klaar';
+
+  return {
+    total,
+    ...counts,
+    status,
+    label,
+    detail: `${counts.valid} klaar, ${counts.hashPending} hash-pending, ${counts.invalid} controle nodig.`,
   };
 }
 

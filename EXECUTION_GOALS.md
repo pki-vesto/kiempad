@@ -16029,8 +16029,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload, attachment envelope helper, app-shell tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3625
+
+### G1852 — Attachment envelope batch status routeflow evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De attachment-envelope batchstatus is zichtbaar en getest, maar nog niet expliciet in browser-routeflow bewijs opgenomen na file-selectiesimulatie.
+- **User Impact:** Compactheid of zichtbaarheid van de batchstatus kan later op mobiele uploadroutes regressies krijgen zonder routeflow-signaal.
+- **Desired Outcome:** Routeflow smoke bewaakt de batchstatussurface en veilige aantallen op desktop, tablet, mobile en small-mobile.
+- **User Value:** Gebruikers kunnen grotere uploadselecties betrouwbaar scannen zonder bestandsnamen of inhoud in de statuslaag.
+- **Acceptance Criteria:** Routeflow smoke verifieert dat de batchstatus zichtbaar en compact blijft; bewijs controleert klaar/hash-pending/controle-nodig aantallen zonder filename, token, secret, base64, OCR-tekst of medische plaintext; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Dossier upload, imaging upload, embryo upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Routeflow smoke, Dossier upload, attachment envelope helper
+- **ADR Needed:** no
+- **Score:** 101
+- **Status:** ☐ open
+- **Issue:** #3646
 
 ### G586 — replay conflict recovery status UI
 

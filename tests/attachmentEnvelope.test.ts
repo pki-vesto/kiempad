@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   describeAttachmentEnvelopeStorageError,
   evaluateAttachmentEnvelopeMetadata,
+  summarizeAttachmentEnvelopeMetadataBatch,
 } from '../src/domain/attachmentEnvelope';
 
 describe('attachment envelope metadata', () => {
@@ -40,6 +41,38 @@ describe('attachment envelope metadata', () => {
       expect(check.detail).toContain('controleer type, grootte en hashstatus');
       expect(JSON.stringify(check)).not.toContain('not-a-sha256');
     }
+  });
+
+  it('vat mixed attachment-envelope batches samen zonder bestandsnaam of inhoud', () => {
+    const summary = summarizeAttachmentEnvelopeMetadataBatch([
+      {
+        contentType: 'image/jpeg',
+        sizeBytes: 8192,
+        sha256: 'a'.repeat(64),
+      },
+      {
+        contentType: 'application/pdf',
+        sizeBytes: 4096,
+      },
+      {
+        contentType: 'not-a-mime',
+        sizeBytes: 2048,
+        sha256: 'b'.repeat(64),
+      },
+    ]);
+
+    expect(summary).toMatchObject({
+      total: 3,
+      valid: 1,
+      hashPending: 1,
+      invalid: 1,
+      status: 'invalid',
+      label: 'Batchcontrole nodig',
+    });
+    expect(summary.detail).toBe('1 klaar, 1 hash-pending, 1 controle nodig.');
+    expect(JSON.stringify(summary)).not.toContain('echo-foto-privenaam.jpg');
+    expect(JSON.stringify(summary)).not.toContain('base64-bijlage-inhoud');
+    expect(JSON.stringify(summary)).not.toContain('fertiliteitsnotitie');
   });
 
   it('mapt centrale envelopefouten naar generieke gebruikerstaal zonder payloaddetails', () => {
