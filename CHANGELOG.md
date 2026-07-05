@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1885 Premium Claude Design UI: Traject/Vergoeding opent nu met een compact
+  vergoedingsbord voor resterende pogingen, meetellende pogingen, poliscontext,
+  kostenroute en volledige details. De bestaande vergoedingstekst, kostenlink,
+  routehooks en privacygrenzen blijven bereikbaar zonder als eerste lange
+  administratiestapel te starten.
 - G1884 Premium Claude Design UI: Traject/Beheer opent nu met een compact
   beheerbord voor huidig traject, nieuwe poging, archief, behandelcontext en
   volledige beheerdetails. De bestaande form-id's, input names, archiefacties

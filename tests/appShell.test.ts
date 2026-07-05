@@ -5704,6 +5704,10 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-management-board__lanes {');
     expect(css).toContain('.treatment-management-board__lane {');
     expect(css).toContain('.treatment-management-board__lane:hover,');
+    expect(css).toContain('.treatment-reimbursement-board {');
+    expect(css).toContain('.treatment-reimbursement-board__lanes {');
+    expect(css).toContain('.treatment-reimbursement-board__lane {');
+    expect(css).toContain('.treatment-reimbursement-board__lane:hover,');
     expect(css).toContain('.treatment-phase-primary {');
     expect(css).toContain('.treatment-phase-primary__card {');
     expect(css).toContain('.treatment-phase-followup {');
@@ -5752,6 +5756,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.treatment-management-board {');
     expect(mobileCss).toContain('.treatment-management-board__lanes {');
     expect(mobileCss).toContain('.treatment-management-board__lane {');
+    expect(mobileCss).toContain('.treatment-reimbursement-board {');
+    expect(mobileCss).toContain('.treatment-reimbursement-board__lanes {');
+    expect(mobileCss).toContain('.treatment-reimbursement-board__lane {');
     expect(mobileCss).toContain(
       '.content:has([data-treatment-focus-shell="ready"]) > .workspace-map,',
     );
@@ -43647,6 +43654,34 @@ describe('app shell', () => {
     expect(html).not.toContain('<details id="treatment-phase-followup" open');
     expect(html).toContain('id="traject-route-vergoeding"');
     expect(html).toContain('data-treatment-route="vergoeding"');
+    expect(html).toContain(
+      'aria-label="Vergoeding startlaag" data-treatment-reimbursement-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je vergoedingslaag');
+    expect(html).toContain('data-treatment-reimbursement-lane="remaining"');
+    expect(html).toContain('data-treatment-reimbursement-lane="counted"');
+    expect(html).toContain('data-treatment-reimbursement-lane="policy"');
+    expect(html).toContain('data-treatment-reimbursement-lane="costs"');
+    expect(html).toContain('data-treatment-reimbursement-lane="details"');
+    expect(html).toContain(
+      'href="#treatment-reimbursement-details" data-treatment-reimbursement-lane="remaining"',
+    );
+    expect(html).toContain(
+      'href="#treatment-reimbursement-details" data-treatment-reimbursement-lane="counted"',
+    );
+    expect(html).toContain(
+      'href="#treatment-reimbursement-details" data-treatment-reimbursement-lane="policy"',
+    );
+    expect(html).toContain(
+      'href="#kosten?route=vergoeding" data-treatment-reimbursement-lane="costs"',
+    );
+    expect(html).toContain(
+      'href="#treatment-reimbursement-details" data-treatment-reimbursement-lane="details"',
+    );
+    expect(html).toContain('id="treatment-reimbursement-details"');
+    expect(html.indexOf('data-treatment-reimbursement-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-reimbursement-details"'),
+    );
     expect(html).toContain('id="traject-route-context"');
     expect(html).toContain('data-treatment-route="context"');
     expect(html).toContain('id="traject-route-beheer"');

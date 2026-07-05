@@ -16607,8 +16607,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, reimbursement, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 65
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3712
+
+### G1886 — Premium Claude Design UI: treatment context route first-viewport timeline board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Traject/Context kan als lange inzichtenpagina voelen wanneer fertility timeline, graphcontext, fasecontext, vergoedingscontext en volledige details tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is of zij timeline, graph, fasecontext, vergoeding of volledige inzichten nodig hebben.
+- **Desired Outcome:** Traject/Context opent met een compact first-viewport timeline board voor timeline, graph, fasecontext, vergoedingscontext en volledige inzichtdetails.
+- **User Value:** Trajectcontext voelt rustiger en taakgerichter zonder bestaande timelinefilters, graphankers, routehooks, bronmetadata of privacygrenzen te verliezen.
+- **Acceptance Criteria:** Traject/Context opent met compacte lanes voor timeline, graph, fasecontext, vergoedingscontext en volledige insightdetails; volledige timeline-, graph- en filterpanelen blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande timeline filters, graph anchors, route hooks, source metadata en privacy boundaries; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw treatment payload wordt toegevoegd.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, fertility timeline, graph context, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 64
+- **Status:** ☐ open
+- **Issue:** #3714
 
 ### G586 — replay conflict recovery status UI
 

@@ -183,6 +183,11 @@
   behandelcontext en volledige beheerdetails. De bestaande form-id's,
   input names, archiefacties en herstel/verwijderacties blijven bereikbaar
   zonder de eerste viewport als beheerformulierstapel te vullen.
+- **G1885 Traject/Vergoeding reimbursement board:** Traject/Vergoeding start
+  met een compact vergoedingsbord voor resterende pogingen, meetellende
+  pogingen, poliscontext, kostenroute en volledige details. De bestaande
+  vergoedingstekst, kostenlink, routehooks en privacygrenzen blijven bereikbaar
+  zonder de eerste viewport als administratiestapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
