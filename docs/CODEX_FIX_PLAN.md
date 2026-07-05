@@ -129,6 +129,11 @@
   and sources cards stay visible before consult detail cards while the scan container remains
   bounded inside the route root across desktop, tablet, and mobile without consult payload text in
   the evidence.
+- **Embryo tracking-scan overflow evidence — done in G1927 / issue #3800.** Dossier imaging
+  routeflow coverage now opens the embryo-dossiers route and measures the tracking scan directly:
+  dossiers, measurements, status, and sources cards stay visible before embryo grids and detail
+  cards while the scan container remains bounded across desktop, tablet, and mobile without
+  ranking, chance-calculation, or treatment-advice text in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

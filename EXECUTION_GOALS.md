@@ -17288,7 +17288,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo UI, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 26
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3800
 
 ### G1923 — Premium Claude Design UI: research trend scan mobile density polish
@@ -17630,6 +17630,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 26
 - **Status:** ☐ open
 - **Issue:** #3854
+
+### G1955 — Premium Claude Design UI: embryo tracking scan release evidence
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De embryo tracking-scan heeft routeflow-overflow evidence, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de embryo tracking-scan bescherming verliezen zonder dat reviewers zien dat scan cards of page-level overflow onvoldoende bewaakt worden.
+- **Desired Outcome:** Release-evidence documenteert dat de embryo tracking-scan op desktop, tablet en mobiel gecontroleerd blijft zonder ranking, kansberekening, behandeladvies of broninhoud.
+- **User Value:** Gebruikers houden een rustige Embryo-dossiersroute waarin dossiers, meetmomenten, status-events en bronnen snel scanbaar blijven na thema- of layoutwijzigingen.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar `data-embryo-tracking-scan="ready"` en de embryo tracking-scan overflow evidence; evidence bevestigt vier zichtbare scan cards voor dossiers, measurements, status en sources; evidence bevestigt scan-before-grid/card ordering en containerbegrenzing op desktop, tablet en mobile; evidence bevat geen ranking, kansberekening, behandeladvies, medische payloads, OCR-tekst, secrets, tokens of broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier, Embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo UI, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 26
+- **Status:** ☐ open
+- **Issue:** #3856
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 
