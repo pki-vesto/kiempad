@@ -186,6 +186,7 @@ type RuntimeState = {
   dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   centralSyncFeedback?: AppShellState['centralSyncFeedback'];
+  centralSessionRenewalRecoveryPendingFocus?: boolean;
   settingsOpen: boolean;
   webAuthnStatus: WebAuthnViewStatus;
   loadingState?: AppShellLoadingState;
@@ -297,6 +298,9 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindAfwegingControls(root, state);
   bindKostenControls(root, state);
   bindBackupControls(root, state);
+  if (state.centralSessionRenewalRecoveryPendingFocus) {
+    focusCentralSessionRenewalRecoveryStatus(root, state);
+  }
   if (state.dailyRecommendationRouteFocusPendingFocus) {
     focusDailyRecommendationRouteFocusStatus(root);
   }
@@ -624,6 +628,7 @@ async function mount(): Promise<void> {
   if (consumeCentralSessionRenewalRecoveryFocus()) {
     state.backupStatus =
       'Centrale sessieherstelactie verwerkt. Controleer de centrale overdrachtstatus hieronder.';
+    state.centralSessionRenewalRecoveryPendingFocus = true;
   }
 
   render(app, state);
@@ -674,6 +679,15 @@ function reloadToCentralSessionRenewalRecoveryFocus(): void {
   markCentralSessionRenewalRecoveryFocus();
   window.history.replaceState(null, '', '#backup?route=controleren');
   window.location.reload();
+}
+
+function focusCentralSessionRenewalRecoveryStatus(root: HTMLElement, state: RuntimeState): void {
+  const status = root.querySelector<HTMLElement>(
+    '[data-central-session-renewal-recovery-focus-target="ready"]',
+  );
+  if (!status) return;
+  state.centralSessionRenewalRecoveryPendingFocus = false;
+  status.focus({ preventScroll: true });
 }
 
 function bindBackupControls(root: HTMLElement, state: RuntimeState): void {

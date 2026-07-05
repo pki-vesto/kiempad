@@ -15914,8 +15914,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, Back-up status feedback, route focus, tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3638
+
+### G1849 — Central session renewal recovery focus visual ring
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Het sessie-renewal focusdoel kan nu focus ontvangen, maar heeft nog geen eigen visuele focusbehandeling die forced-colors expliciet borgt.
+- **User Impact:** Toetsenbordgebruikers kunnen de gefocuste herstelbevestiging missen als de standaard browserfocus subtiel is.
+- **Desired Outcome:** Kiempad toont een rustige, zichtbare focusring voor de centrale sessie-renewal herstelbevestiging zonder layout shift.
+- **User Value:** Herstel na centrale sessieverval is visueel terugvindbaar voor toetsenbordgebruikers.
+- **Acceptance Criteria:** Recovery focus target heeft een zichtbare focusbehandeling alleen wanneer gefocust; normale Back-up statussen krijgen geen extra visuele ruis; forced-colors houdt de ring zichtbaar zonder layout shift; geen passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload, filename of medische plaintext in copy of testfixtures; tests dekken CSS hooks en normale afwezigheid; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Back-up, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell CSS, Back-up status feedback, accessibility tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3640
 
 ### G584 — paginated record load status UI
 

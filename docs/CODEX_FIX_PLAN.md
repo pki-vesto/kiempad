@@ -2227,3 +2227,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   specific polite live-region marker with `role="status"` and `aria-atomic`
   only for the recovery confirmation, leaving normal active session status
   quiet while preserving the no-token/no-payload boundary.
+- Partial G1848/#3638: The same recovery confirmation is now a stable
+  `tabindex="-1"` focus target, and the runtime moves focus there with
+  `preventScroll` only after the session-renewal recovery flow consumes its
+  one-time marker.
