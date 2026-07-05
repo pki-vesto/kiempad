@@ -24137,6 +24137,50 @@ summary[class*="__summary"]:focus-visible,
     text-shadow: none;
   }
 
+  .imaging-metadata-review-form {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+    forced-color-adjust: auto;
+  }
+
+  .imaging-classification-review {
+    border: 2px solid Highlight;
+    background: Canvas;
+    color: CanvasText;
+    outline: 1px solid CanvasText;
+    outline-offset: 2px;
+    forced-color-adjust: auto;
+  }
+
+  .imaging-classification-review strong {
+    color: Highlight;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  .imaging-metadata-review-form label {
+    color: CanvasText;
+  }
+
+  .imaging-metadata-review-form input,
+  .imaging-metadata-review-form select {
+    border-color: ButtonText;
+    background: Field;
+    color: FieldText;
+    forced-color-adjust: auto;
+  }
+
+  .imaging-metadata-review-form input:focus-visible,
+  .imaging-metadata-review-form select:focus-visible {
+    border-color: Highlight;
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
   .attachment-envelope-status {
     border-color: ButtonText;
     background: Canvas;

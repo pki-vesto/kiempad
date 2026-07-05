@@ -1098,6 +1098,7 @@ const targets = [
       'input[name="imagingMetadataLaboratoriumContext"]',
     ],
     embryoImageClassificationReview: true,
+    embryoImageClassificationForcedColorsEvidence: true,
     dossierConsole: true,
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
@@ -1977,6 +1978,9 @@ async function assertRouteflows(browser, options) {
             if (details instanceof HTMLDetailsElement) details.open = true;
           }
         }, target.openSelectors);
+      }
+      if (target.embryoImageClassificationForcedColorsEvidence) {
+        await page.emulateMedia({ forcedColors: 'active' });
       }
 
       await waitForStableRouteflowRoot(page, target.rootSelector);
@@ -2892,11 +2896,25 @@ async function assertRouteflows(browser, options) {
               const label = panel?.querySelector('input[name="imagingMetadataEmbryoLabel"]');
               const id = panel?.querySelector('input[name="imagingMetadataEmbryoId"]');
               const status = panel?.querySelector('select[name="imagingMetadataReviewStatus"]');
+              const reviewStrong = review?.querySelector('strong');
               const elements = [review, type, label, id, status].filter(
                 (element) => element instanceof HTMLElement,
               );
               const rects = elements.map((element) => element.getBoundingClientRect());
               const text = reviewForm?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const reviewStyle = review instanceof HTMLElement ? getComputedStyle(review) : null;
+              const reviewStrongStyle =
+                reviewStrong instanceof HTMLElement ? getComputedStyle(reviewStrong) : null;
+              const fieldStyles = [type, label, id, status]
+                .filter((element) => element instanceof HTMLElement)
+                .map((element) => {
+                  const style = getComputedStyle(element);
+                  return {
+                    borderStyle: style.borderStyle,
+                    backgroundColor: style.backgroundColor,
+                    color: style.color,
+                  };
+                });
               const forbiddenFragments = [
                 'kwaliteitsscore',
                 'selectieadvies',
@@ -2922,6 +2940,13 @@ async function assertRouteflows(browser, options) {
                 embryoLabelValue: label instanceof HTMLInputElement ? label.value : '',
                 embryoIdValue: id instanceof HTMLInputElement ? id.value : '',
                 reviewStatusValue: status instanceof HTMLSelectElement ? status.value : '',
+                forcedColorsActive: window.matchMedia('(forced-colors: active)').matches,
+                reviewBorderStyle: reviewStyle?.borderStyle ?? '',
+                reviewBorderWidth: reviewStyle?.borderWidth ?? '',
+                reviewOutlineStyle: reviewStyle?.outlineStyle ?? '',
+                reviewOutlineWidth: reviewStyle?.outlineWidth ?? '',
+                reviewStrongTextDecorationLine: reviewStrongStyle?.textDecorationLine ?? '',
+                fieldStyles,
                 hasForbiddenText: forbiddenFragments.some((fragment) =>
                   text.toLowerCase().includes(fragment.toLowerCase()),
                 ),
@@ -3671,6 +3696,14 @@ async function assertRouteflows(browser, options) {
           evidence.embryoImageClassificationReview.embryoLabelValue !== 'Embryo A' ||
           evidence.embryoImageClassificationReview.embryoIdValue !== 'E-A' ||
           evidence.embryoImageClassificationReview.reviewStatusValue !== 'concept' ||
+          (target.embryoImageClassificationForcedColorsEvidence &&
+            (!evidence.embryoImageClassificationReview.forcedColorsActive ||
+              evidence.embryoImageClassificationReview.reviewBorderStyle === 'none' ||
+              evidence.embryoImageClassificationReview.reviewOutlineStyle === 'none' ||
+              evidence.embryoImageClassificationReview.reviewStrongTextDecorationLine === 'none' ||
+              evidence.embryoImageClassificationReview.fieldStyles.some(
+                (field) => field.borderStyle === 'none' || !field.backgroundColor || !field.color,
+              ))) ||
           evidence.embryoImageClassificationReview.hasForbiddenText ||
           evidence.embryoImageClassificationReview.hasHorizontalOverflow)
       ) {
