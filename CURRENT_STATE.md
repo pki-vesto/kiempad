@@ -208,6 +208,10 @@
   middenrij en context/beheer als vervolgrij. De bestaande routehrefs,
   aria-current states, badges, command-task hooks en desktop density-cues
   blijven intact.
+- **G1890 Traject mobile active route reach:** op mobiel promoveert de
+  Traject route-rail de actieve route bovenaan over de volle breedte, ook
+  wanneer Fasen, Vergoeding, Context of Beheer actief is. De routegroepen,
+  hrefs, badges, aria-current states en desktop density-cues blijven intact.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

@@ -30423,9 +30423,41 @@ summary[class*="__summary"]:focus-visible,
     padding: 7px;
   }
 
+  .treatment-task-routes:has([data-command-route-group="planning"][aria-current="page"]) {
+    grid-template-areas:
+      "planning planning"
+      "focus finance"
+      "context admin";
+  }
+
+  .treatment-task-routes:has([data-command-route-group="finance"][aria-current="page"]) {
+    grid-template-areas:
+      "finance finance"
+      "focus planning"
+      "context admin";
+  }
+
+  .treatment-task-routes:has([data-command-route-group="context"][aria-current="page"]) {
+    grid-template-areas:
+      "context context"
+      "focus planning"
+      "finance admin";
+  }
+
+  .treatment-task-routes:has([data-command-route-group="admin"][aria-current="page"]) {
+    grid-template-areas:
+      "admin admin"
+      "focus planning"
+      "finance context";
+  }
+
   .treatment-task-route[data-command-route-group="focus"] {
     grid-area: focus;
     min-height: 74px;
+  }
+
+  .treatment-task-route[aria-current="page"] {
+    min-height: 80px;
   }
 
   .treatment-task-route[data-command-route-group="planning"] {

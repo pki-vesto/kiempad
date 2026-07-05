@@ -161,6 +161,10 @@
   On mobile, the Traject route rail now groups overview as a full-width start route, phases and
   reimbursement as the middle row, and context and management as the follow-up row, preserving
   route hrefs, badges, aria-current states, command-task hooks and desktop density cues.
+- **Treatment mobile rail active thumb reach polish — done in G1890 / issue #3722.**
+  On mobile, the active Traject route is promoted to the full-width top row for phases,
+  reimbursement, context and management too, preserving route groups, hrefs, badges,
+  aria-current states and desktop density cues.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
