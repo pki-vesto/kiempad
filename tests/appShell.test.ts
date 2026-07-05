@@ -5915,6 +5915,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('font-weight: 780;');
     expect(mobileCss).toContain('text-decoration: none;');
     expect(mobileCss).toContain(
+      '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__top > span {',
+    );
+    expect(mobileCss).toContain('max-width: calc(100% - 92px);');
+    expect(mobileCss).toContain(
       '.treatment-task-route:not([aria-current="page"]):focus-visible small {',
     );
     expect(mobileCss).toContain('margin-top: 1px;');

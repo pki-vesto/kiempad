@@ -267,6 +267,10 @@
   gefocuste mobiele Traject-metatekst krijgt expliciete forced-colors
   line-height, margin en fitregels, zodat metatekst gescheiden blijft van
   titels en statuspills.
+- **G1905 Traject mobile forced-colors inactive focus label fit:** inactieve
+  gefocuste mobiele Traject-titels krijgen expliciete forced-colors breedte-
+  en ellipsisregels naast badgepills, zodat de labelkolom stabiel blijft
+  tijdens keyboardfocus.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
