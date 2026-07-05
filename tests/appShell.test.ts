@@ -8427,9 +8427,13 @@ describe('app shell', () => {
       'Concept: OCR-tekst wordt pas na review gebruikt voor metadata en tijdlijnindex.',
     );
     expect(html).toContain('data-ocr-review-correction="ready"');
+    expect(html).toContain('data-ocr-review-field="correction-text"');
     expect(html).toContain('name="ocrReviewCorrectieTekst"');
+    expect(html).toContain('data-ocr-review-field="metadata-note"');
     expect(html).toContain('name="ocrReviewMetadataNotitie"');
+    expect(html).toContain('data-ocr-review-field="review-status"');
     expect(html).toContain('name="ocrReviewStatus"');
+    expect(html).toContain('data-ocr-review-action="save"');
     expect(html).toContain('OCR-review bewaren');
     expect(html).toContain('geen diagnose, dosering of behandelkeuzeadvies');
     expect(html).toContain('PDF of afbeelding is klaargezet voor lokale OCR');

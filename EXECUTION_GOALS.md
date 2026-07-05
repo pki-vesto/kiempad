@@ -17475,7 +17475,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** OCR review, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3821
 
 ### G1938 — Fertility Intelligence: import-inbox retry routeflow overflow evidence
@@ -17528,6 +17528,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3842
+
+### G1949 — Fertility Intelligence: OCR-review correctieformulier release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De OCR-review correctieflow heeft routeflow-evidence voor ready en locked varianten, maar release-evidence moet nog vastleggen dat deze privacy- en overflowbescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de OCR-review routeflowbescherming verliezen zonder dat reviewers zien dat correctievelden of locked privacycopy onvoldoende bewaakt worden.
+- **Desired Outcome:** Release-evidence documenteert dat de OCR-review correctieflow op desktop, tablet, mobiel en small-mobile gecontroleerd blijft zonder OCR-payloads, bronbestandsnamen of locked beeldbron-plaintext.
+- **User Value:** Gebruikers kunnen onzeker OCR-werk blijven corrigeren en gereviewd markeren met vertrouwen dat releases de privacyboundary en scanbare formulierlayout behouden.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar de OCR-review correctie routeflow en de gecontroleerde selectors; evidence bevestigt dat correctietekst, metadata-notitie, reviewstatus en bewaaractie scanbaar blijven zonder page-level horizontale overflow; evidence bevestigt dat de locked variant geen bronbestandsnaam, thumbnail, beeldpayload, OCR-fragment of plaintext bronwaarde toont; evidence bevat geen OCR-payload, bronbestandsnamen, medische plaintext, secrets of trackingdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Documenttijdlijn, Dossier reviewwachtrij
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** OCR review, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3844
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 

@@ -1571,6 +1571,44 @@ const targets = [
     ],
   },
   {
+    screen: 'dossier-ocr-review-correction',
+    hash: '#dossier?route=timeline&preview=locked',
+    rootSelector: '#dossier-route-timeline',
+    expectedText: 'OCR-review',
+    activeRouteSelector: '[data-dossier-route="timeline"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    prepare: 'dossier-ocr-review-correction',
+    openSelectors: [
+      '[data-dossier-timeline-followup="collapsed"]',
+      '[data-dossier-timeline-context-choice="collapsed"]',
+      '[data-dossier-timeline-disclosure="documents"]',
+    ],
+    requiredSelectors: [
+      '[data-ocr-review-correction="ready"]',
+      '[data-ocr-review-field="correction-text"]',
+      '[data-ocr-review-field="metadata-note"]',
+      '[data-ocr-review-field="review-status"]',
+      '[data-ocr-review-action="save"]',
+      '[data-ocr-review-correction="locked"]',
+      '[data-ocr-review-locked-boundary="ready"]',
+    ],
+    presentSelectors: [
+      '[data-hub-detail-panel="timeline-documents"]',
+      '[data-attachment-review-kind="ocr-review"]',
+      '[data-attachment-preview-kind="dossier-preview"][data-attachment-preview-state="locked"]',
+    ],
+    closedDetailsSelectors: [],
+    dossierConsole: true,
+    dossierOcrReviewCorrection: true,
+    smallMobileViewport: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
     screen: 'treatment-context',
     hash: '#traject?route=context',
     rootSelector: '[data-treatment-focus-shell="ready"]',
@@ -2054,6 +2092,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'dossier-import-inbox-retry') {
         await prepareDossierImportInboxRetry(page, target.hash);
+      }
+      if (target.prepare === 'dossier-ocr-review-correction') {
+        await prepareDossierOcrReviewCorrection(page, target.hash);
       }
       if (target.prepare === 'central-session-renewal-recovery-focus') {
         await prepareCentralSessionRenewalRecoveryFocus(page, target.hash);
@@ -2684,6 +2725,77 @@ async function assertRouteflows(browser, options) {
                   (actionbarRect && retryRect ? actionbarRect.right > retryRect.right + 1 : true) ||
                   (retryButtonRect && retryRect ? retryButtonRect.right > retryRect.right + 1 : true) ||
                   (deleteButtonRect && retryRect ? deleteButtonRect.right > retryRect.right + 1 : true),
+              };
+            })()
+          : null;
+        const dossierOcrReviewCorrection = routeflow.dossierOcrReviewCorrection
+          ? (() => {
+              const ready = document.querySelector('[data-ocr-review-correction="ready"]');
+              const locked = document.querySelector('[data-ocr-review-correction="locked"]');
+              const correction = ready?.querySelector('[data-ocr-review-field="correction-text"]');
+              const metadata = ready?.querySelector('[data-ocr-review-field="metadata-note"]');
+              const status = ready?.querySelector('[data-ocr-review-field="review-status"]');
+              const action = ready?.querySelector('[data-ocr-review-action="save"]');
+              const lockedBoundary = locked?.querySelector('[data-ocr-review-locked-boundary="ready"]');
+              const correctionTextarea = correction?.querySelector('textarea');
+              const metadataTextarea = metadata?.querySelector('textarea');
+              const statusSelect = status?.querySelector('select');
+              const lockedPreview = document.querySelector(
+                '[data-attachment-preview-kind="dossier-preview"][data-attachment-preview-state="locked"]',
+              );
+              const readyRect = ready?.getBoundingClientRect();
+              const lockedRect = locked?.getBoundingClientRect();
+              const correctionRect = correction?.getBoundingClientRect();
+              const metadataRect = metadata?.getBoundingClientRect();
+              const statusRect = status?.getBoundingClientRect();
+              const actionRect = action?.getBoundingClientRect();
+              const lockedBoundaryRect = lockedBoundary?.getBoundingClientRect();
+              const readyStyle = ready instanceof HTMLElement ? getComputedStyle(ready) : null;
+              const actionStyle = action instanceof HTMLElement ? getComputedStyle(action) : null;
+              const text = [ready, locked, lockedPreview]
+                .map((element) => element?.textContent?.replace(/\s+/g, ' ').trim() ?? '')
+                .join(' ');
+              const forbiddenMatch = text.match(
+                /(\.pdf|\.jpg|\.jpeg|OCR_RAW|GEVOELIGE|MEDISCHE PAYLOAD|secret|token|base64|routeflow-ocr-ready|routeflow-ocr-locked)/i,
+              );
+              return {
+                readyVisible: Boolean(readyRect && readyRect.width > 0 && readyRect.height > 0),
+                lockedVisible: Boolean(lockedRect && lockedRect.width > 0 && lockedRect.height > 0),
+                correctionVisible: Boolean(
+                  correctionRect && correctionRect.width > 0 && correctionRect.height > 0,
+                ),
+                metadataVisible: Boolean(
+                  metadataRect && metadataRect.width > 0 && metadataRect.height > 0,
+                ),
+                statusVisible: Boolean(statusRect && statusRect.width > 0 && statusRect.height > 0),
+                actionVisible: Boolean(actionRect && actionRect.width > 0 && actionRect.height > 0),
+                lockedBoundaryVisible: Boolean(
+                  lockedBoundaryRect &&
+                    lockedBoundaryRect.width > 0 &&
+                    lockedBoundaryRect.height > 0,
+                ),
+                lockedPreviewVisible: lockedPreview instanceof HTMLElement,
+                correctionRows:
+                  correctionTextarea instanceof HTMLTextAreaElement ? correctionTextarea.rows : 0,
+                metadataRows:
+                  metadataTextarea instanceof HTMLTextAreaElement ? metadataTextarea.rows : 0,
+                statusValue: statusSelect instanceof HTMLSelectElement ? statusSelect.value : '',
+                actionText: action?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                readyDisplay: readyStyle?.display ?? '',
+                readyGridTemplateColumns: readyStyle?.gridTemplateColumns ?? '',
+                actionWhiteSpace: actionStyle?.whiteSpace ?? '',
+                forbiddenMatch: forbiddenMatch?.[0] ?? '',
+                hasForbiddenText: Boolean(forbiddenMatch),
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  (readyRect ? readyRect.right > document.documentElement.clientWidth + 1 : true) ||
+                  (lockedRect ? lockedRect.right > document.documentElement.clientWidth + 1 : true) ||
+                  (correctionRect && readyRect ? correctionRect.right > readyRect.right + 1 : true) ||
+                  (metadataRect && readyRect ? metadataRect.right > readyRect.right + 1 : true) ||
+                  (statusRect && readyRect ? statusRect.right > readyRect.right + 1 : true) ||
+                  (actionRect && readyRect ? actionRect.right > readyRect.right + 1 : true),
               };
             })()
           : null;
@@ -3455,6 +3567,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
           dossierImportInboxRetry,
+          dossierOcrReviewCorrection,
           startLaunchpad,
           uploadConsole,
           attachmentEnvelopeBatchStatus,
@@ -3863,6 +3976,28 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: import-inbox retry mist scanbare routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierImportInboxRetry)}).`,
+        );
+      }
+      if (
+        evidence.dossierOcrReviewCorrection &&
+        (!evidence.dossierOcrReviewCorrection.readyVisible ||
+          !evidence.dossierOcrReviewCorrection.lockedVisible ||
+          !evidence.dossierOcrReviewCorrection.correctionVisible ||
+          !evidence.dossierOcrReviewCorrection.metadataVisible ||
+          !evidence.dossierOcrReviewCorrection.statusVisible ||
+          !evidence.dossierOcrReviewCorrection.actionVisible ||
+          !evidence.dossierOcrReviewCorrection.lockedBoundaryVisible ||
+          !evidence.dossierOcrReviewCorrection.lockedPreviewVisible ||
+          evidence.dossierOcrReviewCorrection.correctionRows < 3 ||
+          evidence.dossierOcrReviewCorrection.metadataRows < 2 ||
+          !['concept', 'gereviewd'].includes(evidence.dossierOcrReviewCorrection.statusValue) ||
+          evidence.dossierOcrReviewCorrection.actionText !== 'OCR-review bewaren' ||
+          evidence.dossierOcrReviewCorrection.readyDisplay !== 'grid' ||
+          evidence.dossierOcrReviewCorrection.hasForbiddenText ||
+          evidence.dossierOcrReviewCorrection.hasHorizontalOverflow)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: OCR-review correctieflow mist scanbare routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierOcrReviewCorrection)}).`,
         );
       }
       if (
@@ -5043,6 +5178,77 @@ async function prepareDossierImportInboxRetry(page, targetHash) {
   await page.locator('#dossier-upload-form [name="datum"]').fill('2026-06-28');
   await page.locator('#dossier-upload-form [name="titel"]').fill('Import retry klaaritem');
   await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('behandelverslag');
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareDossierOcrReviewCorrection(page, targetHash) {
+  await page.goto(`${url}#dossier-upload-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#dossier-upload-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'routeflow-ocr-ready.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('safe synthetic local ocr review text'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-06-29');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('OCR review correctie klaar');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('labuitslag');
+  await page.locator('#dossier-upload-form [name="lokaleOcr"]').check();
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-image-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'routeflow-ocr-locked.jpg',
+    mimeType: 'image/jpeg',
+    buffer: Buffer.from('safe synthetic locked image fixture'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-06-30');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('OCR review beeld vergrendeld');
+  await page.locator('#dossier-upload-form [name="categorie"]').selectOption('beeld');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('afbeelding');
+  await page.locator('#dossier-upload-form [name="beeldContext"]').fill('OCR review locked context');
+  await page.locator('#dossier-upload-form [name="beeldBron"]').fill('Veilige bron');
+  await page.locator('#dossier-upload-form [name="lokaleOcr"]').check();
   await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
   await page.locator('#dossier-upload-form button[type="submit"]').click();
   await page.waitForFunction(

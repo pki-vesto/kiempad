@@ -105,6 +105,11 @@
   includes routeflow coverage for a synthetic import-inbox retry item: the retry state, retry
   action, delete action, and review-ready no-retry variant are measured across desktop, tablet,
   mobile, and small-mobile without source filenames, OCR payloads, or medical plaintext.
+- **OCR-review correction evidence — done in G1937 / issue #3821.** Dossier Timeline now has
+  routeflow coverage for the OCR-review correction form and locked imaging variant: correction
+  text, metadata note, review status, save action, locked boundary copy, and locked preview state
+  are measured across desktop, tablet, mobile, and small-mobile without OCR payloads or source
+  filenames in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

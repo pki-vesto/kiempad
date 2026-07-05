@@ -13117,7 +13117,7 @@ function renderDossierOcrDetails(document: DossierDocument, state: AppShellState
     return `
       <section class="linked-note ocr-review-correction-form" data-ocr-review-correction="locked">
         <strong>OCR-review</strong>
-        <p class="small-print">Ontgrendel de lokale kluis om OCR-tekst, metadata-notitie en reviewstatus te corrigeren zonder beeldbron of OCR-fragment te tonen.</p>
+        <p class="small-print" data-ocr-review-locked-boundary="ready">Ontgrendel de lokale kluis om OCR-tekst, metadata-notitie en reviewstatus te corrigeren zonder beeldbron of OCR-fragment te tonen.</p>
       </section>
     `;
   }
@@ -13163,22 +13163,22 @@ function renderOcrReviewCorrectieForm(document: DossierDocument): string {
       <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(document.id)}" />
       <strong>OCR-review</strong>
       <p class="small-print">Corrigeer alleen lokaal uitgelezen tekst en metadata-notitie; Kiempad geeft geen diagnose, dosering of behandelkeuzeadvies.</p>
-      <label>
+      <label data-ocr-review-field="correction-text">
         Correctietekst
         <textarea name="ocrReviewCorrectieTekst" rows="3">${escapeHtml(tekst)}</textarea>
       </label>
-      <label>
+      <label data-ocr-review-field="metadata-note">
         Metadata-notitie
         <textarea name="ocrReviewMetadataNotitie" rows="2">${escapeHtml(metadataNotitie)}</textarea>
       </label>
-      <label>
+      <label data-ocr-review-field="review-status">
         Reviewstatus
         <select name="ocrReviewStatus">
           <option value="concept"${reviewStatus === 'concept' ? ' selected' : ''}>Concept - nog controleren</option>
           <option value="gereviewd"${reviewStatus === 'gereviewd' ? ' selected' : ''}>Gereviewd - gebruiken voor metadata en zoeken</option>
         </select>
       </label>
-      <button type="submit" class="secondary-button">OCR-review bewaren</button>
+      <button type="submit" class="secondary-button" data-ocr-review-action="save">OCR-review bewaren</button>
     </form>
   `;
 }
