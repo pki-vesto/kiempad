@@ -19830,6 +19830,7 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
         </label>
       </section>
       ${renderVraagArtscheckMetadataFormSection(vraag)}
+      ${renderVraagConsultKoppelingenFormSection(vraag)}
       <section class="command-form-section" data-command-form-section="vraag-antwoord">
         <p class="command-form-section__eyebrow">Antwoord</p>
         <label>
@@ -19874,6 +19875,16 @@ function renderVraagArtscheckMetadataFormSection(vraag: VraagBundle['vraag'] | u
   `;
 }
 
+function renderVraagConsultKoppelingenFormSection(vraag: VraagBundle['vraag'] | undefined): string {
+  if (!vraag?.consultKoppelingen || vraag.consultKoppelingen.length === 0) return '';
+  return `
+      <section class="command-form-section" data-command-form-section="vraag-consult-links" data-question-consult-links="form">
+        <p class="command-form-section__eyebrow">Consultkoppeling</p>
+        ${renderVraagConsultKoppelingenSummary(vraag)}
+      </section>
+  `;
+}
+
 function renderOpenVragenVoorAfspraak(item: {
   afspraak: Afspraak;
   vragen: VraagBundle['vraag'][];
@@ -19883,7 +19894,16 @@ function renderOpenVragenVoorAfspraak(item: {
       <h3>${escapeHtml(item.afspraak.titel)}</h3>
       <p>${formatDateTime(item.afspraak.datumTijd)}</p>
       <ul class="question-list">
-        ${item.vragen.map((vraag) => `<li>${escapeHtml(vraag.vraag)}</li>`).join('')}
+        ${item.vragen
+          .map(
+            (vraag) => `
+              <li data-question-consult-link-item="${vraag.consultKoppelingen?.length ? 'linked' : 'standard'}">
+                <span>${escapeHtml(vraag.vraag)}</span>
+                ${renderVraagConsultKoppelingenSummary(vraag)}
+              </li>
+            `,
+          )
+          .join('')}
       </ul>
     </div>
   `;
@@ -19926,11 +19946,12 @@ function renderVragenList(bundles: VraagBundle[]): string {
       ${bundles
         .map(
           (bundle) => `
-            <li class="phase-item" data-question-list-item="${escapeAttribute(bundle.vraag.artscheckMetadata ? 'artscheck' : 'standard')}">
+            <li class="phase-item" data-question-list-item="${escapeAttribute(bundle.vraag.artscheckMetadata ? 'artscheck' : 'standard')}" data-question-consult-link-item="${bundle.vraag.consultKoppelingen?.length ? 'linked' : 'standard'}">
               <div>
                 <h3>${escapeHtml(bundle.vraag.vraag)}</h3>
                 <p>${bundle.vraag.beantwoord ? 'Beantwoord' : 'Openstaand'}${bundle.vraag.prioriteit ? ` · Prioriteit ${bundle.vraag.prioriteit}` : ''}${bundle.afspraak ? ` · ${escapeHtml(bundle.afspraak.titel)}` : ''}</p>
                 ${renderVraagArtscheckMetadataSummary(bundle.vraag)}
+                ${renderVraagConsultKoppelingenSummary(bundle.vraag)}
                 ${bundle.vraag.antwoord ? `<p class="linked-note">Antwoord: ${escapeHtml(bundle.vraag.antwoord)}</p>` : ''}
               </div>
               ${renderVraagArtscheckReviewForm(bundle.vraag)}
@@ -19946,6 +19967,26 @@ function renderVragenList(bundles: VraagBundle[]): string {
   `;
 }
 
+function renderVraagConsultKoppelingenSummary(vraag: VraagBundle['vraag']): string {
+  const koppelingen = vraag.consultKoppelingen ?? [];
+  if (koppelingen.length === 0) return '';
+
+  return `
+                <div class="question-consult-link-summary" data-question-consult-links="ready" data-question-consult-link-count="${escapeAttribute(String(koppelingen.length))}">
+                  ${koppelingen
+                    .map(
+                      (koppeling) => `
+                    <p class="linked-note dossier-status-row" data-question-consult-link-review-state="${escapeAttribute(koppeling.reviewStatus)}">
+                      Consultdocument: ${escapeHtml(koppeling.bronLabel)} · ${escapeHtml(koppeling.datum)}
+                      ${renderVraagConsultReviewBadge(koppeling.reviewStatus)}
+                    </p>
+                  `,
+                    )
+                    .join('')}
+                </div>
+  `;
+}
+
 function renderVraagArtscheckMetadataSummary(vraag: VraagBundle['vraag']): string {
   if (!vraag.artscheckMetadata) return '';
   return `
@@ -19954,6 +19995,19 @@ function renderVraagArtscheckMetadataSummary(vraag: VraagBundle['vraag']): strin
                   ${renderVraagArtscheckReviewBadge(vraag.artscheckMetadata.reviewStatus)}
                 </p>
   `;
+}
+
+function renderVraagConsultReviewBadge(
+  reviewStatus: NonNullable<VraagBundle['vraag']['consultKoppelingen']>[number]['reviewStatus'],
+): string {
+  return statusBadge({
+    label: reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept',
+    tone: reviewStatus === 'gereviewd' ? 'success' : 'warning',
+    className: 'status-badge--question',
+    data: {
+      'question-consult-link-review-badge': reviewStatus,
+    },
+  });
 }
 
 function renderVraagArtscheckReviewForm(vraag: VraagBundle['vraag']): string {

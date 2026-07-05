@@ -3266,6 +3266,21 @@ h2 {
   overflow-wrap: anywhere;
 }
 
+.question-consult-link-summary {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.question-consult-link-summary .linked-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+  align-items: center;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .phase-item[data-question-list-item] {
   grid-template-columns: minmax(0, 1fr);
 }

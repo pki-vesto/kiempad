@@ -210,6 +210,10 @@
   een compacte open-vragenroute voor vragen die aan dezelfde consultafspraak
   hangen, met bronlabel, datum, reviewstatus en een lokale bewaarknop voor de
   koppeling zonder consultpayload of behandeladvies.
+- **G2016 consultvraagkoppeling zichtbaar in Vragen:** open vragen, alle vragen
+  en het geselecteerde vraagformulier tonen consult-linked vraagmetadata met
+  bronlabel, datum en reviewstatus, compact naast gewone vragen zonder medische
+  payload of behandeladvies.
 - **G2011 offline cache metadata release-state contract error-contract error
   error error missing-term error contract:** de exacte G2010 error-contract
   error error error release missing-term foutmelding is als
