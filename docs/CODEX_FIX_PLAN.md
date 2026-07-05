@@ -227,6 +227,9 @@
 - **Treatment mobile rail forced-colors inactive focus cue outline offset polish — done in G1910 / issue #3762.**
   Inactive focused mobile Traject cue pills now use a compact one-pixel outline offset, keeping
   keyboard focus readable without matching active route outline spacing.
+- **Treatment mobile rail forced-colors inactive focus badge outline offset polish — done in G1911 / issue #3764.**
+  Inactive focused mobile Traject badges now use a compact one-pixel outline offset, keeping
+  status focus readable without matching active route outline spacing.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
