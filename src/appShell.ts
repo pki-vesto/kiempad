@@ -17960,6 +17960,14 @@ function renderHerinneringenScreen(state: AppShellState): string {
           ariaLabel: 'Herinneringen komend route-samenvatting',
           data: { 'notification-route-summary': 'komend' },
         })}
+        ${renderNotificationHistoryBoard({
+          permission: state.notificaties.permission,
+          serviceWorker: state.notificaties.serviceWorker,
+          lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
+          reminderCount: komende.length,
+          fallbackCount: fallback.length,
+          defaultWarningMinutes: state.settings.afspraakWaarschuwingMinuten,
+        })}
         <details id="herinneringen-fallback-disclosure" class="kp-disclosure" data-notification-disclosure="fallback">
           <summary class="kp-disclosure__summary">In-app fallbackmeldingen openen</summary>
           <div class="kp-disclosure__body">
@@ -17994,6 +18002,82 @@ function renderHerinneringenScreen(state: AppShellState): string {
     ],
     { className: 'notification-command-layout', ariaLabel: 'Herinneringen beheren' },
   );
+}
+
+function renderNotificationHistoryBoard(input: {
+  permission: NotificationRuntimeStatus['permission'];
+  serviceWorker: NotificationRuntimeStatus['serviceWorker'];
+  lockscreenDetails: boolean;
+  reminderCount: number;
+  fallbackCount: number;
+  defaultWarningMinutes: number;
+}): string {
+  const statusReady = input.permission === 'granted' && input.serviceWorker === 'ready';
+  const lanes: Array<{
+    key: 'permission' | 'planning' | 'privacy' | 'history';
+    href: string;
+    eyebrow: string;
+    value: string;
+    label: string;
+    detail: string;
+  }> = [
+    {
+      key: 'permission',
+      href: '#herinneringen-route-status',
+      eyebrow: 'Toestemming',
+      value: statusReady ? 'OK' : renderPermissionLabel(input.permission),
+      label: 'Runtime',
+      detail: 'Controleer browser en service worker zonder inhoud te tonen.',
+    },
+    {
+      key: 'planning',
+      href: '#herinneringen-route-plannen',
+      eyebrow: 'Planning',
+      value: `${input.defaultWarningMinutes}m`,
+      label: 'Standaard',
+      detail: 'Pas standaardtijd of eigen herinnering in de planroute aan.',
+    },
+    {
+      key: 'privacy',
+      href: '#herinneringen-route-privacy',
+      eyebrow: 'Privacy',
+      value: input.lockscreenDetails ? 'Opt-in' : 'Generiek',
+      label: 'Lockscreen',
+      detail: 'Houd lockscreenmeldingen generiek tenzij je bewust kiest.',
+    },
+    {
+      key: 'history',
+      href: '#herinneringen-komend-disclosure',
+      eyebrow: 'Historie',
+      value: String(input.reminderCount),
+      label: `${input.fallbackCount} fallback`,
+      detail: 'Open de volledige herinneringenlijst pas als naslag of actie.',
+    },
+  ];
+
+  return `
+    <section class="notification-history-board" aria-label="Herinneringen notification board" data-notification-history-board="first-viewport">
+      <header class="notification-history-board__header">
+        <p class="kp-card__eyebrow">Notification board</p>
+        <h3>Kies eerst je meldingslaag</h3>
+        <p>Toestemming, planning, privacy en herinneringen blijven gescheiden voordat je de volledige lijst opent.</p>
+      </header>
+      <nav class="notification-history-board__lanes" aria-label="Herinneringen notification routes">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="notification-history-board__lane" href="${lane.href}" data-notification-history-lane="${lane.key}">
+                <span>${lane.eyebrow}</span>
+                <strong>${escapeHtml(lane.value)}</strong>
+                <em>${escapeHtml(lane.label)}</em>
+                <small>${lane.detail}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
 }
 
 function renderNotificationFocusShell(input: { workspace: string }): string {

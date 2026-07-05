@@ -16369,8 +16369,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Notification history UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 79
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3684
+
+### G1872 — Premium Claude Design UI: event log history first-viewport audit board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het logboek kan nog als lange stapel openen wanneer privacystatus, gemiste acties, systeemevents en volledige audithistorie tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke auditlaag eerst relevant is.
+- **Desired Outcome:** Logboekgeschiedenis opent met een compact first-viewport audit board voor privacystatus, gemiste acties, systeemevents en audithistorie.
+- **User Value:** Privacy- en auditcontrole voelt sneller navigeerbaar zonder eventlog-, privacy-, filter-, timeline-, missed-action- of audithooks te verliezen.
+- **Acceptance Criteria:** Event log history opent met compacte lanes voor privacystatus, gemiste acties, systeemevents en audithistorie; volledige event- en detaillijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande event log privacy-, filter-, timeline-, missed action- en audithooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, OCR-tekst, bestandsinhoud, token, secret, trackingpayload of raw event payload wordt toegevoegd.
+- **Affected Screens:** Logboek
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Event log history UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #3686
 
 ### G586 — replay conflict recovery status UI
 

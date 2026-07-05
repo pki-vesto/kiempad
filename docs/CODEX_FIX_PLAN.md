@@ -75,6 +75,10 @@
   Historie now opens with one compact planning board for today, upcoming appointments,
   preparation, and appointment history before the full history disclosure, preserving overview,
   upcoming, planning, import, and history anchors on desktop and mobile.
+- **Reminders history first-viewport notification board — done in G1871 / issue #3684.**
+  Herinneringen Komend now opens with one compact notification board for permission, planning,
+  privacy, and reminder history before the fallback and upcoming reminders disclosures,
+  preserving status, privacy, planning, fallback, and reminder anchors on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
