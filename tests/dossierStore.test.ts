@@ -116,6 +116,35 @@ describe('DossierStore', () => {
     expect(await store.list()).toEqual([saved]);
   });
 
+  it('bewaart gereviewde ziekenhuisdocumenttype-correcties versleuteld zonder medische payload', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-06',
+      titel: 'Ziekenhuisdocument review',
+      categorie: 'onderzoek',
+      uploadProfiel: 'ziekenhuisdocument',
+      bestandsNaam: 'kliniek-document.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRmLWdlaGVpbQ==',
+      metadataCorrectie: {
+        ziekenhuisDocumentType: 'verwijsbrief',
+      },
+      notitie: 'Reviewcorrectie zonder medische tekstpayload',
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(saved.metadata.ziekenhuisDocumentType).toBe('verwijsbrief');
+    expect(saved.metadata.extractieBronnen).toContain('ziekenhuisdocumenttype-review');
+    expect(raw?.type).toBe('dossier_document');
+    expect(raw?.payload.ciphertext).not.toContain('Ziekenhuisdocument review');
+    expect(raw?.payload.ciphertext).not.toContain('kliniek-document.pdf');
+    expect(raw?.payload.ciphertext).not.toContain('verwijsbrief');
+    expect(raw?.payload.ciphertext).not.toContain('Reviewcorrectie');
+    expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
+  });
+
   it('verwijdert dossierdocumenten via de encrypted repository', async () => {
     const { driver, store } = await setupStore();
     const saved = await store.save({

@@ -24,6 +24,7 @@ import {
   renderVaultGate,
   SCREENS,
 } from '../src/appShell';
+import { ZIEKENHUIS_DOCUMENT_TYPE_LABELS } from '../src/domain/dossier';
 import { EXAMPLE_DATA_IDS } from '../src/domain/exampleData';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 import type { DossierDocument } from '../src/domain/types';
@@ -8472,6 +8473,18 @@ describe('app shell', () => {
     expect(emptyForm).toContain('name="titel"');
     expect(emptyForm).toContain('name="categorie"');
     expect(emptyForm).toContain('name="uploadProfiel"');
+    expect(emptyForm).toContain('data-dossier-hospital-type-review="ready"');
+    expect(emptyForm).toContain('name="ziekenhuisDocumentTypeCorrectie"');
+    expect(emptyForm).toContain('Automatisch voorstel gebruiken');
+    expect(emptyForm).toContain('Onbekend of niet vastleggen');
+    for (const [value, label] of Object.entries(ZIEKENHUIS_DOCUMENT_TYPE_LABELS)) {
+      expect(emptyForm).toContain(`value="${value}"`);
+      expect(emptyForm).toContain(label);
+    }
+    expect(emptyForm).toContain('data-dossier-hospital-type-review-hint="safe"');
+    expect(emptyForm).toContain('conceptmetadata');
+    expect(emptyForm).toContain('alleen voor dossierindex en zoeken');
+    expect(emptyForm).toContain('zonder medisch advies');
     expect(emptyForm).toContain(
       `name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required`,
     );

@@ -67,6 +67,10 @@
   groottecontrole met per-bestandlimiet, selectielimiet, centrale 413-context en
   herstelbare retry-copy zonder bestandsnamen, OCR-tekst of medische inhoud in de
   zichtbare statusmelding.
+- **G568 Ziekenhuisdocumenttype reviewcorrectie:** de metadata-stap laat het
+  herkende ziekenhuisdocumenttype als conceptcontext controleren, corrigeren of
+  bewust op onbekend zetten; de gereviewde waarde wordt encrypted bewaard en
+  gebruikt voor dossierindex en zoeken zonder medisch advies.
 - **G1331 Dossier zoekconsole:** de Dossier-zoekroute groepeert zoeken,
   privacycontrole en inhoudsindex in drie herkenbare panelen. De route opent als
   compacte zoekwerkruimte in plaats van losse formulier-, privacy- en indexblokken.

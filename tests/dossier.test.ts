@@ -311,6 +311,51 @@ describe('dossier', () => {
     );
   });
 
+  it('gebruikt gereviewde ziekenhuisdocumenttype-correcties voor index en zoeken', () => {
+    const corrected = maakDossierDocument('doc-hospital-corrected-taxonomy', {
+      datum: '2026-05-01',
+      titel: 'Ziekenhuisdocument review',
+      categorie: 'onderzoek',
+      uploadProfiel: 'ziekenhuisdocument',
+      bestandsNaam: 'kliniek-algemeen.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      metadataCorrectie: {
+        ziekenhuisDocumentType: 'verwijsbrief',
+      },
+    });
+    const unknown = maakDossierDocument('doc-hospital-unknown-taxonomy', {
+      datum: '2026-05-01',
+      titel: 'Ziekenhuisdocument onbekend',
+      categorie: 'onderzoek',
+      uploadProfiel: 'ziekenhuisdocument',
+      bestandsNaam: 'kliniek-echo-verslag.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      metadataCorrectie: {
+        ziekenhuisDocumentType: 'onbekend',
+      },
+    });
+
+    expect(corrected.metadata.ziekenhuisDocumentType).toBe('verwijsbrief');
+    expect(corrected.metadata.extractieBronnen).toContain('ziekenhuisdocumenttype-herkenning');
+    expect(corrected.metadata.extractieBronnen).toContain('ziekenhuisdocumenttype-review');
+    expect(corrected.analyse.signalen).toContain('Metadata ziekenhuisdocumenttype: Verwijsbrief.');
+    expect(bouwDossierIndex([corrected])[0]?.tags).toContain('Verwijsbrief');
+    expect(bouwDossierIndex([corrected])[0]?.tags).toContain('Metadata gecorrigeerd');
+    expect(zoekDossierDocumenten([corrected], 'verwijsbrief')[0]?.matches).toContain(
+      'ziekenhuisdocumenttype',
+    );
+
+    expect(unknown.metadata.ziekenhuisDocumentType).toBeUndefined();
+    expect(unknown.metadata.extractieBronnen).toContain('ziekenhuisdocumenttype-herkenning');
+    expect(unknown.metadata.extractieBronnen).toContain('ziekenhuisdocumenttype-review');
+    expect(JSON.stringify(unknown)).not.toContain('Beeldverslag');
+    expect(zoekDossierDocumenten([unknown], 'beeldverslag')).toEqual([]);
+  });
+
   it('maakt OCR-resultaten alleen na expliciete lokale verwerking', () => {
     expect(
       maakDossierOcrResultaat(

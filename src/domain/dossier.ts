@@ -46,6 +46,7 @@ export type DossierMetadataCorrectieInput = {
   datum?: string;
   bron?: string;
   documenttype?: string;
+  ziekenhuisDocumentType?: ZiekenhuisDocumentType | 'onbekend';
   onderzoekstype?: string;
   labwaarden?: {
     naam: string;
@@ -1224,16 +1225,23 @@ export function extraheerDossierMetadata(input: {
   const documenttype = input.uploadProfiel
     ? DOSSIER_UPLOAD_PROFIEL_LABELS[input.uploadProfiel]
     : DOSSIER_CATEGORIE_LABELS[input.categorie];
-  const ziekenhuisDocumentType = bepaalZiekenhuisDocumentType({
+  const herkendZiekenhuisDocumentType = bepaalZiekenhuisDocumentType({
     uploadProfiel: input.uploadProfiel,
     tekst: gecombineerdeTekst,
   });
+  const ziekenhuisDocumentType = normaliseerZiekenhuisDocumentTypeCorrectie(
+    input.metadataCorrectie?.ziekenhuisDocumentType,
+    herkendZiekenhuisDocumentType,
+  );
 
   if (input.trajectId) bronnen.push('trajectkoppeling');
   if (herkendeDatum) bronnen.push('datumherkenning');
   if (instelling) bronnen.push('instellingherkenning');
   if (arts) bronnen.push('artsherkenning');
-  if (ziekenhuisDocumentType) bronnen.push('ziekenhuisdocumenttype-herkenning');
+  if (herkendZiekenhuisDocumentType) bronnen.push('ziekenhuisdocumenttype-herkenning');
+  if (input.metadataCorrectie?.ziekenhuisDocumentType) {
+    bronnen.push('ziekenhuisdocumenttype-review');
+  }
 
   const metadataBasis = {
     documentDatum,
@@ -1302,6 +1310,15 @@ export function bepaalZiekenhuisDocumentType(input: {
   return 'algemeen_ziekenhuisdocument';
 }
 
+function normaliseerZiekenhuisDocumentTypeCorrectie(
+  correctie: DossierMetadataCorrectieInput['ziekenhuisDocumentType'] | undefined,
+  herkend: ZiekenhuisDocumentType | undefined,
+): ZiekenhuisDocumentType | undefined {
+  if (!correctie) return herkend;
+  if (correctie === 'onbekend') return undefined;
+  return correctie;
+}
+
 function normaliseerDossierMetadata(input: {
   datum: string;
   bron: string;
@@ -1333,6 +1350,7 @@ function normaliseerDossierMetadata(input: {
         correctie.datum,
         correctie.bron,
         correctie.documenttype,
+        correctie.ziekenhuisDocumentType,
         correctie.onderzoekstype,
         correctie.labwaarden?.length ? 'labwaarden' : undefined,
         correctie.pogingId,

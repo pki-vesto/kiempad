@@ -55,6 +55,7 @@ import {
   type ImagingRepositoryFilter,
   type ImagingRepositoryItem,
   maakImagingContextSamenvatting,
+  ZIEKENHUIS_DOCUMENT_TYPE_LABELS,
   zoekDossierDocumenten,
 } from './domain/dossier';
 import {
@@ -3881,6 +3882,19 @@ function renderDossierScreen(state: AppShellState): string {
                     .join('')}
                 </select>
               </label>
+              <label data-dossier-hospital-type-review="ready">
+                Ziekenhuisdocumenttype
+                <select name="ziekenhuisDocumentTypeCorrectie">
+                  <option value="">Automatisch voorstel gebruiken</option>
+                  <option value="onbekend">Onbekend of niet vastleggen</option>
+                  ${Object.entries(ZIEKENHUIS_DOCUMENT_TYPE_LABELS)
+                    .map(([value, label]) => renderOption(value, label))
+                    .join('')}
+                </select>
+              </label>
+              <p class="field-hint" data-dossier-hospital-type-review-hint="safe">
+                Controleer het herkende ziekenhuisdocumenttype als conceptmetadata; Kiempad gebruikt deze keuze alleen voor dossierindex en zoeken, zonder medisch advies.
+              </p>
               <label class="check-row">
                 <input name="lokaleOcr" type="checkbox" value="ja" />
                 Lokale OCR-pipeline starten voor tekstherkenning op dit toestel

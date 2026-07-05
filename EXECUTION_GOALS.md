@@ -15611,7 +15611,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier review, metadata, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #902
 
 ### G569 — imaging lock-state visual regression fixture
 
@@ -17332,6 +17333,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3805
+
+### G1930 — Fertility Intelligence: ziekenhuisdocumenttype reviewcorrectie routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De ziekenhuisdocumenttype-reviewcorrectie is zichtbaar in de uploadmetadata, maar routeflow-bewijs moet nog bewaken dat de taxonomieselect en veilige hint op desktop en mobiel leesbaar blijven.
+- **User Impact:** Zonder visuele evidence kan een latere themewijziging de correctieselect weer verbergen, laten overlappen of als onduidelijke metadata in de uploadflow tonen.
+- **Desired Outcome:** Routeflow-smoke vindt de ziekenhuisdocumenttype-reviewselect en bewaakt dat automatisch voorstel, onbekend-keuze en taxonomiewaarden scanbaar blijven zonder medische payload.
+- **User Value:** Gebruikers houden controle over ziekenhuisdocumentcontext voordat het document in index en zoekfunctie meetelt.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-dossier-hospital-type-review="ready"` op desktop en mobiel; selectopties en hintcopy blijven leesbaar zonder page-level horizontale overflow; bestaande uploadinputs, conceptpreview, envelopecontrole en privacyhooks blijven intact; tests blijven vrij van bestandsnamen, OCR-tekst, medische payloads, secrets en broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier uploads, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3807
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 
