@@ -40222,6 +40222,30 @@ describe('app shell', () => {
     expect(html).toContain('Open categorieanker, vervolgcontext, kaartdetails en routecontext.');
     expect(html).toContain('href="#knowledge-library-category-choice"');
     expect(html).toContain('href="#knowledge-library-followup"');
+    expect(html).toContain(
+      'aria-label="Kennisbibliotheek index startlaag" data-knowledge-library-index-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je bibliotheeklaag');
+    expect(html).toContain('data-knowledge-library-index-lane="categories"');
+    expect(html).toContain('data-knowledge-library-index-lane="visible"');
+    expect(html).toContain('data-knowledge-library-index-lane="filters"');
+    expect(html).toContain('data-knowledge-library-index-lane="actions"');
+    expect(html).toContain('data-knowledge-library-index-lane="context"');
+    expect(html).toContain(
+      'href="#knowledge-library-category-choice" data-knowledge-library-index-lane="categories"',
+    );
+    expect(html).toContain(
+      'href="#knowledge-library-panel" data-knowledge-library-index-lane="visible"',
+    );
+    expect(html).toContain(
+      'href="#knowledge-filter-form" data-knowledge-library-index-lane="filters"',
+    );
+    expect(html).toContain(
+      'href="#knowledge-library-panel" data-knowledge-library-index-lane="actions"',
+    );
+    expect(html).toContain(
+      'href="#knowledge-library-followup" data-knowledge-library-index-lane="context"',
+    );
     expect(html).toContain('id="knowledge-library-category-choice"');
     expect(html).toContain('data-knowledge-library-category-choice="ready"');
     expect(html).toContain('data-knowledge-library-category-card-choice="collapsed"');
@@ -40266,6 +40290,9 @@ describe('app shell', () => {
     );
     expect(html.indexOf('data-knowledge-library-action-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#knowledge-library-category-choice"'),
+    );
+    expect(html.indexOf('data-knowledge-library-index-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-category-choice="ready"'),
     );
     expect(html.indexOf('data-knowledge-library-category-choice="ready"')).toBeLessThan(
       html.indexOf('data-knowledge-library-category-card-grid-choice="collapsed"'),
@@ -40637,6 +40664,13 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-library-action-choice:not([open]) > .knowledge-library-action-choice__body {',
     );
+    expect(css).toContain('.knowledge-library-index-board {');
+    expect(css).toContain('.knowledge-library-index-board__lanes {');
+    expect(css).toContain('.knowledge-library-index-board__lane {');
+    expect(css).toContain('.knowledge-library-index-board__lane:hover,');
+    expect(mobileCss).toContain('.knowledge-library-index-board {');
+    expect(mobileCss).toContain('.knowledge-library-index-board__lanes {');
+    expect(mobileCss).toContain('.knowledge-library-index-board__lane {');
     expect(css).toContain('.knowledge-library-category-choice {');
     expect(css).toContain('.knowledge-library-category-choice__summary {');
     expect(css).toContain('.knowledge-library-category-choice__body {');

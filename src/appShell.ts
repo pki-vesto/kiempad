@@ -13285,6 +13285,11 @@ function renderKennisScreen(state: AppShellState): string {
     state.settings.researchNetwerk.ingeschakeld,
   );
   const activeKnowledgeRoute = state.activeKnowledgeRoute ?? 'read';
+  const activeKennisFilterCount =
+    (filter.zoekterm?.trim() ? 1 : 0) +
+    (filter.categorie ? 1 : 0) +
+    (filter.bron?.trim() ? 1 : 0) +
+    (filter.verificatie ? 1 : 0);
 
   return `
     <section class="section-stack knowledge-command-layout" aria-label="Kennisbank">
@@ -13732,6 +13737,12 @@ function renderKennisScreen(state: AppShellState): string {
             </details>
           </div>
         </details>
+        ${renderKnowledgeLibraryIndexBoard({
+          categoryCount: Object.keys(KENNIS_CATEGORIE_LABELS).length,
+          visibleItems: filteredItems.length,
+          totalItems: state.kennisItems.length,
+          activeFilters: activeKennisFilterCount,
+        })}
         ${renderKnowledgeLibraryCategoryChoice(grouped)}
         <details id="knowledge-library-followup" class="kp-disclosure knowledge-library-followup" data-knowledge-library-followup="collapsed" data-knowledge-library-disclosure="categories">
           <summary class="kp-disclosure__summary knowledge-library-followup__summary">
@@ -13819,6 +13830,82 @@ function renderKennisScreen(state: AppShellState): string {
       `,
         }),
       })}
+    </section>
+  `;
+}
+
+function renderKnowledgeLibraryIndexBoard(input: {
+  categoryCount: number;
+  visibleItems: number;
+  totalItems: number;
+  activeFilters: number;
+}): string {
+  const lanes = [
+    {
+      id: 'categories',
+      href: '#knowledge-library-category-choice',
+      label: 'Categorieën',
+      title: `${input.categoryCount} groepen`,
+      detail: 'Kies eerst een kennisgroep voordat je alle kaarten opent.',
+      cue: 'Index',
+    },
+    {
+      id: 'visible',
+      href: '#knowledge-library-panel',
+      label: 'Zichtbaar',
+      title: `${input.visibleItems}/${input.totalItems} item${input.totalItems === 1 ? '' : 's'}`,
+      detail: 'Open de zichtbare bibliotheeklijst pas als vervolgstap.',
+      cue: 'Lijst',
+    },
+    {
+      id: 'filters',
+      href: '#knowledge-filter-form',
+      label: 'Filters',
+      title: input.activeFilters > 0 ? `${input.activeFilters} actief` : 'Geen filter',
+      detail: 'Pas zoekterm, bron, categorie of reviewstatus lokaal aan.',
+      cue: 'Zoeken',
+    },
+    {
+      id: 'actions',
+      href: '#knowledge-library-panel',
+      label: 'Acties',
+      title: 'Kaartacties',
+      detail: 'Open details, verificatielabels en bewerkacties per item.',
+      cue: 'Bewerken',
+    },
+    {
+      id: 'context',
+      href: '#knowledge-library-followup',
+      label: 'Volledige context',
+      title: 'Bibliotheek',
+      detail: 'Open categorieën, kaarten en zichtbaarheid als vervolgcontext.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="knowledge-library-index-board" aria-label="Kennisbibliotheek index startlaag" data-knowledge-library-index-board="first-viewport">
+      <header class="knowledge-library-index-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Bibliotheekindex</p>
+          <h3>Kies eerst je bibliotheeklaag</h3>
+        </div>
+        <p>Categorieën, zichtbare items, filters, kaartacties en volledige context staan als aparte keuzes.</p>
+      </header>
+      <nav class="knowledge-library-index-board__lanes" aria-label="Kennisbibliotheek eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="knowledge-library-index-board__lane" href="${escapeAttribute(lane.href)}" data-knowledge-library-index-lane="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }
