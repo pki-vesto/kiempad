@@ -16590,8 +16590,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, forms, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 66
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3710
+
+### G1885 — Premium Claude Design UI: treatment reimbursement route first-viewport reimbursement board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Traject/Vergoeding kan als lange administratieve pagina voelen wanneer resterende pogingen, meetellende pogingen, poliscontext, kostenroute en volledige vergoedingdetails tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is of zij resterende ruimte, meetellende pogingen, poliscontext of kosteninformatie nodig hebben.
+- **Desired Outcome:** Traject/Vergoeding opent met een compact first-viewport reimbursement board voor resterende pogingen, meetellende pogingen, poliscontext, kostenroute en volledige vergoedingdetails.
+- **User Value:** Vergoedingsinformatie voelt rustiger en taakgerichter zonder bestaande vergoedingstekst, routehooks, kostenlinks, trajectstatus of privacygrenzen te verliezen.
+- **Acceptance Criteria:** Traject/Vergoeding opent met compacte lanes voor resterende pogingen, meetellende pogingen, poliscontext, kostenroute en volledige vergoedingdetails; volledige vergoedingstabellen en toelichtende details blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande reimbursement copy, route hooks, cost links, treatment status en privacy boundaries; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw treatment payload wordt toegevoegd.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, reimbursement, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 65
+- **Status:** ☐ open
+- **Issue:** #3712
 
 ### G586 — replay conflict recovery status UI
 

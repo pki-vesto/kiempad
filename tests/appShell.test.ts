@@ -5700,6 +5700,10 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-phase-board__lanes {');
     expect(css).toContain('.treatment-phase-board__lane {');
     expect(css).toContain('.treatment-phase-board__lane:hover,');
+    expect(css).toContain('.treatment-management-board {');
+    expect(css).toContain('.treatment-management-board__lanes {');
+    expect(css).toContain('.treatment-management-board__lane {');
+    expect(css).toContain('.treatment-management-board__lane:hover,');
     expect(css).toContain('.treatment-phase-primary {');
     expect(css).toContain('.treatment-phase-primary__card {');
     expect(css).toContain('.treatment-phase-followup {');
@@ -5745,6 +5749,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.treatment-phase-board {');
     expect(mobileCss).toContain('.treatment-phase-board__lanes {');
     expect(mobileCss).toContain('.treatment-phase-board__lane {');
+    expect(mobileCss).toContain('.treatment-management-board {');
+    expect(mobileCss).toContain('.treatment-management-board__lanes {');
+    expect(mobileCss).toContain('.treatment-management-board__lane {');
     expect(mobileCss).toContain(
       '.content:has([data-treatment-focus-shell="ready"]) > .workspace-map,',
     );
@@ -43644,6 +43651,37 @@ describe('app shell', () => {
     expect(html).toContain('data-treatment-route="context"');
     expect(html).toContain('id="traject-route-beheer"');
     expect(html).toContain('data-treatment-route="beheer"');
+    expect(html).toContain(
+      'aria-label="Trajectbeheer startlaag" data-treatment-management-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je beheerlaag');
+    expect(html).toContain('data-treatment-management-lane="edit"');
+    expect(html).toContain('data-treatment-management-lane="new"');
+    expect(html).toContain('data-treatment-management-lane="archive"');
+    expect(html).toContain('data-treatment-management-lane="context"');
+    expect(html).toContain('data-treatment-management-lane="details"');
+    expect(html).toContain(
+      'href="#treatment-management-disclosure" data-treatment-management-lane="edit"',
+    );
+    expect(html).toContain('href="#traject-new-form" data-treatment-management-lane="new"');
+    expect(html).toContain(
+      'href="#treatment-management-archive-disclosure" data-treatment-management-lane="archive"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=context" data-treatment-management-lane="context"',
+    );
+    expect(html).toContain(
+      'href="#treatment-management-disclosure" data-treatment-management-lane="details"',
+    );
+    expect(html).toContain('id="treatment-management-disclosure"');
+    expect(html).toContain('id="treatment-management-archive-disclosure"');
+    expect(html.indexOf('data-treatment-management-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-management-disclosure"'),
+    );
+    expect(html.indexOf('data-treatment-management-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-management-archive-disclosure"'),
+    );
+    expect(html).not.toContain('<details id="treatment-management-disclosure" open');
     expect(html).toContain('Trajectoverzicht');
     expect(html).toContain('Faseplanning');
     expect(html).toContain(

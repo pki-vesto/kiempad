@@ -21019,8 +21019,15 @@ function renderTrajectScreen(state: AppShellState): string {
           data: { 'treatment-route-summary': 'beheer' },
           ariaLabel: 'Trajectbeheer route-samenvatting',
         })}
+        ${renderTreatmentManagementBoard({
+          hasSelectedTreatment: Boolean(selected),
+          archivedCount: gearchiveerdeTrajecten.length,
+          activeCount: actieveTrajecten.length,
+          contextCount: fertilityTimeline.items.length + (graphWeergave?.edges.length ?? 0),
+        })}
         ${disclosure({
           summary: selected ? 'Traject bewerken of poging toevoegen' : 'Traject aanmaken',
+          id: 'treatment-management-disclosure',
           open: !selected,
           body: trajectFormsBody,
         })}
@@ -21028,6 +21035,7 @@ function renderTrajectScreen(state: AppShellState): string {
           gearchiveerdeTrajecten.length > 0
             ? disclosure({
                 summary: 'Archief tonen',
+                id: 'treatment-management-archive-disclosure',
                 body: renderTrajectList(gearchiveerdeTrajecten, 'Archief', true),
               })
             : ''
@@ -21294,6 +21302,85 @@ function renderTreatmentPhaseBoard(input: {
           .map(
             (lane) => `
               <a class="treatment-phase-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-phase-lane="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
+}
+
+function renderTreatmentManagementBoard(input: {
+  hasSelectedTreatment: boolean;
+  archivedCount: number;
+  activeCount: number;
+  contextCount: number;
+}): string {
+  const lanes = [
+    {
+      id: 'edit',
+      href: '#treatment-management-disclosure',
+      label: 'Huidig traject',
+      title: input.hasSelectedTreatment ? 'Bewerken' : 'Nog geen traject',
+      detail: 'Open de bestaande trajectvelden pas als je wilt aanpassen.',
+      cue: input.hasSelectedTreatment ? 'Bewerken' : 'Start',
+    },
+    {
+      id: 'new',
+      href: input.hasSelectedTreatment ? '#traject-new-form' : '#treatment-management-disclosure',
+      label: 'Nieuwe poging',
+      title: `${input.activeCount} actief`,
+      detail: 'Voeg een poging toe vanuit dezelfde beheerdetails.',
+      cue: 'Toevoegen',
+    },
+    {
+      id: 'archive',
+      href:
+        input.archivedCount > 0
+          ? '#treatment-management-archive-disclosure'
+          : '#traject?route=beheer',
+      label: 'Archief',
+      title: `${input.archivedCount} gearchiveerd`,
+      detail: 'Herstel oude pogingen zonder de eerste viewport te vullen.',
+      cue: input.archivedCount > 0 ? 'Herstel' : 'Leeg',
+    },
+    {
+      id: 'context',
+      href: '#traject?route=context',
+      label: 'Behandelcontext',
+      title: `${input.contextCount} contextitem${input.contextCount === 1 ? '' : 's'}`,
+      detail: 'Lees timeline en graph los van beheeracties.',
+      cue: 'Context',
+    },
+    {
+      id: 'details',
+      href: '#treatment-management-disclosure',
+      label: 'Volledig beheer',
+      title: 'Details openen',
+      detail: 'Open alle beheerformulieren wanneer je echt wilt wijzigen.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="treatment-management-board" aria-label="Trajectbeheer startlaag" data-treatment-management-board="first-viewport">
+      <header class="treatment-management-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Beheerbord</p>
+          <h3>Kies eerst je beheerlaag</h3>
+        </div>
+        <p>Bewerken, nieuwe poging, archief, context en volledige beheerdetails staan als aparte keuzes.</p>
+      </header>
+      <nav class="treatment-management-board__lanes" aria-label="Trajectbeheer eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="treatment-management-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-management-lane="${escapeAttribute(lane.id)}">
                 <span>${escapeHtml(lane.label)}</span>
                 <strong>${escapeHtml(lane.title)}</strong>
                 <small>${escapeHtml(lane.detail)}</small>

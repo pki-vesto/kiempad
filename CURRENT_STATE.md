@@ -178,6 +178,11 @@
   volledige planning. De bestaande faseknoppen, vervolgcontext, tijdlijnankers
   en graphcontext blijven bereikbaar zonder de eerste viewport als
   faseplanningstapel te vullen.
+- **G1884 Traject/Beheer management board:** Traject/Beheer start met een
+  compact beheerbord voor huidig traject, nieuwe poging, archief,
+  behandelcontext en volledige beheerdetails. De bestaande form-id's,
+  input names, archiefacties en herstel/verwijderacties blijven bereikbaar
+  zonder de eerste viewport als beheerformulierstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

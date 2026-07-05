@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1884 Premium Claude Design UI: Traject/Beheer opent nu met een compact
+  beheerbord voor huidig traject, nieuwe poging, archief, behandelcontext en
+  volledige beheerdetails. De bestaande form-id's, input names, archiefacties
+  en herstel/verwijderacties blijven bereikbaar zonder als eerste lange
+  beheerformulierstapel te starten.
 - G1883 Premium Claude Design UI: Traject/Fasen opent nu met een compact
   fasebord voor actieve fase, fasehistorie, faseacties, behandelcontext en
   volledige planning. De bestaande faseknoppen, vervolgcontext, tijdlijnankers
