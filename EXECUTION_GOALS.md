@@ -18105,8 +18105,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging repository, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3836
+
+### G1975 — Fertility Intelligence: embryo image classification release evidence freshness guard
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De G1945 release-evidence verwijst naar de forced-colors focuscontrole voor embryo-afbeelding classificatie, maar een toekomstige wijziging aan routeflow-targets of veldnamen kan die verwijzing verouderen.
+- **User Impact:** Gebruikers met toetsenbordnavigatie en high-contrast instellingen kunnen regressies missen als release-evidence niet meer aan de actuele routeflow gekoppeld is.
+- **Desired Outcome:** Een freshness guard bewaakt dat release-evidence, routeflow target en veldnamen samen blijven wijzigen.
+- **User Value:** High-contrast en keyboard focus blijven aantoonbaar beschermd in releasevoorbereiding.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan het routeflow target `dossier-imaging-embryo-classification-review`; guard test noemt beeldtype, embryo-label, embryo-id en reviewstatus; guard faalt als de evidence helper of targetnaam verdwijnt; geen kwaliteitsscore, selectieadvies, beeldpayload, OCR-tekst, diagnose, dosering, kansberekening, secrets of trackingpayload wordt toegevoegd; backlog health blijft op minimaal 100 open goals.
+- **Affected Screens:** Dossier, Beeldenoverzicht, Embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging repository, routeflow smoke, release evidence, maintenance docs
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3887
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

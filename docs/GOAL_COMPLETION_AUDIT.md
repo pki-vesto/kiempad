@@ -162,6 +162,23 @@ of forced-colors styling rond dossieruploads wijzigt.
   OCR-tekst, record payload, medische plaintext, diagnose of behandelkeuzeadvies
   bevatten. Houd `attachmentEnvelopeEvidencePrivacyPattern` en deze sectie synchroon.
 
+## Embryo Image Classification Forced-Colors Focus Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de embryo-afbeelding
+classificatiereview, imaging metadata review of forced-colors focuscontrole wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `embryoImageClassificationForcedColorsFocusEvidence` in de routeflow target
+  `dossier-imaging-embryo-classification-review`.
+- **Command:** `npm run smoke:routeflows` emuleert forced-colors rond deze target
+  en focust de controles voor beeldtype, embryo-label, embryo-id en reviewstatus.
+- **Scope:** de evidence bewaakt actieve focusringen, zichtbare veldranden,
+  labeltekst en horizontale overflow voor de concept-classificatie zonder de
+  beeldmetadata zelf te interpreteren.
+- **Privacygrens:** blijvende evidence mag geen kwaliteitsscore, selectieadvies,
+  beeldpayload, OCR-tekst, diagnose, dosering, kansberekening, secret of
+  trackingpayload bevatten.
+
 ## Beslissing
 
 Markeer een doel alleen als `☑ klaar` wanneer ieder requirement direct bewijs heeft.

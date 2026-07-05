@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1945 embryo image classification forced-colors focus release evidence:
+  releasecontext en onderhoudsdocs noemen nu
+  `npm run smoke:routeflows`, target `dossier-imaging-embryo-classification-review`
+  en `embryoImageClassificationForcedColorsFocusEvidence`, zodat de forced-colors focuscontrole voor beeldtype, embryo-label, embryo-id en reviewstatus vindbaar blijft
+  zonder beeldpayload of medische interpretatie.
 - G578 Fertility Intelligence: OCR-documenten tonen nu een reviewformulier voor
   correctietekst, metadata-notitie en reviewstatus; gereviewde OCR-correcties
   worden encrypted opgeslagen en concept-OCR telt niet mee voor zoeken.
