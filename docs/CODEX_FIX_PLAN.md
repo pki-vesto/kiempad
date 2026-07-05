@@ -179,6 +179,9 @@
 - **Treatment mobile rail forced-colors badge contrast polish — done in G1894 / issue #3730.**
   Mobile Traject badges and cue pills now have explicit forced-colors contrast rules for active
   and inactive route cards, keeping route status readable in high-contrast contexts.
+- **Treatment mobile rail forced-colors cue spacing polish — done in G1895 / issue #3732.**
+  Mobile Traject badge and cue pills now gain forced-colors gap, min-height, padding and
+  line-height handling, keeping compact route groups readable without crowding.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
