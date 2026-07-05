@@ -17220,7 +17220,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 30
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3782
 
 ### G1921 — Premium Claude Design UI: consult review scan mobile density polish
@@ -17596,6 +17596,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 26
 - **Status:** ☐ open
 - **Issue:** #3850
+
+### G1953 — Premium Claude Design UI: treatment mobile rail forced-colors cue text fill release evidence
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De mobiele Traject-rail heeft expliciete forced-colors cue text-fill behandeling, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de cue-fill behandeling verliezen zonder dat reviewers zien dat inactive cue pills minder leesbaar worden in high-contrast rendering.
+- **Desired Outcome:** Release-evidence documenteert dat inactive focused treatment route cue pills ButtonText fill houden op ButtonFace achtergrond met CanvasText border/outline, terwijl active cue pills onderscheidend blijven.
+- **User Value:** High-contrast toetsenbordgebruikers houden scanbare cuepills in de mobiele Traject-rail na thema- of layoutwijzigingen.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar de app-shell CSS-test voor forced-colors inactive cue text fill; evidence bevestigt expliciete inactive cue text fill en active cue fill distinctie; evidence bevat geen medische payloads, OCR-tekst, secrets, tokens of broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Treatment UI, mobile route rail, release evidence
+- **ADR Needed:** no
+- **Score:** 26
+- **Status:** ☐ open
+- **Issue:** #3852
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 

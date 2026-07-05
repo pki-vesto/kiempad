@@ -277,6 +277,9 @@
 - **Treatment mobile rail forced-colors inactive focus cue text contrast polish — done in G1919 / issue #3780.**
   Inactive focused mobile Traject cue pills now pin WebKit text fill to ButtonText, preserving
   cue label readability against ButtonFace backgrounds and CanvasText borders.
+- **Treatment mobile rail forced-colors inactive focus cue text fill polish — done in G1920 / issue #3782.**
+  Inactive focused mobile Traject cue pills now explicitly keep ButtonText fill, forced-color
+  adjustment, and text-decoration color on ButtonFace while active cue pills pin Highlight fill.
 - **Consult intelligence review scan — done in G557 / issue #3784.** Consultverslagen now open
   with a compact review scan for reports, summaries, action points, and source review before the
   detailed consult cards, keeping existing upload, review, and anchor hooks intact.
