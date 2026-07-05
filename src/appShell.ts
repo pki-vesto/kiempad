@@ -12834,7 +12834,7 @@ function renderHistorischeTijdlijnReviewForm(
     return `
       <section class="linked-note historical-timeline-review-form" data-historical-timeline-review="locked">
         <strong>Historische tijdlijnreview</strong>
-        <p class="small-print">Ontgrendel de lokale kluis om datum, bron en zichtbaarheid te corrigeren zonder bronbestandsnaam te tonen.</p>
+        <p class="small-print" data-historical-timeline-review-locked-boundary="ready">Ontgrendel de lokale kluis om datum, bron en zichtbaarheid te corrigeren zonder bronbestandsnaam te tonen.</p>
       </section>
     `;
   }
@@ -12862,15 +12862,15 @@ function renderHistorischeTijdlijnReviewForm(
         <div><dt>Auditdatum</dt><dd>${escapeHtml(conflict)}</dd></div>
         <div><dt>Originele bron</dt><dd>${escapeHtml(document.metadata.bronbestand ?? document.bestandsNaam)}</dd></div>
       </dl>
-      <label>
+      <label data-historical-timeline-review-field="date">
         Datum
         <input name="historicalTimelineDatum" type="date" required value="${escapeAttribute(datum)}" />
       </label>
-      <label>
+      <label data-historical-timeline-review-field="source">
         Bron
         <input name="historicalTimelineBron" autocomplete="off" required value="${escapeAttribute(bron)}" />
       </label>
-      <label>
+      <label data-historical-timeline-review-field="review-status">
         Reviewstatus
         <select name="historicalTimelineReviewStatus">
           <option value="concept"${status === 'concept' ? ' selected' : ''}>Concept - nog controleren</option>
@@ -12878,14 +12878,14 @@ function renderHistorischeTijdlijnReviewForm(
           <option value="verborgen"${status === 'verborgen' ? ' selected' : ''}>Verborgen - niet tonen in centrale tijdlijn</option>
         </select>
       </label>
-      <label>
+      <label data-historical-timeline-review-field="visibility">
         Zichtbaarheid
         <select name="historicalTimelineZichtbaarheid">
           <option value="zichtbaar"${zichtbaarheid === 'zichtbaar' ? ' selected' : ''}>Zichtbaar in tijdlijn</option>
           <option value="verborgen"${zichtbaarheid === 'verborgen' ? ' selected' : ''}>Verborgen in centrale tijdlijn</option>
         </select>
       </label>
-      <button type="submit" class="secondary-button">Tijdlijnreview bewaren</button>
+      <button type="submit" class="secondary-button" data-historical-timeline-review-action="save">Tijdlijnreview bewaren</button>
     </form>
   `;
 }

@@ -1571,6 +1571,46 @@ const targets = [
     ],
   },
   {
+    screen: 'dossier-historical-timeline-review',
+    hash: '#dossier?route=timeline&preview=locked',
+    rootSelector: '#dossier-route-timeline',
+    expectedText: 'Historische tijdlijnreview',
+    activeRouteSelector: '[data-dossier-route="timeline"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    prepare: 'dossier-historical-timeline-review',
+    openSelectors: [
+      '[data-dossier-timeline-followup="collapsed"]',
+      '[data-dossier-timeline-context-choice="collapsed"]',
+      '[data-dossier-timeline-disclosure="documents"]',
+    ],
+    requiredSelectors: [
+      '[data-historical-timeline-review="ready"]',
+      '[data-historical-timeline-review-field="date"]',
+      '[data-historical-timeline-review-field="source"]',
+      '[data-historical-timeline-review-field="review-status"]',
+      '[data-historical-timeline-review-field="visibility"]',
+      '[data-historical-timeline-review-action="save"]',
+      '[data-historical-timeline-review="locked"]',
+      '[data-historical-timeline-review-locked-boundary="ready"]',
+    ],
+    presentSelectors: [
+      '[data-hub-detail-panel="timeline-documents"]',
+      '[data-attachment-preview-kind="dossier-preview"][data-attachment-preview-state="locked"]',
+      '[data-metadata-normalization-correction="ready"]',
+      '[data-ocr-review-correction="ready"]',
+    ],
+    closedDetailsSelectors: [],
+    dossierConsole: true,
+    dossierHistoricalTimelineReview: true,
+    smallMobileViewport: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
     screen: 'dossier-metadata-normalization-correction',
     hash: '#dossier?route=timeline&preview=locked',
     rootSelector: '#dossier-route-timeline',
@@ -2140,6 +2180,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'dossier-metadata-normalization-correction') {
         await prepareDossierMetadataNormalizationCorrection(page, target.hash);
+      }
+      if (target.prepare === 'dossier-historical-timeline-review') {
+        await prepareDossierHistoricalTimelineReview(page, target.hash);
       }
       if (target.prepare === 'central-session-renewal-recovery-focus') {
         await prepareCentralSessionRenewalRecoveryFocus(page, target.hash);
@@ -2899,6 +2942,77 @@ async function assertRouteflows(browser, options) {
                 .join(' ');
               const lockedForbiddenMatch = lockedText.match(
                 /(\.pdf|\.jpg|\.jpeg|OCR_RAW|GEVOELIGE|MEDISCHE PAYLOAD|secret|token|base64|routeflow-normalization-ready|routeflow-normalization-locked|Veilige bron|locked context)/i,
+              );
+              return {
+                readyVisible: Boolean(readyRect && readyRect.width > 0 && readyRect.height > 0),
+                lockedVisible: Boolean(lockedRect && lockedRect.width > 0 && lockedRect.height > 0),
+                fields,
+                actionVisible: Boolean(actionRect && actionRect.width > 0 && actionRect.height > 0),
+                actionText: action?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                actionWhiteSpace: actionStyle?.whiteSpace ?? '',
+                lockedBoundaryVisible: Boolean(
+                  lockedBoundaryRect &&
+                    lockedBoundaryRect.width > 0 &&
+                    lockedBoundaryRect.height > 0,
+                ),
+                lockedPreviewVisible: lockedPreview instanceof HTMLElement,
+                readyDisplay: readyStyle?.display ?? '',
+                readyGridTemplateColumns: readyStyle?.gridTemplateColumns ?? '',
+                lockedForbiddenMatch: lockedForbiddenMatch?.[0] ?? '',
+                lockedHasForbiddenText: Boolean(lockedForbiddenMatch),
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  (readyRect ? readyRect.right > document.documentElement.clientWidth + 1 : true) ||
+                  (lockedRect ? lockedRect.right > document.documentElement.clientWidth + 1 : true) ||
+                  (actionRect && readyRect ? actionRect.right > readyRect.right + 1 : true) ||
+                  fields.some((field) => field.overflowsForm),
+              };
+            })()
+          : null;
+        const dossierHistoricalTimelineReview = routeflow.dossierHistoricalTimelineReview
+          ? (() => {
+              const ready = document.querySelector('[data-historical-timeline-review="ready"]');
+              const locked = document.querySelector('[data-historical-timeline-review="locked"]');
+              const readyRectForFields = ready?.getBoundingClientRect();
+              const fields = ['date', 'source', 'review-status', 'visibility'].map((field) => {
+                const element = ready?.querySelector(
+                  `[data-historical-timeline-review-field="${field}"]`,
+                );
+                const control = element?.querySelector('input, select');
+                const rect = element?.getBoundingClientRect();
+                const controlRect = control?.getBoundingClientRect();
+                return {
+                  field,
+                  visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+                  controlVisible: Boolean(
+                    controlRect && controlRect.width > 0 && controlRect.height > 0,
+                  ),
+                  controlName: control?.getAttribute('name') ?? '',
+                  overflowsForm: Boolean(
+                    rect && readyRectForFields ? rect.right > readyRectForFields.right + 1 : true,
+                  ),
+                };
+              });
+              const action = ready?.querySelector('[data-historical-timeline-review-action="save"]');
+              const lockedBoundary = locked?.querySelector(
+                '[data-historical-timeline-review-locked-boundary="ready"]',
+              );
+              const lockedPreview = document.querySelector(
+                '[data-attachment-preview-kind="dossier-preview"][data-attachment-preview-state="locked"]',
+              );
+              const readyRect = ready?.getBoundingClientRect();
+              const lockedRect = locked?.getBoundingClientRect();
+              const actionRect = action?.getBoundingClientRect();
+              const lockedBoundaryRect = lockedBoundary?.getBoundingClientRect();
+              const readyStyle = ready instanceof HTMLElement ? getComputedStyle(ready) : null;
+              const actionStyle = action instanceof HTMLElement ? getComputedStyle(action) : null;
+              const lockedText = [locked, lockedPreview]
+                .map((element) => element?.textContent?.replace(/\s+/g, ' ').trim() ?? '')
+                .join(' ');
+              const lockedForbiddenMatch = lockedText.match(
+                /(\.pdf|\.jpg|\.jpeg|OCR_RAW|GEVOELIGE|MEDISCHE PAYLOAD|secret|token|base64|routeflow-timeline-ready|routeflow-timeline-locked|Veilige bron|locked context)/i,
               );
               return {
                 readyVisible: Boolean(readyRect && readyRect.width > 0 && readyRect.height > 0),
@@ -3696,6 +3810,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
           dossierImportInboxRetry,
+          dossierHistoricalTimelineReview,
           dossierMetadataNormalizationCorrection,
           dossierOcrReviewCorrection,
           startLaunchpad,
@@ -4148,6 +4263,26 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: metadata-normalisatie correctieflow mist scanbare routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierMetadataNormalizationCorrection)}).`,
+        );
+      }
+      if (
+        evidence.dossierHistoricalTimelineReview &&
+        (!evidence.dossierHistoricalTimelineReview.readyVisible ||
+          !evidence.dossierHistoricalTimelineReview.lockedVisible ||
+          evidence.dossierHistoricalTimelineReview.fields.length !== 4 ||
+          evidence.dossierHistoricalTimelineReview.fields.some(
+            (field) => !field.visible || !field.controlVisible || !field.controlName,
+          ) ||
+          !evidence.dossierHistoricalTimelineReview.actionVisible ||
+          evidence.dossierHistoricalTimelineReview.actionText !== 'Tijdlijnreview bewaren' ||
+          !evidence.dossierHistoricalTimelineReview.lockedBoundaryVisible ||
+          !evidence.dossierHistoricalTimelineReview.lockedPreviewVisible ||
+          evidence.dossierHistoricalTimelineReview.readyDisplay !== 'grid' ||
+          evidence.dossierHistoricalTimelineReview.lockedHasForbiddenText ||
+          evidence.dossierHistoricalTimelineReview.hasHorizontalOverflow)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: historische tijdlijnreview mist scanbare routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierHistoricalTimelineReview)}).`,
         );
       }
       if (
@@ -5468,6 +5603,76 @@ async function prepareDossierMetadataNormalizationCorrection(page, targetHash) {
   await page.locator('#dossier-upload-form [name="categorie"]').selectOption('beeld');
   await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('afbeelding');
   await page.locator('#dossier-upload-form [name="beeldContext"]').fill('Metadata locked context');
+  await page.locator('#dossier-upload-form [name="beeldBron"]').fill('Veilige bron');
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareDossierHistoricalTimelineReview(page, targetHash) {
+  await page.goto(`${url}#dossier-upload-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#dossier-upload-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'routeflow-timeline-ready.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('safe synthetic timeline review text'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-07-03');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('Historische tijdlijnreview klaar');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('behandelverslag');
+  await page.locator('#dossier-upload-form [name="lokaleOcr"]').check();
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-image-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'routeflow-timeline-locked.jpg',
+    mimeType: 'image/jpeg',
+    buffer: Buffer.from('safe synthetic locked timeline fixture'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-07-04');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('Historische tijdlijnreview beeld');
+  await page.locator('#dossier-upload-form [name="categorie"]').selectOption('beeld');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('afbeelding');
+  await page.locator('#dossier-upload-form [name="beeldContext"]').fill('Timeline locked context');
   await page.locator('#dossier-upload-form [name="beeldBron"]').fill('Veilige bron');
   await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
   await page.locator('#dossier-upload-form button[type="submit"]').click();

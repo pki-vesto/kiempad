@@ -657,6 +657,20 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'metadata-normalisatie correctieflow mist scanbare routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-historical-timeline-review'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "prepare: 'dossier-historical-timeline-review'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('data-historical-timeline-review="ready"');
+    expect(routeflowScreenshotSmokeScript).toContain('data-historical-timeline-review="locked"');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'data-historical-timeline-review-field="date"',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'historische tijdlijnreview mist scanbare routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('focusLayout');
     expect(routeflowScreenshotSmokeScript).toContain(
       'focus-workspace staat niet als volle breedte',

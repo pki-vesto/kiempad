@@ -115,6 +115,11 @@
   document type, research type, attempt, appointment, certainty, save action, locked boundary copy,
   and locked preview state are measured across desktop, tablet, mobile, and small-mobile without
   locked source filenames or image payloads in the evidence.
+- **Historical timeline review evidence — done in G1935 / issue #3817.** Dossier Timeline now has
+  routeflow coverage for historical timeline review ready and locked variants: date, source,
+  review status, visibility, save action, locked boundary copy, and locked preview state are
+  measured across desktop, tablet, mobile, and small-mobile without locked source filenames or
+  image payloads in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

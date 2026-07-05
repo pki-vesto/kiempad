@@ -17441,7 +17441,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier timeline, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3817
 
 ### G1936 — Fertility Intelligence: metadata-normalisatie correctieformulier routeflow evidence
@@ -17562,6 +17562,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3846
+
+### G1951 — Fertility Intelligence: historische tijdlijnreview release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De historische tijdlijnreview heeft routeflow-evidence voor ready en locked varianten, maar release-evidence moet nog vastleggen dat deze privacy- en overflowbescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de historische tijdlijnreviewbescherming verliezen zonder dat reviewers zien dat reviewvelden of locked imaging privacy onvoldoende bewaakt worden.
+- **Desired Outcome:** Release-evidence documenteert dat de historische tijdlijnreview op desktop, tablet, mobiel en small-mobile gecontroleerd blijft zonder medische payloads, bronbestandsnamen of locked beeldbron-plaintext.
+- **User Value:** Gebruikers kunnen historische dossiermomenten blijven bevestigen, corrigeren of verbergen met vertrouwen dat releases de privacyboundary en scanbare formulierlayout behouden.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar de historische tijdlijnreview routeflow en de gecontroleerde selectors; evidence bevestigt dat datum, bron, reviewstatus, zichtbaarheid en bewaaractie scanbaar blijven zonder page-level horizontale overflow; evidence bevestigt dat de locked variant geen bronbestandsnaam, thumbnail, beeldpayload of plaintext bronwaarde toont; evidence bevat geen medische payload, bronbestandsnamen, OCR-payload, secrets of trackingdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Documenttijdlijn, centrale timeline
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier timeline, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3848
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 
