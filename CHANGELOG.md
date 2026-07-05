@@ -17,6 +17,13 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1989 offline cache metadata release evidence missing-term fixture: de
+  maintenance-test meldt nu compact wanneer
+  `knowledge-research-offline-cache-metadata` of
+  `data-research-offline-cache-metadata` ontbreekt, met cachebron, datum,
+  reviewstatus, cachetype en correctievelden als veilige context zonder
+  diagnose, dosering, kansberekening, behandelkeuzeadvies, secret,
+  gezondheidsdata of plaintext medische payload.
 - G1988 offline cache metadata release evidence freshness guard:
   releasecontext en onderhoudsdocs noemen nu `npm run smoke:routeflows`,
   target `knowledge-research-offline-cache-metadata`,
