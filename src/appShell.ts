@@ -15792,7 +15792,7 @@ function renderResearchTrendScan(groepen: readonly ResearchTrendGroep[]): string
   ];
 
   return `
-    <nav class="research-trend-scan" data-research-trend-scan="ready" aria-label="Research trend overzicht">
+    <nav class="research-trend-scan" data-research-trend-scan="ready" data-research-trend-scan-density="mobile-compact" aria-label="Research trend overzicht">
       ${cards
         .map(
           (

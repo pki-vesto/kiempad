@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1727 |
+| ☑ klaar | 1728 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1926** |
+| **Totaal** | **1927** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2084,17 +2084,18 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1920 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus cue text fill polish | P1 | F5 | ☐ |
 | G1921 | Premium Claude Design UI: consult review scan mobile density polish | P1 | F5 | ☑ |
 | G1922 | Premium Claude Design UI: embryo tracking scan mobile density polish | P1 | F5 | ☑ |
-| G1923 | Premium Claude Design UI: research trend scan mobile density polish | P1 | F5 | ☐ |
+| G1923 | Premium Claude Design UI: research trend scan mobile density polish | P1 | F5 | ☑ |
 | G1924 | Premium Claude Design UI: daily recommendation owner scan mobile density polish | P1 | F5 | ☑ |
 | G1925 | Premium Claude Design UI: daily recommendation owner scan routeflow overflow evidence | P1 | F5 | ☐ |
 | G1926 | Premium Claude Design UI: consult review scan routeflow overflow evidence | P1 | F5 | ☐ |
 | G1927 | Premium Claude Design UI: embryo tracking scan routeflow overflow evidence | P1 | F5 | ☐ |
+| G1928 | Premium Claude Design UI: research trend scan routeflow overflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1926** (id's G001 t/m G1927; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1927** (id's G001 t/m G1928; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
