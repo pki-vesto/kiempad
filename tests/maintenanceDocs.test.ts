@@ -545,6 +545,8 @@ const OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_ERROR_RELEASE
   'offline cache metadata missing-term error contract',
   'veilige technische labels',
 ] as const;
+const OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_ERROR_RELEASE_MISSING_TERM_ERROR =
+  'Offline cache metadata release-state contract error-contract error releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels';
 const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS = [
   'G1095',
   'missing-term fixture',
@@ -4765,6 +4767,50 @@ describe('onderhoudsdocumentatie', () => {
     }
     expect(backlog).toContain('G2003');
     expect(executionGoals).toContain('G2003');
+  });
+
+  it('geeft ontbrekende G2004 offline cache metadata release-state contract error-contract error release-termen technisch terug', () => {
+    const partialErrorContractErrorReleaseState =
+      'G2002 borgt offline-cache-metadata-release-state-contract-error-contract-missing-term-error-contract met Offline cache metadata release-state contract error-contract releasecontext ontbreekt voor termen.';
+
+    expect(() =>
+      extractOfflineCacheMetadataReleaseStateContractErrorContractErrorReleaseContext(
+        partialErrorContractErrorReleaseState,
+      ),
+    ).toThrow(
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_ERROR_RELEASE_MISSING_TERM_ERROR,
+    );
+    expect(
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_ERROR_RELEASE_MISSING_TERM_ERROR,
+    ).toBe(
+      'Offline cache metadata release-state contract error-contract error releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels',
+    );
+    for (const presentContractTerm of [
+      'G2002',
+      'offline-cache-metadata-release-state-contract-error-contract-missing-term-error-contract',
+      'Offline cache metadata release-state contract error-contract releasecontext ontbreekt voor termen',
+    ]) {
+      expect(partialErrorContractErrorReleaseState).toContain(presentContractTerm);
+    }
+    for (const missingSafeTerm of [
+      'offline cache metadata missing-term error contract',
+      'veilige technische labels',
+    ]) {
+      expect(partialErrorContractErrorReleaseState).not.toContain(missingSafeTerm);
+    }
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(partialErrorContractErrorReleaseState).not.toContain(forbiddenEvidenceTerm);
+    }
+    expect(backlog).toContain('G2004');
+    expect(executionGoals).toContain('G2004');
   });
 
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
