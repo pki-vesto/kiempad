@@ -224,6 +224,9 @@
 - **Treatment mobile rail forced-colors inactive focus cue border polish — done in G1909 / issue #3760.**
   Inactive focused mobile Traject cue pills now keep explicit solid system borders and ButtonText
   outlines, preserving cue affordance without copying active route outlines.
+- **Treatment mobile rail forced-colors inactive focus cue outline offset polish — done in G1910 / issue #3762.**
+  Inactive focused mobile Traject cue pills now use a compact one-pixel outline offset, keeping
+  keyboard focus readable without matching active route outline spacing.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
