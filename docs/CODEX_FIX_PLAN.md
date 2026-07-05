@@ -278,6 +278,10 @@
 - **Daily recommendation owner scan mobile density — done in G1924 / issue #3794.** The owner
   scan now uses tighter mobile snap cards with shorter height and short review/artscheck cues,
   so vrouw, man, and samen are easier to scan before opening the detailed suggestion list.
+- **Supplement artscheck action routeflow evidence — done in G1941 / issue #3828.** Supplement
+  checklist rows now expose stable label, source/disclaimer, and per-row artscheck action hooks,
+  with a compact desktop/mobile layout and routeflow smoke evidence that standard checklist rows
+  do not show the extra action or leak dosage, interaction, treatment, tracking, or secret text.
 - **Dossierupload size feedback — done in G567 / issue #3804.** The Dossier upload form now
   shows a dedicated preflight size feedback layer with per-file and per-selection limits,
   central 413 context, and recoverable retry copy without filenames, OCR text, encoded content,
