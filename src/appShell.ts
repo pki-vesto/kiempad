@@ -779,6 +779,7 @@ type CommandTaskRoute<RouteId extends string> = {
   meta: string;
   badge: string;
   cue?: string;
+  group?: string;
   density: 'empty' | 'filled' | 'action';
 };
 
@@ -795,7 +796,7 @@ function renderCommandTaskRoutes<RouteId extends string>(input: {
       ${input.routes
         .map(
           (route) => `
-            <a class="${input.routeClassName} command-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''} data-command-route-density="${route.density}">
+            <a class="${input.routeClassName} command-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''} data-command-route-density="${route.density}"${route.group ? ` data-command-route-group="${escapeAttribute(route.group)}"` : ''}>
               <span class="command-task-route__top">
                 <span>${escapeHtml(route.label)}</span>
                 <strong class="command-task-route__badge">${escapeHtml(route.badge)}</strong>
@@ -21831,6 +21832,7 @@ function renderTreatmentTaskRoutes(input: {
       meta: `${input.activeCount} actief`,
       badge: String(input.activeCount),
       cue: 'Start',
+      group: 'focus',
       density: input.activeCount > 0 ? 'filled' : 'empty',
     },
     {
@@ -21840,6 +21842,7 @@ function renderTreatmentTaskRoutes(input: {
       meta: `${input.phaseCount} fases`,
       badge: String(input.phaseCount),
       cue: 'Planning',
+      group: 'planning',
       density: input.phaseCount > 0 ? 'filled' : 'empty',
     },
     {
@@ -21849,6 +21852,7 @@ function renderTreatmentTaskRoutes(input: {
       meta: `${input.remainingReimbursements} resterend`,
       badge: String(input.remainingReimbursements),
       cue: 'Polis',
+      group: 'finance',
       density: input.remainingReimbursements > 0 ? 'filled' : 'empty',
     },
     {
@@ -21858,6 +21862,7 @@ function renderTreatmentTaskRoutes(input: {
       meta: 'timeline',
       badge: 'graph',
       cue: 'Graph',
+      group: 'context',
       density: 'action',
     },
     {
@@ -21867,6 +21872,7 @@ function renderTreatmentTaskRoutes(input: {
       meta: `${input.archivedCount} archief`,
       badge: String(input.archivedCount),
       cue: 'Archief',
+      group: 'admin',
       density: input.archivedCount > 0 ? 'filled' : 'action',
     },
   ];

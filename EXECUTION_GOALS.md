@@ -16675,8 +16675,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 61
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3720
+
+### G1890 — Premium Claude Design UI: treatment mobile rail active thumb reach polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De mobiele Traject route-rail heeft nu duidelijke groepen, maar de actieve route kan nog extra bereik- en scanritme nodig hebben binnen de gegroepeerde kaarten.
+- **User Impact:** Gebruikers op kleine schermen kunnen alsnog opnieuw moeten zoeken naar de actieve route wanneer zij tussen trajectroutes wisselen.
+- **Desired Outcome:** De mobiele Traject route-rail houdt de actieve route visueel en fysiek makkelijk bereikbaar zonder de gegroepeerde routekaarten te verdringen.
+- **User Value:** Routewissels op mobiel voelen sneller en rustiger terwijl de nieuwe routegroepering behouden blijft.
+- **Acceptance Criteria:** Mobile Traject route rail keeps the active route visually and physically reachable without crowding the grouped route cards; existing route hrefs, aria-current states, badges, command-task hooks, route groups and treatment route state remain intact; desktop treatment route density cues and mobile route grouping remain stable; app-shell or routeflow tests cover layout/no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 60
+- **Status:** ☐ open
+- **Issue:** #3722
 
 ### G586 — replay conflict recovery status UI
 
