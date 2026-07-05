@@ -16811,8 +16811,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 53
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3736
+
+### G1898 — Premium Claude Design UI: treatment mobile rail forced-colors active supporting text polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve mobiele Traject-route heeft nu expliciete forced-colors label- en cuebehandeling, maar ondersteunende routebeschrijving kan nog concurreren met titel, badge en cue wanneer de kaart gepromoveerd is.
+- **User Impact:** Gebruikers in high-contrast mode kunnen de actieve route minder snel scannen als titel, cue en beschrijving visueel te dicht op elkaar blijven.
+- **Desired Outcome:** De gepromote actieve mobiele Traject-route heeft expliciete forced-colors spacing en fit voor ondersteunende tekst.
+- **User Value:** De actieve route blijft rustig scanbaar: titel, badge, cue en beschrijving hebben elk een duidelijke plek binnen de volle-breedte kaart.
+- **Acceptance Criteria:** Mobile Traject active route supporting text has explicit forced-colors spacing and fit behavior when promoted to the full-width row; existing route hrefs, aria-current states, badges, cue pills, command-task hooks, route groups, active-route promotion, focus feedback, reduced-motion behavior, forced-colors contrast, spacing and active label/cue handling remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors active supporting text behavior or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 52
+- **Status:** ☐ open
+- **Issue:** #3738
 
 ### G586 — replay conflict recovery status UI
 

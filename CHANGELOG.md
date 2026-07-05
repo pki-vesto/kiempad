@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1897 Premium Claude Design UI: de gepromoveerde actieve mobiele
+  Traject-route krijgt in forced-colors expliciete labelnadruk en begrensde
+  cue-uitlijning, zodat label, badge en cue binnen de volle kaart gescheiden
+  blijven.
 - G1896 Premium Claude Design UI: mobiele Traject routelabels krijgen in
   forced-colors expliciete ellipsis- en min-width regels naast begrensde
   badge- en cuepills, zodat lange labels niet tegen statuspills drukken.
