@@ -572,6 +572,12 @@ describe('kennis domeinregels', () => {
       titel: 'IVF embryo-cultuur',
       publicatieDatum: '2026-05-10',
       bron: 'https://voorbeeld.test/ivf-embryo',
+      periodeLabel: '2026-05',
+      relevantieUitleg:
+        'Nog geen persoonlijke relevantie vastgelegd; gebruik dit item alleen als algemene leescontext.',
+      updateStatus: 'ongepland',
+      updateStatusLabel: 'Herverificatie niet gepland',
+      laatsteCheck: 'Nog niet gecontroleerd',
     });
     expect(groepen.every((groep) => groep.waarschuwing.includes('geen bewijsweging'))).toBe(true);
   });

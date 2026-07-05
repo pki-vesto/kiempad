@@ -174,6 +174,11 @@ export type ResearchTrendItem = {
   titel: string;
   bron?: string;
   publicatieDatum?: string;
+  periodeLabel: string;
+  relevantieUitleg: string;
+  updateStatus: ResearchHerverificatieStatus['status'];
+  updateStatusLabel: string;
+  laatsteCheck: string;
 };
 
 export type ResearchTrendGroep = {
@@ -868,6 +873,14 @@ export function groepeerResearchTrends(items: readonly KennisItem[]): ResearchTr
           titel: item.titel,
           bron: item.researchPublicatie?.bron ?? item.bron,
           publicatieDatum: item.researchPublicatie?.publicatieDatum,
+          periodeLabel: bepaalResearchTrendPeriode(item),
+          relevantieUitleg:
+            item.researchPublicatie?.relevantieVoorGebruiker ??
+            'Nog geen persoonlijke relevantie vastgelegd; gebruik dit item alleen als algemene leescontext.',
+          updateStatus: bouwResearchHerverificatieStatus(item)?.status ?? 'ongepland',
+          updateStatusLabel:
+            bouwResearchHerverificatieStatus(item)?.label ?? 'Herverificatie niet gepland',
+          laatsteCheck: item.geverifieerdOp ?? 'Nog niet gecontroleerd',
         },
       ]);
     }
@@ -882,6 +895,12 @@ export function groepeerResearchTrends(items: readonly KennisItem[]): ResearchTr
         'Trendgroepering is een lokale trefwoordindeling voor overzicht; dit is geen bewijsweging of behandeladvies.',
     }))
     .filter((groep) => groep.items.length > 0);
+}
+
+function bepaalResearchTrendPeriode(item: KennisItem): string {
+  const datum = item.researchPublicatie?.publicatieDatum;
+  if (!datum) return 'Periode onbekend';
+  return `${datum.slice(0, 4)}-${datum.slice(5, 7)}`;
 }
 
 export function bouwResearchKaartMetadata(item: KennisItem): ResearchKaartMetadata | undefined {

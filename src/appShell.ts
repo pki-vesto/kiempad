@@ -16322,17 +16322,22 @@ function renderResearchDossierRelaties(relaties: readonly ResearchDossierRelatie
 
 function renderResearchTrendGroepen(groepen: readonly ResearchTrendGroep[]): string {
   const itemCount = groepen.reduce((total, groep) => total + groep.items.length, 0);
+  const latestDate = groepen
+    .flatMap((groep) => groep.items.map((item) => item.publicatieDatum).filter(Boolean))
+    .sort()
+    .at(-1);
   return `
     <section class="research-trend-dashboard" aria-label="Research trenddashboard" data-research-trend-dashboard="ready" data-research-trend-state="${groepen.length > 0 ? 'filled' : 'empty'}">
       <header class="research-trend-dashboard__header">
         <div>
           <p class="kp-card__eyebrow">Trenddashboard</p>
           <h2>Researchtrends</h2>
-          <p>${RESEARCH_CONTEXT_DISCLAIMER}</p>
+          <p>${RESEARCH_CONTEXT_DISCLAIMER} Trends tonen onderwerp, periode, bron en relevantie als leescontext; Kiempad weegt geen bewijs en adviseert geen behandeling.</p>
         </div>
         <dl class="research-trend-dashboard__stats" aria-label="Researchtrend status">
           <div><dt>Groepen</dt><dd>${groepen.length}</dd></div>
           <div><dt>Items</dt><dd>${itemCount}</dd></div>
+          <div><dt>Laatste check</dt><dd>${escapeHtml(latestDate ?? 'Nog geen publicatiedatum')}</dd></div>
         </dl>
       </header>
       ${renderResearchTrendScan(groepen)}
@@ -16422,13 +16427,16 @@ function renderResearchTrendCard(groep: ResearchTrendGroep): string {
 }
 
 function renderResearchTrendCardItem(item: ResearchTrendGroep['items'][number]): string {
-  const metadata = [item.publicatieDatum, item.bron].filter((value): value is string =>
-    Boolean(value),
-  );
   return `
     <li class="research-trend-card__item" data-research-trend-item="${escapeAttribute(item.id)}">
       <span>${escapeHtml(item.titel)}</span>
-      <small>${metadata.map((value) => escapeHtml(value)).join(' · ') || 'Bronmetadata ontbreekt'}</small>
+      <dl class="research-trend-card__metadata" data-research-trend-item-metadata="ready">
+        <div data-research-trend-item-period="${escapeAttribute(item.periodeLabel)}"><dt>Periode</dt><dd>${escapeHtml(item.periodeLabel)}</dd></div>
+        <div data-research-trend-item-source="ready"><dt>Bron</dt><dd>${escapeHtml(item.bron ?? 'Bronmetadata ontbreekt')}</dd></div>
+        <div data-research-trend-item-update="${escapeAttribute(item.updateStatus)}"><dt>Update-status</dt><dd>${escapeHtml(item.updateStatusLabel)}</dd></div>
+        <div data-research-trend-item-last-check="ready"><dt>Laatste check</dt><dd>${escapeHtml(item.laatsteCheck)}</dd></div>
+      </dl>
+      <small data-research-trend-item-relevance="ready">${escapeHtml(item.relevantieUitleg)}</small>
     </li>
   `;
 }

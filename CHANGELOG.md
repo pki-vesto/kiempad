@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G485 Research Intelligence: het research trenddashboard toont nu per
+  onderwerp publicatieperiode, bron, update-status, laatste check en
+  relevantie-uitleg naast de bestaande trendscan, zonder bewijsweging of
+  behandeladvies.
 - G482 Research Intelligence: de Kennis researchroute toont nu een
   literatuur-querybuilder met PubMed-preview, gede-identificeerde contextlabels,
   bewerkbare zoektermen, uitgesloten-contextchips en een lokale bewaaractie als

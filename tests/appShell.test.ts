@@ -42610,6 +42610,7 @@ describe('app shell', () => {
     expect(emptyDashboard).toContain('Researchtrend status');
     expect(emptyDashboard).toContain('<dt>Groepen</dt><dd>0</dd>');
     expect(emptyDashboard).toContain('<dt>Items</dt><dd>0</dd>');
+    expect(emptyDashboard).toContain('<dt>Laatste check</dt><dd>Nog geen publicatiedatum</dd>');
     expect(emptyDashboard).toContain('data-research-trend-scan="ready"');
     expect(emptyDashboard).toContain('data-research-trend-scan-density="mobile-compact"');
     expect(emptyDashboard).toContain('aria-label="Research trend overzicht"');
@@ -42648,7 +42649,9 @@ describe('app shell', () => {
                 'Achtergrond om vragen over labobservaties met de kliniek te bespreken.',
             },
             ai_gegenereerd: false,
-            geverifieerd_met_arts: false,
+            geverifieerd_met_arts: true,
+            geverifieerdOp: '2026-06-01',
+            volgendeVerificatieOp: '2027-06-01',
           },
           {
             id: 'research-man-leefstijl-bron',
@@ -42701,11 +42704,28 @@ describe('app shell', () => {
     expect(contextualDashboard).toContain('Leefstijl');
     expect(contextualDashboard).toContain('Mannelijke factor');
     expect(contextualDashboard).toContain('IVF ICSI embryo trendreview');
-    expect(contextualDashboard).toContain('2026-05-10 · https://pubmed.ncbi.nlm.nih.gov/123456/');
     expect(contextualDashboard).toContain('Mannelijke factor leefstijl overzicht');
-    expect(contextualDashboard).toContain('2026-04-01 · https://doi.org/10.1000/fertility-context');
+    expect(contextualDashboard).toContain('data-research-trend-item-metadata="ready"');
+    expect(contextualDashboard).toContain('data-research-trend-item-period="2026-05"');
+    expect(contextualDashboard).toContain('data-research-trend-item-source="ready"');
+    expect(contextualDashboard).toContain('data-research-trend-item-update="actueel"');
+    expect(contextualDashboard).toContain('data-research-trend-item-update="ongepland"');
+    expect(contextualDashboard).toContain('data-research-trend-item-last-check="ready"');
+    expect(contextualDashboard).toContain('data-research-trend-item-relevance="ready"');
+    expect(contextualDashboard).toContain('<dt>Periode</dt><dd>2026-05</dd>');
+    expect(contextualDashboard).toContain(
+      '<dt>Bron</dt><dd>https://pubmed.ncbi.nlm.nih.gov/123456/</dd>',
+    );
+    expect(contextualDashboard).toContain(
+      '<dt>Update-status</dt><dd>Research actueel tot 2027-06-01</dd>',
+    );
+    expect(contextualDashboard).toContain('<dt>Laatste check</dt><dd>2026-06-01</dd>');
+    expect(contextualDashboard).toContain(
+      'Achtergrond om vragen over labobservaties met de kliniek te bespreken.',
+    );
     expect(contextualDashboard).toContain('<dt>Groepen</dt><dd>5</dd>');
     expect(contextualDashboard).toContain('<dt>Items</dt><dd>5</dd>');
+    expect(contextualDashboard).toContain('<dt>Laatste check</dt><dd>2026-05-10</dd>');
     expect(contextualDashboard).toContain(
       'Trendgroepering is een lokale trefwoordindeling voor overzicht',
     );
@@ -42722,6 +42742,8 @@ describe('app shell', () => {
     expect(css).toContain('.research-trend-dashboard__grid {');
     expect(css).toContain('.research-trend-card {');
     expect(css).toContain('.research-trend-card__item {');
+    expect(css).toContain('.research-trend-card__metadata {');
+    expect(css).toContain('.research-trend-card__metadata dt,');
     expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(mobileCss).toContain('.research-trend-scan {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
@@ -42730,6 +42752,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('min-height: 66px;');
     expect(mobileCss).toContain('.research-trend-dashboard__grid {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(mobileCss).toContain('.research-trend-card__metadata {');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {

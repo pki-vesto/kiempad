@@ -373,6 +373,10 @@
   visible `data-literature-query-builder="ready"` PubMed query preview with de-identified context
   labels, editable terms, excluded-context chips and a local save-as-research-concept action,
   while tests guard minimisation, route ordering and the no-network/no-dossier-plaintext boundary.
+- **Fertiliteitsresearch trend dashboard — done in G485 / issue #814.** Research trends now show
+  topic groups with publication period, source, update status, last check and relevance context per
+  item, while tests guard empty/filled states, metadata hooks and the no-evidence-weighing/no-
+  treatment-advice boundary.
 - **Artscheck question reviewstatus routeflow evidence — done in G1940 / issue #3826.** The
   Vragen list now keeps artscheck review cards in a stacked, readable layout with compact
   Concept/Gereviewd badges, and routeflow smoke creates both an artscheck question and a normal

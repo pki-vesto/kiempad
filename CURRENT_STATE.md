@@ -67,6 +67,10 @@
   PubMed-querypreview met gede-identificeerde contextlabels, bewerkbare
   zoektermen, uitgesloten-contextchips en een lokale bewaaractie als
   researchconcept zonder netwerkactie, dossierplaintext, consulttekst of OCR-tekst.
+- **G485 Research trenddashboard:** researchtrends tonen per onderwerp nu
+  publicatieperiode, bron, update-status, laatste check en relevantie-uitleg naast
+  de bestaande trendscan, zodat ontwikkelingen scanbaar blijven zonder
+  bewijsweging, diagnose of behandeladvies.
 - **G567 Dossierupload groottefeedback:** de eerste uploadstap toont een aparte
   groottecontrole met per-bestandlimiet, selectielimiet, centrale 413-context en
   herstelbare retry-copy zonder bestandsnamen, OCR-tekst of medische inhoud in de
