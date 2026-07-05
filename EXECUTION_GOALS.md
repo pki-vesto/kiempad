@@ -16420,8 +16420,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Settings UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 76
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3690
+
+### G1875 — Premium Claude Design UI: start route first-viewport focus board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Start kan opnieuw als lange dashboardstapel gaan voelen wanneer vandaag, planning, aanbevelingen, vragen en diepere context tegelijk aandacht vragen.
+- **User Impact:** Gebruikers zien minder snel waar ze moeten beginnen en scannen alsnog door meerdere modules.
+- **Desired Outcome:** Start opent met een compact first-viewport focus board voor vandaag, planning, aanbevelingen, vragen en dashboardcontext.
+- **User Value:** De dagelijkse start voelt rustiger en taakgerichter zonder bestaande start-, dagadvies-, vragen- of routehooks te verliezen.
+- **Acceptance Criteria:** Start opent met compacte lanes voor vandaag, planning, aanbevelingen, vragen en dashboardcontext; volledige dashboard- en detailpanelen blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande startoverzicht-, vandaagconsole-, aanbevelingen-, vragen- en routehooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw recommendation payload wordt toegevoegd.
+- **Affected Screens:** Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Startscreen, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 75
+- **Status:** ☐ open
+- **Issue:** #3692
 
 ### G586 — replay conflict recovery status UI
 

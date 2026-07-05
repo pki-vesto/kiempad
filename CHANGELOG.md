@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1874 Premium Claude Design UI: instellingen openen nu met een compact
+  eerste-viewport preferences board voor identiteit, gedeelde modus, thema,
+  notificatieprivacy en detailvelden. De bestaande naam-, gedeelde-modus-,
+  thema- en voorbeelddataformulieren blijven bereikbaar via een detailsectie
+  zonder als eerste lange instellingenstapel te starten.
 - G1873 Premium Claude Design UI: back-up controleren opent nu met een compact
   eerste-viewport recovery board voor exportstatus, synchestel,
   back-upherinnering en herstelhistorie. De volledige syncstatus-, reminder- en

@@ -130,6 +130,11 @@
   herstelhistorie. De volledige syncstatus-, reminder- en herstelpanelen blijven
   via bestaande export-, import-, status- en herstelankers bereikbaar zonder de
   eerste viewport als lange back-upstapel te vullen.
+- **G1874 Instellingen preferences board:** de settings-sheet start met een
+  compact voorkeurenbord voor identiteit, gedeelde modus, thema,
+  notificatieprivacy en detailvelden. De bestaande naam-, gedeelde-modus-,
+  thema- en voorbeelddataformulieren blijven via een detailsectie bereikbaar
+  zonder de eerste viewport als lange instellingenstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
