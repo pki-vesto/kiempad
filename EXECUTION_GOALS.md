@@ -15452,7 +15452,9 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #3784
+
 ### G558 — embryo tracking compact cards
 
 - **Epic:** Premium Claude Design UI
@@ -17204,6 +17206,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 30
 - **Status:** ☐ open
 - **Issue:** #3782
+
+### G1921 — Premium Claude Design UI: consult review scan mobile density polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De nieuwe consult review-scan maakt consultverslagen sneller scanbaar, maar de mobiele dichtheid kan nog expliciet worden verfijnd en bewaakt.
+- **User Impact:** Gebruikers op kleine schermen kunnen alsnog extra horizontaal scannen als de scan-tegels later te breed of te lang worden.
+- **Desired Outcome:** Consult review-scan blijft compact, leesbaar en zonder overlap op mobiel terwijl lege en gevulde consultstaten duidelijk blijven.
+- **User Value:** Gebruikers houden snel overzicht over verslagen, samenvattingen, actiepunten en bronreview zonder terug te vallen naar lange detailkaarten.
+- **Acceptance Criteria:** Mobile consult review scan tiles remain readable without horizontal page overflow; empty and populated consult states remain visually distinct; existing consult card anchors, review forms and data-hooks remain intact; app-shell or routeflow tests cover scan density or no-overlap behavior; backlog health remains at 100+ open goals.
+- **Affected Screens:** Dossier, Consult intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consult UI, Dossier UI, Claude Design, app-shell tests
+- **ADR Needed:** no
+- **Score:** 29
+- **Status:** ☐ open
+- **Issue:** #3785
 
 ### G586 — replay conflict recovery status UI
 

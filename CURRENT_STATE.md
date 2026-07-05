@@ -74,6 +74,9 @@
   transcript- en reviewdetails een compacte eerste-viewport werkbank met routes
   naar verslag, samenvatting, actiepunten en broncontext. Mobiel blijft de werkbank
   horizontaal scanbaar zonder bestaande consultankers of reviewformulieren te breken.
+- **G557 consult review-scan:** de Consultverslagen-sectie start met een compacte
+  scanlaag voor verslagen, samenvattingen, actiepunten en bronreview, zodat de
+  gebruiker eerst overzicht krijgt voordat detailkaarten en reviewformulieren volgen.
 - **G1862 researchsamenvatting leesbord:** de researchsamenvattingenroute toont
   vóór de wetenschappelijke en eenvoudige lijsten een compact leesbord voor
   wetenschappelijke samenvatting, eenvoudige uitleg, relevantie en broncontext.

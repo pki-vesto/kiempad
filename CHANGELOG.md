@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G557 Premium Claude Design UI: Consultverslagen starten met een compacte
+  review-scan voor verslagen, samenvattingen, actiepunten en bronreview voordat
+  de detailkaarten verschijnen.
 - G1919 Premium Claude Design UI: inactieve gefocuste mobiele Traject-cues
   pinnen in forced-colors WebKit tekstvulling op ButtonText, zodat cue-labels
   leesbaar blijven naast ButtonFace achtergronden en CanvasText randen.

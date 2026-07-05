@@ -4902,6 +4902,7 @@ function renderDossierScreen(state: AppShellState): string {
           </summary>
           <div class="kp-disclosure__body">
             <h2 id="dossier-consultverslagen">Consultverslagen</h2>
+            ${renderConsultReviewScan(consultVerslagen)}
             ${
               consultVerslagen.length > 0
                 ? `<ol class="phase-list">${consultVerslagen.map((verslag) => renderConsultVerslag(verslag, state)).join('')}</ol>`
@@ -12027,6 +12028,69 @@ function renderDossierTijdlijnItem(
     previewBron: item.privacy.previewBron,
     matches,
   });
+}
+
+function renderConsultReviewScan(consultVerslagen: ConsultVerslag[]): string {
+  const verslagCount = consultVerslagen.length;
+  const summaryCount = consultVerslagen.filter((verslag) => Boolean(verslag.samenvatting)).length;
+  const actionCount = consultVerslagen.reduce(
+    (total, verslag) => total + (verslag.actiepunten?.length ?? 0),
+    0,
+  );
+  const sourceReviewCount = consultVerslagen.filter((verslag) =>
+    Boolean(verslag.samenvatting?.bronParagraaf),
+  ).length;
+  const needsReviewCount = consultVerslagen.filter((verslag) => {
+    const summaryStatus = verslag.samenvattingReview?.status ?? verslag.samenvatting?.status;
+    const sourceStatus = verslag.samenvatting?.bronParagraaf?.reviewStatus;
+    return summaryStatus === 'concept' || sourceStatus === 'concept';
+  }).length;
+  const cards = [
+    {
+      id: 'reports',
+      label: 'Verslagen',
+      value: String(verslagCount),
+      detail: verslagCount === 0 ? 'Nog geen gesprekken' : 'Apart recordtype',
+      href: '#consult-verslag-form',
+    },
+    {
+      id: 'summaries',
+      label: 'Samenvattingen',
+      value: String(summaryCount),
+      detail: needsReviewCount > 0 ? `${needsReviewCount} te controleren` : 'Rustig bijgelezen',
+      href: '#dossier-consultverslagen',
+    },
+    {
+      id: 'actions',
+      label: 'Actiepunten',
+      value: String(actionCount),
+      detail: actionCount === 1 ? 'Vraag of taak' : 'Vragen en taken',
+      href: '#dossier-consultverslagen',
+    },
+    {
+      id: 'sources',
+      label: 'Bronreview',
+      value: String(sourceReviewCount),
+      detail: 'Herleiding, geen advies',
+      href: '#dossier-consultverslagen',
+    },
+  ];
+
+  return `
+    <nav class="consult-review-scan" data-consult-review-scan="ready" aria-label="Consult review overzicht">
+      ${cards
+        .map(
+          (
+            card,
+          ) => `<a class="consult-review-scan__card" href="${escapeAttribute(card.href)}" data-consult-review-scan-card="${escapeAttribute(card.id)}">
+            <span>${escapeHtml(card.label)}</span>
+            <strong>${escapeHtml(card.value)}</strong>
+            <small>${escapeHtml(card.detail)}</small>
+          </a>`,
+        )
+        .join('')}
+    </nav>
+  `;
 }
 
 function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): string {

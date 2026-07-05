@@ -254,6 +254,9 @@
 - **Treatment mobile rail forced-colors inactive focus cue text contrast polish — done in G1919 / issue #3780.**
   Inactive focused mobile Traject cue pills now pin WebKit text fill to ButtonText, preserving
   cue label readability against ButtonFace backgrounds and CanvasText borders.
+- **Consult intelligence review scan — done in G557 / issue #3784.** Consultverslagen now open
+  with a compact review scan for reports, summaries, action points, and source review before the
+  detailed consult cards, keeping existing upload, review, and anchor hooks intact.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
