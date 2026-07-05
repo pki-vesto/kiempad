@@ -17091,19 +17091,19 @@ function renderStartFocusShell(input: {
         <div class="start-focus-shell__primary" data-start-launchpad-region="primary">
           ${input.primaryDayAction}
         </div>
-        <aside class="start-focus-shell__side" aria-label="Werkbanen" data-start-focus-region="workspaces" data-start-launchpad-region="deck">
-          ${input.workspaceDeck}
-        </aside>
         <div class="start-focus-shell__dashboard" data-start-focus-region="dashboard">
           <details id="start-dashboard-followup" class="kp-disclosure start-dashboard-followup" data-start-dashboard-followup="collapsed">
             <summary class="kp-disclosure__summary start-dashboard-followup__summary">
               <span>
-                <strong>Dashboardcontext openen</strong>
-                <small>Dossierbasis, kernwerkbanen en eerste setup blijven beschikbaar.</small>
+                <strong>Werkbanen en dashboard openen</strong>
+                <small>Dossierbasis, kernwerkbanen en eerste setup staan achter dit vervolgpaneel.</small>
               </span>
               <em>Vervolg</em>
             </summary>
             <div class="kp-disclosure__body start-dashboard-followup__body">
+              <aside class="start-focus-shell__side" aria-label="Werkbanen" data-start-focus-region="workspaces" data-start-launchpad-region="deck">
+                ${input.workspaceDeck}
+              </aside>
               <div class="start-focus-shell__cockpit" data-start-launchpad-region="cockpit">
                 ${input.cockpit}
               </div>

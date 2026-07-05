@@ -2985,7 +2985,10 @@ describe('app shell', () => {
     expect(html).toContain('href="#start-recommendations"');
     expect(html).toContain('id="start-dashboard-followup"');
     expect(html).toContain('data-start-dashboard-followup="collapsed"');
-    expect(html).toContain('Dashboardcontext openen');
+    expect(html).toContain('Werkbanen en dashboard openen');
+    expect(html).toContain(
+      'Dossierbasis, kernwerkbanen en eerste setup staan achter dit vervolgpaneel.',
+    );
     expect(html).toContain('data-start-launchpad-region="cockpit"');
     expect(html).toContain('data-start-launchpad-region="deck"');
     expect(html).toContain('data-start-launchpad-region="setup"');
@@ -3334,7 +3337,7 @@ describe('app shell', () => {
     expect(css).toContain('.start-workspace-deck__card {');
     expect(css).toContain('.start-focus-shell {');
     expect(css).toContain('grid-template-areas:');
-    expect(css).toContain('"workflows scan daily";');
+    expect(css).toContain('"workflows daily";');
     expect(css).toContain('max-height: min(900px, calc(100vh - 126px));');
     expect(css).toContain('.start-focus-shell:has(#start-flow-panel-aanbevelingen[open]) {');
     expect(mobileCss).toContain(
@@ -3342,14 +3345,12 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('max-height: min(680px, calc(100vh - 164px));');
     expect(mobileCss).toContain('overflow-y: auto;');
-    expect(css).toContain(
-      'grid-template-columns: minmax(0, 0.48fr) minmax(180px, 0.42fr) minmax(520px, 1.62fr);',
-    );
+    expect(css).toContain('grid-template-columns: minmax(0, 0.66fr) minmax(520px, 1.34fr);');
     expect(css).toContain('.start-focus-shell__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);');
     expect(css).toContain('display: contents;');
     expect(css).toContain('grid-area: workflows;');
-    expect(css).toContain('grid-area: scan;');
+    expect(css).not.toContain('grid-area: scan;');
     expect(css).toContain('grid-area: daily;');
     expect(css).toContain('max-height: min(760px, calc(100vh - 214px));');
     expect(css).toContain('overflow-y: auto;');
@@ -3819,16 +3820,16 @@ describe('app shell', () => {
     const launchpadIndex = html.indexOf('data-start-launchpad="ready"');
     const headerIndex = html.indexOf('data-start-launchpad-region="header"', launchpadIndex);
     const primaryIndex = html.indexOf('data-start-primary-day-action="ready"', headerIndex);
-    const deckIndex = html.indexOf('data-start-launchpad-region="deck"', primaryIndex);
-    const followupIndex = html.indexOf('data-start-dashboard-followup="collapsed"', deckIndex);
-    const cockpitIndex = html.indexOf('data-start-launchpad-region="cockpit"', followupIndex);
+    const followupIndex = html.indexOf('data-start-dashboard-followup="collapsed"', primaryIndex);
+    const deckIndex = html.indexOf('data-start-launchpad-region="deck"', followupIndex);
+    const cockpitIndex = html.indexOf('data-start-launchpad-region="cockpit"', deckIndex);
 
     expect(launchpadIndex).toBeGreaterThan(-1);
     expect(headerIndex).toBeGreaterThan(launchpadIndex);
     expect(primaryIndex).toBeGreaterThan(headerIndex);
-    expect(deckIndex).toBeGreaterThan(primaryIndex);
-    expect(followupIndex).toBeGreaterThan(deckIndex);
-    expect(cockpitIndex).toBeGreaterThan(followupIndex);
+    expect(followupIndex).toBeGreaterThan(primaryIndex);
+    expect(deckIndex).toBeGreaterThan(followupIndex);
+    expect(cockpitIndex).toBeGreaterThan(deckIndex);
     expect(html).toContain('Poging dashboard · Stimulatie');
     expect(html).toContain('Echo dashboard');
     expect(html).toContain('data-start-workspace-card="today"');
