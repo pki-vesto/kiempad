@@ -1198,6 +1198,37 @@ const targets = [
     ],
   },
   {
+    screen: 'dossier-embryo-tracking-scan',
+    hash: '#dossier?route=imaging',
+    rootSelector: '[data-hub-detail-panel="embryo-dossiers"]',
+    expectedText: 'Embryo-dossiers',
+    activeRouteSelector: '[data-dossier-route="imaging"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-hub-detail-panel="embryo-dossiers"]',
+    ],
+    requiredSelectors: [
+      '[data-embryo-tracking-scan="ready"]',
+      '[data-embryo-tracking-scan-density="mobile-compact"]',
+      '[data-embryo-tracking-scan-card="dossiers"]',
+      '[data-embryo-tracking-scan-card="measurements"]',
+      '[data-embryo-tracking-scan-card="status"]',
+      '[data-embryo-tracking-scan-card="sources"]',
+      '[data-embryo-tracking-grid="compact"]',
+      '[data-embryo-tracking-card="ready"]',
+    ],
+    embryoTrackingScanOverflow: true,
+    dossierConsole: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '[data-hub-detail-panel="embryo-dossiers"] .hub-detail-disclosure__summary small',
+    ],
+  },
+  {
     screen: 'dossier-upload',
     hash: '#dossier-upload-form',
     rootSelector: '#dossier-route-upload',
@@ -3611,6 +3642,57 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const embryoTrackingScanOverflow = routeflow.embryoTrackingScanOverflow
+          ? (() => {
+              const scan = rootElement?.querySelector('[data-embryo-tracking-scan="ready"]');
+              const scanCards = [
+                ...(rootElement?.querySelectorAll('[data-embryo-tracking-scan-card]') ?? []),
+              ].map((scanCard) => {
+                const rect = scanCard.getBoundingClientRect();
+                return {
+                  id: scanCard.getAttribute('data-embryo-tracking-scan-card') ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  text: scanCard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                };
+              });
+              const grid = rootElement?.querySelector('[data-embryo-tracking-grid="compact"]');
+              const card = rootElement?.querySelector('[data-embryo-tracking-card="ready"]');
+              const comparison = rootElement?.textContent?.includes('Embryovergelijking') ?? false;
+              const scanRect = scan?.getBoundingClientRect();
+              const gridRect = grid?.getBoundingClientRect();
+              const cardRect = card?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const scanStyle = scan ? getComputedStyle(scan) : null;
+              const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
+              const rootText = rootElement?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
+                scanCardIds: scanCards.map((scanCard) => scanCard.id),
+                visibleScanCards: scanCards.filter((scanCard) => scanCard.visible).length,
+                scanDisplay: scanStyle?.display ?? '',
+                scanOverflowX: scanStyle?.overflowX ?? '',
+                scanBeforeGrid:
+                  Boolean(scan && grid && scanRect && gridRect) &&
+                  Boolean(scan.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  scanRect.top <= gridRect.top + 1,
+                scanBeforeCard:
+                  Boolean(scan && card && scanRect && cardRect) &&
+                  Boolean(scan.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  scanRect.top <= cardRect.top + 1,
+                scanContained:
+                  Boolean(rootRect && scanRect) &&
+                  scanRect.left >= rootRect.left - 1 &&
+                  scanRect.right <= rootRect.right + 1,
+                hasInternalScroll:
+                  scan instanceof HTMLElement ? scan.scrollWidth > scan.clientWidth + 1 : false,
+                detailCardVisible: Boolean(cardRect && cardRect.width > 0 && cardRect.height > 0),
+                comparisonCopyPresent: comparison,
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|behandelkeuzeadvies|\b\d+\s?%\s?kans|ranking|rankscore/i.test(
+                  `${scanText} ${rootText}`,
+                ),
+              };
+            })()
+          : null;
         const embryoImageClassificationReview = routeflow.embryoImageClassificationReview
           ? (() => {
               const panel = document.querySelector('[data-dossier-imaging-disclosure="repository"]');
@@ -3912,6 +3994,7 @@ async function assertRouteflows(browser, options) {
           knowledgeConsole,
           consultConsole,
           filledConsultCard,
+          embryoTrackingScanOverflow,
           embryoImageClassificationReview,
           wellbeingConsole,
           treatmentConsole,
@@ -4629,6 +4712,26 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: consult review-scan mist routeflow-overflow evidence of lekt gevoelige tekst (${JSON.stringify(evidence.filledConsultCard)}).`,
+        );
+      }
+      if (
+        evidence.embryoTrackingScanOverflow &&
+        (!evidence.embryoTrackingScanOverflow.scanVisible ||
+          evidence.embryoTrackingScanOverflow.visibleScanCards !== 4 ||
+          !evidence.embryoTrackingScanOverflow.scanCardIds.includes('dossiers') ||
+          !evidence.embryoTrackingScanOverflow.scanCardIds.includes('measurements') ||
+          !evidence.embryoTrackingScanOverflow.scanCardIds.includes('status') ||
+          !evidence.embryoTrackingScanOverflow.scanCardIds.includes('sources') ||
+          !['flex', 'grid'].includes(evidence.embryoTrackingScanOverflow.scanDisplay) ||
+          !evidence.embryoTrackingScanOverflow.scanBeforeGrid ||
+          !evidence.embryoTrackingScanOverflow.scanBeforeCard ||
+          !evidence.embryoTrackingScanOverflow.scanContained ||
+          !evidence.embryoTrackingScanOverflow.detailCardVisible ||
+          !evidence.embryoTrackingScanOverflow.comparisonCopyPresent ||
+          evidence.embryoTrackingScanOverflow.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: embryo tracking-scan mist routeflow-overflow evidence of lekt gevoelige tekst (${JSON.stringify(evidence.embryoTrackingScanOverflow)}).`,
         );
       }
       if (

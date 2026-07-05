@@ -228,6 +228,13 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-embryo-tracking-scan-density="mobile-compact"]',
     );
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'dossier-embryo-tracking-scan'");
+    expect(routeflowScreenshotSmokeScript).toContain('embryoTrackingScanOverflow');
+    expect(routeflowScreenshotSmokeScript).toContain('scanBeforeGrid');
+    expect(routeflowScreenshotSmokeScript).toContain('comparisonCopyPresent');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'embryo tracking-scan mist routeflow-overflow evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-research-trend-scan-density="mobile-compact"]',
     );
