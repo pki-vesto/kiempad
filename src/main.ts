@@ -1408,6 +1408,19 @@ async function saveEmbryoQualityFromForm(
     const embryoKliniekTerminologie = optionalString(data.get('embryoKliniekTerminologie'));
     const embryoBron = optionalString(data.get('embryoBron'));
     const embryoReviewStatus = parseEmbryoReviewStatus(data.get('embryoReviewStatus'));
+    const embryoAliasLabel = optionalString(data.get('embryoAliasLabel'));
+    const embryoKliniekId = optionalString(data.get('embryoKliniekId'));
+    const embryoAliasBronLabel = optionalString(data.get('embryoAliasBronLabel'));
+    const embryoAliasReviewStatus = parseEmbryoReviewStatus(data.get('embryoAliasReviewStatus'));
+    const aliasCorrectie =
+      embryoAliasLabel || embryoKliniekId || embryoAliasBronLabel
+        ? {
+            aliasLabel: embryoAliasLabel ?? embryoLabel,
+            kliniekId: embryoKliniekId,
+            bronLabel: embryoAliasBronLabel,
+            reviewStatus: embryoAliasReviewStatus,
+          }
+        : undefined;
     const kliniekBeoordelingDatum = datum || new Date().toISOString().slice(0, 10);
     const kliniekBeoordelingBron = embryoBron || 'Kliniekopgave';
     const inhoud = JSON.stringify({
@@ -1422,6 +1435,7 @@ async function saveEmbryoQualityFromForm(
       },
       kliniekTerminologie: embryoKliniekTerminologie,
       status: embryoStatus,
+      aliasCorrectie,
       bron: embryoBron,
       reviewStatus: embryoReviewStatus,
       notitie,
@@ -1450,6 +1464,7 @@ async function saveEmbryoQualityFromForm(
         kliniekTerminologie: embryoKliniekTerminologie,
         bron: embryoBron,
         reviewStatus: embryoReviewStatus,
+        aliasCorrectie,
         status: embryoStatus,
       },
       notitie,
@@ -1496,6 +1511,19 @@ async function saveEmbryoStatusEventFromForm(
     const embryoStatus = parseEmbryoStatus(data.get('embryoStatus'));
     const embryoBron = optionalString(data.get('embryoBron'));
     const embryoReviewStatus = parseEmbryoReviewStatus(data.get('embryoReviewStatus'));
+    const embryoAliasLabel = optionalString(data.get('embryoAliasLabel'));
+    const embryoKliniekId = optionalString(data.get('embryoKliniekId'));
+    const embryoAliasBronLabel = optionalString(data.get('embryoAliasBronLabel'));
+    const embryoAliasReviewStatus = parseEmbryoReviewStatus(data.get('embryoAliasReviewStatus'));
+    const aliasCorrectie =
+      embryoAliasLabel || embryoKliniekId || embryoAliasBronLabel
+        ? {
+            aliasLabel: embryoAliasLabel ?? embryoLabel,
+            kliniekId: embryoKliniekId,
+            bronLabel: embryoAliasBronLabel,
+            reviewStatus: embryoAliasReviewStatus,
+          }
+        : undefined;
     const statusLabel = EMBRYO_STATUS_LABELS[embryoStatus];
     const bron = embryoBron || 'Kliniekopgave';
     const inhoud = JSON.stringify({
@@ -1503,6 +1531,7 @@ async function saveEmbryoStatusEventFromForm(
       status: embryoStatus,
       bron,
       reviewStatus: embryoReviewStatus,
+      aliasCorrectie,
       notitie,
     });
 
@@ -1527,6 +1556,7 @@ async function saveEmbryoStatusEventFromForm(
         meetmoment: 'Status event',
         bron,
         reviewStatus: embryoReviewStatus,
+        aliasCorrectie,
         status: embryoStatus,
       },
       notitie,

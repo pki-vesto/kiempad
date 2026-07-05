@@ -145,6 +145,47 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
   });
 
+  it('bewaart embryo-aliasreview versleuteld zonder bronpayload', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-08',
+      titel: 'Embryo aliasreview',
+      categorie: 'embryo',
+      bestandsNaam: 'embryo-alias.json',
+      mimeType: 'application/json',
+      grootteBytes: 256,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '4AA',
+        bron: 'Labrapport',
+        aliasCorrectie: {
+          aliasLabel: 'Embryo A',
+          kliniekId: 'KLINIEK-EMBRYO-98765',
+          bronLabel: 'Portaal',
+          reviewStatus: 'gereviewd',
+        },
+      },
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(saved.embryo?.aliasCorrectie).toEqual({
+      aliasLabel: 'Embryo A',
+      kliniekId: 'KLINIEK-EMBRYO-98765',
+      bronLabel: 'Portaal',
+      reviewStatus: 'gereviewd',
+    });
+    expect(raw?.type).toBe('dossier_document');
+    expect(raw?.payload.ciphertext).not.toContain('Embryo aliasreview');
+    expect(raw?.payload.ciphertext).not.toContain('Embryo A');
+    expect(raw?.payload.ciphertext).not.toContain('Labrapport');
+    expect(raw?.payload.ciphertext).not.toContain('Portaal');
+    expect(raw?.payload.ciphertext).not.toContain('KLINIEK-EMBRYO-98765');
+    expect(raw?.payload.ciphertext).not.toContain('e30=');
+  });
+
   it('verwijdert dossierdocumenten via de encrypted repository', async () => {
     const { driver, store } = await setupStore();
     const saved = await store.save({

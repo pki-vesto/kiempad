@@ -15655,7 +15655,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo dossier, dossier UI, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #908
 
 ### G572 — embryo kwaliteit bronlabel correctieflow
 
@@ -17368,6 +17369,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3809
+
+### G1932 — Fertility Intelligence: embryo-ID alias reviewcorrectie routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De embryo-ID alias reviewcorrectie is zichtbaar in formulieren, embryo-dossiers en vergelijkingen, maar routeflow-bewijs moet nog bewaken dat Kiempad-ID, kliniek-ID en aliasreview op desktop en mobiel leesbaar blijven.
+- **User Impact:** Zonder visuele routeflow-evidence kan een latere themewijziging de aliasvelden of side-by-side ID-context verbergen of laten overlappen.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de embryo alias-review UI en de embryovergelijking zonder medische payloads.
+- **User Value:** Gebruikers kunnen embryo's blijven herkennen over labrapporten, portaalnamen en kliniek-ID's heen, ook na themawijzigingen.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-embryo-alias-review` en `data-embryo-alias-review-display="ready"` op desktop en mobiel; Kiempad-ID, bronlabels, kliniek-ID en aliasreview blijven scanbaar in embryo-dossier en embryovergelijking zonder page-level horizontale overflow; bestaande embryokwaliteit, embryostatus, bronlabelreview en privacyhooks blijven intact; tests en fixtures blijven vrij van secrets, medische bronpayloads en plaintext gezondheidsdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossierupload, embryo-dossier, embryovergelijking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo dossier, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3811
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

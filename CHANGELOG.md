@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G571 Fertility Intelligence: embryoformulieren kunnen nu een aliascorrectie,
+  kliniek-ID, bronlabel en reviewstatus bewaren; embryo-dossiers en
+  embryovergelijkingen tonen de gecorrigeerde alias naast Kiempad-ID en
+  kliniek-ID zonder medische interpretatie.
 - G570 Fertility Intelligence: consultuploads hebben nu een tekstimport-
   reviewstatus waarmee gebruikers consultnotities als concept of gereviewde
   bronmetadata kunnen bewaren voordat samenvattingen, actiepunten of vragen op

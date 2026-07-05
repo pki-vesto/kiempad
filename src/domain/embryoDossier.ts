@@ -7,6 +7,14 @@ export type EmbryoDossierItem = {
   canonicalEmbryoId: string;
   embryoLabel: string;
   trajectId?: string;
+  bronLabels: string[];
+  kliniekIds: string[];
+  aliasCorrecties: {
+    aliasLabel: string;
+    kliniekId?: string;
+    bronLabel?: string;
+    reviewStatus: 'concept' | 'gereviewd';
+  }[];
   laatsteDatum: string;
   kwaliteiten: string[];
   kwaliteitBronLabels: string[];
@@ -52,6 +60,9 @@ export type EmbryoVergelijking = {
   sortering: 'embryo_label_alfabetisch';
   embryos: {
     embryoLabel: string;
+    canonicalEmbryoId: string;
+    kliniekIds: string[];
+    aliasReviewStatussen: string[];
     embryoDagen: number[];
     kwaliteiten: string[];
     kliniekTeksten: string[];
@@ -108,6 +119,13 @@ export function bouwEmbryoVergelijkingen(
         .sort((a, b) => a.embryoLabel.localeCompare(b.embryoLabel, 'nl-NL'))
         .map((item) => ({
           embryoLabel: item.embryoLabel,
+          canonicalEmbryoId: item.canonicalEmbryoId,
+          kliniekIds: item.kliniekIds,
+          aliasReviewStatussen: uniekeWaarden(
+            item.aliasCorrecties.map((alias) =>
+              alias.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+            ),
+          ),
           embryoDagen: item.embryoDagen,
           kwaliteiten: item.kwaliteiten,
           kliniekTeksten: uniekeWaarden(
@@ -164,9 +182,26 @@ function bouwEmbryoDossier(
   const bronnen = uniekeWaarden(
     dossierDocumenten.map((document) => document.embryo?.bron).filter(isString),
   );
+  const bronLabels = uniekeWaarden(
+    dossierDocumenten
+      .flatMap((document) => [
+        document.embryo?.bron,
+        document.embryo?.aliasCorrectie?.bronLabel,
+        document.beeldMetadata?.bron,
+        document.metadata.bronbestand,
+      ])
+      .filter(isString),
+  );
   const embryoIds = uniekeWaarden(
     dossierDocumenten.map((document) => document.beeldMetadata?.embryoId).filter(isString),
   );
+  const aliasCorrecties = uniekeAliasCorrecties(
+    dossierDocumenten.map((document) => document.embryo?.aliasCorrectie),
+  );
+  const kliniekIds = uniekeWaarden([
+    ...embryoIds,
+    ...aliasCorrecties.map((alias) => alias.kliniekId).filter(isString),
+  ]);
   const embryoDagen = uniekeNummers(
     dossierDocumenten
       .map((document) => document.beeldMetadata?.embryoDag ?? document.embryo?.dag)
@@ -202,6 +237,9 @@ function bouwEmbryoDossier(
     canonicalEmbryoId,
     embryoLabel,
     trajectId,
+    bronLabels,
+    kliniekIds,
+    aliasCorrecties,
     laatsteDatum: bepaalDatum(dossierDocumenten[dossierDocumenten.length - 1] ?? eerste),
     kwaliteiten,
     kwaliteitBronLabels,
@@ -243,6 +281,7 @@ function bouwEmbryoDossier(
 
 function bepaalEmbryoLabel(document: DossierDocument): string | undefined {
   return (
+    document.embryo?.aliasCorrectie?.aliasLabel ??
     document.embryo?.label ??
     document.beeldMetadata?.embryoLabel ??
     document.beeldMetadata?.embryoId
@@ -282,6 +321,12 @@ function bepaalHistorieGebeurtenis(document: DossierDocument): string {
 function beschrijfHistorieDetail(document: DossierDocument): string {
   const kliniekTekst = document.embryo?.kliniekBeoordeling?.tekst ?? document.embryo?.kwaliteit;
   const details = [
+    document.embryo?.aliasCorrectie?.aliasLabel
+      ? `alias ${document.embryo.aliasCorrectie.aliasLabel}`
+      : undefined,
+    document.embryo?.aliasCorrectie?.kliniekId
+      ? `kliniek-id ${document.embryo.aliasCorrectie.kliniekId}`
+      : undefined,
     document.embryo?.dag ? `dag ${document.embryo.dag}` : undefined,
     kliniekTekst ? `kliniektekst ${kliniekTekst}` : undefined,
     document.embryo?.kliniekTerminologie
@@ -422,6 +467,23 @@ function uniekeWaarden(values: string[]): string[] {
 
 function uniekeNummers(values: number[]): number[] {
   return [...new Set(values)].sort((a, b) => a - b);
+}
+
+function uniekeAliasCorrecties(
+  values: Array<NonNullable<NonNullable<DossierDocument['embryo']>['aliasCorrectie']> | undefined>,
+): EmbryoDossierItem['aliasCorrecties'] {
+  const uniek = new Map<string, EmbryoDossierItem['aliasCorrecties'][number]>();
+  for (const value of values) {
+    if (!value?.aliasLabel) continue;
+    const key = [value.aliasLabel, value.kliniekId ?? '', value.bronLabel ?? ''].join('|');
+    uniek.set(key, {
+      aliasLabel: value.aliasLabel,
+      kliniekId: value.kliniekId,
+      bronLabel: value.bronLabel,
+      reviewStatus: value.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+    });
+  }
+  return [...uniek.values()];
 }
 
 function isString(value: string | undefined): value is string {
