@@ -4523,6 +4523,45 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G1997');
   });
 
+  it('geeft ontbrekende G1998 offline cache metadata release-state contract error release-termen technisch terug', () => {
+    const partialContractErrorReleaseState =
+      'G1996 borgt offline-cache-metadata-release-state-contract-missing-term-error-contract met Offline cache metadata release-state contract releasecontext ontbreekt voor termen.';
+
+    expect(() =>
+      extractOfflineCacheMetadataReleaseStateContractErrorReleaseContext(
+        partialContractErrorReleaseState,
+      ),
+    ).toThrow(
+      'Offline cache metadata release-state contract error releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels',
+    );
+    for (const presentContractTerm of [
+      'G1996',
+      'offline-cache-metadata-release-state-contract-missing-term-error-contract',
+      'Offline cache metadata release-state contract releasecontext ontbreekt voor termen',
+    ]) {
+      expect(partialContractErrorReleaseState).toContain(presentContractTerm);
+    }
+    for (const missingSafeTerm of [
+      'offline cache metadata missing-term error contract',
+      'veilige technische labels',
+    ]) {
+      expect(partialContractErrorReleaseState).not.toContain(missingSafeTerm);
+    }
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(partialContractErrorReleaseState).not.toContain(forbiddenEvidenceTerm);
+    }
+    expect(backlog).toContain('G1998');
+    expect(executionGoals).toContain('G1998');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',
