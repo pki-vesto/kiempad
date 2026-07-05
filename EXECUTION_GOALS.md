@@ -16352,8 +16352,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Schedule history UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 80
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3682
+
+### G1871 — Premium Claude Design UI: reminders history first-viewport notification board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De herinneringenhistorie kan nog als lange stapel openen wanneer toestemming, planning, privacy en herinneringsgeschiedenis tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke notificatielaag eerst relevant is.
+- **Desired Outcome:** Herinneringenhistorie opent met een compact first-viewport notification board voor toestemming, planning, privacy en herinneringsgeschiedenis.
+- **User Value:** Herinneringenbeheer voelt sneller navigeerbaar zonder notification-, permission-, planning-, privacy-, reminder form- of historyhooks te verliezen.
+- **Acceptance Criteria:** Notifications history opent met compacte lanes voor toestemming, planning, privacy en herinneringsgeschiedenis; volledige herinnering- en detaillijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande notification permission-, planning-, privacy-, reminder form- en historyhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medicatie- of afspraakdetaillekkage, diagnose, behandelkeuzeadvies, token, secret of medische plaintext wordt toegevoegd.
+- **Affected Screens:** Herinneringen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Notification history UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 79
+- **Status:** ☐ open
+- **Issue:** #3684
 
 ### G586 — replay conflict recovery status UI
 

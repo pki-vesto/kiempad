@@ -18292,6 +18292,16 @@ function renderAgendaScreen(state: AppShellState): string {
   const past = state.afspraken
     .filter((bundle) => pastOrder.has(bundle.afspraak.id))
     .sort((a, b) => (pastOrder.get(a.afspraak.id) ?? 0) - (pastOrder.get(b.afspraak.id) ?? 0));
+  const today = new Date().toISOString().slice(0, 10);
+  const todayCount = state.afspraken.filter((bundle) =>
+    bundle.afspraak.datumTijd.startsWith(`${today}T`),
+  ).length;
+  const preparationCount = upcoming.filter(
+    (bundle) =>
+      Boolean(bundle.afspraak.voorbereiding?.trim()) ||
+      Boolean(bundle.afspraak.notitie?.trim()) ||
+      Boolean(bundle.vraag),
+  ).length;
 
   const exportIcsButton =
     state.afspraken.length > 0
@@ -18483,6 +18493,12 @@ function renderAgendaScreen(state: AppShellState): string {
           data: { 'schedule-route-summary': 'historie' },
           ariaLabel: 'Afgelopen afspraken route-samenvatting',
         })}
+        ${renderScheduleHistoryPlanningBoard({
+          todayCount,
+          upcomingCount: upcoming.length,
+          preparationCount,
+          pastCount: past.length,
+        })}
         ${disclosure({
           summary: 'Afgelopen afspraken tonen',
           id: 'schedule-history-disclosure',
@@ -18516,6 +18532,79 @@ function renderAgendaScreen(state: AppShellState): string {
     ],
     { className: 'schedule-command-layout', ariaLabel: 'Agenda beheren' },
   );
+}
+
+function renderScheduleHistoryPlanningBoard(input: {
+  todayCount: number;
+  upcomingCount: number;
+  preparationCount: number;
+  pastCount: number;
+}): string {
+  const lanes: Array<{
+    key: 'today' | 'upcoming' | 'preparation' | 'history';
+    href: string;
+    eyebrow: string;
+    value: string;
+    label: string;
+    detail: string;
+  }> = [
+    {
+      key: 'today',
+      href: '#agenda?route=overzicht',
+      eyebrow: 'Vandaag',
+      value: String(input.todayCount),
+      label: 'Dagplanning',
+      detail: 'Open de dag- en weekcontext zonder de historie te laden.',
+    },
+    {
+      key: 'upcoming',
+      href: '#agenda?route=komend',
+      eyebrow: 'Komend',
+      value: String(input.upcomingCount),
+      label: 'Afspraken',
+      detail: 'Bekijk komende afspraken en acties in een eigen route.',
+    },
+    {
+      key: 'preparation',
+      href: '#agenda?route=plannen',
+      eyebrow: 'Voorbereiding',
+      value: String(input.preparationCount),
+      label: 'Open punten',
+      detail: 'Bewerk voorbereiding, vragen en herinnering los van terugblik.',
+    },
+    {
+      key: 'history',
+      href: '#schedule-history-disclosure',
+      eyebrow: 'Historie',
+      value: String(input.pastCount),
+      label: 'Terugblik',
+      detail: 'Open de volledige afspraakgeschiedenis pas als naslag.',
+    },
+  ];
+
+  return `
+    <section class="schedule-history-planning-board" aria-label="Agendageschiedenis planningbord" data-schedule-history-planning-board="first-viewport">
+      <header class="schedule-history-planning-board__header">
+        <p class="kp-card__eyebrow">Planningbord</p>
+        <h3>Kies eerst je planninglaag</h3>
+        <p>Vandaag, komende afspraken, voorbereiding en terugblik blijven gescheiden voordat je de volledige historie opent.</p>
+      </header>
+      <nav class="schedule-history-planning-board__lanes" aria-label="Agendageschiedenis routes">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="schedule-history-planning-board__lane" href="${lane.href}" data-schedule-history-planning-lane="${lane.key}">
+                <span>${lane.eyebrow}</span>
+                <strong>${lane.value}</strong>
+                <em>${lane.label}</em>
+                <small>${lane.detail}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
 }
 
 function renderScheduleFocusShell(input: { workspace: string }): string {
