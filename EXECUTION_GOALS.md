@@ -17560,8 +17560,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging repository, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3830
+
+### G1943 — Fertility Intelligence: embryo image classification review forced-colors evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De embryo-afbeelding classificatiereview heeft nu routeflow-evidence op desktop, tablet en mobiel, maar high-contrast/forced-colors evidence bewaakt nog niet expliciet dat conceptlabel en embryo-koppelingvelden leesbaar blijven.
+- **User Impact:** Gebruikers met high-contrast instellingen kunnen regressies in conceptlabel, beeldtype of embryo-koppeling later minder snel zien.
+- **Desired Outcome:** Forced-colors of equivalente accessibility evidence controleert de embryo-beeldclassificatiereview zonder beeldpayloads, kwaliteitsscore of selectieadvies.
+- **User Value:** Gebruikers met high-contrast instellingen blijven de handmatige embryo-koppeling veilig controleren.
+- **Acceptance Criteria:** Evidence controleert het conceptlabel, beeldtype, embryo-label, embryo-id en reviewstatus in forced-colors of equivalente accessibility context; conceptlabel en velden blijven zichtbaar zonder horizontale overflow; geen kwaliteitsscore, selectieadvies, beeldpayload, OCR-tekst, diagnose, dosering, kansberekening, secrets of trackingpayload wordt toegevoegd; backlog/docs blijven synchroon.
+- **Affected Screens:** Dossier, Beeldenoverzicht, Embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging repository, routeflow smoke, accessibility evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3832
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

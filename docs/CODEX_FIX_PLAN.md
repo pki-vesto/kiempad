@@ -312,6 +312,11 @@
 - **Imaging metadata review correction — done in G581 / issue #928.** The imaging repository now
   exposes a focused review form for image type, source, date, attempt, appointment, EXIF status,
   and review status, while locked previews show only safe unlock copy and no source payload.
+- **Embryo image classification routeflow evidence — done in G1942 / issue #3830.** Routeflow
+  smoke now creates a synthetic embryo image through the normal upload flow and verifies the
+  dossier imaging route shows the concept classification label, image type, embryo label,
+  embryo ID, and review status fields on desktop, tablet, and mobile without score or selection
+  advice.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

@@ -524,6 +524,22 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'gevulde consultkaart mist compacte browser-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-imaging-embryo-classification-review'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "prepare: 'embryo-image-classification-review'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('prepareEmbryoImageClassificationReview');
+    expect(routeflowScreenshotSmokeScript).toContain('embryoImageClassificationReview: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-embryo-image-classification-review="concept"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataEmbryoLabel');
+    expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataEmbryoId');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'embryo-beeldclassificatie review mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('gesloten routeflow-selectors ontbreken');
     expect(routeflowScreenshotSmokeScript).toContain('hiddenSelectors: [');
     expect(routeflowScreenshotSmokeScript).toContain('desktopHiddenSelectors');
