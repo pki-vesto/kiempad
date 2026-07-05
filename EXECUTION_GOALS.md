@@ -15931,8 +15931,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell CSS, Back-up status feedback, accessibility tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3640
+
+### G1850 — Central session renewal recovery focus routeflow evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De sessie-renewal recovery focusring is via unit/CSS-tests geborgd, maar nog niet expliciet in browser-routeflow bewijs opgenomen.
+- **User Impact:** Layout- of overflowregressies rond het gefocuste hersteldoel kunnen later buiten de bestaande routeflow-fixtures vallen.
+- **Desired Outcome:** Routeflow smoke bevat bewijs dat de recovery focus target stabiel blijft op desktop, tablet, mobile en small-mobile.
+- **User Value:** Het centrale sessieherstelpad blijft visueel betrouwbaar op alle viewportklassen.
+- **Acceptance Criteria:** Routeflow smoke dekt de recovery focus target of een dedicated fixture route; bewijs verifieert dat de gefocuste herstelbevestiging niet overflowt of layout jump veroorzaakt; geen passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload, filename of medische plaintext in copy of fixtures; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Back-up, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Routeflow smoke, Back-up status fixture, accessibility tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3642
 
 ### G584 — paginated record load status UI
 

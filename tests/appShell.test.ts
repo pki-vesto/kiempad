@@ -42329,6 +42329,30 @@ describe('app shell', () => {
     expect(recoveryBackupZone).not.toContain('BASE64_MEDISCHE_PAYLOAD');
   });
 
+  it('bewaakt sessie-renewal recovery focusring zonder normale backupruis', () => {
+    const normalHtml = renderAppShell('backup', makeStartState({ storageMode: 'central-api' }));
+    const css = readFileSync('src/styles.css', 'utf8');
+    const forcedColorsCss = extractCssMediaBlock(css, 'forced-colors: active');
+
+    expect(normalHtml).not.toContain('data-central-session-renewal-recovery-focus-target');
+    expect(css).toContain(
+      '[data-central-session-renewal-recovery-focus-target="ready"]:focus-visible {',
+    );
+    expect(css).toContain(
+      'outline: 2px solid color-mix(in srgb, var(--accent) 68%, var(--border-strong));',
+    );
+    expect(css).toContain('outline-offset: 3px;');
+    expect(css).toContain(
+      'box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);',
+    );
+    expect(forcedColorsCss).toContain(
+      '[data-central-session-renewal-recovery-focus-target="ready"]:focus-visible {',
+    );
+    expect(forcedColorsCss).toContain('outline: 2px solid Highlight;');
+    expect(forcedColorsCss).toContain('box-shadow: none;');
+    expect(forcedColorsCss).toContain('forced-color-adjust: auto;');
+  });
+
   it('toont replayconflict reloadactie alleen bij herstelbare centrale conflictstatus', () => {
     const idleHtml = renderAppShell(
       'backup',

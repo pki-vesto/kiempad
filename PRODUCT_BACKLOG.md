@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1649 |
+| ☑ klaar | 1650 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1848** |
+| **Totaal** | **1849** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2010,13 +2010,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1846 | Central Encrypted Platform: central replay conflict recovery focus feedback | P1 | F5 | ☐ |
 | G1847 | Central Encrypted Platform: central session renewal recovery aria-live confirmation | P1 | F5 | ☑ |
 | G1848 | Central Encrypted Platform: central session renewal recovery focus target management | P1 | F5 | ☑ |
-| G1849 | Central Encrypted Platform: central session renewal recovery focus visual ring | P1 | F5 | ☐ |
+| G1849 | Central Encrypted Platform: central session renewal recovery focus visual ring | P1 | F5 | ☑ |
+| G1850 | Central Encrypted Platform: central session renewal recovery focus routeflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1848** (id's G001 t/m G1849; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1849** (id's G001 t/m G1850; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

@@ -2231,3 +2231,6 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   `tabindex="-1"` focus target, and the runtime moves focus there with
   `preventScroll` only after the session-renewal recovery flow consumes its
   one-time marker.
+- Partial G1849/#3640: The central session renewal recovery focus target now
+  has a dedicated `:focus-visible` ring plus a forced-colors `Highlight`
+  fallback, while normal Back-up statuses remain visually quiet.
