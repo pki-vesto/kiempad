@@ -1044,6 +1044,7 @@ const targets = [
       '[data-hub-detail-panel="imaging-repository"]',
       '[data-hub-detail-panel="embryo-dossiers"]',
       '[data-embryo-tracking-scan="ready"]',
+      '[data-embryo-tracking-scan-density="mobile-compact"]',
       '[data-embryo-tracking-scan-card="dossiers"]',
       '[data-embryo-tracking-scan-card="measurements"]',
       '[data-embryo-tracking-scan-card="status"]',

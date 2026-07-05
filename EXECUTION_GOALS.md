@@ -17261,8 +17261,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo UI, Dossier UI, Claude Design, app-shell tests
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3788
+
+### G1927 — Premium Claude Design UI: embryo tracking scan routeflow overflow evidence
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De compacte embryo tracking-scan is nu dichter op mobiel, maar expliciete overflow-evidence kan nog verder worden uitgebreid.
+- **User Impact:** Zonder routeflow-overflow evidence kan een latere wijziging opnieuw brede embryo-scan kaarten introduceren die de eerste viewport onrustig maken.
+- **Desired Outcome:** Routeflow-evidence bewijst dat embryo tracking-scan kaarten zichtbaar blijven en geen page-level horizontale overflow veroorzaken.
+- **User Value:** Gebruikers houden een rustige mobiele Embryo-dossiersroute waarin dossiers, meetmomenten, status-events en bronnen scanbaar blijven zonder brede pagina-uitloop.
+- **Acceptance Criteria:** Routeflow smoke or equivalent visual evidence covers embryo tracking-scan overflow behavior; scan cards remain visible before embryo detail cards; existing embryo dossier cards, status events, comparison copy and data-hooks remain intact; backlog health remains at 100+ open goals.
+- **Affected Screens:** Dossier, Embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo UI, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 26
+- **Status:** ☐ open
+- **Issue:** #3800
 
 ### G1923 — Premium Claude Design UI: research trend scan mobile density polish
 

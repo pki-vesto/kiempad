@@ -83,6 +83,9 @@
 - **G558 embryo tracking-scan:** de Embryo-dossiers-sectie start met een compacte
   scanlaag voor dossiers, meetmomenten, status-events en bronnen, zodat
   embryohistorie eerst als overzicht leest voordat vergelijkingen en detailkaarten volgen.
+- **G1922 mobiele embryo tracking-scan dichtheid:** op mobiel gebruikt de
+  embryoscan smallere snapkaarten met lagere hoogte en compactere labels, zodat
+  dossiers, meetmomenten, status-events en bronnen sneller tegelijk scanbaar zijn.
 - **G559 research trend-scan:** het researchtrenddashboard start met een compacte
   scanlaag voor onderwerpen, publicaties, bronnen en laatste update, zodat trends
   eerst als overzicht lezen voordat de losse trendkaarten volgen.

@@ -263,6 +263,9 @@
 - **Embryo tracking compact scan — done in G558 / issue #3787.** Embryo-dossiers now open with
   a compact tracking scan for dossiers, measurement moments, status events, and source records
   before comparisons and detailed embryo cards.
+- **Embryo tracking scan mobile density — done in G1922 / issue #3788.** The Embryo-dossiers
+  tracking scan now uses tighter mobile snap cards with shorter height and compact labels, making
+  dossiers, measurements, status events, and sources faster to scan before opening detail cards.
 - **Research trend dashboard scan — done in G559 / issue #3791.** Researchtrends now open with
   a compact scan for topics, publications, source references, and latest update before detailed
   trend cards.

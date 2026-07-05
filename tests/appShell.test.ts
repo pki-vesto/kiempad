@@ -39390,6 +39390,7 @@ describe('app shell', () => {
     );
     expect(html).toContain('Embryo-dossiers');
     expect(html).toContain('data-embryo-tracking-scan="ready"');
+    expect(html).toContain('data-embryo-tracking-scan-density="mobile-compact"');
     expect(html).toContain('aria-label="Embryo tracking overzicht"');
     expect(html).toContain('data-embryo-tracking-scan-card="dossiers"');
     expect(html).toContain('data-embryo-tracking-scan-card="measurements"');
@@ -39507,6 +39508,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.embryo-tracking-scan {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.embryo-tracking-scan__card {');
+    expect(mobileCss).toContain('flex: 0 0 min(124px, 48vw);');
+    expect(mobileCss).toContain('min-height: 66px;');
     expect(mobileCss).toContain('.embryo-tracking-grid {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
   });
