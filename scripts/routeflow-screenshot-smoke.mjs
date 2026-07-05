@@ -8,6 +8,8 @@ const host = '127.0.0.1';
 const port = Number(process.env.KIEMPAD_ROUTEFLOW_SMOKE_PORT ?? 4179);
 const url = `http://${host}:${port}/`;
 const passphrase = 'routeflow screenshot smoke passphrase';
+const attachmentEnvelopeEvidencePrivacyPattern =
+  /routeflow|\.pdf|\.jpg|\.jpeg|base64|OCR|diagnose|behandelkeuzeadvies/i;
 
 const targets = [
   {
@@ -1183,7 +1185,7 @@ const targets = [
     dossierConsole: true,
     uploadConsole: true,
     attachmentEnvelopeBatchStatus: true,
-    attachmentEnvelopeBatchForcedColors: true,
+    attachmentEnvelopeBatchForcedColorsEvidence: true,
     smallMobileViewport: true,
   },
   {
@@ -1933,7 +1935,7 @@ async function assertRouteflows(browser, options) {
         await waitForActiveWorkspaceStripButton(page);
       }
       let imageOpenFieldFocus = null;
-      let attachmentEnvelopeBatchForcedColors = null;
+      let attachmentEnvelopeBatchForcedColorsEvidence = null;
       if (target.imageOpenFieldFocus) {
         const focusSelector =
           '[data-dossier-upload-image-open-fields="compact-rhythm"] label[data-dossier-upload-image-field] > input';
@@ -2021,14 +2023,14 @@ async function assertRouteflows(browser, options) {
           undefined,
           { timeout: 10_000 },
         );
-        if (target.attachmentEnvelopeBatchForcedColors) {
+        if (target.attachmentEnvelopeBatchForcedColorsEvidence) {
           await page.emulateMedia({ forcedColors: 'active' });
-          attachmentEnvelopeBatchForcedColors = {
-            hashing: await collectAttachmentEnvelopeBatchForcedColors(page, {
+          attachmentEnvelopeBatchForcedColorsEvidence = {
+            hashing: await collectAttachmentEnvelopeBatchForcedColorsEvidence(page, {
               batch: 'hash-pending',
               progress: 'hashing',
             }),
-            completeInvalid: await collectAttachmentEnvelopeBatchForcedColors(page),
+            completeInvalid: await collectAttachmentEnvelopeBatchForcedColorsEvidence(page),
           };
           await page.emulateMedia({ forcedColors: 'none' });
         }
@@ -3038,7 +3040,8 @@ async function assertRouteflows(browser, options) {
         };
       }, { routeflow: target, viewportLabel: options.label });
       evidence.imageOpenFieldFocus = imageOpenFieldFocus;
-      evidence.attachmentEnvelopeBatchForcedColors = attachmentEnvelopeBatchForcedColors;
+      evidence.attachmentEnvelopeBatchForcedColorsEvidence =
+        attachmentEnvelopeBatchForcedColorsEvidence;
       const screenshot = await root.screenshot({ animations: 'disabled' });
 
       if (pageErrors.length > 0) {
@@ -3347,7 +3350,7 @@ async function assertRouteflows(browser, options) {
           !evidence.attachmentEnvelopeBatchStatus.text.includes(
             'Geen bestandsnamen of broninhoud',
           ) ||
-          /routeflow|\.pdf|\.jpg|\.jpeg|base64|OCR|diagnose|behandelkeuzeadvies/i.test(
+          attachmentEnvelopeEvidencePrivacyPattern.test(
             evidence.attachmentEnvelopeBatchStatus.text,
           ) ||
           evidence.attachmentEnvelopeBatchStatus.scrollWidth >
@@ -3361,38 +3364,12 @@ async function assertRouteflows(browser, options) {
           )}).`,
         );
       }
-      if (evidence.attachmentEnvelopeBatchForcedColors) {
-        const forcedColors = evidence.attachmentEnvelopeBatchForcedColors;
-        const hashing = forcedColors.hashing ?? {};
-        const completeInvalid = forcedColors.completeInvalid ?? {};
-        const combinedText = `${hashing.text ?? ''} ${completeInvalid.text ?? ''}`;
-        if (
-          !hashing.forcedColorsActive ||
-          !completeInvalid.forcedColorsActive ||
-          !hashing.visible ||
-          !completeInvalid.visible ||
-          hashing.progress !== 'hashing' ||
-          completeInvalid.progress !== 'complete' ||
-          completeInvalid.state !== 'invalid' ||
-          hashing.borderLeftStyle === 'none' ||
-          hashing.titleTextDecorationLine === 'none' ||
-          completeInvalid.borderLeftStyle === 'none' ||
-          completeInvalid.outlineStyle === 'none' ||
-          completeInvalid.titleTextDecorationStyle !== 'double' ||
-          /routeflow|\.pdf|\.jpg|\.jpeg|base64|OCR|diagnose|behandelkeuzeadvies/i.test(
-            combinedText,
-          ) ||
-          hashing.scrollWidth > hashing.clientWidth + 1 ||
-          completeInvalid.scrollWidth > completeInvalid.clientWidth + 1 ||
-          hashing.scrollHeight > hashing.clientHeight + 1 ||
-          completeInvalid.scrollHeight > completeInvalid.clientHeight + 1
-        ) {
-          throw new Error(
-            `${options.label}/${target.screen}: attachment-envelope forced-colors batchprogress mist onderscheidende evidence (${JSON.stringify(
-              forcedColors,
-            )}).`,
-          );
-        }
+      if (evidence.attachmentEnvelopeBatchForcedColorsEvidence) {
+        assertAttachmentEnvelopeBatchForcedColorsEvidence(
+          evidence.attachmentEnvelopeBatchForcedColorsEvidence,
+          options.label,
+          target.screen,
+        );
       }
       if (
         (options.label === 'mobile' || options.label === 'small-mobile') &&
@@ -3704,7 +3681,7 @@ async function assertRouteflows(browser, options) {
   }
 }
 
-async function collectAttachmentEnvelopeBatchForcedColors(page, stateOverride) {
+async function collectAttachmentEnvelopeBatchForcedColorsEvidence(page, stateOverride) {
   return page.evaluate((override) => {
     const batch = document.querySelector('[data-attachment-envelope-batch]');
     const originalBatch =
@@ -3743,6 +3720,46 @@ async function collectAttachmentEnvelopeBatchForcedColors(page, stateOverride) {
     }
     return evidence;
   }, stateOverride);
+}
+
+function assertAttachmentEnvelopeBatchForcedColorsEvidence(evidence, viewportLabel, screen) {
+  const hashing = evidence.hashing ?? {};
+  const completeInvalid = evidence.completeInvalid ?? {};
+  const combinedText = `${hashing.text ?? ''} ${completeInvalid.text ?? ''}`;
+  const hasHorizontalOverflow =
+    hashing.scrollWidth > hashing.clientWidth + 1 ||
+    completeInvalid.scrollWidth > completeInvalid.clientWidth + 1;
+  const hasVerticalOverflow =
+    hashing.scrollHeight > hashing.clientHeight + 1 ||
+    completeInvalid.scrollHeight > completeInvalid.clientHeight + 1;
+  const hasDistinctHashingCue =
+    hashing.progress === 'hashing' &&
+    hashing.borderLeftStyle !== 'none' &&
+    hashing.titleTextDecorationLine !== 'none';
+  const hasDistinctCompleteInvalidCue =
+    completeInvalid.progress === 'complete' &&
+    completeInvalid.state === 'invalid' &&
+    completeInvalid.borderLeftStyle !== 'none' &&
+    completeInvalid.outlineStyle !== 'none' &&
+    completeInvalid.titleTextDecorationStyle === 'double';
+
+  if (
+    !hashing.forcedColorsActive ||
+    !completeInvalid.forcedColorsActive ||
+    !hashing.visible ||
+    !completeInvalid.visible ||
+    !hasDistinctHashingCue ||
+    !hasDistinctCompleteInvalidCue ||
+    attachmentEnvelopeEvidencePrivacyPattern.test(combinedText) ||
+    hasHorizontalOverflow ||
+    hasVerticalOverflow
+  ) {
+    throw new Error(
+      `${viewportLabel}/${screen}: attachment-envelope forced-colors batchprogress mist onderscheidende evidence (${JSON.stringify(
+        evidence,
+      )}).`,
+    );
+  }
 }
 
 async function assertWorkspaceStripHistoryNavigation(page, viewportLabel) {
