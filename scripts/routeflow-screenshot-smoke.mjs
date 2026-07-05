@@ -1571,6 +1571,48 @@ const targets = [
     ],
   },
   {
+    screen: 'dossier-metadata-normalization-correction',
+    hash: '#dossier?route=timeline&preview=locked',
+    rootSelector: '#dossier-route-timeline',
+    expectedText: 'Metadata-normalisatie',
+    activeRouteSelector: '[data-dossier-route="timeline"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    prepare: 'dossier-metadata-normalization-correction',
+    openSelectors: [
+      '[data-dossier-timeline-followup="collapsed"]',
+      '[data-dossier-timeline-context-choice="collapsed"]',
+      '[data-dossier-timeline-disclosure="documents"]',
+    ],
+    requiredSelectors: [
+      '[data-metadata-normalization-correction="ready"]',
+      '[data-metadata-normalization-field="date"]',
+      '[data-metadata-normalization-field="source"]',
+      '[data-metadata-normalization-field="document-type"]',
+      '[data-metadata-normalization-field="research-type"]',
+      '[data-metadata-normalization-field="attempt"]',
+      '[data-metadata-normalization-field="appointment"]',
+      '[data-metadata-normalization-field="certainty"]',
+      '[data-metadata-normalization-action="save"]',
+      '[data-metadata-normalization-correction="locked"]',
+      '[data-metadata-normalization-locked-boundary="ready"]',
+    ],
+    presentSelectors: [
+      '[data-hub-detail-panel="timeline-documents"]',
+      '[data-attachment-preview-kind="dossier-preview"][data-attachment-preview-state="locked"]',
+      '[data-ocr-review-correction="ready"]',
+    ],
+    closedDetailsSelectors: [],
+    dossierConsole: true,
+    dossierMetadataNormalizationCorrection: true,
+    smallMobileViewport: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
     screen: 'dossier-ocr-review-correction',
     hash: '#dossier?route=timeline&preview=locked',
     rootSelector: '#dossier-route-timeline',
@@ -2095,6 +2137,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'dossier-ocr-review-correction') {
         await prepareDossierOcrReviewCorrection(page, target.hash);
+      }
+      if (target.prepare === 'dossier-metadata-normalization-correction') {
+        await prepareDossierMetadataNormalizationCorrection(page, target.hash);
       }
       if (target.prepare === 'central-session-renewal-recovery-focus') {
         await prepareCentralSessionRenewalRecoveryFocus(page, target.hash);
@@ -2796,6 +2841,90 @@ async function assertRouteflows(browser, options) {
                   (metadataRect && readyRect ? metadataRect.right > readyRect.right + 1 : true) ||
                   (statusRect && readyRect ? statusRect.right > readyRect.right + 1 : true) ||
                   (actionRect && readyRect ? actionRect.right > readyRect.right + 1 : true),
+              };
+            })()
+          : null;
+        const dossierMetadataNormalizationCorrection = routeflow.dossierMetadataNormalizationCorrection
+          ? (() => {
+              const ready = document.querySelector(
+                '[data-metadata-normalization-correction="ready"]',
+              );
+              const locked = document.querySelector(
+                '[data-metadata-normalization-correction="locked"]',
+              );
+              const fields = [
+                'date',
+                'source',
+                'document-type',
+                'research-type',
+                'attempt',
+                'appointment',
+                'certainty',
+              ].map((field) => {
+                const element = ready?.querySelector(
+                  `[data-metadata-normalization-field="${field}"]`,
+                );
+                const control = element?.querySelector('input, select');
+                const rect = element?.getBoundingClientRect();
+                const controlRect = control?.getBoundingClientRect();
+                return {
+                  field,
+                  visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+                  controlVisible: Boolean(
+                    controlRect && controlRect.width > 0 && controlRect.height > 0,
+                  ),
+                  controlName: control?.getAttribute('name') ?? '',
+                  overflowsForm: Boolean(
+                    rect && ready?.getBoundingClientRect()
+                      ? rect.right > ready.getBoundingClientRect().right + 1
+                      : true,
+                  ),
+                };
+              });
+              const action = ready?.querySelector('[data-metadata-normalization-action="save"]');
+              const lockedBoundary = locked?.querySelector(
+                '[data-metadata-normalization-locked-boundary="ready"]',
+              );
+              const lockedPreview = document.querySelector(
+                '[data-attachment-preview-kind="dossier-preview"][data-attachment-preview-state="locked"]',
+              );
+              const readyRect = ready?.getBoundingClientRect();
+              const lockedRect = locked?.getBoundingClientRect();
+              const actionRect = action?.getBoundingClientRect();
+              const lockedBoundaryRect = lockedBoundary?.getBoundingClientRect();
+              const readyStyle = ready instanceof HTMLElement ? getComputedStyle(ready) : null;
+              const actionStyle = action instanceof HTMLElement ? getComputedStyle(action) : null;
+              const lockedText = [locked, lockedPreview]
+                .map((element) => element?.textContent?.replace(/\s+/g, ' ').trim() ?? '')
+                .join(' ');
+              const lockedForbiddenMatch = lockedText.match(
+                /(\.pdf|\.jpg|\.jpeg|OCR_RAW|GEVOELIGE|MEDISCHE PAYLOAD|secret|token|base64|routeflow-normalization-ready|routeflow-normalization-locked|Veilige bron|locked context)/i,
+              );
+              return {
+                readyVisible: Boolean(readyRect && readyRect.width > 0 && readyRect.height > 0),
+                lockedVisible: Boolean(lockedRect && lockedRect.width > 0 && lockedRect.height > 0),
+                fields,
+                actionVisible: Boolean(actionRect && actionRect.width > 0 && actionRect.height > 0),
+                actionText: action?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                actionWhiteSpace: actionStyle?.whiteSpace ?? '',
+                lockedBoundaryVisible: Boolean(
+                  lockedBoundaryRect &&
+                    lockedBoundaryRect.width > 0 &&
+                    lockedBoundaryRect.height > 0,
+                ),
+                lockedPreviewVisible: lockedPreview instanceof HTMLElement,
+                readyDisplay: readyStyle?.display ?? '',
+                readyGridTemplateColumns: readyStyle?.gridTemplateColumns ?? '',
+                lockedForbiddenMatch: lockedForbiddenMatch?.[0] ?? '',
+                lockedHasForbiddenText: Boolean(lockedForbiddenMatch),
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  (readyRect ? readyRect.right > document.documentElement.clientWidth + 1 : true) ||
+                  (lockedRect ? lockedRect.right > document.documentElement.clientWidth + 1 : true) ||
+                  (actionRect && readyRect ? actionRect.right > readyRect.right + 1 : true) ||
+                  fields.some((field) => field.overflowsForm),
               };
             })()
           : null;
@@ -3567,6 +3696,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
           dossierImportInboxRetry,
+          dossierMetadataNormalizationCorrection,
           dossierOcrReviewCorrection,
           startLaunchpad,
           uploadConsole,
@@ -3998,6 +4128,26 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: OCR-review correctieflow mist scanbare routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierOcrReviewCorrection)}).`,
+        );
+      }
+      if (
+        evidence.dossierMetadataNormalizationCorrection &&
+        (!evidence.dossierMetadataNormalizationCorrection.readyVisible ||
+          !evidence.dossierMetadataNormalizationCorrection.lockedVisible ||
+          evidence.dossierMetadataNormalizationCorrection.fields.length !== 7 ||
+          evidence.dossierMetadataNormalizationCorrection.fields.some(
+            (field) => !field.visible || !field.controlVisible || !field.controlName,
+          ) ||
+          !evidence.dossierMetadataNormalizationCorrection.actionVisible ||
+          evidence.dossierMetadataNormalizationCorrection.actionText !== 'Normalisatie bewaren' ||
+          !evidence.dossierMetadataNormalizationCorrection.lockedBoundaryVisible ||
+          !evidence.dossierMetadataNormalizationCorrection.lockedPreviewVisible ||
+          evidence.dossierMetadataNormalizationCorrection.readyDisplay !== 'grid' ||
+          evidence.dossierMetadataNormalizationCorrection.lockedHasForbiddenText ||
+          evidence.dossierMetadataNormalizationCorrection.hasHorizontalOverflow)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: metadata-normalisatie correctieflow mist scanbare routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierMetadataNormalizationCorrection)}).`,
         );
       }
       if (
@@ -5249,6 +5399,76 @@ async function prepareDossierOcrReviewCorrection(page, targetHash) {
   await page.locator('#dossier-upload-form [name="beeldContext"]').fill('OCR review locked context');
   await page.locator('#dossier-upload-form [name="beeldBron"]').fill('Veilige bron');
   await page.locator('#dossier-upload-form [name="lokaleOcr"]').check();
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareDossierMetadataNormalizationCorrection(page, targetHash) {
+  await page.goto(`${url}#dossier-upload-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#dossier-upload-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'routeflow-normalization-ready.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('safe synthetic metadata normalization text'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-07-01');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('Metadata normalisatie klaar');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('labuitslag');
+  await page.locator('#dossier-upload-form [name="lokaleOcr"]').check();
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-image-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'routeflow-normalization-locked.jpg',
+    mimeType: 'image/jpeg',
+    buffer: Buffer.from('safe synthetic locked metadata fixture'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-07-02');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('Metadata normalisatie beeld');
+  await page.locator('#dossier-upload-form [name="categorie"]').selectOption('beeld');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('afbeelding');
+  await page.locator('#dossier-upload-form [name="beeldContext"]').fill('Metadata locked context');
+  await page.locator('#dossier-upload-form [name="beeldBron"]').fill('Veilige bron');
   await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
   await page.locator('#dossier-upload-form button[type="submit"]').click();
   await page.waitForFunction(

@@ -110,6 +110,11 @@
   text, metadata note, review status, save action, locked boundary copy, and locked preview state
   are measured across desktop, tablet, mobile, and small-mobile without OCR payloads or source
   filenames in the evidence.
+- **Metadata-normalisatie correction evidence — done in G1936 / issue #3819.** Dossier Timeline
+  now has routeflow coverage for metadata-normalisatie ready and locked variants: date, source,
+  document type, research type, attempt, appointment, certainty, save action, locked boundary copy,
+  and locked preview state are measured across desktop, tablet, mobile, and small-mobile without
+  locked source filenames or image payloads in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving
