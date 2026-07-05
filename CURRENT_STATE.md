@@ -305,6 +305,10 @@
 - **G1914 Traject mobile forced-colors inactive focus badge font weight:**
   inactieve gefocuste mobiele Traject-badges gebruiken een rustiger 740-gewicht,
   zodat statuslabels leesbaar blijven zonder actieve route-emphasis te kopiëren.
+- **G1915 Traject mobile forced-colors inactive focus cue font weight:**
+  inactieve gefocuste mobiele Traject-cues gebruiken een rustiger 700-gewicht,
+  zodat cue-labels leesbaar blijven zonder met statusbadges of actieve
+  route-emphasis te concurreren.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

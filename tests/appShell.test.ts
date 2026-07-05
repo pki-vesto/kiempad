@@ -5951,7 +5951,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('margin-top: 4px;');
     expect(mobileCss).toContain('border-width: 1px;');
     expect(mobileCss).toContain('border-style: solid;');
-    expect(mobileCss).toContain('font-weight: 720;');
+    expect(mobileCss).toContain('font-weight: 700;');
     expect(mobileCss).toContain('outline-color: ButtonText;');
     expect(mobileCss).toContain('outline-offset: 1px;');
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
