@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1873 Premium Claude Design UI: back-up controleren opent nu met een compact
+  eerste-viewport recovery board voor exportstatus, synchestel,
+  back-upherinnering en herstelhistorie. De volledige syncstatus-, reminder- en
+  herstelpanelen blijven bereikbaar via bestaande ankers zonder als eerste lange
+  back-upstapel te starten.
 - G1872 Premium Claude Design UI: het logboek opent op de recente route nu met een
   compact eerste-viewport audit board voor privacystatus, aandachtspunten,
   systeemcategorieen en audithistorie. De volledige event- en privacytijdlijnen

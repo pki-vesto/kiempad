@@ -125,6 +125,11 @@
   audithistorie. De volledige event- en privacytijdlijnen blijven via bestaande
   overzicht-, recent-, categorieen- en privacyankers bereikbaar zonder de eerste
   viewport als lange auditstapel te vullen.
+- **G1873 Back-up recovery board:** de Back-up-controleroute start met een compact
+  recovery board voor exportstatus, synchestel, back-upherinnering en
+  herstelhistorie. De volledige syncstatus-, reminder- en herstelpanelen blijven
+  via bestaande export-, import-, status- en herstelankers bereikbaar zonder de
+  eerste viewport als lange back-upstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

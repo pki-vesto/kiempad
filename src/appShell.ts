@@ -2770,6 +2770,14 @@ function renderBackupScreen(state: AppShellState): string {
             hasFeedback: Boolean(state.backupStatus || state.backupError),
             hasError: Boolean(state.backupError),
           })}
+          ${renderBackupRecoveryBoard({
+            central,
+            reminderStatus: reminder.status,
+            reminderTitle: reminder.titel,
+            hasWebAuthn: webAuthnGekoppeld,
+            hasFeedback: Boolean(state.backupStatus || state.backupError),
+            hasError: Boolean(state.backupError),
+          })}
         </div>
         <details id="backup-control-status-disclosure" class="kp-disclosure" data-backup-disclosure="controleren">
           <summary class="kp-disclosure__summary">Syncstatus en back-upherinnering openen</summary>
@@ -3008,6 +3016,83 @@ function renderBackupSyncBoard(input: {
           .join('')}
       </nav>
       <p class="small-print">Deze laag toont geen recordinhoud, bestandsinhoud, herstelzin, sleuteldata of ontsleutelde gezondheidsdata.</p>
+    </section>
+  `;
+}
+
+function renderBackupRecoveryBoard(input: {
+  central: boolean;
+  reminderStatus: string;
+  reminderTitle: string;
+  hasWebAuthn: boolean;
+  hasFeedback: boolean;
+  hasError: boolean;
+}): string {
+  const exportState = input.reminderStatus === 'recent' ? 'OK' : 'Nodig';
+  const syncState = input.hasError ? 'Check' : input.hasFeedback ? 'Feedback' : 'Klaar';
+  const lanes: Array<{
+    key: 'export' | 'sync' | 'reminder' | 'history';
+    href: string;
+    eyebrow: string;
+    value: string;
+    label: string;
+    detail: string;
+  }> = [
+    {
+      key: 'export',
+      href: '#backup?route=export',
+      eyebrow: 'Export',
+      value: exportState,
+      label: input.central ? 'Centraal' : 'Lokaal',
+      detail: 'Maak een versleutelde export zonder inhoud te tonen.',
+    },
+    {
+      key: 'sync',
+      href: '#backup?route=import',
+      eyebrow: 'Synchestel',
+      value: syncState,
+      label: input.central ? 'Recordpakket' : 'Syncpakket',
+      detail: 'Open import of overdracht alleen bij bewust herstel.',
+    },
+    {
+      key: 'reminder',
+      href: '#backup-control-status-disclosure',
+      eyebrow: 'Reminder',
+      value: input.reminderStatus === 'recent' ? 'Actueel' : 'Check',
+      label: input.reminderTitle,
+      detail: 'Bekijk back-upherinnering pas met statusdetails.',
+    },
+    {
+      key: 'history',
+      href: '#backup-recovery-webauthn-disclosure',
+      eyebrow: 'Historie',
+      value: input.hasWebAuthn ? 'Bio' : 'Fallback',
+      label: 'Herstel',
+      detail: 'Open herstelinstellingen los van export en import.',
+    },
+  ];
+
+  return `
+    <section class="backup-recovery-board" aria-label="Back-up recovery board" data-backup-recovery-board="first-viewport">
+      <header class="backup-recovery-board__header">
+        <p class="kp-card__eyebrow">Recovery board</p>
+        <h3>Kies eerst je herstellaag</h3>
+        <p>Exportstatus, synchestel, back-upherinnering en herstelhistorie blijven gescheiden voordat je detailinformatie opent.</p>
+      </header>
+      <nav class="backup-recovery-board__lanes" aria-label="Back-up recovery routes">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="backup-recovery-board__lane" href="${lane.href}" data-backup-recovery-lane="${lane.key}">
+                <span>${lane.eyebrow}</span>
+                <strong>${escapeHtml(lane.value)}</strong>
+                <em>${escapeHtml(lane.label)}</em>
+                <small>${lane.detail}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }
