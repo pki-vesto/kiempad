@@ -214,6 +214,11 @@
   en het geselecteerde vraagformulier tonen consult-linked vraagmetadata met
   bronlabel, datum en reviewstatus, compact naast gewone vragen zonder medische
   payload of behandeladvies.
+- **G2017 consultvraagkoppeling routeflow evidence:** Vragen/Open toont nu een
+  compacte consultkoppelingen-scan voor gereviewde consultvragen,
+  conceptkoppelingen en gewone open vragen; routeflow-smoke maakt de koppeling
+  via afspraak, consultkaart en vraagformulier en bewaakt desktop, tablet en
+  mobiel zonder consulttekst, medische payload of behandeladvies.
 - **G512 historische records zoekfilter op kliniek:** Dossier Zoeken toont een
   aparte kliniekfilter met veilige resultaatcontext voor bron, datum en
   reviewstatus, zodat historische records per kliniek scanbaar worden zonder

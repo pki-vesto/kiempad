@@ -19737,6 +19737,7 @@ function renderVragenScreen(state: AppShellState): string {
           hasPrepPacket: Boolean(gegenereerdeVragenlijst),
           nextWithQuestions,
         })}
+        ${renderQuestionConsultLinkBoard(state.vragen)}
         ${renderQuestionOpenToolbar({
           openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
           deleteVraagButton,
@@ -20034,6 +20035,85 @@ function renderQuestionOpenPrepBoard(input: {
   `;
 }
 
+function renderQuestionConsultLinkBoard(bundles: VraagBundle[]): string {
+  const openBundles = bundles.filter((bundle) => !bundle.vraag.beantwoord);
+  const linkedBundles = openBundles.filter(
+    (bundle) => (bundle.vraag.consultKoppelingen ?? []).length > 0,
+  );
+  const reviewedBundles = linkedBundles.filter((bundle) =>
+    (bundle.vraag.consultKoppelingen ?? []).some(
+      (koppeling) => koppeling.reviewStatus === 'gereviewd',
+    ),
+  );
+  const conceptBundles = linkedBundles.filter((bundle) =>
+    (bundle.vraag.consultKoppelingen ?? []).some(
+      (koppeling) => koppeling.reviewStatus !== 'gereviewd',
+    ),
+  );
+  const regularCount = Math.max(0, openBundles.length - linkedBundles.length);
+  const firstReviewed = reviewedBundles[0]?.vraag.consultKoppelingen?.find(
+    (koppeling) => koppeling.reviewStatus === 'gereviewd',
+  );
+  const firstConcept = conceptBundles[0]?.vraag.consultKoppelingen?.find(
+    (koppeling) => koppeling.reviewStatus !== 'gereviewd',
+  );
+  const describeLink = (
+    koppeling:
+      | NonNullable<NonNullable<VraagBundle['vraag']['consultKoppelingen']>[number]>
+      | undefined,
+    fallback: string,
+  ): string =>
+    koppeling ? `${koppeling.bronLabel} · ${formatDateTime(koppeling.datum)}` : fallback;
+  const lanes = [
+    {
+      id: 'reviewed',
+      label: 'Gereviewd',
+      count: reviewedBundles.length,
+      detail: describeLink(firstReviewed, 'Nog geen gereviewde consultkoppeling.'),
+    },
+    {
+      id: 'concept',
+      label: 'Concept',
+      count: conceptBundles.length,
+      detail: describeLink(firstConcept, 'Controleer bron en datum voordat je deze bespreekt.'),
+    },
+    {
+      id: 'regular',
+      label: 'Gewoon open',
+      count: regularCount,
+      detail:
+        regularCount > 0
+          ? 'Deze open vragen hebben nog geen consultdocument als bron.'
+          : 'Alle open vragen zijn aan consultcontext gekoppeld.',
+    },
+  ];
+
+  return `
+    <section class="question-consult-link-board" aria-label="Consultkoppelingen in open vragen" data-question-consult-link-board="${linkedBundles.length > 0 ? 'ready' : 'empty'}" data-question-consult-link-board-state="${linkedBundles.length > 0 ? 'linked' : 'empty'}">
+      <header class="question-consult-link-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Consultkoppelingen</p>
+          <h3>Welke vragen komen uit een consultdocument?</h3>
+        </div>
+        <strong>${linkedBundles.length} link${linkedBundles.length === 1 ? '' : 's'}</strong>
+      </header>
+      <div class="question-consult-link-board__lanes" aria-label="Consultvraagstatussen">
+        ${lanes
+          .map(
+            (lane) => `
+        <div class="question-consult-link-board__lane" data-question-consult-link-lane="${lane.id}" data-question-consult-link-lane-count="${lane.count}">
+          <span>${lane.label}</span>
+          <strong>${lane.count}</strong>
+          <small>${escapeHtml(lane.detail)}</small>
+        </div>`,
+          )
+          .join('')}
+      </div>
+      <p class="small-print">Deze scan toont alleen bronlabel, datum en reviewstatus; consulttekst en antwoorden blijven achter de volledige vragenlijst.</p>
+    </section>
+  `;
+}
+
 function renderQuestionOpenToolbar(input: {
   openCount: number;
   deleteVraagButton: string;
@@ -20093,9 +20173,9 @@ function renderQuestionPreparationWorkbench(input: {
       ? `${input.openCount} open`
       : 'Geen open vragen';
   const context = priorityQuestion
-    ? `Hoogste prioriteit ${priorityQuestion.prioriteit ?? '-'} · ${input.openCount} open vraag${input.openCount === 1 ? '' : 'en'}`
+    ? `Hoogste prioriteit ${priorityQuestion.prioriteit ?? '-'} · ${input.openCount} open ${input.openCount === 1 ? 'vraag' : 'vragen'}`
     : input.totalCount > 0
-      ? `${input.answeredCount} beantwoord · ${input.verslagCount} verslag${input.verslagCount === 1 ? '' : 'en'}`
+      ? `${input.answeredCount} beantwoord · ${input.verslagCount} ${input.verslagCount === 1 ? 'verslag' : 'verslagen'}`
       : 'Voeg een vraag toe of koppel vragen aan een komende afspraak.';
 
   return firstViewportWorkbench({

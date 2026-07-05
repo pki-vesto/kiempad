@@ -17,6 +17,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2017 consultvraagkoppeling routeflow evidence: Vragen/Open toont nu een
+  compacte consultkoppelingen-scan die gereviewde consultvragen,
+  conceptkoppelingen en gewone open vragen scheidt. Routeflow-smoke maakt via
+  de UI een afspraak, consult, open vraag en gereviewde koppeling en bewaakt
+  desktop, tablet en mobiel zonder consulttekst, medische payload of
+  behandeladvies.
 - G2019 dossier zoekfilters gecombineerde routeflow evidence: Dossier Zoeken
   toont nu een vaste filtersetkaart voor vrije tekst, kliniek, poging en
   reviewstatus, plus veilige bron/datumcontext. Routeflow-smoke bewaakt

@@ -18764,7 +18764,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Questions, routeflow smoke, app shell
 - **ADR Needed:** no
 - **Score:** 80
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3972
 
 ### G2018 — Fertility Intelligence: historische records zoekfilter op poging
