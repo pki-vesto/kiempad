@@ -244,6 +244,10 @@
   gepromoveerde actieve mobiele Traject-route krijgt in forced-colors extra
   row-gap en expliciete supporting-text fit, zodat metatekst gescheiden blijft
   van label, badge en cue.
+- **G1899 Traject mobile forced-colors active focus text:** de gepromoveerde
+  actieve mobiele Traject-route houdt tijdens forced-colors keyboardfocus
+  expliciete titel-, metatekst-, badge- en cuekleuren, zodat focus duidelijk
+  blijft zonder tekstoverlap.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

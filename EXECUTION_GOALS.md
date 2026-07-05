@@ -16845,8 +16845,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 51
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3740
+
+### G1900 — Premium Claude Design UI: treatment mobile rail forced-colors focus cue spacing polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve mobiele Traject-route heeft nu expliciete forced-colors focus-tekstbehandeling, maar badge- en cue-outlines kunnen bij focus nog extra spacing nodig hebben zonder crowding.
+- **User Impact:** High-contrast gebruikers kunnen focus en statuspills minder snel onderscheiden als outline en compacte pillen te dicht op elkaar staan.
+- **Desired Outcome:** Mobiele Traject routefocus heeft expliciete forced-colors spacing voor badge- en cue-outlines op actieve en inactieve routekaarten.
+- **User Value:** Focus blijft zichtbaar zonder dat badge en cue onrustig of samengedrukt aanvoelen.
+- **Acceptance Criteria:** Mobile Traject route focus state has explicit forced-colors spacing for badge and cue outlines across active and inactive route cards; existing route hrefs, aria-current states, badges, cue pills, command-task hooks, route groups, active-route promotion, reduced-motion behavior, forced-colors contrast, spacing, active label/cue handling, supporting text fit and active focus text handling remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors focus cue spacing or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 50
+- **Status:** ☐ open
+- **Issue:** #3742
 
 ### G586 — replay conflict recovery status UI
 

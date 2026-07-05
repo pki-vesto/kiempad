@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1699 |
+| ☑ klaar | 1700 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1898** |
+| **Totaal** | **1899** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2060,13 +2060,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1896 | Premium Claude Design UI: treatment mobile rail forced-colors label fit polish | P1 | F5 | ☑ |
 | G1897 | Premium Claude Design UI: treatment mobile rail forced-colors active cue label polish | P1 | F5 | ☑ |
 | G1898 | Premium Claude Design UI: treatment mobile rail forced-colors active supporting text polish | P1 | F5 | ☑ |
-| G1899 | Premium Claude Design UI: treatment mobile rail forced-colors active focus text polish | P1 | F5 | ☐ |
+| G1899 | Premium Claude Design UI: treatment mobile rail forced-colors active focus text polish | P1 | F5 | ☑ |
+| G1900 | Premium Claude Design UI: treatment mobile rail forced-colors focus cue spacing polish | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1898** (id's G001 t/m G1899; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1899** (id's G001 t/m G1900; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
