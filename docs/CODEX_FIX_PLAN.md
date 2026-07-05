@@ -2231,6 +2231,11 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   explicit `...Evidence` helper names, a shared privacy pattern and a scoped
   assertion helper so hashing, complete/invalid, privacy and overflow failures
   stay readable.
+- Partial G1858/#3658: Runbook and completion-audit docs now point to
+  `scripts/routeflow-screenshot-smoke.mjs`,
+  `attachmentEnvelopeBatchForcedColorsEvidence` and
+  `attachmentEnvelopeEvidencePrivacyPattern`, with a maintenance-doc test for
+  the forced-colors batch evidence scope and privacy boundary.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record
