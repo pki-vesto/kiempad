@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1880 Premium Claude Design UI: Kennis/Toevoegen opent nu met een compact
+  inputbord voor researchinvoer, eigen kennis, verplichte velden, opslagstatus en
+  volledige toevoegcontext. De bestaande research- en eigen-kennisformulieren,
+  feedback en annuleeracties blijven bereikbaar zonder als eerste lange
+  invoerstapel te starten.
 - G1879 Premium Claude Design UI: Kennis/Bibliotheek opent nu met een compact
   indexbord voor categorieën, zichtbare items, filters, kaartacties en volledige
   bibliotheekcontext. De bestaande categoriekaarten, filterstatus, itemlijsten,

@@ -115,6 +115,11 @@
   now opens with one compact index board for categories, visible items, filters, card actions, and
   full library context before the existing category and follow-up layers, preserving category
   anchors, filter state, card actions, verification labels, and route hooks on desktop and mobile.
+- **Knowledge add first-viewport input board — done in G1880 / issue #3702.** Kennis/Toevoegen
+  now opens with one compact input board for research input, own knowledge, required fields,
+  storage status, and full add context before the existing forms and optional panels, preserving
+  form ids, input names, add route hooks, feedback, cancel actions, and own-item routes on desktop
+  and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

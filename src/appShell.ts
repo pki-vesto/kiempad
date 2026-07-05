@@ -13515,6 +13515,9 @@ function renderKennisScreen(state: AppShellState): string {
             </details>
           </div>
         </details>
+        ${renderKnowledgeAddInputBoard({
+          totalItems: state.kennisItems.length,
+        })}
         <div class="knowledge-route-grid knowledge-route-grid--add" data-knowledge-add-layout="single-input">
           <div class="summary-panel" data-knowledge-add-primary="research">
             <h3>Research opslaan</h3>
@@ -13830,6 +13833,77 @@ function renderKennisScreen(state: AppShellState): string {
       `,
         }),
       })}
+    </section>
+  `;
+}
+
+function renderKnowledgeAddInputBoard(input: { totalItems: number }): string {
+  const lanes = [
+    {
+      id: 'research',
+      href: '#research-item-form',
+      label: 'Research',
+      title: 'Publicatie',
+      detail: 'Start met titel, bron, datum, notitie en samenvattingen.',
+      cue: 'Invoer',
+    },
+    {
+      id: 'own',
+      href: '#knowledge-own-item-disclosure',
+      label: 'Eigen kennis',
+      title: 'Notitie',
+      detail: 'Open eigen kennis pas als aparte vervolgstap.',
+      cue: 'Optioneel',
+    },
+    {
+      id: 'required',
+      href: '#research-item-form',
+      label: 'Verplicht',
+      title: 'Veldencheck',
+      detail: 'Controleer verplichte invoer voordat je bewaart.',
+      cue: 'Check',
+    },
+    {
+      id: 'storage',
+      href: '#knowledge-overview',
+      label: 'Opslag',
+      title: `${input.totalItems} item${input.totalItems === 1 ? '' : 's'}`,
+      detail: 'Bekijk bibliotheekstatus en lokale filtercontext.',
+      cue: 'Status',
+    },
+    {
+      id: 'context',
+      href: '#knowledge-own-item-disclosure',
+      label: 'Volledige context',
+      title: 'Toevoegen',
+      detail: 'Open researchinvoer en eigen kennis als vervolgcontext.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="knowledge-add-input-board" aria-label="Kennis toevoegen input startlaag" data-knowledge-add-input-board="first-viewport">
+      <header class="knowledge-add-input-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Inputbord</p>
+          <h3>Kies eerst je toevoeglaag</h3>
+        </div>
+        <p>Researchinvoer, eigen kennis, verplichte velden, opslagstatus en volledige context staan als aparte keuzes.</p>
+      </header>
+      <nav class="knowledge-add-input-board__lanes" aria-label="Kennis toevoegen eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="knowledge-add-input-board__lane" href="${escapeAttribute(lane.href)}" data-knowledge-add-input-lane="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }

@@ -16522,8 +16522,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge UI, forms, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 70
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3702
+
+### G1881 — Premium Claude Design UI: knowledge AI route first-viewport preview board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Kennis/AI kan als lange preview-, opslag-, instellingen- en netwerkstapel voelen wanneer AI-preview, samenvatting bewaren, instellingen, researchnetwerk en volledige AI-context tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is of ze eerst preview, opslaan, instellingen of netwerkcontext nodig hebben.
+- **Desired Outcome:** Kennis/AI opent met een compact first-viewport preview board voor AI-preview, samenvatting bewaren, instellingen, researchnetwerk en volledige AI-context.
+- **User Value:** AI en netwerk voelen rustiger en controleerbaarder zonder bestaande formulier-id's, input names, opt-in state, previewhooks, supportpanelen of routehooks te verliezen.
+- **Acceptance Criteria:** Kennis/AI opent met compacte lanes voor AI-preview, samenvatting bewaren, instellingen, researchnetwerk en volledige AI-context; volledige preview-, opslag-, instellingen- en netwerkpanelen blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande form ids, input names, opt-in state, preview hooks, support panels en route hooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud, AI prompt of raw preview payload wordt toegevoegd.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Knowledge UI, AI settings, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 69
+- **Status:** ☐ open
+- **Issue:** #3704
 
 ### G586 — replay conflict recovery status UI
 
