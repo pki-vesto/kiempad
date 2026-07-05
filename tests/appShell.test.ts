@@ -40115,6 +40115,22 @@ describe('app shell', () => {
     expect(html).toContain('Open previewanker, beheeranker, netwerkstatus en routecontext.');
     expect(html).toContain('href="#ai-preview-form"');
     expect(html).toContain('href="#knowledge-ai-support"');
+    expect(html).toContain(
+      'aria-label="Kennis AI preview startlaag" data-knowledge-ai-preview-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je AI-laag');
+    expect(html).toContain('data-knowledge-ai-preview-lane="preview"');
+    expect(html).toContain('data-knowledge-ai-preview-lane="summary"');
+    expect(html).toContain('data-knowledge-ai-preview-lane="settings"');
+    expect(html).toContain('data-knowledge-ai-preview-lane="network"');
+    expect(html).toContain('data-knowledge-ai-preview-lane="context"');
+    expect(html).toContain('href="#ai-preview-form" data-knowledge-ai-preview-lane="preview"');
+    expect(html).toContain('href="#ai-summary-form" data-knowledge-ai-preview-lane="summary"');
+    expect(html).toContain('href="#ai-settings-form" data-knowledge-ai-preview-lane="settings"');
+    expect(html).toContain(
+      'href="#research-network-form" data-knowledge-ai-preview-lane="network"',
+    );
+    expect(html).toContain('href="#knowledge-ai-support" data-knowledge-ai-preview-lane="context"');
     expect(html).toContain('data-knowledge-ai-console="ready"');
     expect(html).toContain('data-knowledge-ai-console-region="preview"');
     expect(html).toContain('data-knowledge-ai-preview-choice="collapsed"');
@@ -40158,6 +40174,9 @@ describe('app shell', () => {
     );
     expect(html.indexOf('data-knowledge-ai-action-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#ai-preview-form"'),
+    );
+    expect(html.indexOf('data-knowledge-ai-preview-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-knowledge-ai-console="ready"'),
     );
     expect(html.indexOf('data-knowledge-ai-console-region="preview"')).toBeLessThan(
       html.indexOf('id="knowledge-ai-support"'),
@@ -41232,6 +41251,13 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-ai-action-choice:not([open]) > .knowledge-ai-action-choice__body {',
     );
+    expect(css).toContain('.knowledge-ai-preview-board {');
+    expect(css).toContain('.knowledge-ai-preview-board__lanes {');
+    expect(css).toContain('.knowledge-ai-preview-board__lane {');
+    expect(css).toContain('.knowledge-ai-preview-board__lane:hover,');
+    expect(mobileCss).toContain('.knowledge-ai-preview-board {');
+    expect(mobileCss).toContain('.knowledge-ai-preview-board__lanes {');
+    expect(mobileCss).toContain('.knowledge-ai-preview-board__lane {');
     expect(css).toContain('.knowledge-ai-preview-choice {');
     expect(css).toContain('.knowledge-ai-preview-choice__summary {');
     expect(css).toContain('.knowledge-ai-preview-choice__body {');

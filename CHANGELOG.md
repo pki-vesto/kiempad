@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1881 Premium Claude Design UI: Kennis/AI opent nu met een compact previewbord
+  voor AI-preview, samenvatting bewaren, instellingen, researchnetwerk en
+  volledige AI-context. De bestaande preview-, opslag-, instellingen- en
+  netwerkpanelen blijven bereikbaar zonder als eerste lange AI-stapel te starten.
 - G1880 Premium Claude Design UI: Kennis/Toevoegen opent nu met een compact
   inputbord voor researchinvoer, eigen kennis, verplichte velden, opslagstatus en
   volledige toevoegcontext. De bestaande research- en eigen-kennisformulieren,

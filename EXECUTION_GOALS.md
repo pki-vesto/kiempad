@@ -16539,8 +16539,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge UI, AI settings, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 69
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3704
+
+### G1882 — Premium Claude Design UI: treatment overview route first-viewport stage board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Traject/Overzicht kan als lange behandelcontextstapel voelen wanneer huidige fase, volgende stap, tijdlijn, vergoeding en volledige trajectcontext tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is welke trajectlaag eerst relevant is.
+- **Desired Outcome:** Traject/Overzicht opent met een compact first-viewport stage board voor huidige fase, volgende stap, tijdlijn, vergoeding en volledige behandelcontext.
+- **User Value:** Trajectoverzicht voelt rustiger en taakgerichter zonder bestaande routehooks, formulieren, tijdlijnankers, vergoedingankers of graphcontext te verliezen.
+- **Acceptance Criteria:** Traject/Overzicht opent met compacte lanes voor huidige fase, volgende stap, tijdlijn, vergoeding en volledige behandelcontext; volledige behandelpanelen blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande route hooks, treatment forms, timeline anchors, reimbursement anchors en graph context; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw treatment payload wordt toegevoegd.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 68
+- **Status:** ☐ open
+- **Issue:** #3706
 
 ### G586 — replay conflict recovery status UI
 

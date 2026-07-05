@@ -163,6 +163,11 @@
   volledige toevoegcontext. De bestaande formulier-id's, input names,
   eigen-kennisroute, feedback en annuleeracties blijven bereikbaar zonder de
   eerste viewport als invoerstapel te vullen.
+- **G1881 Kennis/AI preview board:** Kennis/AI start met een compact previewbord
+  voor AI-preview, samenvatting bewaren, instellingen, researchnetwerk en
+  volledige AI-context. De bestaande preview-, opslag-, instellingen- en
+  netwerkpanelen blijven bereikbaar zonder de eerste viewport als AI-stapel te
+  vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
