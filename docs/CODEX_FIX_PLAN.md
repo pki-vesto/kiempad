@@ -2248,6 +2248,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   first-viewport review board linking to transcript, summary, action points and
   source context, while the longer consult review panels keep their existing
   forms, anchors and privacy boundaries.
+- Partial G1862/#3666: Research summaries now start with a compact reading
+  board linking to scientific summaries, simple summaries, relevance context and
+  source context, while full summary/source/trend details keep their existing
+  anchors and privacy boundaries.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record

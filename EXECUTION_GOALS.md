@@ -16216,8 +16216,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research summary UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 88
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3666
+
+### G1863 — Premium Claude Design UI: daily recommendations first-viewport decision board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dagadvies kan ondanks compactere lijsten nog als één lange aanbevelingenroute openen wanneer vrouw-, man-, samen- en artscheckcontext tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is welke suggesties vandaag voor wie bedoeld zijn en welke punten beter met de kliniek besproken worden.
+- **Desired Outcome:** Dagadvies opent met een compact first-viewport beslis-/actiebord voor vrouw, man, samen en artscheckcontext.
+- **User Value:** Dagadvies voelt rustiger en taakgerichter zonder bestaande review-, reminder-, vraag- of actiehooks te verliezen.
+- **Acceptance Criteria:** Daily recommendations openen met compacte lanes voor vrouw, man, gezamenlijke acties en artscheckcontext; volledige aanbevelingenlijsten blijven bereikbaar zonder als één lange pagina te openen; mobile en desktop behouden bestaande action/review/reminder/question hooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen diagnose, dosering, behandelkeuzeadvies, token, secret of medische plaintext wordt toegevoegd.
+- **Affected Screens:** Dagadvies, Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Daily recommendations UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 87
+- **Status:** ☐ open
+- **Issue:** #3668
 
 ### G586 — replay conflict recovery status UI
 
