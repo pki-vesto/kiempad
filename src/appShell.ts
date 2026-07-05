@@ -4115,8 +4115,8 @@ function renderDossierScreen(state: AppShellState): string {
                 ? `<ol class="phase-list">${importInboxItems
                     .map(
                       (item) => `
-                    <li class="phase-item">
-                      <div>
+                    <li class="phase-item dossier-import-inbox-item" data-dossier-import-inbox-item="${escapeAttribute(item.importstatus)}">
+                      <div class="dossier-import-inbox-item__body">
                         <h3>${escapeHtml(item.titel)}</h3>
                         <p>${escapeHtml(item.datum)} · ${escapeHtml(item.type)} · ${escapeHtml(item.grootte)}</p>
                         <p class="linked-note dossier-status-row">Bronlabel: ${escapeHtml(state.imagingPreviewLocked && item.document.categorie === 'beeld' ? item.veiligBestandslabel : item.bronlabel)} ${renderDossierImportStatusBadge(item.importstatus, item.importstatusLabel)}</p>
@@ -4132,12 +4132,12 @@ function renderDossierScreen(state: AppShellState): string {
                         }
                         <small>Veilige metadata: ${escapeHtml(item.veiligBestandslabel)}</small>
                       </div>
-                      <div class="button-row">
+                      <div class="button-row dossier-import-actionbar" data-dossier-import-actionbar="${item.retryBeschikbaar ? 'retry-available' : 'retry-unavailable'}">
                         ${
                           item.retryBeschikbaar
                             ? `<form class="dossier-import-retry-form" data-dossier-import-retry-form="available">
                                 <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(item.id)}" />
-                                <button class="phase-button secondary" type="submit" data-dossier-import-retry-action="available" aria-label="Probeer importstap opnieuw voor record ${escapeAttribute(item.id)}">Probeer opnieuw</button>
+                                <button class="phase-button secondary dossier-import-retry-button" type="submit" data-dossier-import-retry-action="available" aria-label="Probeer importstap opnieuw voor record ${escapeAttribute(item.id)}">Probeer opnieuw</button>
                               </form>`
                             : ''
                         }

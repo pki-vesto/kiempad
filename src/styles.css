@@ -507,6 +507,7 @@ h3 {
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 
 .cost-item-meta {
@@ -21287,6 +21288,35 @@ a.action-card:active {
   margin: 0;
 }
 
+.dossier-import-inbox-item {
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+}
+
+.dossier-import-inbox-item__body {
+  min-width: 0;
+}
+
+.dossier-import-actionbar {
+  justify-content: start;
+  min-width: min(100%, 152px);
+  max-width: 100%;
+}
+
+.dossier-import-actionbar > form,
+.dossier-import-actionbar > button {
+  min-width: 0;
+}
+
+.dossier-import-actionbar .phase-button {
+  white-space: normal;
+}
+
+.dossier-import-retry-form {
+  display: grid;
+  min-width: 0;
+}
+
 .dossier-command-center {
   display: grid;
   gap: 10px;
@@ -31856,6 +31886,17 @@ summary[class*="__summary"]:focus-visible,
 
   .button-row {
     justify-content: stretch;
+  }
+
+  .dossier-import-inbox-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dossier-import-actionbar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 132px), 1fr));
+    justify-content: stretch;
+    width: 100%;
   }
 
   .definition-list > div,

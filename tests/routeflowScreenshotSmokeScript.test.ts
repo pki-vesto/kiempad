@@ -623,6 +623,16 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('root.screenshot');
     expect(routeflowScreenshotSmokeScript).toContain('screenshotBytes');
     expect(routeflowScreenshotSmokeScript).toContain('hasPayloadLeak');
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'dossier-import-inbox-retry'");
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'dossier-import-inbox-retry'");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'data-dossier-import-retry-action="available"',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('data-dossier-import-retry-state="ocr_wacht"');
+    expect(routeflowScreenshotSmokeScript).toContain('completedHasRetryAction');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'import-inbox retry mist scanbare routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('focusLayout');
     expect(routeflowScreenshotSmokeScript).toContain(
       'focus-workspace staat niet als volle breedte',

@@ -101,6 +101,10 @@
   preparation, and question context before the full open-question follow-up disclosure,
   preserving question routes, forms, prep packet, reports, and priority hooks on desktop and
   mobile.
+- **Import-inbox retry overflow evidence — done in G1938 / issue #3823.** Dossier Review now
+  includes routeflow coverage for a synthetic import-inbox retry item: the retry state, retry
+  action, delete action, and review-ready no-retry variant are measured across desktop, tablet,
+  mobile, and small-mobile without source filenames, OCR payloads, or medical plaintext.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving
