@@ -20979,6 +20979,13 @@ function renderTrajectScreen(state: AppShellState): string {
           data: { 'treatment-route-summary': 'context' },
           ariaLabel: 'Timeline en graphcontext route-samenvatting',
         })}
+        ${renderTreatmentContextTimelineBoard({
+          timelineCount: fertilityTimeline.items.length,
+          graphCount: graphWeergave?.edges.length ?? 0,
+          phaseCount: selected?.fasen.length ?? 0,
+          reimbursementCount: vergoeding.resterend,
+          hasGraph: Boolean(graphWeergave),
+        })}
         ${renderTreatmentContextDecisionBoard({
           phaseCount: selected?.fasen.length ?? 0,
           timelineCount: fertilityTimeline.items.length,
@@ -21154,6 +21161,83 @@ function renderTreatmentContextDecisionBoard(input: {
           .map(
             (lane) => `
               <a class="treatment-context-decision-board__lane" href="${lane.href}" data-treatment-context-decision-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
+}
+
+function renderTreatmentContextTimelineBoard(input: {
+  timelineCount: number;
+  graphCount: number;
+  phaseCount: number;
+  reimbursementCount: number;
+  hasGraph: boolean;
+}): string {
+  const lanes = [
+    {
+      id: 'timeline',
+      href: '#treatment-context-timeline-disclosure',
+      label: 'Timeline',
+      title: `${input.timelineCount} item${input.timelineCount === 1 ? '' : 's'}`,
+      detail: 'Open de fertility timeline met filters als eerste contextlaag.',
+      cue: 'Lezen',
+    },
+    {
+      id: 'graph',
+      href: input.hasGraph ? '#treatment-context-graph-disclosure' : '#traject?route=context',
+      label: 'Graph',
+      title: `${input.graphCount} relatie${input.graphCount === 1 ? '' : 's'}`,
+      detail: 'Bekijk bronrelaties en graphcontext los van de tijdlijn.',
+      cue: input.hasGraph ? 'Graph' : 'Leeg',
+    },
+    {
+      id: 'phase',
+      href: '#traject?route=fasen',
+      label: 'Fasecontext',
+      title: `${input.phaseCount} fase${input.phaseCount === 1 ? '' : 's'}`,
+      detail: 'Open faseplanning zonder de contextpagina te vullen.',
+      cue: 'Fasen',
+    },
+    {
+      id: 'reimbursement',
+      href: '#traject?route=vergoeding',
+      label: 'Vergoeding',
+      title: `${input.reimbursementCount} resterend`,
+      detail: 'Gebruik vergoeding als aparte administratieve contextlaag.',
+      cue: 'Polis',
+    },
+    {
+      id: 'details',
+      href: '#treatment-context-timeline-disclosure',
+      label: 'Volledige inzichten',
+      title: 'Details openen',
+      detail: 'Open timeline, filters en graph pas wanneer je verdieping nodig hebt.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="treatment-context-timeline-board" aria-label="Trajectcontext timeline startlaag" data-treatment-context-timeline-board="first-viewport">
+      <header class="treatment-context-timeline-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Contextbord</p>
+          <h3>Kies eerst je inzichtlaag</h3>
+        </div>
+        <p>Timeline, graph, fasecontext, vergoeding en volledige inzichten staan als aparte keuzes.</p>
+      </header>
+      <nav class="treatment-context-timeline-board__lanes" aria-label="Trajectcontext eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="treatment-context-timeline-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-context-timeline-lane="${escapeAttribute(lane.id)}">
                 <span>${escapeHtml(lane.label)}</span>
                 <strong>${escapeHtml(lane.title)}</strong>
                 <small>${escapeHtml(lane.detail)}</small>

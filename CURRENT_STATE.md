@@ -188,6 +188,11 @@
   pogingen, poliscontext, kostenroute en volledige details. De bestaande
   vergoedingstekst, kostenlink, routehooks en privacygrenzen blijven bereikbaar
   zonder de eerste viewport als administratiestapel te vullen.
+- **G1886 Traject/Context timeline board:** Traject/Context start met een
+  compact contextbord voor timeline, graph, fasecontext, vergoeding en
+  volledige inzichten. De bestaande timelinefilters, graphankers,
+  bronmetadata, routehooks en privacygrenzen blijven bereikbaar zonder de
+  eerste viewport als inzichtenstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

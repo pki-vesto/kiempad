@@ -5433,6 +5433,33 @@ describe('app shell', () => {
     expect(html.indexOf('data-treatment-overview-stage-board="first-viewport"')).toBeLessThan(
       html.indexOf('id="treatment-overview-disclosure"'),
     );
+    expect(html).toContain(
+      'aria-label="Trajectcontext timeline startlaag" data-treatment-context-timeline-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je inzichtlaag');
+    expect(html).toContain('data-treatment-context-timeline-lane="timeline"');
+    expect(html).toContain('data-treatment-context-timeline-lane="graph"');
+    expect(html).toContain('data-treatment-context-timeline-lane="phase"');
+    expect(html).toContain('data-treatment-context-timeline-lane="reimbursement"');
+    expect(html).toContain('data-treatment-context-timeline-lane="details"');
+    expect(html).toContain(
+      'href="#treatment-context-timeline-disclosure" data-treatment-context-timeline-lane="timeline"',
+    );
+    expect(html).toContain(
+      'href="#treatment-context-graph-disclosure" data-treatment-context-timeline-lane="graph"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=fasen" data-treatment-context-timeline-lane="phase"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=vergoeding" data-treatment-context-timeline-lane="reimbursement"',
+    );
+    expect(html).toContain(
+      'href="#treatment-context-timeline-disclosure" data-treatment-context-timeline-lane="details"',
+    );
+    expect(html.indexOf('data-treatment-context-timeline-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-context-timeline-disclosure"'),
+    );
     expect(html).toContain('data-treatment-context-decision-board="first-viewport"');
     expect(html).toContain('aria-label="Behandelcontext beslisbord"');
     expect(html).toContain('Kies eerst je contextlaag');
@@ -5682,6 +5709,10 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-context-decision-board__lane:hover,');
     expect(css).toContain('.treatment-context-decision-board__lane:focus-visible {');
     expect(css).toContain('.treatment-context-decision-board__lane em {');
+    expect(css).toContain('.treatment-context-timeline-board {');
+    expect(css).toContain('.treatment-context-timeline-board__lanes {');
+    expect(css).toContain('.treatment-context-timeline-board__lane {');
+    expect(css).toContain('.treatment-context-timeline-board__lane:hover,');
     expect(css).toContain('.treatment-overview-stage-board {');
     expect(css).toContain('.treatment-overview-stage-board__lanes {');
     expect(css).toContain('.treatment-overview-stage-board__lane {');
@@ -5750,6 +5781,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.treatment-overview-stage-board {');
     expect(mobileCss).toContain('.treatment-overview-stage-board__lanes {');
     expect(mobileCss).toContain('.treatment-overview-stage-board__lane {');
+    expect(mobileCss).toContain('.treatment-context-timeline-board {');
+    expect(mobileCss).toContain('.treatment-context-timeline-board__lanes {');
+    expect(mobileCss).toContain('.treatment-context-timeline-board__lane {');
     expect(mobileCss).toContain('.treatment-phase-board {');
     expect(mobileCss).toContain('.treatment-phase-board__lanes {');
     expect(mobileCss).toContain('.treatment-phase-board__lane {');
@@ -43684,6 +43718,33 @@ describe('app shell', () => {
     );
     expect(html).toContain('id="traject-route-context"');
     expect(html).toContain('data-treatment-route="context"');
+    expect(html).toContain(
+      'aria-label="Trajectcontext timeline startlaag" data-treatment-context-timeline-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je inzichtlaag');
+    expect(html).toContain('data-treatment-context-timeline-lane="timeline"');
+    expect(html).toContain('data-treatment-context-timeline-lane="graph"');
+    expect(html).toContain('data-treatment-context-timeline-lane="phase"');
+    expect(html).toContain('data-treatment-context-timeline-lane="reimbursement"');
+    expect(html).toContain('data-treatment-context-timeline-lane="details"');
+    expect(html).toContain(
+      'href="#treatment-context-timeline-disclosure" data-treatment-context-timeline-lane="timeline"',
+    );
+    expect(html).toContain(
+      'href="#treatment-context-graph-disclosure" data-treatment-context-timeline-lane="graph"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=fasen" data-treatment-context-timeline-lane="phase"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=vergoeding" data-treatment-context-timeline-lane="reimbursement"',
+    );
+    expect(html).toContain(
+      'href="#treatment-context-timeline-disclosure" data-treatment-context-timeline-lane="details"',
+    );
+    expect(html.indexOf('data-treatment-context-timeline-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-context-timeline-disclosure"'),
+    );
     expect(html).toContain('id="traject-route-beheer"');
     expect(html).toContain('data-treatment-route="beheer"');
     expect(html).toContain(

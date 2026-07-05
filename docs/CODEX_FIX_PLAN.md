@@ -144,6 +144,11 @@
   counted attempts, policy context, cost route and full reimbursement details before the existing
   reimbursement panel, preserving reimbursement copy, cost links, treatment status and privacy
   boundaries on desktop and mobile.
+- **Treatment context first-viewport timeline board — done in G1886 / issue #3714.**
+  Traject/Context now opens with one compact timeline board for timeline, graph, phase context,
+  reimbursement context and full insight details before the existing timeline and graph
+  disclosures, preserving timeline filters, graph anchors, source metadata and privacy boundaries
+  on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
