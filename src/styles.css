@@ -30637,6 +30637,20 @@ summary[class*="__summary"]:focus-visible,
       background: HighlightText;
     }
 
+    .treatment-task-route .command-task-route__badge,
+    .treatment-task-route .command-task-route__cue {
+      border-color: CanvasText;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .treatment-task-route[aria-current="page"] .command-task-route__badge,
+    .treatment-task-route[aria-current="page"] .command-task-route__cue {
+      border-color: HighlightText;
+      background: HighlightText;
+      color: Highlight;
+    }
+
     .treatment-task-route:focus-visible {
       border-color: Highlight;
       outline: 2px solid Highlight;

@@ -5856,6 +5856,14 @@ describe('app shell', () => {
     expect(mobileCss).toContain('color: HighlightText;');
     expect(mobileCss).toContain('.treatment-task-route[aria-current="page"]::before {');
     expect(mobileCss).toContain('background: HighlightText;');
+    expect(mobileCss).toContain('.treatment-task-route .command-task-route__badge,');
+    expect(mobileCss).toContain('.treatment-task-route .command-task-route__cue {');
+    expect(mobileCss).toContain(
+      '.treatment-task-route[aria-current="page"] .command-task-route__badge,',
+    );
+    expect(mobileCss).toContain(
+      '.treatment-task-route[aria-current="page"] .command-task-route__cue {',
+    );
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');
