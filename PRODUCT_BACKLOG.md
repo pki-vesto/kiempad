@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1660 |
+| ☑ klaar | 1661 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1859** |
+| **Totaal** | **1860** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2000,7 +2000,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1836 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label tabgrootte rustig | P1 | F5 | ☑ |
 | G1837 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label lettertype rustig | P1 | F5 | ☑ |
 | G1838 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label font-synthese rustig | P1 | F5 | ☑ |
-| G1839 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label optische sizing rustig | P1 | F5 | ☐ |
+| G1839 | Premium Claude Design UI: Dossier upload small-mobile routekaart forced-colors actieve micro-label optische sizing rustig | P1 | F5 | ☑ |
 | G1840 | Premium Claude Design UI: Dossier routepanelen als bounded werkruimte | P1 | F5 | ☑ |
 | G1841 | Central Encrypted Platform: attachment envelope batch status UI | P1 | F5 | ☑ |
 | G1842 | Central Encrypted Platform: central record load progress in runtime bootstrap | P1 | F5 | ☐ |
@@ -2022,12 +2022,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1858 | Central Encrypted Platform: attachment envelope forced-colors evidence docs audit | P1 | F5 | ☑ |
 | G1859 | Central Encrypted Platform: attachment envelope forced-colors evidence release note audit | P1 | F5 | ☑ |
 | G1860 | Central Encrypted Platform: attachment envelope forced-colors release evidence freshness guard | P1 | F5 | ☐ |
+| G1861 | Premium Claude Design UI: consult intelligence review first-viewport polish | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1859** (id's G001 t/m G1860; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1860** (id's G001 t/m G1861; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

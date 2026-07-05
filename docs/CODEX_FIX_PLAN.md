@@ -2195,6 +2195,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1838/#3619: Dossier upload active route micro-labels now disable
   font synthesis in their own small-mobile forced-colors rule, preventing
   browser-synthesized bold or italic emphasis from making compact labels louder.
+- Partial G1839/#3621: Dossier upload active route micro-labels now keep
+  `font-optical-sizing: auto` in their own small-mobile forced-colors rule,
+  preventing variable-font optical sizing from changing compact active labels.
 - Partial G1840/#3623: Dossier route panels now act as bounded scrollable
   workspaces with a sticky route header on desktop and tablet, so upload,
   review, imaging and timeline no longer read as one continuous main-column

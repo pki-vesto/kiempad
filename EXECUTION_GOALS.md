@@ -2428,7 +2428,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier upload route selector, route card forced-colors active micro-label font-optical-sizing, small-mobile CSS, app-shell tests
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3621
 
 ### G1840 — Dossier routepanelen als bounded werkruimte
@@ -16184,6 +16184,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 91
 - **Status:** ☐ open
 - **Issue:** #3662
+
+### G1861 — Premium Claude Design UI: consult intelligence review first-viewport polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De consult intelligence reviewroute kan nog als dichte reviewstapel openen wanneer transcript, samenvatting, actiepunten en broncontext tegelijk zichtbaar worden.
+- **User Impact:** Gebruikers moeten alsnog scannen en scrollen voordat duidelijk is welke consultinformatie eerst aandacht vraagt.
+- **Desired Outcome:** Consult review opent met een compacte, taakgerichte first-viewport reviewwerkbank waarin verslag, samenvatting, actiepunten en broncontext als duidelijke routes of panelen bereikbaar blijven.
+- **User Value:** Consultinformatie voelt rustiger en sneller te beoordelen zonder dat inhoud of privacyhooks verdwijnen.
+- **Acceptance Criteria:** Consult review start met een compacte first-viewport reviewboard; transcript, samenvatting, actiepunten en broncontext blijven bereikbaar zonder als één lange pagina te openen; mobile en desktop behouden bestaande ankers, form-id's en privacyhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen filename, OCR-tekst, medische plaintext, beeldpayload, token of secret wordt toegevoegd.
+- **Affected Screens:** Consult intelligence, Vragen/consultvoorbereiding, Dossier upload
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consult review UI, Claude Design, routeflow smoke, app-shell tests
+- **ADR Needed:** no
+- **Score:** 89
+- **Status:** ☐ open
+- **Issue:** #3664
 
 ### G586 — replay conflict recovery status UI
 
