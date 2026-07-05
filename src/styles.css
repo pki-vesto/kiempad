@@ -30454,10 +30454,11 @@ summary[class*="__summary"]:focus-visible,
 
   .consult-review-scan {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     overflow-x: auto;
     padding-bottom: 2px;
     scroll-snap-type: x proximity;
+    scrollbar-width: none;
   }
 
   .consult-review-scan::-webkit-scrollbar {
@@ -30465,9 +30466,26 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .consult-review-scan__card {
-    flex: 0 0 min(142px, 66vw);
-    min-height: 76px;
+    gap: 3px;
+    flex: 0 0 min(124px, 48vw);
+    min-height: 66px;
+    padding: 8px;
     scroll-snap-align: start;
+  }
+
+  .consult-review-scan__card span {
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    line-height: 1.12;
+  }
+
+  .consult-review-scan__card strong {
+    font-size: 1rem;
+  }
+
+  .consult-review-scan__card small {
+    font-size: 0.68rem;
+    line-height: 1.2;
   }
 
   .consult-review-board__lanes {

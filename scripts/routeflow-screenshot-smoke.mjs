@@ -1690,6 +1690,7 @@ const targets = [
     ],
     requiredSelectors: [
       '[data-consult-review-scan="ready"]',
+      '[data-consult-review-scan-density="mobile-compact"]',
       '[data-consult-review-scan-card="reports"]',
       '[data-consult-review-scan-card="summaries"]',
       '[data-consult-review-scan-card="actions"]',

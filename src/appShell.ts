@@ -12147,7 +12147,7 @@ function renderConsultReviewScan(consultVerslagen: ConsultVerslag[]): string {
   ];
 
   return `
-    <nav class="consult-review-scan" data-consult-review-scan="ready" aria-label="Consult review overzicht">
+    <nav class="consult-review-scan" data-consult-review-scan="ready" data-consult-review-scan-density="mobile-compact" aria-label="Consult review overzicht">
       ${cards
         .map(
           (
