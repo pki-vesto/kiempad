@@ -1830,6 +1830,7 @@ const targets = [
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: ['[data-consult-upload-context-fields="collapsed"]'],
     requiredSelectors: [
       '[data-dossier-upload-console="ready"]',
       '[data-dossier-upload-console-region="header"]',
@@ -1851,6 +1852,9 @@ const targets = [
       '[data-consult-upload-link-fields="collapsed"] > .dossier-upload-optional__summary',
       '[data-consult-upload-context-fields="collapsed"]',
       '[data-consult-upload-context-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-consult-text-import-review="ready"]',
+      'select[name="consultImportReviewStatus"]',
+      '[data-consult-text-import-review-hint="safe"]',
       '[data-consult-upload-completion-choice="ready"]',
       '[data-consult-upload-submit-feedback-details="collapsed"]',
       '[data-consult-upload-submit-feedback-details="collapsed"] > .dossier-upload-optional__summary',
@@ -1867,7 +1871,6 @@ const targets = [
     closedDetailsSelectors: [
       '[data-consult-upload-report-fields="collapsed"]',
       '[data-consult-upload-link-fields="collapsed"]',
-      '[data-consult-upload-context-fields="collapsed"]',
       '[data-consult-upload-submit-feedback-details="collapsed"]',
       '[data-consult-upload-completion-status-choice="collapsed"]',
     ],
@@ -1883,6 +1886,7 @@ const targets = [
     ],
     dossierConsole: true,
     uploadConsole: true,
+    consultTextImportReview: true,
   },
   {
     screen: 'embryo-quality',
@@ -3570,6 +3574,49 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const consultTextImportReview = routeflow.consultTextImportReview
+          ? (() => {
+              const review = rootElement?.querySelector('[data-consult-text-import-review="ready"]');
+              const select = review?.querySelector('select[name="consultImportReviewStatus"]');
+              const hint = rootElement?.querySelector('[data-consult-text-import-review-hint="safe"]');
+              const correction = rootElement?.querySelector('textarea[name="samenvattingCorrectie"]');
+              const options = [
+                ...(select instanceof HTMLSelectElement ? select.options : []),
+              ].map((option) => ({
+                value: option.value,
+                text: option.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+              }));
+              const reviewRect = review?.getBoundingClientRect();
+              const selectRect = select?.getBoundingClientRect();
+              const hintRect = hint?.getBoundingClientRect();
+              const correctionRect = correction?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const hintText = hint?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const reviewText = review?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                reviewVisible: Boolean(reviewRect && reviewRect.width > 0 && reviewRect.height > 0),
+                selectVisible: Boolean(selectRect && selectRect.width > 0 && selectRect.height > 0),
+                hintVisible: Boolean(hintRect && hintRect.width > 0 && hintRect.height > 0),
+                correctionVisible: Boolean(
+                  correctionRect && correctionRect.width > 0 && correctionRect.height > 0,
+                ),
+                optionValues: options.map((option) => option.value),
+                optionTexts: options.map((option) => option.text),
+                optionCount: options.length,
+                selectValue: select instanceof HTMLSelectElement ? select.value : '',
+                selectName: select?.getAttribute('name') ?? '',
+                hintTextLength: hintText.length,
+                contained:
+                  Boolean(rootRect && reviewRect && hintRect && selectRect) &&
+                  reviewRect.left >= rootRect.left - 1 &&
+                  selectRect.right <= rootRect.right + 1 &&
+                  hintRect.right <= rootRect.right + 1,
+                hasForbiddenText: /CONSULT_RAW|consulttekst|transcript|diagnose|dosering|behandelkeuzeadvies|BASE64|OCR_RAW|data:application|passphrase|token|secret|routeflow/i.test(
+                  `${reviewText} ${hintText}`,
+                ),
+              };
+            })()
+          : null;
         const imageSummaryChips = routeflow.imageSummaryChips
           ? [
               ...document.querySelectorAll(
@@ -4242,6 +4289,7 @@ async function assertRouteflows(browser, options) {
           attachmentEnvelopeBatchStatus,
           dossierUploadSizeFeedback,
           dossierHospitalTypeReview,
+          consultTextImportReview,
           imageSummaryChips,
           imageFieldLabels,
           imageOpenFields,
@@ -4838,6 +4886,27 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: ziekenhuisdocumenttype-review mist routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierHospitalTypeReview)}).`,
+        );
+      }
+      if (
+        evidence.consultTextImportReview &&
+        (!evidence.consultTextImportReview.reviewVisible ||
+          !evidence.consultTextImportReview.selectVisible ||
+          !evidence.consultTextImportReview.hintVisible ||
+          !evidence.consultTextImportReview.correctionVisible ||
+          evidence.consultTextImportReview.selectName !== 'consultImportReviewStatus' ||
+          evidence.consultTextImportReview.selectValue !== 'concept' ||
+          evidence.consultTextImportReview.optionCount !== 2 ||
+          !evidence.consultTextImportReview.optionValues.includes('concept') ||
+          !evidence.consultTextImportReview.optionValues.includes('gereviewd') ||
+          !evidence.consultTextImportReview.optionTexts.includes('Concept - nog controleren') ||
+          !evidence.consultTextImportReview.optionTexts.includes('Gereviewd - broncontext klopt') ||
+          evidence.consultTextImportReview.hintTextLength < 100 ||
+          !evidence.consultTextImportReview.contained ||
+          evidence.consultTextImportReview.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: consult tekstimport-review mist routeflow-evidence of lekt payload (${JSON.stringify(evidence.consultTextImportReview)}).`,
         );
       }
       if (

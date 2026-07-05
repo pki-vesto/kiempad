@@ -149,6 +149,11 @@
   correction directly: automatic proposal, unknown choice, taxonomy values, safe hint,
   conceptpreview, and envelope controls remain visible and bounded across desktop, tablet, and
   mobile without filenames, OCR text, or medical payloads in the evidence.
+- **Consult tekstimport reviewstatus evidence — done in G1931 / issue #3809.** Consultupload
+  routeflow coverage now opens the source/context panel and measures the text-import reviewstatus
+  directly: concept and reviewed options, safe source-metadata hint, and summary-correction context
+  remain visible and bounded across desktop, tablet, and mobile without consult text, diagnosis,
+  dosage, treatment-choice advice, or payload text in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

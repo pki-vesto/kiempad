@@ -17373,7 +17373,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consultverslagen, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3809
 
 ### G1932 — Fertility Intelligence: embryo-ID alias reviewcorrectie routeflow evidence
@@ -17698,6 +17698,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3862
+
+### G1959 — Fertility Intelligence: consultnotitie tekstimport reviewstatus release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De consultnotitie tekstimport-reviewstatus heeft routeflow-evidence, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de reviewstatusselect of veilige bronmetadatahint opnieuw verbergen, laten overlappen of consultpayloads in evidence laten lekken.
+- **Desired Outcome:** Release-evidence documenteert dat de consult tekstimport-reviewselect op desktop, tablet en mobile gecontroleerd blijft zonder consulttekst, diagnose, dosering of behandelkeuzeadvies.
+- **User Value:** Gebruikers houden controle over consultnotities voordat samenvattingen, actiepunten of vervolgvragen op broncontext leunen.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar `data-consult-text-import-review="ready"` en de consult tekstimport-reviewstatus routeflow evidence; evidence bevestigt concept/gereviewd opties en veilige bronmetadatahint; consulttekstinput, bestandupload, samenvattingcorrectie en privacyhooks blijven intact; evidence bevat geen consulttekst, medische payloads, diagnose, dosering, behandelkeuzeadvies, secrets, tokens of broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Consultupload, Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consultverslagen, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3864
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 
