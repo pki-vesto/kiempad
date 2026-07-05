@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1744 |
+| ☑ klaar | 1745 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1943** |
+| **Totaal** | **1944** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2105,13 +2105,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1941 | Daily Recommendations: supplement artscheck actieflow routeflow evidence | P1 | F5 | ☐ |
 | G1942 | Fertility Intelligence: embryo image classification review routeflow evidence | P1 | F5 | ☑ |
 | G1943 | Fertility Intelligence: embryo image classification review forced-colors evidence | P1 | F5 | ☑ |
-| G1944 | Fertility Intelligence: embryo image classification forced-colors focus evidence | P1 | F5 | ☐ |
+| G1944 | Fertility Intelligence: embryo image classification forced-colors focus evidence | P1 | F5 | ☑ |
+| G1945 | Fertility Intelligence: embryo image classification forced-colors focus release evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1943** (id's G001 t/m G1944; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1944** (id's G001 t/m G1945; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

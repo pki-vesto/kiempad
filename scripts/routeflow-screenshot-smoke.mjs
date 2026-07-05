@@ -1099,6 +1099,7 @@ const targets = [
     ],
     embryoImageClassificationReview: true,
     embryoImageClassificationForcedColorsEvidence: true,
+    embryoImageClassificationForcedColorsFocusEvidence: true,
     dossierConsole: true,
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
@@ -2915,6 +2916,61 @@ async function assertRouteflows(browser, options) {
                     color: style.color,
                   };
                 });
+              const focusRows = routeflow.embryoImageClassificationForcedColorsFocusEvidence
+                ? [
+                    ['type', type],
+                    ['embryoLabel', label],
+                    ['embryoId', id],
+                    ['reviewStatus', status],
+                  ].map(([field, element]) => {
+                    if (!(element instanceof HTMLElement)) {
+                      return {
+                        field,
+                        active: false,
+                        controlVisible: false,
+                        labelVisible: false,
+                        labelText: '',
+                        outlineStyle: '',
+                        outlineWidth: '',
+                        outlineColor: '',
+                        borderStyle: '',
+                        borderColor: '',
+                        labelColor: '',
+                        labelTextDecorationLine: '',
+                        hasHorizontalOverflow: true,
+                      };
+                    }
+                    element.focus();
+                    const labelElement = element.closest('label');
+                    const controlRect = element.getBoundingClientRect();
+                    const labelRect = labelElement?.getBoundingClientRect();
+                    const controlStyle = getComputedStyle(element);
+                    const labelStyle =
+                      labelElement instanceof HTMLElement ? getComputedStyle(labelElement) : null;
+                    return {
+                      field,
+                      active: document.activeElement === element,
+                      controlVisible: controlRect.width > 0 && controlRect.height > 0,
+                      labelVisible: Boolean(
+                        labelRect && labelRect.width > 0 && labelRect.height > 0,
+                      ),
+                      labelText: labelElement?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                      outlineStyle: controlStyle.outlineStyle,
+                      outlineWidth: controlStyle.outlineWidth,
+                      outlineColor: controlStyle.outlineColor,
+                      borderStyle: controlStyle.borderStyle,
+                      borderColor: controlStyle.borderColor,
+                      labelColor: labelStyle?.color ?? '',
+                      labelTextDecorationLine: labelStyle?.textDecorationLine ?? '',
+                      hasHorizontalOverflow:
+                        controlRect.left < -1 ||
+                        controlRect.right > document.documentElement.clientWidth + 1 ||
+                        document.documentElement.scrollWidth >
+                          document.documentElement.clientWidth + 1 ||
+                        document.body.scrollWidth > document.body.clientWidth + 1,
+                    };
+                  })
+                : [];
               const forbiddenFragments = [
                 'kwaliteitsscore',
                 'selectieadvies',
@@ -2947,6 +3003,7 @@ async function assertRouteflows(browser, options) {
                 reviewOutlineWidth: reviewStyle?.outlineWidth ?? '',
                 reviewStrongTextDecorationLine: reviewStrongStyle?.textDecorationLine ?? '',
                 fieldStyles,
+                focusRows,
                 hasForbiddenText: forbiddenFragments.some((fragment) =>
                   text.toLowerCase().includes(fragment.toLowerCase()),
                 ),
@@ -3703,7 +3760,24 @@ async function assertRouteflows(browser, options) {
               evidence.embryoImageClassificationReview.reviewStrongTextDecorationLine === 'none' ||
               evidence.embryoImageClassificationReview.fieldStyles.some(
                 (field) => field.borderStyle === 'none' || !field.backgroundColor || !field.color,
-              ))) ||
+              ) ||
+              (target.embryoImageClassificationForcedColorsFocusEvidence &&
+                (evidence.embryoImageClassificationReview.focusRows.length !== 4 ||
+                  evidence.embryoImageClassificationReview.focusRows.some(
+                    (field) =>
+                      !field.active ||
+                      !field.controlVisible ||
+                      !field.labelVisible ||
+                      !field.labelText ||
+                      field.outlineStyle === 'none' ||
+                      field.outlineWidth === '0px' ||
+                      field.borderStyle === 'none' ||
+                      !field.borderColor ||
+                      !field.labelColor ||
+                      field.labelTextDecorationLine === 'none' ||
+                      field.hasHorizontalOverflow,
+                  )))
+              )) ||
           evidence.embryoImageClassificationReview.hasForbiddenText ||
           evidence.embryoImageClassificationReview.hasHorizontalOverflow)
       ) {

@@ -536,6 +536,9 @@ describe('routeflow screenshot smoke script', () => {
       'embryoImageClassificationForcedColorsEvidence: true',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
+      'embryoImageClassificationForcedColorsFocusEvidence: true',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
       '[data-embryo-image-classification-review="concept"]',
     );
     expect(routeflowScreenshotSmokeScript).toContain('imagingMetadataEmbryoLabel');
@@ -547,6 +550,9 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('reviewBorderStyle');
     expect(routeflowScreenshotSmokeScript).toContain('reviewOutlineStyle');
     expect(routeflowScreenshotSmokeScript).toContain('reviewStrongTextDecorationLine');
+    expect(routeflowScreenshotSmokeScript).toContain('focusRows');
+    expect(routeflowScreenshotSmokeScript).toContain('labelTextDecorationLine');
+    expect(routeflowScreenshotSmokeScript).toContain("field.outlineWidth === '0px'");
     expect(routeflowScreenshotSmokeScript).toContain('gesloten routeflow-selectors ontbreken');
     expect(routeflowScreenshotSmokeScript).toContain('hiddenSelectors: [');
     expect(routeflowScreenshotSmokeScript).toContain('desktopHiddenSelectors');
