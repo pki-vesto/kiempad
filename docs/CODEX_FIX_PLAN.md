@@ -83,6 +83,10 @@
   Recent now opens with one compact audit board for privacy status, attention points, system
   categories, and audit history before the full recent-event disclosure, preserving overview,
   recent, category, privacy, timeline, and privacy-followup anchors on desktop and mobile.
+- **Backup history first-viewport recovery board — done in G1873 / issue #3688.** Back-up
+  Controleren now opens with one compact recovery board for export status, sync recovery, backup
+  reminder, and recovery history before the full status disclosure, preserving export, import,
+  status, reminder, sync feedback, and recovery anchors on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

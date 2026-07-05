@@ -2194,6 +2194,12 @@ describe('app shell', () => {
     expect(css).toContain('.backup-sync-board__lane:hover,');
     expect(css).toContain('.backup-sync-board__lane:focus-visible {');
     expect(css).toContain('.backup-sync-board__lane em {');
+    expect(css).toContain('.backup-recovery-board {');
+    expect(css).toContain('.backup-recovery-board__header {');
+    expect(css).toContain('.backup-recovery-board__lanes {');
+    expect(css).toContain('.backup-recovery-board__lane {');
+    expect(css).toContain('.backup-recovery-board__lane:hover,');
+    expect(css).toContain('.backup-recovery-board__lane em {');
     expect(css).toContain('.backup-reminder-card,');
     expect(css).toContain('.backup-export-preview {');
     expect(css).toContain('[data-backup-reminder-state="missing"]');
@@ -2203,6 +2209,8 @@ describe('app shell', () => {
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.management-workbench :where(.stat-row) {');
     expect(css).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.backup-recovery-board__lanes {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(css).toContain('.management-workbench :where(.stat) {');
     expect(css).toContain('flex: 0 0 102px;');
     expect(css).toContain('grid-template-columns: 1fr;');
@@ -42379,6 +42387,26 @@ describe('app shell', () => {
     expect(html).toContain('Versleuteld pakket maken');
     expect(html).toContain('Bewust herstellen');
     expect(html).toContain('Wachtwoordzin leidend');
+    expect(html).toContain(
+      'aria-label="Back-up recovery board" data-backup-recovery-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je herstellaag');
+    expect(html).toContain('data-backup-recovery-lane="export"');
+    expect(html).toContain('data-backup-recovery-lane="sync"');
+    expect(html).toContain('data-backup-recovery-lane="reminder"');
+    expect(html).toContain('data-backup-recovery-lane="history"');
+    expect(html).toContain('href="#backup?route=export" data-backup-recovery-lane="export"');
+    expect(html).toContain('href="#backup?route=import" data-backup-recovery-lane="sync"');
+    expect(html).toContain(
+      'href="#backup-control-status-disclosure" data-backup-recovery-lane="reminder"',
+    );
+    expect(html).toContain(
+      'href="#backup-recovery-webauthn-disclosure" data-backup-recovery-lane="history"',
+    );
+    expect(html).toContain('<span>Export</span>');
+    expect(html).toContain('<span>Synchestel</span>');
+    expect(html).toContain('<span>Reminder</span>');
+    expect(html).toContain('<span>Historie</span>');
     expect(html).toContain('data-backup-reminder-card="ready"');
     expect(html).toContain('data-backup-reminder-state="missing"');
     expect(html).toContain('Laatste back-up');
@@ -42388,6 +42416,9 @@ describe('app shell', () => {
       'Deze laag toont geen recordinhoud, bestandsinhoud, herstelzin, sleuteldata of ontsleutelde gezondheidsdata.',
     );
     expect(html.indexOf('data-backup-sync-board="ready"')).toBeLessThan(
+      html.indexOf('data-backup-recovery-board="first-viewport"'),
+    );
+    expect(html.indexOf('data-backup-recovery-board="first-viewport"')).toBeLessThan(
       html.indexOf('data-backup-disclosure="controleren"'),
     );
     expect(html.indexOf('data-backup-disclosure="controleren"')).toBeLessThan(

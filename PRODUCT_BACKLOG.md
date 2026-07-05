@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1673 |
+| ☑ klaar | 1674 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1872** |
+| **Totaal** | **1873** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2034,13 +2034,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1870 | Premium Claude Design UI: schedule history first-viewport planning board | P1 | F5 | ☑ |
 | G1871 | Premium Claude Design UI: reminders history first-viewport notification board | P1 | F5 | ☑ |
 | G1872 | Premium Claude Design UI: event log history first-viewport audit board | P1 | F5 | ☑ |
-| G1873 | Premium Claude Design UI: backup history first-viewport recovery board | P1 | F5 | ☐ |
+| G1873 | Premium Claude Design UI: backup history first-viewport recovery board | P1 | F5 | ☑ |
+| G1874 | Premium Claude Design UI: settings history first-viewport preferences board | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1872** (id's G001 t/m G1873; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1873** (id's G001 t/m G1874; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

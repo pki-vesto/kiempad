@@ -16403,8 +16403,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Backup history UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3688
+
+### G1874 — Premium Claude Design UI: settings history first-viewport preferences board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Instellingen kunnen nog als lange stapel openen wanneer identiteit, gedeelde modus, thema, notificatieprivacy en detailinstellingen tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke voorkeur eerst relevant is.
+- **Desired Outcome:** Instellingen openen met een compact first-viewport preferences board voor identiteit, gedeelde modus, thema, notificatieprivacy en detailinstellingen.
+- **User Value:** Persoonlijke instellingen voelen sneller navigeerbaar zonder settings form-, theme-, owner label-, notification privacy- of encrypted-savehooks te verliezen.
+- **Acceptance Criteria:** Settings opent met compacte lanes voor identiteit, gedeelde modus, thema, notificatieprivacy en detailinstellingen; volledige settings- en detailformulieren blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande settings form-, theme-, owner label-, notification privacy- en encrypted-savehooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, passphrase, OCR-tekst, bestandsinhoud of raw settings payload wordt toegevoegd.
+- **Affected Screens:** Instellingen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Settings UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 76
+- **Status:** ☐ open
+- **Issue:** #3690
 
 ### G586 — replay conflict recovery status UI
 
