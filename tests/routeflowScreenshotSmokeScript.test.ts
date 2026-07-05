@@ -470,7 +470,14 @@ describe('routeflow screenshot smoke script', () => {
     );
     expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeBatchStatus');
     expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeProgress');
-    expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeBatchForcedColors');
+    expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeBatchForcedColorsEvidence');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'collectAttachmentEnvelopeBatchForcedColorsEvidence',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'assertAttachmentEnvelopeBatchForcedColorsEvidence',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeEvidencePrivacyPattern');
     expect(routeflowScreenshotSmokeScript).toContain(
       "await page.emulateMedia({ forcedColors: 'active' })",
     );
@@ -486,11 +493,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       "window.matchMedia('(forced-colors: active)').matches",
     );
-    expect(routeflowScreenshotSmokeScript).toContain("hashing.progress !== 'hashing'");
-    expect(routeflowScreenshotSmokeScript).toContain("progress !== 'complete'");
-    expect(routeflowScreenshotSmokeScript).toContain(
-      "completeInvalid.titleTextDecorationStyle !== 'double'",
-    );
+    expect(routeflowScreenshotSmokeScript).toContain('hasDistinctHashingCue');
+    expect(routeflowScreenshotSmokeScript).toContain('hasDistinctCompleteInvalidCue');
+    expect(routeflowScreenshotSmokeScript).toContain('hasHorizontalOverflow');
+    expect(routeflowScreenshotSmokeScript).toContain('hasVerticalOverflow');
     expect(routeflowScreenshotSmokeScript).toContain(
       '3 items: 2 klaar, 0 hash-pending, 1 controle nodig.',
     );

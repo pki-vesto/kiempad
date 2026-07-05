@@ -2227,6 +2227,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   now collected locally around the batchstatus measurement, including
   small-mobile horizontal and vertical overflow checks for hashing plus
   complete/invalid states without perturbing the rest of the small-mobile route.
+- Partial G1857/#3656: Attachment-envelope forced-colors evidence now uses
+  explicit `...Evidence` helper names, a shared privacy pattern and a scoped
+  assertion helper so hashing, complete/invalid, privacy and overflow failures
+  stay readable.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record

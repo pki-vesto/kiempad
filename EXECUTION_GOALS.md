@@ -16131,8 +16131,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Routeflow smoke, attachment envelope tests
 - **ADR Needed:** no
 - **Score:** 94
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3656
+
+### G1858 — Attachment envelope forced-colors evidence docs audit
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De forced-colors routeflow evidence is technisch opgeschoond, maar documentatie kan nog explicieter verwijzen naar locatie en privacygrenzen.
+- **User Impact:** Nieuwe contributors kunnen de evidence missen of privacyregels verkeerd interpreteren.
+- **Desired Outcome:** Docs leggen kort uit waar de forced-colors batch evidence leeft en welke privacytermen uitgesloten blijven.
+- **User Value:** Uploadregressies blijven onderhoudbaar zonder medische of bestandsinhoud in evidence te lekken.
+- **Acceptance Criteria:** Docs verklaren waar forced-colors batch evidence leeft en welke privacytermen uitgesloten blijven; backlog/docs verwijzen naar het doel; evidence vermijdt filename, token, secret, base64, OCR-tekst, recordpayload en medische plaintext.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Routeflow smoke, docs, attachment envelope tests
+- **ADR Needed:** no
+- **Score:** 93
+- **Status:** ☐ open
+- **Issue:** #3658
 
 ### G586 — replay conflict recovery status UI
 
