@@ -83,6 +83,10 @@
   aparte correctieflow voor bronlabel, datum en reviewstatus; de gecorrigeerde
   bronmetadata wordt encrypted op hetzelfde dossierrecord bewaard en gebruikt in
   bronlabels zonder de kliniekwaarde te veranderen.
+- **G579 Metadata-normalisatie correctieformulier:** dossierdocumenten tonen nu
+  een compacte correctieflow voor datum, bron, documenttype, onderzoekstype,
+  poging, afspraak en onzekerheid; originele waarden blijven auditcontext,
+  index/zoek/tijdlijn gebruiken de correctie en locked beelditems blijven veilig.
 - **G580 Historische tijdlijnreview:** dossier-documenttijdlijnitems tonen nu
   een compacte reviewkaart om datum, bron, reviewstatus en zichtbaarheid te
   bevestigen, corrigeren of verbergen; de centrale timeline gebruikt de

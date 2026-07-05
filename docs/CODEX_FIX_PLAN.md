@@ -296,6 +296,10 @@
   cards now expose a focused correction flow for source label, source date, and review status;
   corrected source metadata is saved encrypted on the existing record without changing the clinic
   quality value.
+- **Metadata normalization correction form — done in G579 / issue #924.** Dossier documents now
+  expose a compact correction form for normalized date, source, document type, research type,
+  attempt, appointment and uncertainty; corrections are stored encrypted while original values
+  remain audit context, and locked image records show only safe unlock copy.
 - **Historical timeline review action — done in G580 / issue #926.** Dossier timeline items now
   show a compact review card for date, source, review status and visibility; corrections are
   stored encrypted on the dossier record, the central timeline hides intentionally hidden

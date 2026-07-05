@@ -15769,7 +15769,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, metadata review, app shell, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #924
 
 ### G580 — historische tijdlijnitem reviewactie
 
@@ -17440,6 +17441,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3817
+
+### G1936 — Fertility Intelligence: metadata-normalisatie correctieformulier routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het metadata-normalisatie correctieformulier is zichtbaar bij dossierdocumenten, maar routeflow-bewijs moet nog bewaken dat datum, bron, documenttype, onderzoekstype, poging, afspraak en onzekerheid op desktop en mobiel leesbaar blijven.
+- **User Impact:** Zonder visuele routeflow-evidence kan een latere themewijziging de normalisatievelden laten overlappen, onder de fold onduidelijk maken of bronprivacy rond locked beelditems breken.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de metadata-normalisatie correctieflow zonder medische payloads of plaintext locked beeldbronnen.
+- **User Value:** Gebruikers kunnen genormaliseerde dossiermetadata betrouwbaar blijven corrigeren zonder dat toekomstige theme-wijzigingen het formulier laten verdwijnen of bronprivacy breken.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-metadata-normalization-correction="ready"` en de locked variant op desktop en mobiel; datum, bron, documenttype, onderzoekstype, poging, afspraak, onzekerheid en bewaaractie blijven scanbaar zonder page-level horizontale overflow; locked beelditems tonen geen bronbestandsnaam, thumbnail, beeldpayload of plaintext bronwaarde in de normalisatieflow; bestaande documenttijdlijn, dossierindex, zoekroute, OCR-review en imaging privacyhooks blijven intact; tests en fixtures blijven vrij van secrets, medische bronpayloads en plaintext gezondheidsdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Documenttijdlijn, Dossier zoeken
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier metadata, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3819
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

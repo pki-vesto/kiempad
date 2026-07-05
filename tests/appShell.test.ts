@@ -8239,6 +8239,16 @@ describe('app shell', () => {
     expect(html).toContain('name="historicalTimelineZichtbaarheid"');
     expect(html).toContain('Tijdlijnreview bewaren');
     expect(html).toContain('geen diagnose, dosering of behandelkeuzeadvies');
+    expect(html).toContain('data-metadata-normalization-correction="ready"');
+    expect(html).toContain('Metadata-normalisatie');
+    expect(html).toContain('name="metadataNormalisatieDatum"');
+    expect(html).toContain('name="metadataNormalisatieBron"');
+    expect(html).toContain('name="metadataNormalisatieDocumenttype"');
+    expect(html).toContain('name="metadataNormalisatieOnderzoekstype"');
+    expect(html).toContain('name="metadataNormalisatiePogingId"');
+    expect(html).toContain('name="metadataNormalisatieAfspraakId"');
+    expect(html).toContain('name="metadataNormalisatieOnzekerheid"');
+    expect(html).toContain('Normalisatie bewaren');
     expect(html).toContain('Behandelgeschiedenis');
     expect(html).toContain('id="dossier-upload-form"');
     expect(html).toContain(

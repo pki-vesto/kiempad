@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G579 Fertility Intelligence: dossierdocumenten tonen nu een
+  metadata-normalisatieformulier voor datum, bron, documenttype,
+  onderzoekstype, poging, afspraak en onzekerheid; correcties blijven encrypted
+  en locked beeldrecords tonen alleen veilige unlock-copy.
 - G580 Fertility Intelligence: de dossier-documenttijdlijn heeft nu een
   historische tijdlijnreviewkaart waarmee gebruikers datum, bron, reviewstatus
   en zichtbaarheid kunnen bevestigen, corrigeren of verbergen; locked
