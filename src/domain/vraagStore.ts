@@ -74,6 +74,36 @@ export class VraagStore {
     return updated;
   }
 
+  async updateConsultKoppeling(
+    vraagId: string,
+    koppeling: NonNullable<Vraag['consultKoppelingen']>[number],
+  ): Promise<Vraag> {
+    const record = await this.vragen.get(vraagId);
+    if (!record) {
+      throw new Error('Vraag niet gevonden.');
+    }
+
+    const existing = record.value.consultKoppelingen ?? [];
+    const nextKoppeling: NonNullable<Vraag['consultKoppelingen']>[number] = {
+      consultVerslagId: koppeling.consultVerslagId.trim(),
+      bronLabel: koppeling.bronLabel.trim(),
+      datum: koppeling.datum.trim(),
+      reviewStatus: koppeling.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+    };
+    const updatedKoppelingen: NonNullable<Vraag['consultKoppelingen']> = [
+      ...existing.filter((item) => item.consultVerslagId !== koppeling.consultVerslagId),
+      nextKoppeling,
+    ].filter((item) => {
+      return item.consultVerslagId.length > 0 && item.bronLabel.length > 0 && item.datum.length > 0;
+    });
+    const updated: Vraag = {
+      ...record.value,
+      consultKoppelingen: updatedKoppelingen.length > 0 ? updatedKoppelingen : undefined,
+    };
+    await this.vragen.saveWithId(updated);
+    return updated;
+  }
+
   async movePriority(vraagId: string, richting: 'omhoog' | 'omlaag'): Promise<void> {
     const records = await this.vragen.list();
     const reordered = herprioriteerVraag(

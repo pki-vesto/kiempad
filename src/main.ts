@@ -826,6 +826,12 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       void saveConsultSamenvattingReviewFromForm(event.currentTarget, event.submitter, root, state);
     });
   });
+  root.querySelectorAll<HTMLFormElement>('.consult-question-link-review-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveConsultQuestionLinkFromForm(event.currentTarget, root, state);
+    });
+  });
 
   root.querySelector('#dossier-search-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -1134,6 +1140,42 @@ async function saveConsultSamenvattingReviewFromForm(
       error,
       'Consultsamenvatting reviewen is mislukt.',
     );
+    render(root, state);
+  }
+}
+
+async function saveConsultQuestionLinkFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.vraagStore) return;
+  const data = new FormData(target);
+  const vraagId = optionalString(data.get('vraagId'));
+  const consultVerslagId = optionalString(data.get('consultVerslagId'));
+  const bronLabel = optionalString(data.get('consultQuestionLinkSourceLabel'));
+  const datum = optionalString(data.get('consultQuestionLinkDate'));
+  if (!vraagId || !consultVerslagId || !bronLabel || !datum) return;
+
+  const reviewStatus =
+    data.get('consultQuestionLinkReviewStatus') === 'gereviewd' ? 'gereviewd' : 'concept';
+  try {
+    await state.vraagStore.updateConsultKoppeling(vraagId, {
+      consultVerslagId,
+      bronLabel,
+      datum,
+      reviewStatus,
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Consultvraagkoppeling bijgewerkt',
+      detail: `Vraag ${vraagId}; consult ${consultVerslagId}; reviewstatus ${reviewStatus}.`,
+    });
+    state.dossierStatus = 'Open vraag gekoppeld aan consultdocument.';
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError =
+      error instanceof Error ? error.message : 'Consultvraagkoppeling bewaren is mislukt.';
     render(root, state);
   }
 }
@@ -3710,13 +3752,18 @@ async function saveVraagFromForm(
   if (!(target instanceof HTMLFormElement) || !state.vraagStore) return;
 
   const data = new FormData(target);
+  const vraagId = optionalString(data.get('id'));
+  const existingQuestion = vraagId
+    ? state.vragen.find((bundle) => bundle.vraag.id === vraagId)?.vraag
+    : undefined;
   await state.vraagStore.save({
-    id: optionalString(data.get('id')),
+    id: vraagId,
     vraag: String(data.get('vraag') ?? ''),
     voorAfspraakId: optionalString(data.get('voorAfspraakId')),
     prioriteit: optionalPositiveNumber(data.get('prioriteit')),
     beantwoord: data.get('beantwoord') === 'true',
     antwoord: optionalString(data.get('antwoord')),
+    consultKoppelingen: existingQuestion?.consultKoppelingen,
     artscheckMetadata: parseArtscheckMetadataFromForm(data),
   });
 

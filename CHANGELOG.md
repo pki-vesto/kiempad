@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G522 consultdocument koppelen aan open vragen: consultkaarten tonen nu een
+  compacte open-vragenroute voor vragen die aan dezelfde consultafspraak hangen,
+  inclusief bronlabel, datum, reviewstatus en een bewaarformulier voor de
+  koppeling zonder consultpayload of behandeladvies.
 - G2014 offline cache metadata release-state contract error-contract error
   error error error missing-term error contract: de exacte G2013
   error-contract error error error error release missing-term foutmelding is nu

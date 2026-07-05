@@ -206,6 +206,10 @@
   error-contract error error error error release missing-term foutmelding is als
   compact maintenance-contract gesnapshott met veilige labels `offline cache
   metadata missing-term error contract` en `veilige technische labels`.
+- **G522 consultdocumenten gekoppeld aan open vragen:** consultkaarten tonen nu
+  een compacte open-vragenroute voor vragen die aan dezelfde consultafspraak
+  hangen, met bronlabel, datum, reviewstatus en een lokale bewaarknop voor de
+  koppeling zonder consultpayload of behandeladvies.
 - **G2011 offline cache metadata release-state contract error-contract error
   error error missing-term error contract:** de exacte G2010 error-contract
   error error error release missing-term foutmelding is als

@@ -103,6 +103,12 @@ export interface Vraag {
   prioriteit?: number;
   beantwoord: boolean;
   antwoord?: string;
+  consultKoppelingen?: {
+    consultVerslagId: string;
+    bronLabel: string;
+    datum: IsoDate;
+    reviewStatus: 'concept' | 'gereviewd';
+  }[];
   artscheckMetadata?: {
     bron: 'daily_recommendation';
     bronId: string;

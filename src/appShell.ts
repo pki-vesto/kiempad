@@ -12551,12 +12551,16 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
     medicatie: state.medicatie.map((item) => item.medicatie),
     dossierDocumenten: state.dossierDocuments ?? [],
   });
+  const openVraagKoppelingen = bouwConsultOpenVraagKoppelingen(verslag, state.vragen);
   const statusChips = [
     `${details.length} metadata`,
     verslag.samenvatting ? 'samenvatting' : 'geen samenvatting',
     verslag.actiepunten?.length
       ? `${verslag.actiepunten.length} actiepunt${verslag.actiepunten.length === 1 ? '' : 'en'}`
       : 'geen actiepunten',
+    openVraagKoppelingen.length
+      ? `${openVraagKoppelingen.length} open vraag${openVraagKoppelingen.length === 1 ? '' : 'en'}`
+      : 'geen open vragen',
     inzichten.length
       ? `${inzichten.length} koppeling${inzichten.length === 1 ? '' : 'en'}`
       : 'geen koppelingen',
@@ -12580,6 +12584,7 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
           hasText: Boolean(verslag.tekst),
           hasSummary: Boolean(verslag.samenvatting),
           actionCount: verslag.actiepunten?.length ?? 0,
+          questionCount: openVraagKoppelingen.length,
           sourceCount: verslag.samenvatting?.bronnen.length ?? 0,
         })}
         <p class="linked-note consult-card__metadata">${details.map(escapeHtml).join(' · ')}</p>
@@ -12594,6 +12599,7 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
         ${renderConsultSamenvatting(verslag, reviewAnchorBase)}
         ${renderConsultSamenvattingVerschil(vergelijkConsultSamenvatting(verslag))}
         ${renderConsultActiepunten(verslag, reviewAnchorBase)}
+        ${renderConsultOpenVraagKoppelingen(verslag, openVraagKoppelingen, reviewAnchorBase)}
         ${renderConsultInzichten(inzichten)}
         ${verslag.notitie ? `<p class="small-print">Notitie: ${escapeHtml(verslag.notitie)}</p>` : ''}
       </div>
@@ -12615,6 +12621,7 @@ function renderConsultReviewBoard(input: {
   hasText: boolean;
   hasSummary: boolean;
   actionCount: number;
+  questionCount: number;
   sourceCount: number;
 }): string {
   const lanes = [
@@ -12638,6 +12645,13 @@ function renderConsultReviewBoard(input: {
       label: 'Acties',
       value: `${input.actionCount} punt${input.actionCount === 1 ? '' : 'en'}`,
       detail: 'Taken en vragen',
+    },
+    {
+      id: 'questions',
+      href: `${input.anchorBase}-open-vragen`,
+      label: 'Open vragen',
+      value: `${input.questionCount} ${input.questionCount === 1 ? 'vraag' : 'vragen'}`,
+      detail: 'Gekoppeld aan consult',
     },
     {
       id: 'source',
@@ -12811,6 +12825,89 @@ function consultInzichtSoortLabel(soort: ConsultInzichtKoppeling['soort']): stri
   if (soort === 'medicatie') return 'Medicatie';
   if (soort === 'embryo') return 'Embryo';
   return 'Onderzoek';
+}
+
+type ConsultOpenVraagKoppeling = {
+  vraag: VraagBundle['vraag'];
+  metadata: NonNullable<VraagBundle['vraag']['consultKoppelingen']>[number] | undefined;
+};
+
+function bouwConsultOpenVraagKoppelingen(
+  verslag: ConsultVerslag,
+  vragen: VraagBundle[],
+): ConsultOpenVraagKoppeling[] {
+  if (!verslag.afspraakId) return [];
+  const openVragen = openstaandeVragen(vragen.map((bundle) => bundle.vraag));
+  return openVragen
+    .filter((vraag) => vraag.voorAfspraakId === verslag.afspraakId)
+    .slice(0, 4)
+    .map((vraag) => ({
+      vraag,
+      metadata: vraag.consultKoppelingen?.find(
+        (koppeling) => koppeling.consultVerslagId === verslag.id,
+      ),
+    }));
+}
+
+function renderConsultOpenVraagKoppelingen(
+  verslag: ConsultVerslag,
+  koppelingen: ConsultOpenVraagKoppeling[],
+  anchorBase: string,
+): string {
+  if (!verslag.afspraakId) {
+    return '<p class="small-print">Geen afspraak gekoppeld; open vragen blijven in de consultvoorbereiding staan.</p>';
+  }
+  if (koppelingen.length === 0) {
+    return '<p class="small-print">Geen open vragen aan deze consultafspraak gekoppeld.</p>';
+  }
+
+  return `
+    <section id="${escapeAttribute(`${anchorBase}-open-vragen`)}" class="linked-note consult-card__section consult-question-links" data-consult-card-section="open-vragen" data-consult-question-links="ready" aria-label="Open vragen gekoppeld aan consultdocument">
+      <header class="consult-question-links__header">
+        <div>
+          <p class="kp-card__eyebrow">Open vragen</p>
+          <h4>Vragen bij dit consultdocument</h4>
+        </div>
+        <span>${koppelingen.length} vraag${koppelingen.length === 1 ? '' : 'en'}</span>
+      </header>
+      <ul class="consult-question-links__list">
+        ${koppelingen
+          .map((item) => {
+            const metadata = item.metadata;
+            const bronLabel = metadata?.bronLabel ?? `Consult: ${verslag.titel}`;
+            const datum = metadata?.datum ?? verslag.datum;
+            const reviewStatus = metadata?.reviewStatus ?? 'concept';
+            return `
+              <li class="consult-question-link" data-consult-question-link="${escapeAttribute(reviewStatus)}">
+                <div class="consult-question-link__body">
+                  <strong>${escapeHtml(item.vraag.vraag)}</strong>
+                  <small>Bron: ${escapeHtml(bronLabel)} · Datum: ${escapeHtml(datum)} · Reviewstatus: ${escapeHtml(reviewStatus)}</small>
+                </div>
+                <form class="consult-question-link-review-form compact-form" data-consult-question-link-review-form="ready">
+                  <input type="hidden" name="vraagId" value="${escapeAttribute(item.vraag.id)}" />
+                  <input type="hidden" name="consultVerslagId" value="${escapeAttribute(verslag.id)}" />
+                  <input type="hidden" name="consultQuestionLinkDate" value="${escapeAttribute(datum)}" />
+                  <label>
+                    Bronlabel
+                    <input name="consultQuestionLinkSourceLabel" autocomplete="off" value="${escapeAttribute(bronLabel)}" />
+                  </label>
+                  <label>
+                    Review
+                    <select name="consultQuestionLinkReviewStatus">
+                      ${renderOption('concept', 'Concept - controleren', reviewStatus)}
+                      ${renderOption('gereviewd', 'Gereviewd - klopt', reviewStatus)}
+                    </select>
+                  </label>
+                  <button class="phase-button secondary" type="submit">Koppeling bewaren</button>
+                </form>
+              </li>
+            `;
+          })
+          .join('')}
+      </ul>
+      <p class="small-print">Kiempad koppelt alleen vraagmetadata aan het consultdocument; dit is voorbereiding voor het gesprek, geen medisch advies.</p>
+    </section>
+  `;
 }
 
 function renderConsultActiepunten(verslag: ConsultVerslag, anchorBase: string): string {

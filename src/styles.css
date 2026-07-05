@@ -16904,6 +16904,71 @@ h2 {
   margin: 0;
 }
 
+.consult-question-links {
+  gap: 10px;
+}
+
+.consult-question-links__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.consult-question-links__header h4,
+.consult-question-links__header p {
+  margin: 0;
+}
+
+.consult-question-links__header span {
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.consult-question-links__list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.consult-question-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.72fr);
+  gap: 10px;
+  align-items: start;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  border-radius: 9px;
+  background: var(--surface);
+}
+
+.consult-question-link__body {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.consult-question-link__body strong,
+.consult-question-link__body small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.consult-question-link__body small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.consult-question-link-review-form {
+  gap: 7px;
+  min-width: 0;
+}
+
 .consult-review-board {
   display: grid;
   gap: 10px;
@@ -16934,7 +16999,7 @@ h2 {
 
 .consult-review-board__lanes {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 8px;
   min-width: 0;
 }
@@ -31518,6 +31583,10 @@ summary[class*="__summary"]:focus-visible,
     flex: 0 0 min(156px, 70vw);
     min-height: 72px;
     scroll-snap-align: start;
+  }
+
+  .consult-question-link {
+    grid-template-columns: 1fr;
   }
 
   .consult-review-layout__header,

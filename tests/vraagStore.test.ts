@@ -118,4 +118,37 @@ describe('VraagStore', () => {
       /\bdiagnose|dosering|behandelkeuzeadvies\b/i,
     );
   });
+
+  it('bewaart consultdocumentkoppelingen met bron datum en reviewstatus versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      vraag: 'Welke vervolgstap moeten we bespreken?',
+      beantwoord: false,
+    });
+
+    const updated = await store.updateConsultKoppeling(saved.id, {
+      consultVerslagId: 'consult-g522',
+      bronLabel: 'Consult: evaluatiegesprek',
+      datum: '2026-05-08',
+      reviewStatus: 'gereviewd',
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(updated.consultKoppelingen).toEqual([
+      {
+        consultVerslagId: 'consult-g522',
+        bronLabel: 'Consult: evaluatiegesprek',
+        datum: '2026-05-08',
+        reviewStatus: 'gereviewd',
+      },
+    ]);
+    expect((await store.list())[0]?.vraag.consultKoppelingen?.[0]?.reviewStatus).toBe('gereviewd');
+    expect(raw?.payload.ciphertext).not.toContain('Welke vervolgstap');
+    expect(raw?.payload.ciphertext).not.toContain('consult-g522');
+    expect(raw?.payload.ciphertext).not.toContain('Consult: evaluatiegesprek');
+    expect(JSON.stringify(updated.consultKoppelingen)).not.toMatch(
+      /\bdiagnose|dosering|kansberekening|behandelkeuzeadvies\b/i,
+    );
+  });
 });
