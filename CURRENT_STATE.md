@@ -83,6 +83,10 @@
   eerste-viewport beslisbord voor vrouw, man, samen en artscheck. De actieplanner,
   eigenaarwerkbank en volledige suggestielijst blijven bereikbaar als vervolgcontext
   zonder als één lange pagina te openen.
+- **G1864 Dossier-tijdlijn event board:** de Dossier-tijdlijnroute start met een
+  compact event board voor uploads, consulten, beelden en embryo's. De
+  documenttijdlijn en behandelgeschiedenis blijven via follow-up bereikbaar zonder
+  de eerste viewport als lange dossierstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

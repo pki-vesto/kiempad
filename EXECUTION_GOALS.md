@@ -16250,8 +16250,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier timeline UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 86
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3670
+
+### G1865 — Premium Claude Design UI: treatment context first-viewport decision board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De behandelcontext kan nog als lange stapel openen wanneer faseplanning, timeline, vergoeding en graphcontext tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke behandelcontext eerst relevant is.
+- **Desired Outcome:** Behandelcontext opent met een compact first-viewport decision board voor faseplanning, timeline, vergoeding en graph/context.
+- **User Value:** Behandelcontext voelt sneller navigeerbaar zonder fase-, timeline-, vergoeding- of graphhooks te verliezen.
+- **Acceptance Criteria:** Treatment context opent met compacte lanes voor faseplanning, timeline, vergoeding en graph/context; volledige fase-, timeline- en contextlijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande treatment-, timeline-, reimbursement- en graphhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen diagnose, dosering, behandelkeuzeadvies, token, secret of medische plaintext wordt toegevoegd.
+- **Affected Screens:** Traject, Fertility Timeline
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment context UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** #3672
 
 ### G586 — replay conflict recovery status UI
 

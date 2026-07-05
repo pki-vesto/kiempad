@@ -4713,6 +4713,12 @@ function renderDossierScreen(state: AppShellState): string {
             <span>${tijdlijn.length} momenten</span>
           </header>
           <p>Lees de trajectlijn eerst als veilige samenvatting. Onderzoeken, consultcontext en behandelgeschiedenis blijven beschikbaar zonder meteen alle details te tonen.</p>
+          ${renderDossierTimelineEventBoard({
+            uploadCount: tijdlijn.length,
+            consultCount: consultVerslagen.length,
+            imagingCount: imagingItems.length,
+            embryoCount: embryoDossiers.length,
+          })}
           <dl class="summary-list">
             <div><dt>Documenttijdlijn</dt><dd>${tijdlijn.length} momenten</dd></div>
             <div><dt>Behandelgeschiedenis</dt><dd>${behandelGeschiedenis.length} items</dd></div>
@@ -5187,6 +5193,74 @@ function renderHubWorkflowHeader(input: {
               <a class="hub-workflow-tab" href="${escapeAttribute(tab.href)}" data-hub-workflow-tab="${escapeAttribute(tab.id)}" aria-current="${tab.id === input.activeTab ? 'page' : 'false'}">
                 <span>${escapeHtml(tab.label)}</span>
                 <small>${escapeHtml(tab.meta)}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
+}
+
+function renderDossierTimelineEventBoard(input: {
+  uploadCount: number;
+  consultCount: number;
+  imagingCount: number;
+  embryoCount: number;
+}): string {
+  const lanes = [
+    {
+      id: 'uploads',
+      href: '#dossier-documenttijdlijn',
+      label: 'Uploads',
+      title: `${input.uploadCount} moment${input.uploadCount === 1 ? '' : 'en'}`,
+      detail: 'Onderzoeken en documenten in volgorde.',
+      cue: 'Bronnen',
+    },
+    {
+      id: 'consults',
+      href: '#dossier-consultverslagen',
+      label: 'Consulten',
+      title: `${input.consultCount} verslag${input.consultCount === 1 ? '' : 'en'}`,
+      detail: 'Gesprekscontext en consultnotities.',
+      cue: 'Bespreken',
+    },
+    {
+      id: 'imaging',
+      href: '#dossier-imaging-repository',
+      label: 'Beelden',
+      title: `${input.imagingCount} beeld${input.imagingCount === 1 ? '' : 'en'}`,
+      detail: "Echo's, foto's en scans als dossiermoment.",
+      cue: 'Vergelijken',
+    },
+    {
+      id: 'embryos',
+      href: '#dossier-embryo-dossiers',
+      label: 'Embryo',
+      title: `${input.embryoCount} dossier${input.embryoCount === 1 ? '' : 's'}`,
+      detail: 'Embryokwaliteit en statusmomenten.',
+      cue: 'Historie',
+    },
+  ];
+
+  return `
+    <section class="dossier-timeline-event-board" aria-label="Dossier tijdlijn event board" data-dossier-timeline-event-board="first-viewport">
+      <header class="dossier-timeline-event-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Event board</p>
+          <h4>Kies eerst je dossierlaag</h4>
+        </div>
+        <p>Open uploads, consulten, beelden of embryo's zonder meteen de volledige tijdlijnstapel te lezen.</p>
+      </header>
+      <nav class="dossier-timeline-event-board__lanes" aria-label="Dossier tijdlijn laag kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="dossier-timeline-event-board__lane" href="${lane.href}" data-dossier-timeline-event-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
               </a>
             `,
           )

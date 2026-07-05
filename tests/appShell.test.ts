@@ -9571,6 +9571,13 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-timeline-focus {');
     expect(css).toContain('.dossier-timeline-focus__header {');
+    expect(css).toContain('.dossier-timeline-event-board {');
+    expect(css).toContain('.dossier-timeline-event-board__header {');
+    expect(css).toContain('.dossier-timeline-event-board__lanes {');
+    expect(css).toContain('.dossier-timeline-event-board__lane {');
+    expect(css).toContain('.dossier-timeline-event-board__lane:hover,');
+    expect(css).toContain('.dossier-timeline-event-board__lane:focus-visible {');
+    expect(css).toContain('.dossier-timeline-event-board__lane em {');
     expect(css).toContain('.dossier-timeline-followup {');
     expect(css).toContain('.dossier-timeline-followup__summary {');
     expect(css).toContain('.dossier-timeline-followup__body {');
@@ -9742,6 +9749,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.dossier-imaging-inspection-board__lanes {');
     expect(mobileCss).toContain('.dossier-imaging-inspection-board__lane {');
     expect(mobileCss).toContain('flex: 0 0 min(236px, 78vw);');
+    expect(mobileCss).toContain('.dossier-timeline-event-board {');
+    expect(mobileCss).toContain('.dossier-timeline-event-board__lanes {');
+    expect(mobileCss).toContain('.dossier-timeline-event-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('max-width: 76ch;');
     expect(css).toContain('flex-wrap: wrap;');
@@ -10360,6 +10371,17 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-timeline-primary-focus="ready"');
     expect(emptyHtml).toContain('aria-label="Dossier tijdlijn leesfocus"');
     expect(emptyHtml).toContain('Begrijp eerst de volgorde');
+    expect(emptyHtml).toContain('data-dossier-timeline-event-board="first-viewport"');
+    expect(emptyHtml).toContain('aria-label="Dossier tijdlijn event board"');
+    expect(emptyHtml).toContain('Kies eerst je dossierlaag');
+    expect(emptyHtml).toContain('data-dossier-timeline-event-lane="uploads"');
+    expect(emptyHtml).toContain('data-dossier-timeline-event-lane="consults"');
+    expect(emptyHtml).toContain('data-dossier-timeline-event-lane="imaging"');
+    expect(emptyHtml).toContain('data-dossier-timeline-event-lane="embryos"');
+    expect(emptyHtml).toContain('href="#dossier-documenttijdlijn"');
+    expect(emptyHtml).toContain('href="#dossier-consultverslagen"');
+    expect(emptyHtml).toContain('href="#dossier-imaging-repository"');
+    expect(emptyHtml).toContain('href="#dossier-embryo-dossiers"');
     expect(emptyHtml).toContain('data-dossier-timeline-followup="collapsed"');
     expect(emptyHtml).toContain('Tijdlijncontext openen');
     expect(emptyHtml).toContain('Documenttijdlijn en behandelgeschiedenis');
@@ -10368,6 +10390,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Kies tijdlijncontext');
     expect(emptyHtml).toContain('Documenttijdlijn of behandelgeschiedenis');
     expect(emptyHtml.indexOf('data-dossier-timeline-primary-focus="ready"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-timeline-followup="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-timeline-event-board="first-viewport"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-timeline-followup="collapsed"'),
     );
     expect(emptyHtml.indexOf('data-dossier-timeline-followup="collapsed"')).toBeLessThan(
