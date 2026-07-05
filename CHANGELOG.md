@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1909 Premium Claude Design UI: inactieve gefocuste mobiele Traject-cues
+  houden in forced-colors expliciete solid systeemranden en ButtonText outlines,
+  zodat cue-affordance duidelijk blijft zonder actieve route-outlines te
+  kopiëren.
 - G1908 Premium Claude Design UI: inactieve gefocuste mobiele Traject-cues
   houden in forced-colors ButtonFace/ButtonText systeemtonen en een rustiger
   gewicht, zodat cue-informatie leesbaar blijft zonder actieve cue-styling te
