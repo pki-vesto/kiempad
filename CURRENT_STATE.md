@@ -255,6 +255,10 @@
   gefocuste mobiele Traject-routekaarten houden titel, metatekst, badge en cue
   in expliciete forced-colors tekststaten zonder de actieve Highlight-staat na
   te bootsen.
+- **G1902 Traject mobile forced-colors inactive focus cue fit:** inactieve
+  gefocuste mobiele Traject badge- en cuepills krijgen expliciete
+  forced-colors breedte- en ellipsisregels, zodat statuspills compact blijven
+  zonder labels te verdringen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

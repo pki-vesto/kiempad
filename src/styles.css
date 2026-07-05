@@ -30728,9 +30728,15 @@ summary[class*="__summary"]:focus-visible,
 
     .treatment-task-route:not([aria-current="page"]):focus-visible
       :is(.command-task-route__badge, .command-task-route__cue) {
+      flex: 0 1 auto;
+      max-width: min(88px, 46%);
+      min-width: 0;
       border-color: CanvasText;
       background: ButtonFace;
       color: ButtonText;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .treatment-task-route[aria-current="page"]:focus-visible {
