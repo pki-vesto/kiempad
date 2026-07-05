@@ -17509,8 +17509,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier import-inbox, eventlog, tests
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3824
+
+### G1963 — Fertility Intelligence: import-inbox retry eventlog redaction release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De import-inbox retry eventlog redaction helper en tests borgen technische status plus veilige record-id, maar release-evidence moet nog aantonen dat dit gedrag in de distributie en onderhoudschecks zichtbaar blijft.
+- **User Impact:** Zonder release-evidence kan een latere releasewijziging de redaction helper omzeilen of gevoelige importcontext in log-evidence laten terugkomen.
+- **Desired Outcome:** Release- of onderhoudsevidence toont dat importretry-eventlogs via `maakImportRetryEventLogDetail` lopen en alleen technische status plus veilige record-id bevatten.
+- **User Value:** Gebruikers kunnen importstappen herstellen zonder dat releasewijzigingen per ongeluk filenames, OCR/base64, payloads of medische plaintext in eventlogs opnemen.
+- **Acceptance Criteria:** Release-evidence verwijst naar `maakImportRetryEventLogDetail` en gebeurtenis `Dossierimport retry`; evidence bevestigt technische status plus record-id only; evidence sluit filenames, OCR-tekst, base64, dossierpayload, diagnose, dosering, behandelkeuzeadvies, secrets en plaintext gezondheidsdata uit; bestaande retryactie, storagepad en UI-hooks blijven intact; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier review, import-inbox, eventlog
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier import-inbox, eventlog, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3872
 
 ### G1948 — Fertility Intelligence: import-inbox retry overflow release evidence
 

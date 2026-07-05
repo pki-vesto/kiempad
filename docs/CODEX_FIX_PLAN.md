@@ -169,6 +169,11 @@
   beeldtype, source label, date, attempt, appointment, EXIF status, reviewstatus and save action
   remain visible and bounded across desktop, tablet and mobile while locked previews expose no
   thumbnail, image payload or plaintext source filename in the review evidence.
+- **Import-inbox retry eventlog redaction evidence — done in G1939 / issue #3824.** Import retry
+  now writes eventlog detail via `maakImportRetryEventLogDetail`, with tests guarding technical
+  status plus safe record-id only and rejecting filenames, OCR/base64/payload, diagnosis, dosage,
+  treatment advice, secrets and plaintext health data while keeping retry, storage and UI hooks
+  intact.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

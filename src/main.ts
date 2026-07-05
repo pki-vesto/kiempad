@@ -51,6 +51,7 @@ import {
   ZIEKENHUIS_DOCUMENT_TYPE_LABELS,
 } from './domain/dossier';
 import { DossierStore } from './domain/dossierStore';
+import { maakImportRetryEventLogDetail } from './domain/eventLog';
 import { EventLogStore } from './domain/eventLogStore';
 import { buildExampleData, EXAMPLE_DATA_IDS } from './domain/exampleData';
 import type {
@@ -1293,7 +1294,10 @@ async function retryDossierImportFromForm(
     await state.eventLogStore?.record({
       categorie: 'systeem',
       gebeurtenis: 'Dossierimport retry',
-      detail: `Importretry record-id ${result.document.id}; status ${result.status}.`,
+      detail: maakImportRetryEventLogDetail({
+        recordId: result.document.id,
+        status: result.status,
+      }),
     });
     state.dossierStatus =
       result.status === 'opnieuw_klaargezet'
