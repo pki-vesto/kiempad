@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1864 Premium Claude Design UI: de Dossier-tijdlijn opent nu met een compact
+  eerste-viewport event board voor uploads, consulten, beelden en embryo's. De
+  volledige documenttijdlijn en behandelgeschiedenis blijven bereikbaar als
+  vervolgcontext in plaats van als eerste lange stapel.
 - G1863 Premium Claude Design UI: Dagadvies opent nu met een eerste-viewport
   beslisbord voor vrouw, man, samen en artscheck. De volledige suggestielijst en
   eigenaarwerkbank blijven bereikbaar als vervolgcontext, zodat de route niet als
