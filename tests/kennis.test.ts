@@ -13,6 +13,7 @@ import {
   bouwResearchDossierRelaties,
   bouwResearchHerverificatieStatus,
   bouwResearchKaartMetadata,
+  bouwResearchOfflineCacheMetadata,
   bouwResearchRelevantieVoorGebruiker,
   bouwResearchSourceCitation,
   bouwResearchSourceRegistry,
@@ -75,6 +76,15 @@ describe('kennis domeinregels', () => {
       allowlistStatus: 'handmatige_review_nodig',
       allowlistRationale:
         'Bron staat niet op de research-source allowlist; gebruik alleen na handmatige controle van herkomst, publicatiedatum en relevantie.',
+      offlineCacheMetadata: {
+        bron: 'https://voorbeeld.test/embryo-cultuur',
+        datum: 'Nog geen publicatiedatum',
+        reviewStatus: 'concept_te_controleren',
+        cacheType: 'lokale_cache',
+        correctieVelden: ['bron', 'datum', 'cacheType', 'reviewstatus'],
+        uitlegVoorLeken:
+          'Deze bron staat offline in je lokale researchbibliotheek; controleer bron, datum en relevantie zelf.',
+      },
     });
     expect(bronnen.find((bron) => bron.id === 'seed-research-pubmed')).toMatchObject({
       allowlistStatus: 'toegestaan_met_rationale',
@@ -83,6 +93,35 @@ describe('kennis domeinregels', () => {
     expect(bronnen.find((bron) => bron.id === 'seed-research-pubmed')?.toelichting).toContain(
       'Kiempad haalt niets automatisch op',
     );
+    expect(
+      bronnen.find((bron) => bron.id === 'seed-research-pubmed')?.offlineCacheMetadata,
+    ).toEqual({
+      bron: 'https://pubmed.ncbi.nlm.nih.gov/?term=IVF+ICSI+embryo+fertility',
+      datum: 'Seedbron zonder publicatiedatum',
+      reviewStatus: 'concept_te_controleren',
+      cacheType: 'handmatige_seed',
+      correctieVelden: ['bron', 'datum', 'cacheType', 'reviewstatus'],
+      uitlegVoorLeken:
+        'Deze seedbron is een handmatig startpunt; controleer zelf of de bron past bij jullie vraag.',
+    });
+  });
+
+  it('bouwt offline cache metadata voor researchbronnen', () => {
+    expect(
+      bouwResearchOfflineCacheMetadata({
+        bron: 'https://voorbeeld.test/research',
+        datum: '2026-05-10',
+        cacheType: 'lokale_cache',
+      }),
+    ).toEqual({
+      bron: 'https://voorbeeld.test/research',
+      datum: '2026-05-10',
+      reviewStatus: 'concept_te_controleren',
+      cacheType: 'lokale_cache',
+      correctieVelden: ['bron', 'datum', 'cacheType', 'reviewstatus'],
+      uitlegVoorLeken:
+        'Deze bron staat offline in je lokale researchbibliotheek; controleer bron, datum en relevantie zelf.',
+    });
   });
 
   it('beoordeelt researchbronnen via een expliciete allowlist met rationale', () => {

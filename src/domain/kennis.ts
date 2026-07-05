@@ -23,6 +23,16 @@ export type ResearchBron = {
   toelichting: string;
   allowlistStatus: ResearchBronAllowlistStatus;
   allowlistRationale: string;
+  offlineCacheMetadata: ResearchOfflineCacheMetadata;
+};
+
+export type ResearchOfflineCacheMetadata = {
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  cacheType: 'handmatige_seed' | 'lokale_cache';
+  correctieVelden: string[];
+  uitlegVoorLeken: string;
 };
 
 export type ResearchSourceType =
@@ -384,6 +394,11 @@ export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
     bron: 'https://www.eshre.eu/Guidelines-and-Legal/Guidelines',
     herkomst: 'handmatige_seed',
     toelichting: 'Startpunt voor Europese richtlijnen en achtergrondbronnen rond fertiliteitszorg.',
+    offlineCacheMetadata: bouwResearchOfflineCacheMetadata({
+      bron: 'https://www.eshre.eu/Guidelines-and-Legal/Guidelines',
+      datum: 'Seedbron zonder publicatiedatum',
+      cacheType: 'handmatige_seed',
+    }),
     ...beoordeelResearchBron('https://www.eshre.eu/Guidelines-and-Legal/Guidelines'),
   },
   {
@@ -392,6 +407,11 @@ export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
     bron: 'https://www.cochranelibrary.com/cdsr/reviews/topics?topicId=GYNAECA%3AFERTILREG',
     herkomst: 'handmatige_seed',
     toelichting: 'Startpunt voor systematische reviews; gebruiker controleert relevantie zelf.',
+    offlineCacheMetadata: bouwResearchOfflineCacheMetadata({
+      bron: 'https://www.cochranelibrary.com/cdsr/reviews/topics?topicId=GYNAECA%3AFERTILREG',
+      datum: 'Seedbron zonder publicatiedatum',
+      cacheType: 'handmatige_seed',
+    }),
     ...beoordeelResearchBron(
       'https://www.cochranelibrary.com/cdsr/reviews/topics?topicId=GYNAECA%3AFERTILREG',
     ),
@@ -403,6 +423,11 @@ export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
     herkomst: 'handmatige_seed',
     toelichting:
       'Handmatige zoekstart voor recente publicaties; Kiempad haalt niets automatisch op.',
+    offlineCacheMetadata: bouwResearchOfflineCacheMetadata({
+      bron: 'https://pubmed.ncbi.nlm.nih.gov/?term=IVF+ICSI+embryo+fertility',
+      datum: 'Seedbron zonder publicatiedatum',
+      cacheType: 'handmatige_seed',
+    }),
     ...beoordeelResearchBron('https://pubmed.ncbi.nlm.nih.gov/?term=IVF+ICSI+embryo+fertility'),
   },
 ] as const;
@@ -492,6 +517,14 @@ export function bouwResearchBronnenCache(items: readonly KennisItem[]): Research
         bron,
         herkomst: 'lokale_cache',
         toelichting: item.inhoud,
+        offlineCacheMetadata: bouwResearchOfflineCacheMetadata({
+          bron,
+          datum:
+            item.researchPublicatie?.publicatieDatum ??
+            item.geverifieerdOp ??
+            'Nog geen publicatiedatum',
+          cacheType: 'lokale_cache',
+        }),
         ...beoordeelResearchBron(bron),
       };
     });
@@ -506,6 +539,24 @@ export function bouwResearchBronnenCache(items: readonly KennisItem[]): Research
       herkomstVolgorde(a.herkomst) - herkomstVolgorde(b.herkomst) ||
       a.titel.localeCompare(b.titel, 'nl-NL'),
   );
+}
+
+export function bouwResearchOfflineCacheMetadata(input: {
+  bron: string;
+  datum: string;
+  cacheType: ResearchOfflineCacheMetadata['cacheType'];
+}): ResearchOfflineCacheMetadata {
+  return {
+    bron: input.bron,
+    datum: input.datum,
+    reviewStatus: 'concept_te_controleren',
+    cacheType: input.cacheType,
+    correctieVelden: ['bron', 'datum', 'cacheType', 'reviewstatus'],
+    uitlegVoorLeken:
+      input.cacheType === 'lokale_cache'
+        ? 'Deze bron staat offline in je lokale researchbibliotheek; controleer bron, datum en relevantie zelf.'
+        : 'Deze seedbron is een handmatig startpunt; controleer zelf of de bron past bij jullie vraag.',
+  };
 }
 
 export function bouwResearchSourceRegistry(

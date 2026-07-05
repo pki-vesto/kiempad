@@ -16144,6 +16144,7 @@ function renderResearchBronnenCache(bronnen: readonly ResearchBron[]): string {
         title: bron.titel,
         meta: `${bron.herkomst === 'handmatige_seed' ? 'Seedbron' : 'Lokale cache'} · ${bron.bron}`,
         detail: `${bron.toelichting} · ${renderResearchBronAllowlistStatus(bron.allowlistStatus)}: ${bron.allowlistRationale}`,
+        body: renderResearchOfflineCacheMetadata(bron.offlineCacheMetadata),
         data: {
           'research-source-origin': bron.herkomst,
           'research-source-allowlist': bron.allowlistStatus,
@@ -16151,6 +16152,20 @@ function renderResearchBronnenCache(bronnen: readonly ResearchBron[]): string {
       }),
     ),
   });
+}
+
+function renderResearchOfflineCacheMetadata(
+  metadata: ResearchBron['offlineCacheMetadata'],
+): string {
+  return `
+    <dl class="research-offline-cache-metadata" data-research-offline-cache-metadata="ready" data-research-offline-cache-review="${escapeAttribute(metadata.reviewStatus)}" data-research-offline-cache-type="${escapeAttribute(metadata.cacheType)}">
+      <div data-research-offline-cache-source="ready"><dt>Cachebron</dt><dd>${escapeHtml(metadata.bron)}</dd></div>
+      <div data-research-offline-cache-date="${escapeAttribute(metadata.datum)}"><dt>Datum</dt><dd>${escapeHtml(metadata.datum)}</dd></div>
+      <div><dt>Reviewstatus</dt><dd>${escapeHtml(metadata.reviewStatus)}</dd></div>
+      <div><dt>Correctievelden</dt><dd>${metadata.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+      <div><dt>Uitleg</dt><dd>${escapeHtml(metadata.uitlegVoorLeken)}</dd></div>
+    </dl>
+  `;
 }
 
 function renderWetenschappelijkeResearchSamenvattingen(
