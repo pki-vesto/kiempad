@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G543 Research Intelligence trend update timestamp — done in G543 / issue #874.** Researchtrendkaarten tonen nu per onderwerp een controleerbare update-timestamp met datum, bron, reviewstatus, correctievelden en lekenuitleg op basis van lokale researchbibliotheekmetadata.
 - **G552 Daily Recommendations feedbackanalytics — done in G552 / issue #883.** De Dagadvies-werkbank toont nu lokale feedbackanalytics zonder tracking met statusverdeling, eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en no-tracking copy op basis van encrypted eventlogs.
 - **G550 Daily Recommendations bronconfidence — done in G550 / issue #881.** Dagadvieskaarten tonen nu een bronconfidenceblok met label, score, bron, datum, reviewstatus, broncategorieen en lekenuitleg; de score duidt alleen lokale bronbasis en geen medische zekerheid of behandeladvies.
 - **G553 Daily Recommendations eigenaarsfilter — done in G553 / issue #884.** Dagadvies toont nu een herstelbaar lokaal eigenaarsfilter voor vrouw, man en samen met bron, datum en reviewstatus uit encrypted eventlogs; verborgen eigenaars verdwijnen uit de zichtbare suggestielijst zonder medische conclusie.

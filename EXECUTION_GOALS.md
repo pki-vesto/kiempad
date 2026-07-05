@@ -15261,7 +15261,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research dashboard, tests
 - **ADR Needed:** no
 - **Score:** 106
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #874
 
 ### G544 — research relevantie uitleg onzekerheidslabel
 
@@ -18164,6 +18165,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3902
+
+### G1983 — Research Intelligence: trend update timestamp routeflow evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** De research trend update timestamp is zichtbaar in het dashboard, maar routeflow-bewijs moet expliciet blijven vastleggen dat datum, bron, reviewstatus en correctievelden bereikbaar blijven na UI-wijzigingen.
+- **User Impact:** Gebruikers kunnen anders niet controleren of de trendkaart nog herleidbaar en actueel genoeg is voor gesprekvoorbereiding.
+- **Desired Outcome:** Routeflow- en release-evidence noemen de research trend update timestamp, inclusief data-hooks, bronherleiding en niet-medische grens.
+- **User Value:** Gebruikers behouden een controleerbare researchtrendkaart zonder dat Kiempad medisch advies of behandelkeuzes suggereert.
+- **Acceptance Criteria:** Evidence noemt `data-research-trend-update-timestamp`; evidence noemt datum, bron, reviewstatus en correctievelden; evidence bewaakt dat geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt getoond; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research dashboard, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3904
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

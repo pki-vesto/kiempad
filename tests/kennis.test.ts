@@ -579,6 +579,21 @@ describe('kennis domeinregels', () => {
       updateStatusLabel: 'Herverificatie niet gepland',
       laatsteCheck: 'Nog niet gecontroleerd',
     });
+    expect(groepen.find((groep) => groep.onderwerp === 'embryo')?.updateTimestamp).toEqual({
+      bron: 'Lokale researchbibliotheekmetadata',
+      datum: '2026-05-10',
+      reviewStatus: 'concept_te_controleren',
+      correctieVelden: ['trendUpdateDatum', 'bronselectie', 'reviewstatus'],
+      uitlegVoorLeken:
+        'Deze datum komt uit opgeslagen researchmetadata en helpt controleren hoe actueel de lokale trendkaart is; dit is geen medisch advies of keuzehulp.',
+    });
+    expect(
+      groepen.every(
+        (groep) =>
+          groep.updateTimestamp.reviewStatus === 'concept_te_controleren' &&
+          groep.updateTimestamp.correctieVelden.includes('reviewstatus'),
+      ),
+    ).toBe(true);
     expect(groepen.every((groep) => groep.waarschuwing.includes('geen bewijsweging'))).toBe(true);
   });
 

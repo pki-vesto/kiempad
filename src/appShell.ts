@@ -16434,6 +16434,12 @@ function renderResearchTrendCard(groep: ResearchTrendGroep): string {
         <span class="research-trend-card__topic">${escapeHtml(groep.label)}</span>
         <strong>${groep.items.length} item${groep.items.length === 1 ? '' : 's'}</strong>
       </header>
+      <dl class="research-trend-card__timestamp" data-research-trend-update-timestamp="ready" data-research-trend-update-review="${escapeAttribute(groep.updateTimestamp.reviewStatus)}">
+        <div data-research-trend-update-date="${escapeAttribute(groep.updateTimestamp.datum)}"><dt>Laatst bijgewerkt</dt><dd>${escapeHtml(groep.updateTimestamp.datum)}</dd></div>
+        <div data-research-trend-update-source="ready"><dt>Bron</dt><dd>${escapeHtml(groep.updateTimestamp.bron)}</dd></div>
+        <div data-research-trend-update-correction="ready"><dt>Controleerbaar</dt><dd>${groep.updateTimestamp.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+        <div data-research-trend-update-explanation="ready"><dt>Uitleg</dt><dd>${escapeHtml(groep.updateTimestamp.uitlegVoorLeken)}</dd></div>
+      </dl>
       <p class="research-trend-card__warning">${escapeHtml(groep.waarschuwing)}</p>
       <ol class="research-trend-card__items">
         ${groep.items.map(renderResearchTrendCardItem).join('')}
