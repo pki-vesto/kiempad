@@ -17100,8 +17100,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 36
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3770
+
+### G1915 — Premium Claude Design UI: treatment mobile rail forced-colors inactive focus cue font weight polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Inactieve gefocuste mobiele Traject-routekaarten hebben nu rustiger badgegewicht, maar cuegewicht kan nog verder worden afgestemd zodat cue-labels niet concurreren met statusbadges of actieve route-emphasis.
+- **User Impact:** High-contrast toetsenbordgebruikers kunnen cuepills als te zwaar ervaren wanneer het gewicht onvoldoende onderscheid houdt met actieve routecues.
+- **Desired Outcome:** Inactieve gefocuste mobiele Traject-routekaarten hebben expliciete forced-colors cue-font-weightbehandeling die cue-labels leesbaar maar rustiger houdt dan actieve nadruk.
+- **User Value:** Cuepills blijven scanbaar tijdens keyboardfocus zonder actieve route-emphasis te kopiëren.
+- **Acceptance Criteria:** Mobile Traject inactive focused route cards have explicit forced-colors cue font weight handling that stays distinct from active route cue pills and inactive badge treatment; existing route hrefs, aria-current states, badges, cue pills, command-task hooks, route groups, active-route promotion, reduced-motion behavior, forced-colors contrast, spacing, active label/cue handling, supporting text fit, active focus text handling, focus cue spacing, inactive focus text handling, inactive focus cue fit, inactive focus cue rhythm, inactive focus meta rhythm, inactive focus label fit, inactive focus label weight, inactive focus badge tone, inactive focus cue tone, inactive focus cue border, inactive focus cue outline offset, inactive focus badge outline offset, inactive focus badge border style, inactive focus badge outline color and inactive focus badge font weight remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors inactive focus cue font weight or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 35
+- **Status:** ☐ open
+- **Issue:** #3772
 
 ### G586 — replay conflict recovery status UI
 

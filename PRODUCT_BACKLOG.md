@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1714 |
+| ☑ klaar | 1715 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1913** |
+| **Totaal** | **1914** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2075,13 +2075,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1911 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus badge outline offset polish | P1 | F5 | ☑ |
 | G1912 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus badge border style polish | P1 | F5 | ☑ |
 | G1913 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus badge outline color polish | P1 | F5 | ☑ |
-| G1914 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus badge font weight polish | P1 | F5 | ☐ |
+| G1914 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus badge font weight polish | P1 | F5 | ☑ |
+| G1915 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus cue font weight polish | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1913** (id's G001 t/m G1914; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1914** (id's G001 t/m G1915; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
