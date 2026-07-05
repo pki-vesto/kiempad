@@ -1354,7 +1354,10 @@ const targets = [
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
-    openSelectors: ['[data-dossier-upload-metadata="collapsed"]'],
+    openSelectors: [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+    ],
     requiredSelectors: [
       '[data-dossier-upload-console="ready"]',
       '[data-dossier-upload-console="ready"][data-dossier-add-flow="document"]',
@@ -1362,9 +1365,11 @@ const targets = [
       '[data-dossier-upload-metadata="collapsed"]',
       '[data-dossier-upload-metadata-fields="collapsed"]',
       '[data-dossier-upload-metadata-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-dossier-hospital-type-review="ready"]',
+      'select[name="ziekenhuisDocumentTypeCorrectie"]',
+      '[data-dossier-hospital-type-review-hint="safe"]',
     ],
     closedDetailsSelectors: [
-      '[data-dossier-upload-metadata-fields="collapsed"]',
       '[data-dossier-upload-optional="koppelingen"]',
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-optional="embryo-labcontext"]',
@@ -1381,6 +1386,7 @@ const targets = [
     ],
     dossierConsole: true,
     uploadConsole: true,
+    dossierHospitalTypeReview: true,
   },
   {
     screen: 'dossier-upload-links',
@@ -3503,6 +3509,67 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const dossierHospitalTypeReview = routeflow.dossierHospitalTypeReview
+          ? (() => {
+              const review = rootElement?.querySelector('[data-dossier-hospital-type-review="ready"]');
+              const select = review?.querySelector('select[name="ziekenhuisDocumentTypeCorrectie"]');
+              const hint = rootElement?.querySelector('[data-dossier-hospital-type-review-hint="safe"]');
+              const conceptPreview = rootElement?.querySelector('#dossier-concept-preview');
+              const envelope = rootElement?.querySelector(
+                '[data-attachment-envelope-surface="dossier-upload"]',
+              );
+              const options = [
+                ...(select instanceof HTMLSelectElement ? select.options : []),
+              ].map((option) => ({
+                value: option.value,
+                text: option.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+              }));
+              const reviewRect = review?.getBoundingClientRect();
+              const selectRect = select?.getBoundingClientRect();
+              const hintRect = hint?.getBoundingClientRect();
+              const previewRect = conceptPreview?.getBoundingClientRect();
+              const envelopeRect = envelope?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const selectStyle = select ? getComputedStyle(select) : null;
+              const hintText = hint?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const reviewText = review?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const combinedText = `${reviewText} ${hintText}`;
+              return {
+                reviewVisible: Boolean(reviewRect && reviewRect.width > 0 && reviewRect.height > 0),
+                selectVisible: Boolean(selectRect && selectRect.width > 0 && selectRect.height > 0),
+                hintVisible: Boolean(hintRect && hintRect.width > 0 && hintRect.height > 0),
+                conceptPreviewVisible: Boolean(
+                  previewRect && previewRect.width > 0 && previewRect.height > 0,
+                ),
+                envelopeVisible: Boolean(envelopeRect && envelopeRect.width > 0 && envelopeRect.height > 0),
+                optionValues: options.map((option) => option.value),
+                optionTexts: options.map((option) => option.text),
+                optionCount: options.length,
+                selectValue: select instanceof HTMLSelectElement ? select.value : '',
+                selectName: select?.getAttribute('name') ?? '',
+                selectMinHeight: selectStyle?.minHeight ?? '',
+                selectWidth: selectRect?.width ?? 0,
+                selectScrollWidth: select instanceof HTMLElement ? select.scrollWidth : 0,
+                selectClientWidth: select instanceof HTMLElement ? select.clientWidth : 0,
+                hintTextLength: hintText.length,
+                beforeConceptPreview:
+                  Boolean(review && conceptPreview && reviewRect && previewRect) &&
+                  Boolean(
+                    review.compareDocumentPosition(conceptPreview) &
+                      Node.DOCUMENT_POSITION_FOLLOWING,
+                  ) &&
+                  reviewRect.top <= previewRect.top + 1,
+                contained:
+                  Boolean(rootRect && reviewRect && hintRect && selectRect) &&
+                  reviewRect.left >= rootRect.left - 1 &&
+                  selectRect.right <= rootRect.right + 1 &&
+                  hintRect.right <= rootRect.right + 1,
+                hasForbiddenText: /\.pdf|\.jpg|\.jpeg|OCR_RAW|BASE64|data:application|passphrase|token|secret|MEDISCHE PAYLOAD|diagnose stellen|behandelkeuzeadvies|routeflow/i.test(
+                  combinedText,
+                ),
+              };
+            })()
+          : null;
         const imageSummaryChips = routeflow.imageSummaryChips
           ? [
               ...document.querySelectorAll(
@@ -4174,6 +4241,7 @@ async function assertRouteflows(browser, options) {
           uploadConsole,
           attachmentEnvelopeBatchStatus,
           dossierUploadSizeFeedback,
+          dossierHospitalTypeReview,
           imageSummaryChips,
           imageFieldLabels,
           imageOpenFields,
@@ -4742,6 +4810,34 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: dossierupload size-feedback mist overflow-evidence of lekt payload (${JSON.stringify(evidence.dossierUploadSizeFeedback)}).`,
+        );
+      }
+      if (
+        evidence.dossierHospitalTypeReview &&
+        (!evidence.dossierHospitalTypeReview.reviewVisible ||
+          !evidence.dossierHospitalTypeReview.selectVisible ||
+          !evidence.dossierHospitalTypeReview.hintVisible ||
+          !evidence.dossierHospitalTypeReview.conceptPreviewVisible ||
+          !evidence.dossierHospitalTypeReview.envelopeVisible ||
+          evidence.dossierHospitalTypeReview.selectName !== 'ziekenhuisDocumentTypeCorrectie' ||
+          evidence.dossierHospitalTypeReview.selectValue !== '' ||
+          evidence.dossierHospitalTypeReview.optionCount < 5 ||
+          !evidence.dossierHospitalTypeReview.optionValues.includes('') ||
+          !evidence.dossierHospitalTypeReview.optionValues.includes('onbekend') ||
+          !evidence.dossierHospitalTypeReview.optionValues.includes('lab_rapport') ||
+          !evidence.dossierHospitalTypeReview.optionValues.includes('beeldverslag') ||
+          !evidence.dossierHospitalTypeReview.optionValues.includes('algemeen_ziekenhuisdocument') ||
+          !evidence.dossierHospitalTypeReview.optionTexts.includes('Automatisch voorstel gebruiken') ||
+          !evidence.dossierHospitalTypeReview.optionTexts.includes('Onbekend of niet vastleggen') ||
+          !evidence.dossierHospitalTypeReview.optionTexts.includes('Labrapport') ||
+          !evidence.dossierHospitalTypeReview.optionTexts.includes('Beeldverslag') ||
+          evidence.dossierHospitalTypeReview.hintTextLength < 100 ||
+          !evidence.dossierHospitalTypeReview.beforeConceptPreview ||
+          !evidence.dossierHospitalTypeReview.contained ||
+          evidence.dossierHospitalTypeReview.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: ziekenhuisdocumenttype-review mist routeflow-evidence of lekt payload (${JSON.stringify(evidence.dossierHospitalTypeReview)}).`,
         );
       }
       if (

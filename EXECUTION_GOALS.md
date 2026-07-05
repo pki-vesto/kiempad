@@ -17356,7 +17356,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier uploads, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3807
 
 ### G1931 — Fertility Intelligence: consultnotitie tekstimport reviewstatus routeflow evidence
@@ -17681,6 +17681,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3860
+
+### G1958 — Fertility Intelligence: ziekenhuisdocumenttype review release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De ziekenhuisdocumenttype-reviewcorrectie heeft routeflow-evidence, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de metadatareviewselect opnieuw verbergen, laten overlappen of payloadgevoelige context in review-evidence laten lekken.
+- **Desired Outcome:** Release-evidence documenteert dat de ziekenhuisdocumenttype-reviewselect op desktop, tablet en mobile gecontroleerd blijft zonder bestandsnamen, OCR-tekst of medische payloads.
+- **User Value:** Gebruikers houden controle over ziekenhuisdocumentcontext voordat het document in index en zoekfunctie meetelt.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar `data-dossier-hospital-type-review="ready"` en de ziekenhuisdocumenttype-review routeflow evidence; evidence bevestigt automatisch voorstel, onbekend-keuze en taxonomiewaarden zoals Labrapport en Beeldverslag; hintcopy, conceptpreview, envelopecontrole en uploadinputs blijven zichtbaar en begrensd; evidence bevat geen bestandsnamen, OCR-tekst, medische payloads, secrets, tokens of broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier uploads, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3862
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 
