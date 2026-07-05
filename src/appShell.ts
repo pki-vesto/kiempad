@@ -781,6 +781,121 @@ export function normalizeNotificationRoute(value: string | null | undefined): No
     : 'status';
 }
 
+type RouteFocusLink = {
+  id: string;
+  label: string;
+  meta: string;
+  href: string;
+};
+
+type RouteFocusDock = {
+  active: RouteFocusLink;
+  links: readonly RouteFocusLink[];
+};
+
+const START_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'overview', label: 'Overzicht', meta: 'Dagbord', href: '#start' },
+  { id: 'today', label: 'Vandaag', meta: 'Acties', href: '#start?route=today' },
+  {
+    id: 'recommendations',
+    label: 'Advies',
+    meta: 'Dagadvies',
+    href: '#start?route=recommendations',
+  },
+];
+
+const TREATMENT_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'overzicht', label: 'Overzicht', meta: 'Stand', href: '#traject?route=overzicht' },
+  { id: 'fasen', label: 'Fasen', meta: 'Planning', href: '#traject?route=fasen' },
+  { id: 'vergoeding', label: 'Vergoeding', meta: 'Pogingen', href: '#traject?route=vergoeding' },
+  { id: 'context', label: 'Context', meta: 'Traject', href: '#traject?route=context' },
+  { id: 'beheer', label: 'Beheer', meta: 'Wijzigen', href: '#traject?route=beheer' },
+];
+
+const SCHEDULE_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'overzicht', label: 'Overzicht', meta: 'Agenda', href: '#agenda?route=overzicht' },
+  { id: 'komend', label: 'Komend', meta: 'Afspraken', href: '#agenda?route=komend' },
+  { id: 'plannen', label: 'Plannen', meta: 'Toevoegen', href: '#agenda?route=plannen' },
+  { id: 'import', label: 'Import', meta: 'Schema', href: '#agenda?route=import' },
+  { id: 'historie', label: 'Historie', meta: 'Teruglezen', href: '#agenda?route=historie' },
+];
+
+const MEDICATION_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'vandaag', label: 'Vandaag', meta: 'Afvinken', href: '#medicatie?route=vandaag' },
+  { id: 'planning', label: 'Planning', meta: 'Schema', href: '#medicatie?route=planning' },
+  { id: 'beheer', label: 'Beheer', meta: 'Medicatie', href: '#medicatie?route=beheer' },
+  { id: 'import', label: 'Import', meta: 'Invoer', href: '#medicatie?route=import' },
+  { id: 'historie', label: 'Historie', meta: 'Logboek', href: '#medicatie?route=historie' },
+];
+
+const QUESTION_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'open', label: 'Open', meta: 'Vragen', href: '#vragen?route=open' },
+  {
+    id: 'voorbereiden',
+    label: 'Voorbereiden',
+    meta: 'Consult',
+    href: '#vragen?route=voorbereiden',
+  },
+  { id: 'beheer', label: 'Beheer', meta: 'Toevoegen', href: '#vragen?route=beheer' },
+  { id: 'verslagen', label: 'Verslagen', meta: 'Antwoorden', href: '#vragen?route=verslagen' },
+  { id: 'alle', label: 'Alle', meta: 'Overzicht', href: '#vragen?route=alle' },
+];
+
+const DOSSIER_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'upload', label: 'Upload', meta: 'Toevoegen', href: '#dossier?route=upload' },
+  { id: 'search', label: 'Zoeken', meta: 'Filteren', href: '#dossier?route=search' },
+  { id: 'imaging', label: 'Beelden', meta: 'Inspectie', href: '#dossier?route=imaging' },
+  { id: 'timeline', label: 'Tijdlijn', meta: 'Chronologie', href: '#dossier?route=timeline' },
+];
+
+const KNOWLEDGE_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'read', label: 'Lezen', meta: 'Research', href: '#kennis?route=read' },
+  { id: 'add', label: 'Toevoegen', meta: 'Invoer', href: '#kennis?route=add' },
+  { id: 'ai', label: 'AI', meta: 'Preview', href: '#kennis?route=ai' },
+  { id: 'library', label: 'Bibliotheek', meta: 'Index', href: '#kennis?route=library' },
+];
+
+const WELLBEING_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'overview', label: 'Overzicht', meta: 'Welzijn', href: '#welzijn?route=overview' },
+  { id: 'history', label: 'Historie', meta: 'Trends', href: '#welzijn?route=history' },
+  { id: 'log', label: 'Vastleggen', meta: 'Check-in', href: '#welzijn?route=log' },
+];
+
+const DECISION_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'prepare', label: 'Voorbereiden', meta: 'Notitie', href: '#afwegingen?route=prepare' },
+  { id: 'compare', label: 'Vergelijken', meta: 'Opties', href: '#afwegingen?route=compare' },
+  { id: 'choice', label: 'Keuze', meta: 'Besluit', href: '#afwegingen?route=choice' },
+  { id: 'history', label: 'Historie', meta: 'Teruglezen', href: '#afwegingen?route=history' },
+];
+
+const FINANCE_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'overzicht', label: 'Overzicht', meta: 'Kosten', href: '#kosten?route=overzicht' },
+  { id: 'toevoegen', label: 'Toevoegen', meta: 'Post', href: '#kosten?route=toevoegen' },
+  { id: 'vergoeding', label: 'Vergoeding', meta: 'Declaratie', href: '#kosten?route=vergoeding' },
+  { id: 'historie', label: 'Historie', meta: 'Records', href: '#kosten?route=historie' },
+];
+
+const EVENTLOG_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'overzicht', label: 'Overzicht', meta: 'Audit', href: '#logboek?route=overzicht' },
+  { id: 'recent', label: 'Recent', meta: 'Events', href: '#logboek?route=recent' },
+  { id: 'categorieen', label: 'Categorieën', meta: 'Soorten', href: '#logboek?route=categorieen' },
+  { id: 'privacy', label: 'Privacy', meta: 'Controle', href: '#logboek?route=privacy' },
+];
+
+const BACKUP_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'controleren', label: 'Controleren', meta: 'Status', href: '#backup?route=controleren' },
+  { id: 'export', label: 'Export', meta: 'Download', href: '#backup?route=export' },
+  { id: 'import', label: 'Import', meta: 'Herstel', href: '#backup?route=import' },
+  { id: 'herstel', label: 'Herstel', meta: 'Drill', href: '#backup?route=herstel' },
+];
+
+const NOTIFICATION_ROUTE_FOCUS_LINKS: readonly RouteFocusLink[] = [
+  { id: 'status', label: 'Status', meta: 'Meldingen', href: '#herinneringen?route=status' },
+  { id: 'privacy', label: 'Privacy', meta: 'Lokaal', href: '#herinneringen?route=privacy' },
+  { id: 'plannen', label: 'Plannen', meta: 'Nieuwe', href: '#herinneringen?route=plannen' },
+  { id: 'komend', label: 'Komend', meta: 'Lijst', href: '#herinneringen?route=komend' },
+];
+
 type CommandTaskRoute<RouteId extends string> = {
   id: RouteId;
   href: string;
@@ -1024,6 +1139,7 @@ export function renderAppShell(
       <main class="content" id="inhoud" tabindex="-1" data-screen-stage="ready" data-screen-stage-screen="${escapeAttribute(activeId)}" data-screen-stage-group="${escapeAttribute(activeGroup?.label ?? 'Onbekend')}" data-screen-stage-layout="bounded-workspace">
         <div class="screen-stage__chrome" data-screen-stage-chrome="sticky">
           ${renderWorkspaceStrip(activeId)}
+          ${renderRouteFocusDock(activeId, state)}
           ${
             activeId === 'start'
               ? ''
@@ -1671,6 +1787,72 @@ function renderWorkspaceStrip(activeId: ScreenId): string {
         activeGroup.label,
       )}">
         ${siblingLinks}
+      </nav>
+    </section>
+  `;
+}
+
+function buildRouteFocusDock(activeId: ScreenId, state: AppShellState): RouteFocusDock {
+  switch (activeId) {
+    case 'start':
+      return routeFocusDock(START_ROUTE_FOCUS_LINKS, state.activeStartRoute ?? 'overview');
+    case 'traject':
+      return routeFocusDock(TREATMENT_ROUTE_FOCUS_LINKS, state.activeTreatmentRoute ?? 'overzicht');
+    case 'agenda':
+      return routeFocusDock(SCHEDULE_ROUTE_FOCUS_LINKS, state.activeScheduleRoute ?? 'overzicht');
+    case 'medicatie':
+      return routeFocusDock(MEDICATION_ROUTE_FOCUS_LINKS, state.activeMedicationRoute ?? 'vandaag');
+    case 'herinneringen':
+      return routeFocusDock(
+        NOTIFICATION_ROUTE_FOCUS_LINKS,
+        state.activeNotificationRoute ?? 'status',
+      );
+    case 'vragen':
+      return routeFocusDock(QUESTION_ROUTE_FOCUS_LINKS, state.activeQuestionRoute ?? 'open');
+    case 'dossier':
+      return routeFocusDock(DOSSIER_ROUTE_FOCUS_LINKS, state.activeDossierRoute ?? 'upload');
+    case 'kennis':
+      return routeFocusDock(KNOWLEDGE_ROUTE_FOCUS_LINKS, state.activeKnowledgeRoute ?? 'read');
+    case 'welzijn':
+      return routeFocusDock(WELLBEING_ROUTE_FOCUS_LINKS, state.activeWellbeingRoute ?? 'overview');
+    case 'afwegingen':
+      return routeFocusDock(DECISION_ROUTE_FOCUS_LINKS, state.activeDecisionRoute ?? 'prepare');
+    case 'kosten':
+      return routeFocusDock(FINANCE_ROUTE_FOCUS_LINKS, state.activeFinanceRoute ?? 'overzicht');
+    case 'logboek':
+      return routeFocusDock(EVENTLOG_ROUTE_FOCUS_LINKS, state.activeEventLogRoute ?? 'overzicht');
+    case 'backup':
+      return routeFocusDock(BACKUP_ROUTE_FOCUS_LINKS, state.activeBackupRoute ?? 'controleren');
+  }
+}
+
+function routeFocusDock(links: readonly RouteFocusLink[], activeRouteId: string): RouteFocusDock {
+  const active = links.find((link) => link.id === activeRouteId) ?? links[0];
+  if (!active) throw new Error('Routefocus vereist minstens één route.');
+  return { active, links };
+}
+
+function renderRouteFocusDock(activeId: ScreenId, state: AppShellState): string {
+  const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
+  const dock = buildRouteFocusDock(activeId, state);
+  const links = dock.links
+    .map((link) => {
+      const isActive = link.id === dock.active.id;
+      return `<a href="${escapeAttribute(link.href)}"${isActive ? ' aria-current="page"' : ''} data-route-focus-link="${escapeAttribute(link.id)}"><span>${escapeHtml(
+        link.label,
+      )}</span><small>${escapeHtml(link.meta)}</small></a>`;
+    })
+    .join('');
+
+  return `
+    <section class="route-focus-dock" aria-label="Actieve taakroute" data-route-focus-dock="ready" data-route-focus-screen="${escapeAttribute(activeId)}" data-route-focus-route="${escapeAttribute(dock.active.id)}">
+      <div class="route-focus-dock__summary">
+        <p>Routefocus</p>
+        <strong>${escapeHtml(activeScreen.label)} · ${escapeHtml(dock.active.label)}</strong>
+        <small>${escapeHtml(dock.active.meta)} · taakpad</small>
+      </div>
+      <nav class="route-focus-dock__links" aria-label="Taakroutes binnen ${escapeAttribute(activeScreen.label)}">
+        ${links}
       </nav>
     </section>
   `;

@@ -18801,6 +18801,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Status:** ☐ open
 - **Issue:** #3976
 
+### G2020 — Premium Claude Design UI: sticky routefocus-dock tegen lange pagina
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Ondanks bounded workspaces voelt de app voor gebruikers nog steeds als één lange pagina, omdat de actieve taakroute niet consequent boven de werkruimte zichtbaar is.
+- **User Impact:** Gebruikers moeten in lange routepanelen zoeken waar ze zijn en welke route binnen het scherm actief is.
+- **Desired Outcome:** De app-shell toont boven de actieve werkruimte een compacte sticky routefocus-dock met actieve route, taakmeta en sibling-routeknoppen.
+- **User Value:** Gebruikers zien per scherm direct de routecontext en kunnen naar een andere taakroute zonder door de pagina te scrollen.
+- **Acceptance Criteria:** Alle hoofdschermen renderen `data-route-focus-dock="ready"` in de sticky screen-stage chrome; de dock toont actieve screen/route metadata en routeknoppen met één `aria-current="page"` link; desktop, tablet, mobile en small-mobile blijven bounded zonder body-scroll regressie; routeflow screenshot smoke bewaakt zichtbaarheid, positie boven het actieve paneel en actieve link; de routefocus-laag bevat geen medische payload, OCR-tekst, diagnose, dosering, kansberekening of behandeladvies; backlog/docs blijven synchroon.
+- **Affected Screens:** App-shell, alle hoofdschermen, routefocus chrome
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** AppShell, CSS, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 112
+- **Status:** ☑ done
+- **Issue:** #3978
+
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
 - **Epic:** Fertility Intelligence

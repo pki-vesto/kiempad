@@ -218,6 +218,11 @@
   aparte kliniekfilter met veilige resultaatcontext voor bron, datum en
   reviewstatus, zodat historische records per kliniek scanbaar worden zonder
   bronpayload of behandeladvies.
+- **G2020 sticky routefocus-dock tegen lange pagina:** de app-shell toont boven
+  elke actieve werkruimte een compacte routefocus-dock met actieve route,
+  taakmeta en sibling-routeknoppen; routeflow-smoke bewaakt zichtbaarheid boven
+  het actieve paneel op desktop, tablet, mobile en small-mobile zonder
+  body-scroll regressie of medische payload.
 - **G2018/G513 historische records zoekfilter op poging:** Dossier Zoeken toont
   nu een aparte pogingfilter naast vrije tekst en kliniekfiltering, met actieve
   filterchips en compacte resultaatcontext voor bron, datum en reviewstatus

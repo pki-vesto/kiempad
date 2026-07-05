@@ -2604,9 +2604,13 @@ async function assertRouteflows(browser, options) {
         const appShell = document.querySelector('.app-shell');
         const content = document.querySelector('.content');
         const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
+        const routeFocusDock = document.querySelector('[data-route-focus-dock="ready"]');
+        const routeFocusDockActiveLink = routeFocusDock?.querySelector('a[aria-current="page"]');
         const appShellRect = appShell?.getBoundingClientRect();
         const contentRect = content?.getBoundingClientRect();
         const activePanelRect = activePanel?.getBoundingClientRect();
+        const routeFocusDockRect = routeFocusDock?.getBoundingClientRect();
+        const routeFocusDockActiveLinkRect = routeFocusDockActiveLink?.getBoundingClientRect();
         const appShellStyle = appShell ? getComputedStyle(appShell) : null;
         const contentStyle = content ? getComputedStyle(content) : null;
         const activePanelStyle = activePanel ? getComputedStyle(activePanel) : null;
@@ -4840,6 +4844,23 @@ async function assertRouteflows(browser, options) {
             activePanelScrolls: Boolean(
               activePanel && activePanel.scrollHeight > activePanel.clientHeight + 1,
             ),
+            routeFocusDockVisible: Boolean(
+              routeFocusDockRect && routeFocusDockRect.width > 0 && routeFocusDockRect.height > 0,
+            ),
+            routeFocusDockBeforePanel: Boolean(
+              routeFocusDockRect &&
+                activePanelRect &&
+                routeFocusDockRect.bottom <= activePanelRect.top + 10,
+            ),
+            routeFocusDockRoute:
+              routeFocusDock instanceof HTMLElement
+                ? routeFocusDock.dataset.routeFocusRoute ?? ''
+                : '',
+            routeFocusDockActiveLinkVisible: Boolean(
+              routeFocusDockActiveLinkRect &&
+                routeFocusDockActiveLinkRect.width > 0 &&
+                routeFocusDockActiveLinkRect.height > 0,
+            ),
             bodyScrolls:
               document.documentElement.scrollHeight > document.documentElement.clientHeight + 1 ||
               document.body.scrollHeight > document.body.clientHeight + 1,
@@ -5004,6 +5025,10 @@ async function assertRouteflows(browser, options) {
           evidence.appFrame.contentMaxHeight === 'none' ||
           !evidence.appFrame.activePanelVisible ||
           evidence.appFrame.activePanelOverflowY !== 'auto' ||
+          !evidence.appFrame.routeFocusDockVisible ||
+          !evidence.appFrame.routeFocusDockBeforePanel ||
+          !evidence.appFrame.routeFocusDockRoute ||
+          !evidence.appFrame.routeFocusDockActiveLinkVisible ||
           evidence.appFrame.bodyScrolls)
       ) {
         throw new Error(

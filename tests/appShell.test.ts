@@ -1840,6 +1840,13 @@ describe('app shell', () => {
     expect(html).toContain('data-workspace-strip-group="Vandaag"');
     expect(html).toContain('aria-label="Actieve werkruimte"');
     expect(html).toContain('aria-label="Schermen binnen Vandaag"');
+    expect(html).toContain('class="route-focus-dock"');
+    expect(html).toContain('data-route-focus-dock="ready"');
+    expect(html).toContain('data-route-focus-screen="agenda"');
+    expect(html).toContain('data-route-focus-route="overzicht"');
+    expect(html).toContain('Agenda · Overzicht');
+    expect(html).toContain('href="#agenda?route=plannen"');
+    expect(html).toContain('data-route-focus-link="overzicht"');
     expect(html).not.toContain('aria-label="Snelle kernroutes"');
     expect(html).not.toContain('class="workspace-map"');
     expect(html).not.toContain('data-workspace-map="ready"');
@@ -1858,6 +1865,12 @@ describe('app shell', () => {
       html.indexOf('<main class="content"'),
     );
     expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeLessThan(
+      html.indexOf('data-screen-stage-panel="active"'),
+    );
+    expect(html.indexOf('data-route-focus-dock="ready"')).toBeGreaterThan(
+      html.indexOf('data-compact-workspace-deck="ready"'),
+    );
+    expect(html.indexOf('data-route-focus-dock="ready"')).toBeLessThan(
       html.indexOf('data-screen-stage-panel="active"'),
     );
   });
@@ -1888,6 +1901,11 @@ describe('app shell', () => {
     expect(html).toContain('data-compact-workspace-deck="ready"');
     expect(html).toContain('<p class="workspace-strip__eyebrow">Werkruimte</p>');
     expect(html).toContain('class="workspace-strip__switcher"');
+    expect(html).toContain('data-route-focus-dock="ready"');
+    expect(html).toContain('data-route-focus-screen="vragen"');
+    expect(html).toContain('data-route-focus-route="open"');
+    expect(html).toContain('Vragen · Open');
+    expect(html).toContain('href="#vragen?route=voorbereiden"');
     expect(html).not.toContain('class="workspace-strip__quick"');
     expect(html).not.toContain('data-workspace-map-active="Behandeling"');
     expect(html).not.toContain('Werk behandelcontext, medicatie en consultvragen apart af.');
@@ -1897,6 +1915,9 @@ describe('app shell', () => {
       html.indexOf('<main class="content"'),
     );
     expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeLessThan(
+      html.indexOf('data-screen-stage-panel="active"'),
+    );
+    expect(html.indexOf('data-route-focus-dock="ready"')).toBeLessThan(
       html.indexOf('data-screen-stage-panel="active"'),
     );
   });
@@ -3200,13 +3221,18 @@ describe('app shell', () => {
     expect(css).toContain('max-height: calc(100vh - 48px);');
     expect(css).toContain('grid-template-rows: auto minmax(0, 1fr);');
     expect(css).toContain('.screen-stage__chrome {');
-    expect(css).toContain('max-height: min(22vh, 168px);');
+    expect(css).toContain('max-height: min(28vh, 220px);');
     expect(css).toContain('overflow-y: auto;');
     expect(css).toContain('overscroll-behavior: contain;');
     expect(css).toContain('scrollbar-gutter: stable;');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
     expect(css).toContain('.workspace-strip--compact {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(css).toContain('.route-focus-dock {');
+    expect(css).toContain('grid-template-columns: minmax(176px, 0.42fr) minmax(0, 1fr);');
+    expect(css).toContain('.route-focus-dock__links {');
+    expect(css).toContain('overscroll-behavior-inline: contain;');
+    expect(css).toContain('.route-focus-dock__links a[aria-current="page"] {');
     expect(css).toContain('.screen-stage__chrome > .workspace-strip {');
     expect(css).toContain('.screen-stage__chrome > .page-header {');
     expect(css).toContain('.screen-stage__chrome > .page-header .page-header__intro {');
@@ -3273,11 +3299,11 @@ describe('app shell', () => {
     expect(css).toContain('.workspace-map__card[data-workspace-map-state="active"]');
     expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-map,');
     expect(mobileCss).toContain('.workspace-strip {');
-    expect(mobileCss).toContain('gap: 6px;');
-    expect(mobileCss).toContain('max-height: min(138px, 28svh);');
+    expect(mobileCss).toContain('gap: 4px;');
+    expect(mobileCss).toContain('max-height: min(96px, 20svh);');
     expect(mobileCss).toContain('overflow: hidden auto;');
     expect(mobileCss).toContain('overscroll-behavior: contain;');
-    expect(mobileCss).toContain('padding: 8px;');
+    expect(mobileCss).toContain('padding: 6px;');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.workspace-strip > div,');
     expect(mobileCss).toContain('.workspace-strip__switcher a,');
@@ -3291,6 +3317,11 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('.workspace-strip__description {');
     expect(mobileCss).toContain('display: none;');
+    expect(mobileCss).toContain('.route-focus-dock {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(104px, 0.36fr) minmax(0, 1fr);');
+    expect(mobileCss).toContain('.route-focus-dock__summary small {');
+    expect(mobileCss).toContain('.route-focus-dock__links {');
+    expect(mobileCss).toContain('.route-focus-dock__links a {');
     expect(mobileCss).toContain('.workspace-map__grid {');
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.workspace-map__card {');
@@ -45106,7 +45137,7 @@ describe('app shell', () => {
     expect(tabletCss).toContain('grid-template-rows: auto minmax(0, 1fr);');
     expect(tabletCss).toContain('.screen-stage__chrome {');
     expect(tabletCss).toContain('position: sticky;');
-    expect(tabletCss).toContain('max-height: min(24svh, 172px);');
+    expect(tabletCss).toContain('max-height: min(30svh, 224px);');
     expect(tabletCss).toContain('overflow-y: auto;');
     expect(tabletCss).toContain('overscroll-behavior: contain;');
     expect(tabletCss).toContain('.screen-stage__chrome > .page-header {');
