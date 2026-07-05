@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1723 |
+| ☑ klaar | 1724 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1922** |
+| **Totaal** | **1923** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -722,7 +722,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G557 | Premium Claude Design UI: consult intelligence review layout | P1 | F5 | ☑ |
 | G558 | Premium Claude Design UI: embryo tracking compact cards | P1 | F5 | ☑ |
 | G559 | Premium Claude Design UI: research trend dashboard visual system | P1 | F5 | ☑ |
-| G560 | Premium Claude Design UI: daily recommendation dual-owner cards | P1 | F5 | ☐ |
+| G560 | Premium Claude Design UI: daily recommendation dual-owner cards | P1 | F5 | ☑ |
 | G561 | Product Quality & Automation: active goal floor maintenance test | P0 | F5 | ☑ |
 | G562 | Product Quality & Automation: goal score top-priority snapshot | P1 | F5 | ☐ |
 | G563 | Product Quality & Automation: issue creation script dry-run fixture | P1 | F5 | ☐ |
@@ -2085,12 +2085,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1921 | Premium Claude Design UI: consult review scan mobile density polish | P1 | F5 | ☐ |
 | G1922 | Premium Claude Design UI: embryo tracking scan mobile density polish | P1 | F5 | ☐ |
 | G1923 | Premium Claude Design UI: research trend scan mobile density polish | P1 | F5 | ☐ |
+| G1924 | Premium Claude Design UI: daily recommendation owner scan mobile density polish | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1922** (id's G001 t/m G1923; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1923** (id's G001 t/m G1924; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

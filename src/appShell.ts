@@ -17395,6 +17395,7 @@ function renderDailyAdviceDecisionBoard(overview: DailyRecommendationOverview): 
         </div>
         <p>Open alleen de route die je nu nodig hebt; de volledige suggestielijst blijft vervolgcontext.</p>
       </header>
+      ${renderDailyAdviceOwnerScan(overview)}
       <nav class="daily-advice-decision-board__lanes" aria-label="Dagadvies eigenaar en artscheck kiezen">
         ${lanes
           .map(
@@ -17410,6 +17411,35 @@ function renderDailyAdviceDecisionBoard(overview: DailyRecommendationOverview): 
           .join('')}
       </nav>
     </section>
+  `;
+}
+
+function renderDailyAdviceOwnerScan(overview: DailyRecommendationOverview): string {
+  return `
+    <div class="daily-advice-owner-scan" aria-label="Dagadvies eigenaarsscan" data-daily-advice-owner-scan="ready">
+      ${(['vrouw', 'man', 'samen'] as const)
+        .map((owner) => {
+          const items = overview[owner];
+          const label = DAILY_RECOMMENDATION_OWNER_LABELS[owner];
+          const copy = DAILY_RECOMMENDATION_OWNER_COPY[owner];
+          const firstItem = items[0];
+          const artscheckCount = items.filter((item) =>
+            item.checklist?.some((checklistItem) => checklistItem.artscheck),
+          ).length;
+          const reviewCount = items.filter(
+            (item) => item.inputMinimisatie?.reviewStatus === 'concept_te_controleren',
+          ).length;
+          return `
+            <a class="daily-advice-owner-scan__card" href="#daily-advice-full-list" data-daily-advice-owner-scan-card="${owner}">
+              <span class="daily-advice-owner-scan__label">${escapeHtml(label)}</span>
+              <strong>${items.length} suggestie${items.length === 1 ? '' : 's'}</strong>
+              <small>${escapeHtml(firstItem ? firstItem.titel : copy.empty)}</small>
+              <em>${reviewCount} review · ${artscheckCount} artscheck · ${escapeHtml(copy.route)}</em>
+            </a>
+          `;
+        })
+        .join('')}
+    </div>
   `;
 }
 

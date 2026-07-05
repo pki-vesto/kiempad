@@ -6488,6 +6488,77 @@ h2 {
   line-height: 1.35;
 }
 
+.daily-advice-owner-scan {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.daily-advice-owner-scan__card {
+  display: grid;
+  grid-template-rows: auto auto minmax(36px, 1fr) auto;
+  gap: 6px;
+  min-width: 0;
+  min-height: 132px;
+  padding: 11px;
+  border: 1px solid color-mix(in srgb, var(--category) 24%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 86%, white 14%);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(69, 52, 38, 0.07);
+}
+
+.daily-advice-owner-scan__card:hover,
+.daily-advice-owner-scan__card:focus-visible {
+  border-color: color-mix(in srgb, var(--category) 54%, var(--border-strong));
+  background: color-mix(in srgb, var(--category) 9%, var(--surface) 91%);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.daily-advice-owner-scan__label,
+.daily-advice-owner-scan__card strong,
+.daily-advice-owner-scan__card small,
+.daily-advice-owner-scan__card em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.daily-advice-owner-scan__label {
+  width: fit-content;
+  padding: 3px 7px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--category) 14%, var(--surface) 86%);
+  color: var(--category-strong);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.daily-advice-owner-scan__card strong {
+  color: var(--text-strong);
+  font-size: 1.02rem;
+  line-height: 1.2;
+}
+
+.daily-advice-owner-scan__card small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.daily-advice-owner-scan__card em {
+  align-self: end;
+  color: var(--text-faint);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 760;
+  line-height: 1.25;
+}
+
 .daily-advice-decision-board__lanes {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -28574,6 +28645,24 @@ summary[class*="__summary"]:focus-visible,
 
   .daily-advice-decision-board__header > p {
     max-width: none;
+  }
+
+  .daily-advice-owner-scan {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .daily-advice-owner-scan::-webkit-scrollbar {
+    display: none;
+  }
+
+  .daily-advice-owner-scan__card {
+    flex: 0 0 min(184px, 72vw);
+    min-height: 126px;
+    scroll-snap-align: start;
   }
 
   .daily-advice-decision-board__lanes {

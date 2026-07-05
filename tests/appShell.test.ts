@@ -3401,6 +3401,10 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-selection-board__lane:hover,');
     expect(css).toContain('.daily-advice-decision-board {');
     expect(css).toContain('.daily-advice-decision-board__header {');
+    expect(css).toContain('.daily-advice-owner-scan {');
+    expect(css).toContain('.daily-advice-owner-scan__card {');
+    expect(css).toContain('.daily-advice-owner-scan__card:hover,');
+    expect(css).toContain('.daily-advice-owner-scan__label {');
     expect(css).toContain('.daily-advice-decision-board__lanes {');
     expect(css).toContain('.daily-advice-decision-board__lane {');
     expect(css).toContain('.daily-advice-decision-board__lane:hover,');
@@ -3662,6 +3666,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.daily-advice-selection-board__lane {');
     expect(mobileCss).toContain('.daily-advice-decision-board {');
     expect(mobileCss).toContain('.daily-advice-decision-board__header {');
+    expect(mobileCss).toContain('.daily-advice-owner-scan {');
+    expect(mobileCss).toContain('.daily-advice-owner-scan__card {');
+    expect(mobileCss).toContain('flex: 0 0 min(184px, 72vw);');
     expect(mobileCss).toContain('.daily-advice-decision-board__lanes {');
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.daily-advice-decision-board__lane {');
@@ -3858,6 +3865,13 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('data-daily-advice-focus-region="decision"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-console-region="decision"');
     expect(emptyContextRecommendations).toContain('Beslis eerst per eigenaar');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-scan="ready"');
+    expect(emptyContextRecommendations).toContain('aria-label="Dagadvies eigenaarsscan"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-scan-card="vrouw"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-scan-card="man"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-scan-card="samen"');
+    expect(emptyContextRecommendations).toContain('suggesties');
+    expect(emptyContextRecommendations).toContain('review · 1 artscheck');
     expect(emptyContextRecommendations).toContain('data-daily-advice-decision-lane="vrouw"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-decision-lane="man"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-decision-lane="samen"');
@@ -3876,6 +3890,12 @@ describe('app shell', () => {
     expect(
       emptyContextRecommendations.indexOf('id="daily-advice-primary-action-choice"'),
     ).toBeLessThan(emptyContextRecommendations.indexOf('id="daily-advice-followup"'));
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-decision-board="first-viewport"'),
+    ).toBeLessThan(emptyContextRecommendations.indexOf('data-daily-advice-owner-scan="ready"'));
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-owner-scan="ready"'),
+    ).toBeLessThan(emptyContextRecommendations.indexOf('data-daily-advice-decision-lane="vrouw"'));
     expect(
       emptyContextRecommendations.indexOf('data-daily-advice-decision-board="first-viewport"'),
     ).toBeLessThan(emptyContextRecommendations.indexOf('data-daily-advice-action-planner="ready"'));
