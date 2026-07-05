@@ -1781,6 +1781,28 @@ const targets = [
     ],
   },
   {
+    screen: 'backup-sync-recovery-focus',
+    hash: '#backup?route=controleren',
+    rootSelector: '#backup-route-controleren',
+    expectedText: 'Centrale sessieherstelactie verwerkt.',
+    activeRouteSelector: '[data-backup-route="controleren"][data-backup-route-state="active"]',
+    inactiveRouteSelector: '[data-backup-route-state="inactive"]',
+    prepare: 'central-session-renewal-recovery-focus',
+    requiredSelectors: [
+      '[data-backup-sync-board="ready"]',
+      '[data-central-session-renewal-recovery-announcement="polite"]',
+      '[data-central-session-renewal-recovery-focus-target="ready"]',
+    ],
+    desktopHiddenSelectors: [
+      '.backup-focus-shell__header p:last-child',
+      '.backup-route-section__header > p:last-child',
+      '.backup-sync-board__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+    centralSessionRenewalRecoveryFocus: true,
+    smallMobileViewport: true,
+  },
+  {
     screen: 'notifications-planning',
     hash: '#herinneringen?route=plannen',
     rootSelector: '#herinneringen-route-plannen',
@@ -1869,6 +1891,9 @@ async function assertRouteflows(browser, options) {
       await unlockIfNeeded(page, target.hash);
       if (target.prepare === 'filled-consult-card') {
         await prepareFilledConsultCard(page, target.hash);
+      }
+      if (target.prepare === 'central-session-renewal-recovery-focus') {
+        await prepareCentralSessionRenewalRecoveryFocus(page, target.hash);
       }
       if (target.closedDetailsSelectors) {
         await page.evaluate((selectors) => {
@@ -2845,6 +2870,33 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const centralSessionRenewalRecoveryFocus = routeflow.centralSessionRenewalRecoveryFocus
+          ? (() => {
+              const status = rootElement?.querySelector(
+                '[data-central-session-renewal-recovery-focus-target="ready"]',
+              );
+              const statusRect = status?.getBoundingClientRect();
+              const statusStyle = status instanceof HTMLElement ? getComputedStyle(status) : null;
+              return {
+                visible: Boolean(statusRect && statusRect.width > 0 && statusRect.height > 0),
+                active: document.activeElement === status,
+                tabIndex: status instanceof HTMLElement ? status.tabIndex : null,
+                role: status?.getAttribute('role') ?? '',
+                ariaLive: status?.getAttribute('aria-live') ?? '',
+                ariaAtomic: status?.getAttribute('aria-atomic') ?? '',
+                outlineStyle: statusStyle?.outlineStyle ?? '',
+                outlineWidth: statusStyle?.outlineWidth ?? '',
+                outlineOffset: statusStyle?.outlineOffset ?? '',
+                boxShadow: statusStyle?.boxShadow ?? '',
+                left: statusRect?.left ?? 0,
+                right: statusRect?.right ?? 0,
+                scrollWidth: status instanceof HTMLElement ? status.scrollWidth : 0,
+                clientWidth: status instanceof HTMLElement ? status.clientWidth : 0,
+                scrollHeight: status instanceof HTMLElement ? status.scrollHeight : 0,
+                clientHeight: status instanceof HTMLElement ? status.clientHeight : 0,
+              };
+            })()
+          : null;
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
@@ -2873,6 +2925,7 @@ async function assertRouteflows(browser, options) {
           wellbeingConsole,
           treatmentConsole,
           timelineConsole,
+          centralSessionRenewalRecoveryFocus,
           appFrame: {
             shellVisible: Boolean(appShellRect && appShellRect.width > 0 && appShellRect.height > 0),
             shellHeight: appShellRect?.height ?? 0,
@@ -3448,6 +3501,27 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: timeline-console staat niet in begrensde werkvlakken (${JSON.stringify(evidence.timelineConsole)}).`,
+        );
+      }
+      if (
+        evidence.centralSessionRenewalRecoveryFocus &&
+        (!evidence.centralSessionRenewalRecoveryFocus.visible ||
+          !evidence.centralSessionRenewalRecoveryFocus.active ||
+          evidence.centralSessionRenewalRecoveryFocus.tabIndex !== -1 ||
+          evidence.centralSessionRenewalRecoveryFocus.role !== 'status' ||
+          evidence.centralSessionRenewalRecoveryFocus.ariaLive !== 'polite' ||
+          evidence.centralSessionRenewalRecoveryFocus.ariaAtomic !== 'true' ||
+          evidence.centralSessionRenewalRecoveryFocus.left < -1 ||
+          evidence.centralSessionRenewalRecoveryFocus.right > options.viewport.width + 1 ||
+          evidence.centralSessionRenewalRecoveryFocus.scrollWidth >
+            evidence.centralSessionRenewalRecoveryFocus.clientWidth + 1 ||
+          evidence.centralSessionRenewalRecoveryFocus.scrollHeight >
+            evidence.centralSessionRenewalRecoveryFocus.clientHeight + 24)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: sessieherstel-focus mist stabiele routeflow-evidence (${JSON.stringify(
+            evidence.centralSessionRenewalRecoveryFocus,
+          )}).`,
         );
       }
       const overflowingText = evidence.required.filter((item) => !item.textFits);
@@ -4141,6 +4215,36 @@ async function prepareFilledConsultCard(page, targetHash) {
   );
 
   await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareCentralSessionRenewalRecoveryFocus(page, targetHash) {
+  await page.evaluate((nextHash) => {
+    window.sessionStorage.setItem('kiempad.central-session-renewal-recovery-focus', '1');
+    window.location.hash = nextHash;
+  }, targetHash);
+  await page.reload({ waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, targetHash);
+  await page.evaluate((nextHash) => {
+    window.sessionStorage.setItem('kiempad.central-session-renewal-recovery-focus', '1');
+    window.history.replaceState(null, '', nextHash);
+  }, targetHash);
+  await page.reload({ waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, targetHash);
+  await waitForStableRouteflowRoot(page, '#backup-route-controleren');
+  await page.waitForFunction(
+    () => {
+      const status = document.querySelector(
+        '[data-central-session-renewal-recovery-focus-target="ready"]',
+      );
+      return (
+        status instanceof HTMLElement &&
+        document.activeElement === status &&
+        status.textContent?.includes('Centrale sessieherstelactie verwerkt.')
+      );
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
 }
 
 async function assertDailyAdviceFeedbackNavigation(page) {

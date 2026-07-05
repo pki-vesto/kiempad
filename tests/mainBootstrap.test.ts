@@ -187,7 +187,14 @@ describe('main bootstrap', () => {
   it('verplaatst focus na sessie-renewal recovery naar het veilige backup focusdoel', () => {
     expect(mainSource).toContain('centralSessionRenewalRecoveryPendingFocus');
     expect(mainSource).toContain('focusCentralSessionRenewalRecoveryStatus(root, state)');
+    expect(mainSource).toContain('!state.loadingState');
+    expect(mainSource).toContain(
+      "state.backupStatus?.startsWith('Centrale sessieherstelactie verwerkt.')",
+    );
     expect(mainSource).toContain('function focusCentralSessionRenewalRecoveryStatus');
+    expect(mainSource).toContain('requestAnimationFrame(() =>');
+    expect(mainSource).toContain('querySelectorAll<HTMLElement>');
+    expect(mainSource).toContain('getBoundingClientRect()');
     expect(mainSource).toContain('[data-central-session-renewal-recovery-focus-target="ready"]');
     expect(mainSource).toContain('status.focus({ preventScroll: true })');
   });

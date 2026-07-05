@@ -2599,6 +2599,7 @@ function renderBackupScreen(state: AppShellState): string {
           ariaLabel: 'Back-up controleren route-samenvatting',
           data: { 'backup-route-summary': 'controleren' },
         })}
+        ${renderStatusFeedback('backup', state.backupStatus, state.backupError)}
         <div class="backup-control-console" data-backup-control-layout="single-status-layer">
           ${renderBackupSyncBoard({
             central,

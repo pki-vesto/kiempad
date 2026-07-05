@@ -2234,3 +2234,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1849/#3640: The central session renewal recovery focus target now
   has a dedicated `:focus-visible` ring plus a forced-colors `Highlight`
   fallback, while normal Back-up statuses remain visually quiet.
+- Partial G1850/#3642: Routeflow smoke now includes a dedicated central session
+  renewal recovery focus fixture across desktop, tablet, mobile and
+  small-mobile, and the Back-up control route keeps the visible recovery status
+  focused after unlock/loading without exposing tokens, payloads or medical
+  plaintext.

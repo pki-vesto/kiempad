@@ -15948,8 +15948,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Routeflow smoke, Back-up status fixture, accessibility tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3642
+
+### G1851 — Central session renewal recovery focus loading handoff
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De herstel-focus is nu met routeflow bewijs geborgd, maar de unlock/loading overdracht blijft gevoelig voor regressies als nieuwe loadinglagen of verborgen routekopieën focus eerder consumeren.
+- **User Impact:** Gebruikers kunnen na sessieherstel alsnog zonder zichtbare focuscue eindigen als een toekomstige loading-state de focusmarker te vroeg afhandelt.
+- **Desired Outcome:** De sessieherstel-focus blijft gekoppeld aan het zichtbare Back-up controleblok na unlock, reload en routewissels.
+- **User Value:** Het centrale sessieherstelpad blijft voorspelbaar voor toetsenbord- en screenreadergebruikers.
+- **Acceptance Criteria:** Loading handoff bewaart de herstel-focus tot de zichtbare status beschikbaar is; verborgen routekopieën kunnen geen focus winnen; tests dekken unlock/loading overdracht zonder passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload, filename of medische plaintext; routeflow of unit-tests blijven groen.
+- **Affected Screens:** Back-up, vault unlock, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** main bootstrap, Back-up status feedback, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+- **Issue:** #3644
 
 ### G584 — paginated record load status UI
 

@@ -448,12 +448,25 @@ describe('routeflow screenshot smoke script', () => {
       '[data-backup-sync-lane="import"]',
       '[data-backup-sync-lane="recovery"]',
       '[data-backup-reminder-card="ready"]',
+      '[data-central-session-renewal-recovery-announcement="polite"]',
+      '[data-central-session-renewal-recovery-focus-target="ready"]',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(selector);
     }
 
     expect(routeflowScreenshotSmokeScript).toContain('openSelectors');
     expect(routeflowScreenshotSmokeScript).toContain('presentSelectors');
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'backup-sync-recovery-focus'");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "prepare: 'central-session-renewal-recovery-focus'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "window.sessionStorage.setItem('kiempad.central-session-renewal-recovery-focus', '1')",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('centralSessionRenewalRecoveryFocus');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'sessieherstel-focus mist stabiele routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'consult-card-filled'");
     expect(routeflowScreenshotSmokeScript).toContain("prepare: 'filled-consult-card'");
     expect(routeflowScreenshotSmokeScript).toContain('filledConsultCard: true');
