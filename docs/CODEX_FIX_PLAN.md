@@ -101,6 +101,11 @@
   preparation, and question context before the full open-question follow-up disclosure,
   preserving question routes, forms, prep packet, reports, and priority hooks on desktop and
   mobile.
+- **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
+  opens with one compact selection board for today, owner routes, feedback, arts-check, and full
+  recommendation context before the existing decision and action layers, preserving
+  recommendation list, owner cards, feedback filter, arts-check, and route hooks on desktop and
+  mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

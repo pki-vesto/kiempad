@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1877 Premium Claude Design UI: Dagadvies opent nu met een compact
+  selectiebord voor vandaag, eigenaarroutes, feedback, artscheck en volledige
+  adviescontext. De bestaande eigenaarwerkbank, actieplanner, feedbackfilter en
+  volledige lijst blijven bereikbaar zonder als eerste lange adviesstapel te
+  starten.
 - G1876 Premium Claude Design UI: Vragen/Open opent nu met een compact
   first-viewport prep board voor open vragen, volgende afspraak, prioriteit,
   voorbereiding en vraagcontext. De volledige open-vragenlijst blijft bereikbaar

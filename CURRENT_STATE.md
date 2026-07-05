@@ -143,6 +143,11 @@
   voorbereidingsbord voor open vragen, volgende afspraak, prioriteit,
   voorbereiding en vraagcontext. De volledige open-vragenlijst blijft bereikbaar
   achter een vervolgsectie zonder de eerste viewport als vragenstapel te vullen.
+- **G1877 Dagadvies selection board:** Dagadvies start met een compact
+  selectiebord voor vandaag, eigenaarroutes, feedback, artscheck en volledige
+  context. De bestaande eigenaar-, actieplanner-, feedbackfilter- en volledige
+  lijstlagen blijven bereikbaar zonder de eerste viewport als adviesstapel te
+  vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

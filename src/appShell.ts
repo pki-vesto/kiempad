@@ -16558,7 +16558,7 @@ function renderDailyAdviceWorkbench(
       <nav class="daily-advice-owner-choice" aria-label="Kies dagadvies eigenaar" data-daily-advice-owner-choice="ready">
         ${owners.map((owner) => renderDailyAdviceOwnerChoiceRoute(owner, overview[owner])).join('')}
       </nav>
-      <details class="kp-disclosure daily-advice-owner-details" data-daily-advice-owner-details="collapsed">
+      <details id="daily-advice-owner-details" class="kp-disclosure daily-advice-owner-details" data-daily-advice-owner-details="collapsed">
         <summary class="kp-disclosure__summary daily-advice-owner-details__summary">
           <span>
             <strong>Open eigenaaroverzicht</strong>
@@ -16730,6 +16730,12 @@ function renderDailyAdviceConsole(
   return renderDailyAdviceFocusShell({
     status: `${state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''}${routeFocusStatus}`,
     filterStatus: feedbackFilterStatus,
+    selectionBoard: renderDailyAdviceSelectionBoard({
+      overview,
+      feedbackFilterActive: Boolean(state.dailyRecommendationFeedbackFilter),
+      totalRecommendations,
+      filteredTotalRecommendations,
+    }),
     decisionBoard: renderDailyAdviceDecisionBoard(overview),
     workflow: renderHubWorkflowHeader({
       id: 'start-recommendations-workflow-header',
@@ -16880,6 +16886,95 @@ function renderDailyAdviceDecisionBoard(overview: DailyRecommendationOverview): 
   `;
 }
 
+function renderDailyAdviceSelectionBoard(input: {
+  overview: DailyRecommendationOverview;
+  feedbackFilterActive: boolean;
+  totalRecommendations: number;
+  filteredTotalRecommendations: number;
+}): string {
+  const ownerCount = (['vrouw', 'man', 'samen'] as const).filter(
+    (owner) => input.overview[owner].length > 0,
+  ).length;
+  const artscheckCount = (['vrouw', 'man', 'samen'] as const).reduce(
+    (count, owner) =>
+      count +
+      input.overview[owner].filter((item) =>
+        item.checklist?.some((checklistItem) => checklistItem.artscheck),
+      ).length,
+    0,
+  );
+  const lanes = [
+    {
+      id: 'today',
+      href: '#start-today',
+      label: 'Vandaag',
+      title: 'Dagroute',
+      detail: 'Open planning en dagtaken zonder de volledige adviescontext.',
+      cue: 'Nu',
+    },
+    {
+      id: 'owners',
+      href: '#daily-advice-owner-details',
+      label: 'Eigenaars',
+      title: `${ownerCount} route${ownerCount === 1 ? '' : 's'}`,
+      detail: 'Kies vrouw, man of samen voordat je alle kaarten opent.',
+      cue: 'Per persoon',
+    },
+    {
+      id: 'feedback',
+      href: '#daily-recommendation-feedback-filter-form',
+      label: 'Feedback',
+      title: input.feedbackFilterActive
+        ? `${input.filteredTotalRecommendations} zichtbaar`
+        : 'Filter kiezen',
+      detail: 'Filter lokaal op feedbackstatus voordat je de lijst leest.',
+      cue: 'Lokaal',
+    },
+    {
+      id: 'artscheck',
+      href: '#vragen',
+      label: 'Artscheck',
+      title: `${artscheckCount} punt${artscheckCount === 1 ? '' : 'en'}`,
+      detail: 'Zet bespreekpunten apart klaar voor consultvoorbereiding.',
+      cue: 'Vragen',
+    },
+    {
+      id: 'context',
+      href: '#daily-advice-followup',
+      label: 'Volledige context',
+      title: `${input.totalRecommendations} kaart${input.totalRecommendations === 1 ? '' : 'en'}`,
+      detail: 'Open workflow, eigenaarwerkbank en volledige lijst pas als vervolg.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="daily-advice-selection-board" aria-label="Dagadvies selectie startlaag" data-daily-advice-selection-board="first-viewport">
+      <header class="daily-advice-selection-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Selectie</p>
+          <h3>Kies eerst je advieslaag</h3>
+        </div>
+        <p>Vandaag, eigenaars, feedback, artscheck en volledige context staan als aparte keuzes.</p>
+      </header>
+      <nav class="daily-advice-selection-board__lanes" aria-label="Dagadvies eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="daily-advice-selection-board__lane" href="${lane.href}" data-daily-advice-selection-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
+}
+
 function filterDailyRecommendationOverview(
   overview: DailyRecommendationOverview,
   feedbackStatussen: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>,
@@ -16997,6 +17092,7 @@ function renderDailyRecommendationFeedbackFilter(input: {
 function renderDailyAdviceFocusShell(input: {
   status: string;
   filterStatus: string;
+  selectionBoard: string;
   decisionBoard: string;
   workflow: string;
   workbench: string;
@@ -17012,6 +17108,7 @@ function renderDailyAdviceFocusShell(input: {
       </header>
       ${input.status}
       ${input.filterStatus}
+      ${input.selectionBoard}
       <div class="daily-advice-focus-shell__body" data-daily-advice-console-region="body">
         <div id="daily-advice-primary-action-choice" class="daily-advice-primary-action-choice" data-daily-advice-primary-action-choice="ready">
           <div class="daily-advice-focus-shell__decision" data-daily-advice-focus-region="decision" data-daily-advice-console-region="decision">
