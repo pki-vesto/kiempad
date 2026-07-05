@@ -30,6 +30,17 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('Recordpakket geïmporteerd in centrale dataset');
   });
 
+  it('werkt attachment-envelope batchstatus bij vanuit de dossier file input', () => {
+    expect(mainSource).toContain('summarizeAttachmentEnvelopeMetadataBatch');
+    expect(mainSource).toContain('updateAttachmentEnvelopeBatchStatus(dossierForm)');
+    expect(mainSource).toContain("form.querySelector('[data-attachment-envelope-batch]')");
+    expect(mainSource).toContain('fileInput.files ?? []');
+    expect(mainSource).toContain('summary.total === 0');
+    expect(mainSource).toContain('Geen bestandsnamen of broninhoud in deze batchstatus.');
+    expect(mainSource).not.toContain('echo-foto-privenaam.jpg');
+    expect(mainSource).not.toContain('base64-bijlage-inhoud');
+  });
+
   it('houdt biometrie enrollment-labels storage-mode bewust', () => {
     expect(mainSource).toContain('Kiempad centrale versleutelde opslag');
     expect(mainSource).toContain('Kiempad lokale kluis');

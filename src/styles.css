@@ -22088,6 +22088,14 @@ summary[class*="__summary"]:focus-visible,
   font-weight: 850;
 }
 
+.attachment-envelope-status [data-attachment-envelope-batch="hash-pending"] strong {
+  color: var(--warning);
+}
+
+.attachment-envelope-status [data-attachment-envelope-batch="invalid"] strong {
+  color: var(--danger);
+}
+
 .attachment-envelope-status span,
 .attachment-envelope-status p {
   margin: 0;

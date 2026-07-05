@@ -3489,6 +3489,10 @@ function renderDossierScreen(state: AppShellState): string {
               <strong>Envelope controle</strong>
               <span>Kiempad controleert alleen technisch type, grootte en hashstatus voor versleutelde opslag.</span>
             </div>
+            <div data-attachment-envelope-batch="idle">
+              <strong>Batchcontrole wacht</strong>
+              <span>Kies bestanden om technische bijlagemetadata samen te vatten.</span>
+            </div>
             <p>Bestandsnaam, broninhoud, OCR-tekst en medische context worden niet in deze status getoond.</p>
           </section>
           </fieldset>

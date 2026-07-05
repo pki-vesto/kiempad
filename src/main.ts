@@ -27,7 +27,10 @@ import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { exporteerAfsprakenAlsIcs, importeerAfsprakenUitIcs } from './domain/agenda';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
-import { evaluateAttachmentEnvelopeMetadata } from './domain/attachmentEnvelope';
+import {
+  evaluateAttachmentEnvelopeMetadata,
+  summarizeAttachmentEnvelopeMetadataBatch,
+} from './domain/attachmentEnvelope';
 import { maakConsultPrintHtml } from './domain/consultExport';
 import { ConsultVerslagStore } from './domain/consultVerslagStore';
 import { CycleDataStore } from './domain/cycleDataStore';
@@ -774,9 +777,11 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       'select[name="uploadProfiel"]',
     ]) {
       dossierForm.querySelector(selector)?.addEventListener('change', () => {
+        updateAttachmentEnvelopeBatchStatus(dossierForm);
         updateDossierConceptPreview(dossierForm);
       });
     }
+    updateAttachmentEnvelopeBatchStatus(dossierForm);
     updateDossierConceptPreview(dossierForm);
   }
 
@@ -1269,6 +1274,31 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
       ? summarizeDossierUploadValidation(validation)
       : 'Conceptrecords klaar voor controle. Pas datum, categorie, uploadprofiel of koppelingen aan vóór opslag.';
   container.append(intro, list);
+}
+
+function updateAttachmentEnvelopeBatchStatus(form: HTMLFormElement): void {
+  const batch = form.querySelector('[data-attachment-envelope-batch]');
+  const fileInput = form.querySelector('input[name="dossierBestanden"]');
+  if (!(batch instanceof HTMLElement) || !(fileInput instanceof HTMLInputElement)) return;
+
+  const files = Array.from(fileInput.files ?? []).filter((file) => file.size > 0);
+  const summary = summarizeAttachmentEnvelopeMetadataBatch(
+    files.map((file) => ({
+      contentType: file.type || undefined,
+      sizeBytes: file.size,
+    })),
+  );
+  batch.dataset.attachmentEnvelopeBatch = summary.status;
+  batch.replaceChildren();
+
+  const title = document.createElement('strong');
+  title.textContent = summary.label;
+  const detail = document.createElement('span');
+  detail.textContent =
+    summary.total === 0
+      ? summary.detail
+      : `${summary.total} items: ${summary.detail} Geen bestandsnamen of broninhoud in deze batchstatus.`;
+  batch.append(title, detail);
 }
 
 async function saveEmbryoQualityFromForm(
