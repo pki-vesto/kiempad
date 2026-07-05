@@ -16,6 +16,13 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('[data-start-dashboard-followup="collapsed"]');
     expect(routeflowScreenshotSmokeScript).toContain('[data-compact-workspace-deck="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain('[data-route-focus-dock="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-dossier-search-filter-set="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'async function assertDossierSearchCombinedFilter',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('data-dossier-search-combined-filter');
+    expect(routeflowScreenshotSmokeScript).toContain('safe-metadata');
+    expect(routeflowScreenshotSmokeScript).toContain("query: 'zzzzzz'");
     expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockBeforePanel');
     expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockActiveLinkVisible');
     expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockActiveLinkInRowViewport');

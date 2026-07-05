@@ -1614,6 +1614,30 @@ describe('dossier', () => {
       trajectId: 'traject-2',
       notitie: 'Geen labtekst uit UMC Utrecht',
     });
+    const normalisatieBronMatch = maakDossierDocument('doc-normalisatie-bron', {
+      datum: '2026-05-03',
+      titel: 'Genormaliseerde bron',
+      categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
+      bestandsNaam: 'normalisatie.txt',
+      mimeType: 'text/plain',
+      grootteBytes: 1024,
+      inhoudBase64: 'dGVrc3Q=',
+      trajectId: 'traject-3',
+    });
+    normalisatieBronMatch.metadata.normalisatie = {
+      datum: '2026-05-03',
+      bron: 'Kliniek Alpha',
+      documenttype: 'Labuitslag',
+      pogingId: 'Poging Alpha',
+      onzekerheid: 'laag',
+      overschrevenDoorGebruiker: true,
+      origineleWaarden: {
+        datum: '2026-05-03',
+        bron: 'normalisatie.txt',
+        documenttype: 'Labuitslag',
+      },
+    };
 
     expect(zoekDossierDocumenten([match, geenMatch], 'amh')).toEqual([
       { document: match, matches: ['OCR-tekst'] },
@@ -1629,6 +1653,11 @@ describe('dossier', () => {
         (result) => result.document.id,
       ),
     ).toEqual(['doc-match']);
+    expect(
+      zoekDossierDocumenten([match, geenMatch, normalisatieBronMatch], '', {
+        kliniek: 'Kliniek Alpha',
+      }).map((result) => result.document.id),
+    ).toEqual(['doc-normalisatie-bron']);
     expect(zoekDossierDocumenten([match, geenMatch], 'amh', { kliniek: 'UMC Utrecht' })).toEqual(
       [],
     );

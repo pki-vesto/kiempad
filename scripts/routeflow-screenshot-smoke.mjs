@@ -1723,6 +1723,12 @@ const targets = [
       '[data-dossier-search-console="ready"]',
       '[data-dossier-search-console-region="search"]',
       '[data-dossier-search-primary-control="ready"]',
+      '[data-dossier-search-filter-set="ready"]',
+      '[data-dossier-search-filter-lane="query"]',
+      '[data-dossier-search-filter-lane="clinic"]',
+      '[data-dossier-search-filter-lane="attempt"]',
+      '[data-dossier-search-filter-lane="review"]',
+      '[data-dossier-search-filter-source="safe-metadata"]',
       '[data-dossier-search-choice="collapsed"]',
       '[data-dossier-search-choice-summary="ready"]',
       '[data-dossier-search-support="collapsed"] > .dossier-search-support__summary',
@@ -1743,6 +1749,7 @@ const targets = [
       '[data-dossier-search-support="collapsed"]',
       '[data-dossier-search-result-choice="collapsed"]',
     ],
+    prepare: 'dossier-search-combined-filter',
     dossierConsole: true,
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
@@ -2447,6 +2454,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'dossier-ocr-review-correction') {
         await prepareDossierOcrReviewCorrection(page, target.hash);
+      }
+      if (target.prepare === 'dossier-search-combined-filter') {
+        await prepareDossierSearchCombinedFilter(page, target.hash);
       }
       if (target.prepare === 'dossier-metadata-normalization-correction') {
         await prepareDossierMetadataNormalizationCorrection(page, target.hash);
@@ -5609,6 +5619,9 @@ async function assertRouteflows(browser, options) {
           `${options.label}/${target.screen}: dossier-console staat niet in compacte werkvlakken (${JSON.stringify(evidence.dossierConsole)}).`,
         );
       }
+      if (target.screen === 'dossier-search') {
+        await assertDossierSearchCombinedFilter(page, options.label);
+      }
       if (
         options.label === 'desktop' &&
         evidence.knowledgeConsole &&
@@ -6861,6 +6874,74 @@ async function prepareDossierOcrReviewCorrection(page, targetHash) {
   await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
 }
 
+async function prepareDossierSearchCombinedFilter(page, targetHash) {
+  await page.goto(`${url}#dossier-upload-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#dossier-upload-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'kliniek-alpha.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('safe synthetic alpha search text'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-07-05');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('Alpha zoekfilter record');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('labuitslag');
+  const trajectSelect = page.locator('#dossier-upload-form [name="trajectId"]');
+  if (await trajectSelect.isVisible().catch(() => false)) {
+    const trajectValue = await trajectSelect.evaluate((select) => {
+      if (!(select instanceof HTMLSelectElement)) return '';
+      return [...select.options].find((option) => option.value.trim())?.value ?? '';
+    });
+    if (trajectValue) await trajectSelect.selectOption(trajectValue);
+  }
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.evaluate(() => {
+    document.querySelectorAll('details').forEach((details) => {
+      details.open = true;
+    });
+  });
+  await page.evaluate(() => {
+    const form = document.querySelector('.metadata-normalization-correction-form');
+    if (!(form instanceof HTMLFormElement)) {
+      throw new Error('Metadata-normalisatieformulier ontbreekt voor zoekfilterfixture.');
+    }
+    const source = form.querySelector('[name="metadataNormalisatieBron"]');
+    const attempt = form.querySelector('[name="metadataNormalisatiePogingId"]');
+    const certainty = form.querySelector('[name="metadataNormalisatieOnzekerheid"]');
+    if (source instanceof HTMLInputElement) source.value = 'Kliniek Alpha';
+    if (attempt instanceof HTMLInputElement) attempt.value = 'Poging Alpha';
+    if (certainty instanceof HTMLSelectElement) certainty.value = 'laag';
+    form.dispatchEvent(new SubmitEvent('submit', { bubbles: true, cancelable: true }));
+  });
+  await page.waitForFunction(
+    () => document.body.textContent?.includes('Metadata-normalisatie in de lokale kluis opgeslagen.'),
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
 async function prepareDossierMetadataNormalizationCorrection(page, targetHash) {
   await page.goto(`${url}#dossier-upload-form`, { waitUntil: 'networkidle' });
   await unlockIfNeeded(page, '#dossier-upload-form');
@@ -7634,6 +7715,136 @@ async function waitForActiveWorkspaceStripButton(page, expectedLabel) {
     expectedLabel,
     { timeout: 10_000 },
   );
+}
+
+async function assertDossierSearchCombinedFilter(page, viewportLabel) {
+  const optionValues = await page.evaluate(() => {
+    const clinicOptions = [
+      ...document.querySelectorAll('#dossier-search-form select[name="dossierKliniekFilter"] option'),
+    ].filter((option) => option instanceof HTMLOptionElement);
+    const attemptOptions = [
+      ...document.querySelectorAll('#dossier-search-form select[name="dossierPogingFilter"] option'),
+    ].filter((option) => option instanceof HTMLOptionElement);
+    const clinic =
+      clinicOptions.find((option) => option.value === 'Kliniek Alpha') ??
+      clinicOptions.find((option) => option.value.trim());
+    const attempt =
+      attemptOptions.find((option) => option.value === 'Poging Alpha') ??
+      attemptOptions.find((option) => option.value.trim());
+
+    return {
+      clinic: clinic instanceof HTMLOptionElement ? clinic.value : '',
+      attempt: attempt instanceof HTMLOptionElement ? attempt.value : '',
+    };
+  });
+
+  if (!optionValues.clinic || !optionValues.attempt) {
+    throw new Error(`${viewportLabel}/dossier-search: gecombineerde filteropties ontbreken.`);
+  }
+
+  await submitDossierSearchFilterSet(page, {
+    query: 'a',
+    clinic: optionValues.clinic,
+    attempt: optionValues.attempt,
+  });
+  const matching = await collectDossierSearchFilterSetEvidence(page);
+  if (
+    !matching.visible ||
+    matching.combined !== 'active' ||
+    matching.state === 'idle' ||
+    matching.lanes.length !== 4 ||
+    matching.lanes.some((lane) => !lane.visible || lane.height > 88 || !lane.text) ||
+    !matching.sourceVisible ||
+    !matching.sourceText.includes('Bron:') ||
+    !matching.sourceText.includes('Datum:') ||
+    matching.hasForbiddenText ||
+    matching.hasHorizontalOverflow ||
+    matching.height > (viewportLabel === 'mobile' || viewportLabel === 'small-mobile' ? 300 : 240)
+  ) {
+    throw new Error(
+      `${viewportLabel}/dossier-search: gecombineerde zoekfilterset mist compacte match-evidence (${JSON.stringify(matching)}).`,
+    );
+  }
+
+  await submitDossierSearchFilterSet(page, {
+    query: 'zzzzzz',
+    clinic: optionValues.clinic,
+    attempt: optionValues.attempt,
+  });
+  const empty = await collectDossierSearchFilterSetEvidence(page);
+  if (
+    !empty.visible ||
+    empty.combined !== 'active' ||
+    empty.state !== 'empty' ||
+    empty.lanes.length !== 4 ||
+    empty.lanes.some((lane) => !lane.visible || lane.height > 88 || !lane.text) ||
+    !empty.sourceVisible ||
+    !empty.sourceText.includes('Bron en datum') ||
+    empty.hasForbiddenText ||
+    empty.hasHorizontalOverflow ||
+    empty.height > (viewportLabel === 'mobile' || viewportLabel === 'small-mobile' ? 300 : 240)
+  ) {
+    throw new Error(
+      `${viewportLabel}/dossier-search: gecombineerde zoekfilterset mist compacte lege-state evidence (${JSON.stringify(empty)}).`,
+    );
+  }
+
+  await page.locator('[data-dossier-search-choice-summary="ready"]').click();
+  await page.locator('[data-dossier-search-clear="filters"]').click();
+  await page.waitForFunction(
+    () =>
+      document
+        .querySelector('[data-dossier-search-filter-set="ready"]')
+        ?.getAttribute('data-dossier-search-filter-state') === 'idle',
+    undefined,
+    { timeout: 10_000 },
+  );
+}
+
+async function submitDossierSearchFilterSet(page, { query, clinic, attempt }) {
+  await page.locator('[data-dossier-search-choice-summary="ready"]').click();
+  await page.locator('#dossier-search-form input[name="dossierZoekterm"]').fill(query);
+  await page.locator('#dossier-search-form select[name="dossierKliniekFilter"]').selectOption(clinic);
+  await page.locator('#dossier-search-form select[name="dossierPogingFilter"]').selectOption(attempt);
+  await page.locator('#dossier-search-form button[type="submit"]').click();
+  await page.locator('[data-dossier-search-filter-set="ready"]').waitFor({ timeout: 10_000 });
+}
+
+async function collectDossierSearchFilterSetEvidence(page) {
+  return page.evaluate(() => {
+    const root = document.querySelector('[data-dossier-search-filter-set="ready"]');
+    const rootRect = root?.getBoundingClientRect();
+    const source = root?.querySelector('[data-dossier-search-filter-source="safe-metadata"]');
+    const sourceRect = source?.getBoundingClientRect();
+    const lanes = [...(root?.querySelectorAll('[data-dossier-search-filter-lane]') ?? [])].map(
+      (lane) => {
+        const rect = lane.getBoundingClientRect();
+        return {
+          lane: lane.getAttribute('data-dossier-search-filter-lane') ?? '',
+          state: lane.getAttribute('data-dossier-search-filter-lane-state') ?? '',
+          visible: rect.width > 0 && rect.height > 0,
+          height: rect.height,
+          text: lane.textContent?.trim().replace(/\s+/g, ' ') ?? '',
+        };
+      },
+    );
+    const text = root?.textContent ?? '';
+    return {
+      visible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
+      height: rootRect?.height ?? 0,
+      state:
+        root instanceof HTMLElement ? root.getAttribute('data-dossier-search-filter-state') ?? '' : '',
+      combined:
+        root instanceof HTMLElement ? root.getAttribute('data-dossier-search-combined-filter') ?? '' : '',
+      lanes,
+      sourceVisible: Boolean(sourceRect && sourceRect.width > 0 && sourceRect.height > 0),
+      sourceText: source?.textContent?.trim().replace(/\s+/g, ' ') ?? '',
+      hasForbiddenText: /base64|OCR payload|diagnose|behandelkeuzeadvies|private-disclosure-token/i.test(text),
+      hasHorizontalOverflow:
+        document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
+        document.body.scrollWidth > document.body.clientWidth + 1,
+    };
+  });
 }
 
 async function waitForPreview() {

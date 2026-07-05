@@ -8659,6 +8659,17 @@ describe('app shell', () => {
     expect(html).toContain('<option value="traject-1" selected>Poging 1</option>');
     expect(html).toContain('data-dossier-clinic-filter-state="active"');
     expect(html).toContain('data-dossier-attempt-filter-state="active"');
+    expect(html).toContain('data-dossier-search-filter-set="ready"');
+    expect(html).toContain('data-dossier-search-filter-state="matches"');
+    expect(html).toContain('data-dossier-search-combined-filter="active"');
+    expect(html).toContain('data-dossier-search-filter-lane="query"');
+    expect(html).toContain('data-dossier-search-filter-lane="clinic"');
+    expect(html).toContain('data-dossier-search-filter-lane="attempt"');
+    expect(html).toContain('data-dossier-search-filter-lane="review"');
+    expect(html).toContain('data-dossier-search-filter-lane-state="active"');
+    expect(html).toContain('data-dossier-search-filter-lane-state="gereviewd"');
+    expect(html).toContain('data-dossier-search-filter-source="safe-metadata"');
+    expect(html).toContain('Huidige zoekcontext');
     expect(html).toContain('data-dossier-clinic-filter-chip="active"');
     expect(html).toContain('data-dossier-attempt-filter-chip="active"');
     expect(html).toContain('Kliniek: Erasmus MC');

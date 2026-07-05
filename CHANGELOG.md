@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2019 dossier zoekfilters gecombineerde routeflow evidence: Dossier Zoeken
+  toont nu een vaste filtersetkaart voor vrije tekst, kliniek, poging en
+  reviewstatus, plus veilige bron/datumcontext. Routeflow-smoke bewaakt
+  matchende en lege gecombineerde filters compact op desktop, tablet en mobiel
+  zonder OCR-tekst, bronpayload of behandeladvies te tonen.
 - G2022 routefocus-dock actieve route automatisch in beeld: de actieve
   routefocus-link wordt na render en browsernavigatie horizontaal gecentreerd,
   zodat deeplinks en reloads de actieve taakroute bovenin zichtbaar houden.

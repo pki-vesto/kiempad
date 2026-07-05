@@ -18798,7 +18798,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Search, dossier, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 107
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3976
 
 ### G2020 — Premium Claude Design UI: sticky routefocus-dock tegen lange pagina
