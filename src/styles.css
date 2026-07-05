@@ -30726,6 +30726,16 @@ summary[class*="__summary"]:focus-visible,
       text-decoration: none;
     }
 
+    .treatment-task-route:not([aria-current="page"]):focus-visible small {
+      max-width: 100%;
+      margin-top: 1px;
+      padding-right: 3px;
+      line-height: 1.28;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .treatment-task-route:not([aria-current="page"]):focus-visible
       :is(.command-task-route__badge, .command-task-route__cue) {
       flex: 0 1 auto;

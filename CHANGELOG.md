@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1904 Premium Claude Design UI: inactieve gefocuste mobiele
+  Traject-metatekst krijgt in forced-colors expliciete line-height, margin en
+  fitregels, zodat metatekst gescheiden blijft van titels en statuspills.
 - G1903 Premium Claude Design UI: inactieve gefocuste mobiele Traject badge-
   en cuepills krijgen in forced-colors expliciete min-height, padding,
   line-height en cue-afstand, zodat compacte statuspills leesbaar blijven.

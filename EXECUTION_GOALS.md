@@ -16930,8 +16930,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 46
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3750
+
+### G1905 — Premium Claude Design UI: treatment mobile rail forced-colors inactive focus label fit polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Inactieve gefocuste mobiele Traject-routekaarten hebben nu expliciet supporting-text ritme, maar titels kunnen nog eigen width/ellipsis-regels naast badgepills gebruiken.
+- **User Impact:** High-contrast toetsenbordgebruikers kunnen routetitels minder snel scannen als titel en badge bij focus te dicht op elkaar staan.
+- **Desired Outcome:** Inactieve gefocuste mobiele Traject-routekaarten hebben expliciete forced-colors titelbreedte en ellipsisbehandeling naast badgepills.
+- **User Value:** Niet-actieve gefocuste routes houden een stabiele titelkolom terwijl badges compact blijven.
+- **Acceptance Criteria:** Mobile Traject inactive focused route cards have explicit forced-colors title width and ellipsis handling beside badge pills; existing route hrefs, aria-current states, badges, cue pills, command-task hooks, route groups, active-route promotion, reduced-motion behavior, forced-colors contrast, spacing, active label/cue handling, supporting text fit, active focus text handling, focus cue spacing, inactive focus text handling, inactive focus cue fit, inactive focus cue rhythm and inactive focus meta rhythm remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors inactive focus label fit or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 45
+- **Status:** ☐ open
+- **Issue:** #3752
 
 ### G586 — replay conflict recovery status UI
 

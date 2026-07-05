@@ -5915,6 +5915,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('font-weight: 780;');
     expect(mobileCss).toContain('text-decoration: none;');
     expect(mobileCss).toContain(
+      '.treatment-task-route:not([aria-current="page"]):focus-visible small {',
+    );
+    expect(mobileCss).toContain('margin-top: 1px;');
+    expect(mobileCss).toContain('padding-right: 3px;');
+    expect(mobileCss).toContain('line-height: 1.28;');
+    expect(mobileCss).toContain(
       '.treatment-task-route:not([aria-current="page"]):focus-visible\n      :is(.command-task-route__badge, .command-task-route__cue) {',
     );
     expect(mobileCss).toContain('flex: 0 1 auto;');
