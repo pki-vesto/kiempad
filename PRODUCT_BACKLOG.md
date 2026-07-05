@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1728 |
+| ☑ klaar | 1729 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1927** |
+| **Totaal** | **1928** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -729,7 +729,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G564 | Product Quality & Automation: autonomous evolution runbook checklist | P1 | F5 | ☐ |
 | G565 | Product Quality & Automation: autonomous issue snapshot freshness gate | P1 | F5 | ☐ |
 | G566 | Central Encrypted Platform: encrypted record migration fixture registry | P1 | F5 | ☐ |
-| G567 | Fertility Intelligence: dossierupload size feedback voor grote bijlagen | P1 | F5 | ☐ |
+| G567 | Fertility Intelligence: dossierupload size feedback voor grote bijlagen | P1 | F5 | ☑ |
 | G568 | Fertility Intelligence: ziekenhuisdocument taxonomie reviewcorrectie | P1 | F5 | ☐ |
 | G569 | Product Quality & Automation: imaging lock-state visual regression fixture | P1 | F5 | ☐ |
 | G570 | Fertility Intelligence: consultnotitie tekstimport reviewcorrectie | P1 | F5 | ☐ |
@@ -2090,12 +2090,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1926 | Premium Claude Design UI: consult review scan routeflow overflow evidence | P1 | F5 | ☐ |
 | G1927 | Premium Claude Design UI: embryo tracking scan routeflow overflow evidence | P1 | F5 | ☐ |
 | G1928 | Premium Claude Design UI: research trend scan routeflow overflow evidence | P1 | F5 | ☐ |
+| G1929 | Fertility Intelligence: dossierupload size feedback routeflow overflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1927** (id's G001 t/m G1928; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1928** (id's G001 t/m G1929; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

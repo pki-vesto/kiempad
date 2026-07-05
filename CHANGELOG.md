@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G567 Fertility Intelligence: de dossierupload toont nu een aparte
+  groottecontrole met 25 MB per bestand, 50 MB per selectie, centrale
+  413-context en een herstelbaar retry-pad zonder bestandsnamen, OCR-tekst of
+  medische inhoud in de melding.
 - G1923 Premium Claude Design UI: de Researchtrends scan is op mobiel compacter
   met smallere snapkaarten, lagere kaarthoogte en compactere labels, zodat
   onderwerpen, publicaties, bronnen en laatste update sneller scanbaar zijn.

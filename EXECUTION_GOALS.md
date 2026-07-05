@@ -15596,7 +15596,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier uploads, central API errors, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #3804
 
 ### G568 — ziekenhuisdocument taxonomie reviewcorrectie
 
@@ -17314,6 +17315,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 26
 - **Status:** ☐ open
 - **Issue:** #3802
+
+### G1929 — Fertility Intelligence: dossierupload size feedback routeflow overflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De nieuwe dossierupload groottefeedback is zichtbaar in de formulierlaag, maar routeflow-bewijs moet nog aantonen dat de limietkaarten en retry-copy op desktop en mobiel zonder overflow blijven.
+- **User Impact:** Zonder visueel routeflow-bewijs kan een latere themewijziging de groottefeedback opnieuw wegdrukken of laten overlappen in de uploadroute.
+- **Desired Outcome:** Routeflow-smoke vindt de dossierupload size-feedback en bewaakt dat limieten, centrale opslagcontext en herstelcopy scanbaar blijven.
+- **User Value:** Gebruikers zien vóór opslag waarom grote PDF's, echo's of embryobeelden kunnen blokkeren en hoe zij veilig opnieuw proberen.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-dossier-upload-size-feedback="preflight"` op desktop en mobiel; limietkaarten en retry-copy veroorzaken geen page-level horizontale overflow; bestaande uploadinputs, envelopecontrole en privacyhooks blijven intact; tests blijven vrij van bestandsnamen, OCR-tekst, medische payloads, secrets en broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier uploads, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3805
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

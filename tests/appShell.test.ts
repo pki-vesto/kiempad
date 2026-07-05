@@ -29,6 +29,8 @@ import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 import type { DossierDocument } from '../src/domain/types';
 import {
   DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE,
+  DOSSIER_UPLOAD_MAX_FILE_BYTES,
+  DOSSIER_UPLOAD_MAX_TOTAL_BYTES,
   describeDossierUploadLimits,
 } from '../src/domain/uploadValidation';
 
@@ -8474,8 +8476,29 @@ describe('app shell', () => {
       `name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required`,
     );
     expect(emptyForm).toContain('data-dossier-upload-size-guidance="ready"');
+    expect(emptyForm).toContain('data-dossier-upload-size-feedback="preflight"');
+    expect(emptyForm).toContain(
+      `data-dossier-upload-max-file-bytes="${DOSSIER_UPLOAD_MAX_FILE_BYTES}"`,
+    );
+    expect(emptyForm).toContain(
+      `data-dossier-upload-max-total-bytes="${DOSSIER_UPLOAD_MAX_TOTAL_BYTES}"`,
+    );
+    expect(emptyForm).toContain('Groottecontrole');
+    expect(emptyForm).toContain('data-dossier-upload-size-status="recoverable"');
+    expect(emptyForm).toContain('Herstelbaar');
+    expect(emptyForm).toContain('data-dossier-upload-size-limit="file"');
+    expect(emptyForm).toContain('data-dossier-upload-size-limit="selection"');
+    expect(emptyForm).toContain('data-dossier-upload-size-limit="central"');
+    expect(emptyForm).toContain('Per bestand');
+    expect(emptyForm).toContain('Per selectie');
+    expect(emptyForm).toContain('kan 413 blokkeren');
+    expect(emptyForm).toContain('data-dossier-upload-size-retry="safe"');
+    expect(emptyForm).toContain('bestanden verwijderen, splitsen of opnieuw selecteren');
     expect(emptyForm).toContain(describeDossierUploadLimits());
-    expect(emptyForm).toContain('Kiempad toont alleen type en grootte in foutmeldingen.');
+    expect(emptyForm).toContain('Kiempad toont alleen technisch type, grootte en limietstatus');
+    expect(emptyForm).toContain(
+      'bestandsnaam, OCR-tekst, gecodeerde inhoud en medische inhoud blijven buiten deze melding',
+    );
     expect(emptyForm).toContain('class="attachment-envelope-status"');
     expect(emptyForm).toContain('data-attachment-envelope-surface="dossier-upload"');
     expect(emptyForm).toContain('data-attachment-envelope-validation="idle"');
@@ -8489,6 +8512,7 @@ describe('app shell', () => {
     expect(emptyForm).toContain('Bestandsnaam, broninhoud, OCR-tekst en medische context');
     expect(emptyForm).not.toContain('echo-foto-privenaam.jpg');
     expect(emptyForm).not.toContain('base64-bijlage-inhoud');
+    expect(emptyForm).not.toContain('diagnose 150 mg');
     expect(emptyForm).toContain('name="lokaleOcr" type="checkbox" value="ja"');
     expect(emptyForm).toContain('id="dossier-concept-preview"');
     expect(emptyForm).toContain('name="conceptBevestigd" type="checkbox" value="ja" required');
@@ -9972,6 +9996,11 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-upload-console__context:not([open]) > p {');
     expect(css).toContain('.dossier-upload-console__body {');
+    expect(css).toContain('.dossier-upload-size-feedback {');
+    expect(css).toContain('.dossier-upload-size-feedback__grid {');
+    expect(css).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
+    expect(css).toContain('.dossier-upload-size-feedback__badge {');
+    expect(css).toContain('[data-dossier-upload-size-status="recoverable"]');
     expect(css).toContain('.attachment-envelope-status {');
     expect(css).toContain('[data-attachment-envelope-validation="valid"]');
     expect(css).toContain('[data-attachment-envelope-validation="invalid"]');
@@ -10496,6 +10525,11 @@ describe('app shell', () => {
       '.attachment-envelope-status [data-attachment-envelope-batch="invalid"] strong {',
     );
     expect(forcedColorsCss).toContain('text-decoration-style: double;');
+    expect(forcedColorsCss).toContain('.dossier-upload-size-feedback,');
+    expect(forcedColorsCss).toContain('.dossier-upload-size-feedback__grid p,');
+    expect(forcedColorsCss).toContain('.dossier-upload-size-feedback__badge {');
+    expect(forcedColorsCss).toContain('.dossier-upload-size-feedback__header strong,');
+    expect(forcedColorsCss).toContain('.dossier-upload-size-feedback__grid strong,');
     expect(forcedColorsCss).not.toContain('echo-foto-privenaam.jpg');
     expect(forcedColorsCss).not.toContain('base64-bijlage-inhoud');
     expect(forcedColorsCss).not.toContain('OCR-tekst');
