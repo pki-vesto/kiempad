@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1807 |
+| ☑ klaar | 1808 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **2015** |
+| **Totaal** | **2016** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2177,13 +2177,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2013 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error missing-term fixture | P1 | F5 | ☑ |
 | G2014 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error missing-term error contract | P1 | F5 | ☑ |
 | G2015 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error error release guard | P1 | F5 | ☐ |
-| G2016 | Fertility Intelligence: consultvraagkoppeling zichtbaar in vragenroute | P1 | F5 | ☐ |
+| G2016 | Fertility Intelligence: consultvraagkoppeling zichtbaar in vragenroute | P1 | F5 | ☑ |
+| G2017 | Fertility Intelligence: consultvraagkoppeling routeflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 2015** (id's G001 t/m G2016; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 2016** (id's G001 t/m G2017; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

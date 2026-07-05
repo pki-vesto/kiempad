@@ -18746,8 +18746,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Questions, consults, app shell
 - **ADR Needed:** no
 - **Score:** 80
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3970
+
+### G2017 — Fertility Intelligence: consultvraagkoppeling routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G2016 toont consult-linked vraagmetadata in de Vragen-route, maar routeflow evidence bewaakt nog niet dat bron, datum en reviewstatus zichtbaar blijven zonder gewone vragen zwaarder te maken.
+- **User Impact:** Een latere thema- of layoutwijziging kan consultvraagmetadata laten wegvallen of de Vragen-route weer als lange lijst laten voelen.
+- **Desired Outcome:** Routeflow evidence controleert consult-linked vraagmetadata met bron, datum en reviewstatus in de Vragen-route op desktop, tablet en mobiel.
+- **User Value:** Gebruikers blijven in de consultvoorbereiding zien welke vragen bij een consultdocument horen zonder terug te zoeken in Dossier.
+- **Acceptance Criteria:** Routeflow evidence covers consult-linked question metadata with source, date and review status; evidence distinguishes concept/reviewed consult-question links from regular open questions; desktop, tablet and mobile stay compact without horizontal overflow or one-long-list behavior; output avoids diagnosis, dosage, chance calculation, treatment-choice advice, secrets, health payloads and plaintext medical payloads; backlog/docs stay aligned.
+- **Affected Screens:** Vragen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Questions, routeflow smoke, app shell
+- **ADR Needed:** no
+- **Score:** 80
+- **Status:** ☐ open
+- **Issue:** #3972
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

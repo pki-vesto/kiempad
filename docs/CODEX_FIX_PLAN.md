@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G2016 Fertility Intelligence consultvraagkoppeling zichtbaar in vragenroute — done in G2016 / issue #3970.** De Vragen-route toont consult-linked vraagmetadata met bronlabel, datum en reviewstatus in open vragen, alle vragen en het geselecteerde vraagformulier zonder medische payload of behandeladvies.
 - **G522 Fertility Intelligence consultdocument koppelen aan open vragen — done in G522 / issue #853.** Consultkaarten tonen nu een compacte open-vragenroute voor vragen die aan dezelfde consultafspraak hangen, inclusief bronlabel, datum, reviewstatus en een lokaal bewaarformulier voor de koppeling zonder consultpayload of behandeladvies.
 - **G2014 Research Intelligence offline cache metadata release-state contract error-contract error error error error missing-term error contract — done in G2014 / issue #3966.** Maintenance-docs test snapshott nu de exacte G2013 error-contract error error error error release missing-term foutmelding met alleen `offline cache metadata missing-term error contract` en `veilige technische labels` als veilige contractlabels.
 - **G2013 Research Intelligence offline cache metadata release-state contract error-contract error error error error missing-term fixture — done in G2013 / issue #3964.** Maintenance-docs test geeft nu compact terug wanneer de veilige labels `offline cache metadata missing-term error contract` of `veilige technische labels` uit G2012 error-contract error error error error release-evidence ontbreken.

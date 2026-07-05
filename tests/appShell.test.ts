@@ -7890,6 +7890,14 @@ describe('app shell', () => {
             voorAfspraakId: 'afspraak-1',
             prioriteit: 1,
             beantwoord: false,
+            consultKoppelingen: [
+              {
+                consultVerslagId: 'consult-1',
+                bronLabel: 'Consult: voorbereidend consult',
+                datum: '2099-06-20',
+                reviewStatus: 'gereviewd',
+              },
+            ],
           },
           afspraak: {
             id: 'afspraak-1',
@@ -7987,6 +7995,7 @@ describe('app shell', () => {
     expect(html).toContain('Alle vragen tonen');
     expect(html).toContain('data-command-form-section="vraag-basis"');
     expect(html).toContain('data-command-form-section="vraag-context"');
+    expect(html).toContain('data-command-form-section="vraag-consult-links"');
     expect(html).toContain('data-command-form-section="vraag-antwoord"');
     expect(html).toContain('data-question-route="open"');
     expect(html).toContain('data-question-route-state="active"');
@@ -8051,6 +8060,15 @@ describe('app shell', () => {
     expect(html).toContain('href="#vragen?route=beheer" data-question-open-prep-lane="context"');
     expect(html).toContain('Volledige open vragenlijst');
     expect(html).toContain('id="question-open-full-context"');
+    expect(html).toContain('data-question-consult-link-item="linked"');
+    expect(html).toContain('data-question-consult-links="ready"');
+    expect(html).toContain('data-question-consult-links="form"');
+    expect(html).toContain('data-question-consult-link-count="1"');
+    expect(html).toContain('data-question-consult-link-review-state="gereviewd"');
+    expect(html).toContain('data-question-consult-link-review-badge="gereviewd"');
+    expect(html).toContain('Consultdocument: Consult: voorbereidend consult · 2099-06-20');
+    expect(html).toContain('Gereviewd');
+    expect(html).toContain('data-question-consult-link-item="standard"');
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="question-open-full-context" open',
     );
@@ -8138,6 +8156,22 @@ describe('app shell', () => {
     expect(html).not.toContain('Kiempad geeft geen diagnose, behandeladvies of behandelkeuze.');
     expect(html).toContain('Wanneer horen we de uitslag?');
     expect(html).toContain('Antwoord: De kliniek belt morgen.');
+    const answeredQuestionHeading = '<h3>Wanneer horen we de uitslag?</h3>';
+    const answeredQuestionSnippet = html.slice(
+      html.indexOf(answeredQuestionHeading),
+      html.indexOf(
+        'class="question-priority-form compact-form"',
+        html.indexOf(answeredQuestionHeading),
+      ),
+    );
+    expect(answeredQuestionSnippet).not.toContain('data-question-consult-links="ready"');
+
+    const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    expect(css).toContain('.question-consult-link-summary {');
+    expect(css).toContain('.question-consult-link-summary .linked-note {');
+    expect(css).toContain('flex-wrap: wrap;');
+    expect(mobileCss).toContain('.question-artscheck-review-form {');
   });
 
   it('toont artscheckvraag bronmetadata en corrigeerbare reviewstatus zonder medische payload', () => {
