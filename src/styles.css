@@ -30783,6 +30783,7 @@ summary[class*="__summary"]:focus-visible,
       border-block-color: CanvasText;
       border-inline-color: CanvasText;
       background: ButtonFace;
+      background-color: ButtonFace;
       color: ButtonText;
       font-weight: 700;
       outline-color: CanvasText;
