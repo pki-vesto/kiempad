@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1766 |
+| ☑ klaar | 1767 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **1974** |
+| **Totaal** | **1975** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2107,7 +2107,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1943 | Fertility Intelligence: embryo image classification review forced-colors evidence | P1 | F5 | ☑ |
 | G1944 | Fertility Intelligence: embryo image classification forced-colors focus evidence | P1 | F5 | ☑ |
 | G1945 | Fertility Intelligence: embryo image classification forced-colors focus release evidence | P1 | F5 | ☑ |
-| G1946 | Daily Recommendations: supplement artscheck action release evidence | P1 | F5 | ☐ |
+| G1946 | Daily Recommendations: supplement artscheck action release evidence | P1 | F5 | ☑ |
 | G1947 | Daily Recommendations: artscheck vraag reviewstatus release evidence | P1 | F5 | ☐ |
 | G1948 | Fertility Intelligence: import-inbox retry overflow release evidence | P1 | F5 | ☐ |
 | G1949 | Fertility Intelligence: OCR-review correctieformulier release evidence | P1 | F5 | ☐ |
@@ -2137,12 +2137,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1973 | Fertility Intelligence: embryo event research context boundary evidence | P1 | F5 | ☐ |
 | G1974 | Fertility Intelligence: embryo event recovery and offline persistence evidence | P1 | F5 | ☐ |
 | G1975 | Fertility Intelligence: embryo image classification release evidence freshness guard | P1 | F5 | ☐ |
+| G1976 | Daily Recommendations: supplement artscheck action release evidence freshness guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1974** (id's G001 t/m G1975; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1975** (id's G001 t/m G1976; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

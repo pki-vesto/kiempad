@@ -97,6 +97,15 @@ pad zonder lokale vault-hercreatie.
   zichtbare veldranden, labeltekst en horizontale overflow. Blijvende evidence mag
   geen kwaliteitsscore, selectieadvies, beeldpayload, OCR-tekst, diagnose,
   dosering, kansberekening, secret of trackingpayload bevatten.
+- **Supplement artscheck action evidence (G1946):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
+  `daily-advice-supplement-artscheck-action` `dailyAdviceSupplementArtscheckAction`
+  te verzamelen. De smoke controleert de supplementregel met
+  `data-supplement-artscheck-action="available"` en
+  `recommendationAction=supplementArtscheck`, bewaakt label, bron/disclaimer,
+  actieknop, standaardregels zonder extra artscheckactie en horizontale overflow.
+  Blijvende evidence mag geen dosering, interactieclaim, behandelvervanging,
+  medische payload, secret of trackingpayload bevatten.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en
   herlaadt de app-shell.

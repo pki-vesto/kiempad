@@ -395,6 +395,11 @@
   `dossier-imaging-embryo-classification-review` en
   `embryoImageClassificationForcedColorsFocusEvidence`, zodat de forced-colors focuscontrole voor beeldtype, embryo-label, embryo-id en reviewstatus vindbaar blijft
   zonder beeldpayload of medische interpretatie.
+- **G1946 supplement artscheck action release evidence:** releasecontext in
+  changelog en current state noemt `npm run smoke:routeflows`,
+  `daily-advice-supplement-artscheck-action`, `data-supplement-artscheck-action`,
+  `recommendationAction=supplementArtscheck` en `dailyAdviceSupplementArtscheckAction`, zodat label, bron/disclaimer en actieknop gekoppeld blijven
+  zonder dosering, interactieclaim of behandelvervanging.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
