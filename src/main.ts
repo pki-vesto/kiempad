@@ -777,11 +777,11 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       'select[name="uploadProfiel"]',
     ]) {
       dossierForm.querySelector(selector)?.addEventListener('change', () => {
-        updateAttachmentEnvelopeBatchStatus(dossierForm);
+        void updateAttachmentEnvelopeBatchStatus(dossierForm);
         updateDossierConceptPreview(dossierForm);
       });
     }
-    updateAttachmentEnvelopeBatchStatus(dossierForm);
+    void updateAttachmentEnvelopeBatchStatus(dossierForm);
     updateDossierConceptPreview(dossierForm);
   }
 
@@ -1276,16 +1276,43 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
   container.append(intro, list);
 }
 
-function updateAttachmentEnvelopeBatchStatus(form: HTMLFormElement): void {
+async function updateAttachmentEnvelopeBatchStatus(form: HTMLFormElement): Promise<void> {
   const batch = form.querySelector('[data-attachment-envelope-batch]');
   const fileInput = form.querySelector('input[name="dossierBestanden"]');
   if (!(batch instanceof HTMLElement) || !(fileInput instanceof HTMLInputElement)) return;
 
   const files = Array.from(fileInput.files ?? []).filter((file) => file.size > 0);
-  const summary = summarizeAttachmentEnvelopeMetadataBatch(
+  renderAttachmentEnvelopeBatchStatus(
+    batch,
     files.map((file) => ({
       contentType: file.type || undefined,
       sizeBytes: file.size,
+    })),
+  );
+  if (files.length === 0) return;
+
+  const hashedFiles = await Promise.all(
+    files.map(async (file) => ({
+      contentType: file.type || undefined,
+      sizeBytes: file.size,
+      sha256: await fileToSha256Checksum(file),
+    })),
+  );
+  if (Array.from(fileInput.files ?? []).filter((file) => file.size > 0).length !== files.length) {
+    return;
+  }
+  renderAttachmentEnvelopeBatchStatus(batch, hashedFiles);
+}
+
+function renderAttachmentEnvelopeBatchStatus(
+  batch: HTMLElement,
+  files: Array<{ contentType?: string; sizeBytes?: number; sha256?: string }>,
+): void {
+  const summary = summarizeAttachmentEnvelopeMetadataBatch(
+    files.map((file) => ({
+      contentType: file.contentType,
+      sizeBytes: file.sizeBytes,
+      sha256: file.sha256,
     })),
   );
   batch.dataset.attachmentEnvelopeBatch = summary.status;
