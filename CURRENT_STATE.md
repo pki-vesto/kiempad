@@ -282,6 +282,10 @@
   gefocuste mobiele Traject-cues houden ButtonFace/ButtonText systeemtonen en
   een rustiger gewicht, zodat cue-informatie leesbaar blijft zonder actieve
   cue-styling te kopiëren.
+- **G1909 Traject mobile forced-colors inactive focus cue border:** inactieve
+  gefocuste mobiele Traject-cues houden expliciete solid systeemranden en
+  ButtonText outlines, zodat cue-affordance duidelijk blijft zonder actieve
+  route-outlines te kopiëren.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

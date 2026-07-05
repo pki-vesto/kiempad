@@ -17015,8 +17015,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 41
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3760
+
+### G1910 — Premium Claude Design UI: treatment mobile rail forced-colors inactive focus cue outline offset polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Inactieve gefocuste mobiele Traject-routekaarten hebben nu expliciete cue-borderbehandeling, maar de cue-outline offset kan nog te generiek zijn voor compacte forced-colors mobile scanning.
+- **User Impact:** High-contrast toetsenbordgebruikers kunnen cuepills als te druk of te dicht op de rand ervaren als de outline-afstand niet expliciet compact is.
+- **Desired Outcome:** Inactieve gefocuste mobiele Traject-routekaarten hebben expliciete forced-colors cue-outline-offsetbehandeling die cuepills compact en onderscheidend houdt.
+- **User Value:** Cuepills blijven makkelijk scanbaar tijdens keyboardfocus zonder extra visuele druk.
+- **Acceptance Criteria:** Mobile Traject inactive focused route cards have explicit forced-colors cue outline offset handling that stays distinct from active route cue pills and inactive badge tone; existing route hrefs, aria-current states, badges, cue pills, command-task hooks, route groups, active-route promotion, reduced-motion behavior, forced-colors contrast, spacing, active label/cue handling, supporting text fit, active focus text handling, focus cue spacing, inactive focus text handling, inactive focus cue fit, inactive focus cue rhythm, inactive focus meta rhythm, inactive focus label fit, inactive focus label weight, inactive focus badge tone, inactive focus cue tone and inactive focus cue border remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors inactive focus cue outline offset or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 40
+- **Status:** ☐ open
+- **Issue:** #3762
 
 ### G586 — replay conflict recovery status UI
 
