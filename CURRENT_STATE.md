@@ -94,6 +94,13 @@
   cachebron, datum, reviewstatus, cachetype en correctievelden gekoppeld blijven
   zonder diagnose, dosering, kansberekening, behandelkeuzeadvies, secret,
   gezondheidsdata of plaintext medische payload.
+- **G1989 offline cache metadata missing-term fixture:** de maintenance-test geeft
+  een compacte technische melding wanneer
+  `knowledge-research-offline-cache-metadata` of
+  `data-research-offline-cache-metadata` uit release-evidence verdwijnt, met
+  cachebron, datum, reviewstatus, cachetype en correctievelden als veilige
+  context zonder diagnose, dosering, kansberekening, behandelkeuzeadvies,
+  secret, gezondheidsdata of plaintext medische payload.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.

@@ -489,6 +489,19 @@ const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_TERMS = [
 ] as const;
 const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_MISSING_TERM_ERROR =
   'Health monitor retention freshness releasecontext ontbreekt voor termen: goal-completion-audit, maintenance-test';
+const OFFLINE_CACHE_METADATA_RELEASE_TERMS = [
+  'G1988',
+  'knowledge-research-offline-cache-metadata',
+  'data-research-offline-cache-metadata',
+  'researchOfflineCacheMetadata',
+  'cachebron',
+  'datum',
+  'reviewstatus',
+  'cachetype',
+  'correctievelden',
+] as const;
+const OFFLINE_CACHE_METADATA_RELEASE_MISSING_TERM_ERROR =
+  'Offline cache metadata release-evidence ontbreekt voor termen: knowledge-research-offline-cache-metadata, data-research-offline-cache-metadata';
 const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS = [
   'G1095',
   'missing-term fixture',
@@ -4154,6 +4167,49 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G1988');
   });
 
+  it('geeft ontbrekende G1989 offline cache metadata release-evidence termen technisch terug', () => {
+    const partialReleaseContext =
+      'G1988 offline cache metadata release evidence freshness guard noemt researchOfflineCacheMetadata, cachebron, datum, reviewstatus, cachetype en correctievelden.';
+
+    expect(() => extractOfflineCacheMetadataReleaseContext(partialReleaseContext)).toThrow(
+      OFFLINE_CACHE_METADATA_RELEASE_MISSING_TERM_ERROR,
+    );
+    expect(OFFLINE_CACHE_METADATA_RELEASE_MISSING_TERM_ERROR).toBe(
+      'Offline cache metadata release-evidence ontbreekt voor termen: knowledge-research-offline-cache-metadata, data-research-offline-cache-metadata',
+    );
+    expect(OFFLINE_CACHE_METADATA_RELEASE_MISSING_TERM_ERROR).toContain(
+      'knowledge-research-offline-cache-metadata',
+    );
+    expect(OFFLINE_CACHE_METADATA_RELEASE_MISSING_TERM_ERROR).toContain(
+      'data-research-offline-cache-metadata',
+    );
+    for (const safeMetadataTerm of [
+      'cachebron',
+      'datum',
+      'reviewstatus',
+      'cachetype',
+      'correctievelden',
+    ]) {
+      expect(partialReleaseContext).toContain(safeMetadataTerm);
+    }
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(OFFLINE_CACHE_METADATA_RELEASE_MISSING_TERM_ERROR).not.toContain(
+        forbiddenEvidenceTerm,
+      );
+      expect(partialReleaseContext).not.toContain(forbiddenEvidenceTerm);
+    }
+    expect(backlog).toContain('G1989');
+    expect(executionGoals).toContain('G1989');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',
@@ -6000,6 +6056,24 @@ function extractHealthMonitorRetentionFreshnessReleaseContext(releaseDoc: string
       `Health monitor retention freshness releasecontext ontbreekt voor termen: ${missingTerms.join(
         ', ',
       )}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractOfflineCacheMetadataReleaseContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3,4}\s+/)
+    .filter((line) => OFFLINE_CACHE_METADATA_RELEASE_TERMS.some((term) => line.includes(term)));
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms = OFFLINE_CACHE_METADATA_RELEASE_TERMS.filter(
+    (term) => !matchingContext.includes(term),
+  );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Offline cache metadata release-evidence ontbreekt voor termen: ${missingTerms.join(', ')}`,
     );
   }
 
