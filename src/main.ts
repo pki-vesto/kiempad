@@ -854,6 +854,12 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       void saveImagingMetadataCorrectieFromForm(event.currentTarget, root, state);
     });
   });
+  root.querySelectorAll<HTMLFormElement>('.historical-timeline-review-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveHistorischeTijdlijnReviewFromForm(event.currentTarget, root, state);
+    });
+  });
 }
 
 function showDossierDeleteConfirmation(
@@ -1662,6 +1668,47 @@ async function saveImagingMetadataCorrectieFromForm(
     await reloadAndRender(root, state);
   } catch (error: unknown) {
     state.dossierError = formatRecoverableStorageError(error, 'Beeldmetadata bewaren is mislukt.');
+    render(root, state);
+  }
+}
+
+async function saveHistorischeTijdlijnReviewFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+  const data = new FormData(target);
+  const documentId = optionalString(data.get('dossierDocumentId'));
+  const datum = optionalString(data.get('historicalTimelineDatum'));
+  const bron = optionalString(data.get('historicalTimelineBron'));
+  if (!documentId || !datum || !bron) return;
+
+  try {
+    await state.dossierStore.updateHistorischeTijdlijnReview(documentId, {
+      datum,
+      bron,
+      reviewStatus: parseHistorischeTijdlijnReviewStatus(
+        data.get('historicalTimelineReviewStatus'),
+      ),
+      zichtbaarheid: parseHistorischeTijdlijnZichtbaarheid(
+        data.get('historicalTimelineZichtbaarheid'),
+      ),
+      bijgewerktOp: new Date().toISOString(),
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Historische tijdlijnreview bijgewerkt',
+      detail: `Tijdlijnmetadata ${beschrijfRecordOpslag(state)} zonder medische interpretatie.`,
+    });
+    state.dossierStatus = `Historische tijdlijnreview ${beschrijfRecordOpslag(state)}.`;
+    state.dossierError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError = formatRecoverableStorageError(
+      error,
+      'Historische tijdlijnreview bewaren is mislukt.',
+    );
     render(root, state);
   }
 }
@@ -3812,6 +3859,19 @@ function parseImagingReviewStatus(
   value: FormDataEntryValue | null,
 ): NonNullable<NonNullable<DossierDocument['beeldMetadata']>['reviewStatus']> {
   return value === 'gereviewd' ? 'gereviewd' : 'concept';
+}
+
+function parseHistorischeTijdlijnReviewStatus(
+  value: FormDataEntryValue | null,
+): NonNullable<DossierDocument['metadata']['historischeTijdlijnReview']>['reviewStatus'] {
+  if (value === 'bevestigd' || value === 'verborgen') return value;
+  return 'concept';
+}
+
+function parseHistorischeTijdlijnZichtbaarheid(
+  value: FormDataEntryValue | null,
+): NonNullable<DossierDocument['metadata']['historischeTijdlijnReview']>['zichtbaarheid'] {
+  return value === 'verborgen' ? 'verborgen' : 'zichtbaar';
 }
 
 function parseEmbryoStatus(

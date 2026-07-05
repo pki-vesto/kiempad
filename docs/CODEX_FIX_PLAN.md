@@ -296,6 +296,11 @@
   cards now expose a focused correction flow for source label, source date, and review status;
   corrected source metadata is saved encrypted on the existing record without changing the clinic
   quality value.
+- **Historical timeline review action — done in G580 / issue #926.** Dossier timeline items now
+  show a compact review card for date, source, review status and visibility; corrections are
+  stored encrypted on the dossier record, the central timeline hides intentionally hidden
+  historical items, and locked image records render only safe unlock copy without plaintext
+  filenames or image payloads.
 - **Imaging metadata review correction — done in G581 / issue #928.** The imaging repository now
   exposes a focused review form for image type, source, date, attempt, appointment, EXIF status,
   and review status, while locked previews show only safe unlock copy and no source payload.

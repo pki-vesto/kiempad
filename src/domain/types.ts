@@ -290,6 +290,18 @@ export interface DossierDocument {
       };
       overschrevenDoorGebruiker: boolean;
     };
+    historischeTijdlijnReview?: {
+      reviewStatus: 'concept' | 'bevestigd' | 'verborgen';
+      datum: IsoDate;
+      bron: string;
+      zichtbaarheid: 'zichtbaar' | 'verborgen';
+      bijgewerktOp: IsoDate;
+      origineleWaarden: {
+        formulierDatum: string;
+        metadataDatum?: string;
+        bron: string;
+      };
+    };
   };
   beeldMetadata?: {
     datum: IsoDate;

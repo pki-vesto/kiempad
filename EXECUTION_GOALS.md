@@ -15783,7 +15783,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Fertility timeline, dossier, app shell, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #926
 
 ### G581 — imaging metadata reviewcorrectie
 
@@ -17422,6 +17423,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3815
+
+### G1935 — Fertility Intelligence: historische tijdlijnreview routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De historische tijdlijnreviewactie is zichtbaar in de dossier-documenttijdlijn, maar routeflow-bewijs moet nog bewaken dat datum, bron, reviewstatus, zichtbaarheid en locked imaging privacy op desktop en mobiel leesbaar blijven.
+- **User Impact:** Zonder visuele routeflow-evidence kan een latere themewijziging de reviewkaart laten overlappen, onder de fold onduidelijk maken of bronprivacy rond locked beelditems breken.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de historische tijdlijnreviewkaart zonder medische payloads of plaintext beeldbronnen.
+- **User Value:** Gebruikers kunnen historische dossiermomenten blijven bevestigen, corrigeren of verbergen zonder dat toekomstige theme-wijzigingen het formulier laten verdwijnen of bronprivacy breken.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-historical-timeline-review="ready"` en de locked variant op desktop en mobiel; datum, bron, reviewstatus, zichtbaarheid en bewaaractie blijven scanbaar zonder page-level horizontale overflow; locked beelditems tonen geen bronbestandsnaam, thumbnail, beeldpayload of plaintext bronwaarde in de reviewflow; bestaande documenttijdlijn, imaging privacyhooks, dossierindex en centrale timeline blijven intact; tests en fixtures blijven vrij van secrets, medische bronpayloads en plaintext gezondheidsdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Documenttijdlijn, centrale timeline
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier timeline, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3817
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

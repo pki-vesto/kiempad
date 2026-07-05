@@ -12757,6 +12757,7 @@ function renderDossierDocument(
             ? `<p class="linked-note">Tijdlijn: ${escapeHtml(tijdlijn.datum)} · ${escapeHtml(tijdlijn.documenttype)} · bron: ${escapeHtml(tijdlijn.bron)}${tijdlijn.previewState ? ` · preview: ${escapeHtml(tijdlijn.previewState.label)} · ${escapeHtml(tijdlijn.previewBron === 'encrypted_dataset' ? 'versleutelde opslag' : 'geen previewbron')}` : ''}</p>`
             : ''
         }
+        ${tijdlijn ? renderHistorischeTijdlijnReviewForm(document, tijdlijn, state) : ''}
         ${
           tijdlijn?.matches && tijdlijn.matches.length > 0
             ? `<p class="linked-note">Zoekmatch: ${tijdlijn.matches.map(escapeHtml).join(', ')}</p>`
@@ -12777,6 +12778,75 @@ function renderDossierDocument(
         ${document.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(document.notitie)}</p>` : ''}
       </div>
     </li>
+  `;
+}
+
+function renderHistorischeTijdlijnReviewForm(
+  document: DossierDocument,
+  tijdlijn: {
+    datum: string;
+    documenttype: string;
+    bron: string;
+  },
+  state: AppShellState,
+): string {
+  if (state.imagingPreviewLocked && document.categorie === 'beeld') {
+    return `
+      <section class="linked-note historical-timeline-review-form" data-historical-timeline-review="locked">
+        <strong>Historische tijdlijnreview</strong>
+        <p class="small-print">Ontgrendel de lokale kluis om datum, bron en zichtbaarheid te corrigeren zonder bronbestandsnaam te tonen.</p>
+      </section>
+    `;
+  }
+
+  const review = document.metadata.historischeTijdlijnReview;
+  const status = review?.reviewStatus ?? 'concept';
+  const zichtbaarheid = review?.zichtbaarheid ?? 'zichtbaar';
+  const bron =
+    review?.bron ??
+    document.metadata.normalisatie?.bron ??
+    document.metadata.bronbestand ??
+    document.bestandsNaam;
+  const datum = review?.datum ?? document.metadata.normalisatie?.datum ?? tijdlijn.datum;
+  const conflict =
+    document.metadata.documentDatum && document.metadata.documentDatum !== document.datum
+      ? `${document.datum} vs ${document.metadata.documentDatum}`
+      : 'Geen datumconflict';
+
+  return `
+    <form class="linked-note historical-timeline-review-form" data-historical-timeline-review="ready">
+      <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(document.id)}" />
+      <strong>Historische tijdlijnreview</strong>
+      <p class="small-print">Bevestig, corrigeer of verberg dit gereconstrueerde tijdlijnitem. Kiempad bewaart alleen bronmetadata en geeft geen diagnose, dosering of behandelkeuzeadvies.</p>
+      <dl class="summary-list">
+        <div><dt>Auditdatum</dt><dd>${escapeHtml(conflict)}</dd></div>
+        <div><dt>Originele bron</dt><dd>${escapeHtml(document.metadata.bronbestand ?? document.bestandsNaam)}</dd></div>
+      </dl>
+      <label>
+        Datum
+        <input name="historicalTimelineDatum" type="date" required value="${escapeAttribute(datum)}" />
+      </label>
+      <label>
+        Bron
+        <input name="historicalTimelineBron" autocomplete="off" required value="${escapeAttribute(bron)}" />
+      </label>
+      <label>
+        Reviewstatus
+        <select name="historicalTimelineReviewStatus">
+          <option value="concept"${status === 'concept' ? ' selected' : ''}>Concept - nog controleren</option>
+          <option value="bevestigd"${status === 'bevestigd' ? ' selected' : ''}>Bevestigd - klopt op basis van bron</option>
+          <option value="verborgen"${status === 'verborgen' ? ' selected' : ''}>Verborgen - niet tonen in centrale tijdlijn</option>
+        </select>
+      </label>
+      <label>
+        Zichtbaarheid
+        <select name="historicalTimelineZichtbaarheid">
+          <option value="zichtbaar"${zichtbaarheid === 'zichtbaar' ? ' selected' : ''}>Zichtbaar in tijdlijn</option>
+          <option value="verborgen"${zichtbaarheid === 'verborgen' ? ' selected' : ''}>Verborgen in centrale tijdlijn</option>
+        </select>
+      </label>
+      <button type="submit" class="secondary-button">Tijdlijnreview bewaren</button>
+    </form>
   `;
 }
 

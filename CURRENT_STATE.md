@@ -83,6 +83,10 @@
   aparte correctieflow voor bronlabel, datum en reviewstatus; de gecorrigeerde
   bronmetadata wordt encrypted op hetzelfde dossierrecord bewaard en gebruikt in
   bronlabels zonder de kliniekwaarde te veranderen.
+- **G580 Historische tijdlijnreview:** dossier-documenttijdlijnitems tonen nu
+  een compacte reviewkaart om datum, bron, reviewstatus en zichtbaarheid te
+  bevestigen, corrigeren of verbergen; de centrale timeline gebruikt de
+  gecorrigeerde metadata en locked beelditems lekken geen bronbestandsnaam.
 - **G581 Imaging metadata reviewcorrectie:** beeldrecords in Beeldenoverzicht
   tonen een aparte reviewflow voor beeldtype, bron, datum, poging, afspraak,
   EXIF-status en reviewstatus; gecorrigeerde metadata wordt encrypted op

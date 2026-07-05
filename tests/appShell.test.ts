@@ -8231,6 +8231,14 @@ describe('app shell', () => {
     expect(html).toContain('aria-expanded="false"');
     expect(html).toContain('Verwijder</button>');
     expect(html).toContain('Documenttijdlijn');
+    expect(html).toContain('data-historical-timeline-review="ready"');
+    expect(html).toContain('Historische tijdlijnreview');
+    expect(html).toContain('name="historicalTimelineDatum"');
+    expect(html).toContain('name="historicalTimelineBron"');
+    expect(html).toContain('name="historicalTimelineReviewStatus"');
+    expect(html).toContain('name="historicalTimelineZichtbaarheid"');
+    expect(html).toContain('Tijdlijnreview bewaren');
+    expect(html).toContain('geen diagnose, dosering of behandelkeuzeadvies');
     expect(html).toContain('Behandelgeschiedenis');
     expect(html).toContain('id="dossier-upload-form"');
     expect(html).toContain(

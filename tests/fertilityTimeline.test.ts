@@ -7,6 +7,78 @@ import {
 import type { DossierDocument, KennisItem } from '../src/domain/types';
 
 describe('fertility timeline', () => {
+  it('gebruikt historische reviewcorrecties en verbergt verborgen dossieritems', () => {
+    const zichtbaar = {
+      id: 'doc-zichtbaar',
+      datum: '2026-05-01',
+      titel: 'Gereviewd historisch onderzoek',
+      categorie: 'onderzoek',
+      bestandsNaam: 'zichtbaar.pdf',
+      grootteBytes: 1024,
+      inhoudBase64: 'base64',
+      analyse: { samenvatting: 'Feitelijke samenvatting.', signalen: [] },
+      metadata: {
+        documentDatum: '2026-05-02',
+        documenttype: 'Onderzoek',
+        bronbestand: 'zichtbaar.pdf',
+        extractieBronnen: ['datumherkenning'],
+        historischeTijdlijnReview: {
+          reviewStatus: 'bevestigd',
+          datum: '2026-05-06',
+          bron: 'Gereviewde bron',
+          zichtbaarheid: 'zichtbaar',
+          bijgewerktOp: '2026-07-05T08:00:00.000Z',
+          origineleWaarden: {
+            formulierDatum: '2026-05-01',
+            metadataDatum: '2026-05-02',
+            bron: 'zichtbaar.pdf',
+          },
+        },
+      },
+      uploadedAt: '2026-06-22T10:00:00.000Z',
+    } as DossierDocument;
+    const verborgen = {
+      ...zichtbaar,
+      id: 'doc-verborgen',
+      titel: 'Verborgen historisch onderzoek',
+      metadata: {
+        ...zichtbaar.metadata,
+        historischeTijdlijnReview: {
+          ...zichtbaar.metadata.historischeTijdlijnReview,
+          reviewStatus: 'verborgen',
+          zichtbaarheid: 'verborgen',
+        },
+      },
+    } as DossierDocument;
+
+    const timeline = bouwFertilityTimeline({
+      trajecten: [],
+      afspraken: [],
+      dossierDocuments: [zichtbaar, verborgen],
+      consultVerslagen: [],
+      kennisItems: [],
+    });
+
+    expect(timeline.items.map((item) => item.recordId)).toContain('doc-zichtbaar');
+    expect(timeline.items.map((item) => item.recordId)).not.toContain('doc-verborgen');
+    const zichtbaarItem = timeline.items.find((item) => item.recordId === 'doc-zichtbaar');
+    expect(zichtbaarItem).toMatchObject({
+      datum: '2026-05-06',
+      bron: 'Gereviewde bron',
+      historischConcept: {
+        reviewStatus: 'bevestigd',
+        bron: 'Gereviewde bron',
+      },
+      bronverwijzingen: [
+        expect.objectContaining({
+          datum: '2026-05-06',
+          reviewStatus: 'gereviewd',
+        }),
+      ],
+    });
+    expect(JSON.stringify(zichtbaarItem)).not.toMatch(/dosering|behandelkeuzeadvies/i);
+  });
+
   it('bouwt een centrale tijdlijn met onderzoeken, consulten, behandelingen, embryo, aanbevelingen en research', () => {
     const embryoDocument = {
       id: 'doc-embryo',
