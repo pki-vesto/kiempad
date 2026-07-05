@@ -5943,7 +5943,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('background: Canvas;');
     expect(mobileCss).toContain('color: CanvasText;');
     expect(mobileCss).toContain(
-      '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__badge {\n      border-width: 1px;\n      border-style: solid;\n      border-color: CanvasText;\n      background: Canvas;\n      color: CanvasText;\n      font-weight: 760;\n      outline-offset: 1px;\n    }',
+      '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__badge {\n      border-width: 1px;\n      border-style: solid;\n      border-color: CanvasText;\n      background: Canvas;\n      color: CanvasText;\n      font-weight: 760;\n      outline-color: CanvasText;\n      outline-offset: 1px;\n    }',
     );
     expect(mobileCss).toContain(
       '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {',

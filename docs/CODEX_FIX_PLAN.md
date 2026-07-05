@@ -233,6 +233,9 @@
 - **Treatment mobile rail forced-colors inactive focus badge border style polish — done in G1912 / issue #3766.**
   Inactive focused mobile Traject badges now use explicit one-pixel solid system borders, keeping
   status affordance predictable in forced-colors mobile mode.
+- **Treatment mobile rail forced-colors inactive focus badge outline color polish — done in G1913 / issue #3768.**
+  Inactive focused mobile Traject badges now keep explicit CanvasText outlines, preserving status
+  focus readability without inheriting active route outline tone.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
