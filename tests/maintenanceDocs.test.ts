@@ -4329,6 +4329,38 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G1992');
   });
 
+  it('bewaakt G1993 offline cache metadata release-state foutmeldingcontract', () => {
+    const errorContract = [
+      'G1993 offline-cache-metadata-release-state-missing-term-contract',
+      'references=G1992',
+      `error=${OFFLINE_CACHE_METADATA_RELEASE_STATE_MISSING_TERM_ERROR}`,
+      'safeTerms=offline cache metadata missing-term error contract|veilige technische labels',
+    ].join('\n');
+
+    expect(OFFLINE_CACHE_METADATA_RELEASE_STATE_MISSING_TERM_ERROR).toBe(
+      'Offline cache metadata release-state ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels',
+    );
+    expect(errorContract).toMatchInlineSnapshot(`
+      "G1993 offline-cache-metadata-release-state-missing-term-contract
+      references=G1992
+      error=Offline cache metadata release-state ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels
+      safeTerms=offline cache metadata missing-term error contract|veilige technische labels"
+    `);
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(errorContract).not.toContain(forbiddenEvidenceTerm);
+    }
+    expect(backlog).toContain('G1993');
+    expect(executionGoals).toContain('G1993');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',

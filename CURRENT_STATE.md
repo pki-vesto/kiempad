@@ -115,6 +115,10 @@
   `veilige technische labels` uit release-state evidence ontbreekt, zonder
   diagnose, dosering, kansberekening, behandelkeuzeadvies, secret,
   gezondheidsdata of plaintext medische payload.
+- **G1993 offline cache metadata release-state error contract:** de exacte
+  release-state missing-term foutmelding is als compact maintenance-contract
+  gesnapshott met veilige labels `offline cache metadata missing-term error
+  contract` en `veilige technische labels`.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.

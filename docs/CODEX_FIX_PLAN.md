@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G1993 Research Intelligence offline cache metadata release-state error contract — done in G1993 / issue #3924.** Maintenance-docs test snapshott nu de exacte offline-cache release-state missing-term foutmelding met alleen `offline cache metadata missing-term error contract` en `veilige technische labels` als veilige contractlabels.
 - **G1992 Research Intelligence offline cache metadata release-state missing-term fixture — done in G1992 / issue #3922.** Maintenance-docs test geeft nu compact terug wanneer het G1990 contractlabel of `veilige technische labels` uit offline-cache release-state evidence ontbreekt, zonder gevoelige payloadtermen.
 - **G1991 Research Intelligence offline cache metadata missing-term release-state guard — done in G1991 / issue #3920.** Maintenance-docs test bewaakt nu release-state evidence voor het G1990 offline-cache missing-term contract met veilige selectorlabels en privacygrens.
 - **G1990 Research Intelligence offline cache metadata missing-term error contract — done in G1990 / issue #3918.** Maintenance-docs test snapshott nu het exacte offline-cache missing-term foutmeldingcontract met veilige technische labels voor `knowledge-research-offline-cache-metadata` en `data-research-offline-cache-metadata`.
