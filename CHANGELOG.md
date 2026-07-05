@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2007 offline cache metadata release-state contract error-contract error
+  error missing-term fixture: de maintenance-test meldt nu compact wanneer de
+  veilige labels `offline cache metadata missing-term error contract` of
+  `veilige technische labels` uit G2006 error-contract error error
+  release-evidence verdwijnen.
 - G2006 offline cache metadata release-state contract error-contract error
   error release guard: release-evidence bewaakt nu dat het G2005
   `offline-cache-metadata-release-state-contract-error-contract-error-missing-term-error-contract`
