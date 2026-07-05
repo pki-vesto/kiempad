@@ -30601,6 +30601,17 @@ summary[class*="__summary"]:focus-visible,
     scroll-snap-align: start;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .treatment-task-route {
+      transition: none;
+    }
+
+    .treatment-task-route[aria-current="page"],
+    .treatment-task-route:focus-visible {
+      transform: none;
+    }
+  }
+
   .schedule-history-planning-board {
     padding: 12px;
   }

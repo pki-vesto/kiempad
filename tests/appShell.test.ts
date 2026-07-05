@@ -5847,6 +5847,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('scroll-margin-top: 12px;');
     expect(mobileCss).toContain('.treatment-task-route:focus-visible {');
     expect(mobileCss).toContain('outline-offset: 3px;');
+    expect(mobileCss).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(mobileCss).toContain('transition: none;');
+    expect(mobileCss).toContain('transform: none;');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="finance"] {');
