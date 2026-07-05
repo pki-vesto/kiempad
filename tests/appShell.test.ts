@@ -5918,6 +5918,7 @@ describe('app shell', () => {
       '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__top > span {',
     );
     expect(mobileCss).toContain('max-width: calc(100% - 92px);');
+    expect(mobileCss).toContain('font-weight: 760;');
     expect(mobileCss).toContain(
       '.treatment-task-route:not([aria-current="page"]):focus-visible small {',
     );
