@@ -231,10 +231,19 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'dossier-embryo-tracking-scan'");
     expect(routeflowScreenshotSmokeScript).toContain('embryoTrackingScanOverflow');
     expect(routeflowScreenshotSmokeScript).toContain('scanBeforeGrid');
+    expect(routeflowScreenshotSmokeScript).toContain('aliasDisplayVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('aliasDisplayText');
     expect(routeflowScreenshotSmokeScript).toContain('comparisonCopyPresent');
     expect(routeflowScreenshotSmokeScript).toContain(
       'embryo tracking-scan mist routeflow-overflow evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('embryoAliasReview');
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'embryo-alias-review-display'");
+    expect(routeflowScreenshotSmokeScript).toContain('prepareEmbryoAliasReviewDisplay');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-embryo-alias-review="quality"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-embryo-alias-review="status"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-embryo-alias-review-hint="safe"]');
+    expect(routeflowScreenshotSmokeScript).toContain('embryo alias-review mist routeflow-evidence');
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-research-trend-scan-density="mobile-compact"]',
     );

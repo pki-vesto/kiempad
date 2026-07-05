@@ -154,6 +154,11 @@
   directly: concept and reviewed options, safe source-metadata hint, and summary-correction context
   remain visible and bounded across desktop, tablet, and mobile without consult text, diagnosis,
   dosage, treatment-choice advice, or payload text in the evidence.
+- **Embryo-ID alias review evidence — done in G1932 / issue #3811.** Embryo quality and
+  status routeflow coverage now measures the alias review fields directly, and the embryo dossier
+  scan checks `data-embryo-alias-review-display="ready"` with Kiempad label, clinic ID, source
+  label and alias review text visible and bounded across desktop, tablet and mobile without
+  secrets, medical payloads or plaintext health data in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

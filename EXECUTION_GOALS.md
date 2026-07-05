@@ -17390,7 +17390,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo dossier, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3811
 
 ### G1933 — Fertility Intelligence: embryo bronlabel correctieflow routeflow evidence
@@ -17715,6 +17715,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3864
+
+### G1960 — Fertility Intelligence: embryo-ID alias review release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De embryo-ID alias reviewcorrectie heeft routeflow-evidence, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge Kiempad-ID, kliniek-ID, bronlabels of aliasreview opnieuw verbergen, laten overlappen of onduidelijk maken in embryo-dossier en vergelijking.
+- **Desired Outcome:** Release-evidence documenteert dat de embryo alias-review UI op desktop, tablet en mobile gecontroleerd blijft zonder medische bronpayloads of plaintext gezondheidsdata.
+- **User Value:** Gebruikers kunnen hetzelfde embryo betrouwbaar blijven herkennen over labrapporten, portaalnamen en kliniek-ID's heen.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar `data-embryo-alias-review` en `data-embryo-alias-review-display="ready"`; evidence bevestigt kwaliteit- en statusformulier plus embryo-dossierweergave; Kiempad-ID, kliniek-ID, bronlabels en aliasreview blijven scanbaar zonder page-level horizontale overflow; bestaande embryokwaliteit, embryostatus, bronlabelreview en privacyhooks blijven intact; evidence bevat geen secrets, medische bronpayloads, OCR-tekst, beeldpayloads of plaintext gezondheidsdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossierupload, embryo-dossier, embryovergelijking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo dossier, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3866
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 
