@@ -2658,3 +2658,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   small-mobile, and the Back-up control route keeps the visible recovery status
   focused after unlock/loading without exposing tokens, payloads or medical
   plaintext.
+- **Embryo outcome event tracking — done in G479 / issue #808.** Embryo-status
+  events now persist typed `metadata.embryoStatusEvent` with status, date,
+  source, review status, note, trajectory/appointment links and `bijgewerktOp`;
+  the embryo dossier exposes audit hooks and event history, fertility timeline
+  labels status events as factual `Embryo-status` moments, and routeflow smoke
+  covers a saved status-event history without diagnosis, dosage, treatment
+  choice advice, chance calculation or payload leakage.

@@ -1606,6 +1606,8 @@ async function saveEmbryoStatusEventFromForm(
         : undefined;
     const statusLabel = EMBRYO_STATUS_LABELS[embryoStatus];
     const bron = embryoBron || 'Kliniekopgave';
+    const eventDatum = datum || new Date().toISOString().slice(0, 10);
+    const bijgewerktOp = new Date().toISOString();
     const inhoud = JSON.stringify({
       embryo: embryoLabel,
       status: embryoStatus,
@@ -1613,6 +1615,12 @@ async function saveEmbryoStatusEventFromForm(
       reviewStatus: embryoReviewStatus,
       aliasCorrectie,
       notitie,
+      eventMetadata: {
+        datum: eventDatum,
+        trajectId,
+        afspraakId,
+        bijgewerktOp,
+      },
     });
 
     await state.dossierStore.save({
@@ -1625,13 +1633,23 @@ async function saveEmbryoStatusEventFromForm(
       inhoudBase64: textToBase64(inhoud),
       afspraakId,
       trajectId,
+      embryoStatusEvent: {
+        status: embryoStatus,
+        bron,
+        datum: eventDatum,
+        reviewStatus: embryoReviewStatus,
+        trajectId,
+        afspraakId,
+        notitie,
+        bijgewerktOp,
+      },
       embryo: {
         label: embryoLabel,
         kwaliteit: `Status event: ${statusLabel}`,
         kliniekBeoordeling: {
           tekst: `Status event: ${statusLabel}`,
           bron,
-          datum: datum || new Date().toISOString().slice(0, 10),
+          datum: eventDatum,
         },
         meetmoment: 'Status event',
         bron,

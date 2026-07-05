@@ -7,6 +7,77 @@ import {
 import type { DossierDocument, KennisItem } from '../src/domain/types';
 
 describe('fertility timeline', () => {
+  it('toont embryo-status events als auditbare tijdlijnmomenten met poging en afspraak', () => {
+    const statusDocument = {
+      id: 'doc-status-event',
+      datum: '2026-06-15',
+      titel: 'Embryostatus embryo 1',
+      categorie: 'embryo',
+      bestandsNaam: 'embryostatus-embryo-1.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'c3RhdHVzLWV2ZW50',
+      afspraakId: 'afspraak-status',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: 'Status event: Ingevroren',
+        status: 'ingevroren',
+        meetmoment: 'Status event',
+        bron: 'Labportaal',
+        reviewStatus: 'concept',
+      },
+      analyse: { samenvatting: 'Embryostatus als bronregistratie.', signalen: [] },
+      metadata: {
+        documentDatum: '2026-06-15',
+        documenttype: 'Embryostatus',
+        trajectId: 'traject-1',
+        bronbestand: 'embryostatus-embryo-1.json',
+        extractieBronnen: ['bronbestand', 'formulierdatum', 'trajectkoppeling'],
+        embryoStatusEvent: {
+          status: 'ingevroren',
+          bron: 'Labportaal',
+          datum: '2026-06-15',
+          reviewStatus: 'concept',
+          trajectId: 'traject-1',
+          afspraakId: 'afspraak-status',
+          notitie: 'Status ontvangen via labportaal.',
+          bijgewerktOp: '2026-06-15T12:30:00.000Z',
+        },
+      },
+      uploadedAt: '2026-06-15T12:30:00.000Z',
+    } as DossierDocument;
+
+    const timeline = bouwFertilityTimeline({
+      trajecten: [],
+      afspraken: [],
+      dossierDocuments: [statusDocument],
+      consultVerslagen: [],
+      kennisItems: [],
+    });
+
+    expect(timeline.items.find((item) => item.id === 'embryo-doc-status-event')).toMatchObject({
+      soort: 'embryo',
+      titel: 'Embryo 1',
+      label: 'Embryo-status',
+      detail:
+        'Status geregistreerd: Ingevroren. Bron: Labportaal. Audit: bijgewerkt 2026-06-15T12:30:00.000Z.',
+      context:
+        'Status event · status ingevroren · poging traject-1 · afspraak afspraak-status · bijgewerkt 2026-06-15T12:30:00.000Z',
+      bron: 'Labportaal',
+      trajectId: 'traject-1',
+      recordId: 'doc-status-event',
+      gekoppeldeRecords: expect.arrayContaining([
+        { soort: 'dossier', id: 'doc-status-event', label: 'Dossierrecord: Embryostatus embryo 1' },
+        { soort: 'traject', id: 'traject-1', label: 'Traject: traject-1' },
+        { soort: 'afspraak', id: 'afspraak-status', label: 'Afspraak: afspraak-status' },
+      ]),
+    });
+    expect(JSON.stringify(timeline.items)).not.toMatch(
+      /c3RhdHVzLWV2ZW50|diagnose|dosering|behandelkeuzeadvies|kansberekening/i,
+    );
+  });
+
   it('gebruikt historische reviewcorrecties en verbergt verborgen dossieritems', () => {
     const zichtbaar = {
       id: 'doc-zichtbaar',

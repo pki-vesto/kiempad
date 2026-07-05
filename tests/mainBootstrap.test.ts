@@ -143,6 +143,20 @@ describe('main bootstrap', () => {
     expect(mainSource).not.toContain('OCR_RAW BASE64 payload');
   });
 
+  it('bewaart embryo-status events met auditbare updatedAt metadata', () => {
+    expect(mainSource).toContain(
+      'const eventDatum = datum || new Date().toISOString().slice(0, 10)',
+    );
+    expect(mainSource).toContain('const bijgewerktOp = new Date().toISOString()');
+    expect(mainSource).toContain('embryoStatusEvent: {');
+    expect(mainSource).toContain('status: embryoStatus');
+    expect(mainSource).toContain('reviewStatus: embryoReviewStatus');
+    expect(mainSource).toContain('trajectId');
+    expect(mainSource).toContain('afspraakId');
+    expect(mainSource).toContain('bijgewerktOp');
+    expect(mainSource).toContain("gebeurtenis: 'Embryo-status vastgelegd'");
+  });
+
   it('vervangt native delete-confirms door inline bevestigingen', () => {
     expect(mainSource).toContain('function showInlineDeleteConfirmation(');
     expect(mainSource).toContain('[data-inline-delete-confirm="ready"]');

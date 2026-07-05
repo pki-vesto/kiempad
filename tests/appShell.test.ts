@@ -39838,8 +39838,10 @@ describe('app shell', () => {
     expect(html).toContain('Embryo-status events');
     expect(html).toContain('data-embryo-status-event-state="concept-review"');
     expect(html).toContain('data-embryo-status-event-id="doc-embryo"');
+    expect(html).toContain('data-embryo-status-event-updated-at="2026-06-23T15:00:00.000Z"');
+    expect(html).toContain('data-embryo-status-event-trajectory="traject-1"');
     expect(html).toContain(
-      'Status: Teruggeplaatst · Bron: Labrapport · Datum: 2026-05-04 · Reviewstatus: Gereviewd',
+      'Status: Teruggeplaatst · Bron: Labrapport · Datum: 2026-05-04 · Poging: traject-1 · Afspraak: afspraak-transfer · Reviewstatus: Gereviewd · Bijgewerkt: 2026-06-23T15:00:00.000Z',
     );
     expect(html).toContain('data-embryo-source-label-correction="ready"');
     expect(html).toContain('data-embryo-source-label-correction-form="ready"');
@@ -39853,7 +39855,7 @@ describe('app shell', () => {
     );
     expect(html).toContain('data-embryo-status-event-id="doc-embryo-2"');
     expect(html).toContain(
-      'Status: Ingevroren · Bron: Labrapport · Datum: 2026-05-04 · Reviewstatus: Concept',
+      'Status: Ingevroren · Bron: Labrapport · Datum: 2026-05-04 · Poging: traject-1 · Reviewstatus: Concept · Bijgewerkt: 2026-06-23T15:05:00.000Z',
     );
     expect(html).toContain(
       'Status-events zijn feitelijke bronregistraties en geen beoordeling of behandeladvies.',

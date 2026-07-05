@@ -2090,6 +2090,30 @@ const targets = [
     embryoAliasReview: 'status',
   },
   {
+    screen: 'dossier-embryo-status-event-history',
+    hash: '#dossier?route=imaging',
+    rootSelector: '[data-dossier-imaging-disclosure="embryos"]',
+    expectedText: 'Embryo-status events',
+    prepare: 'embryo-status-event-history',
+    activeRouteSelector: '[data-dossier-route="imaging"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-dossier-imaging-disclosure="embryos"]',
+    ],
+    requiredSelectors: ['[data-embryo-status-event-state="concept-review"]'],
+    presentSelectors: [
+      '[data-embryo-status-event-id]',
+      '[data-embryo-status-event-updated-at]',
+      '[data-embryo-status-event-trajectory]',
+      '[data-embryo-tracking-card="ready"]',
+    ],
+    embryoStatusEventHistory: true,
+    dossierConsole: true,
+    smallMobileViewport: true,
+  },
+  {
     screen: 'consult-card-filled',
     hash: '#dossier?route=imaging',
     rootSelector: '[data-hub-detail-panel="consult-verslagen"]',
@@ -2365,6 +2389,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'embryo-alias-review-display') {
         await prepareEmbryoAliasReviewDisplay(page, target.hash);
+      }
+      if (target.prepare === 'embryo-status-event-history') {
+        await prepareEmbryoStatusEventHistory(page, target.hash);
       }
       if (target.prepare === 'question-artscheck-review-status') {
         await prepareQuestionArtscheckReviewStatus(page, target.hash);
@@ -4609,6 +4636,36 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const embryoStatusEventHistory = routeflow.embryoStatusEventHistory
+          ? (() => {
+              const panel = document.querySelector('[data-dossier-imaging-disclosure="embryos"]');
+              const eventSection = panel?.querySelector(
+                '[data-embryo-status-event-state="concept-review"]',
+              );
+              const event = panel?.querySelector('[data-embryo-status-event-id]');
+              const text = eventSection?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const rect = eventSection?.getBoundingClientRect();
+              const panelRect = panel?.getBoundingClientRect();
+              return {
+                visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+                eventPresent: Boolean(event),
+                updatedAt: event?.getAttribute('data-embryo-status-event-updated-at') ?? '',
+                trajectory: event?.getAttribute('data-embryo-status-event-trajectory') ?? '',
+                hasStatus: text.includes('Status: Ingevroren'),
+                hasSource: text.includes('Bron: Routeflow lab'),
+                hasDate: text.includes('Datum: 2026-07-06'),
+                hasReview: text.includes('Reviewstatus: Concept'),
+                hasUpdatedAt: /Bijgewerkt: 20\d\d-\d\d-\d\dT/.test(text),
+                hasNote: text.includes('Routeflow statusnotitie'),
+                contained:
+                  Boolean(rect && panelRect) && rect.width <= panelRect.width + 32,
+                hasForbiddenText:
+                  /diagnose|dosering|behandelkeuzeadvies|kansberekening|BASE64|OCR_RAW|data:application|routeflow-status-secret/i.test(
+                    text,
+                  ),
+              };
+            })()
+          : null;
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
@@ -4655,6 +4712,7 @@ async function assertRouteflows(browser, options) {
           treatmentConsole,
           timelineConsole,
           centralSessionRenewalRecoveryFocus,
+          embryoStatusEventHistory,
           appFrame: {
             shellVisible: Boolean(appShellRect && appShellRect.width > 0 && appShellRect.height > 0),
             shellHeight: appShellRect?.height ?? 0,
@@ -5615,6 +5673,25 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: beeldvergelijking mist datum/bron/type/notitie-evidence of lekt interpretatie/payload (${JSON.stringify(evidence.imagingCompareEvidence)}).`,
+        );
+      }
+      if (
+        evidence.embryoStatusEventHistory &&
+        (!evidence.embryoStatusEventHistory.visible ||
+          !evidence.embryoStatusEventHistory.eventPresent ||
+          !evidence.embryoStatusEventHistory.updatedAt ||
+          !evidence.embryoStatusEventHistory.trajectory ||
+          !evidence.embryoStatusEventHistory.hasStatus ||
+          !evidence.embryoStatusEventHistory.hasSource ||
+          !evidence.embryoStatusEventHistory.hasDate ||
+          !evidence.embryoStatusEventHistory.hasReview ||
+          !evidence.embryoStatusEventHistory.hasUpdatedAt ||
+          !evidence.embryoStatusEventHistory.hasNote ||
+          !evidence.embryoStatusEventHistory.contained ||
+          evidence.embryoStatusEventHistory.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: embryo-status eventhistorie mist routeflow-evidence of lekt interpretatie/payload (${JSON.stringify(evidence.embryoStatusEventHistory)}).`,
         );
       }
       if (
@@ -6934,6 +7011,70 @@ async function prepareEmbryoAliasReviewDisplay(page, targetHash) {
   );
 
   await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareEmbryoStatusEventHistory(page, targetHash) {
+  await page.goto(`${url}#embryo-status-event-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#embryo-status-event-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-embryo-status-basis-fields="collapsed"]',
+      '[data-embryo-status-source-fields="collapsed"]',
+      '[data-embryo-status-link-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('#embryo-status-event-form [name="datum"]').fill('2026-07-06');
+  await page.locator('#embryo-status-event-form [name="embryoLabel"]').fill('Embryo routeflow');
+  await page.locator('#embryo-status-event-form [name="embryoAliasLabel"]').fill('Embryo RF');
+  await page.locator('#embryo-status-event-form [name="embryoKliniekId"]').fill('RF-1');
+  await page.locator('#embryo-status-event-form [name="embryoStatus"]').selectOption('ingevroren');
+  await page.locator('#embryo-status-event-form [name="embryoBron"]').fill('Routeflow lab');
+  await page
+    .locator('#embryo-status-event-form [name="embryoAliasBronLabel"]')
+    .fill('Routeflow portaal');
+  await page.locator('#embryo-status-event-form [name="embryoReviewStatus"]').selectOption('concept');
+  await page.locator('#embryo-status-event-form [name="notitie"]').fill('Routeflow statusnotitie');
+  await page.evaluate(() => {
+    for (const selector of [
+      '#embryo-status-event-form select[name="trajectId"]',
+      '#embryo-status-event-form select[name="afspraakId"]',
+    ]) {
+      const select = document.querySelector(selector);
+      if (!(select instanceof HTMLSelectElement)) continue;
+      const option = [...select.options].find((candidate) => candidate.value);
+      if (option) select.value = option.value;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  });
+  await page.locator('#embryo-status-event-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const label = document.querySelector('#embryo-status-event-form input[name="embryoLabel"]');
+      return label instanceof HTMLInputElement && label.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-dossier-imaging-disclosure="embryos"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+  await page.waitForSelector('[data-embryo-status-event-state="concept-review"]', {
+    timeout: 10_000,
+  });
 }
 
 async function prepareQuestionArtscheckReviewStatus(page, targetHash) {

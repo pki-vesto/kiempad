@@ -317,6 +317,16 @@ export interface DossierDocument {
       bijgewerktOp: IsoDate;
       poging: number;
     };
+    embryoStatusEvent?: {
+      status: NonNullable<NonNullable<DossierDocument['embryo']>['status']>;
+      bron: string;
+      datum: IsoDate;
+      reviewStatus: 'concept' | 'gereviewd';
+      trajectId?: string;
+      afspraakId?: string;
+      notitie?: string;
+      bijgewerktOp: IsoDate;
+    };
   };
   beeldMetadata?: {
     datum: IsoDate;

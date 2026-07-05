@@ -40,6 +40,7 @@ export type DossierDocumentInput = {
   };
   notitie?: string;
   beeldMetadata?: DossierBeeldMetadataInput;
+  embryoStatusEvent?: NonNullable<DossierDocument['metadata']['embryoStatusEvent']>;
   ocr?: DossierOcrInput;
   uploadedAt?: string;
 };
@@ -303,7 +304,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     input.ocr,
     uploadedAt,
   );
-  const metadata = extraheerDossierMetadata({
+  const metadataBasis = extraheerDossierMetadata({
     datum,
     titel,
     categorie,
@@ -315,6 +316,10 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     notitie,
     ocr,
   });
+  const metadata: DossierDocument['metadata'] = {
+    ...metadataBasis,
+    embryoStatusEvent: input.embryoStatusEvent,
+  };
   const beeldMetadata = maakBeeldMetadata(
     {
       datum,
