@@ -5068,6 +5068,40 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G2010');
   });
 
+  it('bewaakt G2011 offline cache metadata release-state contract error-contract error error error missing-term foutmeldingcontract', () => {
+    const errorContract = [
+      'G2011 offline-cache-metadata-release-state-contract-error-contract-error-error-error-missing-term-error-contract',
+      'references=G2010',
+      `error=${OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_ERROR_ERROR_ERROR_RELEASE_MISSING_TERM_ERROR}`,
+      'safeTerms=offline cache metadata missing-term error contract|veilige technische labels',
+    ].join('\n');
+
+    expect(
+      OFFLINE_CACHE_METADATA_RELEASE_STATE_CONTRACT_ERROR_CONTRACT_ERROR_ERROR_ERROR_RELEASE_MISSING_TERM_ERROR,
+    ).toBe(
+      'Offline cache metadata release-state contract error-contract error error error releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels',
+    );
+    expect(errorContract).toMatchInlineSnapshot(`
+      "G2011 offline-cache-metadata-release-state-contract-error-contract-error-error-error-missing-term-error-contract
+      references=G2010
+      error=Offline cache metadata release-state contract error-contract error error error releasecontext ontbreekt voor termen: offline cache metadata missing-term error contract, veilige technische labels
+      safeTerms=offline cache metadata missing-term error contract|veilige technische labels"
+    `);
+    for (const forbiddenEvidenceTerm of [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ]) {
+      expect(errorContract).not.toContain(forbiddenEvidenceTerm);
+    }
+    expect(backlog).toContain('G2011');
+    expect(executionGoals).toContain('G2011');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',
