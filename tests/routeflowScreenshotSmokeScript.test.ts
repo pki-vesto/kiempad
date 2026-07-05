@@ -233,6 +233,21 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('scanBeforeGrid');
     expect(routeflowScreenshotSmokeScript).toContain('aliasDisplayVisible');
     expect(routeflowScreenshotSmokeScript).toContain('aliasDisplayText');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-embryo-source-label-correction="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-embryo-source-label-correction-form="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('sourceCorrectionVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('sourceCorrectionFormVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('sourceLabelVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('sourceDateVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('sourceReviewVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('sourceSaveVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('sourceCorrectionContained');
+    expect(routeflowScreenshotSmokeScript).toContain('Concept - bron controleren');
+    expect(routeflowScreenshotSmokeScript).toContain('Gereviewd - bron klopt');
     expect(routeflowScreenshotSmokeScript).toContain('comparisonCopyPresent');
     expect(routeflowScreenshotSmokeScript).toContain(
       'embryo tracking-scan mist routeflow-overflow evidence',
