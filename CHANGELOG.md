@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G570 Fertility Intelligence: consultuploads hebben nu een tekstimport-
+  reviewstatus waarmee gebruikers consultnotities als concept of gereviewde
+  bronmetadata kunnen bewaren voordat samenvattingen, actiepunten of vragen op
+  die context leunen.
 - G568 Fertility Intelligence: dossieruploads hebben nu een
   ziekenhuisdocumenttype-reviewcorrectie met automatisch voorstel, onbekend-keuze
   en taxonomiewaarden die encrypted worden bewaard en gebruikt worden voor

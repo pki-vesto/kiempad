@@ -101,4 +101,33 @@ describe('ConsultVerslagStore', () => {
     });
     expect(verworpen?.samenvattingCorrectie).toBeUndefined();
   });
+
+  it('bewaart gereviewde consultnotitie importstatus versleuteld zonder plaintext payload', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-06-14',
+      titel: 'Gereviewde consultnotitie',
+      tekst: 'Broncontext is door gebruiker gecontroleerd.',
+      auteur: 'Eigen notitie',
+      context: 'Belafspraak',
+      importReviewStatus: 'gereviewd',
+      uploadedAt: '2026-06-14T10:00:00.000Z',
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(saved.importMetadata).toMatchObject({
+      bron: 'tekstveld',
+      reviewStatus: 'gereviewd',
+      bronLabel: 'Tekstveld consultnotitie',
+      auteur: 'Eigen notitie',
+      context: 'Belafspraak',
+    });
+    expect(raw?.type).toBe('consult_verslag');
+    expect(raw?.payload.ciphertext).not.toContain('Gereviewde consultnotitie');
+    expect(raw?.payload.ciphertext).not.toContain('Broncontext');
+    expect(raw?.payload.ciphertext).not.toContain('Eigen notitie');
+    expect(raw?.payload.ciphertext).not.toContain('Belafspraak');
+    expect(raw?.payload.ciphertext).not.toContain('gereviewd');
+  });
 });

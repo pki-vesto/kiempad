@@ -79,6 +79,30 @@ describe('consultVerslag', () => {
     ]);
   });
 
+  it('bewaart gereviewde tekstveld-importmetadata zonder medische interpretatie', () => {
+    const verslag = maakConsultVerslag('consult-text-review', {
+      datum: '2026-06-12',
+      titel: 'Gereviewde consultnotitie',
+      tekst: 'Gebruiker heeft broncontext gecontroleerd.',
+      auteur: 'Eigen notitie',
+      context: 'Belafspraak',
+      importReviewStatus: 'gereviewd',
+      uploadedAt: '2026-06-12T10:00:00.000Z',
+    });
+
+    expect(verslag.importMetadata).toMatchObject({
+      bron: 'tekstveld',
+      reviewStatus: 'gereviewd',
+      bronLabel: 'Tekstveld consultnotitie',
+      auteur: 'Eigen notitie',
+      context: 'Belafspraak',
+      aangemaaktOp: '2026-06-12T10:00:00.000Z',
+    });
+    expect(JSON.stringify(verslag.importMetadata)).not.toMatch(
+      /diagnose|dosering|behandelkeuzeadvies/i,
+    );
+  });
+
   it('importeert consulttranscripten uit PDF en afbeelding met bronkoppeling', () => {
     const pdf = maakConsultVerslag('consult-pdf', {
       datum: '2026-06-13',

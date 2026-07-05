@@ -1022,6 +1022,8 @@ async function saveConsultVerslagFromForm(
       pogingId: optionalString(data.get('consultPogingId')),
       auteur: optionalString(data.get('consultAuteur')),
       context: optionalString(data.get('consultContext')),
+      importReviewStatus:
+        data.get('consultImportReviewStatus') === 'gereviewd' ? 'gereviewd' : 'concept',
       notitie: optionalString(data.get('notitie')),
     });
 

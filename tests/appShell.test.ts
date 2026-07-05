@@ -8660,6 +8660,13 @@ describe('app shell', () => {
     expect(consultForm).toContain('name="consultPogingId"');
     expect(consultForm).toContain('name="consultAuteur"');
     expect(consultForm).toContain('name="consultContext"');
+    expect(consultForm).toContain('data-consult-text-import-review="ready"');
+    expect(consultForm).toContain('name="consultImportReviewStatus"');
+    expect(consultForm).toContain('Concept - nog controleren');
+    expect(consultForm).toContain('Gereviewd - broncontext klopt');
+    expect(consultForm).toContain('data-consult-text-import-review-hint="safe"');
+    expect(consultForm).toContain('tekstveld en bronlabel gecontroleerd');
+    expect(consultForm).toContain('zonder medische adviesinhoud');
     expect(consultForm).toContain('name="notitie"');
 
     expect(embryoQualityForm).toContain('data-upload-privacy-kind="embryo"');

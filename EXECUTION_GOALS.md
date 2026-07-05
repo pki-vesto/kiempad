@@ -15640,7 +15640,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consultverslagen, dossier UI, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #906
 
 ### G571 — embryo-ID alias reviewcorrectie
 
@@ -17350,6 +17351,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3807
+
+### G1931 — Fertility Intelligence: consultnotitie tekstimport reviewstatus routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De consultnotitie tekstimport-reviewstatus is zichtbaar in de uploadcontext, maar routeflow-bewijs moet nog bewaken dat concept/gereviewd opties en veilige bronmetadata-hint op desktop en mobiel leesbaar blijven.
+- **User Impact:** Zonder visuele evidence kan een latere themewijziging de reviewstatusselect weer verbergen of laten overlappen in de consultuploadflow.
+- **Desired Outcome:** Routeflow-smoke vindt de consult tekstimport-reviewselect en bewaakt dat statuskeuze en veilige hintcopy scanbaar blijven zonder medische payload.
+- **User Value:** Gebruikers houden controle over consultnotities voordat samenvattingen, actiepunten of vervolgvragen op de broncontext leunen.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-consult-text-import-review="ready"` op desktop en mobiel; concept/gereviewd opties en hintcopy blijven leesbaar zonder page-level horizontale overflow; bestaande consulttekst, bestandupload, samenvattingcorrectie en privacyhooks blijven intact; tests blijven vrij van consulttekst, medische payloads, secrets en broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Consultupload, Dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consultverslagen, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3809
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

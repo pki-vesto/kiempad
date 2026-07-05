@@ -286,6 +286,9 @@
   upload metadata step now lets users review the detected hospital document type, choose a
   taxonomy value, or mark it unknown before encrypted storage; the reviewed value feeds dossier
   index/search without medical advice.
+- **Consult note text import review correction — done in G570 / issue #906.** The Consult upload
+  context now lets users save text-field consult notes as concept or reviewed source metadata
+  before summaries, action points, or follow-up questions rely on that context.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

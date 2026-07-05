@@ -4274,6 +4274,16 @@ function renderDossierScreen(state: AppShellState): string {
               Consultcontext
               <input name="consultContext" autocomplete="off" placeholder="Bijvoorbeeld: intake, evaluatie, belafspraak of labupdate" />
             </label>
+            <label data-consult-text-import-review="ready">
+              Reviewstatus tekstimport
+              <select name="consultImportReviewStatus">
+                <option value="concept" selected>Concept - nog controleren</option>
+                <option value="gereviewd">Gereviewd - broncontext klopt</option>
+              </select>
+            </label>
+            <p class="field-hint" data-consult-text-import-review-hint="safe">
+              Gebruik gereviewd alleen als tekstveld en bronlabel gecontroleerd zijn; Kiempad bewaart deze status als bronmetadata zonder medische adviesinhoud.
+            </p>
             <label>
               Notitie
               <textarea name="notitie" rows="3"></textarea>
