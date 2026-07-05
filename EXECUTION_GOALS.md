@@ -17278,8 +17278,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations UI, Claude Design, app-shell tests
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3794
+
+### G1925 — Premium Claude Design UI: daily recommendation owner scan routeflow overflow evidence
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De compacte dagadvies owner-scan is nu dichter op mobiel, maar expliciete overflow-evidence kan nog verder worden uitgebreid.
+- **User Impact:** Zonder routeflow-overflow evidence kan een latere wijziging opnieuw brede owner-scan kaarten introduceren die de eerste viewport onrustig maken.
+- **Desired Outcome:** Routeflow-evidence bewijst dat owner-scan kaarten zichtbaar blijven en geen page-level horizontale overflow veroorzaken.
+- **User Value:** Gebruikers houden een rustige mobiele Dagadviesroute waarin vrouw, man en samen scanbaar blijven zonder brede pagina-uitloop.
+- **Acceptance Criteria:** Routeflow smoke or equivalent visual evidence covers owner-scan overflow behavior; owner-scan cards remain visible before decision lanes and list details; existing feedback filter, forms and data-hooks remain intact; backlog health remains at 100+ open goals.
+- **Affected Screens:** Start, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Recommendations UI, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 26
+- **Status:** ☐ open
+- **Issue:** #3796
 
 ### G586 — replay conflict recovery status UI
 

@@ -266,6 +266,9 @@
 - **Daily recommendation dual-owner scan — done in G560 / issue #3793.** Dagadvies now shows a
   first-viewport owner scan for vrouw, man, and samen before the decision lanes and full
   suggestion list, keeping feedback filters, owner workbench hooks, and non-medical copy intact.
+- **Daily recommendation owner scan mobile density — done in G1924 / issue #3794.** The owner
+  scan now uses tighter mobile snap cards with shorter height and short review/artscheck cues,
+  so vrouw, man, and samen are easier to scan before opening the detailed suggestion list.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

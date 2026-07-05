@@ -87,6 +87,9 @@
   compacte kaarten voor vrouw, man en samen, zodat persoonlijke en gezamenlijke
   suggesties eerst scanbaar zijn voordat de gebruiker beslislinks of de volledige
   suggestielijst opent.
+- **G1924 mobiele dagadvies owner-scan dichtheid:** op mobiel gebruikt de
+  owner-scan smallere snapkaarten met lagere hoogte en korte review-/artscheckregels,
+  zodat vrouw/man/samen sneller tegelijk zichtbaar zijn zonder de volledige lijst te openen.
 - **G1862 researchsamenvatting leesbord:** de researchsamenvattingenroute toont
   vóór de wetenschappelijke en eenvoudige lijsten een compact leesbord voor
   wetenschappelijke samenvatting, eenvoudige uitleg, relevantie en broncontext.
