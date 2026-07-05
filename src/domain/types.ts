@@ -237,6 +237,11 @@ export interface DossierDocument {
     kliniekTerminologie?: string;
     bron?: string;
     reviewStatus?: 'concept' | 'gereviewd';
+    kwaliteitBronCorrectie?: {
+      bronLabel: string;
+      datum: IsoDate;
+      reviewStatus: 'concept' | 'gereviewd';
+    };
     aliasCorrectie?: {
       aliasLabel: string;
       kliniekId?: string;

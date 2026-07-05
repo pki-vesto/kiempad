@@ -292,6 +292,10 @@
 - **Embryo-ID alias review correction — done in G571 / issue #908.** Embryo quality and status
   forms now save reviewed alias metadata with clinic IDs and source labels; embryo dossiers and
   comparisons show the corrected alias next to Kiempad IDs without adding medical interpretation.
+- **Embryo quality source-label correction flow — done in G572 / issue #910.** Embryo dossier
+  cards now expose a focused correction flow for source label, source date, and review status;
+  corrected source metadata is saved encrypted on the existing record without changing the clinic
+  quality value.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

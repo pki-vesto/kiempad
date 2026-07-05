@@ -186,6 +186,50 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('e30=');
   });
 
+  it('corrigeert embryokwaliteit-bronmetadata versleuteld zonder bronpayload', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-09',
+      titel: 'Embryokwaliteit bronreview',
+      categorie: 'embryo',
+      bestandsNaam: 'embryo-bronreview.json',
+      mimeType: 'application/json',
+      grootteBytes: 256,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '4AA',
+        bron: 'Oud lablabel',
+        reviewStatus: 'concept',
+      },
+    });
+
+    const updated = await store.updateEmbryoKwaliteitBronCorrectie(saved.id, {
+      bronLabel: 'Gereviewd portaalrapport',
+      datum: '2026-05-10',
+      reviewStatus: 'gereviewd',
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(updated.id).toBe(saved.id);
+    expect(updated.metadata.documentDatum).toBe('2026-05-10');
+    expect(updated.embryo).toMatchObject({
+      bron: 'Gereviewd portaalrapport',
+      reviewStatus: 'gereviewd',
+      kwaliteitBronCorrectie: {
+        bronLabel: 'Gereviewd portaalrapport',
+        datum: '2026-05-10',
+        reviewStatus: 'gereviewd',
+      },
+    });
+    expect(raw?.payload.ciphertext).not.toContain('Embryokwaliteit bronreview');
+    expect(raw?.payload.ciphertext).not.toContain('Oud lablabel');
+    expect(raw?.payload.ciphertext).not.toContain('Gereviewd portaalrapport');
+    expect(raw?.payload.ciphertext).not.toContain('e30=');
+  });
+
   it('verwijdert dossierdocumenten via de encrypted repository', async () => {
     const { driver, store } = await setupStore();
     const saved = await store.save({

@@ -79,6 +79,10 @@
   kunnen een alias, kliniek-ID, bronlabel en reviewstatus vastleggen; het
   embryo-dossier en de vergelijking tonen gecorrigeerde alias, Kiempad-ID en
   kliniek-ID naast elkaar zonder medische interpretatie.
+- **G572 Embryokwaliteit bronlabelcorrectie:** embryo-dossierkaarten tonen een
+  aparte correctieflow voor bronlabel, datum en reviewstatus; de gecorrigeerde
+  bronmetadata wordt encrypted op hetzelfde dossierrecord bewaard en gebruikt in
+  bronlabels zonder de kliniekwaarde te veranderen.
 - **G1331 Dossier zoekconsole:** de Dossier-zoekroute groepeert zoeken,
   privacycontrole en inhoudsindex in drie herkenbare panelen. De route opent als
   compacte zoekwerkruimte in plaats van losse formulier-, privacy- en indexblokken.

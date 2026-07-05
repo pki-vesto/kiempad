@@ -12141,6 +12141,7 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
         </section>
         ${renderEmbryoBehandelContext(item)}
         ${renderEmbryoStatusEvents(item)}
+        ${renderEmbryoKwaliteitBronCorrecties(item)}
         <ul class="compact-list embryo-tracking-card__documents" aria-label="Embryobronnen">
           ${item.documenten
             .map(
@@ -12152,6 +12153,45 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
         <p class="small-print">${escapeHtml(item.waarschuwing)}</p>
       </article>
     </li>
+  `;
+}
+
+function renderEmbryoKwaliteitBronCorrecties(item: EmbryoDossierItem): string {
+  if (item.kwaliteitBronCorrecties.length === 0) return '';
+
+  return `
+    <section class="linked-note embryo-source-label-corrections" aria-label="Embryokwaliteit bronlabel correcties" data-embryo-source-label-correction="ready">
+      <strong>Bronlabelcorrectie embryokwaliteit</strong>
+      <p class="small-print">Pas alleen bronlabel, datum en reviewstatus aan; de kliniekwaarde blijft ongewijzigd.</p>
+      <div class="embryo-source-label-corrections__list">
+        ${item.kwaliteitBronCorrecties
+          .map(
+            (correctie) => `
+              <form class="embryo-source-label-correction-form" data-embryo-source-label-correction-form="ready">
+                <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(correctie.documentId)}" />
+                <p class="small-print">Kwaliteit ${escapeHtml(correctie.kwaliteit)} · origineel: ${escapeHtml(correctie.origineleBronLabel ?? 'Geen bronlabel')} · ${escapeHtml(correctie.origineleDatum)}</p>
+                <label>
+                  Bronlabel
+                  <input name="embryoBronCorrectieLabel" autocomplete="off" required value="${escapeAttribute(correctie.bronLabel)}" />
+                </label>
+                <label>
+                  Datum bron
+                  <input name="embryoBronCorrectieDatum" type="date" required value="${escapeAttribute(correctie.datum)}" />
+                </label>
+                <label>
+                  Reviewstatus
+                  <select name="embryoBronCorrectieReviewStatus">
+                    <option value="concept"${correctie.reviewStatus === 'concept' ? ' selected' : ''}>Concept - bron controleren</option>
+                    <option value="gereviewd"${correctie.reviewStatus === 'gereviewd' ? ' selected' : ''}>Gereviewd - bron klopt</option>
+                  </select>
+                </label>
+                <button type="submit" class="secondary-button">Bronmetadata bewaren</button>
+              </form>
+            `,
+          )
+          .join('')}
+      </div>
+    </section>
   `;
 }
 

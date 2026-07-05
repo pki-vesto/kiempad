@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G572 Fertility Intelligence: embryo-dossiers hebben nu een aparte
+  bronlabelcorrectieflow voor embryokwaliteit waarmee bronlabel, datum en
+  reviewstatus encrypted worden bijgewerkt zonder de kliniekwaarde te wijzigen.
 - G571 Fertility Intelligence: embryoformulieren kunnen nu een aliascorrectie,
   kliniek-ID, bronlabel en reviewstatus bewaren; embryo-dossiers en
   embryovergelijkingen tonen de gecorrigeerde alias naast Kiempad-ID en
