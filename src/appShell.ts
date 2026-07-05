@@ -17467,18 +17467,27 @@ function renderVragenScreen(state: AppShellState): string {
           ariaLabel: 'Open vragen route-samenvatting',
         })}
         ${renderVraagStatus(state.vraagStatus, 'open')}
+        ${renderQuestionOpenPrepBoard({
+          openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+          totalCount: state.vragen.length,
+          hasPrepPacket: Boolean(gegenereerdeVragenlijst),
+          nextWithQuestions,
+        })}
         ${renderQuestionOpenToolbar({
           openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
           deleteVraagButton,
         })}
-        ${
-          nextWithQuestions
+        ${disclosure({
+          summary: 'Volledige open vragenlijst',
+          id: 'question-open-full-context',
+          open: false,
+          body: nextWithQuestions
             ? renderOpenVragenVoorAfspraak(nextWithQuestions)
             : renderEmptyState('Geen openstaande vragen voor de eerstvolgende afspraak.', {
                 title: 'Geen open vragen',
                 cta: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
-              })
-        }
+              }),
+        })}
       </section>`,
     `<section id="vragen-route-voorbereiden" class="question-route-section command-route-section" aria-labelledby="vragen-route-voorbereiden-title" data-question-route="voorbereiden"${renderQuestionRouteVisibility(activeQuestionRoute, 'voorbereiden')}>
         <header class="question-route-section__header command-route-section__header">
@@ -17665,6 +17674,100 @@ function renderVraagStatus(
     live: 'polite',
     saveFeedback: `question-${surface}`,
   });
+}
+
+function renderQuestionOpenPrepBoard(input: {
+  openCount: number;
+  totalCount: number;
+  hasPrepPacket: boolean;
+  nextWithQuestions: ReturnType<typeof volgendeAfspraakMetOpenVragen>;
+}): string {
+  const priorityQuestion = input.nextWithQuestions?.vragen
+    .slice()
+    .sort(
+      (a, b) =>
+        (a.prioriteit ?? Number.MAX_SAFE_INTEGER) - (b.prioriteit ?? Number.MAX_SAFE_INTEGER),
+    )[0];
+  const appointmentTitle = input.nextWithQuestions?.afspraak.titel ?? 'Geen afspraak gekoppeld';
+  const appointmentTime = input.nextWithQuestions
+    ? formatDateTime(input.nextWithQuestions.afspraak.datumTijd)
+    : 'Koppel een afspraak via Beheer.';
+  const priorityLabel = priorityQuestion?.prioriteit
+    ? `Prioriteit ${priorityQuestion.prioriteit}`
+    : input.openCount > 0
+      ? 'Prioriteit open'
+      : 'Geen prioriteit';
+  const lanes = [
+    {
+      id: 'open',
+      href: '#question-open-full-context',
+      label: 'Open vragen',
+      title: `${input.openCount} open`,
+      detail:
+        input.openCount > 0
+          ? 'Open de volledige lijst pas wanneer je vragen wilt teruglezen.'
+          : 'Voeg een vraag toe om voorbereiding te vullen.',
+      cue: 'Lijst',
+    },
+    {
+      id: 'appointment',
+      href: '#agenda',
+      label: 'Volgende afspraak',
+      title: appointmentTitle,
+      detail: appointmentTime,
+      cue: 'Agenda',
+    },
+    {
+      id: 'priority',
+      href: '#vragen?route=alle',
+      label: 'Prioriteit',
+      title: priorityLabel,
+      detail: 'Wijzig volgorde of prioriteit in de volledige vraaglijst.',
+      cue: 'Ordenen',
+    },
+    {
+      id: 'preparation',
+      href: '#vragen?route=voorbereiden',
+      label: 'Voorbereiding',
+      title: input.hasPrepPacket ? 'Blad klaar' : 'Nog opbouwen',
+      detail: 'Maak of controleer het lokale gespreksblad apart.',
+      cue: 'Prep',
+    },
+    {
+      id: 'context',
+      href: '#vragen?route=beheer',
+      label: 'Vraagcontext',
+      title: `${input.totalCount} totaal`,
+      detail: 'Voeg context, afspraakkoppeling, antwoord of status toe via Beheer.',
+      cue: 'Beheer',
+    },
+  ];
+
+  return `
+    <section class="question-open-prep-board" aria-label="Open vragen voorbereiding startlaag" data-question-open-prep-board="first-viewport">
+      <header class="question-open-prep-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Open voorbereiding</p>
+          <h3>Kies eerst je consultvoorbereiding</h3>
+        </div>
+        <p>Open vragen, afspraak, prioriteit, voorbereiding en vraagcontext staan als aparte routes.</p>
+      </header>
+      <nav class="question-open-prep-board__lanes" aria-label="Open vragen voorbereiding kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+        <a class="question-open-prep-board__lane" href="${lane.href}" data-question-open-prep-lane="${lane.id}">
+          <span>${lane.label}</span>
+          <strong>${escapeHtml(lane.title)}</strong>
+          <small>${escapeHtml(lane.detail)}</small>
+          <em>${lane.cue}</em>
+        </a>`,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">${QUESTION_CONTEXT_DISCLAIMER}</p>
+    </section>
+  `;
 }
 
 function renderQuestionOpenToolbar(input: {

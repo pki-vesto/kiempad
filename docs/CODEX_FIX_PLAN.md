@@ -96,6 +96,11 @@
   compact focus board for today, planning, recommendations, questions, and dashboard context
   before the existing day action and dashboard follow-up, preserving today console, daily
   advice, question, cockpit, workspace, and setup routes on desktop and mobile.
+- **Questions open first-viewport prep board — done in G1876 / issue #3694.** Vragen/Open now
+  opens with one compact prep board for open questions, next appointment, priority,
+  preparation, and question context before the full open-question follow-up disclosure,
+  preserving question routes, forms, prep packet, reports, and priority hooks on desktop and
+  mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

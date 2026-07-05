@@ -2434,6 +2434,10 @@ describe('app shell', () => {
     expect(css).toContain('.question-management-followup__body {');
     expect(css).toContain('.question-open-toolbar {');
     expect(css).toContain('.question-open-toolbar__actions {');
+    expect(css).toContain('.question-open-prep-board {');
+    expect(css).toContain('.question-open-prep-board__lanes {');
+    expect(css).toContain('.question-open-prep-board__lane {');
+    expect(css).toContain('.question-open-prep-board__lane:hover,');
     expect(css).toContain('.question-form__prompt {');
     expect(css).toContain('.question-prompt-input {');
     expect(css).toContain('.consult-prep-board {');
@@ -2498,6 +2502,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.question-focus-shell {');
     expect(mobileCss).toContain('.question-focus-shell__body {');
     expect(mobileCss).toContain('.question-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.question-open-prep-board__lanes {');
+    expect(mobileCss).toContain('.question-open-prep-board__lane {');
     expect(mobileCss).toContain('.question-open-toolbar {');
     expect(mobileCss).toContain('.question-open-toolbar__actions {');
     expect(mobileCss).toContain('.question-prompt-input {');
@@ -7451,6 +7457,35 @@ describe('app shell', () => {
     expect(html).toContain('Beantwoorde vragen per afspraak');
     expect(html).toContain('Vraaglijst beheren');
     expect(html).toContain('Consult');
+    expect(html).toContain(
+      'aria-label="Open vragen voorbereiding startlaag" data-question-open-prep-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je consultvoorbereiding');
+    expect(html).toContain('data-question-open-prep-lane="open"');
+    expect(html).toContain('data-question-open-prep-lane="appointment"');
+    expect(html).toContain('data-question-open-prep-lane="priority"');
+    expect(html).toContain('data-question-open-prep-lane="preparation"');
+    expect(html).toContain('data-question-open-prep-lane="context"');
+    expect(html).toContain(
+      'href="#question-open-full-context" data-question-open-prep-lane="open"',
+    );
+    expect(html).toContain('href="#agenda" data-question-open-prep-lane="appointment"');
+    expect(html).toContain('href="#vragen?route=alle" data-question-open-prep-lane="priority"');
+    expect(html).toContain(
+      'href="#vragen?route=voorbereiden" data-question-open-prep-lane="preparation"',
+    );
+    expect(html).toContain('href="#vragen?route=beheer" data-question-open-prep-lane="context"');
+    expect(html).toContain('Volledige open vragenlijst');
+    expect(html).toContain('id="question-open-full-context"');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure" id="question-open-full-context" open',
+    );
+    expect(html.indexOf('data-question-open-prep-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-question-open-toolbar="ready"'),
+    );
+    expect(html.indexOf('data-question-open-prep-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="question-open-full-context"'),
+    );
     expect(html).toContain(
       'class="question-open-toolbar" aria-label="Openstaande vragen acties" data-question-open-toolbar="ready"',
     );
