@@ -12190,6 +12190,18 @@ function renderEmbryoTrackingScan(embryoDossiers: readonly EmbryoDossierItem[]):
 }
 
 function renderEmbryoDossier(item: EmbryoDossierItem): string {
+  const aliasReviewDetails = item.aliasCorrecties
+    .map((alias) =>
+      [
+        `Alias: ${alias.aliasLabel}`,
+        alias.kliniekId ? `Kliniek-ID: ${alias.kliniekId}` : undefined,
+        alias.bronLabel ? `Aliasbron: ${alias.bronLabel}` : undefined,
+        `Aliasreview: ${alias.reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept'}`,
+      ]
+        .filter((value): value is string => Boolean(value))
+        .join(' · '),
+    )
+    .join(' | ');
   const details = [
     item.trajectId ? `Traject: ${item.trajectId}` : undefined,
     `Kiempad-id: ${item.canonicalEmbryoId}`,
@@ -12246,6 +12258,11 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
           <div><dt>Bronlabels</dt><dd>${escapeHtml(item.bronLabels.join(', ') || 'Geen bronlabel')}</dd></div>
           <div><dt>Aliasreview</dt><dd>${escapeHtml(item.aliasCorrecties.map((alias) => `${alias.aliasLabel} · ${alias.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept'}`).join(', ') || 'Geen aliascorrectie')}</dd></div>
         </dl>
+        ${
+          aliasReviewDetails
+            ? `<p class="linked-note" data-embryo-alias-review-display="ready">${escapeHtml(aliasReviewDetails)}</p>`
+            : ''
+        }
         <p class="linked-note embryo-tracking-card__metadata">${details.map(escapeHtml).join(' · ')}</p>
         <section class="embryo-tracking-card__history" aria-label="Embryo-historie compact">
           <p class="small-print">Embryo-historie</p>

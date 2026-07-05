@@ -1257,6 +1257,7 @@ const targets = [
       '[data-dossier-imaging-context-choice="collapsed"]',
       '[data-hub-detail-panel="embryo-dossiers"]',
     ],
+    prepare: 'embryo-alias-review-display',
     requiredSelectors: [
       '[data-embryo-tracking-scan="ready"]',
       '[data-embryo-tracking-scan-density="mobile-compact"]',
@@ -1895,6 +1896,7 @@ const targets = [
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: ['[data-embryo-quality-identification-fields="collapsed"]'],
     requiredSelectors: [
       '[data-dossier-upload-console="ready"]',
       '[data-dossier-upload-console-region="embryo-quality"]',
@@ -1904,6 +1906,12 @@ const targets = [
       '[data-embryo-quality-choice="ready"]',
       '[data-embryo-quality-identification-fields="collapsed"]',
       '[data-embryo-quality-identification-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-embryo-alias-review="quality"]',
+      '#embryo-quality-form [data-embryo-alias-review-hint="safe"]',
+      '#embryo-quality-form input[name="embryoAliasLabel"]',
+      '#embryo-quality-form input[name="embryoKliniekId"]',
+      '#embryo-quality-form input[name="embryoAliasBronLabel"]',
+      '#embryo-quality-form select[name="embryoAliasReviewStatus"]',
       '[data-embryo-quality-assessment-fields="collapsed"]',
       '[data-embryo-quality-assessment-fields="collapsed"] > .dossier-upload-optional__summary',
       '[data-embryo-quality-link-fields="collapsed"]',
@@ -1921,7 +1929,6 @@ const targets = [
       '[data-embryo-quality-group="embryo-koppelingen"]',
     ],
     closedDetailsSelectors: [
-      '[data-embryo-quality-identification-fields="collapsed"]',
       '[data-embryo-quality-assessment-fields="collapsed"]',
       '[data-embryo-quality-link-fields="collapsed"]',
       '[data-embryo-quality-submit-feedback-details="collapsed"]',
@@ -1939,6 +1946,7 @@ const targets = [
     ],
     dossierConsole: true,
     uploadConsole: true,
+    embryoAliasReview: 'quality',
   },
   {
     screen: 'embryo-status',
@@ -1947,6 +1955,10 @@ const targets = [
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: [
+      '[data-embryo-status-basis-fields="collapsed"]',
+      '[data-embryo-status-source-fields="collapsed"]',
+    ],
     requiredSelectors: [
       '[data-dossier-upload-console="ready"]',
       '[data-dossier-upload-console-region="embryo-status"]',
@@ -1958,6 +1970,12 @@ const targets = [
       '[data-embryo-status-basis-fields="collapsed"] > .dossier-upload-optional__summary',
       '[data-embryo-status-source-fields="collapsed"]',
       '[data-embryo-status-source-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-embryo-alias-review="status"]',
+      '#embryo-status-event-form [data-embryo-alias-review-hint="safe"]',
+      '#embryo-status-event-form input[name="embryoAliasLabel"]',
+      '#embryo-status-event-form input[name="embryoKliniekId"]',
+      '#embryo-status-event-form input[name="embryoAliasBronLabel"]',
+      '#embryo-status-event-form select[name="embryoAliasReviewStatus"]',
       '[data-embryo-status-link-fields="collapsed"]',
       '[data-embryo-status-link-fields="collapsed"] > .dossier-upload-optional__summary',
       '[data-embryo-status-completion-choice="ready"]',
@@ -1973,8 +1991,6 @@ const targets = [
       '[data-embryo-status-group="status-koppelingen"]',
     ],
     closedDetailsSelectors: [
-      '[data-embryo-status-basis-fields="collapsed"]',
-      '[data-embryo-status-source-fields="collapsed"]',
       '[data-embryo-status-link-fields="collapsed"]',
       '[data-embryo-status-submit-feedback-details="collapsed"]',
       '[data-embryo-status-completion-status-choice="collapsed"]',
@@ -1991,6 +2007,7 @@ const targets = [
     ],
     dossierConsole: true,
     uploadConsole: true,
+    embryoAliasReview: 'status',
   },
   {
     screen: 'consult-card-filled',
@@ -2262,6 +2279,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'embryo-image-classification-review') {
         await prepareEmbryoImageClassificationReview(page, target.hash);
+      }
+      if (target.prepare === 'embryo-alias-review-display') {
+        await prepareEmbryoAliasReviewDisplay(page, target.hash);
       }
       if (target.prepare === 'question-artscheck-review-status') {
         await prepareQuestionArtscheckReviewStatus(page, target.hash);
@@ -3617,6 +3637,60 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const embryoAliasReview = routeflow.embryoAliasReview
+          ? (() => {
+              const mode = routeflow.embryoAliasReview;
+              const review = rootElement?.querySelector(
+                `[data-embryo-alias-review="${mode}"]`,
+              );
+              const form = review?.closest('form') ?? rootElement;
+              const hint = form?.querySelector('[data-embryo-alias-review-hint="safe"]');
+              const aliasInput = form?.querySelector('input[name="embryoAliasLabel"]');
+              const clinicInput = form?.querySelector('input[name="embryoKliniekId"]');
+              const sourceInput = form?.querySelector('input[name="embryoAliasBronLabel"]');
+              const statusSelect = form?.querySelector(
+                'select[name="embryoAliasReviewStatus"]',
+              );
+              const options = [
+                ...(statusSelect instanceof HTMLSelectElement ? statusSelect.options : []),
+              ].map((option) => ({
+                value: option.value,
+                text: option.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+              }));
+              const reviewRect = review?.getBoundingClientRect();
+              const hintRect = hint?.getBoundingClientRect();
+              const aliasRect = aliasInput?.getBoundingClientRect();
+              const clinicRect = clinicInput?.getBoundingClientRect();
+              const sourceRect = sourceInput?.getBoundingClientRect();
+              const selectRect = statusSelect?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const hintText = hint?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const reviewText = review?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                mode,
+                reviewVisible: Boolean(reviewRect && reviewRect.width > 0 && reviewRect.height > 0),
+                hintVisible: Boolean(hintRect && hintRect.width > 0 && hintRect.height > 0),
+                aliasVisible: Boolean(aliasRect && aliasRect.width > 0 && aliasRect.height > 0),
+                clinicVisible: Boolean(clinicRect && clinicRect.width > 0 && clinicRect.height > 0),
+                sourceVisible: Boolean(sourceRect && sourceRect.width > 0 && sourceRect.height > 0),
+                selectVisible: Boolean(selectRect && selectRect.width > 0 && selectRect.height > 0),
+                optionValues: options.map((option) => option.value),
+                optionTexts: options.map((option) => option.text),
+                optionCount: options.length,
+                selectValue: statusSelect instanceof HTMLSelectElement ? statusSelect.value : '',
+                hintTextLength: hintText.length,
+                contained:
+                  Boolean(rootRect && reviewRect && hintRect && aliasRect && selectRect) &&
+                  reviewRect.left >= rootRect.left - 1 &&
+                  aliasRect.right <= rootRect.right + 1 &&
+                  selectRect.right <= rootRect.right + 1 &&
+                  hintRect.right <= rootRect.right + 1,
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|MEDISCHE PAYLOAD|diagnose|dosering|behandelkeuzeadvies|ranking|rankscore|\b\d+\s?%\s?kans|routeflow/i.test(
+                  `${reviewText} ${hintText}`,
+                ),
+              };
+            })()
+          : null;
         const imageSummaryChips = routeflow.imageSummaryChips
           ? [
               ...document.querySelectorAll(
@@ -3894,10 +3968,14 @@ async function assertRouteflows(browser, options) {
               });
               const grid = rootElement?.querySelector('[data-embryo-tracking-grid="compact"]');
               const card = rootElement?.querySelector('[data-embryo-tracking-card="ready"]');
+              const aliasDisplay = rootElement?.querySelector(
+                '[data-embryo-alias-review-display="ready"]',
+              );
               const comparison = rootElement?.textContent?.includes('Embryovergelijking') ?? false;
               const scanRect = scan?.getBoundingClientRect();
               const gridRect = grid?.getBoundingClientRect();
               const cardRect = card?.getBoundingClientRect();
+              const aliasRect = aliasDisplay?.getBoundingClientRect();
               const rootRect = rootElement?.getBoundingClientRect();
               const scanStyle = scan ? getComputedStyle(scan) : null;
               const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
@@ -3923,6 +4001,11 @@ async function assertRouteflows(browser, options) {
                 hasInternalScroll:
                   scan instanceof HTMLElement ? scan.scrollWidth > scan.clientWidth + 1 : false,
                 detailCardVisible: Boolean(cardRect && cardRect.width > 0 && cardRect.height > 0),
+                aliasDisplayVisible: Boolean(
+                  aliasRect && aliasRect.width > 0 && aliasRect.height > 0,
+                ),
+                aliasDisplayText:
+                  aliasDisplay?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
                 comparisonCopyPresent: comparison,
                 hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|behandelkeuzeadvies|\b\d+\s?%\s?kans|ranking|rankscore/i.test(
                   `${scanText} ${rootText}`,
@@ -4290,6 +4373,7 @@ async function assertRouteflows(browser, options) {
           dossierUploadSizeFeedback,
           dossierHospitalTypeReview,
           consultTextImportReview,
+          embryoAliasReview,
           imageSummaryChips,
           imageFieldLabels,
           imageOpenFields,
@@ -4910,6 +4994,29 @@ async function assertRouteflows(browser, options) {
         );
       }
       if (
+        evidence.embryoAliasReview &&
+        (!['quality', 'status'].includes(evidence.embryoAliasReview.mode) ||
+          !evidence.embryoAliasReview.reviewVisible ||
+          !evidence.embryoAliasReview.hintVisible ||
+          !evidence.embryoAliasReview.aliasVisible ||
+          !evidence.embryoAliasReview.clinicVisible ||
+          !evidence.embryoAliasReview.sourceVisible ||
+          !evidence.embryoAliasReview.selectVisible ||
+          evidence.embryoAliasReview.optionCount !== 2 ||
+          !evidence.embryoAliasReview.optionValues.includes('concept') ||
+          !evidence.embryoAliasReview.optionValues.includes('gereviewd') ||
+          !evidence.embryoAliasReview.optionTexts.includes('Concept - alias controleren') ||
+          !evidence.embryoAliasReview.optionTexts.includes('Gereviewd - alias klopt') ||
+          evidence.embryoAliasReview.selectValue !== 'concept' ||
+          evidence.embryoAliasReview.hintTextLength < 100 ||
+          !evidence.embryoAliasReview.contained ||
+          evidence.embryoAliasReview.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: embryo alias-review mist routeflow-evidence of lekt payload (${JSON.stringify(evidence.embryoAliasReview)}).`,
+        );
+      }
+      if (
         (options.label === 'mobile' || options.label === 'small-mobile') &&
         evidence.uploadConsole &&
         (!evidence.uploadConsole.bodyVisible ||
@@ -5107,6 +5214,11 @@ async function assertRouteflows(browser, options) {
           !evidence.embryoTrackingScanOverflow.scanBeforeCard ||
           !evidence.embryoTrackingScanOverflow.scanContained ||
           !evidence.embryoTrackingScanOverflow.detailCardVisible ||
+          !evidence.embryoTrackingScanOverflow.aliasDisplayVisible ||
+          !evidence.embryoTrackingScanOverflow.aliasDisplayText.includes('Alias:') ||
+          !evidence.embryoTrackingScanOverflow.aliasDisplayText.includes('Kliniek-ID:') ||
+          !evidence.embryoTrackingScanOverflow.aliasDisplayText.includes('Aliasbron:') ||
+          !evidence.embryoTrackingScanOverflow.aliasDisplayText.includes('Aliasreview:') ||
           !evidence.embryoTrackingScanOverflow.comparisonCopyPresent ||
           evidence.embryoTrackingScanOverflow.hasForbiddenText)
       ) {
@@ -6367,6 +6479,46 @@ async function prepareEmbryoImageClassificationReview(page, targetHash) {
   await page.waitForSelector('[data-embryo-image-classification-review="concept"]', {
     timeout: 10_000,
   });
+}
+
+async function prepareEmbryoAliasReviewDisplay(page, targetHash) {
+  await page.goto(`${url}#embryo-quality-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#embryo-quality-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-embryo-quality-identification-fields="collapsed"]',
+      '[data-embryo-quality-assessment-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('#embryo-quality-form [name="datum"]').fill('2026-06-27');
+  await page.locator('#embryo-quality-form [name="embryoLabel"]').fill('Embryo alias routeflow');
+  await page.locator('#embryo-quality-form [name="embryoAliasLabel"]').fill('Embryo A');
+  await page.locator('#embryo-quality-form [name="embryoKliniekId"]').fill('E-A');
+  await page.locator('#embryo-quality-form [name="embryoAliasBronLabel"]').fill('Labportaal');
+  await page.locator('#embryo-quality-form [name="embryoAliasReviewStatus"]').selectOption('gereviewd');
+  await page.locator('#embryo-quality-form [name="embryoDag"]').fill('5');
+  await page.locator('#embryo-quality-form [name="embryoMeetmoment"]').fill('Dag 5 blastocyst');
+  await page.locator('#embryo-quality-form [name="embryoKwaliteit"]').fill('4AA');
+  await page.locator('#embryo-quality-form [name="embryoKliniekTerminologie"]').fill('Gardner-score');
+  await page.locator('#embryo-quality-form [name="embryoBron"]').fill('Labrapport');
+  await page.locator('#embryo-quality-form [name="embryoReviewStatus"]').selectOption('gereviewd');
+  await page.locator('#embryo-quality-form [name="embryoStatus"]').selectOption('ingevroren');
+  await page.locator('#embryo-quality-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const label = document.querySelector('#embryo-quality-form input[name="embryoLabel"]');
+      return label instanceof HTMLInputElement && label.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
 }
 
 async function prepareQuestionArtscheckReviewStatus(page, targetHash) {
