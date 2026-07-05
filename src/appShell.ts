@@ -14357,6 +14357,13 @@ function renderKostenScreen(state: AppShellState): string {
           data: { 'finance-route-summary': 'historie' },
         })}
         ${renderKostenStatus(state.kostenStatus, 'historie')}
+        ${renderFinanceHistoryCostBoard({
+          costCount: kosten.length,
+          vergoedCount,
+          eigenRisicoCount,
+          onbekendCount,
+          overview: overzicht,
+        })}
         <details id="kosten-historie-disclosure" class="kp-disclosure" data-finance-disclosure="historie">
           <summary class="kp-disclosure__summary">Kostenhistorie en bewerken openen</summary>
           <div class="kp-disclosure__body">
@@ -14397,6 +14404,80 @@ function renderFinanceFocusShell(input: { workspace: string }): string {
           ${input.workspace}
         </div>
       </div>
+    </section>
+  `;
+}
+
+function renderFinanceHistoryCostBoard(input: {
+  costCount: number;
+  vergoedCount: number;
+  eigenRisicoCount: number;
+  onbekendCount: number;
+  overview: ReturnType<typeof berekenKostenOverzicht>;
+}): string {
+  const lanes: readonly {
+    id: string;
+    href: string;
+    eyebrow: string;
+    title: string;
+    detail: string;
+    cue: string;
+  }[] = [
+    {
+      id: 'totals',
+      href: '#kosten-route-overzicht',
+      eyebrow: 'Totalen',
+      title: formatEuro(input.overview.totaal),
+      detail: `${input.costCount} lokale kostenpost(en) vastgelegd.`,
+      cue: 'Overzicht',
+    },
+    {
+      id: 'reimbursement',
+      href: '#kosten-vergoeding-disclosure',
+      eyebrow: 'Vergoeding',
+      title: `${input.vergoedCount} vergoed`,
+      detail: `${input.onbekendCount} post(en) hebben nog onbekende status.`,
+      cue: 'Controleren',
+    },
+    {
+      id: 'own-risk',
+      href: '#kosten-vergoeding-disclosure',
+      eyebrow: 'Eigen risico',
+      title: formatEuro(input.overview.eigenRisicoGebruikt),
+      detail: `Resterend lokaal bijgehouden: ${formatEuro(input.overview.eigenRisicoResterend)}.`,
+      cue: 'Poliscontext',
+    },
+    {
+      id: 'history',
+      href: '#kosten-historie-disclosure',
+      eyebrow: 'Historie',
+      title: `${input.costCount} post(en)`,
+      detail: 'Volledige kostenlijst en bewerken open je als vervolgcontext.',
+      cue: 'Teruglezen',
+    },
+  ];
+
+  return `
+    <section class="finance-history-cost-board" aria-label="Kostenhistorie kostenbord" data-finance-history-cost-board="first-viewport">
+      <header class="finance-history-cost-board__header">
+        <p class="kp-card__eyebrow">Kostenbord</p>
+        <h3>Kies eerst je kostenlaag</h3>
+        <p>Open totalen, vergoeding, eigen risico of eerdere kosten zonder meteen alle factuurregels te tonen.</p>
+      </header>
+      <nav class="finance-history-cost-board__lanes" aria-label="Kostenhistorie laag kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="finance-history-cost-board__lane" href="${lane.href}" data-finance-history-cost-lane="${lane.id}">
+                <span>${lane.eyebrow}</span>
+                <strong>${lane.title}</strong>
+                <small>${lane.detail}</small>
+                <em>${lane.cue}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }

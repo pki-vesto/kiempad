@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1868 Premium Claude Design UI: kostenhistorie opent nu met een compact
+  eerste-viewport kostenbord voor totalen, vergoeding, eigen risico en
+  kostenhistorie. De volledige kostenlijst en bewerkformulieren blijven bereikbaar
+  via bestaande ankers zonder als eerste lange factuurstapel te starten.
 - G1867 Premium Claude Design UI: beslisgeschiedenis opent nu met een compact
   eerste-viewport reviewbord voor opties, keuze, notities en beslisverslagen.
   De volledige vergelijk-, keuze- en geschiedenislijsten blijven bereikbaar via

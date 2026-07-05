@@ -63,6 +63,10 @@
   Geschiedenis now opens with one compact review board for options, chosen decisions, notes, and
   prior reports before the full history disclosure, preserving compare, choice, form, and history
   anchors on desktop and mobile.
+- **Finance history first-viewport cost board — done in G1868 / issue #3678.** Kosten Historie
+  now opens with one compact cost board for totals, reimbursement, own-risk context, and prior
+  cost records before the full history disclosure, preserving overview, reimbursement, form, and
+  history anchors on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

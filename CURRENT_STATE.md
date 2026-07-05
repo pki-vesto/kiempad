@@ -100,6 +100,11 @@
   Volledige beslisdetails blijven via bestaande compare-, choice-, form- en
   historyankers bereikbaar zonder de eerste viewport als lange beslisstapel te
   vullen.
+- **G1868 Kostenhistorie kostenbord:** de Kosten-historieroute start met een
+  compact kostenbord voor totalen, vergoeding, eigen risico en kostenhistorie.
+  De volledige kostenlijst en bewerkformulieren blijven via bestaande overzicht-,
+  vergoeding-, formulier- en historyankers bereikbaar zonder de eerste viewport
+  als lange factuurstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

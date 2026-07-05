@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1668 |
+| ☑ klaar | 1669 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1867** |
+| **Totaal** | **1868** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2029,13 +2029,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1865 | Premium Claude Design UI: treatment context first-viewport decision board | P1 | F5 | ☑ |
 | G1866 | Premium Claude Design UI: wellbeing history first-viewport signal board | P1 | F5 | ☑ |
 | G1867 | Premium Claude Design UI: decision history first-viewport review board | P1 | F5 | ☑ |
-| G1868 | Premium Claude Design UI: finance history first-viewport cost board | P1 | F5 | ☐ |
+| G1868 | Premium Claude Design UI: finance history first-viewport cost board | P1 | F5 | ☑ |
+| G1869 | Premium Claude Design UI: medication history first-viewport intake board | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1867** (id's G001 t/m G1868; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1868** (id's G001 t/m G1869; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
