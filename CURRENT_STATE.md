@@ -148,6 +148,11 @@
   context. De bestaande eigenaar-, actieplanner-, feedbackfilter- en volledige
   lijstlagen blijven bereikbaar zonder de eerste viewport als adviesstapel te
   vullen.
+- **G1878 Kennis/Research source board:** Kennis/Research start met een compact
+  bronselectiebord voor bronnen, eenvoudige uitleg, wetenschappelijke
+  samenvatting, relevantie en volledige researchcontext. De bestaande
+  broncache-, samenvatting-, relevantie-, trend- en vervolgcontextlagen blijven
+  bereikbaar zonder de eerste viewport als researchstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

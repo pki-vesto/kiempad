@@ -9902,6 +9902,10 @@ describe('app shell', () => {
     );
     expect(css).toContain('.knowledge-research-primary-focus {');
     expect(css).toContain('.knowledge-research-primary-focus > .knowledge-research-reader {');
+    expect(css).toContain('.knowledge-research-source-board {');
+    expect(css).toContain('.knowledge-research-source-board__lanes {');
+    expect(css).toContain('.knowledge-research-source-board__lane {');
+    expect(css).toContain('.knowledge-research-source-board__lane:hover,');
     expect(css).toContain('.knowledge-research-followup {');
     expect(css).toContain('.knowledge-research-followup__summary {');
     expect(css).toContain('.knowledge-research-followup__body {');
@@ -9910,6 +9914,9 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.research-summary-reading-board__lane {');
     expect(css).toContain('min-height: 78px;');
+    expect(mobileCss).toContain('.knowledge-research-source-board {');
+    expect(mobileCss).toContain('.knowledge-research-source-board__lanes {');
+    expect(mobileCss).toContain('.knowledge-research-source-board__lane {');
     expect(mobileCss).toContain('.dossier-focus-shell {');
     expect(mobileCss).toContain(
       '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
@@ -39871,6 +39878,30 @@ describe('app shell', () => {
     expect(html).toContain('Eerst één researchfocus');
     expect(html).toContain('href="#knowledge-research-primary-focus"');
     expect(html).toContain('href="#knowledge-research-followup"');
+    expect(html).toContain(
+      'aria-label="Kennis research bronselectie" data-knowledge-research-source-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je researchingang');
+    expect(html).toContain('data-knowledge-research-source-lane="sources"');
+    expect(html).toContain('data-knowledge-research-source-lane="simple"');
+    expect(html).toContain('data-knowledge-research-source-lane="scientific"');
+    expect(html).toContain('data-knowledge-research-source-lane="relevance"');
+    expect(html).toContain('data-knowledge-research-source-lane="context"');
+    expect(html).toContain(
+      'href="#knowledge-research-sources" data-knowledge-research-source-lane="sources"',
+    );
+    expect(html).toContain(
+      'href="#knowledge-research-patient-summaries" data-knowledge-research-source-lane="simple"',
+    );
+    expect(html).toContain(
+      'href="#knowledge-research-scientific-summaries" data-knowledge-research-source-lane="scientific"',
+    );
+    expect(html).toContain(
+      'href="#knowledge-research-trends" data-knowledge-research-source-lane="relevance"',
+    );
+    expect(html).toContain(
+      'href="#knowledge-research-followup" data-knowledge-research-source-lane="context"',
+    );
     expect(html).toContain('id="knowledge-research-primary-focus"');
     expect(html).toContain('data-knowledge-research-primary-focus="ready"');
     expect(html).toContain('data-knowledge-research-reader="ready"');
@@ -39904,6 +39935,9 @@ describe('app shell', () => {
     expect(html).toContain('Open bronnen, samenvattingen of trendcontext.');
     expect(html.indexOf('data-knowledge-research-primary-focus="ready"')).toBeLessThan(
       html.indexOf('data-knowledge-research-followup="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-research-source-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-knowledge-research-primary-focus="ready"'),
     );
     expect(html.indexOf('data-knowledge-research-followup="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-research-context-choice="collapsed"'),

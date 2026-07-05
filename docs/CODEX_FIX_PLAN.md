@@ -106,6 +106,11 @@
   recommendation context before the existing decision and action layers, preserving
   recommendation list, owner cards, feedback filter, arts-check, and route hooks on desktop and
   mobile.
+- **Knowledge research first-viewport source board — done in G1878 / issue #3698.** Kennis/Research
+  now opens with one compact source board for sources, simple summaries, scientific summaries,
+  relevance, and full research context before the existing research reader and follow-up layers,
+  preserving source citations, summaries, relevance, trends, and route hooks on desktop and
+  mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
