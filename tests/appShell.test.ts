@@ -1847,6 +1847,9 @@ describe('app shell', () => {
     expect(html).toContain('Agenda · Overzicht');
     expect(html).toContain('href="#agenda?route=plannen"');
     expect(html).toContain('data-route-focus-link="overzicht"');
+    expect(html).toContain('data-route-focus-badge="overzicht">0 afspraken</em>');
+    expect(html).toContain('data-route-focus-badge="komend">0 komend</em>');
+    expect(html).toContain('data-route-focus-badge="plannen">Nieuw</em>');
     expect(html).not.toContain('aria-label="Snelle kernroutes"');
     expect(html).not.toContain('class="workspace-map"');
     expect(html).not.toContain('data-workspace-map="ready"');
@@ -1906,6 +1909,8 @@ describe('app shell', () => {
     expect(html).toContain('data-route-focus-route="open"');
     expect(html).toContain('Vragen · Open');
     expect(html).toContain('href="#vragen?route=voorbereiden"');
+    expect(html).toContain('data-route-focus-badge="open">0 open</em>');
+    expect(html).toContain('data-route-focus-badge="alle">0 vragen</em>');
     expect(html).not.toContain('class="workspace-strip__quick"');
     expect(html).not.toContain('data-workspace-map-active="Behandeling"');
     expect(html).not.toContain('Werk behandelcontext, medicatie en consultvragen apart af.');
@@ -1920,6 +1925,75 @@ describe('app shell', () => {
     expect(html.indexOf('data-route-focus-dock="ready"')).toBeLessThan(
       html.indexOf('data-screen-stage-panel="active"'),
     );
+  });
+
+  it('toont veilige live badges in de routefocus-dock voor dossierrecords', () => {
+    const documenten: DossierDocument[] = [
+      {
+        id: 'routefocus-doc-1',
+        datum: '2026-06-12',
+        titel: 'Veilig documentlabel',
+        categorie: 'onderzoek',
+        bestandsNaam: 'routefocus-doc-1.pdf',
+        mimeType: 'application/pdf',
+        grootteBytes: 1024,
+        inhoudBase64: 'cm91dGVmb2N1cw==',
+        analyse: {
+          samenvatting: 'Metadata beschikbaar zonder medisch advies.',
+          signalen: ['Veilige telling beschikbaar.'],
+        },
+        metadata: {
+          documentDatum: '2026-06-12',
+          documenttype: 'Onderzoek',
+          bronbestand: 'routefocus-doc-1.pdf',
+          extractieBronnen: ['formulierdatum'],
+        },
+        uploadedAt: '2026-06-12T10:00:00.000Z',
+      },
+      {
+        id: 'routefocus-image-1',
+        datum: '2026-06-13',
+        titel: 'Veilig beeldlabel',
+        categorie: 'beeld',
+        bestandsNaam: 'routefocus-image-1.jpg',
+        mimeType: 'image/jpeg',
+        grootteBytes: 2048,
+        inhoudBase64: 'cm91dGVmb2N1cy1pbWFnZQ==',
+        analyse: {
+          samenvatting: 'Beeldmetadata beschikbaar zonder interpretatie.',
+          signalen: ['Veilige beeldtelling beschikbaar.'],
+        },
+        metadata: {
+          documentDatum: '2026-06-13',
+          documenttype: 'Echo',
+          bronbestand: 'routefocus-image-1.jpg',
+          extractieBronnen: ['formulierdatum'],
+        },
+        uploadedAt: '2026-06-13T10:00:00.000Z',
+      },
+    ];
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        activeDossierRoute: 'imaging',
+        dossierDocuments: documenten,
+      }),
+    );
+    const routeFocusDock = html.slice(
+      html.indexOf('data-route-focus-dock="ready"'),
+      html.indexOf('</section>', html.indexOf('data-route-focus-dock="ready"')),
+    );
+
+    expect(html).toContain('data-route-focus-screen="dossier"');
+    expect(html).toContain('data-route-focus-route="imaging"');
+    expect(html).toContain('Dossier · Beelden');
+    expect(html).toContain('data-route-focus-badge="upload">2 documenten</em>');
+    expect(html).toContain('data-route-focus-badge="search">2 index</em>');
+    expect(html).toContain('data-route-focus-badge="imaging">1 beeld</em>');
+    expect(html).toContain('data-route-focus-badge="timeline">2 momenten</em>');
+    expect(routeFocusDock).not.toContain('diagnose');
+    expect(routeFocusDock).not.toContain('behandeladvies');
+    expect(routeFocusDock).not.toContain('OCR');
   });
 
   it('toont een skeleton-laadlaag binnen de actieve werkruimte tijdens unlock of reload', () => {
@@ -3233,6 +3307,9 @@ describe('app shell', () => {
     expect(css).toContain('.route-focus-dock__links {');
     expect(css).toContain('overscroll-behavior-inline: contain;');
     expect(css).toContain('.route-focus-dock__links a[aria-current="page"] {');
+    expect(css).toContain('.route-focus-dock__links em {');
+    expect(css).toContain('font-style: normal;');
+    expect(css).toContain('font-weight: 850;');
     expect(css).toContain('.screen-stage__chrome > .workspace-strip {');
     expect(css).toContain('.screen-stage__chrome > .page-header {');
     expect(css).toContain('.screen-stage__chrome > .page-header .page-header__intro {');
@@ -3300,7 +3377,7 @@ describe('app shell', () => {
     expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-map,');
     expect(mobileCss).toContain('.workspace-strip {');
     expect(mobileCss).toContain('gap: 4px;');
-    expect(mobileCss).toContain('max-height: min(96px, 20svh);');
+    expect(mobileCss).toContain('max-height: min(94px, 19svh);');
     expect(mobileCss).toContain('overflow: hidden auto;');
     expect(mobileCss).toContain('overscroll-behavior: contain;');
     expect(mobileCss).toContain('padding: 6px;');

@@ -2606,11 +2606,13 @@ async function assertRouteflows(browser, options) {
         const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
         const routeFocusDock = document.querySelector('[data-route-focus-dock="ready"]');
         const routeFocusDockActiveLink = routeFocusDock?.querySelector('a[aria-current="page"]');
+        const routeFocusDockBadge = routeFocusDock?.querySelector('[data-route-focus-badge]');
         const appShellRect = appShell?.getBoundingClientRect();
         const contentRect = content?.getBoundingClientRect();
         const activePanelRect = activePanel?.getBoundingClientRect();
         const routeFocusDockRect = routeFocusDock?.getBoundingClientRect();
         const routeFocusDockActiveLinkRect = routeFocusDockActiveLink?.getBoundingClientRect();
+        const routeFocusDockBadgeRect = routeFocusDockBadge?.getBoundingClientRect();
         const appShellStyle = appShell ? getComputedStyle(appShell) : null;
         const contentStyle = content ? getComputedStyle(content) : null;
         const activePanelStyle = activePanel ? getComputedStyle(activePanel) : null;
@@ -4861,6 +4863,11 @@ async function assertRouteflows(browser, options) {
                 routeFocusDockActiveLinkRect.width > 0 &&
                 routeFocusDockActiveLinkRect.height > 0,
             ),
+            routeFocusDockBadgeVisible: Boolean(
+              routeFocusDockBadgeRect &&
+                routeFocusDockBadgeRect.width > 0 &&
+                routeFocusDockBadgeRect.height > 0,
+            ),
             bodyScrolls:
               document.documentElement.scrollHeight > document.documentElement.clientHeight + 1 ||
               document.body.scrollHeight > document.body.clientHeight + 1,
@@ -5029,6 +5036,7 @@ async function assertRouteflows(browser, options) {
           !evidence.appFrame.routeFocusDockBeforePanel ||
           !evidence.appFrame.routeFocusDockRoute ||
           !evidence.appFrame.routeFocusDockActiveLinkVisible ||
+          !evidence.appFrame.routeFocusDockBadgeVisible ||
           evidence.appFrame.bodyScrolls)
       ) {
         throw new Error(

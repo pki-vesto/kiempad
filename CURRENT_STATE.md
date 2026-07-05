@@ -218,6 +218,10 @@
   aparte kliniekfilter met veilige resultaatcontext voor bron, datum en
   reviewstatus, zodat historische records per kliniek scanbaar worden zonder
   bronpayload of behandeladvies.
+- **G2021 routefocus-dock live route badges:** de sticky routefocus-dock toont
+  nu per taakroute veilige live badges met lokale aantallen of neutrale
+  statuslabels, zodat gebruikers direct zien waar inhoud of open werk zit
+  zonder medische payload, OCR-tekst of behandeladvies.
 - **G2020 sticky routefocus-dock tegen lange pagina:** de app-shell toont boven
   elke actieve werkruimte een compacte routefocus-dock met actieve route,
   taakmeta en sibling-routeknoppen; routeflow-smoke bewaakt zichtbaarheid boven

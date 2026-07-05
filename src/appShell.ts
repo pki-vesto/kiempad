@@ -786,6 +786,7 @@ type RouteFocusLink = {
   label: string;
   meta: string;
   href: string;
+  badge?: string;
 };
 
 type RouteFocusDock = {
@@ -1793,36 +1794,216 @@ function renderWorkspaceStrip(activeId: ScreenId): string {
 }
 
 function buildRouteFocusDock(activeId: ScreenId, state: AppShellState): RouteFocusDock {
+  const afspraken = state.afspraken;
+  const consultVerslagen = state.consultVerslagen ?? [];
+  const cycleData = state.cycleData ?? [];
+  const decisions = state.decisions ?? [];
+  const dossierDocuments = state.dossierDocuments ?? [];
+  const eventLogs = state.eventLogs ?? [];
+  const kosten = state.kosten ?? [];
+  const mentalCheckIns = state.mentalCheckIns ?? [];
+  const symptomLogs = state.symptomLogs ?? [];
+  const vandaagIso = localDateTimeIso(new Date());
+
   switch (activeId) {
     case 'start':
-      return routeFocusDock(START_ROUTE_FOCUS_LINKS, state.activeStartRoute ?? 'overview');
+      return routeFocusDock(
+        withRouteFocusBadges(START_ROUTE_FOCUS_LINKS, {
+          overview: formatRouteFocusCount(state.trajecten.length, 'traject', 'trajecten'),
+          today: formatRouteFocusCount(afspraken.length, 'afspraak', 'afspraken'),
+          recommendations: formatRouteFocusCount(
+            openstaandeVragen(state.vragen.map((bundle) => bundle.vraag)).length,
+            'vraag',
+            'vragen',
+          ),
+        }),
+        state.activeStartRoute ?? 'overview',
+      );
     case 'traject':
-      return routeFocusDock(TREATMENT_ROUTE_FOCUS_LINKS, state.activeTreatmentRoute ?? 'overzicht');
+      return routeFocusDock(
+        withRouteFocusBadges(TREATMENT_ROUTE_FOCUS_LINKS, {
+          overzicht: formatRouteFocusCount(state.trajecten.length, 'traject', 'trajecten'),
+          fasen: formatRouteFocusCount(
+            state.trajecten.reduce((total, bundle) => total + bundle.fasen.length, 0),
+            'fase',
+            'fasen',
+          ),
+          vergoeding: formatRouteFocusCount(kosten.length, 'post', 'posten'),
+          context: formatRouteFocusCount(dossierDocuments.length, 'bron', 'bronnen'),
+          beheer: state.trajectStatus ? 'Actief' : 'Rustig',
+        }),
+        state.activeTreatmentRoute ?? 'overzicht',
+      );
     case 'agenda':
-      return routeFocusDock(SCHEDULE_ROUTE_FOCUS_LINKS, state.activeScheduleRoute ?? 'overzicht');
+      return routeFocusDock(
+        withRouteFocusBadges(SCHEDULE_ROUTE_FOCUS_LINKS, {
+          overzicht: formatRouteFocusCount(afspraken.length, 'afspraak', 'afspraken'),
+          komend: formatRouteFocusCount(
+            afspraken.filter(
+              (bundle) => new Date(bundle.afspraak.datumTijd).getTime() >= Date.now(),
+            ).length,
+            'komend',
+            'komend',
+          ),
+          plannen: state.agendaStatus ? 'Actief' : 'Nieuw',
+          import: state.agendaImportStatus ? 'Actief' : 'Lokaal',
+          historie: formatRouteFocusCount(
+            afspraken.filter((bundle) => new Date(bundle.afspraak.datumTijd).getTime() < Date.now())
+              .length,
+            'eerder',
+            'eerder',
+          ),
+        }),
+        state.activeScheduleRoute ?? 'overzicht',
+      );
     case 'medicatie':
-      return routeFocusDock(MEDICATION_ROUTE_FOCUS_LINKS, state.activeMedicationRoute ?? 'vandaag');
+      return routeFocusDock(
+        withRouteFocusBadges(MEDICATION_ROUTE_FOCUS_LINKS, {
+          vandaag: formatRouteFocusCount(
+            state.medicatie.reduce(
+              (total, bundle) => total + doseLogsVoorDag(bundle.doseLogs, vandaagIso).length,
+              0,
+            ),
+            'vandaag',
+            'vandaag',
+          ),
+          planning: formatRouteFocusCount(state.medicatie.length, 'middel', 'middelen'),
+          beheer: state.medicatieStatus ? 'Actief' : 'Rustig',
+          import: state.medicatieImportStatus ? 'Actief' : 'Lokaal',
+          historie: formatRouteFocusCount(
+            state.medicatie.reduce((total, bundle) => total + bundle.doseLogs.length, 0),
+            'log',
+            'logs',
+          ),
+        }),
+        state.activeMedicationRoute ?? 'vandaag',
+      );
     case 'herinneringen':
       return routeFocusDock(
-        NOTIFICATION_ROUTE_FOCUS_LINKS,
+        withRouteFocusBadges(NOTIFICATION_ROUTE_FOCUS_LINKS, {
+          status: state.notificaties.permission === 'granted' ? 'Aan' : 'Lokaal',
+          privacy: state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'Details' : 'Discreet',
+          plannen: formatRouteFocusCount(state.herinneringen.length, 'regel', 'regels'),
+          komend: formatRouteFocusCount(
+            komendeHerinneringen(state.herinneringen, vandaagIso).length,
+            'komend',
+            'komend',
+          ),
+        }),
         state.activeNotificationRoute ?? 'status',
       );
     case 'vragen':
-      return routeFocusDock(QUESTION_ROUTE_FOCUS_LINKS, state.activeQuestionRoute ?? 'open');
+      return routeFocusDock(
+        withRouteFocusBadges(QUESTION_ROUTE_FOCUS_LINKS, {
+          open: formatRouteFocusCount(
+            openstaandeVragen(state.vragen.map((bundle) => bundle.vraag)).length,
+            'open',
+            'open',
+          ),
+          voorbereiden: formatRouteFocusCount(state.afspraken.length, 'afspraak', 'afspraken'),
+          beheer: state.vraagStatus ? 'Actief' : 'Nieuw',
+          verslagen: formatRouteFocusCount(consultVerslagen.length, 'verslag', 'verslagen'),
+          alle: formatRouteFocusCount(state.vragen.length, 'vraag', 'vragen'),
+        }),
+        state.activeQuestionRoute ?? 'open',
+      );
     case 'dossier':
-      return routeFocusDock(DOSSIER_ROUTE_FOCUS_LINKS, state.activeDossierRoute ?? 'upload');
+      return routeFocusDock(
+        withRouteFocusBadges(DOSSIER_ROUTE_FOCUS_LINKS, {
+          upload: formatRouteFocusCount(dossierDocuments.length, 'document', 'documenten'),
+          search: formatRouteFocusCount(
+            bouwDossierIndex(dossierDocuments).length,
+            'index',
+            'index',
+          ),
+          imaging: formatRouteFocusCount(
+            bouwImagingRepository(dossierDocuments).length,
+            'beeld',
+            'beelden',
+          ),
+          timeline: formatRouteFocusCount(
+            bouwDossierTijdlijn(dossierDocuments).length,
+            'moment',
+            'momenten',
+          ),
+        }),
+        state.activeDossierRoute ?? 'upload',
+      );
     case 'kennis':
-      return routeFocusDock(KNOWLEDGE_ROUTE_FOCUS_LINKS, state.activeKnowledgeRoute ?? 'read');
+      return routeFocusDock(
+        withRouteFocusBadges(KNOWLEDGE_ROUTE_FOCUS_LINKS, {
+          read: formatRouteFocusCount(state.kennisItems.length, 'bron', 'bronnen'),
+          add: 'Nieuw',
+          ai: state.aiPreview ? 'Preview' : 'Opt-in',
+          library: formatRouteFocusCount(
+            Object.keys(kennisItemsPerCategorie(state.kennisItems)).length,
+            'categorie',
+            'categorieën',
+          ),
+        }),
+        state.activeKnowledgeRoute ?? 'read',
+      );
     case 'welzijn':
-      return routeFocusDock(WELLBEING_ROUTE_FOCUS_LINKS, state.activeWellbeingRoute ?? 'overview');
+      return routeFocusDock(
+        withRouteFocusBadges(WELLBEING_ROUTE_FOCUS_LINKS, {
+          overview: formatRouteFocusCount(symptomLogs.length, 'log', 'logs'),
+          history: formatRouteFocusCount(mentalCheckIns.length, 'check-in', 'check-ins'),
+          log: formatRouteFocusCount(cycleData.length, 'cyclus', 'cycli'),
+        }),
+        state.activeWellbeingRoute ?? 'overview',
+      );
     case 'afwegingen':
-      return routeFocusDock(DECISION_ROUTE_FOCUS_LINKS, state.activeDecisionRoute ?? 'prepare');
+      return routeFocusDock(
+        withRouteFocusBadges(DECISION_ROUTE_FOCUS_LINKS, {
+          prepare: formatRouteFocusCount(decisions.length, 'notitie', 'notities'),
+          compare: formatRouteFocusCount(decisions.length, 'optie', 'opties'),
+          choice: formatRouteFocusCount(
+            decisions.filter((decision) => Boolean(decision.keuze)).length,
+            'keuze',
+            'keuzes',
+          ),
+          history: formatRouteFocusCount(decisions.length, 'record', 'records'),
+        }),
+        state.activeDecisionRoute ?? 'prepare',
+      );
     case 'kosten':
-      return routeFocusDock(FINANCE_ROUTE_FOCUS_LINKS, state.activeFinanceRoute ?? 'overzicht');
+      return routeFocusDock(
+        withRouteFocusBadges(FINANCE_ROUTE_FOCUS_LINKS, {
+          overzicht: formatRouteFocusCount(kosten.length, 'post', 'posten'),
+          toevoegen: state.kostenStatus ? 'Actief' : 'Nieuw',
+          vergoeding: formatRouteFocusCount(
+            kosten.filter((item) => item.vergoed === 'ja').length,
+            'vergoed',
+            'vergoed',
+          ),
+          historie: formatRouteFocusCount(kosten.length, 'record', 'records'),
+        }),
+        state.activeFinanceRoute ?? 'overzicht',
+      );
     case 'logboek':
-      return routeFocusDock(EVENTLOG_ROUTE_FOCUS_LINKS, state.activeEventLogRoute ?? 'overzicht');
+      return routeFocusDock(
+        withRouteFocusBadges(EVENTLOG_ROUTE_FOCUS_LINKS, {
+          overzicht: formatRouteFocusCount(eventLogs.length, 'event', 'events'),
+          recent: formatRouteFocusCount(eventLogs.slice(0, 5).length, 'recent', 'recent'),
+          categorieen: formatRouteFocusCount(
+            new Set(eventLogs.map((event) => event.categorie)).size,
+            'soort',
+            'soorten',
+          ),
+          privacy: 'Lokaal',
+        }),
+        state.activeEventLogRoute ?? 'overzicht',
+      );
     case 'backup':
-      return routeFocusDock(BACKUP_ROUTE_FOCUS_LINKS, state.activeBackupRoute ?? 'controleren');
+      return routeFocusDock(
+        withRouteFocusBadges(BACKUP_ROUTE_FOCUS_LINKS, {
+          controleren: state.backupStatus ? 'Actief' : 'Klaar',
+          export: 'Lokaal',
+          import: state.backupError ? 'Check' : 'Herstel',
+          herstel: 'Drill',
+        }),
+        state.activeBackupRoute ?? 'controleren',
+      );
   }
 }
 
@@ -1830,6 +2011,17 @@ function routeFocusDock(links: readonly RouteFocusLink[], activeRouteId: string)
   const active = links.find((link) => link.id === activeRouteId) ?? links[0];
   if (!active) throw new Error('Routefocus vereist minstens één route.');
   return { active, links };
+}
+
+function withRouteFocusBadges(
+  links: readonly RouteFocusLink[],
+  badges: Record<string, string>,
+): readonly RouteFocusLink[] {
+  return links.map((link) => ({ ...link, badge: badges[link.id] }));
+}
+
+function formatRouteFocusCount(count: number, singular: string, plural: string): string {
+  return `${count} ${count === 1 ? singular : plural}`;
 }
 
 function renderRouteFocusDock(activeId: ScreenId, state: AppShellState): string {
@@ -1840,7 +2032,11 @@ function renderRouteFocusDock(activeId: ScreenId, state: AppShellState): string 
       const isActive = link.id === dock.active.id;
       return `<a href="${escapeAttribute(link.href)}"${isActive ? ' aria-current="page"' : ''} data-route-focus-link="${escapeAttribute(link.id)}"><span>${escapeHtml(
         link.label,
-      )}</span><small>${escapeHtml(link.meta)}</small></a>`;
+      )}</span><small>${escapeHtml(link.meta)}</small>${
+        link.badge
+          ? `<em data-route-focus-badge="${escapeAttribute(link.id)}">${escapeHtml(link.badge)}</em>`
+          : ''
+      }</a>`;
     })
     .join('');
 
@@ -1849,7 +2045,7 @@ function renderRouteFocusDock(activeId: ScreenId, state: AppShellState): string 
       <div class="route-focus-dock__summary">
         <p>Routefocus</p>
         <strong>${escapeHtml(activeScreen.label)} · ${escapeHtml(dock.active.label)}</strong>
-        <small>${escapeHtml(dock.active.meta)} · taakpad</small>
+        <small>${escapeHtml(dock.active.meta)} · ${escapeHtml(dock.active.badge ?? 'taakpad')}</small>
       </div>
       <nav class="route-focus-dock__links" aria-label="Taakroutes binnen ${escapeAttribute(activeScreen.label)}">
         ${links}

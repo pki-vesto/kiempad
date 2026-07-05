@@ -18818,6 +18818,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Status:** ☑ done
 - **Issue:** #3978
 
+### G2021 — Premium Claude Design UI: routefocus-dock live route badges
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De sticky routefocus-dock maakt routes zichtbaar, maar de routeknoppen tonen nog niet waar inhoud of open werk zit.
+- **User Impact:** Gebruikers moeten alsnog routepanelen openen om te ontdekken welke route dossierrecords, vragen, afspraken of andere lokale items bevat.
+- **Desired Outcome:** Routefocus-links tonen compacte live badges met veilige aantallen of neutrale statuslabels uit lokale state.
+- **User Value:** Gebruikers kunnen sneller kiezen waar ze heen moeten zonder door lange panelen te scrollen.
+- **Acceptance Criteria:** Routefocus-dock toont per hoofdscherm routebadges via `data-route-focus-badge`; badges bevatten alleen aantallen of neutrale statuslabels en geen medische payload, OCR-tekst, diagnose, dosering, kansberekening of behandeladvies; desktop, tablet, mobile en small-mobile blijven bounded en compact; routeflow-smoke bewaakt dat minimaal één badge zichtbaar is in de routefocus-dock; backlog/docs blijven synchroon.
+- **Affected Screens:** App-shell, routefocus chrome, alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** AppShell, CSS, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 109
+- **Status:** ☑ done
+- **Issue:** #3980
+
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
 - **Epic:** Fertility Intelligence
