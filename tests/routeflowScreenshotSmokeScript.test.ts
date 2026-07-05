@@ -15,6 +15,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('[data-start-primary-day-action="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain('[data-start-dashboard-followup="collapsed"]');
     expect(routeflowScreenshotSmokeScript).toContain('[data-compact-workspace-deck="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-route-focus-dock="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockBeforePanel');
+    expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockActiveLinkVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockRoute');
     expect(routeflowScreenshotSmokeScript).toContain('appFrame');
     expect(routeflowScreenshotSmokeScript).toContain('desktop app-workspace is niet begrensd');
     expect(routeflowScreenshotSmokeScript).toContain('bodyScrolls');

@@ -1103,6 +1103,107 @@ h3 {
   font-weight: 750;
 }
 
+.route-focus-dock {
+  display: grid;
+  grid-template-columns: minmax(176px, 0.42fr) minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-subtle));
+}
+
+.route-focus-dock__summary {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  align-content: center;
+  padding-inline: 4px;
+}
+
+.route-focus-dock__summary p,
+.route-focus-dock__summary strong,
+.route-focus-dock__summary small {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.route-focus-dock__summary p {
+  color: var(--text-faint);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.route-focus-dock__summary strong {
+  color: var(--text-strong);
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+.route-focus-dock__summary small {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 680;
+}
+
+.route-focus-dock__links {
+  display: flex;
+  min-width: 0;
+  align-items: stretch;
+  gap: 6px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+}
+
+.route-focus-dock__links::-webkit-scrollbar {
+  display: none;
+}
+
+.route-focus-dock__links a {
+  display: grid;
+  flex: 0 0 auto;
+  min-width: 92px;
+  min-height: 40px;
+  align-content: center;
+  gap: 1px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--surface);
+  color: var(--text-soft);
+  text-decoration: none;
+}
+
+.route-focus-dock__links a[aria-current="page"] {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+  background: var(--surface-active);
+  color: var(--accent);
+}
+
+.route-focus-dock__links span,
+.route-focus-dock__links small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.route-focus-dock__links span {
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.route-focus-dock__links small {
+  color: var(--text-faint);
+  font-size: 0.64rem;
+  font-weight: 700;
+}
+
 .workspace-map {
   display: grid;
   gap: 12px;
@@ -27631,7 +27732,7 @@ summary[class*="__summary"]:focus-visible,
     z-index: 28;
     gap: 10px;
     min-width: 0;
-    max-height: min(22vh, 168px);
+    max-height: min(28vh, 220px);
     overflow-y: auto;
     overscroll-behavior: contain;
     padding-bottom: 2px;
@@ -27821,7 +27922,7 @@ summary[class*="__summary"]:focus-visible,
     position: sticky;
     top: 0;
     z-index: 24;
-    max-height: min(24svh, 172px);
+    max-height: min(30svh, 224px);
     overflow-y: auto;
     overscroll-behavior: contain;
   }
@@ -27860,6 +27961,10 @@ summary[class*="__summary"]:focus-visible,
     padding: 0;
   }
 
+  .screen-stage__chrome {
+    gap: 6px;
+  }
+
   .screen-stage__panel {
     gap: 14px;
     overflow-x: hidden;
@@ -27870,11 +27975,37 @@ summary[class*="__summary"]:focus-visible,
   .workspace-strip {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 6px;
-    max-height: min(138px, 28svh);
+    gap: 4px;
+    max-height: min(96px, 20svh);
     overflow: hidden auto;
     overscroll-behavior: contain;
-    padding: 8px;
+    padding: 6px;
+  }
+
+  .route-focus-dock {
+    grid-template-columns: minmax(104px, 0.36fr) minmax(0, 1fr);
+    gap: 5px;
+    padding: 5px;
+  }
+
+  .route-focus-dock__summary {
+    padding-inline: 1px;
+  }
+
+  .route-focus-dock__summary small {
+    display: none;
+  }
+
+  .route-focus-dock__links {
+    scroll-padding-inline: 4px;
+    scroll-snap-type: x proximity;
+  }
+
+  .route-focus-dock__links a {
+    min-width: 84px;
+    min-height: 36px;
+    padding: 5px 8px;
+    scroll-snap-align: start;
   }
 
   .workspace-strip > div,

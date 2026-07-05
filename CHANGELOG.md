@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2020 sticky routefocus-dock tegen lange pagina: de app-shell toont nu boven
+  elke actieve werkruimte een compacte routefocus-dock met actieve route,
+  taakmeta en routeknoppen. Routeflow-smoke bewaakt dat de dock zichtbaar boven
+  het actieve paneel blijft op desktop, tablet, mobile en small-mobile zonder
+  body-scroll regressie of medische payload.
 - G2018/G513 historische records zoekfilter op poging: Dossier Zoeken heeft nu
   een aparte pogingfilter naast vrije tekst en kliniekfiltering, met actieve
   filterchips en compacte resultaatcontext zonder bronpayload of behandeladvies.
