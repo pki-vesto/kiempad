@@ -5825,6 +5825,23 @@ describe('app shell', () => {
     expect(mobileCss).toContain('"focus focus"');
     expect(mobileCss).toContain('"planning finance"');
     expect(mobileCss).toContain('"context admin"');
+    expect(mobileCss).toContain(
+      '.treatment-task-routes:has([data-command-route-group="planning"][aria-current="page"]) {',
+    );
+    expect(mobileCss).toContain('"planning planning"');
+    expect(mobileCss).toContain(
+      '.treatment-task-routes:has([data-command-route-group="finance"][aria-current="page"]) {',
+    );
+    expect(mobileCss).toContain('"finance finance"');
+    expect(mobileCss).toContain(
+      '.treatment-task-routes:has([data-command-route-group="context"][aria-current="page"]) {',
+    );
+    expect(mobileCss).toContain('"context context"');
+    expect(mobileCss).toContain(
+      '.treatment-task-routes:has([data-command-route-group="admin"][aria-current="page"]) {',
+    );
+    expect(mobileCss).toContain('"admin admin"');
+    expect(mobileCss).toContain('.treatment-task-route[aria-current="page"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="finance"] {');
