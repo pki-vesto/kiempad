@@ -30630,6 +30630,7 @@ summary[class*="__summary"]:focus-visible,
       color: HighlightText;
       outline: 2px solid Highlight;
       outline-offset: 2px;
+      row-gap: 5px;
       box-shadow: none;
     }
 
@@ -30684,6 +30685,17 @@ summary[class*="__summary"]:focus-visible,
       align-self: flex-start;
       max-width: min(96px, 42%);
       text-align: center;
+    }
+
+    .treatment-task-route[aria-current="page"] small {
+      max-width: 100%;
+      margin-top: -1px;
+      padding-right: 4px;
+      color: HighlightText;
+      line-height: 1.25;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .treatment-task-route:focus-visible {
