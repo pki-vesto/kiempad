@@ -11822,6 +11822,7 @@ function renderImagingRepositoryItem(
         ${tijdlijnKoppeling}
         <p class="linked-note">${escapeHtml(contextSamenvatting.titel)}: ${escapeHtml(contextSamenvatting.notitie)}</p>
         <p class="small-print">${escapeHtml(contextSamenvatting.waarschuwing)}</p>
+        ${renderImagingMetadataCorrectieForm(item)}
         ${preview}
         ${lockedPlaceholder}
       </div>
@@ -11829,6 +11830,84 @@ function renderImagingRepositoryItem(
         ${thumbnailTile}
       </div>
     </li>
+  `;
+}
+
+function renderImagingMetadataCorrectieForm(
+  item: ReturnType<typeof bouwImagingRepository>[number],
+): string {
+  const metadata = item.document.beeldMetadata;
+  if (!metadata) return '';
+  if (item.previewState.status === 'locked') {
+    return `
+      <section class="linked-note imaging-metadata-review" data-imaging-metadata-review="locked">
+        <strong>Beeldmetadata review</strong>
+        <p class="small-print">Ontgrendel de lokale kluis om bron, koppelingen en reviewstatus te corrigeren zonder bronbestandsnaam te tonen.</p>
+      </section>
+    `;
+  }
+
+  return `
+    <form class="linked-note imaging-metadata-review-form" data-imaging-metadata-review="ready">
+      <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(item.id)}" />
+      <strong>Beeldmetadata review</strong>
+      <p class="small-print">Corrigeer alleen bronmetadata en koppelingen; Kiempad interpreteert het beeld niet medisch.</p>
+      <label>
+        Beeldtype
+        <select name="imagingMetadataSoort">
+          ${(
+            [
+              ['echo', 'Echo'],
+              ['foto', 'Foto'],
+              ['scan', 'Scan'],
+              ['embryo_afbeelding', 'Embryo-afbeelding'],
+              ['overig_beeld', 'Overig beeld'],
+            ] satisfies Array<[ReturnType<typeof bouwImagingRepository>[number]['soort'], string]>
+          )
+            .map(
+              ([value, label]) =>
+                `<option value="${escapeAttribute(value)}"${metadata.soort === value ? ' selected' : ''}>${escapeHtml(label)}</option>`,
+            )
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Bron
+        <input name="imagingMetadataBron" autocomplete="off" required value="${escapeAttribute(metadata.bron)}" />
+      </label>
+      <label>
+        Datum
+        <input name="imagingMetadataDatum" type="date" required value="${escapeAttribute(metadata.datum)}" />
+      </label>
+      <label>
+        Poging
+        <input name="imagingMetadataPogingId" autocomplete="off" value="${escapeAttribute(metadata.pogingId ?? '')}" />
+      </label>
+      <label>
+        Afspraak
+        <input name="imagingMetadataAfspraakId" autocomplete="off" value="${escapeAttribute(metadata.afspraakId ?? item.afspraakId ?? '')}" />
+      </label>
+      <label>
+        Traject
+        <input name="imagingMetadataTrajectId" autocomplete="off" value="${escapeAttribute(metadata.trajectId ?? item.trajectId ?? '')}" />
+      </label>
+      <label>
+        EXIF-status
+        <select name="imagingMetadataExifStatus">
+          <option value="geisoleerd"${metadata.exifStatus === 'geisoleerd' ? ' selected' : ''}>Geisoleerd</option>
+          <option value="geen_exif"${metadata.exifStatus === 'geen_exif' ? ' selected' : ''}>Geen EXIF</option>
+          <option value="onbekend"${metadata.exifStatus === 'onbekend' ? ' selected' : ''}>Onbekend</option>
+        </select>
+      </label>
+      <label>
+        Reviewstatus
+        <select name="imagingMetadataReviewStatus">
+          <option value="concept"${metadata.reviewStatus === 'concept' ? ' selected' : ''}>Concept - metadata controleren</option>
+          <option value="gereviewd"${metadata.reviewStatus === 'gereviewd' ? ' selected' : ''}>Gereviewd - metadata klopt</option>
+        </select>
+      </label>
+      <button type="submit" class="secondary-button">Beeldmetadata bewaren</button>
+    </form>
   `;
 }
 

@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G581 Fertility Intelligence: het Beeldenoverzicht heeft nu een
+  beeldmetadata-reviewformulier voor beeldtype, bron, datum, poging, afspraak,
+  EXIF-status en reviewstatus; locked previews tonen alleen veilige unlock-copy.
 - G572 Fertility Intelligence: embryo-dossiers hebben nu een aparte
   bronlabelcorrectieflow voor embryokwaliteit waarmee bronlabel, datum en
   reviewstatus encrypted worden bijgewerkt zonder de kliniekwaarde te wijzigen.

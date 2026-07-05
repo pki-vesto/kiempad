@@ -848,6 +848,12 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     };
     render(root, state);
   });
+  root.querySelectorAll<HTMLFormElement>('.imaging-metadata-review-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveImagingMetadataCorrectieFromForm(event.currentTarget, root, state);
+    });
+  });
 }
 
 function showDossierDeleteConfirmation(
@@ -1618,6 +1624,44 @@ async function saveEmbryoBronlabelCorrectieFromForm(
       error,
       'Embryokwaliteit bronmetadata bewaren is mislukt.',
     );
+    render(root, state);
+  }
+}
+
+async function saveImagingMetadataCorrectieFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+  const data = new FormData(target);
+  const documentId = optionalString(data.get('dossierDocumentId'));
+  const datum = optionalString(data.get('imagingMetadataDatum'));
+  const bron = optionalString(data.get('imagingMetadataBron'));
+  const soort = parseImagingSoort(data.get('imagingMetadataSoort'));
+  if (!documentId || !datum || !bron || !soort) return;
+
+  try {
+    await state.dossierStore.updateBeeldMetadataCorrectie(documentId, {
+      datum,
+      soort,
+      bron,
+      pogingId: optionalString(data.get('imagingMetadataPogingId')),
+      afspraakId: optionalString(data.get('imagingMetadataAfspraakId')),
+      trajectId: optionalString(data.get('imagingMetadataTrajectId')),
+      exifStatus: parseImagingExifStatus(data.get('imagingMetadataExifStatus')),
+      reviewStatus: parseImagingReviewStatus(data.get('imagingMetadataReviewStatus')),
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Beeldmetadata bijgewerkt',
+      detail: `Beeldmetadata ${beschrijfRecordOpslag(state)} als dossiermetadata.`,
+    });
+    state.dossierStatus = `Beeldmetadata ${beschrijfRecordOpslag(state)}.`;
+    state.dossierError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError = formatRecoverableStorageError(error, 'Beeldmetadata bewaren is mislukt.');
     render(root, state);
   }
 }
@@ -3755,6 +3799,19 @@ function parseImagingSoort(
   }
 
   return undefined;
+}
+
+function parseImagingExifStatus(
+  value: FormDataEntryValue | null,
+): NonNullable<NonNullable<DossierDocument['beeldMetadata']>['exifStatus']> {
+  if (value === 'geisoleerd' || value === 'geen_exif' || value === 'onbekend') return value;
+  return 'onbekend';
+}
+
+function parseImagingReviewStatus(
+  value: FormDataEntryValue | null,
+): NonNullable<NonNullable<DossierDocument['beeldMetadata']>['reviewStatus']> {
+  return value === 'gereviewd' ? 'gereviewd' : 'concept';
 }
 
 function parseEmbryoStatus(

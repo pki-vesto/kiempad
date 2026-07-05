@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { bouwImagingRepository } from '../src/domain/dossier';
 import { DossierStore } from '../src/domain/dossierStore';
 import type { DossierDocument } from '../src/domain/types';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
@@ -114,6 +115,70 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('poging-1');
     expect(raw?.payload.ciphertext).not.toContain('geisoleerd');
     expect(await store.list()).toEqual([saved]);
+  });
+
+  it('corrigeert beeldmetadata versleuteld zonder beeldpayload of bronplaintext', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-04',
+      titel: 'Beeldmetadata review',
+      categorie: 'beeld',
+      bestandsNaam: 'beeldmetadata-review.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 4096,
+      inhoudBase64: 'anBnLWdlaGVpbQ==',
+      afspraakId: 'afspraak-oud',
+      trajectId: 'traject-oud',
+      beeldMetadata: {
+        soort: 'foto',
+        bron: 'Oude beeldbron',
+        pogingId: 'poging-oud',
+        exifStatus: 'onbekend',
+        reviewStatus: 'concept',
+      },
+    });
+
+    const updated = await store.updateBeeldMetadataCorrectie(saved.id, {
+      datum: '2026-05-06',
+      soort: 'echo',
+      bron: 'Gereviewd beeldportaal',
+      pogingId: 'poging-nieuw',
+      afspraakId: 'afspraak-nieuw',
+      trajectId: 'traject-nieuw',
+      exifStatus: 'geisoleerd',
+      reviewStatus: 'gereviewd',
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(updated.id).toBe(saved.id);
+    expect(updated.metadata.documentDatum).toBe('2026-05-06');
+    expect(updated.beeldMetadata).toMatchObject({
+      datum: '2026-05-06',
+      soort: 'echo',
+      bron: 'Gereviewd beeldportaal',
+      pogingId: 'poging-nieuw',
+      afspraakId: 'afspraak-nieuw',
+      trajectId: 'traject-nieuw',
+      exifStatus: 'geisoleerd',
+      reviewStatus: 'gereviewd',
+    });
+    expect(bouwImagingRepository(await store.list())[0]).toMatchObject({
+      soort: 'echo',
+      bronbestand: 'Gereviewd beeldportaal',
+      afspraakId: 'afspraak-nieuw',
+      trajectId: 'traject-nieuw',
+      tijdlijnKoppeling: {
+        pogingId: 'poging-nieuw',
+        afspraakId: 'afspraak-nieuw',
+      },
+    });
+    expect(raw?.payload.ciphertext).not.toContain('Beeldmetadata review');
+    expect(raw?.payload.ciphertext).not.toContain('beeldmetadata-review.jpg');
+    expect(raw?.payload.ciphertext).not.toContain('Oude beeldbron');
+    expect(raw?.payload.ciphertext).not.toContain('Gereviewd beeldportaal');
+    expect(raw?.payload.ciphertext).not.toContain('afspraak-nieuw');
+    expect(raw?.payload.ciphertext).not.toContain('anBnLWdlaGVpbQ');
   });
 
   it('bewaart gereviewde ziekenhuisdocumenttype-correcties versleuteld zonder medische payload', async () => {

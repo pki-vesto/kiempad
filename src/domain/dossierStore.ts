@@ -54,6 +54,49 @@ export class DossierStore {
     return updated;
   }
 
+  async updateBeeldMetadataCorrectie(
+    documentId: string,
+    correctie: {
+      datum: string;
+      soort: NonNullable<DossierDocument['beeldMetadata']>['soort'];
+      bron: string;
+      exifStatus: NonNullable<DossierDocument['beeldMetadata']>['exifStatus'];
+      reviewStatus: NonNullable<DossierDocument['beeldMetadata']>['reviewStatus'];
+      pogingId?: string;
+      afspraakId?: string;
+      trajectId?: string;
+    },
+  ): Promise<DossierDocument> {
+    const record = await this.documenten.get(documentId);
+    if (!record?.value.beeldMetadata) {
+      throw new Error('Beeldrecord niet gevonden.');
+    }
+
+    const updatedBeeldMetadata: NonNullable<DossierDocument['beeldMetadata']> = {
+      ...record.value.beeldMetadata,
+      datum: correctie.datum,
+      soort: correctie.soort,
+      bron: correctie.bron,
+      exifStatus: correctie.exifStatus,
+      reviewStatus: correctie.reviewStatus,
+      ...(correctie.pogingId ? { pogingId: correctie.pogingId } : {}),
+      ...(correctie.afspraakId ? { afspraakId: correctie.afspraakId } : {}),
+      ...(correctie.trajectId ? { trajectId: correctie.trajectId } : {}),
+    };
+    const updated: DossierDocument = {
+      ...record.value,
+      afspraakId: correctie.afspraakId ?? record.value.afspraakId,
+      trajectId: correctie.trajectId ?? record.value.trajectId,
+      beeldMetadata: updatedBeeldMetadata,
+      metadata: {
+        ...record.value.metadata,
+        documentDatum: correctie.datum,
+      },
+    };
+    await this.documenten.saveWithId(updated);
+    return updated;
+  }
+
   async delete(id: string): Promise<void> {
     await this.documenten.delete(id);
   }
