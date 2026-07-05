@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G543 Research Intelligence: researchtrendkaarten tonen nu een controleerbare
+  update-timestamp met datum, bron, reviewstatus, correctievelden en lekenuitleg
+  op basis van lokale researchbibliotheekmetadata, zonder medische keuzehulp.
 - G552 Daily Recommendations: de Dagadvies-werkbank toont nu lokale
   feedbackanalytics zonder tracking met statusverdeling, eigenaarverdeling,
   laatste feedbackdatum, bron, reviewstatus en expliciete no-tracking copy.

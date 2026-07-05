@@ -181,10 +181,19 @@ export type ResearchTrendItem = {
   laatsteCheck: string;
 };
 
+export type ResearchTrendUpdateTimestamp = {
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  correctieVelden: string[];
+  uitlegVoorLeken: string;
+};
+
 export type ResearchTrendGroep = {
   onderwerp: ResearchTrendOnderwerp;
   label: string;
   items: ResearchTrendItem[];
+  updateTimestamp: ResearchTrendUpdateTimestamp;
   waarschuwing: string;
 };
 
@@ -887,14 +896,38 @@ export function groepeerResearchTrends(items: readonly KennisItem[]): ResearchTr
   }
 
   return (Object.keys(RESEARCH_TREND_LABELS) as ResearchTrendOnderwerp[])
-    .map((onderwerp) => ({
-      onderwerp,
-      label: RESEARCH_TREND_LABELS[onderwerp],
-      items: groepen.get(onderwerp) ?? [],
-      waarschuwing:
-        'Trendgroepering is een lokale trefwoordindeling voor overzicht; dit is geen bewijsweging of behandeladvies.',
-    }))
+    .map((onderwerp) => {
+      const trendItems = groepen.get(onderwerp) ?? [];
+
+      return {
+        onderwerp,
+        label: RESEARCH_TREND_LABELS[onderwerp],
+        items: trendItems,
+        updateTimestamp: bouwResearchTrendUpdateTimestamp(trendItems),
+        waarschuwing:
+          'Trendgroepering is een lokale trefwoordindeling voor overzicht; dit is geen bewijsweging of behandeladvies.',
+      };
+    })
     .filter((groep) => groep.items.length > 0);
+}
+
+function bouwResearchTrendUpdateTimestamp(
+  items: readonly ResearchTrendItem[],
+): ResearchTrendUpdateTimestamp {
+  const nieuwstePublicatieDatum = items
+    .map((item) => item.publicatieDatum)
+    .filter((datum): datum is string => Boolean(datum))
+    .sort()
+    .at(-1);
+
+  return {
+    bron: 'Lokale researchbibliotheekmetadata',
+    datum: nieuwstePublicatieDatum ?? 'Nog geen publicatiedatum',
+    reviewStatus: 'concept_te_controleren',
+    correctieVelden: ['trendUpdateDatum', 'bronselectie', 'reviewstatus'],
+    uitlegVoorLeken:
+      'Deze datum komt uit opgeslagen researchmetadata en helpt controleren hoe actueel de lokale trendkaart is; dit is geen medisch advies of keuzehulp.',
+  };
 }
 
 function bepaalResearchTrendPeriode(item: KennisItem): string {

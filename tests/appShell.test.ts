@@ -42901,6 +42901,24 @@ describe('app shell', () => {
     expect(contextualDashboard).toContain('IVF ICSI embryo trendreview');
     expect(contextualDashboard).toContain('Mannelijke factor leefstijl overzicht');
     expect(contextualDashboard).toContain('data-research-trend-item-metadata="ready"');
+    expect(contextualDashboard).toContain('data-research-trend-update-timestamp="ready"');
+    expect(contextualDashboard).toContain(
+      'data-research-trend-update-review="concept_te_controleren"',
+    );
+    expect(contextualDashboard).toContain('data-research-trend-update-date="2026-05-10"');
+    expect(contextualDashboard).toContain('data-research-trend-update-source="ready"');
+    expect(contextualDashboard).toContain('data-research-trend-update-correction="ready"');
+    expect(contextualDashboard).toContain('data-research-trend-update-explanation="ready"');
+    expect(contextualDashboard).toContain('<dt>Laatst bijgewerkt</dt><dd>2026-05-10</dd>');
+    expect(contextualDashboard).toContain(
+      '<dt>Bron</dt><dd>Lokale researchbibliotheekmetadata</dd>',
+    );
+    expect(contextualDashboard).toContain(
+      '<dt>Controleerbaar</dt><dd>trendUpdateDatum · bronselectie · reviewstatus</dd>',
+    );
+    expect(contextualDashboard).toContain(
+      'Deze datum komt uit opgeslagen researchmetadata en helpt controleren hoe actueel de lokale trendkaart is; dit is geen medisch advies of keuzehulp.',
+    );
     expect(contextualDashboard).toContain('data-research-trend-item-period="2026-05"');
     expect(contextualDashboard).toContain('data-research-trend-item-source="ready"');
     expect(contextualDashboard).toContain('data-research-trend-item-update="actueel"');
@@ -42936,8 +42954,10 @@ describe('app shell', () => {
     expect(css).toContain('.research-trend-scan__card {');
     expect(css).toContain('.research-trend-dashboard__grid {');
     expect(css).toContain('.research-trend-card {');
+    expect(css).toContain('.research-trend-card__timestamp {');
     expect(css).toContain('.research-trend-card__item {');
     expect(css).toContain('.research-trend-card__metadata {');
+    expect(css).toContain('.research-trend-card__timestamp dt,');
     expect(css).toContain('.research-trend-card__metadata dt,');
     expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(mobileCss).toContain('.research-trend-scan {');
@@ -42948,6 +42968,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.research-trend-dashboard__grid {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(mobileCss).toContain('.research-trend-card__metadata {');
+    expect(mobileCss).toContain('.research-trend-card__timestamp {');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {
