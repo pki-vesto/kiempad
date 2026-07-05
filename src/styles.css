@@ -30769,6 +30769,7 @@ summary[class*="__summary"]:focus-visible,
       background: Canvas;
       color: CanvasText;
       font-weight: 760;
+      outline-offset: 1px;
     }
 
     .treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {
