@@ -2252,6 +2252,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   board linking to scientific summaries, simple summaries, relevance context and
   source context, while full summary/source/trend details keep their existing
   anchors and privacy boundaries.
+- Partial G1863/#3668: Dagadvies now starts with a compact first-viewport
+  decision board for woman, man, shared actions and doctor-check context, while
+  the action planner, owner workbench and full suggestion list remain reachable
+  as follow-up context.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record

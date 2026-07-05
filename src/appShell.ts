@@ -16140,6 +16140,7 @@ function renderDailyAdviceConsole(
   return renderDailyAdviceFocusShell({
     status: `${state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''}${routeFocusStatus}`,
     filterStatus: feedbackFilterStatus,
+    decisionBoard: renderDailyAdviceDecisionBoard(overview),
     workflow: renderHubWorkflowHeader({
       id: 'start-recommendations-workflow-header',
       eyebrow: 'Dagroute',
@@ -16192,7 +16193,7 @@ function renderDailyAdviceConsole(
                 filteredTotal: filteredTotalRecommendations,
               })}
             </section>
-            <details class="kp-disclosure daily-advice-full-list" data-daily-advice-full-list="collapsed">
+            <details id="daily-advice-full-list" class="kp-disclosure daily-advice-full-list" data-daily-advice-full-list="collapsed">
               <summary class="kp-disclosure__summary daily-advice-full-list__summary">
                 <span>
                   <strong>Open volledige suggestielijst</strong>
@@ -16223,6 +16224,69 @@ function renderDailyRecommendationRouteFocusStatus(status: string): string {
       <button type="button" class="daily-recommendation-reset-route-focus__close" data-daily-recommendation-reset-route-focus-close="ready" aria-label="Verberg lokale resetmelding" aria-describedby="daily-recommendation-reset-route-focus-help">Verberg</button>
       <small id="daily-recommendation-reset-route-focus-help" class="daily-recommendation-reset-route-focus__help" data-daily-recommendation-reset-route-focus-help="ready">Verberg sluit alleen deze lokale melding. Als verbergen tijdelijk niet kan, blijft focus hier.</small>
     </div>
+  `;
+}
+
+function renderDailyAdviceDecisionBoard(overview: DailyRecommendationOverview): string {
+  const ownerLanes = (['vrouw', 'man', 'samen'] as const).map((owner) => {
+    const items = overview[owner];
+    const copy = DAILY_RECOMMENDATION_OWNER_COPY[owner];
+    const label = DAILY_RECOMMENDATION_OWNER_LABELS[owner];
+    const firstItem = items[0];
+
+    return {
+      id: owner,
+      href: '#daily-advice-full-list',
+      label,
+      title: `${items.length} advies${items.length === 1 ? '' : 'zen'}`,
+      detail: firstItem ? firstItem.titel : copy.empty,
+      cue: copy.route,
+    };
+  });
+  const artscheckCount = (['vrouw', 'man', 'samen'] as const).reduce(
+    (count, owner) =>
+      count +
+      overview[owner].filter((item) =>
+        item.checklist?.some((checklistItem) => checklistItem.artscheck),
+      ).length,
+    0,
+  );
+  const lanes = [
+    ...ownerLanes,
+    {
+      id: 'artscheck',
+      href: '#vragen',
+      label: 'Artscheck',
+      title: `${artscheckCount} punt${artscheckCount === 1 ? '' : 'en'}`,
+      detail: 'Bespreekpunten voor consultvoorbereiding.',
+      cue: artscheckCount > 0 ? 'Vragen klaarzetten' : 'Geen open check',
+    },
+  ];
+
+  return `
+    <section class="daily-advice-decision-board" aria-label="Dagadvies beslisbord" data-daily-advice-decision-board="first-viewport">
+      <header class="daily-advice-decision-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Beslisbord</p>
+          <h3>Beslis eerst per eigenaar</h3>
+        </div>
+        <p>Open alleen de route die je nu nodig hebt; de volledige suggestielijst blijft vervolgcontext.</p>
+      </header>
+      <nav class="daily-advice-decision-board__lanes" aria-label="Dagadvies eigenaar en artscheck kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="daily-advice-decision-board__lane" href="${lane.href}" data-daily-advice-decision-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
   `;
 }
 
@@ -16343,6 +16407,7 @@ function renderDailyRecommendationFeedbackFilter(input: {
 function renderDailyAdviceFocusShell(input: {
   status: string;
   filterStatus: string;
+  decisionBoard: string;
   workflow: string;
   workbench: string;
   planner: string;
@@ -16359,6 +16424,9 @@ function renderDailyAdviceFocusShell(input: {
       ${input.filterStatus}
       <div class="daily-advice-focus-shell__body" data-daily-advice-console-region="body">
         <div id="daily-advice-primary-action-choice" class="daily-advice-primary-action-choice" data-daily-advice-primary-action-choice="ready">
+          <div class="daily-advice-focus-shell__decision" data-daily-advice-focus-region="decision" data-daily-advice-console-region="decision">
+            ${input.decisionBoard}
+          </div>
           <div class="daily-advice-focus-shell__planner" data-daily-advice-focus-region="planner" data-daily-advice-console-region="planner">
             ${input.planner}
           </div>

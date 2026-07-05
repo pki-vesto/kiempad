@@ -3269,6 +3269,13 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-focus-shell__header {');
     expect(css).toContain('.daily-advice-focus-shell__body {');
     expect(css).toContain('.daily-advice-primary-action-choice {');
+    expect(css).toContain('.daily-advice-focus-shell__decision,');
+    expect(css).toContain('.daily-advice-decision-board {');
+    expect(css).toContain('.daily-advice-decision-board__header {');
+    expect(css).toContain('.daily-advice-decision-board__lanes {');
+    expect(css).toContain('.daily-advice-decision-board__lane {');
+    expect(css).toContain('.daily-advice-decision-board__lane:hover,');
+    expect(css).toContain('.daily-advice-decision-board__lane:focus-visible {');
     expect(css).toContain('.daily-advice-followup {');
     expect(css).toContain('.daily-advice-followup:not([open]) > .daily-advice-followup__body {');
     expect(css).toContain('.daily-advice-workflow-choice {');
@@ -3521,6 +3528,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(mobileCss).toContain('overflow: visible;');
     expect(mobileCss).toContain('.daily-advice-owner-card {');
+    expect(mobileCss).toContain('.daily-advice-decision-board {');
+    expect(mobileCss).toContain('.daily-advice-decision-board__header {');
+    expect(mobileCss).toContain('.daily-advice-decision-board__lanes {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.daily-advice-decision-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(164px, 72vw);');
     expect(mobileCss).toContain('.daily-advice-action-planner {');
     expect(mobileCss).toContain('.daily-advice-action-planner__lanes {');
     expect(mobileCss).toContain('flex: 0 0 min(232px, 78vw);');
@@ -3682,6 +3695,19 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain(
       'data-daily-advice-primary-action-choice="ready"',
     );
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-advice-decision-board="first-viewport"',
+    );
+    expect(emptyContextRecommendations).toContain('aria-label="Dagadvies beslisbord"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-focus-region="decision"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-console-region="decision"');
+    expect(emptyContextRecommendations).toContain('Beslis eerst per eigenaar');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-decision-lane="vrouw"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-decision-lane="man"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-decision-lane="samen"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-decision-lane="artscheck"');
+    expect(emptyContextRecommendations).toContain('href="#daily-advice-full-list"');
+    expect(emptyContextRecommendations).toContain('href="#vragen"');
     expect(emptyContextRecommendations).toContain('id="daily-advice-followup"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-followup="collapsed"');
     expect(emptyContextRecommendations).toContain('Open adviescontext');
@@ -3691,6 +3717,9 @@ describe('app shell', () => {
     expect(
       emptyContextRecommendations.indexOf('id="daily-advice-primary-action-choice"'),
     ).toBeLessThan(emptyContextRecommendations.indexOf('id="daily-advice-followup"'));
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-decision-board="first-viewport"'),
+    ).toBeLessThan(emptyContextRecommendations.indexOf('data-daily-advice-action-planner="ready"'));
     expect(
       emptyContextRecommendations.indexOf('data-daily-advice-action-planner="ready"'),
     ).toBeLessThan(
@@ -3727,6 +3756,7 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('Bekijk suggesties');
     expect(emptyContextRecommendations).toContain('data-daily-advice-list-choice="ready"');
     expect(emptyContextRecommendations).toContain('Kies eerst je lijstfilter');
+    expect(emptyContextRecommendations).toContain('id="daily-advice-full-list"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-full-list="collapsed"');
     expect(emptyContextRecommendations).toContain('Open volledige suggestielijst');
     expect(emptyContextRecommendations).not.toContain(
