@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1679 |
+| ☑ klaar | 1680 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1878** |
+| **Totaal** | **1879** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2040,13 +2040,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1876 | Premium Claude Design UI: questions open route first-viewport prep board | P1 | F5 | ☑ |
 | G1877 | Premium Claude Design UI: daily advice route first-viewport selection board | P1 | F5 | ☑ |
 | G1878 | Premium Claude Design UI: knowledge research route first-viewport source board | P1 | F5 | ☑ |
-| G1879 | Premium Claude Design UI: knowledge library route first-viewport index board | P1 | F5 | ☐ |
+| G1879 | Premium Claude Design UI: knowledge library route first-viewport index board | P1 | F5 | ☑ |
+| G1880 | Premium Claude Design UI: knowledge add route first-viewport input board | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1878** (id's G001 t/m G1879; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1879** (id's G001 t/m G1880; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

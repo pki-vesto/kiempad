@@ -153,6 +153,11 @@
   samenvatting, relevantie en volledige researchcontext. De bestaande
   broncache-, samenvatting-, relevantie-, trend- en vervolgcontextlagen blijven
   bereikbaar zonder de eerste viewport als researchstapel te vullen.
+- **G1879 Kennis/Bibliotheek index board:** Kennis/Bibliotheek start met een
+  compact indexbord voor categorieën, zichtbare items, filters, kaartacties en
+  volledige bibliotheekcontext. De bestaande categoriekaarten, filters,
+  itemlijsten, verificatielabels en bewerkacties blijven bereikbaar zonder de
+  eerste viewport als bibliotheekstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

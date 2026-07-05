@@ -111,6 +111,10 @@
   relevance, and full research context before the existing research reader and follow-up layers,
   preserving source citations, summaries, relevance, trends, and route hooks on desktop and
   mobile.
+- **Knowledge library first-viewport index board — done in G1879 / issue #3700.** Kennis/Bibliotheek
+  now opens with one compact index board for categories, visible items, filters, card actions, and
+  full library context before the existing category and follow-up layers, preserving category
+  anchors, filter state, card actions, verification labels, and route hooks on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

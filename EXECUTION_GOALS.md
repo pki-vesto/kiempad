@@ -16505,8 +16505,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 71
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3700
+
+### G1880 — Premium Claude Design UI: knowledge add route first-viewport input board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Kennis/Toevoegen kan als lange invoer- en optionele-contextstapel voelen wanneer researchinvoer, eigen kennis, verplichte velden, opslagstatus en volledige toevoegcontext tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is of ze een publicatie, eigen kennisitem of opslagstatus moeten openen.
+- **Desired Outcome:** Kennis/Toevoegen opent met een compact first-viewport input board voor researchinvoer, eigen kennis, verplichte velden, opslagstatus en volledige toevoegcontext.
+- **User Value:** Kennis toevoegen voelt rustiger en taakgerichter zonder bestaande formulier-id's, input names, eigen-kennisroute, feedback of annuleeracties te verliezen.
+- **Acceptance Criteria:** Kennis/Toevoegen opent met compacte lanes voor researchinvoer, eigen kennis, verplichte velden, opslagstatus en volledige toevoegcontext; volledige formulieren en optionele panelen blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande form ids, input names, add route hooks, own-item route, feedback en cancel actions; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw knowledge payload wordt toegevoegd.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Knowledge UI, forms, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 70
+- **Status:** ☐ open
+- **Issue:** #3702
 
 ### G586 — replay conflict recovery status UI
 
