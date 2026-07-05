@@ -470,7 +470,18 @@ describe('routeflow screenshot smoke script', () => {
     );
     expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeBatchStatus');
     expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeProgress');
+    expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeBatchForcedColors');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "target.attachmentEnvelopeBatchForcedColors && options.label !== 'small-mobile'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "window.matchMedia('(forced-colors: active)').matches",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain("hashing.progress !== 'hashing'");
     expect(routeflowScreenshotSmokeScript).toContain("progress !== 'complete'");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "completeInvalid.titleTextDecorationStyle !== 'double'",
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       '3 items: 2 klaar, 0 hash-pending, 1 controle nodig.',
     );

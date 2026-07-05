@@ -2219,6 +2219,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   forced-colors system-color evidence for hashing, complete and invalid states,
   using border, outline and text-decoration differences without filenames,
   payloads, OCR text or medical plaintext.
+- Partial G1855/#3652: Routeflow smoke now emulates forced-colors for the
+  attachment-envelope batch target and captures hashing plus complete/invalid
+  style evidence, including border, outline and text-decoration signals without
+  filenames, payloads, OCR text or medical plaintext.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record

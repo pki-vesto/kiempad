@@ -16097,8 +16097,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Routeflow smoke, Dossier upload, attachment envelope tests
 - **ADR Needed:** no
 - **Score:** 96
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3652
+
+### G1856 — Attachment envelope forced-colors small-mobile overflow evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Forced-colors routeflow evidence bewaakt de batchstates, maar small-mobile overflowchecks zijn nog niet apart uitgesplitst.
+- **User Impact:** High-contrast gebruikers op kleine schermen kunnen alsnog horizontale of verticale druk krijgen zonder gerichte regressie.
+- **Desired Outcome:** Small-mobile forced-colors evidence bevestigt dat hashing, complete en invalid batchstates compact blijven zonder overflow.
+- **User Value:** Uploadbatchstatus blijft bruikbaar en scanbaar op kleine schermen in high-contrast mode.
+- **Acceptance Criteria:** Small-mobile forced-colors evidence controleert hashing, complete en invalid states zonder horizontale of verticale overflow; evidence vermijdt filename, token, secret, base64, OCR-tekst, recordpayload en medische plaintext; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Routeflow smoke, Dossier upload, attachment envelope tests
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☐ open
+- **Issue:** #3654
 
 ### G586 — replay conflict recovery status UI
 
