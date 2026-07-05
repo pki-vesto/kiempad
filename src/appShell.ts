@@ -3976,7 +3976,10 @@ function bouwDossierKliniekFilterOpties(documenten: readonly DossierDocument[]):
   return Array.from(
     new Set(
       documenten
-        .map((document) => document.metadata?.instelling?.trim())
+        .flatMap((document) => [
+          document.metadata?.instelling?.trim(),
+          document.metadata?.normalisatie?.bron?.trim(),
+        ])
         .filter((instelling): instelling is string => Boolean(instelling)),
     ),
   ).sort((a, b) => a.localeCompare(b, 'nl'));
@@ -4040,6 +4043,74 @@ function renderDossierKliniekFilterResultaten(resultaten: readonly DossierZoekRe
         })
         .join('')}
     </ol>
+  `;
+}
+
+function renderDossierSearchFilterSet(input: {
+  zoekterm: string;
+  kliniek: string;
+  pogingLabel: string;
+  pogingActief: boolean;
+  resultaten: readonly DossierZoekResultaat[];
+  zoekActief: boolean;
+}): string {
+  const queryActive = Boolean(input.zoekterm.trim());
+  const clinicActive = Boolean(input.kliniek.trim());
+  const attemptActive = input.pogingActief;
+  const firstResult = input.resultaten[0]?.document;
+  const firstResultReviewStatus = firstResult
+    ? bepaalDossierKliniekFilterReviewStatus(firstResult)
+    : null;
+  const firstResultSource =
+    firstResult?.metadata?.normalisatie?.bron ?? firstResult?.metadata?.instelling ?? 'Metadata';
+  const firstResultDate =
+    firstResult?.metadata?.documentDatum ??
+    firstResult?.metadata?.normalisatie?.datum ??
+    firstResult?.datum ??
+    'Onbekend';
+  const reviewLabel =
+    firstResultReviewStatus === 'gereviewd'
+      ? 'Gereviewd'
+      : firstResultReviewStatus === 'verborgen'
+        ? 'Verborgen'
+        : firstResultReviewStatus === 'concept'
+          ? 'Concept'
+          : 'Nog geen resultaat';
+  const resultLabel = input.zoekActief
+    ? `${input.resultaten.length} resultaat${input.resultaten.length === 1 ? '' : 'en'}`
+    : 'Filterset klaar';
+
+  return `
+    <section class="dossier-search-filter-set" aria-label="Actieve dossierzoekfilters" data-dossier-search-filter-set="ready" data-dossier-search-filter-state="${input.zoekActief ? (input.resultaten.length > 0 ? 'matches' : 'empty') : 'idle'}" data-dossier-search-combined-filter="${queryActive && clinicActive && attemptActive ? 'active' : 'partial'}">
+      <div class="dossier-search-filter-set__header">
+        <div>
+          <p class="kp-card__eyebrow">Filterset</p>
+          <h4>Huidige zoekcontext</h4>
+        </div>
+        <strong>${escapeHtml(resultLabel)}</strong>
+      </div>
+      <div class="dossier-search-filter-set__lanes">
+        <span data-dossier-search-filter-lane="query" data-dossier-search-filter-lane-state="${queryActive ? 'active' : 'idle'}">
+          <small>Term</small>
+          <strong>${queryActive ? escapeHtml(input.zoekterm) : 'Geen term'}</strong>
+        </span>
+        <span data-dossier-search-filter-lane="clinic" data-dossier-search-filter-lane-state="${clinicActive ? 'active' : 'idle'}">
+          <small>Kliniek</small>
+          <strong>${clinicActive ? escapeHtml(input.kliniek) : 'Alle klinieken'}</strong>
+        </span>
+        <span data-dossier-search-filter-lane="attempt" data-dossier-search-filter-lane-state="${attemptActive ? 'active' : 'idle'}">
+          <small>Poging</small>
+          <strong>${attemptActive ? escapeHtml(input.pogingLabel) : 'Alle pogingen'}</strong>
+        </span>
+        <span data-dossier-search-filter-lane="review" data-dossier-search-filter-lane-state="${firstResultReviewStatus ?? 'idle'}">
+          <small>Controle</small>
+          <strong>${escapeHtml(reviewLabel)}</strong>
+        </span>
+      </div>
+      <p class="dossier-search-filter-set__source" data-dossier-search-filter-source="safe-metadata">
+        ${firstResult ? `Bron: ${escapeHtml(firstResultSource)} · Datum: ${escapeHtml(firstResultDate)}` : 'Bron en datum verschijnen zodra er een match is.'}
+      </p>
+    </section>
   `;
 }
 
@@ -5195,6 +5266,14 @@ function renderDossierScreen(state: AppShellState): string {
               <span>${zoekActief ? `${zoekResultaten.length} resultaten` : `${zichtbareDocumenten.length} records`}</span>
             </header>
         <div class="dossier-search-primary-control" data-dossier-search-primary-control="ready">
+        ${renderDossierSearchFilterSet({
+          zoekterm,
+          kliniek: dossierKliniekFilter,
+          pogingLabel: dossierPogingFilterLabel,
+          pogingActief: Boolean(dossierPogingFilter),
+          resultaten: zoekResultaten,
+          zoekActief,
+        })}
         <details class="dossier-search-choice" data-dossier-search-choice="collapsed">
           <summary class="dossier-search-choice__summary" data-dossier-search-choice-summary="ready">
             <span>

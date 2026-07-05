@@ -627,7 +627,10 @@ export function zoekDossierDocumenten(
   const gesorteerdeDocumenten = sorteerDossierDocumenten(items)
     .filter((document) => {
       if (!normalizedKliniek) return true;
-      return normaliseerZoektekst(document.metadata?.instelling ?? '') === normalizedKliniek;
+      return (
+        normaliseerZoektekst(document.metadata?.instelling ?? '') === normalizedKliniek ||
+        normaliseerZoektekst(document.metadata?.normalisatie?.bron ?? '') === normalizedKliniek
+      );
     })
     .filter((document) => {
       if (!normalizedPogingId) return true;

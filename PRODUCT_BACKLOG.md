@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1814 |
+| ☑ klaar | 1815 |
 | ◐ bezig | 0 |
-| ☐ open | 108 |
+| ☐ open | 107 |
 | ☒ archived | 99 |
 | **Totaal** | **2021** |
 
@@ -2180,7 +2180,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2016 | Fertility Intelligence: consultvraagkoppeling zichtbaar in vragenroute | P1 | F5 | ☑ |
 | G2017 | Fertility Intelligence: consultvraagkoppeling routeflow evidence | P1 | F5 | ☐ |
 | G2018 | Fertility Intelligence: historische records zoekfilter op poging | P1 | F5 | ☑ |
-| G2019 | Fertility Intelligence: dossier zoekfilters gecombineerde routeflow evidence | P1 | F5 | ☐ |
+| G2019 | Fertility Intelligence: dossier zoekfilters gecombineerde routeflow evidence | P1 | F5 | ☑ |
 | G2020 | Premium Claude Design UI: sticky routefocus-dock tegen lange pagina | P1 | F5 | ☑ |
 | G2021 | Premium Claude Design UI: routefocus-dock live route badges | P1 | F5 | ☑ |
 | G2022 | Premium Claude Design UI: routefocus-dock actieve route automatisch in beeld | P1 | F5 | ☑ |

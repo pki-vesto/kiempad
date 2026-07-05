@@ -218,6 +218,10 @@
   aparte kliniekfilter met veilige resultaatcontext voor bron, datum en
   reviewstatus, zodat historische records per kliniek scanbaar worden zonder
   bronpayload of behandeladvies.
+- **G2019 gecombineerde dossierzoekfilters:** Dossier Zoeken toont nu direct
+  een filtersetkaart voor vrije tekst, kliniek, poging en reviewstatus met
+  veilige bron/datumcontext; routeflow-smoke bewaakt matchende en lege
+  combinatiefilters compact zonder OCR-tekst, bronpayload of behandeladvies.
 - **G2022 routefocus-dock actieve route automatisch in beeld:** `main.ts`
   centreert de actieve routefocus-link na render en browsernavigatie, en
   routeflow-smoke bewaakt dat de actieve routeknop binnen de zichtbare linkrij
