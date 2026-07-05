@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G488 Daily Recommendations personalisatiefeedback — done in G488 / issue #817.** Dagadvieskaarten tonen nu uitlegbare personalisatie op basis van lokale feedbackstatussen; negatieve feedback verlaagt prioriteit maar verbergt vergelijkbare suggesties niet definitief.
 - **CFX-030 — done in G1320 / issue #2415.** `index.html` now defines Claude Design teal
   `theme-color` for light mode, a dark-mode variant, and no longer contains the old sage
   `#7a9471`; `manifest.webmanifest` now uses teal `theme_color` and the Kiempad page background.

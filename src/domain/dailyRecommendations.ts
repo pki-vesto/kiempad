@@ -15,6 +15,13 @@ import type {
 import { openstaandeVragen } from './vraag';
 
 export type DailyRecommendationOwner = 'vrouw' | 'man' | 'samen';
+export type DailyRecommendationFeedbackStatus =
+  | 'bewaard'
+  | 'gedaan'
+  | 'niet_passend'
+  | 'herinnering'
+  | 'bespreken'
+  | 'artscheck';
 
 export type DailyRecommendation = {
   id: string;
@@ -30,6 +37,14 @@ export type DailyRecommendation = {
   inputMinimisatie?: DailyRecommendationInputMinimization;
   cyclusfaseContext?: DailyRecommendationCyclePhaseContext;
   manLeefstijlContext?: DailyRecommendationLifestyleContext;
+};
+
+export type DailyRecommendationPersonalization = {
+  status: DailyRecommendationFeedbackStatus | 'geen_feedback';
+  label: string;
+  selectionHint: string;
+  explainability: string;
+  negativeFeedbackIsTemporary: boolean;
 };
 
 export type DailyRecommendationChecklistItem = {
@@ -361,6 +376,74 @@ export type DailyRecommendationPolicyRegressionViolation = {
   fixtureId: string;
   reden: string;
 };
+
+export function bouwDailyRecommendationPersonalisatie(
+  status?: DailyRecommendationFeedbackStatus,
+): DailyRecommendationPersonalization {
+  if (!status) {
+    return {
+      status: 'geen_feedback',
+      label: 'Nog geen feedback',
+      selectionHint: 'Normale selectie',
+      explainability:
+        'Deze suggestie blijft zichtbaar omdat er nog geen lokale feedbackstatus bekend is.',
+      negativeFeedbackIsTemporary: false,
+    };
+  }
+
+  if (status === 'niet_passend') {
+    return {
+      status,
+      label: 'Niet passend',
+      selectionHint: 'Lager prioriteren, niet verbergen',
+      explainability:
+        'Niet passend betekent: lager prioriteren en uitleg tonen. Vergelijkbare suggesties worden niet definitief verborgen.',
+      negativeFeedbackIsTemporary: true,
+    };
+  }
+
+  const uitleg: Record<
+    Exclude<DailyRecommendationFeedbackStatus, 'niet_passend'>,
+    Omit<DailyRecommendationPersonalization, 'status' | 'negativeFeedbackIsTemporary'>
+  > = {
+    bewaard: {
+      label: 'Bewaard',
+      selectionHint: 'Makkelijk terugvinden',
+      explainability:
+        'Deze suggestie is lokaal bewaard en mag later opnieuw als relevante context terugkomen.',
+    },
+    gedaan: {
+      label: 'Gedaan',
+      selectionHint: 'Herhaalbaar als context',
+      explainability:
+        'Deze suggestie is eerder gedaan. Kiempad kan dit gebruiken om vervolgcontext te tonen zonder vergelijkbare suggesties automatisch te blokkeren.',
+    },
+    herinnering: {
+      label: 'Herinnering',
+      selectionHint: 'Planningcontext tonen',
+      explainability:
+        'Voor deze suggestie bestaat herinneringscontext. Kiempad kan planning eerst tonen wanneer dit opnieuw relevant is.',
+    },
+    bespreken: {
+      label: 'Bespreken',
+      selectionHint: 'Artsgesprek voorbereiden',
+      explainability:
+        'Deze suggestie is naar een bespreekvraag omgezet en blijft zichtbaar als consultvoorbereiding.',
+    },
+    artscheck: {
+      label: 'Artscheck',
+      selectionHint: 'Artscheck eerst',
+      explainability:
+        'Deze suggestie vraagt artscheck en blijft gekoppeld aan consultvoorbereiding, niet aan behandeladvies.',
+    },
+  };
+
+  return {
+    status,
+    ...uitleg[status],
+    negativeFeedbackIsTemporary: false,
+  };
+}
 
 type DailyRecommendationPolicyFixture = {
   id: string;

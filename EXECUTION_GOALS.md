@@ -14490,7 +14490,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, encrypted storage, personalization, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #817
 
 ### G489 — supplement boundary en artscheck
 
@@ -18092,6 +18093,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3893
+
+### G1979 — Daily Recommendations: personalization feedback routeflow evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G488 toont personalisatiefeedback in dagadvieskaarten, maar aparte browser-/routeflow-evidence moet nog bewaken dat status, selectiehint en negatieve-feedbackuitleg zichtbaar blijven.
+- **User Impact:** Een latere thema- of layoutwijziging kan de uitleg rond niet-passende suggesties laten wegvallen terwijl unit-tests nog groen blijven.
+- **Desired Outcome:** Routeflow- of browser-smoke bewaakt personalisatie-uitleg voor feedbackstatussen op desktop, tablet en mobiel.
+- **User Value:** Gebruikers blijven begrijpen waarom suggesties terugkomen of lager prioriteren nadat zij feedback hebben gegeven.
+- **Acceptance Criteria:** Evidence opent dagadvies met feedbackstatus; `data-daily-recommendation-personalization="ready"` en status/temporary hooks blijven zichtbaar; `niet_passend` toont dat vergelijkbare suggesties niet definitief verborgen worden; geen diagnose, dosering, kansberekening, behandelkeuzeadvies, OCR-tekst, bestandsinhoud, secrets of trackingpayloads; backlog health blijft op minimaal 100 open goals.
+- **Affected Screens:** Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations UI, routeflow smoke, feedback evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3896
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

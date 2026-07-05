@@ -71,6 +71,10 @@
   publicatieperiode, bron, update-status, laatste check en relevantie-uitleg naast
   de bestaande trendscan, zodat ontwikkelingen scanbaar blijven zonder
   bewijsweging, diagnose of behandeladvies.
+- **G488 Dagadvies personalisatiefeedback:** lokale feedbackstatussen uit encrypted
+  eventlogs tonen per suggestie hoe Kiempad de status gebruikt, inclusief uitleg
+  dat niet-passend lager prioriteert maar vergelijkbare suggesties niet
+  definitief verbergt.
 - **G567 Dossierupload groottefeedback:** de eerste uploadstap toont een aparte
   groottecontrole met per-bestandlimiet, selectielimiet, centrale 413-context en
   herstelbare retry-copy zonder bestandsnamen, OCR-tekst of medische inhoud in de

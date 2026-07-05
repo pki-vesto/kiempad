@@ -27,6 +27,7 @@ import {
 } from './domain/consultVerslag';
 import {
   bouwDagelijksAanbevelingsoverzicht,
+  bouwDailyRecommendationPersonalisatie,
   type DailyRecommendation,
   type DailyRecommendationOverview,
   type DailyRecommendationOwner,
@@ -18508,6 +18509,7 @@ function renderDailyRecommendationItem(
   feedbackStatus?: FertilityTimelineAanbevelingFeedbackStatus,
 ): string {
   const meta = `Eigenaar: ${DAILY_RECOMMENDATION_OWNER_LABELS[item.owner]}${item.datum ? ` · Datum: ${item.datum}` : ''}${item.reden ? ` · Reden: ${item.reden}` : ''}`;
+  const personalisatie = bouwDailyRecommendationPersonalisatie(feedbackStatus);
   return recommendationCard({
     id: item.id,
     owner: item.owner,
@@ -18529,6 +18531,9 @@ function renderDailyRecommendationItem(
           ? `<p class="small-print" data-daily-recommendation-feedback-status="${escapeAttribute(feedbackStatus)}">Feedbackstatus: ${escapeHtml(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[feedbackStatus])}</p>`
           : ''
       }
+      <p class="small-print daily-recommendation-personalization" data-daily-recommendation-personalization="ready" data-daily-recommendation-personalization-status="${escapeAttribute(personalisatie.status)}" data-daily-recommendation-personalization-negative-temporary="${personalisatie.negativeFeedbackIsTemporary ? 'true' : 'false'}">
+        Personalisatie: ${escapeHtml(personalisatie.label)} · ${escapeHtml(personalisatie.selectionHint)}. ${escapeHtml(personalisatie.explainability)}
+      </p>
       ${
         item.checklist
           ? `<ol class="compact-list rec-checklist">${item.checklist
