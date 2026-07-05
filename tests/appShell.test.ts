@@ -5920,9 +5920,16 @@ describe('app shell', () => {
     expect(mobileCss).toContain('flex: 0 1 auto;');
     expect(mobileCss).toContain('max-width: min(88px, 46%);');
     expect(mobileCss).toContain('min-width: 0;');
+    expect(mobileCss).toContain('min-height: 23px;');
+    expect(mobileCss).toContain('padding: 3px 7px;');
     expect(mobileCss).toContain('background: ButtonFace;');
     expect(mobileCss).toContain('color: ButtonText;');
+    expect(mobileCss).toContain('line-height: 1.18;');
     expect(mobileCss).toContain('white-space: nowrap;');
+    expect(mobileCss).toContain(
+      '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {',
+    );
+    expect(mobileCss).toContain('margin-top: 4px;');
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');

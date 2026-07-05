@@ -203,6 +203,9 @@
 - **Treatment mobile rail forced-colors inactive focus cue fit polish — done in G1902 / issue #3746.**
   Inactive focused mobile Traject badge and cue pills now have explicit forced-colors width and
   ellipsis handling, so status pills stay compact without displacing labels.
+- **Treatment mobile rail forced-colors inactive focus cue rhythm polish — done in G1903 / issue #3748.**
+  Inactive focused mobile Traject badge and cue pills now have explicit forced-colors min-height,
+  padding, line-height and cue spacing, keeping compact status pills readable.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

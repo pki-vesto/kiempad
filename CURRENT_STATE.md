@@ -259,6 +259,10 @@
   gefocuste mobiele Traject badge- en cuepills krijgen expliciete
   forced-colors breedte- en ellipsisregels, zodat statuspills compact blijven
   zonder labels te verdringen.
+- **G1903 Traject mobile forced-colors inactive focus cue rhythm:** inactieve
+  gefocuste mobiele Traject badge- en cuepills krijgen expliciete
+  forced-colors min-height, padding, line-height en cue-afstand, zodat compacte
+  statuspills leesbaar blijven.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
