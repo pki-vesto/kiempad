@@ -79,6 +79,10 @@
   Herinneringen Komend now opens with one compact notification board for permission, planning,
   privacy, and reminder history before the fallback and upcoming reminders disclosures,
   preserving status, privacy, planning, fallback, and reminder anchors on desktop and mobile.
+- **Event log history first-viewport audit board — done in G1872 / issue #3686.** Logboek
+  Recent now opens with one compact audit board for privacy status, attention points, system
+  categories, and audit history before the full recent-event disclosure, preserving overview,
+  recent, category, privacy, timeline, and privacy-followup anchors on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

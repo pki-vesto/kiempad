@@ -120,6 +120,11 @@
   herinneringsgeschiedenis. De volledige fallback- en herinneringenlijsten blijven
   via bestaande status-, privacy-, plannen- en komendankers bereikbaar zonder de
   eerste viewport als lange meldingenstapel te vullen.
+- **G1872 Logboek audit board:** de Logboek-recente-route start met een compact
+  audit board voor privacystatus, aandachtspunten, systeemcategorieen en
+  audithistorie. De volledige event- en privacytijdlijnen blijven via bestaande
+  overzicht-, recent-, categorieen- en privacyankers bereikbaar zonder de eerste
+  viewport als lange auditstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
