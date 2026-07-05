@@ -1183,6 +1183,7 @@ const targets = [
     dossierConsole: true,
     uploadConsole: true,
     attachmentEnvelopeBatchStatus: true,
+    attachmentEnvelopeBatchForcedColors: true,
     smallMobileViewport: true,
   },
   {
@@ -1890,6 +1891,12 @@ async function assertRouteflows(browser, options) {
     for (const target of targets) {
       if (options.label === 'small-mobile' && !target.smallMobileViewport) continue;
       try {
+        await page.emulateMedia({
+          forcedColors:
+            target.attachmentEnvelopeBatchForcedColors && options.label !== 'small-mobile'
+              ? 'active'
+              : 'none',
+        });
         await page.goto(`${url}${target.hash}`, { waitUntil: 'networkidle' });
       await unlockIfNeeded(page, target.hash);
       if (target.prepare === 'filled-consult-card') {
@@ -1931,6 +1938,7 @@ async function assertRouteflows(browser, options) {
         await waitForActiveWorkspaceStripButton(page);
       }
       let imageOpenFieldFocus = null;
+      let attachmentEnvelopeBatchForcedColors = null;
       if (target.imageOpenFieldFocus) {
         const focusSelector =
           '[data-dossier-upload-image-open-fields="compact-rhythm"] label[data-dossier-upload-image-field] > input';
@@ -2018,6 +2026,15 @@ async function assertRouteflows(browser, options) {
           undefined,
           { timeout: 10_000 },
         );
+        if (target.attachmentEnvelopeBatchForcedColors && options.label !== 'small-mobile') {
+          attachmentEnvelopeBatchForcedColors = {
+            hashing: await collectAttachmentEnvelopeBatchForcedColors(page, {
+              batch: 'hash-pending',
+              progress: 'hashing',
+            }),
+            completeInvalid: await collectAttachmentEnvelopeBatchForcedColors(page),
+          };
+        }
       }
       if (target.dailyAdviceFeedbackNavigation) {
         await assertDailyAdviceFeedbackNavigation(page);
@@ -3024,6 +3041,7 @@ async function assertRouteflows(browser, options) {
         };
       }, { routeflow: target, viewportLabel: options.label });
       evidence.imageOpenFieldFocus = imageOpenFieldFocus;
+      evidence.attachmentEnvelopeBatchForcedColors = attachmentEnvelopeBatchForcedColors;
       const screenshot = await root.screenshot({ animations: 'disabled' });
 
       if (pageErrors.length > 0) {
@@ -3346,6 +3364,37 @@ async function assertRouteflows(browser, options) {
           )}).`,
         );
       }
+      if (evidence.attachmentEnvelopeBatchForcedColors) {
+        const forcedColors = evidence.attachmentEnvelopeBatchForcedColors;
+        const hashing = forcedColors.hashing ?? {};
+        const completeInvalid = forcedColors.completeInvalid ?? {};
+        const combinedText = `${hashing.text ?? ''} ${completeInvalid.text ?? ''}`;
+        if (
+          !hashing.forcedColorsActive ||
+          !completeInvalid.forcedColorsActive ||
+          !hashing.visible ||
+          !completeInvalid.visible ||
+          hashing.progress !== 'hashing' ||
+          completeInvalid.progress !== 'complete' ||
+          completeInvalid.state !== 'invalid' ||
+          hashing.borderLeftStyle === 'none' ||
+          hashing.titleTextDecorationLine === 'none' ||
+          completeInvalid.borderLeftStyle === 'none' ||
+          completeInvalid.outlineStyle === 'none' ||
+          completeInvalid.titleTextDecorationStyle !== 'double' ||
+          /routeflow|\.pdf|\.jpg|\.jpeg|base64|OCR|diagnose|behandelkeuzeadvies/i.test(
+            combinedText,
+          ) ||
+          hashing.scrollWidth > hashing.clientWidth + 1 ||
+          completeInvalid.scrollWidth > completeInvalid.clientWidth + 1
+        ) {
+          throw new Error(
+            `${options.label}/${target.screen}: attachment-envelope forced-colors batchprogress mist onderscheidende evidence (${JSON.stringify(
+              forcedColors,
+            )}).`,
+          );
+        }
+      }
       if (
         (options.label === 'mobile' || options.label === 'small-mobile') &&
         evidence.uploadConsole &&
@@ -3654,6 +3703,45 @@ async function assertRouteflows(browser, options) {
   } finally {
     await context.close();
   }
+}
+
+async function collectAttachmentEnvelopeBatchForcedColors(page, stateOverride) {
+  return page.evaluate((override) => {
+    const batch = document.querySelector('[data-attachment-envelope-batch]');
+    const originalBatch =
+      batch instanceof HTMLElement ? batch.dataset.attachmentEnvelopeBatch : undefined;
+    const originalProgress =
+      batch instanceof HTMLElement ? batch.dataset.attachmentEnvelopeProgress : undefined;
+    if (batch instanceof HTMLElement && override) {
+      batch.dataset.attachmentEnvelopeBatch = override.batch;
+      batch.dataset.attachmentEnvelopeProgress = override.progress;
+    }
+    const title = batch?.querySelector('strong');
+    const batchStyle = batch instanceof HTMLElement ? getComputedStyle(batch) : null;
+    const titleStyle = title instanceof HTMLElement ? getComputedStyle(title) : null;
+    const rect = batch?.getBoundingClientRect();
+    const evidence = {
+      forcedColorsActive: window.matchMedia('(forced-colors: active)').matches,
+      visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+      state: batch instanceof HTMLElement ? batch.dataset.attachmentEnvelopeBatch ?? '' : '',
+      progress: batch instanceof HTMLElement ? batch.dataset.attachmentEnvelopeProgress ?? '' : '',
+      text: batch?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      borderLeftStyle: batchStyle?.borderLeftStyle ?? '',
+      borderLeftWidth: batchStyle?.borderLeftWidth ?? '',
+      outlineStyle: batchStyle?.outlineStyle ?? '',
+      outlineWidth: batchStyle?.outlineWidth ?? '',
+      titleColor: titleStyle?.color ?? '',
+      titleTextDecorationLine: titleStyle?.textDecorationLine ?? '',
+      titleTextDecorationStyle: titleStyle?.textDecorationStyle ?? '',
+      scrollWidth: batch instanceof HTMLElement ? batch.scrollWidth : 0,
+      clientWidth: batch instanceof HTMLElement ? batch.clientWidth : 0,
+    };
+    if (batch instanceof HTMLElement) {
+      batch.dataset.attachmentEnvelopeBatch = originalBatch ?? '';
+      batch.dataset.attachmentEnvelopeProgress = originalProgress ?? '';
+    }
+    return evidence;
+  }, stateOverride);
 }
 
 async function assertWorkspaceStripHistoryNavigation(page, viewportLabel) {
