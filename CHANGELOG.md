@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1863 Premium Claude Design UI: Dagadvies opent nu met een eerste-viewport
+  beslisbord voor vrouw, man, samen en artscheck. De volledige suggestielijst en
+  eigenaarwerkbank blijven bereikbaar als vervolgcontext, zodat de route niet als
+  één lange lijst start.
 - G1862 Premium Claude Design UI: researchsamenvattingen openen nu met een
   eerste-viewport leesbord voor wetenschappelijke samenvatting, eenvoudige uitleg,
   relevantie en broncontext. De volledige lijsten, bronnen en trends blijven via

@@ -79,6 +79,10 @@
   wetenschappelijke samenvatting, eenvoudige uitleg, relevantie en broncontext.
   Mobiel blijft het bord horizontaal scanbaar en de bestaande bron-/trendanchors
   blijven intact.
+- **G1863 Dagadvies beslisbord:** de Dagadviesroute start met een compact
+  eerste-viewport beslisbord voor vrouw, man, samen en artscheck. De actieplanner,
+  eigenaarwerkbank en volledige suggestielijst blijven bereikbaar als vervolgcontext
+  zonder als één lange pagina te openen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

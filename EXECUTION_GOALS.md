@@ -16233,8 +16233,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 87
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3668
+
+### G1864 — Premium Claude Design UI: dossier timeline first-viewport event board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De Dossier-tijdlijnroute kan nog als lange eventstapel openen wanneer uploads, consulten, imaging en embryocontext tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welk dossiermoment of welke bron eerst controle nodig heeft.
+- **Desired Outcome:** Dossier timeline opent met een compact first-viewport event board voor uploads, consults, imaging en embryocontext.
+- **User Value:** De medische dossierhistorie voelt sneller navigeerbaar zonder upload-, OCR-, review- of privacyhooks te verliezen.
+- **Acceptance Criteria:** Dossier timeline opent met compacte lanes voor uploads, consults, imaging en embryocontext; volledige timeline/eventlijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande upload-, OCR-, review- en privacyhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen diagnose, dosering, behandelkeuzeadvies, token, secret, medische plaintext of filenames worden toegevoegd.
+- **Affected Screens:** Dossier, Fertility Timeline
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier timeline UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 86
+- **Status:** ☐ open
+- **Issue:** #3670
 
 ### G586 — replay conflict recovery status UI
 
