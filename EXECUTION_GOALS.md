@@ -18456,8 +18456,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research sources, release evidence, maintenance tests
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3936
+
+### G2000 — Research Intelligence: offline cache metadata release-state contract error-contract release guard
+
+- **Epic:** Research Intelligence
+- **Problem:** Het G1999 contracterror missing-term foutmeldingcontract is gesnapshott, maar release-evidence bewaakt nog niet apart dat dit compacte contract zichtbaar blijft.
+- **User Impact:** Beheer kan anders pas laat zien dat het contract wel bestaat maar niet meer vanuit changelog/current-state aantoonbaar is.
+- **Desired Outcome:** Release-context verwijst expliciet naar het G1999 offline cache metadata release-state contract error missing-term error contract met veilige technische labels.
+- **User Value:** Onderhoud kan contracterror error-contractdrift controleren zonder medische payload of lange documentcontext.
+- **Acceptance Criteria:** Release context references the G1999 compact contract-error release missing-term error contract; evidence uses only safe technical labels for offline cache metadata contract error release errors; output avoids diagnosis, dosage, chance calculation, treatment-choice advice, secrets, health payloads and plaintext medical payloads; backlog/docs stay aligned.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research sources, release evidence, maintenance tests
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3938
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
