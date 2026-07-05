@@ -146,6 +146,22 @@ wordt gewijzigd.
   completion-audit en maintenance-test synchroon blijft; `npm run assets:check`
   blijft onderdeel van de CI-validatie.
 
+## Attachment-Envelope Forced-Colors Evidence
+
+Gebruik deze aanvullende evidence wanneer attachment-envelope batchstatus, uploadbatchcopy
+of forced-colors styling rond dossieruploads wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `attachmentEnvelopeBatchForcedColorsEvidence` in de dossier-upload route.
+- **Command:** `npm run smoke:routeflows` bouwt voort op de productiebuild en controleert
+  hashing plus complete/invalid states met forced-colors emulatie rond alleen de
+  batchstatusmeting.
+- **Scope:** de evidence bewaakt onderscheidende hashing-, complete- en invalid-cues,
+  inclusief horizontale en verticale overflow op desktop, tablet, mobile en small-mobile.
+- **Privacygrens:** blijvende evidence mag geen filename, token, secret, base64,
+  OCR-tekst, record payload, medische plaintext, diagnose of behandelkeuzeadvies
+  bevatten. Houd `attachmentEnvelopeEvidencePrivacyPattern` en deze sectie synchroon.
+
 ## Beslissing
 
 Markeer een doel alleen als `☑ klaar` wanneer ieder requirement direct bewijs heeft.

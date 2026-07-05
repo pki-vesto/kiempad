@@ -38,6 +38,7 @@ import readme from '../README.md?raw';
 import roadmap from '../ROADMAP.md?raw';
 import security from '../SECURITY.md?raw';
 import governanceContract from '../scripts/bootstrap-governance-freshness-contract.json';
+import routeflowScreenshotSmokeScript from '../scripts/routeflow-screenshot-smoke.mjs?raw';
 import { DISCLAIMER } from '../src/appShell';
 import { BOOTSTRAP_SMOKE_PHASE_CODES } from '../src/storage/centralBootstrapDiagnostics';
 import centralHealthContractSource from '../src/storage/centralHealthContract.ts?raw';
@@ -3927,6 +3928,44 @@ describe('onderhoudsdocumentatie', () => {
       expect(goalCompletionAudit).toContain(forbiddenTerm);
       expect(runbook).toContain(forbiddenTerm);
     }
+  });
+
+  it('documenteert G1858 attachment-envelope forced-colors routeflow evidence en privacygrens', () => {
+    const requiredTerms = [
+      'Attachment-envelope forced-colors evidence',
+      'scripts/routeflow-screenshot-smoke.mjs',
+      'attachmentEnvelopeBatchForcedColorsEvidence',
+      'attachmentEnvelopeEvidencePrivacyPattern',
+      'npm run smoke:routeflows',
+      'hashing plus complete/invalid states',
+      'horizontale en verticale overflow',
+      'small-mobile',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'filename',
+      'token',
+      'secret',
+      'base64',
+      'OCR-tekst',
+      'record payload',
+      'medische plaintext',
+      'diagnose',
+      'behandelkeuzeadvies',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'assertAttachmentEnvelopeBatchForcedColorsEvidence',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('hasHorizontalOverflow');
+    expect(routeflowScreenshotSmokeScript).toContain('hasVerticalOverflow');
   });
 
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {

@@ -79,6 +79,15 @@ pad zonder lokale vault-hercreatie.
   commando alleen samen met `docs/GOAL_COMPLETION_AUDIT.md`,
   `.github/workflows/ci.yml` en `tests/maintenanceDocs.test.ts`; `npm run assets:check`
   blijft onderdeel van dezelfde CI-run.
+- **Attachment-envelope forced-colors evidence (G1858):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de dossier-upload route
+  `attachmentEnvelopeBatchForcedColorsEvidence` te verzamelen. De smoke emuleert
+  forced-colors alleen rond de batchstatusmeting en controleert hashing plus
+  complete/invalid states op onderscheidende cues en horizontale/verticale overflow,
+  ook op small-mobile. Blijvende evidence mag geen filename, token, secret, base64,
+  OCR-tekst, record payload, medische plaintext, diagnose of behandelkeuzeadvies
+  bevatten; houd `attachmentEnvelopeEvidencePrivacyPattern` synchroon met deze
+  privacygrens.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en
   herlaadt de app-shell.

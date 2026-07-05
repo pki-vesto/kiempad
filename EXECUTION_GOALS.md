@@ -16148,8 +16148,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Routeflow smoke, docs, attachment envelope tests
 - **ADR Needed:** no
 - **Score:** 93
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3658
+
+### G1859 — Attachment envelope forced-colors evidence release note audit
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De forced-colors batch evidence staat in runbook/auditdocs, maar release-achtige auditnotities kunnen nog explicieter naar de dekking verwijzen.
+- **User Impact:** Releasechecks kunnen de evidence missen wanneer alleen changelog- of releasecontext wordt gelezen.
+- **Desired Outcome:** Release/auditdocs noemen forced-colors batch evidence zonder implementatiedrift of privacygevoelige details.
+- **User Value:** Regressiedekking blijft vindbaar bij releasevoorbereiding.
+- **Acceptance Criteria:** Release/auditdocs noemen forced-colors batch evidence zonder implementatiedrift; backlog/docs verwijzen naar het doel; evidence vermijdt filename, token, secret, base64, OCR-tekst, recordpayload en medische plaintext.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, release audit, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 92
+- **Status:** ☐ open
+- **Issue:** #3660
 
 ### G586 — replay conflict recovery status UI
 
