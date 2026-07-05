@@ -1015,6 +1015,29 @@ const targets = [
     smallMobileViewport: true,
   },
   {
+    screen: 'daily-advice-supplement-artscheck-action',
+    hash: '#start-recommendations',
+    rootSelector: '[data-daily-advice-focus-shell="ready"]',
+    expectedText: 'Voeding en supplementen checklijst',
+    openSelectors: [
+      '[data-daily-advice-followup="collapsed"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-advice-full-list="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-daily-advice-focus-shell="ready"]',
+      '[data-daily-advice-console="ready"]',
+      '[data-daily-advice-list-mode="dual-owner-cards"]',
+      '[data-recommendation-checklist-item="artscheck-required"]',
+      '[data-recommendation-checklist-item="artscheck-required"] [data-supplement-checklist-label="ready"]',
+      '[data-recommendation-checklist-item="artscheck-required"] [data-supplement-checklist-source="ready"]',
+      '[data-recommendation-checklist-item="artscheck-required"] [data-supplement-artscheck-action="available"]',
+      '[data-recommendation-checklist-item="artscheck-required"] button[name="recommendationAction"][value="supplementArtscheck"]',
+      '[data-recommendation-checklist-item="standard"]',
+    ],
+    dailyAdviceSupplementArtscheckAction: true,
+  },
+  {
     screen: 'dossier-imaging',
     hash: '#dossier?route=imaging',
     rootSelector: '#dossier-route-imaging',
@@ -2404,6 +2427,66 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const dailyAdviceSupplementArtscheckAction = routeflow.dailyAdviceSupplementArtscheckAction
+          ? (() => {
+              const list = document.querySelector('[data-daily-advice-list-mode="dual-owner-cards"]');
+              const artscheckItem = document.querySelector(
+                '[data-recommendation-checklist-item="artscheck-required"]',
+              );
+              const standardItems = [
+                ...document.querySelectorAll('[data-recommendation-checklist-item="standard"]'),
+              ];
+              const label = artscheckItem?.querySelector('[data-supplement-checklist-label="ready"]');
+              const source = artscheckItem?.querySelector(
+                '[data-supplement-checklist-source="ready"]',
+              );
+              const action = artscheckItem?.querySelector(
+                '[data-supplement-artscheck-action="available"]',
+              );
+              const button = action?.querySelector(
+                'button[name="recommendationAction"][value="supplementArtscheck"]',
+              );
+              const itemRect = artscheckItem?.getBoundingClientRect();
+              const labelRect = label?.getBoundingClientRect();
+              const sourceRect = source?.getBoundingClientRect();
+              const actionRect = action?.getBoundingClientRect();
+              const buttonRect = button?.getBoundingClientRect();
+              const listRect = list?.getBoundingClientRect();
+              const actionStyle = action instanceof HTMLElement ? getComputedStyle(action) : null;
+              const buttonStyle = button instanceof HTMLElement ? getComputedStyle(button) : null;
+              const standardActionCount = standardItems.reduce(
+                (count, item) =>
+                  count + item.querySelectorAll('[data-supplement-artscheck-action]').length,
+                0,
+              );
+              const text = artscheckItem?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                listVisible: Boolean(listRect && listRect.width > 0 && listRect.height > 0),
+                itemVisible: Boolean(itemRect && itemRect.width > 0 && itemRect.height > 0),
+                labelVisible: Boolean(labelRect && labelRect.width > 0 && labelRect.height > 0),
+                sourceVisible: Boolean(sourceRect && sourceRect.width > 0 && sourceRect.height > 0),
+                actionVisible: Boolean(actionRect && actionRect.width > 0 && actionRect.height > 0),
+                buttonVisible: Boolean(buttonRect && buttonRect.width > 0 && buttonRect.height > 0),
+                labelText: label?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                sourceText: source?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                buttonText: button?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                actionJustifySelf: actionStyle?.justifySelf ?? '',
+                actionWidth: actionStyle?.width ?? '',
+                buttonWhiteSpace: buttonStyle?.whiteSpace ?? '',
+                standardItemCount: standardItems.length,
+                standardActionCount,
+                hasForbiddenText: /(\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ie|ml)|interactieclaim|vervang behandeling|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD|secret|token|base64)/i.test(
+                  text,
+                ),
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  (itemRect && listRect ? itemRect.right > listRect.right + 1 : true) ||
+                  (buttonRect && itemRect ? buttonRect.right > itemRect.right + 1 : true),
+              };
+            })()
+          : null;
         const startLaunchpad = routeflow.startLaunchpad
           ? (() => {
               const header = document.querySelector('[data-start-launchpad-region="header"]');
@@ -3169,6 +3252,7 @@ async function assertRouteflows(browser, options) {
           startConsole,
           dailyAdviceConsole,
           dailyAdviceCompactList,
+          dailyAdviceSupplementArtscheckAction,
           startLaunchpad,
           uploadConsole,
           attachmentEnvelopeBatchStatus,
@@ -3510,6 +3594,27 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: mobiele dagadvieslijst is niet compact of verliest acties/disclaimer (${JSON.stringify(evidence.dailyAdviceCompactList)}).`,
+        );
+      }
+      if (
+        evidence.dailyAdviceSupplementArtscheckAction &&
+        (!evidence.dailyAdviceSupplementArtscheckAction.listVisible ||
+          !evidence.dailyAdviceSupplementArtscheckAction.itemVisible ||
+          !evidence.dailyAdviceSupplementArtscheckAction.labelVisible ||
+          !evidence.dailyAdviceSupplementArtscheckAction.sourceVisible ||
+          !evidence.dailyAdviceSupplementArtscheckAction.actionVisible ||
+          !evidence.dailyAdviceSupplementArtscheckAction.buttonVisible ||
+          !evidence.dailyAdviceSupplementArtscheckAction.labelText ||
+          !evidence.dailyAdviceSupplementArtscheckAction.sourceText.includes('Bron:') ||
+          !evidence.dailyAdviceSupplementArtscheckAction.sourceText.includes('Artscheck verplicht') ||
+          evidence.dailyAdviceSupplementArtscheckAction.buttonText !== 'Maak artscheckvraag' ||
+          evidence.dailyAdviceSupplementArtscheckAction.standardItemCount < 1 ||
+          evidence.dailyAdviceSupplementArtscheckAction.standardActionCount !== 0 ||
+          evidence.dailyAdviceSupplementArtscheckAction.hasForbiddenText ||
+          evidence.dailyAdviceSupplementArtscheckAction.hasHorizontalOverflow)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: supplement-artscheckactie mist scanbare routeflow-evidence of lekt medische payload (${JSON.stringify(evidence.dailyAdviceSupplementArtscheckAction)}).`,
         );
       }
       if (

@@ -17543,8 +17543,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations, supplement checklist, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3828
+
+### G1946 — Daily Recommendations: supplement artscheck action release evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** De supplement-artscheckactie heeft routeflow-evidence, maar release- en onderhoudsdocumentatie kan nog explicieter bewaken dat deze per-regel actie vindbaar blijft naast de dagadvieslijst.
+- **User Impact:** Gebruikers kunnen later regressies missen als releasechecks niet expliciet noemen dat supplementvragen veilig naar consultvoorbereiding kunnen worden omgezet.
+- **Desired Outcome:** Release- of onderhoudsevidence verwijst expliciet naar de supplement-artscheck routeflow target en bewaakt dat label, bron/disclaimer en actieknop gekoppeld blijven.
+- **User Value:** Gebruikers houden vertrouwen dat supplementvragen veilig naar consultvoorbereiding kunnen worden omgezet zonder dat Kiempad doserings- of behandeladvies suggereert.
+- **Acceptance Criteria:** Release- of onderhoudsdocumentatie noemt de supplement artscheck actieflow evidence expliciet; de verwijzing blijft gekoppeld aan `data-supplement-artscheck-action` en `recommendationAction=supplementArtscheck`; geen dosering, interactieclaim, behandelvervanging, medische payload, secrets of trackingpayload wordt toegevoegd; backlog/docs blijven synchroon.
+- **Affected Screens:** Dagadvies, Start
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations, supplement checklist, release evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3838
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

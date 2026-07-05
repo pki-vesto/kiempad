@@ -228,6 +228,20 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceCompactList');
     expect(routeflowScreenshotSmokeScript).toContain('listChoicePaddingTop');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'daily-advice-supplement-artscheck-action'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceSupplementArtscheckAction');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-supplement-artscheck-action="available"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'button[name="recommendationAction"][value="supplementArtscheck"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('standardActionCount !== 0');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'supplement-artscheckactie mist scanbare routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('fullListBodyGap');
     expect(routeflowScreenshotSmokeScript).toContain('ghostActionsVisible');
     expect(routeflowScreenshotSmokeScript).toContain('disclaimerVisible');

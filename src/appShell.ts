@@ -18483,12 +18483,12 @@ function renderDailyRecommendationChecklistItem(
   index: number,
 ): string {
   return `
-                  <li data-recommendation-checklist-item="${escapeAttribute(checklistItem.artscheck ? 'artscheck-required' : 'standard')}">
-                    <span>${escapeHtml(checklistItem.label)}</span>
-                    <small>Bron: ${escapeHtml(checklistItem.bron)} · ${escapeHtml(checklistItem.disclaimer)}${checklistItem.artscheck ? ` · ${escapeHtml(checklistItem.artscheck.label)}` : ''}</small>
+                  <li class="rec-checklist__item" data-recommendation-checklist-item="${escapeAttribute(checklistItem.artscheck ? 'artscheck-required' : 'standard')}">
+                    <span data-supplement-checklist-label="ready">${escapeHtml(checklistItem.label)}</span>
+                    <small data-supplement-checklist-source="ready">Bron: ${escapeHtml(checklistItem.bron)} · ${escapeHtml(checklistItem.disclaimer)}${checklistItem.artscheck ? ` · ${escapeHtml(checklistItem.artscheck.label)}` : ''}</small>
                     ${
                       checklistItem.artscheck
-                        ? `<form class="supplement-artscheck-action-form compact-form" data-supplement-artscheck-action="available">
+                        ? `<form class="supplement-artscheck-action-form compact-form" data-supplement-artscheck-action="available" data-supplement-artscheck-row-action="ready">
                             <input type="hidden" name="recommendationId" value="${escapeAttribute(item.id)}" />
                             <input type="hidden" name="titel" value="${escapeAttribute(item.titel)}" />
                             <input type="hidden" name="detail" value="${escapeAttribute(item.detail)}" />

@@ -3625,6 +3625,12 @@ describe('app shell', () => {
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('.rec-overflow__toggle:hover,');
     expect(css).toContain('.rec-overflow__toggle:focus-visible {');
+    expect(css).toContain('.rec-checklist li {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(css).toContain('.supplement-artscheck-action-form {');
+    expect(css).toContain('justify-self: end;');
+    expect(css).toContain('.supplement-artscheck-action-form .rec-action {');
+    expect(css).toContain('white-space: nowrap;');
     expect(css).toContain('.start-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.start-snapshot__card {');
@@ -3689,6 +3695,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain(
       'grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(40px, auto);',
     );
+    expect(mobileCss).toContain('.daily-recommendation-list--dual-owner .rec-checklist li {');
+    expect(mobileCss).toContain(
+      '.daily-recommendation-list--dual-owner .supplement-artscheck-action-form {',
+    );
+    expect(mobileCss).toContain('justify-self: stretch;');
+    expect(mobileCss).toContain(
+      '.daily-recommendation-list--dual-owner .supplement-artscheck-action-form .rec-action {',
+    );
+    expect(mobileCss).toContain('white-space: normal;');
     expect(mobileCss).toContain('.daily-recommendation-list--dual-owner .rec-action--primary {');
     expect(mobileCss).toContain('grid-column: 1 / -1;');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
@@ -4090,10 +4105,14 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain(
       'data-recommendation-checklist-item="artscheck-required"',
     );
+    expect(emptyContextRecommendations).toContain('class="rec-checklist__item"');
+    expect(emptyContextRecommendations).toContain('data-supplement-checklist-label="ready"');
+    expect(emptyContextRecommendations).toContain('data-supplement-checklist-source="ready"');
     expect(emptyContextRecommendations).toContain(
       'class="supplement-artscheck-action-form compact-form"',
     );
     expect(emptyContextRecommendations).toContain('data-supplement-artscheck-action="available"');
+    expect(emptyContextRecommendations).toContain('data-supplement-artscheck-row-action="ready"');
     expect(emptyContextRecommendations).toContain('name="supplementChecklistIndex"');
     expect(emptyContextRecommendations).toContain('name="supplementChecklistLabel"');
     expect(emptyContextRecommendations).toContain(
