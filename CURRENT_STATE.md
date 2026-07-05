@@ -240,6 +240,10 @@
   actieve mobiele Traject-route krijgt in forced-colors eigen labelnadruk en
   begrensde cue-uitlijning, zodat label, badge en cue binnen de volle kaart
   duidelijk gescheiden blijven.
+- **G1898 Traject mobile forced-colors active supporting text:** de
+  gepromoveerde actieve mobiele Traject-route krijgt in forced-colors extra
+  row-gap en expliciete supporting-text fit, zodat metatekst gescheiden blijft
+  van label, badge en cue.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

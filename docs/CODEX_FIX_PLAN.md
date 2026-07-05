@@ -188,6 +188,9 @@
 - **Treatment mobile rail forced-colors active cue label polish — done in G1897 / issue #3736.**
   The promoted active mobile Traject route now has forced-colors active label emphasis and bounded
   cue alignment, so label, badge and cue remain distinct inside the full-width route card.
+- **Treatment mobile rail forced-colors active supporting text polish — done in G1898 / issue #3738.**
+  The promoted active mobile Traject route now has forced-colors row gap and supporting-text fit
+  rules, so meta text stays separated from the active label, badge and cue.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
