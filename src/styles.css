@@ -30783,7 +30783,7 @@ summary[class*="__summary"]:focus-visible,
       background: ButtonFace;
       color: ButtonText;
       font-weight: 700;
-      outline-color: ButtonText;
+      outline-color: CanvasText;
       outline-offset: 1px;
     }
 

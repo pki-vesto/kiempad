@@ -242,6 +242,9 @@
 - **Treatment mobile rail forced-colors inactive focus cue font weight polish — done in G1915 / issue #3772.**
   Inactive focused mobile Traject cue pills now use calmer 700 weight, keeping cue labels readable
   without competing with status badges or active route emphasis.
+- **Treatment mobile rail forced-colors inactive focus cue outline color contrast polish — done in G1916 / issue #3774.**
+  Inactive focused mobile Traject cue pills now use CanvasText outlines, preserving external focus
+  contrast against the route canvas after the calmer cue weight.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
