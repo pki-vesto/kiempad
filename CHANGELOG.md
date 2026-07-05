@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1902 Premium Claude Design UI: inactieve gefocuste mobiele Traject badge-
+  en cuepills krijgen in forced-colors expliciete breedte- en ellipsisregels,
+  zodat statuspills compact blijven zonder labels te verdringen.
 - G1901 Premium Claude Design UI: inactieve gefocuste mobiele
   Traject-routekaarten houden in forced-colors expliciete titel-, metatekst-,
   badge- en cuekleuren zonder de actieve Highlight-staat na te bootsen.
