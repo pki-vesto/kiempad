@@ -115,6 +115,7 @@ import {
   type KennisFilter,
   kennisItemsPerCategorie,
   type LiteratuurDiscoveryQuery,
+  type PatientvriendelijkeSamenvattingLeesniveauGuard,
   type PubMedQueryPreview,
   type ResearchAggregatiePlan,
   type ResearchBron,
@@ -16234,6 +16235,7 @@ function renderEenvoudigeResearchSamenvattingen(
         body: `
           <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
           <small>patientSummary: ${escapeHtml(item.patientSummary)}</small>
+          ${renderPatientvriendelijkeSamenvattingLeesniveauGuard(item.leesniveauGuard)}
           ${metadata ? renderResearchKaartMetadata(metadata) : ''}
           ${herverificatie ? renderResearchHerverificatieStatus(herverificatie) : ''}
           <small>${escapeHtml(item.waarschuwing)}</small>
@@ -16241,6 +16243,23 @@ function renderEenvoudigeResearchSamenvattingen(
       });
     }),
   });
+}
+
+function renderPatientvriendelijkeSamenvattingLeesniveauGuard(
+  guard: PatientvriendelijkeSamenvattingLeesniveauGuard,
+): string {
+  return `
+    <dl class="research-summary-reading-level" data-research-summary-reading-level-guard="ready" data-research-summary-reading-level-status="${escapeAttribute(guard.status)}" data-research-summary-reading-level-review="${escapeAttribute(guard.reviewStatus)}">
+      <div><dt>Leesniveau</dt><dd>${guard.status === 'begrijpelijk_concept' ? 'Begrijpelijk concept' : 'Controle nodig'}</dd></div>
+      <div><dt>Bron</dt><dd>${escapeHtml(guard.bron)}</dd></div>
+      <div><dt>Datum</dt><dd>${escapeHtml(guard.datum)}</dd></div>
+      <div><dt>Reviewstatus</dt><dd>${escapeHtml(guard.reviewStatus)}</dd></div>
+      <div><dt>Gem. zinlengte</dt><dd>${escapeHtml(String(guard.gemiddeldeZinLengte))} woorden</dd></div>
+      <div><dt>Vaktaal</dt><dd>${guard.vaktaalSignalering.length > 0 ? guard.vaktaalSignalering.map(escapeHtml).join(' · ') : 'Geen signaalwoorden'}</dd></div>
+      <div><dt>Correctievelden</dt><dd>${guard.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+      <div><dt>Uitleg</dt><dd>${escapeHtml(guard.uitlegVoorLeken)}</dd></div>
+    </dl>
+  `;
 }
 
 function renderResearchRelevantieVoorGebruiker(

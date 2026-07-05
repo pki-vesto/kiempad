@@ -5,6 +5,7 @@ import {
   berekenVolgendeKennisVerificatie,
   bouwEenvoudigeResearchSamenvattingen,
   bouwLiteratuurDiscoveryQuery,
+  bouwPatientvriendelijkeSamenvattingLeesniveauGuard,
   bouwPubMedQueryPreview,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
@@ -314,6 +315,23 @@ describe('kennis domeinregels', () => {
         patientSummary:
           'Dit artikel beschrijft welke labfactoren zijn bekeken. Het bewijst geen beste behandeling.',
         sourceCitation: 'https://voorbeeld.test/embryo-cultuur · publicatiedatum 2026-05-10',
+        leesniveauGuard: {
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          datum: '2026-05-10',
+          reviewStatus: 'concept_te_controleren',
+          status: 'begrijpelijk_concept',
+          gemiddeldeZinLengte: 6,
+          vaktaalSignalering: [],
+          correctieVelden: [
+            'patientSummary',
+            'eenvoudigeSamenvatting',
+            'bron',
+            'publicatieDatum',
+            'reviewstatus',
+          ],
+          uitlegVoorLeken:
+            'Deze samenvatting gebruikt korte zinnen en gewone woorden genoeg voor een eerste lezing; controleer de tekst nog zelf.',
+        },
         aiConcept: false,
         waarschuwing:
           'Patientvriendelijke conceptsamenvatting in gewone taal met bronverwijzing; controleer publicatie en kliniekcontext. Dit is geen diagnose, dosering of behandelkeuzeadvies.',
@@ -789,6 +807,49 @@ describe('kennis domeinregels', () => {
         relevantieVoorGebruiker: 'Jullie moeten deze behandeling kiezen.',
       }),
     ).toThrow('Relevantie voor gebruiker mag geen diagnose');
+  });
+
+  it('bouwt leesniveauguard voor patientvriendelijke researchsamenvattingen', () => {
+    const guard = bouwPatientvriendelijkeSamenvattingLeesniveauGuard({
+      tekst:
+        'Dit artikel legt in gewone taal uit welke punten onderzoekers bekeken. Het helpt om vragen voor de kliniek voor te bereiden.',
+      bron: 'https://voorbeeld.test/artikel',
+      datum: '2026-06-24',
+    });
+
+    expect(guard).toMatchObject({
+      bron: 'https://voorbeeld.test/artikel',
+      datum: '2026-06-24',
+      reviewStatus: 'concept_te_controleren',
+      status: 'begrijpelijk_concept',
+      vaktaalSignalering: [],
+      correctieVelden: [
+        'patientSummary',
+        'eenvoudigeSamenvatting',
+        'bron',
+        'publicatieDatum',
+        'reviewstatus',
+      ],
+    });
+    expect(guard.gemiddeldeZinLengte).toBeLessThanOrEqual(22);
+    expect(guard.uitlegVoorLeken).toContain('controleer de tekst nog zelf');
+
+    const controleNodig = bouwPatientvriendelijkeSamenvattingLeesniveauGuard({
+      tekst:
+        'Prospectieve cohortstudie met hazard ratio en laboratoriumparameters beschrijft statistisch significant verschil.',
+      bron: 'https://voorbeeld.test/artikel',
+      datum: '2026-06-24',
+    });
+
+    expect(controleNodig.status).toBe('controle_nodig');
+    expect(controleNodig.vaktaalSignalering).toEqual([
+      'prospectieve',
+      'cohortstudie',
+      'hazard ratio',
+      'laboratoriumparameters',
+      'statistisch significant',
+    ]);
+    expect(controleNodig.uitlegVoorLeken).toContain('extra controle nodig');
   });
 
   it('maakt eigen kennisitems in gekozen categorie', () => {

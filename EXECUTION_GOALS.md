@@ -15247,7 +15247,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, AI policy, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #873
 
 ### G543 — research trend update timestamp
 
@@ -18182,6 +18183,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3904
+
+### G1984 — Research Intelligence: patient summary reading-level routeflow evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** De patientvriendelijke samenvatting heeft een zichtbare leesniveauguard, maar routeflow-bewijs moet expliciet blijven vastleggen dat status, bron, datum, reviewstatus en correctievelden bereikbaar blijven na UI-wijzigingen.
+- **User Impact:** Gebruikers kunnen anders niet zien of eenvoudige researchuitleg nog begrijpelijk en controleerbaar is.
+- **Desired Outcome:** Routeflow- en release-evidence noemen de patient summary reading-level guard, inclusief data-hooks, bronherleiding en niet-medische grens.
+- **User Value:** Gebruikers blijven zien of eenvoudige researchuitleg echt leesbaar is voordat zij die gebruiken als gesprekvoorbereiding.
+- **Acceptance Criteria:** Evidence noemt `data-research-summary-reading-level-guard`; evidence noemt status, bron, datum, reviewstatus, vaktaalsignalering en correctievelden; evidence bewaakt dat geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt getoond; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research summaries, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3906
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

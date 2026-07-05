@@ -42630,9 +42630,24 @@ describe('app shell', () => {
     );
     expect(html).toContain('sourceCitation: Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.');
     expect(html).toContain('patientSummary: Dit artikel legt uit welke labfactoren zijn bekeken');
+    expect(html).toContain('data-research-summary-reading-level-guard="ready"');
+    expect(html).toContain('data-research-summary-reading-level-status="begrijpelijk_concept"');
+    expect(html).toContain('data-research-summary-reading-level-review="concept_te_controleren"');
+    expect(html).toContain('<dt>Leesniveau</dt><dd>Begrijpelijk concept</dd>');
+    expect(html).toContain('<dt>Bron</dt><dd>https://voorbeeld.test/embryo-cultuur</dd>');
+    expect(html).toContain('<dt>Datum</dt><dd>2026-05-10</dd>');
+    expect(html).toContain('<dt>Reviewstatus</dt><dd>concept_te_controleren</dd>');
+    expect(html).toContain('<dt>Vaktaal</dt><dd>Geen signaalwoorden</dd>');
+    expect(html).toContain(
+      '<dt>Correctievelden</dt><dd>patientSummary · eenvoudigeSamenvatting · bron · publicatieDatum · reviewstatus</dd>',
+    );
+    expect(html).toContain(
+      'Deze samenvatting gebruikt korte zinnen en gewone woorden genoeg voor een eerste lezing; controleer de tekst nog zelf.',
+    );
     expect(html).toContain('Handmatig concept · brongekoppeld');
     expect(html).toContain('Patientvriendelijke conceptsamenvatting in gewone taal');
     expect(html).toContain('Kiempad ordent researchcontext; je kliniek blijft leidend.');
+    expect(html).not.toContain('kansberekening');
     expect(html).not.toContain(
       'Begrijpelijke Nederlandse uitleg per publicatie, met bron, datum en lekencontext. Dit is geen diagnose of behandeladvies.',
     );

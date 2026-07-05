@@ -71,6 +71,9 @@
   publicatieperiode, bron, update-status, laatste check en relevantie-uitleg naast
   de bestaande trendscan, zodat ontwikkelingen scanbaar blijven zonder
   bewijsweging, diagnose of behandeladvies.
+- **G542 researchsamenvatting leesniveauguard:** eenvoudige researchsamenvattingen
+  tonen bron, datum, reviewstatus, vaktaalsignalering en corrigeerbare velden,
+  zodat de gebruiker kan zien of lekenuitleg begrijpelijk genoeg is.
 - **G543 researchtrend update-timestamp:** researchtrendkaarten tonen per onderwerp
   een lokale update-datum, bron, reviewstatus, correctievelden en uitleg voor leken,
   zodat gebruikers trendmetadata kunnen controleren zonder medisch advies of
