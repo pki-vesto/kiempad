@@ -83,6 +83,10 @@
   aparte correctieflow voor bronlabel, datum en reviewstatus; de gecorrigeerde
   bronmetadata wordt encrypted op hetzelfde dossierrecord bewaard en gebruikt in
   bronlabels zonder de kliniekwaarde te veranderen.
+- **G581 Imaging metadata reviewcorrectie:** beeldrecords in Beeldenoverzicht
+  tonen een aparte reviewflow voor beeldtype, bron, datum, poging, afspraak,
+  EXIF-status en reviewstatus; gecorrigeerde metadata wordt encrypted op
+  hetzelfde dossierrecord bewaard en locked previews blijven zonder bronpayload.
 - **G1331 Dossier zoekconsole:** de Dossier-zoekroute groepeert zoeken,
   privacycontrole en inhoudsindex in drie herkenbare panelen. De route opent als
   compacte zoekwerkruimte in plaats van losse formulier-, privacy- en indexblokken.

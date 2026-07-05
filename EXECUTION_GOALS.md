@@ -15797,7 +15797,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging, dossier UI, encrypted storage, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #928
 
 ### G582 — active goal floor CI gate
 
@@ -17404,6 +17405,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3813
+
+### G1934 — Fertility Intelligence: imaging metadata reviewcorrectie routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De imaging metadata reviewcorrectie is zichtbaar in het Beeldenoverzicht, maar routeflow-bewijs moet nog bewaken dat beeldtype, bron, datum, poging, afspraak, EXIF-status en reviewstatus op desktop en mobiel leesbaar blijven.
+- **User Impact:** Zonder visuele routeflow-evidence kan een latere themewijziging de metadata-reviewvelden in beeldrecords verbergen, laten overlappen of bronprivacy rond locked previews breken.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de imaging metadata reviewflow zonder beeldpayloads of medische interpretatie.
+- **User Value:** Gebruikers houden beeldrecords betrouwbaar gekoppeld aan bron, poging en afspraak terwijl locked previews bronwaarden blijven beschermen.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-imaging-metadata-review="ready"` en de locked variant op desktop en mobiel; beeldtype, bron, datum, poging, afspraak, EXIF-status, reviewstatus en bewaaractie blijven scanbaar zonder page-level horizontale overflow; locked previews tonen geen thumbnail, beeldpayload of plaintext bronbestandsnaam in de reviewflow; bestaande imaging filter, vergelijking, tijdlijnkoppeling en previewhooks blijven intact; tests en fixtures blijven vrij van secrets, medische bronpayloads en plaintext gezondheidsdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Beelden, Beeldenoverzicht
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging repository, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3815
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

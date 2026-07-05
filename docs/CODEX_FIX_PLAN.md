@@ -296,6 +296,9 @@
   cards now expose a focused correction flow for source label, source date, and review status;
   corrected source metadata is saved encrypted on the existing record without changing the clinic
   quality value.
+- **Imaging metadata review correction — done in G581 / issue #928.** The imaging repository now
+  exposes a focused review form for image type, source, date, attempt, appointment, EXIF status,
+  and review status, while locked previews show only safe unlock copy and no source payload.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

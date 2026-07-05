@@ -12213,6 +12213,20 @@ describe('app shell', () => {
     expect(html).toContain(
       'Beeldmetadata: Schema: Echo · Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld · EXIF: geisoleerd · Review: concept',
     );
+    expect(html).toContain('data-imaging-metadata-review="ready"');
+    expect(html).toContain('Beeldmetadata review');
+    expect(html).toContain('name="imagingMetadataSoort"');
+    expect(html).toContain('name="imagingMetadataBron"');
+    expect(html).toContain('name="imagingMetadataDatum"');
+    expect(html).toContain('name="imagingMetadataPogingId"');
+    expect(html).toContain('name="imagingMetadataAfspraakId"');
+    expect(html).toContain('name="imagingMetadataTrajectId"');
+    expect(html).toContain('name="imagingMetadataExifStatus"');
+    expect(html).toContain('name="imagingMetadataReviewStatus"');
+    expect(html).toContain('Beeldmetadata bewaren');
+    expect(html).toContain(
+      'Corrigeer alleen bronmetadata en koppelingen; Kiempad interpreteert het beeld niet medisch.',
+    );
     expect(html).toContain(
       'Tijdlijnkoppeling: Poging: poging-beeld · Afspraak: afspraak-beeld · Cyclusdag: 9 · Embryo: Embryo 1 · Embryo-id: E1 · Embryodag: 5 · Labcontext: Labfoto dag 5',
     );
@@ -12225,6 +12239,56 @@ describe('app shell', () => {
     expect(html).toContain('alt="Lokale preview van Echo 6 weken"');
     expect(html).toContain('Lokale preview uit de lokale kluis op dit toestel.');
     expect(html).toContain('Bestandstype is beeldmateriaal.');
+
+    const lockedHtml = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [
+        {
+          id: 'doc-beeld-locked-review',
+          datum: '2026-05-02',
+          titel: 'Locked beeldmetadata review',
+          categorie: 'beeld',
+          bestandsNaam: 'locked-imaging-review-secret.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 4096,
+          inhoudBase64: 'bG9ja2VkLWltYWdpbmc=',
+          analyse: {
+            samenvatting: 'Foto/echo opgeslagen als beeldbestand; analyse is lokaal.',
+            signalen: ['Beeldmetadata beschikbaar.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-02',
+            documenttype: 'Foto/echo',
+            bronbestand: 'locked-imaging-review-secret.jpg',
+            extractieBronnen: ['bronbestand'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-02',
+            soort: 'echo',
+            bron: 'Locked bronportaal',
+            exifStatus: 'onbekend',
+            reviewStatus: 'concept',
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+      ],
+      imagingPreviewLocked: true,
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    expect(lockedHtml).toContain('data-imaging-metadata-review="locked"');
+    expect(lockedHtml).toContain(
+      'Ontgrendel de lokale kluis om bron, koppelingen en reviewstatus te corrigeren',
+    );
+    expect(lockedHtml).not.toContain('data-imaging-metadata-review="ready"');
+    expect(lockedHtml).not.toContain('Locked bronportaal');
+    expect(lockedHtml).not.toContain('locked-imaging-review-secret.jpg');
+    expect(lockedHtml).not.toContain('bG9ja2VkLWltYWdpbmc=');
   });
 
   it('rendert echo-classificatie per afspraak zonder locked bronpayload', () => {

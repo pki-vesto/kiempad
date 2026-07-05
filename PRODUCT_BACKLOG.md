@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1733 |
+| ☑ klaar | 1734 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1932** |
+| **Totaal** | **1933** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -743,7 +743,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G578 | Fertility Intelligence: OCR-review correctieformulier | P1 | F5 | ☐ |
 | G579 | Fertility Intelligence: metadata-normalisatie correctieformulier | P1 | F5 | ☐ |
 | G580 | Fertility Intelligence: historische tijdlijnitem reviewactie | P1 | F5 | ☐ |
-| G581 | Fertility Intelligence: imaging metadata reviewcorrectie | P1 | F5 | ☐ |
+| G581 | Fertility Intelligence: imaging metadata reviewcorrectie | P1 | F5 | ☑ |
 | G582 | Product Quality & Automation: active goal floor CI gate | P1 | F5 | ☐ |
 | G583 | Central Encrypted Platform: central session renewal status UI | P1 | F5 | ☑ |
 | G584 | Central Encrypted Platform: paginated record load status UI | P1 | F5 | ☑ |
@@ -2095,12 +2095,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1931 | Fertility Intelligence: consultnotitie tekstimport reviewstatus routeflow evidence | P1 | F5 | ☐ |
 | G1932 | Fertility Intelligence: embryo-ID alias reviewcorrectie routeflow evidence | P1 | F5 | ☐ |
 | G1933 | Fertility Intelligence: embryo bronlabel correctieflow routeflow evidence | P1 | F5 | ☐ |
+| G1934 | Fertility Intelligence: imaging metadata reviewcorrectie routeflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1932** (id's G001 t/m G1933; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1933** (id's G001 t/m G1934; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
