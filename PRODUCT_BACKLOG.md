@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1799 |
+| ☑ klaar | 1800 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **2007** |
+| **Totaal** | **2008** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2169,13 +2169,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2005 | Research Intelligence: offline cache metadata release-state contract error-contract error missing-term error contract | P1 | F5 | ☑ |
 | G2006 | Research Intelligence: offline cache metadata release-state contract error-contract error error release guard | P1 | F5 | ☑ |
 | G2007 | Research Intelligence: offline cache metadata release-state contract error-contract error error missing-term fixture | P1 | F5 | ☑ |
-| G2008 | Research Intelligence: offline cache metadata release-state contract error-contract error error missing-term error contract | P1 | F5 | ☐ |
+| G2008 | Research Intelligence: offline cache metadata release-state contract error-contract error error missing-term error contract | P1 | F5 | ☑ |
+| G2009 | Research Intelligence: offline cache metadata release-state contract error-contract error error error release guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 2007** (id's G001 t/m G2008; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 2008** (id's G001 t/m G2009; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

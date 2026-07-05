@@ -179,6 +179,11 @@
   veilige labels `offline cache metadata missing-term error contract` of
   `veilige technische labels` uit G2006 error-contract error error
   release-evidence verdwijnen.
+- **G2008 offline cache metadata release-state contract error-contract error
+  error missing-term error contract:** de exacte G2007 error-contract error
+  error release missing-term foutmelding is als compact maintenance-contract
+  gesnapshott met veilige labels `offline cache metadata missing-term error
+  contract` en `veilige technische labels`.
 - **G2005 offline cache metadata release-state contract error-contract error
   missing-term error contract:** de exacte G2004 error-contract error release
   missing-term foutmelding is als
