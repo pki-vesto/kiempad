@@ -320,6 +320,10 @@
   inactieve gefocuste mobiele Traject-cues houden ButtonFace als shorthand en
   longhand achtergrond, zodat cuecontrast voorspelbaar blijft naast ButtonText
   labels en CanvasText randen.
+- **G1919 Traject mobile forced-colors inactive focus cue text contrast:**
+  inactieve gefocuste mobiele Traject-cues pinnen WebKit tekstvulling op
+  ButtonText, zodat cue-labels leesbaar blijven op ButtonFace achtergronden met
+  CanvasText randen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

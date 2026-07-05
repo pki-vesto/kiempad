@@ -30785,6 +30785,7 @@ summary[class*="__summary"]:focus-visible,
       background: ButtonFace;
       background-color: ButtonFace;
       color: ButtonText;
+      -webkit-text-fill-color: ButtonText;
       font-weight: 700;
       outline-color: CanvasText;
       outline-offset: 1px;
