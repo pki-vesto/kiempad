@@ -871,6 +871,11 @@ const targets = [
       '[data-daily-advice-console="ready"]',
       '#daily-advice-primary-action-choice',
       '[data-daily-advice-primary-action-choice="ready"]',
+      '[data-daily-advice-owner-scan="ready"]',
+      '[data-daily-advice-owner-scan-density="mobile-compact"]',
+      '[data-daily-advice-owner-scan-card="vrouw"]',
+      '[data-daily-advice-owner-scan-card="man"]',
+      '[data-daily-advice-owner-scan-card="samen"]',
       '#daily-advice-followup',
       '[data-daily-advice-followup="collapsed"]',
       '[data-daily-advice-focus-region="planner"]',
@@ -2086,19 +2091,22 @@ async function assertRouteflows(browser, options) {
               return !regionRect || (nodeRect.top >= regionRect.top && nodeRect.bottom <= regionRect.bottom);
             })
             .map((node) => ({
+              text: node.textContent.trim().replace(/\s+/g, ' ').slice(0, 80),
               clientWidth: node.clientWidth,
               scrollWidth: node.scrollWidth,
               clientHeight: node.clientHeight,
               scrollHeight: node.scrollHeight,
             }));
+          const overflowingNodes = textNodes.filter(
+            (node) =>
+              node.scrollWidth > node.clientWidth + 1 ||
+              node.scrollHeight > node.clientHeight + 24,
+          );
           return {
             selector,
             visible: Boolean(rect && rect.width > 0 && rect.height > 0),
-            textFits: textNodes.every(
-              (node) =>
-                node.scrollWidth <= node.clientWidth + 1 &&
-                node.scrollHeight <= node.clientHeight + 24,
-            ),
+            textFits: overflowingNodes.length === 0,
+            overflowingNodes,
           };
         });
         const present = (routeflow.presentSelectors ?? []).map((selector) => {
@@ -3636,7 +3644,12 @@ async function assertRouteflows(browser, options) {
       if (overflowingText.length > 0) {
         throw new Error(
           `${options.label}/${target.screen}: routeflow-tekst past niet: ${overflowingText
-            .map((item) => item.selector)
+            .map(
+              (item) =>
+                `${item.selector} (${item.overflowingNodes
+                  .map((node) => `${node.text} ${node.scrollWidth}/${node.clientWidth}`)
+                  .join('; ')})`,
+            )
             .join(', ')}.`,
         );
       }

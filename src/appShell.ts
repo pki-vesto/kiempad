@@ -17416,7 +17416,7 @@ function renderDailyAdviceDecisionBoard(overview: DailyRecommendationOverview): 
 
 function renderDailyAdviceOwnerScan(overview: DailyRecommendationOverview): string {
   return `
-    <div class="daily-advice-owner-scan" aria-label="Dagadvies eigenaarsscan" data-daily-advice-owner-scan="ready">
+    <div class="daily-advice-owner-scan" aria-label="Dagadvies eigenaarsscan" data-daily-advice-owner-scan="ready" data-daily-advice-owner-scan-density="mobile-compact">
       ${(['vrouw', 'man', 'samen'] as const)
         .map((owner) => {
           const items = overview[owner];
@@ -17434,7 +17434,7 @@ function renderDailyAdviceOwnerScan(overview: DailyRecommendationOverview): stri
               <span class="daily-advice-owner-scan__label">${escapeHtml(label)}</span>
               <strong>${items.length} suggestie${items.length === 1 ? '' : 's'}</strong>
               <small>${escapeHtml(firstItem ? firstItem.titel : copy.empty)}</small>
-              <em>${reviewCount} review · ${artscheckCount} artscheck · ${escapeHtml(copy.route)}</em>
+              <em>${reviewCount} review · ${artscheckCount} artscheck</em>
             </a>
           `;
         })

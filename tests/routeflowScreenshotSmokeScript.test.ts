@@ -212,6 +212,9 @@ describe('routeflow screenshot smoke script', () => {
     );
     expect(routeflowScreenshotSmokeScript).toContain('[data-start-launchpad="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'daily-advice-console'");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-daily-advice-owner-scan-density="mobile-compact"]',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceCompactList');

@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1924 Premium Claude Design UI: de Dagadvies owner-scan is op mobiel
+  compacter met smallere snapkaarten, lagere kaartdichtheid en korte
+  review-/artscheckregels, zodat vrouw/man/samen sneller tegelijk scanbaar zijn.
 - G560 Premium Claude Design UI: Dagadvies toont nu een eerste-viewport
   owner-scan met aparte kaarten voor vrouw, man en samen voordat beslislinks of
   de volledige suggestielijst worden geopend.
