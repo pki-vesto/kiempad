@@ -39360,6 +39360,17 @@ describe('app shell', () => {
       'Kliniekbeoordeling als bronregistratie: 4AA · Bron: Labrapport · Datum: 2026-05-04',
     );
     expect(html).toContain('Embryo-dossiers');
+    expect(html).toContain('data-embryo-tracking-scan="ready"');
+    expect(html).toContain('aria-label="Embryo tracking overzicht"');
+    expect(html).toContain('data-embryo-tracking-scan-card="dossiers"');
+    expect(html).toContain('data-embryo-tracking-scan-card="measurements"');
+    expect(html).toContain('data-embryo-tracking-scan-card="status"');
+    expect(html).toContain('data-embryo-tracking-scan-card="sources"');
+    expect(html).toContain('<span>Dossiers</span>');
+    expect(html).toContain('Per embryo gebundeld');
+    expect(html).toContain('Dag, kwaliteit en bron');
+    expect(html).toContain('2 concept');
+    expect(html).toContain('Geen kansberekening');
     expect(html).toContain('data-embryo-tracking-grid="compact"');
     expect(html).toContain('class="embryo-tracking-card"');
     expect(html).toContain('data-embryo-tracking-card="ready"');
@@ -39458,9 +39469,15 @@ describe('app shell', () => {
 
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    expect(css).toContain('.embryo-tracking-scan {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.embryo-tracking-scan__card {');
     expect(css).toContain('.embryo-tracking-grid {');
     expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(css).toContain('.embryo-tracking-card__facts {');
+    expect(mobileCss).toContain('.embryo-tracking-scan {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.embryo-tracking-scan__card {');
     expect(mobileCss).toContain('.embryo-tracking-grid {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
   });

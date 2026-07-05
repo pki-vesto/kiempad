@@ -3245,6 +3245,61 @@ h2 {
   min-width: 0;
 }
 
+.embryo-tracking-scan {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+  margin: 4px 0 12px;
+}
+
+.embryo-tracking-scan__card {
+  display: grid;
+  min-width: 0;
+  min-height: 86px;
+  align-content: start;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--category) 16%, var(--border));
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  color: inherit;
+  text-decoration: none;
+}
+
+.embryo-tracking-scan__card:hover,
+.embryo-tracking-scan__card:focus-visible {
+  border-color: color-mix(in srgb, var(--category) 42%, var(--border));
+  outline: 0;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--category) 18%, transparent);
+}
+
+.embryo-tracking-scan__card span,
+.embryo-tracking-scan__card strong,
+.embryo-tracking-scan__card small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.embryo-tracking-scan__card span {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.embryo-tracking-scan__card strong {
+  color: var(--text-strong);
+  font-size: 1.24rem;
+  line-height: 1;
+}
+
+.embryo-tracking-scan__card small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.25;
+}
+
 .embryo-tracking-card > article {
   display: grid;
   gap: 10px;
@@ -28098,6 +28153,24 @@ summary[class*="__summary"]:focus-visible,
 
   .embryo-tracking-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .embryo-tracking-scan {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .embryo-tracking-scan::-webkit-scrollbar {
+    display: none;
+  }
+
+  .embryo-tracking-scan__card {
+    flex: 0 0 min(142px, 66vw);
+    min-height: 76px;
+    scroll-snap-align: start;
   }
 
   .embryo-tracking-card > article {

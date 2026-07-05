@@ -257,6 +257,9 @@
 - **Consult intelligence review scan — done in G557 / issue #3784.** Consultverslagen now open
   with a compact review scan for reports, summaries, action points, and source review before the
   detailed consult cards, keeping existing upload, review, and anchor hooks intact.
+- **Embryo tracking compact scan — done in G558 / issue #3787.** Embryo-dossiers now open with
+  a compact tracking scan for dossiers, measurement moments, status events, and source records
+  before comparisons and detailed embryo cards.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
