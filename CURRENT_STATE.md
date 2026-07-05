@@ -168,6 +168,11 @@
   volledige AI-context. De bestaande preview-, opslag-, instellingen- en
   netwerkpanelen blijven bereikbaar zonder de eerste viewport als AI-stapel te
   vullen.
+- **G1882 Traject/Overzicht stage board:** Traject/Overzicht start met een
+  compact stagebord voor huidige fase, volgende stap, tijdlijn, vergoeding en
+  volledige behandelcontext. De bestaande routehooks, formulieren,
+  tijdlijnankers, vergoedingankers en graphcontext blijven bereikbaar zonder de
+  eerste viewport als trajectstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

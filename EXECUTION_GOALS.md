@@ -16556,8 +16556,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 68
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3706
+
+### G1883 — Premium Claude Design UI: treatment phases route first-viewport phase board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Traject/Fasen kan als lange faseplanning voelen wanneer actieve fase, fasehistorie, faseacties, behandelcontext en volledige faseplanning tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is welke fase-informatie eerst relevant is.
+- **Desired Outcome:** Traject/Fasen opent met een compact first-viewport phase board voor actieve fase, fasehistorie, faseacties, behandelcontext en volledige faseplanning.
+- **User Value:** Faseplanning voelt rustiger en taakgerichter zonder bestaande faseknoppen, behandelvormen, routehooks, tijdlijnankers of graphcontext te verliezen.
+- **Acceptance Criteria:** Traject/Fasen opent met compacte lanes voor actieve fase, fasehistorie, faseacties, behandelcontext en volledige faseplanning; volledige faselijsten, knoppen en beheerpanelen blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande phase buttons, treatment forms, route hooks, timeline anchors en graph context; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw treatment payload wordt toegevoegd.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 67
+- **Status:** ☐ open
+- **Issue:** #3708
 
 ### G586 — replay conflict recovery status UI
 
