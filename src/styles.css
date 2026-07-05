@@ -30764,6 +30764,13 @@ summary[class*="__summary"]:focus-visible,
       white-space: nowrap;
     }
 
+    .treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__badge {
+      border-color: CanvasText;
+      background: Canvas;
+      color: CanvasText;
+      font-weight: 760;
+    }
+
     .treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {
       margin-top: 4px;
     }

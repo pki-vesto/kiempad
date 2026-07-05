@@ -274,6 +274,10 @@
 - **G1906 Traject mobile forced-colors inactive focus label weight:** inactieve
   gefocuste mobiele Traject-titels houden een rustiger forced-colors gewicht en
   geen underline, zodat keyboardfocus niet op actieve route-emphasis lijkt.
+- **G1907 Traject mobile forced-colors inactive focus badge tone:** inactieve
+  gefocuste mobiele Traject-badges houden Canvas/CanvasText systeemtonen en een
+  rustiger gewicht, zodat status leesbaar blijft zonder actieve badge-styling te
+  kopiëren.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

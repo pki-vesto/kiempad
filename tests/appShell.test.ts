@@ -5938,6 +5938,11 @@ describe('app shell', () => {
     expect(mobileCss).toContain('line-height: 1.18;');
     expect(mobileCss).toContain('white-space: nowrap;');
     expect(mobileCss).toContain(
+      '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__badge {',
+    );
+    expect(mobileCss).toContain('background: Canvas;');
+    expect(mobileCss).toContain('color: CanvasText;');
+    expect(mobileCss).toContain(
       '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {',
     );
     expect(mobileCss).toContain('margin-top: 4px;');

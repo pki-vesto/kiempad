@@ -215,6 +215,9 @@
 - **Treatment mobile rail forced-colors inactive focus label weight polish — done in G1906 / issue #3754.**
   Inactive focused mobile Traject titles now keep a calmer forced-colors weight and no underline,
   preserving keyboard focus without mimicking active route emphasis.
+- **Treatment mobile rail forced-colors inactive focus badge tone polish — done in G1907 / issue #3756.**
+  Inactive focused mobile Traject badges now keep Canvas/CanvasText system tones and calmer weight,
+  preserving status readability without copying active route badge styling.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
