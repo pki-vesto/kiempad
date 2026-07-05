@@ -11853,6 +11853,7 @@ function renderImagingMetadataCorrectieForm(
 ): string {
   const metadata = item.document.beeldMetadata;
   if (!metadata) return '';
+  const reviewState = metadata.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
   if (item.previewState.status === 'locked') {
     return `
       <section class="linked-note imaging-metadata-review" data-imaging-metadata-review="locked">
@@ -11867,6 +11868,14 @@ function renderImagingMetadataCorrectieForm(
       <input type="hidden" name="dossierDocumentId" value="${escapeAttribute(item.id)}" />
       <strong>Beeldmetadata review</strong>
       <p class="small-print">Corrigeer alleen bronmetadata en koppelingen; Kiempad interpreteert het beeld niet medisch.</p>
+      <section class="imaging-classification-review" data-embryo-image-classification-review="${escapeAttribute(reviewState)}">
+        <strong>Classificatievoorstel: ${escapeHtml(reviewState === 'concept' ? 'Concept' : 'Gereviewd')}</strong>
+        <p class="small-print">${escapeHtml(
+          metadata.soort === 'embryo_afbeelding'
+            ? 'Bevestig of corrigeer hieronder het beeldtype en de embryo-koppeling voordat dit beeld als embryo-record wordt gebruikt.'
+            : 'Bevestig of corrigeer hieronder het beeldtype en laat embryo-koppeling leeg wanneer dit geen embryo-afbeelding is.',
+        )}</p>
+      </section>
       <label>
         Beeldtype
         <select name="imagingMetadataSoort">
@@ -11905,6 +11914,22 @@ function renderImagingMetadataCorrectieForm(
       <label>
         Traject
         <input name="imagingMetadataTrajectId" autocomplete="off" value="${escapeAttribute(metadata.trajectId ?? item.trajectId ?? '')}" />
+      </label>
+      <label>
+        Embryo-label
+        <input name="imagingMetadataEmbryoLabel" autocomplete="off" value="${escapeAttribute(metadata.embryoLabel ?? '')}" />
+      </label>
+      <label>
+        Embryo-id
+        <input name="imagingMetadataEmbryoId" autocomplete="off" value="${escapeAttribute(metadata.embryoId ?? '')}" />
+      </label>
+      <label>
+        Embryodag
+        <input name="imagingMetadataEmbryoDag" type="number" min="1" step="1" inputmode="numeric" value="${escapeAttribute(metadata.embryoDag?.toString() ?? '')}" />
+      </label>
+      <label>
+        Labcontext
+        <input name="imagingMetadataLaboratoriumContext" autocomplete="off" value="${escapeAttribute(metadata.laboratoriumContext ?? '')}" />
       </label>
       <label>
         EXIF-status

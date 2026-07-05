@@ -153,6 +153,10 @@ describe('DossierStore', () => {
       pogingId: 'poging-nieuw',
       afspraakId: 'afspraak-nieuw',
       trajectId: 'traject-nieuw',
+      embryoLabel: 'Embryo 1',
+      embryoId: 'E1',
+      embryoDag: 5,
+      laboratoriumContext: 'Labfoto dag 5',
       exifStatus: 'geisoleerd',
       reviewStatus: 'gereviewd',
     });
@@ -167,6 +171,10 @@ describe('DossierStore', () => {
       pogingId: 'poging-nieuw',
       afspraakId: 'afspraak-nieuw',
       trajectId: 'traject-nieuw',
+      embryoLabel: 'Embryo 1',
+      embryoId: 'E1',
+      embryoDag: 5,
+      laboratoriumContext: 'Labfoto dag 5',
       exifStatus: 'geisoleerd',
       reviewStatus: 'gereviewd',
     });
@@ -178,6 +186,10 @@ describe('DossierStore', () => {
       tijdlijnKoppeling: {
         pogingId: 'poging-nieuw',
         afspraakId: 'afspraak-nieuw',
+        embryoLabel: 'Embryo 1',
+        embryoId: 'E1',
+        embryoDag: 5,
+        laboratoriumContext: 'Labfoto dag 5',
       },
     });
     expect(raw?.payload.ciphertext).not.toContain('Beeldmetadata review');
@@ -185,6 +197,8 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('Oude beeldbron');
     expect(raw?.payload.ciphertext).not.toContain('Gereviewd beeldportaal');
     expect(raw?.payload.ciphertext).not.toContain('afspraak-nieuw');
+    expect(raw?.payload.ciphertext).not.toContain('Embryo 1');
+    expect(raw?.payload.ciphertext).not.toContain('Labfoto dag 5');
     expect(raw?.payload.ciphertext).not.toContain('anBnLWdlaGVpbQ');
   });
 

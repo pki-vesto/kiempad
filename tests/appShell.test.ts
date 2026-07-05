@@ -12305,12 +12305,25 @@ describe('app shell', () => {
     expect(html).toContain('name="imagingMetadataPogingId"');
     expect(html).toContain('name="imagingMetadataAfspraakId"');
     expect(html).toContain('name="imagingMetadataTrajectId"');
+    expect(html).toContain('data-embryo-image-classification-review="concept"');
+    expect(html).toContain('Classificatievoorstel: Concept');
+    expect(html).toContain('name="imagingMetadataEmbryoLabel"');
+    expect(html).toContain('name="imagingMetadataEmbryoId"');
+    expect(html).toContain('name="imagingMetadataEmbryoDag"');
+    expect(html).toContain('name="imagingMetadataLaboratoriumContext"');
     expect(html).toContain('name="imagingMetadataExifStatus"');
     expect(html).toContain('name="imagingMetadataReviewStatus"');
     expect(html).toContain('Beeldmetadata bewaren');
     expect(html).toContain(
       'Corrigeer alleen bronmetadata en koppelingen; Kiempad interpreteert het beeld niet medisch.',
     );
+    expect(html).toContain(
+      'Bevestig of corrigeer hieronder het beeldtype en laat embryo-koppeling leeg wanneer dit geen embryo-afbeelding is.',
+    );
+    const classificationStart = html.indexOf('data-embryo-image-classification-review="concept"');
+    const classificationEnd = html.indexOf('Beeldmetadata bewaren', classificationStart);
+    const classificationSection = html.slice(classificationStart, classificationEnd);
+    expect(classificationSection).not.toMatch(/kwaliteitsscore|selectieadvies/i);
     expect(html).toContain(
       'Tijdlijnkoppeling: Poging: poging-beeld · Afspraak: afspraak-beeld · Cyclusdag: 9 · Embryo: Embryo 1 · Embryo-id: E1 · Embryodag: 5 · Labcontext: Labfoto dag 5',
     );
@@ -12373,6 +12386,58 @@ describe('app shell', () => {
     expect(lockedHtml).not.toContain('Locked bronportaal');
     expect(lockedHtml).not.toContain('locked-imaging-review-secret.jpg');
     expect(lockedHtml).not.toContain('bG9ja2VkLWltYWdpbmc=');
+  });
+
+  it('rendert embryo-afbeelding classificatie als concept met handmatige koppeling', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        dossierDocuments: [
+          {
+            id: 'doc-embryo-classificatie',
+            datum: '2026-05-05',
+            titel: 'Embryo 1 labfoto',
+            categorie: 'beeld',
+            bestandsNaam: 'embryo-1-labfoto.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 2048,
+            inhoudBase64: 'ZW1icnlvLWltYWdl',
+            analyse: {
+              samenvatting:
+                'Embryo-afbeelding opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-05',
+              documenttype: 'Afbeelding',
+              bronbestand: 'embryo-1-labfoto.jpg',
+              extractieBronnen: ['bronbestand'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-05',
+              soort: 'embryo_afbeelding',
+              bron: 'Labportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const start = html.indexOf('data-embryo-image-classification-review="concept"');
+    const end = html.indexOf('Beeldmetadata bewaren', start);
+    const section = html.slice(start, end);
+
+    expect(section).toContain('Classificatievoorstel: Concept');
+    expect(section).toContain(
+      'Bevestig of corrigeer hieronder het beeldtype en de embryo-koppeling voordat dit beeld als embryo-record wordt gebruikt.',
+    );
+    expect(section).toContain('name="imagingMetadataSoort"');
+    expect(section).toContain('value="embryo_afbeelding" selected');
+    expect(section).toContain('name="imagingMetadataEmbryoLabel"');
+    expect(section).toContain('name="imagingMetadataEmbryoId"');
+    expect(section).not.toMatch(/kwaliteitsscore|selectieadvies/i);
   });
 
   it('rendert echo-classificatie per afspraak zonder locked bronpayload', () => {

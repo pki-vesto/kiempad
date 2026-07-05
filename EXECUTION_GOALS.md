@@ -12919,7 +12919,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging, embryo dossier, AI guardrails, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #801
 
 ### G1182 — tijdlijnweergaven omzetten naar herbruikbare timelinecomponenten
 
@@ -17544,6 +17545,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3828
+
+### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De embryo-afbeelding classificatiereview is zichtbaar in het Beeldenoverzicht, maar routeflow-bewijs moet nog bewaken dat conceptlabel, beeldtypecorrectie en embryo-koppeling op desktop en mobiel leesbaar blijven.
+- **User Impact:** Zonder visuele evidence kan een latere themawijziging de handmatige embryo-koppeling laten wegvallen of laten overlappen in de beeldkaart.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de embryo-afbeelding classificatiereview zonder beeldpayloads, kwaliteitsscore of selectieadvies.
+- **User Value:** Gebruikers houden controle over embryo-beeldkoppelingen en zien regressies in deze gevoelige UI sneller terug.
+- **Acceptance Criteria:** Dossierroute `#dossier?route=imaging` toont het conceptlabel voor embryo-afbeelding classificatie op desktop en mobiel; evidence bewaakt de velden voor beeldtype, embryo-label, embryo-id en reviewstatus; geen kwaliteitsscore, selectieadvies, beeldpayload, OCR-tekst, diagnose, dosering, kansberekening, secrets of trackingpayload wordt toegevoegd; backlog/docs blijven synchroon.
+- **Affected Screens:** Dossier, Beeldenoverzicht, Embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging repository, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3830
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

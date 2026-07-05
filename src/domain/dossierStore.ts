@@ -67,6 +67,10 @@ export class DossierStore {
       pogingId?: string;
       afspraakId?: string;
       trajectId?: string;
+      embryoLabel?: string;
+      embryoId?: string;
+      embryoDag?: number;
+      laboratoriumContext?: string;
     },
   ): Promise<DossierDocument> {
     const record = await this.documenten.get(documentId);
@@ -81,9 +85,13 @@ export class DossierStore {
       bron: correctie.bron,
       exifStatus: correctie.exifStatus,
       reviewStatus: correctie.reviewStatus,
-      ...(correctie.pogingId ? { pogingId: correctie.pogingId } : {}),
-      ...(correctie.afspraakId ? { afspraakId: correctie.afspraakId } : {}),
-      ...(correctie.trajectId ? { trajectId: correctie.trajectId } : {}),
+      pogingId: correctie.pogingId,
+      afspraakId: correctie.afspraakId,
+      trajectId: correctie.trajectId,
+      embryoLabel: correctie.embryoLabel,
+      embryoId: correctie.embryoId,
+      embryoDag: correctie.embryoDag,
+      laboratoriumContext: correctie.laboratoriumContext,
     };
     const updated: DossierDocument = {
       ...record.value,
