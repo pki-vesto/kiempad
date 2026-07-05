@@ -778,6 +778,7 @@ type CommandTaskRoute<RouteId extends string> = {
   label: string;
   meta: string;
   badge: string;
+  cue?: string;
   density: 'empty' | 'filled' | 'action';
 };
 
@@ -800,6 +801,7 @@ function renderCommandTaskRoutes<RouteId extends string>(input: {
                 <strong class="command-task-route__badge">${escapeHtml(route.badge)}</strong>
               </span>
               <small>${escapeHtml(route.meta)}</small>
+              ${route.cue ? `<em class="command-task-route__cue" data-command-route-cue="${escapeAttribute(route.cue)}">${escapeHtml(route.cue)}</em>` : ''}
             </a>
           `,
         )
@@ -21828,6 +21830,7 @@ function renderTreatmentTaskRoutes(input: {
       label: 'Overzicht',
       meta: `${input.activeCount} actief`,
       badge: String(input.activeCount),
+      cue: 'Start',
       density: input.activeCount > 0 ? 'filled' : 'empty',
     },
     {
@@ -21836,6 +21839,7 @@ function renderTreatmentTaskRoutes(input: {
       label: 'Fasen',
       meta: `${input.phaseCount} fases`,
       badge: String(input.phaseCount),
+      cue: 'Planning',
       density: input.phaseCount > 0 ? 'filled' : 'empty',
     },
     {
@@ -21844,6 +21848,7 @@ function renderTreatmentTaskRoutes(input: {
       label: 'Vergoeding',
       meta: `${input.remainingReimbursements} resterend`,
       badge: String(input.remainingReimbursements),
+      cue: 'Polis',
       density: input.remainingReimbursements > 0 ? 'filled' : 'empty',
     },
     {
@@ -21852,6 +21857,7 @@ function renderTreatmentTaskRoutes(input: {
       label: 'Context',
       meta: 'timeline',
       badge: 'graph',
+      cue: 'Graph',
       density: 'action',
     },
     {
@@ -21860,6 +21866,7 @@ function renderTreatmentTaskRoutes(input: {
       label: 'Beheer',
       meta: `${input.archivedCount} archief`,
       badge: String(input.archivedCount),
+      cue: 'Archief',
       density: input.archivedCount > 0 ? 'filled' : 'action',
     },
   ];

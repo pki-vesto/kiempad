@@ -5753,6 +5753,12 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-overview-stage-board__lane:hover,');
     expect(css).toContain('.treatment-task-routes {');
     expect(css).toContain('border-radius: 12px;');
+    expect(css).toContain('.command-task-route__cue {');
+    expect(css).toContain('.treatment-task-route::before {');
+    expect(css).toContain('.treatment-task-route[data-command-route-density="empty"]::before {');
+    expect(css).toContain('.treatment-task-route[data-command-route-density="filled"]::before {');
+    expect(css).toContain('.treatment-task-route[data-command-route-density="action"]::before {');
+    expect(css).toContain('.treatment-task-route .command-task-route__cue {');
     expect(css).toContain('.treatment-workbench :where(.phase-hero__label) {');
     expect(css).toContain('font-size: 1.32rem;');
     expect(css).toContain('.treatment-workbench :where(.stat-row) {');
@@ -43629,6 +43635,21 @@ describe('app shell', () => {
     expect(html).toContain('data-command-task-routes="ready"');
     expect(html).toContain(
       'href="#traject?route=overzicht" aria-current="page" data-command-route-density="filled"',
+    );
+    expect(html).toContain(
+      'class="command-task-route__cue" data-command-route-cue="Start">Start</em>',
+    );
+    expect(html).toContain(
+      'class="command-task-route__cue" data-command-route-cue="Planning">Planning</em>',
+    );
+    expect(html).toContain(
+      'class="command-task-route__cue" data-command-route-cue="Polis">Polis</em>',
+    );
+    expect(html).toContain(
+      'class="command-task-route__cue" data-command-route-cue="Graph">Graph</em>',
+    );
+    expect(html).toContain(
+      'class="command-task-route__cue" data-command-route-cue="Archief">Archief</em>',
     );
     expect(html).toContain('class="command-task-route__badge">graph</strong>');
     expect(html).toContain('href="#traject?route=fasen"');
