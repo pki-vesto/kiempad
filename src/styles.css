@@ -1187,7 +1187,8 @@ h3 {
 }
 
 .route-focus-dock__links span,
-.route-focus-dock__links small {
+.route-focus-dock__links small,
+.route-focus-dock__links em {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1202,6 +1203,18 @@ h3 {
   color: var(--text-faint);
   font-size: 0.64rem;
   font-weight: 700;
+}
+
+.route-focus-dock__links em {
+  justify-self: start;
+  max-width: 100%;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface-subtle));
+  color: var(--accent-strong);
+  font-size: 0.61rem;
+  font-style: normal;
+  font-weight: 850;
 }
 
 .workspace-map {
@@ -27976,7 +27989,7 @@ summary[class*="__summary"]:focus-visible,
     display: grid;
     grid-template-columns: 1fr;
     gap: 4px;
-    max-height: min(96px, 20svh);
+    max-height: min(94px, 19svh);
     overflow: hidden auto;
     overscroll-behavior: contain;
     padding: 6px;
@@ -27985,7 +27998,7 @@ summary[class*="__summary"]:focus-visible,
   .route-focus-dock {
     grid-template-columns: minmax(104px, 0.36fr) minmax(0, 1fr);
     gap: 5px;
-    padding: 5px;
+    padding: 4px;
   }
 
   .route-focus-dock__summary {
@@ -28003,8 +28016,8 @@ summary[class*="__summary"]:focus-visible,
 
   .route-focus-dock__links a {
     min-width: 84px;
-    min-height: 36px;
-    padding: 5px 8px;
+    min-height: 34px;
+    padding: 4px 8px;
     scroll-snap-align: start;
   }
 

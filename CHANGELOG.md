@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2021 routefocus-dock live route badges: de sticky routefocus-dock toont nu
+  per route veilige live badges met aantallen of neutrale statuslabels, zodat
+  gebruikers bovenin zien waar inhoud of open werk zit zonder medische payload.
 - G2020 sticky routefocus-dock tegen lange pagina: de app-shell toont nu boven
   elke actieve werkruimte een compacte routefocus-dock met actieve route,
   taakmeta en routeknoppen. Routeflow-smoke bewaakt dat de dock zichtbaar boven
