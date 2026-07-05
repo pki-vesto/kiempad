@@ -30641,9 +30641,17 @@ summary[class*="__summary"]:focus-visible,
       gap: 10px;
     }
 
+    .treatment-task-route .command-task-route__top > span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .treatment-task-route .command-task-route__badge,
     .treatment-task-route .command-task-route__cue {
       min-height: 22px;
+      max-width: min(82px, 48%);
       padding: 3px 8px;
       border-color: CanvasText;
       background: Canvas;

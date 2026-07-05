@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1896 Premium Claude Design UI: mobiele Traject routelabels krijgen in
+  forced-colors expliciete ellipsis- en min-width regels naast begrensde
+  badge- en cuepills, zodat lange labels niet tegen statuspills drukken.
 - G1895 Premium Claude Design UI: mobiele Traject badge- en cuepills hebben in
   forced-colors extra gap, min-height, padding en line-height, zodat compacte
   routegroepen leesbaar blijven zonder crowding.
