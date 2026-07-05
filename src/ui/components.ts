@@ -355,6 +355,7 @@ export function researchSourceCard(opts: {
 }): string {
   const cls = opts.className ? ` ${opts.className}` : '';
   const data = {
+    'research-source-component': 'source-card',
     ...(opts.id ? { 'research-source-id': opts.id } : {}),
     ...(opts.source ? { 'research-source': opts.source } : {}),
     ...(opts.data ?? {}),

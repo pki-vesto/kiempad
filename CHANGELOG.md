@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1987 Research Intelligence offline cache metadata routeflow evidence:
+  `npm run smoke:routeflows` bewaakt nu target
+  `knowledge-research-offline-cache-metadata`, inclusief
+  `data-research-offline-cache-metadata`, cachebron, datum, reviewstatus,
+  cachetype, correctievelden en niet-medische payloadgrens.
 - G545 Research Intelligence: researchbronnen tonen nu offline cache metadata
   met cachebron, datum, reviewstatus, cachetype, correctievelden en uitleg voor
   leken.

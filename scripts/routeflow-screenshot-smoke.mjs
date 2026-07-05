@@ -215,6 +215,52 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-research-offline-cache-metadata',
+    hash: '#kennis?route=read',
+    rootSelector: '[data-knowledge-focus-shell="ready"]',
+    expectedText: 'Cachebron',
+    openSelectors: [
+      '[data-knowledge-research-detail-choice="collapsed"]',
+      '[data-knowledge-research-sources-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-research-source-component="source-list"]',
+      '[data-research-offline-cache-metadata="ready"]',
+      '[data-research-offline-cache-source="ready"]',
+      '[data-research-offline-cache-review="concept_te_controleren"]',
+      '[data-research-offline-cache-type="lokale_cache"]',
+      '[data-research-offline-cache-date]',
+    ],
+    presentSelectors: [
+      '[data-research-offline-cache-type="handmatige_seed"]',
+      '[data-research-offline-cache-date="Nog geen publicatiedatum"]',
+      '[data-research-source-component="source-card"]',
+      '#research-item-form',
+      '#research-network-form',
+    ],
+    closedDetailsSelectors: [
+      '[data-knowledge-task-route-choice="collapsed"]',
+      '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-research-workflow-choice="collapsed"]',
+      '[data-knowledge-research-route-status-choice="collapsed"]',
+      '[data-knowledge-research-lane-choice="collapsed"]',
+      '[data-knowledge-research-followup="collapsed"]',
+      '[data-knowledge-research-followup-context-choice="collapsed"]',
+      '[data-knowledge-research-summaries-choice="collapsed"]',
+      '[data-knowledge-research-trends-choice="collapsed"]',
+    ],
+    knowledgeConsole: true,
+    researchOfflineCacheMetadata: true,
+    desktopHiddenSelectors: [
+      '.knowledge-focus-shell__header p:last-child',
+      '.knowledge-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.knowledge-research-reader__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+      '[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small',
+    ],
+  },
+  {
     screen: 'knowledge-status',
     hash: '#kennis?route=read',
     rootSelector: '.content',
@@ -4260,6 +4306,70 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const researchOfflineCacheMetadata = routeflow.researchOfflineCacheMetadata
+          ? (() => {
+              const sourceList = rootElement?.querySelector(
+                '[data-research-source-component="source-list"]',
+              );
+              const metadataNodes = [
+                ...(rootElement?.querySelectorAll('[data-research-offline-cache-metadata="ready"]') ??
+                  []),
+              ];
+              const localMetadata = rootElement?.querySelector(
+                '[data-research-offline-cache-type="lokale_cache"]',
+              );
+              const seedMetadata = rootElement?.querySelector(
+                '[data-research-offline-cache-type="handmatige_seed"]',
+              );
+              const source = localMetadata?.querySelector(
+                '[data-research-offline-cache-source="ready"]',
+              );
+              const date = localMetadata?.querySelector('[data-research-offline-cache-date]');
+              const sourceListRect = sourceList?.getBoundingClientRect();
+              const localRect = localMetadata?.getBoundingClientRect();
+              const sourceRect = source?.getBoundingClientRect();
+              const dateRect = date?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const localText = localMetadata?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const allText = metadataNodes
+                .map((metadataNode) => metadataNode.textContent?.replace(/\s+/g, ' ').trim() ?? '')
+                .join(' ');
+              return {
+                sourceListVisible: Boolean(
+                  sourceListRect && sourceListRect.width > 0 && sourceListRect.height > 0,
+                ),
+                metadataCount: metadataNodes.length,
+                localVisible: Boolean(localRect && localRect.width > 0 && localRect.height > 0),
+                seedPresent: Boolean(seedMetadata),
+                sourceVisible: Boolean(sourceRect && sourceRect.width > 0 && sourceRect.height > 0),
+                dateVisible: Boolean(dateRect && dateRect.width > 0 && dateRect.height > 0),
+                reviewStatus: localMetadata?.getAttribute('data-research-offline-cache-review') ?? '',
+                cacheType: localMetadata?.getAttribute('data-research-offline-cache-type') ?? '',
+                dateValue: date?.getAttribute('data-research-offline-cache-date') ?? '',
+                hasSourceLabel: localText.includes('Cachebron'),
+                hasDateLabel: localText.includes('Datum'),
+                hasReviewLabel: localText.includes('Reviewstatus'),
+                hasCorrectionFieldsLabel: localText.includes('Correctievelden'),
+                hasCorrectionFields:
+                  localText.includes('bron') &&
+                  localText.includes('datum') &&
+                  localText.includes('cacheType') &&
+                  localText.includes('reviewstatus'),
+                hasLayExplanation: localText.includes(
+                  'controleer bron, datum en relevantie zelf',
+                ),
+                contained:
+                  Boolean(rootRect && localRect && sourceRect && dateRect) &&
+                  localRect.left >= rootRect.left - 1 &&
+                  localRect.right <= rootRect.right + 1 &&
+                  sourceRect.right <= rootRect.right + 1 &&
+                  dateRect.right <= rootRect.right + 1,
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|diagnose stellen|dosering aanpassen|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  `${localText} ${allText}`,
+                ),
+              };
+            })()
+          : null;
         const embryoImageClassificationReview = routeflow.embryoImageClassificationReview
           ? (() => {
               const panel = document.querySelector('[data-dossier-imaging-disclosure="repository"]');
@@ -4705,6 +4815,7 @@ async function assertRouteflows(browser, options) {
           filledConsultCard,
           embryoTrackingScanOverflow,
           researchTrendScanOverflow,
+          researchOfflineCacheMetadata,
           embryoImageClassificationReview,
           imagingMetadataReviewLocked,
           imagingCompareEvidence,
@@ -5590,6 +5701,30 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: research trend-scan mist routeflow-overflow evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchTrendScanOverflow)}).`,
+        );
+      }
+      if (
+        evidence.researchOfflineCacheMetadata &&
+        (!evidence.researchOfflineCacheMetadata.sourceListVisible ||
+          evidence.researchOfflineCacheMetadata.metadataCount < 2 ||
+          !evidence.researchOfflineCacheMetadata.localVisible ||
+          !evidence.researchOfflineCacheMetadata.seedPresent ||
+          !evidence.researchOfflineCacheMetadata.sourceVisible ||
+          !evidence.researchOfflineCacheMetadata.dateVisible ||
+          evidence.researchOfflineCacheMetadata.reviewStatus !== 'concept_te_controleren' ||
+          evidence.researchOfflineCacheMetadata.cacheType !== 'lokale_cache' ||
+          evidence.researchOfflineCacheMetadata.dateValue !== 'Nog geen publicatiedatum' ||
+          !evidence.researchOfflineCacheMetadata.hasSourceLabel ||
+          !evidence.researchOfflineCacheMetadata.hasDateLabel ||
+          !evidence.researchOfflineCacheMetadata.hasReviewLabel ||
+          !evidence.researchOfflineCacheMetadata.hasCorrectionFieldsLabel ||
+          !evidence.researchOfflineCacheMetadata.hasCorrectionFields ||
+          !evidence.researchOfflineCacheMetadata.hasLayExplanation ||
+          !evidence.researchOfflineCacheMetadata.contained ||
+          evidence.researchOfflineCacheMetadata.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: research offline-cache metadata mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchOfflineCacheMetadata)}).`,
         );
       }
       if (
