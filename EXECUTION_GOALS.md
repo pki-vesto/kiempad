@@ -17458,7 +17458,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier metadata, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3819
 
 ### G1937 — Fertility Intelligence: OCR-review correctieformulier routeflow evidence
@@ -17545,6 +17545,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3844
+
+### G1950 — Fertility Intelligence: metadata-normalisatie correctieformulier release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De metadata-normalisatie correctieflow heeft routeflow-evidence voor ready en locked varianten, maar release-evidence moet nog vastleggen dat deze privacy- en overflowbescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de normalisatie-routeflowbescherming verliezen zonder dat reviewers zien dat correctievelden of locked privacycopy onvoldoende bewaakt worden.
+- **Desired Outcome:** Release-evidence documenteert dat de metadata-normalisatie correctieflow op desktop, tablet, mobiel en small-mobile gecontroleerd blijft zonder medische payloads, bronbestandsnamen of locked beeldbron-plaintext.
+- **User Value:** Gebruikers kunnen genormaliseerde dossiermetadata blijven corrigeren met vertrouwen dat releases de privacyboundary en scanbare formulierlayout behouden.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar de metadata-normalisatie correctie routeflow en de gecontroleerde selectors; evidence bevestigt dat datum, bron, documenttype, onderzoekstype, poging, afspraak, onzekerheid en bewaaractie scanbaar blijven zonder page-level horizontale overflow; evidence bevestigt dat de locked variant geen bronbestandsnaam, thumbnail, beeldpayload of plaintext bronwaarde toont; evidence bevat geen medische payload, bronbestandsnamen, OCR-payload, secrets of trackingdata; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier Documenttijdlijn, Dossier zoeken
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier metadata, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3846
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 

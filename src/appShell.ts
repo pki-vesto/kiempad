@@ -13037,7 +13037,7 @@ function renderMetadataNormalisatieCorrectieForm(
     return `
       <section class="linked-note metadata-normalization-correction-form" data-metadata-normalization-correction="locked">
         <strong>Metadata-normalisatie</strong>
-        <p class="small-print">Ontgrendel de lokale kluis om datum, bron, documenttype en koppelingen te corrigeren zonder bronbestandsnaam te tonen.</p>
+        <p class="small-print" data-metadata-normalization-locked-boundary="ready">Ontgrendel de lokale kluis om datum, bron, documenttype en koppelingen te corrigeren zonder bronbestandsnaam te tonen.</p>
       </section>
     `;
   }
@@ -13074,31 +13074,31 @@ function renderMetadataNormalisatieCorrectieForm(
         <div><dt>Originele bron</dt><dd>${escapeHtml(origineleWaarden.bron)}</dd></div>
         <div><dt>Origineel type</dt><dd>${escapeHtml(origineleWaarden.documenttype)}</dd></div>
       </dl>
-      <label>
+      <label data-metadata-normalization-field="date">
         Datum
         <input name="metadataNormalisatieDatum" type="date" required value="${escapeAttribute(datum)}" />
       </label>
-      <label>
+      <label data-metadata-normalization-field="source">
         Bron
         <input name="metadataNormalisatieBron" autocomplete="off" required value="${escapeAttribute(bron)}" />
       </label>
-      <label>
+      <label data-metadata-normalization-field="document-type">
         Documenttype
         <input name="metadataNormalisatieDocumenttype" autocomplete="off" required value="${escapeAttribute(documenttype)}" />
       </label>
-      <label>
+      <label data-metadata-normalization-field="research-type">
         Onderzoekstype
         <input name="metadataNormalisatieOnderzoekstype" autocomplete="off" value="${escapeAttribute(onderzoekstype)}" />
       </label>
-      <label>
+      <label data-metadata-normalization-field="attempt">
         Poging
         <input name="metadataNormalisatiePogingId" autocomplete="off" value="${escapeAttribute(pogingId)}" />
       </label>
-      <label>
+      <label data-metadata-normalization-field="appointment">
         Afspraak
         <input name="metadataNormalisatieAfspraakId" autocomplete="off" value="${escapeAttribute(afspraakId)}" />
       </label>
-      <label>
+      <label data-metadata-normalization-field="certainty">
         Onzekerheid
         <select name="metadataNormalisatieOnzekerheid">
           <option value="laag"${onzekerheid === 'laag' ? ' selected' : ''}>Laag - gecontroleerd</option>
@@ -13106,7 +13106,7 @@ function renderMetadataNormalisatieCorrectieForm(
           <option value="hoog"${onzekerheid === 'hoog' ? ' selected' : ''}>Hoog - onzeker</option>
         </select>
       </label>
-      <button type="submit" class="secondary-button">Normalisatie bewaren</button>
+      <button type="submit" class="secondary-button" data-metadata-normalization-action="save">Normalisatie bewaren</button>
     </form>
   `;
 }

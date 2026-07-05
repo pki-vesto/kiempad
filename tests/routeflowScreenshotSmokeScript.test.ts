@@ -641,6 +641,22 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'OCR-review correctieflow mist scanbare routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-metadata-normalization-correction'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "prepare: 'dossier-metadata-normalization-correction'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'data-metadata-normalization-correction="ready"',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'data-metadata-normalization-correction="locked"',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('data-metadata-normalization-field="date"');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'metadata-normalisatie correctieflow mist scanbare routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('focusLayout');
     expect(routeflowScreenshotSmokeScript).toContain(
       'focus-workspace staat niet als volle breedte',
