@@ -34,9 +34,20 @@ export type DailyRecommendation = {
   reden?: string;
   checklist?: DailyRecommendationChecklistItem[];
   gebruikteBronnen?: string[];
+  bronconfidence?: DailyRecommendationBronconfidence;
   inputMinimisatie?: DailyRecommendationInputMinimization;
   cyclusfaseContext?: DailyRecommendationCyclePhaseContext;
   manLeefstijlContext?: DailyRecommendationLifestyleContext;
+};
+
+export type DailyRecommendationBronconfidence = {
+  label: 'sterk' | 'normaal' | 'beperkt';
+  score: number;
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  bronCategorieen: string[];
+  uitlegVoorLeken: string;
 };
 
 export type DailyRecommendationPersonalization = {
@@ -278,7 +289,56 @@ function verrijkAanbevelingMetBronnen(
     ...item,
     gebruikteBronnen: bronnen,
     inputMinimisatie: bouwInputMinimisatie(item, bronnen, datum),
+    bronconfidence: bouwDailyRecommendationBronconfidence(item, bronnen, datum),
   };
+}
+
+export function bouwDailyRecommendationBronconfidence(
+  item: DailyRecommendation,
+  bronnen: readonly string[] = item.gebruikteBronnen ?? [item.bron],
+  datum: string = item.datum ?? 'onbekend',
+): DailyRecommendationBronconfidence {
+  const bronCategorieen = categoriseerBronnen(bronnen);
+  const score = berekenDailyRecommendationBronconfidenceScore(item, bronnen, bronCategorieen);
+  const label: DailyRecommendationBronconfidence['label'] =
+    score >= 75 ? 'sterk' : score >= 55 ? 'normaal' : 'beperkt';
+
+  return {
+    label,
+    score,
+    bron: item.bron,
+    datum,
+    reviewStatus: 'concept_te_controleren',
+    bronCategorieen,
+    uitlegVoorLeken: beschrijfDailyRecommendationBronconfidence(label, bronCategorieen.length),
+  };
+}
+
+function berekenDailyRecommendationBronconfidenceScore(
+  item: DailyRecommendation,
+  bronnen: readonly string[],
+  bronCategorieen: readonly string[],
+): number {
+  let score = 35;
+  score += Math.min(bronnen.length, 5) * 8;
+  score += Math.min(bronCategorieen.length, 4) * 8;
+  if (item.datum) score += 6;
+  if (item.checklist?.length) score += 5;
+  if (item.cyclusfaseContext || item.manLeefstijlContext) score += 8;
+  return Math.max(25, Math.min(95, score));
+}
+
+function beschrijfDailyRecommendationBronconfidence(
+  label: DailyRecommendationBronconfidence['label'],
+  categorieAantal: number,
+): string {
+  if (label === 'sterk') {
+    return `Sterke bronbasis: meerdere lokale broncategorieen (${categorieAantal}) zijn gekoppeld. Controleer bronselectie en reviewstatus.`;
+  }
+  if (label === 'normaal') {
+    return `Normale bronbasis: enkele lokale broncategorieen (${categorieAantal}) zijn gekoppeld. Controleer of de bronselectie klopt.`;
+  }
+  return `Beperkte bronbasis: weinig lokale broncategorieen (${categorieAantal}) zijn gekoppeld. Vul aan of corrigeer voordat je erop leunt.`;
 }
 
 function bouwInputMinimisatie(
@@ -298,7 +358,7 @@ function bouwInputMinimisatie(
       'trackingdata',
       'locatiegegevens',
     ],
-    correctieVelden: ['dagadviesTekst', 'bronselectie', 'reviewstatus'],
+    correctieVelden: ['dagadviesTekst', 'bronselectie', 'bronconfidence', 'reviewstatus'],
     waarschuwing:
       'Input-minimalisatie: alleen lokale categorie- en planningcontext; geen medische conclusie, hoeveelheid, kansclaim of behandelrichting.',
   };
@@ -565,6 +625,27 @@ export function controleerDailyRecommendationPolicyRegressions(
         reden: 'Dagadvies mist correctievelden voor conceptcontrole.',
       });
     }
+    if (!aanbeveling.bronconfidence?.bron) {
+      overtredingen.push({
+        aanbevelingId: aanbeveling.id,
+        fixtureId: 'bronconfidence-bron-verplicht',
+        reden: 'Dagadvies mist bronconfidence bron.',
+      });
+    }
+    if (!aanbeveling.bronconfidence?.datum) {
+      overtredingen.push({
+        aanbevelingId: aanbeveling.id,
+        fixtureId: 'bronconfidence-datum-verplicht',
+        reden: 'Dagadvies mist bronconfidence datum.',
+      });
+    }
+    if (aanbeveling.bronconfidence?.reviewStatus !== 'concept_te_controleren') {
+      overtredingen.push({
+        aanbevelingId: aanbeveling.id,
+        fixtureId: 'bronconfidence-reviewstatus-verplicht',
+        reden: 'Dagadvies mist bronconfidence reviewstatus.',
+      });
+    }
   }
 
   return overtredingen;
@@ -587,6 +668,9 @@ function dailyRecommendationPolicyText(item: DailyRecommendation): string {
     item.inputMinimisatie?.waarschuwing,
     ...(item.inputMinimisatie?.gebruikteInputCategorieen ?? []),
     ...(item.inputMinimisatie?.uitgeslotenInputCategorieen ?? []),
+    item.bronconfidence?.uitlegVoorLeken,
+    item.bronconfidence?.label,
+    ...(item.bronconfidence?.bronCategorieen ?? []),
     item.cyclusfaseContext?.uitlegVoorLeken,
     item.cyclusfaseContext?.waarschuwing,
     item.manLeefstijlContext?.uitlegVoorLeken,

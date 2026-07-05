@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G550 Daily Recommendations: dagadvieskaarten tonen nu een bronconfidenceblok
+  met label, score, bron, datum, reviewstatus, broncategorieen en uitleg voor
+  leken zonder bewijsweging of behandeladvies.
 - G553 Daily Recommendations: Dagadvies toont nu een eigenaarsfilter waarmee
   vrouw-, man- of samen-suggesties lokaal en herstelbaar verborgen kunnen worden,
   inclusief bron, datum en reviewstatus uit encrypted eventlogs.
