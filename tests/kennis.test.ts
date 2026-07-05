@@ -432,6 +432,59 @@ describe('kennis domeinregels', () => {
         relevantieVoorGebruiker:
           'Relevant als achtergrond bij het lopende ICSI-traject en het laatste labverslag.',
         dossierContextBronnen: contextBronnen,
+        artsBespreekVragen: [
+          {
+            id: 'research-1-researchvraag-context',
+            vraag:
+              'Welke punten uit "Artikel over embryo-cultuur" zijn zinvol om te bespreken naast Traject: Poging 1 en Consult: 2026-06-12 · Labconsult?',
+            bron: 'https://voorbeeld.test/embryo-cultuur',
+            datum: '2026-05-10',
+            reviewStatus: 'concept_te_controleren',
+            correctieVelden: [
+              'vraagtekst',
+              'contextfactoren',
+              'bron',
+              'publicatieDatum',
+              'reviewstatus',
+            ],
+            uitlegVoorLeken:
+              'Deze vraag is een concept voor het gesprek met de kliniek; controleer of hij past bij jullie situatie.',
+          },
+          {
+            id: 'research-1-researchvraag-onzekerheid',
+            vraag:
+              'Welke onzekerheden of beperkingen uit deze publicatie moeten we meenemen in onze vragen?',
+            bron: 'https://voorbeeld.test/embryo-cultuur',
+            datum: '2026-05-10',
+            reviewStatus: 'concept_te_controleren',
+            correctieVelden: [
+              'vraagtekst',
+              'contextfactoren',
+              'bron',
+              'publicatieDatum',
+              'reviewstatus',
+            ],
+            uitlegVoorLeken:
+              'Deze vraag is een concept voor het gesprek met de kliniek; controleer of hij past bij jullie situatie.',
+          },
+          {
+            id: 'research-1-researchvraag-ontbrekend',
+            vraag:
+              'Welke extra informatie is volgens de kliniek nodig als context nu ontbreekt: geen duidelijke ontbrekende context?',
+            bron: 'https://voorbeeld.test/embryo-cultuur',
+            datum: '2026-05-10',
+            reviewStatus: 'concept_te_controleren',
+            correctieVelden: [
+              'vraagtekst',
+              'contextfactoren',
+              'bron',
+              'publicatieDatum',
+              'reviewstatus',
+            ],
+            uitlegVoorLeken:
+              'Deze vraag is een concept voor het gesprek met de kliniek; controleer of hij past bij jullie situatie.',
+          },
+        ],
         contextMatch: {
           label: 'contextmatch_met_lokale_bronnen',
           gekoppeldeContextfactoren: [
@@ -497,6 +550,7 @@ describe('kennis domeinregels', () => {
       relevantie?.relevantieUitleg.uitlegVoorLeken,
       relevantie?.relevantieUitleg.waarschuwing,
       relevantie?.waarschuwing,
+      ...(relevantie?.artsBespreekVragen.map((vraag) => vraag.vraag) ?? []),
     ].join(' ');
 
     expect(relevantie?.contextMatch).toMatchObject({
@@ -518,6 +572,17 @@ describe('kennis domeinregels', () => {
         'reviewstatus',
       ],
     });
+    expect(relevantie?.artsBespreekVragen).toHaveLength(3);
+    expect(relevantie?.artsBespreekVragen[0]).toMatchObject({
+      id: 'research-contextmatch-researchvraag-context',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      datum: '2026-05-10',
+      reviewStatus: 'concept_te_controleren',
+      correctieVelden: ['vraagtekst', 'contextfactoren', 'bron', 'publicatieDatum', 'reviewstatus'],
+    });
+    expect(relevantie?.artsBespreekVragen[2]?.vraag).toContain(
+      'Recent consultverslag ontbreekt en Recent dossierdocument ontbreekt',
+    );
     expect(tekst).not.toMatch(/\b(\d+%|kansscore|diagnose|moet|beste behandeling|kies)\b/i);
   });
 

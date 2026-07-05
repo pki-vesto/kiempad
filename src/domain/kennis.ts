@@ -154,6 +154,7 @@ export type ResearchRelevantieVoorGebruiker = {
   bron: string;
   relevantieVoorGebruiker: string;
   dossierContextBronnen: ResearchDossierContextBron[];
+  artsBespreekVragen: ResearchArtsBespreekVraag[];
   contextMatch: {
     label: 'contextmatch_met_lokale_bronnen' | 'contextmatch_onvolledig';
     gekoppeldeContextfactoren: string[];
@@ -172,6 +173,16 @@ export type ResearchRelevantieVoorGebruiker = {
     waarschuwing: string;
   };
   waarschuwing: string;
+};
+
+export type ResearchArtsBespreekVraag = {
+  id: string;
+  vraag: string;
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  correctieVelden: string[];
+  uitlegVoorLeken: string;
 };
 
 export type ResearchDossierRelatie = {
@@ -875,6 +886,10 @@ export function bouwResearchRelevantieVoorGebruiker(
         bron: item.researchPublicatie.bron,
         relevantieVoorGebruiker: item.researchPublicatie.relevantieVoorGebruiker,
         dossierContextBronnen: [...dossierContextBronnen],
+        artsBespreekVragen: bouwResearchArtsBespreekVragen({
+          item,
+          contextMatch,
+        }),
         contextMatch,
         relevantieUitleg: bouwResearchRelevantieUitleg({
           item,
@@ -889,6 +904,51 @@ export function bouwResearchRelevantieVoorGebruiker(
         b.publicatieDatum.localeCompare(a.publicatieDatum) ||
         a.titel.localeCompare(b.titel, 'nl-NL'),
     );
+}
+
+function bouwResearchArtsBespreekVragen(input: {
+  item: KennisItem & {
+    researchPublicatie: NonNullable<KennisItem['researchPublicatie']> & {
+      relevantieVoorGebruiker: string;
+    };
+  };
+  contextMatch: ResearchRelevantieVoorGebruiker['contextMatch'];
+}): ResearchArtsBespreekVraag[] {
+  const { item, contextMatch } = input;
+  const contextLabel =
+    contextMatch.gekoppeldeContextfactoren.length > 0
+      ? contextMatch.gekoppeldeContextfactoren.slice(0, 2).join(' en ')
+      : 'onze dossiercontext';
+  const ontbrekend =
+    contextMatch.ontbrekendeGegevens.length > 0
+      ? contextMatch.ontbrekendeGegevens.join(' en ')
+      : 'geen duidelijke ontbrekende context';
+  const basis = {
+    bron: item.researchPublicatie.bron,
+    datum: item.researchPublicatie.publicatieDatum,
+    reviewStatus: 'concept_te_controleren' as const,
+    correctieVelden: ['vraagtekst', 'contextfactoren', 'bron', 'publicatieDatum', 'reviewstatus'],
+    uitlegVoorLeken:
+      'Deze vraag is een concept voor het gesprek met de kliniek; controleer of hij past bij jullie situatie.',
+  };
+
+  return [
+    {
+      ...basis,
+      id: `${item.id}-researchvraag-context`,
+      vraag: `Welke punten uit "${item.titel}" zijn zinvol om te bespreken naast ${contextLabel}?`,
+    },
+    {
+      ...basis,
+      id: `${item.id}-researchvraag-onzekerheid`,
+      vraag: `Welke onzekerheden of beperkingen uit deze publicatie moeten we meenemen in onze vragen?`,
+    },
+    {
+      ...basis,
+      id: `${item.id}-researchvraag-ontbrekend`,
+      vraag: `Welke extra informatie is volgens de kliniek nodig als context nu ontbreekt: ${ontbrekend}?`,
+    },
+  ];
 }
 
 function bouwResearchRelevantieUitleg(input: {

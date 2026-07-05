@@ -16299,6 +16299,27 @@ function renderResearchRelevantieVoorGebruiker(
                     <small>Ontbrekende gegevens: ${escapeHtml(item.contextMatch.ontbrekendeGegevens.join(' · ') || 'geen ontbrekende context')}</small>
                     <small>${escapeHtml(item.contextMatch.artsBespreekTaal)}</small>
                     <small>${escapeHtml(item.contextMatch.uitleg)}</small>
+                    <div class="research-clinician-questions" data-research-clinician-questions="ready" data-research-clinician-questions-count="${escapeAttribute(String(item.artsBespreekVragen.length))}">
+                      <strong>Vragen voor de kliniek</strong>
+                      <ol>
+                        ${item.artsBespreekVragen
+                          .map(
+                            (vraag) => `
+                              <li data-research-clinician-question="${escapeAttribute(vraag.id)}">
+                                <span>${escapeHtml(vraag.vraag)}</span>
+                                <dl class="metadata-list compact-list" data-research-clinician-question-metadata="ready">
+                                  <div><dt>Bron</dt><dd>${escapeHtml(vraag.bron)}</dd></div>
+                                  <div><dt>Datum</dt><dd>${escapeHtml(vraag.datum)}</dd></div>
+                                  <div><dt>Reviewstatus</dt><dd>${escapeHtml(vraag.reviewStatus)}</dd></div>
+                                  <div><dt>Correctievelden</dt><dd>${vraag.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+                                  <div><dt>Uitleg voor leken</dt><dd>${escapeHtml(vraag.uitlegVoorLeken)}</dd></div>
+                                </dl>
+                              </li>
+                            `,
+                          )
+                          .join('')}
+                      </ol>
+                    </div>
                     <dl class="metadata-list compact-list">
                       <div><dt>Relevantiebron</dt><dd>${escapeHtml(item.relevantieUitleg.bron)}</dd></div>
                       <div><dt>Datum</dt><dd>${escapeHtml(item.relevantieUitleg.datum)}</dd></div>

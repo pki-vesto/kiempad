@@ -15306,7 +15306,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, questions, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #877
 
 ### G547 — dagadvies engine input-minimalisatie
 
@@ -18218,6 +18219,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3908
+
+### G1986 — Research Intelligence: clinician question generator routeflow evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** De research artsbespreek-vraaggenerator is zichtbaar in de researchrelevantie, maar routeflow-bewijs moet expliciet blijven vastleggen dat vragen, bron, datum, reviewstatus en correctievelden bereikbaar blijven na UI-wijzigingen.
+- **User Impact:** Gebruikers kunnen anders neutrale kliniekvragen kwijtraken bij latere layout- of themawijzigingen.
+- **Desired Outcome:** Routeflow- en release-evidence noemen de clinician question generator, inclusief data-hooks, bronherleiding en niet-medische grens.
+- **User Value:** Gebruikers blijven neutrale vragen voor de kliniek voorbereiden zonder dat Kiempad richting diagnose, dosering, kansberekening of behandelkeuzeadvies verschuift.
+- **Acceptance Criteria:** Evidence noemt `data-research-clinician-questions`; evidence noemt vraagtekst, bron, datum, reviewstatus en correctievelden; evidence bewaakt dat geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt getoond; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research relevance, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3910
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
