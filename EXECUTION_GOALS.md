@@ -17254,7 +17254,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult UI, routeflow smoke, Claude Design
 - **ADR Needed:** no
 - **Score:** 26
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3798
 
 ### G1922 — Premium Claude Design UI: embryo tracking scan mobile density polish
@@ -17613,6 +17613,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 26
 - **Status:** ☐ open
 - **Issue:** #3852
+
+### G1954 — Premium Claude Design UI: consult review scan release evidence
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De consult review-scan heeft routeflow-overflow evidence, maar release-evidence moet nog vastleggen dat deze bescherming zichtbaar blijft in de PR/CI-keten.
+- **User Impact:** Zonder release-evidence kan een latere merge de consult review-scan bescherming verliezen zonder dat reviewers zien dat scan cards of page-level overflow onvoldoende bewaakt worden.
+- **Desired Outcome:** Release-evidence documenteert dat de consult review-scan op desktop, tablet en mobiel gecontroleerd blijft zonder consultpayloads, medische plaintext of broninhoud.
+- **User Value:** Gebruikers houden een rustige Consultverslagenroute waarin verslagen, samenvattingen, actiepunten en bronreview snel scanbaar blijven na thema- of layoutwijzigingen.
+- **Acceptance Criteria:** Release- of CI-evidence verwijst naar `data-consult-review-scan="ready"` en de consult review-scan overflow evidence; evidence bevestigt vier zichtbare scan cards voor reports, summaries, actions en sources; evidence bevestigt scan-before-card ordering en containerbegrenzing op desktop, tablet en mobile; evidence bevat geen consultpayloads, medische plaintext, OCR-tekst, secrets, tokens of broninhoud; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossier, Consult intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consult UI, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 26
+- **Status:** ☐ open
+- **Issue:** #3854
 
 ### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
 

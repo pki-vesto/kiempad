@@ -3548,6 +3548,19 @@ async function assertRouteflows(browser, options) {
           : null;
         const filledConsultCard = routeflow.filledConsultCard
           ? (() => {
+              const scan = rootElement?.querySelector('[data-consult-review-scan="ready"]');
+              const scanCards = [
+                ...(rootElement?.querySelectorAll('[data-consult-review-scan-card]') ?? []),
+              ].map((scanCard) => {
+                const rect = scanCard.getBoundingClientRect();
+                return {
+                  id: scanCard.getAttribute('data-consult-review-scan-card') ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  left: rect.left,
+                  right: rect.right,
+                  text: scanCard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                };
+              });
               const card = rootElement?.querySelector('[data-consult-card="compact"]');
               const header = card?.querySelector('.consult-card__header');
               const status = [...(card?.querySelectorAll('.consult-card__status span') ?? [])];
@@ -3558,8 +3571,27 @@ async function assertRouteflows(browser, options) {
               const cardRect = card?.getBoundingClientRect();
               const headerRect = header?.getBoundingClientRect();
               const sourceRect = sourceReview?.getBoundingClientRect();
+              const scanRect = scan?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const scanStyle = scan ? getComputedStyle(scan) : null;
+              const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
               const text = card?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
               return {
+                scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
+                scanCardIds: scanCards.map((scanCard) => scanCard.id),
+                visibleScanCards: scanCards.filter((scanCard) => scanCard.visible).length,
+                scanDisplay: scanStyle?.display ?? '',
+                scanOverflowX: scanStyle?.overflowX ?? '',
+                scanBeforeCard:
+                  Boolean(scan && card && scanRect && cardRect) &&
+                  Boolean(scan.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  scanRect.top <= cardRect.top + 1,
+                scanContained:
+                  Boolean(rootRect && scanRect) &&
+                  scanRect.left >= rootRect.left - 1 &&
+                  scanRect.right <= rootRect.right + 1,
+                hasInternalScroll:
+                  scan instanceof HTMLElement ? scan.scrollWidth > scan.clientWidth + 1 : false,
                 cardVisible: Boolean(cardRect && cardRect.width > 0 && cardRect.height > 0),
                 headerVisible: Boolean(headerRect && headerRect.width > 0 && headerRect.height > 0),
                 statusChipCount: status.filter((item) => {
@@ -3569,6 +3601,9 @@ async function assertRouteflows(browser, options) {
                 sections,
                 sourceReviewVisible: Boolean(
                   sourceRect && sourceRect.width > 0 && sourceRect.height > 0,
+                ),
+                scanHasPayloadLeak: /BASE64|OCR_RAW|CONSULT_RAW|data:application|passphrase|token|diagnose stellen|dosering aanpassen|kansberekening|behandelkeuzeadvies|routeflow/i.test(
+                  scanText,
                 ),
                 hasPayloadLeak: /BASE64|OCR_RAW|CONSULT_RAW|data:application|passphrase|token|diagnose stellen|dosering aanpassen|kansberekening|behandelkeuzeadvies/i.test(
                   text,
@@ -4573,17 +4608,27 @@ async function assertRouteflows(browser, options) {
       }
       if (
         evidence.filledConsultCard &&
-        (!evidence.filledConsultCard.cardVisible ||
+        (!evidence.filledConsultCard.scanVisible ||
+          evidence.filledConsultCard.visibleScanCards !== 4 ||
+          !evidence.filledConsultCard.scanCardIds.includes('reports') ||
+          !evidence.filledConsultCard.scanCardIds.includes('summaries') ||
+          !evidence.filledConsultCard.scanCardIds.includes('actions') ||
+          !evidence.filledConsultCard.scanCardIds.includes('sources') ||
+          !['flex', 'grid'].includes(evidence.filledConsultCard.scanDisplay) ||
+          !evidence.filledConsultCard.scanBeforeCard ||
+          !evidence.filledConsultCard.scanContained ||
+          !evidence.filledConsultCard.cardVisible ||
           !evidence.filledConsultCard.headerVisible ||
           evidence.filledConsultCard.statusChipCount < 3 ||
           !evidence.filledConsultCard.sections.includes('tekst') ||
           !evidence.filledConsultCard.sections.includes('samenvatting') ||
           !evidence.filledConsultCard.sections.includes('actiepunten') ||
           !evidence.filledConsultCard.sourceReviewVisible ||
+          evidence.filledConsultCard.scanHasPayloadLeak ||
           evidence.filledConsultCard.hasPayloadLeak)
       ) {
         throw new Error(
-          `${options.label}/${target.screen}: gevulde consultkaart mist compacte browser-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.filledConsultCard)}).`,
+          `${options.label}/${target.screen}: consult review-scan mist routeflow-overflow evidence of lekt gevoelige tekst (${JSON.stringify(evidence.filledConsultCard)}).`,
         );
       }
       if (
