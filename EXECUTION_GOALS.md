@@ -14447,7 +14447,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, dashboard, timeline, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #814
 
 ### G486 — vrouw-dagkaart met bronherleiding
 
@@ -18074,6 +18075,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3891
+
+### G1978 — Research Intelligence: trend dashboard metadata routeflow evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** G485 toont trendmetadata in de app, maar aparte browser-evidence moet nog bewaken dat periode, bron, update-status, laatste check en relevantie zichtbaar blijven op alle viewports.
+- **User Impact:** Een thema- of layoutwijziging kan trendmetadata laten overlappen of wegvallen terwijl unit-tests nog groen blijven.
+- **Desired Outcome:** Routeflow-smoke bewaakt de research trendmetadata-laag op desktop, tablet, mobile en small-mobile.
+- **User Value:** Gebruikers blijven researchontwikkelingen per onderwerp en periode begrijpen zonder elk artikel los te openen.
+- **Acceptance Criteria:** Routeflow opent de Kennis researchtrend-disclosure en verifieert `data-research-trend-dashboard="ready"`; evidence dekt topic cards, publicatie-/brontellingen, laatste update, per-item periode, bron, update-status, laatste check en relevantietekst; viewports blijven begrensd zonder horizontale pagina-overflow; geen dossierplaintext, providerpayload, diagnose, dosering, kansclaim, behandelkeuzeadvies, secrets, trackingpayloads of externe content wordt toegevoegd; backlog health blijft op minimaal 100 open goals.
+- **Affected Screens:** Kennis, Research Intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Knowledge research route, trend dashboard, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3893
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

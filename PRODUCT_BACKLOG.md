@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1768 |
+| ☑ klaar | 1769 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **1976** |
+| **Totaal** | **1977** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -640,7 +640,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G482 | Research Intelligence: literatuur discovery query builder | P1 | F5 | ☑ |
 | G483 | Research Intelligence: wetenschappelijke en patientvriendelijke samenvattingen | P0 | F5 | ☑ |
 | G484 | Research Intelligence: persoonlijke relevantiescore zonder behandeladvies | P0 | F5 | ☑ |
-| G485 | Research Intelligence: fertiliteitsresearch trend dashboard | P1 | F5 | ☐ |
+| G485 | Research Intelligence: fertiliteitsresearch trend dashboard | P1 | F5 | ☑ |
 | G486 | Daily Recommendations: vrouw-dagkaart met bronherleiding | P0 | F5 | ☑ |
 | G487 | Daily Recommendations: man-dagkaart met bronherleiding | P0 | F5 | ☑ |
 | G488 | Daily Recommendations: personalisatiefeedback over tijd | P1 | F5 | ☐ |
@@ -2139,12 +2139,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1975 | Fertility Intelligence: embryo image classification release evidence freshness guard | P1 | F5 | ☐ |
 | G1976 | Daily Recommendations: supplement artscheck action release evidence freshness guard | P1 | F5 | ☐ |
 | G1977 | Research Intelligence: literature query builder routeflow evidence | P1 | F5 | ☐ |
+| G1978 | Research Intelligence: trend dashboard metadata routeflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1976** (id's G001 t/m G1977; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1977** (id's G001 t/m G1978; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
