@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1919 Premium Claude Design UI: inactieve gefocuste mobiele Traject-cues
+  pinnen in forced-colors WebKit tekstvulling op ButtonText, zodat cue-labels
+  leesbaar blijven naast ButtonFace achtergronden en CanvasText randen.
 - G1918 Premium Claude Design UI: inactieve gefocuste mobiele Traject-cues
   houden in forced-colors ButtonFace als shorthand en longhand achtergrond,
   zodat cuecontrast voorspelbaar blijft naast ButtonText labels en CanvasText

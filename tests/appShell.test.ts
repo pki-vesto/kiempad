@@ -5954,6 +5954,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('border-block-color: CanvasText;');
     expect(mobileCss).toContain('border-inline-color: CanvasText;');
     expect(mobileCss).toContain('background-color: ButtonFace;');
+    expect(mobileCss).toContain('-webkit-text-fill-color: ButtonText;');
     expect(mobileCss).toContain('font-weight: 700;');
     expect(mobileCss).toContain('outline-color: CanvasText;');
     expect(mobileCss).toContain('outline-offset: 1px;');

@@ -17185,8 +17185,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 31
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3780
+
+### G1920 — Premium Claude Design UI: treatment mobile rail forced-colors inactive focus cue text fill polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Inactieve gefocuste mobiele Traject-routekaarten hebben nu expliciete ButtonText cue-kleur, maar de tekstvulling kan nog explicieter worden vastgelegd voor forced-colors rendering.
+- **User Impact:** High-contrast toetsenbordgebruikers kunnen cue-labels minder consistent lezen als de visuele tekstvulling niet expliciet gekoppeld is aan de systeemkleur.
+- **Desired Outcome:** Inactieve gefocuste mobiele Traject-routekaarten hebben expliciete forced-colors cue-text-fillbehandeling die cue-labels leesbaar houdt naast ButtonFace achtergrond en CanvasText border/outline.
+- **User Value:** Cuepills blijven scanbaar tijdens keyboardfocus zonder actieve route-emphasis te kopiëren.
+- **Acceptance Criteria:** Mobile Traject inactive focused route cards have explicit forced-colors cue text fill handling that stays distinct from active route cue pills and inactive badge treatment; existing route hrefs, aria-current states, badges, cue pills, command-task hooks, route groups, active-route promotion, reduced-motion behavior, forced-colors contrast, spacing, active label/cue handling, supporting text fit, active focus text handling, focus cue spacing, inactive focus text handling, inactive focus cue fit, inactive focus cue rhythm, inactive focus label fit, inactive focus badge tone, inactive focus cue tone, inactive focus cue border, inactive focus cue outline offset, inactive focus badge outline offset, inactive focus badge border style, inactive focus badge outline color, inactive focus badge font weight, inactive focus cue font weight, inactive focus cue outline contrast, inactive focus cue border contrast, inactive focus cue background contrast and inactive focus cue text contrast remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors inactive focus cue text fill or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 30
+- **Status:** ☐ open
+- **Issue:** #3782
 
 ### G586 — replay conflict recovery status UI
 
