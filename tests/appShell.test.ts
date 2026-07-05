@@ -10668,10 +10668,14 @@ describe('app shell', () => {
     expect(forcedColorsCss).toContain('outline: 1px solid CanvasText;');
     expect(forcedColorsCss).toContain('.imaging-classification-review strong {');
     expect(forcedColorsCss).toContain('text-decoration-thickness: 2px;');
+    expect(forcedColorsCss).toContain('.imaging-metadata-review-form label:focus-within {');
+    expect(forcedColorsCss).toContain('text-decoration-thickness: 1px;');
     expect(forcedColorsCss).toContain('.imaging-metadata-review-form input,');
     expect(forcedColorsCss).toContain('.imaging-metadata-review-form select {');
     expect(forcedColorsCss).toContain('background: Field;');
     expect(forcedColorsCss).toContain('color: FieldText;');
+    expect(forcedColorsCss).toContain('.imaging-metadata-review-form input:focus,');
+    expect(forcedColorsCss).toContain('.imaging-metadata-review-form select:focus,');
     expect(forcedColorsCss).toContain('.imaging-metadata-review-form input:focus-visible,');
     expect(forcedColorsCss).toContain('.imaging-metadata-review-form select:focus-visible {');
     expect(forcedColorsCss).toContain('outline: 2px solid Highlight;');

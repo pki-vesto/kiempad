@@ -17594,8 +17594,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging repository, routeflow smoke, accessibility evidence
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3834
+
+### G1945 — Fertility Intelligence: embryo image classification forced-colors focus release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De embryo-afbeelding classificatiereview krijgt forced-colors focus evidence, maar release- en regressiedocumentatie kan nog explicieter bewaken dat deze focuscontrole vindbaar blijft naast de routeflow smoke.
+- **User Impact:** Gebruikers met toetsenbordnavigatie en high-contrast instellingen kunnen later regressies missen als releasechecks de focus-evidence niet expliciet noemen.
+- **Desired Outcome:** Onderhouds- of release-evidence verwijst expliciet naar de forced-colors focuscontrole voor beeldtype, embryo-label, embryo-id en reviewstatus.
+- **User Value:** Gebruikers met toetsenbordnavigatie en high-contrast instellingen houden ook na releases vertrouwen dat embryo-koppelvelden zichtbaar en bedienbaar blijven.
+- **Acceptance Criteria:** Release- of onderhoudsdocumentatie noemt de embryo image classification forced-colors focus evidence expliciet; de verwijzing blijft gekoppeld aan de routeflow target voor beeldtype, embryo-label, embryo-id en reviewstatus; geen kwaliteitsscore, selectieadvies, beeldpayload, OCR-tekst, diagnose, dosering, kansberekening, secrets of trackingpayload wordt toegevoegd; backlog/docs blijven synchroon.
+- **Affected Screens:** Dossier, Beeldenoverzicht, Embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging repository, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3836
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

@@ -321,6 +321,10 @@
   imaging metadata review form and concept classification block now use explicit forced-colors
   system colors, and routeflow smoke verifies the concept label plus image type, embryo label,
   embryo ID, and review status fields remain visible without overflow or score/selection advice.
+- **Embryo image classification forced-colors focus evidence — done in G1944 / issue #3834.** The
+  same routeflow target now focuses the image type, embryo label, embryo ID, and review status
+  controls in forced-colors, verifying active focus rings, visible field borders, underlined
+  labels, and no horizontal overflow without adding scores, advice, payloads, or medical text.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

@@ -24165,6 +24165,13 @@ summary[class*="__summary"]:focus-visible,
     color: CanvasText;
   }
 
+  .imaging-metadata-review-form label:focus-within {
+    color: Highlight;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
   .imaging-metadata-review-form input,
   .imaging-metadata-review-form select {
     border-color: ButtonText;
@@ -24173,6 +24180,8 @@ summary[class*="__summary"]:focus-visible,
     forced-color-adjust: auto;
   }
 
+  .imaging-metadata-review-form input:focus,
+  .imaging-metadata-review-form select:focus,
   .imaging-metadata-review-form input:focus-visible,
   .imaging-metadata-review-form select:focus-visible {
     border-color: Highlight;
