@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1871 Premium Claude Design UI: herinneringen openen op de komende-route nu met
+  een compact eerste-viewport notification board voor toestemming, planning,
+  privacy en herinneringsgeschiedenis. De volledige fallback- en
+  herinneringenlijsten blijven bereikbaar via bestaande ankers zonder als eerste
+  lange meldingenstapel te starten.
 - G1870 Premium Claude Design UI: agendageschiedenis opent nu met een compact
   eerste-viewport planningbord voor vandaag, komende afspraken, voorbereiding en
   afspraakgeschiedenis. De volledige afspraakgeschiedenis blijft bereikbaar via

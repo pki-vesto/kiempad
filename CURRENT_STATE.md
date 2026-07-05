@@ -115,6 +115,11 @@
   afspraakgeschiedenis. De volledige afspraakgeschiedenis blijft via bestaande
   overzicht-, komend-, plannen- en historyankers bereikbaar zonder de eerste
   viewport als lange planningstapel te vullen.
+- **G1871 Herinneringen notification board:** de Herinneringen-komendroute start
+  met een compact notification board voor toestemming, planning, privacy en
+  herinneringsgeschiedenis. De volledige fallback- en herinneringenlijsten blijven
+  via bestaande status-, privacy-, plannen- en komendankers bereikbaar zonder de
+  eerste viewport als lange meldingenstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

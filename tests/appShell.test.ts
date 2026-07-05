@@ -2261,6 +2261,14 @@ describe('app shell', () => {
     expect(css).toContain('.notification-planning-console {');
     expect(css).toContain('.notification-planning-support__summary {');
     expect(css).toContain('.notification-planning-support__body {');
+    expect(css).toContain('.notification-history-board {');
+    expect(css).toContain('.notification-history-board__header {');
+    expect(css).toContain('.notification-history-board__lanes {');
+    expect(css).toContain('.notification-history-board__lane {');
+    expect(css).toContain('.notification-history-board__lane:hover,');
+    expect(css).toContain('.notification-history-board__lane em {');
+    expect(mobileCss).toContain('.notification-history-board__lanes {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(css).toContain('.eventlog-task-routes {');
     expect(css).toContain('.system-workbench :where(.stat-row) {');
     expect(css).toContain('.system-workbench :where(.stat) {');
@@ -6847,6 +6855,36 @@ describe('app shell', () => {
     );
     expect(html).toContain('aria-label="Herinneringen komend route-samenvatting"');
     expect(html).toContain('data-notification-route-summary="komend"');
+    expect(html).toContain(
+      'aria-label="Herinneringen notification board" data-notification-history-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je meldingslaag');
+    expect(html).toContain('data-notification-history-lane="permission"');
+    expect(html).toContain('data-notification-history-lane="planning"');
+    expect(html).toContain('data-notification-history-lane="privacy"');
+    expect(html).toContain('data-notification-history-lane="history"');
+    expect(html).toContain(
+      'href="#herinneringen-route-status" data-notification-history-lane="permission"',
+    );
+    expect(html).toContain(
+      'href="#herinneringen-route-plannen" data-notification-history-lane="planning"',
+    );
+    expect(html).toContain(
+      'href="#herinneringen-route-privacy" data-notification-history-lane="privacy"',
+    );
+    expect(html).toContain(
+      'href="#herinneringen-komend-disclosure" data-notification-history-lane="history"',
+    );
+    expect(html).toContain('<span>Toestemming</span>');
+    expect(html).toContain('<span>Planning</span>');
+    expect(html).toContain('<span>Privacy</span>');
+    expect(html).toContain('<span>Historie</span>');
+    expect(html.indexOf('data-notification-history-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="herinneringen-fallback-disclosure"'),
+    );
+    expect(html.indexOf('data-notification-history-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="herinneringen-komend-disclosure"'),
+    );
     expect(html).toContain('In-app fallbackmeldingen openen');
     expect(html).toContain('Komende herinneringen en acties openen');
     expect(html).toContain('Notificatiestatus controleren');
