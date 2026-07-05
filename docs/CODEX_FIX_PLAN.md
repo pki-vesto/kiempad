@@ -139,6 +139,11 @@
   attempt, archive, treatment context and full management details before the existing management
   forms and archive list, preserving form ids, input names, archive/restore/delete actions and
   privacy boundaries on desktop and mobile.
+- **Treatment reimbursement first-viewport reimbursement board — done in G1885 / issue #3712.**
+  Traject/Vergoeding now opens with one compact reimbursement board for remaining attempts,
+  counted attempts, policy context, cost route and full reimbursement details before the existing
+  reimbursement panel, preserving reimbursement copy, cost links, treatment status and privacy
+  boundaries on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

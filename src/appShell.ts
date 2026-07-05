@@ -20946,7 +20946,13 @@ function renderTrajectScreen(state: AppShellState): string {
           data: { 'treatment-route-summary': 'vergoeding' },
           ariaLabel: 'Vergoeding route-samenvatting',
         })}
-        <section class="policy-panel embedded-summary" aria-label="Vergoede pogingen">
+        ${renderTreatmentReimbursementBoard({
+          remainingCount: vergoeding.resterend,
+          countedCount: vergoeding.meetellend,
+          maximumCount: vergoeding.maximum,
+          hasPolicyContext: vergoeding.maximum > 0,
+        })}
+        <section id="treatment-reimbursement-details" class="policy-panel embedded-summary" aria-label="Vergoede pogingen">
           <h2>Vergoede pogingen</h2>
           <dl class="summary-list">
             <div><dt>Meetellend</dt><dd>${vergoeding.meetellend} van ${vergoeding.maximum}</dd></div>
@@ -21381,6 +21387,82 @@ function renderTreatmentManagementBoard(input: {
           .map(
             (lane) => `
               <a class="treatment-management-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-management-lane="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
+}
+
+function renderTreatmentReimbursementBoard(input: {
+  remainingCount: number;
+  countedCount: number;
+  maximumCount: number;
+  hasPolicyContext: boolean;
+}): string {
+  const lanes = [
+    {
+      id: 'remaining',
+      href: '#treatment-reimbursement-details',
+      label: 'Resterend',
+      title: `${input.remainingCount} resterend`,
+      detail: 'Bekijk eerst hoeveel vergoede pogingen nog openstaan.',
+      cue: 'Ruimte',
+    },
+    {
+      id: 'counted',
+      href: '#treatment-reimbursement-details',
+      label: 'Meetellend',
+      title: `${input.countedCount}/${input.maximumCount} meetellend`,
+      detail: 'Controleer welke pogingen meetellen voor eigen administratie.',
+      cue: 'Teller',
+    },
+    {
+      id: 'policy',
+      href: '#treatment-reimbursement-details',
+      label: 'Poliscontext',
+      title: input.hasPolicyContext ? 'Polis leidend' : 'Nog geen context',
+      detail: 'Kiempad toont administratie; polis en kliniek blijven leidend.',
+      cue: 'Context',
+    },
+    {
+      id: 'costs',
+      href: '#kosten?route=vergoeding',
+      label: 'Kostenroute',
+      title: 'Kosten openen',
+      detail: 'Open kosten apart zonder de vergoedingroute te vullen.',
+      cue: 'Kosten',
+    },
+    {
+      id: 'details',
+      href: '#treatment-reimbursement-details',
+      label: 'Volledige details',
+      title: 'Details lezen',
+      detail: 'Open de volledige teller en toelichting wanneer nodig.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="treatment-reimbursement-board" aria-label="Vergoeding startlaag" data-treatment-reimbursement-board="first-viewport">
+      <header class="treatment-reimbursement-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Vergoedingsbord</p>
+          <h3>Kies eerst je vergoedingslaag</h3>
+        </div>
+        <p>Resterend, meetellend, poliscontext, kostenroute en volledige details staan als aparte keuzes.</p>
+      </header>
+      <nav class="treatment-reimbursement-board__lanes" aria-label="Vergoeding eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="treatment-reimbursement-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-reimbursement-lane="${escapeAttribute(lane.id)}">
                 <span>${escapeHtml(lane.label)}</span>
                 <strong>${escapeHtml(lane.title)}</strong>
                 <small>${escapeHtml(lane.detail)}</small>
