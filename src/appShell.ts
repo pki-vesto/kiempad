@@ -12389,11 +12389,14 @@ function renderEmbryoStatusEvents(item: EmbryoDossierItem): string {
               `Status: ${EMBRYO_STATUS_LABELS[event.status]}`,
               `Bron: ${event.bron}`,
               `Datum: ${event.datum}`,
+              event.trajectId ? `Poging: ${event.trajectId}` : undefined,
+              event.afspraakId ? `Afspraak: ${event.afspraakId}` : undefined,
               `Reviewstatus: ${event.reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept'}`,
+              `Bijgewerkt: ${event.bijgewerktOp}`,
               event.notitie ? `Notitie: ${event.notitie}` : undefined,
             ].filter((detail): detail is string => Boolean(detail));
 
-            return `<li data-embryo-status-event-id="${escapeAttribute(event.id)}">${details.map(escapeHtml).join(' · ')}</li>`;
+            return `<li data-embryo-status-event-id="${escapeAttribute(event.id)}" data-embryo-status-event-updated-at="${escapeAttribute(event.bijgewerktOp)}" data-embryo-status-event-trajectory="${escapeAttribute(event.trajectId ?? 'geen-poging')}">${details.map(escapeHtml).join(' · ')}</li>`;
           })
           .join('')}
       </ol>

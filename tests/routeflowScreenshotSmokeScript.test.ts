@@ -260,6 +260,18 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('[data-embryo-alias-review-hint="safe"]');
     expect(routeflowScreenshotSmokeScript).toContain('embryo alias-review mist routeflow-evidence');
     expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-embryo-status-event-history'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'embryo-status-event-history'");
+    expect(routeflowScreenshotSmokeScript).toContain('prepareEmbryoStatusEventHistory');
+    expect(routeflowScreenshotSmokeScript).toContain('embryoStatusEventHistory');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-embryo-status-event-updated-at]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-embryo-status-event-trajectory]');
+    expect(routeflowScreenshotSmokeScript).toContain('Routeflow statusnotitie');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'embryo-status eventhistorie mist routeflow-evidence',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
       '[data-research-trend-scan-density="mobile-compact"]',
     );
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'knowledge-research-trend-scan'");

@@ -14361,7 +14361,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo dossier, timeline, encrypted storage, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #808
 
 ### G480 — embryovergelijking taalgrens
 
@@ -17545,6 +17546,176 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3874
+
+### G1965 — Fertility Intelligence: embryo outcome event tracking release evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G479 bewaart embryo-status events met auditmetadata, maar release-evidence moet nog borgen dat de nieuwe eventhistorie zichtbaar, gekoppeld en privacyveilig blijft.
+- **User Impact:** Zonder release-evidence kan een latere thema- of routeflowwijziging status, datum, bron, notitie, traject/afspraak of `bijgewerktOp` opnieuw verbergen.
+- **Desired Outcome:** Release-evidence toont dat embryo-status eventhistorie vanuit formulieropslag tot embryo-dossier en fertility timeline scanbaar blijft.
+- **User Value:** Gebruikers kunnen embryo-uitkomsten terugvinden en bespreken zonder dat Kiempad medische conclusies trekt.
+- **Acceptance Criteria:** Evidence bevestigt typed `embryoStatusEvent` metadata met status, datum, bron, reviewstatus, notitie, trajectId, afspraakId en `bijgewerktOp`; embryo-dossier en timeline tonen status-events als feitelijke registraties; routeflow bewijst zichtbaarheid op desktop en mobile; evidence sluit diagnose, dosering, behandelkeuzeadvies, kansberekening, secrets en payloads uit; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Dossierupload, embryo-dossier, fertility timeline
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo dossier, fertility timeline, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3876
+
+### G1966 — Fertility Intelligence: embryo status timeline filter evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryo-status events verschijnen nu op de tijdlijn, maar filter- en label-evidence moet nog borgen dat ze niet wegvallen tussen kwaliteit, consulten en behandelingen.
+- **User Impact:** Gebruikers kunnen een statusmoment missen als tijdlijnfilters of labels later wijzigen.
+- **Desired Outcome:** Timeline-evidence onderscheidt embryo-status events duidelijk van andere dossierrecords.
+- **User Value:** Gebruikers begrijpen de embryo-historie vanuit één tijdlijn zonder detailpanelen af te zoeken.
+- **Acceptance Criteria:** Timeline kan embryo-status events onderscheiden van kwaliteit en beeldrecords; filter/label evidence toont status, bron, datum en `bijgewerktOp`; tests dekken sortering naast consulten en behandelingen; geen medisch advies, diagnose, dosering of kansberekening.
+- **Affected Screens:** Fertility timeline, embryo-dossier
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Timeline, embryo dossier, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3877
+
+### G1967 — Fertility Intelligence: embryo event audit export evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryo-status events zijn auditbaar in het dossier, maar export- of rapportage-evidence moet nog borgen dat auditvelden zonder raw payload worden meegenomen.
+- **User Impact:** Gebruikers kunnen auditinformatie verliezen of onbedoeld payloads exporteren als export later wordt uitgebreid.
+- **Desired Outcome:** Export-evidence neemt alleen veilige status-event metadata op.
+- **User Value:** Gebruikers kunnen feitelijke embryo-historie delen of bewaren zonder ruwe bestandsinhoud.
+- **Acceptance Criteria:** Export/rapportage kan status-event metadata opnemen zonder raw payload; export vermeldt status, datum, bron, reviewstatus, traject/afspraak en `bijgewerktOp`; tests dekken redactie van `inhoudBase64` en vrije payloads; geen medische interpretatie of behandeladvies.
+- **Affected Screens:** Export, embryo-dossier
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Export, dossier documents, privacy tests
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3878
+
+### G1968 — Fertility Intelligence: embryo event source correction evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Broncorrectie bestaat voor embryobronnen, maar embryo-status events moeten aantoonbaar gecorrigeerd kunnen worden zonder kliniekwaarde te overschrijven.
+- **User Impact:** Een verkeerd bronlabel of reviewstatus kan anders blijven staan of de statusregistratie zelf beschadigen.
+- **Desired Outcome:** Correctie-evidence bewaakt bronlabel/reviewstatus en auditupdate voor status-events.
+- **User Value:** Gebruikers kunnen bronregistraties netjes opschonen terwijl de kliniekstatus intact blijft.
+- **Acceptance Criteria:** Gebruiker kan bronlabel/reviewstatus van status-event corrigeren zonder kliniekwaarde te overschrijven; auditveld `bijgewerktOp` verandert bij wijziging; UI toont concept/gereviewd duidelijk; tests dekken dat status en datum intact blijven.
+- **Affected Screens:** Embryo-dossier, dossierupload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo dossier, source correction, tests
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3879
+
+### G1969 — Fertility Intelligence: embryo event appointment linking evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Status-events bewaren traject en afspraak, maar de afspraakkoppeling moet explicieter zichtbaar en getest blijven.
+- **User Impact:** Gebruikers missen anders welke terugplaatsing of afspraak bij een statusmoment hoort.
+- **Desired Outcome:** Afspraak- en trajectcontext blijft zichtbaar in dossier en tijdlijn zonder dubbele records.
+- **User Value:** Gebruikers kunnen embryo-gebeurtenissen aan het behandeltraject koppelen.
+- **Acceptance Criteria:** Status-event toont gekoppelde afspraak/terugplaatsing waar beschikbaar; timelinecontext bevat afspraak en traject zonder dubbele records; routeflow bewijst opslag en weergave; geen persoonsgegevens of payloads lekken in evidence.
+- **Affected Screens:** Embryo-dossier, fertility timeline
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo dossier, timeline, appointment linking
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3880
+
+### G1970 — Fertility Intelligence: embryo event duplicate detection evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Historische uploads kunnen hetzelfde embryo-statusmoment meerdere keren bevatten.
+- **User Impact:** Dubbele events maken de embryo-historie onrustig en minder betrouwbaar.
+- **Desired Outcome:** Kiempad signaleert vermoedelijke dubbele status-events zonder ruwe payloadmatching.
+- **User Value:** Gebruikers houden een schonere historie bij bulkimport.
+- **Acceptance Criteria:** Dubbele statusevents met zelfde embryo, datum, status en bron worden gesignaleerd; gebruiker krijgt keuze om te bewaren of te negeren; tests dekken matching zonder ruwe bestandsinhoud; geen medisch advies of kansberekening.
+- **Affected Screens:** Dossierupload, embryo-dossier
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier import, duplicate detection, embryo dossier
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3881
+
+### G1971 — Fertility Intelligence: embryo event mobile density evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Status-event historie bevat veel auditdetails en kan op small-mobile te druk worden.
+- **User Impact:** Gebruikers kunnen details niet goed scannen als status, bron, datum en audittekst overlappen.
+- **Desired Outcome:** Mobile evidence borgt compacte, niet-overlappende eventhistorie.
+- **User Value:** Embryo-historie blijft bruikbaar op telefoon.
+- **Acceptance Criteria:** Status-event historie past in small-mobile zonder horizontale overflow; auditdetails blijven zichtbaar of bereikbaar zonder nested cards; routeflow screenshot smoke dekt mobile viewport; geen payloadlek in compacte tekst.
+- **Affected Screens:** Embryo-dossier
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, embryo dossier, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3882
+
+### G1972 — Fertility Intelligence: embryo event knowledge graph linking evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryo-status events zijn nu dossierrecords, maar de knowledge graph moet relaties met embryo, traject, afspraak en bron aantoonbaar leggen.
+- **User Impact:** Contextuele inzichten kunnen incompleet blijven als status-events niet in het relatiebeeld zitten.
+- **Desired Outcome:** Knowledge graph evidence toont status-event relaties zonder medische adviesgrens te overschrijden.
+- **User Value:** Gebruikers krijgen context zonder dat Kiempad als arts optreedt.
+- **Acceptance Criteria:** Knowledge graph legt relaties tussen embryo, traject, afspraak, status-event en bron; inzichten blijven contextueel en niet-medisch adviserend; tests dekken relatieopbouw en privacygrenzen; geen diagnose, dosering of behandelkeuzeadvies.
+- **Affected Screens:** Knowledge graph, embryo-dossier
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Knowledge graph, dossier documents, privacy policy
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3883
+
+### G1973 — Fertility Intelligence: embryo event research context boundary evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Researchcontext naast embryo-status events kan snel als persoonlijke conclusie gelezen worden.
+- **User Impact:** Gebruikers kunnen algemene literatuur verwarren met individueel behandeladvies.
+- **Desired Outcome:** Evidence borgt een duidelijke scheiding tussen persoonlijke feiten en algemene researchcontext.
+- **User Value:** Gebruikers kunnen bronnen lezen zonder onbedoelde medische sturing.
+- **Acceptance Criteria:** Researchkaarten kunnen algemene context tonen naast embryo-events; UI scheidt persoonlijke feiten van wetenschappelijke broncontext; tests dekken bronverwijzing en leken-samenvatting zonder persoonsadvies; geen kansberekening of behandeladvies.
+- **Affected Screens:** Research, embryo-dossier, timeline
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research intelligence, embryo dossier, AI policy
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3884
+
+### G1974 — Fertility Intelligence: embryo event recovery and offline persistence evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryo-status events moeten local-first blijven bij reload, offline gebruik en herstelbare opslagfouten.
+- **User Impact:** Verlies van een statusmoment is extra frustrerend omdat het om historische kliniekfeiten gaat.
+- **Desired Outcome:** Recovery evidence bewaakt reload/offline persistence en veilige foutfeedback.
+- **User Value:** Gebruikers kunnen statusmomenten betrouwbaar bewaren, ook bij netwerk- of opslagproblemen.
+- **Acceptance Criteria:** Status-event blijft na reload/offline herstel zichtbaar; bij opslagfout verschijnt herstelbare feedback zonder dataverlies; tests dekken local-first opslagpad en eventlogredactie; geen secrets, tokens, raw payloads of medische plaintext in logs.
+- **Affected Screens:** Dossierupload, embryo-dossier, backup/sync
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Local storage, eventlog, recovery UI
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3885
 
 ### G1948 — Fertility Intelligence: import-inbox retry overflow release evidence
 

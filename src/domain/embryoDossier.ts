@@ -40,6 +40,9 @@ export type EmbryoDossierItem = {
     status: NonNullable<NonNullable<DossierDocument['embryo']>['status']>;
     bron: string;
     reviewStatus: 'concept' | 'gereviewd';
+    trajectId?: string;
+    afspraakId?: string;
+    bijgewerktOp: string;
     notitie?: string;
   }[];
   documenten: {
@@ -240,13 +243,26 @@ function bouwEmbryoDossier(
     )
     .map((document): EmbryoDossierItem['statusEvents'][number] => ({
       id: document.id,
-      datum: bepaalDatum(document),
+      datum: document.metadata.embryoStatusEvent?.datum ?? bepaalDatum(document),
       status: document.embryo.status,
-      bron: bepaalBron(document),
-      reviewStatus: document.embryo.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
-      notitie: document.notitie,
+      bron: document.metadata.embryoStatusEvent?.bron ?? bepaalBron(document),
+      reviewStatus:
+        document.metadata.embryoStatusEvent?.reviewStatus ??
+        (document.embryo.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept'),
+      trajectId:
+        document.metadata.embryoStatusEvent?.trajectId ??
+        document.metadata.trajectId ??
+        document.trajectId,
+      afspraakId: document.metadata.embryoStatusEvent?.afspraakId ?? document.afspraakId,
+      bijgewerktOp: document.metadata.embryoStatusEvent?.bijgewerktOp ?? document.uploadedAt,
+      notitie: document.metadata.embryoStatusEvent?.notitie ?? document.notitie,
     }))
-    .sort((a, b) => a.datum.localeCompare(b.datum) || a.id.localeCompare(b.id));
+    .sort(
+      (a, b) =>
+        a.datum.localeCompare(b.datum) ||
+        a.bijgewerktOp.localeCompare(b.bijgewerktOp) ||
+        a.id.localeCompare(b.id),
+    );
 
   return {
     id: sleutel,

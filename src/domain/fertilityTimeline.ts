@@ -1,6 +1,6 @@
 import { AFSPRAAK_TYPE_LABELS } from './agenda';
 import type { DailyRecommendationOverview, DailyRecommendationOwner } from './dailyRecommendations';
-import { DOSSIER_CATEGORIE_LABELS } from './dossier';
+import { DOSSIER_CATEGORIE_LABELS, EMBRYO_STATUS_LABELS } from './dossier';
 import { MEDICATIE_VORM_LABELS } from './medicatie';
 import type { MedicatieBundle } from './medicatieStore';
 import type { TrajectMetFasen } from './traject';
@@ -287,10 +287,8 @@ export function bouwFertilityTimeline(input: {
         datum: document.beeldMetadata?.datum ?? document.metadata.documentDatum ?? document.datum,
         soort: 'embryo',
         titel: embryoLabel,
-        label: 'Embryo',
-        detail: document.embryo?.kwaliteit
-          ? `Kwaliteit geregistreerd: ${document.embryo.kwaliteit}.`
-          : 'Embryo gekoppeld aan dossierrecord.',
+        label: document.metadata.embryoStatusEvent ? 'Embryo-status' : 'Embryo',
+        detail: beschrijfEmbryoTimelineDetail(document),
         context: beschrijfEmbryoContext(document),
         bron: document.embryo?.bron ?? document.beeldMetadata?.bron ?? document.bestandsNaam,
         bronverwijzingen: bouwEmbryoBronverwijzingen(document),
@@ -695,6 +693,15 @@ function beschrijfEmbryoContext(document: DossierDocument): string {
     document.embryo?.dag ? `dag ${document.embryo.dag}` : undefined,
     document.embryo?.meetmoment ?? document.beeldMetadata?.laboratoriumContext,
     document.embryo?.status ? `status ${document.embryo.status}` : undefined,
+    document.metadata.embryoStatusEvent?.trajectId
+      ? `poging ${document.metadata.embryoStatusEvent.trajectId}`
+      : undefined,
+    document.metadata.embryoStatusEvent?.afspraakId
+      ? `afspraak ${document.metadata.embryoStatusEvent.afspraakId}`
+      : undefined,
+    document.metadata.embryoStatusEvent?.bijgewerktOp
+      ? `bijgewerkt ${document.metadata.embryoStatusEvent.bijgewerktOp}`
+      : undefined,
     document.embryo?.kliniekTerminologie
       ? `terminologie ${document.embryo.kliniekTerminologie}`
       : undefined,
@@ -703,6 +710,21 @@ function beschrijfEmbryoContext(document: DossierDocument): string {
   return onderdelen.length > 0
     ? onderdelen.join(' · ')
     : 'Embryo-informatie gekoppeld aan lokaal dossierrecord.';
+}
+
+function beschrijfEmbryoTimelineDetail(document: DossierDocument): string {
+  const statusEvent = document.metadata.embryoStatusEvent;
+  if (statusEvent) {
+    return [
+      `Status geregistreerd: ${EMBRYO_STATUS_LABELS[statusEvent.status]}.`,
+      `Bron: ${statusEvent.bron}.`,
+      `Audit: bijgewerkt ${statusEvent.bijgewerktOp}.`,
+    ].join(' ');
+  }
+
+  return document.embryo?.kwaliteit
+    ? `Kwaliteit geregistreerd: ${document.embryo.kwaliteit}.`
+    : 'Embryo gekoppeld aan dossierrecord.';
 }
 
 export function filterFertilityTimeline(

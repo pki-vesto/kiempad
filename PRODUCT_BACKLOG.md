@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1764 |
+| ☑ klaar | 1765 |
 | ◐ bezig | 0 |
-| ☐ open | 100 |
+| ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **1963** |
+| **Totaal** | **1973** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -634,7 +634,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G476 | Fertility Intelligence: actie-extractie uit consulten als taken en vragen | P0 | F5 | ☑ |
 | G477 | Fertility Intelligence: consultsamenvatting reviewflow zonder behandeladvies | P0 | F5 | ☑ |
 | G478 | Fertility Intelligence: embryo grading bronregistratie | P0 | F5 | ☑ |
-| G479 | Fertility Intelligence: embryo outcome event tracking | P1 | F5 | ☐ |
+| G479 | Fertility Intelligence: embryo outcome event tracking | P1 | F5 | ☑ |
 | G480 | Fertility Intelligence: embryovergelijking taalgrens | P0 | F5 | ☑ |
 | G481 | Research Intelligence: fertility research source registry | P0 | F5 | ☑ |
 | G482 | Research Intelligence: literatuur discovery query builder | P1 | F5 | ☐ |
@@ -2126,12 +2126,22 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1962 | Fertility Intelligence: imaging metadata reviewcorrectie release evidence | P1 | F5 | ☐ |
 | G1963 | Fertility Intelligence: import-inbox retry eventlog redaction release evidence | P1 | F5 | ☐ |
 | G1964 | Fertility Intelligence: beeldvergelijking zonder interpretatie release evidence | P1 | F5 | ☐ |
+| G1965 | Fertility Intelligence: embryo outcome event tracking release evidence | P1 | F5 | ☐ |
+| G1966 | Fertility Intelligence: embryo status timeline filter evidence | P1 | F5 | ☐ |
+| G1967 | Fertility Intelligence: embryo event audit export evidence | P1 | F5 | ☐ |
+| G1968 | Fertility Intelligence: embryo event source correction evidence | P1 | F5 | ☐ |
+| G1969 | Fertility Intelligence: embryo event appointment linking evidence | P1 | F5 | ☐ |
+| G1970 | Fertility Intelligence: embryo event duplicate detection evidence | P1 | F5 | ☐ |
+| G1971 | Fertility Intelligence: embryo event mobile density evidence | P1 | F5 | ☐ |
+| G1972 | Fertility Intelligence: embryo event knowledge graph linking evidence | P1 | F5 | ☐ |
+| G1973 | Fertility Intelligence: embryo event research context boundary evidence | P1 | F5 | ☐ |
+| G1974 | Fertility Intelligence: embryo event recovery and offline persistence evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1963** (id's G001 t/m G1964; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1973** (id's G001 t/m G1974; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

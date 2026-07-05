@@ -382,6 +382,17 @@ describe('embryoDossier', () => {
       grootteBytes: 128,
       inhoudBase64: 'c3RhdHVzLXBheWxvYWQ=',
       trajectId: 'traject-1',
+      afspraakId: 'afspraak-status-1',
+      embryoStatusEvent: {
+        status: 'ingevroren',
+        bron: 'Labportaal',
+        datum: '2026-06-15',
+        reviewStatus: 'concept',
+        trajectId: 'traject-1',
+        afspraakId: 'afspraak-status-1',
+        notitie: 'Bron overgenomen uit portaal.',
+        bijgewerktOp: '2026-06-15T12:30:00.000Z',
+      },
       embryo: {
         label: 'Embryo 1',
         kwaliteit: 'Status event: Ingevroren',
@@ -391,6 +402,7 @@ describe('embryoDossier', () => {
         status: 'ingevroren',
       },
       notitie: 'Bron overgenomen uit portaal.',
+      uploadedAt: '2026-06-15T12:00:00.000Z',
     });
     const gereviewd = maakDossierDocument('doc-status-gereviewd', {
       datum: '2026-06-16',
@@ -409,6 +421,7 @@ describe('embryoDossier', () => {
         reviewStatus: 'gereviewd',
         status: 'niet_gebruikt',
       },
+      uploadedAt: '2026-06-16T12:00:00.000Z',
     });
 
     const dossier = bouwEmbryoDossiers([gereviewd, concept])[0];
@@ -420,6 +433,9 @@ describe('embryoDossier', () => {
         status: 'ingevroren',
         bron: 'Labportaal',
         reviewStatus: 'concept',
+        trajectId: 'traject-1',
+        afspraakId: 'afspraak-status-1',
+        bijgewerktOp: '2026-06-15T12:30:00.000Z',
         notitie: 'Bron overgenomen uit portaal.',
       },
       {
@@ -428,6 +444,9 @@ describe('embryoDossier', () => {
         status: 'niet_gebruikt',
         bron: 'Embryoloog',
         reviewStatus: 'gereviewd',
+        trajectId: 'traject-1',
+        afspraakId: undefined,
+        bijgewerktOp: '2026-06-16T12:00:00.000Z',
         notitie: undefined,
       },
     ]);
