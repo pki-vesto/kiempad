@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G2017 Fertility Intelligence consultvraagkoppeling routeflow evidence — done in G2017 / issue #3972.** Vragen/Open toont nu een compacte consultkoppelingen-scan die gereviewde consultvragen, conceptkoppelingen en gewone open vragen scheidt; routeflow-smoke maakt via UI een afspraak, consult, open vraag en gereviewde koppeling en bewaakt desktop, tablet en mobiel zonder consulttekst, medische payload of behandeladvies.
 - **G2019 Fertility Intelligence dossier zoekfilters gecombineerde routeflow evidence — done in G2019 / issue #3976.** Dossier Zoeken toont nu een vaste filtersetkaart voor vrije tekst, kliniek, poging en reviewstatus met veilige bron/datumcontext; routeflow-smoke bewaakt matchende en lege combinatiefilters compact op desktop, tablet en mobiel zonder OCR-tekst, bronpayload of behandeladvies.
 - **G2022 Premium Claude Design UI routefocus-dock actieve route automatisch in beeld — done in G2022 / issue #3982.** `main.ts` centreert de actieve routefocus-link na render en browsernavigatie, en routeflow-smoke bewaakt dat de actieve routeknop binnen de zichtbare linkrij blijft zonder medische payload of behandeladvies.
 - **G2021 Premium Claude Design UI routefocus-dock live route badges — done in G2021 / issue #3980.** De sticky routefocus-dock toont nu per taakroute veilige live badges met lokale aantallen of neutrale statuslabels, zodat gebruikers direct zien waar inhoud of open werk zit zonder medische payload, OCR-tekst of behandeladvies.

@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1815 |
+| ☑ klaar | 1816 |
 | ◐ bezig | 0 |
-| ☐ open | 107 |
+| ☐ open | 106 |
 | ☒ archived | 99 |
 | **Totaal** | **2021** |
 
@@ -2178,7 +2178,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2014 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error missing-term error contract | P1 | F5 | ☑ |
 | G2015 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error error release guard | P1 | F5 | ☐ |
 | G2016 | Fertility Intelligence: consultvraagkoppeling zichtbaar in vragenroute | P1 | F5 | ☑ |
-| G2017 | Fertility Intelligence: consultvraagkoppeling routeflow evidence | P1 | F5 | ☐ |
+| G2017 | Fertility Intelligence: consultvraagkoppeling routeflow evidence | P1 | F5 | ☑ |
 | G2018 | Fertility Intelligence: historische records zoekfilter op poging | P1 | F5 | ☑ |
 | G2019 | Fertility Intelligence: dossier zoekfilters gecombineerde routeflow evidence | P1 | F5 | ☑ |
 | G2020 | Premium Claude Design UI: sticky routefocus-dock tegen lange pagina | P1 | F5 | ☑ |

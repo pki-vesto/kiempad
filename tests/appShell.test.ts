@@ -2536,6 +2536,12 @@ describe('app shell', () => {
     expect(css).toContain('.question-open-prep-board__lanes {');
     expect(css).toContain('.question-open-prep-board__lane {');
     expect(css).toContain('.question-open-prep-board__lane:hover,');
+    expect(css).toContain('.question-consult-link-board {');
+    expect(css).toContain('.question-consult-link-board__lanes {');
+    expect(css).toContain('.question-consult-link-board__lane {');
+    expect(css).toContain(
+      '.question-consult-link-board__lane[data-question-consult-link-lane-count="0"]',
+    );
     expect(css).toContain('.question-form__prompt {');
     expect(css).toContain('.question-prompt-input {');
     expect(css).toContain('.consult-prep-board {');
@@ -2602,6 +2608,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.question-focus-shell__workspace .domain-split-workspace,');
     expect(mobileCss).toContain('.question-open-prep-board__lanes {');
     expect(mobileCss).toContain('.question-open-prep-board__lane {');
+    expect(mobileCss).toContain('.question-consult-link-board__lanes {');
+    expect(mobileCss).toContain('.question-consult-link-board__lane {');
     expect(mobileCss).toContain('.question-open-toolbar {');
     expect(mobileCss).toContain('.question-open-toolbar__actions {');
     expect(mobileCss).toContain('.question-prompt-input {');
@@ -8030,6 +8038,44 @@ describe('app shell', () => {
             type: 'consult',
           },
         },
+        {
+          vraag: {
+            id: 'vraag-3',
+            vraag: 'Welke conceptvraag komt uit het consult?',
+            voorAfspraakId: 'afspraak-1',
+            prioriteit: 2,
+            beantwoord: false,
+            consultKoppelingen: [
+              {
+                consultVerslagId: 'consult-1',
+                bronLabel: 'Consult: voorbereidend consult',
+                datum: '2099-06-20',
+                reviewStatus: 'concept',
+              },
+            ],
+          },
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Consult',
+            datumTijd: '2099-06-24T09:00',
+            type: 'consult',
+          },
+        },
+        {
+          vraag: {
+            id: 'vraag-4',
+            vraag: 'Welke gewone open vraag blijft los?',
+            voorAfspraakId: 'afspraak-1',
+            prioriteit: 3,
+            beantwoord: false,
+          },
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Consult',
+            datumTijd: '2099-06-24T09:00',
+            type: 'consult',
+          },
+        },
       ],
       consultVerslagen: [
         {
@@ -8073,7 +8119,7 @@ describe('app shell', () => {
     expect(html).toContain('Open vragen, afspraak en prioriteit eerst');
     expect(html).toContain('Volgend gesprek');
     expect(html).toContain('Consult: 2099-06-24 09:00');
-    expect(html).toContain('Hoogste prioriteit 1 · 1 open vraag');
+    expect(html).toContain('Hoogste prioriteit 1 · 3 open vragen');
     expect(html).toContain('aria-label="Vragen werkbank acties"');
     expect(html).toContain('href="#vragen?route=open"');
     expect(html).toContain('href="#vragen?route=voorbereiden"');
@@ -8099,6 +8145,18 @@ describe('app shell', () => {
     expect(html).toContain('class="question-route-section__header command-route-section__header"');
     expect(html).toContain('data-question-route-summary="open"');
     expect(html).toContain('Open vragen route-samenvatting');
+    expect(html).toContain('data-question-consult-link-board="ready"');
+    expect(html).toContain('data-question-consult-link-board-state="linked"');
+    expect(html).toContain('Welke vragen komen uit een consultdocument?');
+    expect(html).toContain('2 links');
+    expect(html).toContain('data-question-consult-link-lane="reviewed"');
+    expect(html).toContain('data-question-consult-link-lane-count="1"');
+    expect(html).toContain('data-question-consult-link-lane="concept"');
+    expect(html).toContain('data-question-consult-link-lane="regular"');
+    expect(html).toContain('Deze open vragen hebben nog geen consultdocument als bron.');
+    expect(html).toContain(
+      'Deze scan toont alleen bronlabel, datum en reviewstatus; consulttekst en antwoorden blijven achter de volledige vragenlijst.',
+    );
     expect(html).toContain('data-question-route-summary="alle"');
     expect(html).toContain('Alle vragen tonen');
     expect(html).toContain('data-command-form-section="vraag-basis"');
@@ -8238,7 +8296,7 @@ describe('app shell', () => {
     expect(html).toContain('data-hub-detail-panel="consult-prep-wizard"');
     expect(html).toContain('class="hub-detail-disclosure__summary consult-detail-panel__header"');
     expect(html).toContain('Vragenlijst, context en eigen gespreksblad');
-    expect(html).toContain('<em>2 vragen</em>');
+    expect(html).toContain('<em>4 vragen</em>');
     expect(html).toContain('Bewerkbare vragen');
     expect(html).toContain('name="consultPrepQuestions"');
     expect(html).toContain('Lokaal gespreksblad');

@@ -350,6 +350,18 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'artscheckvraag-reviewstatus mist scanbare routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'question-consult-link-route'");
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'question-consult-link-route'");
+    expect(routeflowScreenshotSmokeScript).toContain('prepareQuestionConsultLinkRoute');
+    expect(routeflowScreenshotSmokeScript).toContain('questionConsultLinkRoute');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-question-consult-link-board="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-question-consult-link-lane="reviewed"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('reviewedCount');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'consultvraagkoppeling mist scanbare open-route evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('fullListBodyGap');
     expect(routeflowScreenshotSmokeScript).toContain('ghostActionsVisible');
     expect(routeflowScreenshotSmokeScript).toContain('disclaimerVisible');

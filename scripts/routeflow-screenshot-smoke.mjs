@@ -2269,6 +2269,33 @@ const targets = [
     ],
   },
   {
+    screen: 'question-consult-link-route',
+    hash: '#vragen?route=open',
+    rootSelector: '[data-question-focus-shell="ready"]',
+    expectedText: 'Welke vragen komen uit een consultdocument?',
+    prepare: 'question-consult-link-route',
+    activeRouteSelector: '[data-question-route="open"][data-question-route-state="active"]',
+    inactiveRouteSelector: '[data-question-route-state="inactive"]',
+    requiredSelectors: [
+      '[data-question-focus-shell="ready"]',
+      '[data-question-route-summary="open"]',
+      '[data-question-consult-link-board="ready"]',
+      '[data-question-consult-link-board-state="linked"]',
+      '[data-question-consult-link-lane="reviewed"]',
+      '[data-question-consult-link-lane="concept"]',
+      '[data-question-consult-link-lane="regular"]',
+      '[data-question-open-toolbar="ready"]',
+      '#question-open-full-context',
+    ],
+    closedDetailsSelectors: ['#question-open-full-context'],
+    questionConsultLinkRoute: true,
+    desktopHiddenSelectors: [
+      '.question-focus-shell__header p:last-child',
+      '.question-route-section__header > p:last-child',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
     screen: 'wellbeing-history',
     hash: '#welzijn?route=history',
     rootSelector: '[data-wellbeing-focus-shell="ready"]',
@@ -2448,6 +2475,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'question-artscheck-review-status') {
         await prepareQuestionArtscheckReviewStatus(page, target.hash);
+      }
+      if (target.prepare === 'question-consult-link-route') {
+        await prepareQuestionConsultLinkRoute(page, target.hash);
       }
       if (target.prepare === 'dossier-import-inbox-retry') {
         await prepareDossierImportInboxRetry(page, target.hash);
@@ -3089,6 +3119,56 @@ async function assertRouteflows(browser, options) {
                   (itemRect && listRect ? itemRect.right > listRect.right + 1 : true) ||
                   (formRect && itemRect ? formRect.right > itemRect.right + 1 : true) ||
                   (buttonRect && itemRect ? buttonRect.right > itemRect.right + 1 : true),
+              };
+            })()
+          : null;
+        const questionConsultLinkRoute = routeflow.questionConsultLinkRoute
+          ? (() => {
+              const board = rootElement?.querySelector('[data-question-consult-link-board="ready"]');
+              const lanes = [
+                ...(rootElement?.querySelectorAll('[data-question-consult-link-lane]') ?? []),
+              ].map((lane) => {
+                const rect = lane.getBoundingClientRect();
+                return {
+                  id: lane.getAttribute('data-question-consult-link-lane') ?? '',
+                  count: lane.getAttribute('data-question-consult-link-lane-count') ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  text: lane.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                };
+              });
+              const toolbar = rootElement?.querySelector('[data-question-open-toolbar="ready"]');
+              const fullList = rootElement?.querySelector('#question-open-full-context');
+              const boardRect = board?.getBoundingClientRect();
+              const toolbarRect = toolbar?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const boardStyle = board instanceof HTMLElement ? getComputedStyle(board) : null;
+              const boardText = board?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                boardVisible: Boolean(boardRect && boardRect.width > 0 && boardRect.height > 0),
+                boardState: board?.getAttribute('data-question-consult-link-board-state') ?? '',
+                laneIds: lanes.map((lane) => lane.id),
+                visibleLaneCount: lanes.filter((lane) => lane.visible).length,
+                reviewedCount: lanes.find((lane) => lane.id === 'reviewed')?.count ?? '',
+                conceptCount: lanes.find((lane) => lane.id === 'concept')?.count ?? '',
+                regularCount: lanes.find((lane) => lane.id === 'regular')?.count ?? '',
+                boardDisplay: boardStyle?.display ?? '',
+                fullListClosed: fullList instanceof HTMLDetailsElement ? !fullList.open : false,
+                beforeToolbar:
+                  Boolean(board && toolbar && boardRect && toolbarRect) &&
+                  Boolean(board.compareDocumentPosition(toolbar) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  boardRect.top <= toolbarRect.top + 1,
+                contained:
+                  Boolean(rootRect && boardRect) &&
+                  boardRect.left >= rootRect.left - 1 &&
+                  boardRect.right <= rootRect.right + 1,
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  (rootRect && boardRect ? boardRect.right > rootRect.right + 1 : true),
+                hasForbiddenText: /\b(CONSULT_RAW|OCR_RAW|BASE64|data:application|passphrase|token|secret|diagnose|dosering|behandelkeuzeadvies|kansberekening)\b/i.test(
+                  boardText,
+                ),
               };
             })()
           : null;
@@ -4812,6 +4892,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceOwnerScanOverflow,
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
+          questionConsultLinkRoute,
           dossierImportInboxRetry,
           dossierHistoricalTimelineReview,
           dossierMetadataNormalizationCorrection,
@@ -5262,6 +5343,26 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: artscheckvraag-reviewstatus mist scanbare routeflow-evidence of lekt medische payload (${JSON.stringify(evidence.questionArtscheckReviewStatus)}).`,
+        );
+      }
+      if (
+        evidence.questionConsultLinkRoute &&
+        (!evidence.questionConsultLinkRoute.boardVisible ||
+          evidence.questionConsultLinkRoute.boardState !== 'linked' ||
+          evidence.questionConsultLinkRoute.visibleLaneCount !== 3 ||
+          !evidence.questionConsultLinkRoute.laneIds.includes('reviewed') ||
+          !evidence.questionConsultLinkRoute.laneIds.includes('concept') ||
+          !evidence.questionConsultLinkRoute.laneIds.includes('regular') ||
+          Number(evidence.questionConsultLinkRoute.reviewedCount) < 1 ||
+          evidence.questionConsultLinkRoute.boardDisplay !== 'grid' ||
+          !evidence.questionConsultLinkRoute.beforeToolbar ||
+          !evidence.questionConsultLinkRoute.fullListClosed ||
+          !evidence.questionConsultLinkRoute.contained ||
+          evidence.questionConsultLinkRoute.hasHorizontalOverflow ||
+          evidence.questionConsultLinkRoute.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: consultvraagkoppeling mist scanbare open-route evidence of lekt payload (${JSON.stringify(evidence.questionConsultLinkRoute)}).`,
         );
       }
       if (
@@ -7381,6 +7482,142 @@ async function prepareQuestionArtscheckReviewStatus(page, targetHash) {
     timeout: 10_000,
   });
   await page.waitForSelector('[data-question-list-item="standard"]', {
+    state: 'attached',
+    timeout: 10_000,
+  });
+}
+
+async function prepareQuestionConsultLinkRoute(page, targetHash) {
+  const appointmentTitle = 'Consultkoppeling smoke';
+  const consultTitle = 'Consultvraag smoke';
+
+  await page.goto(`${url}#agenda?route=plannen`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#agenda?route=plannen');
+  await waitForStableRouteflowRoot(page, '[data-schedule-focus-shell="ready"]');
+  await page.locator('#afspraak-form input[name="titel"]').fill(appointmentTitle);
+  await page.locator('#afspraak-form input[name="datumTijd"]').fill('2099-07-01T10:00');
+  await page.locator('#afspraak-form select[name="type"]').selectOption('consult');
+  await page.locator('#afspraak-form textarea[name="voorbereiding"]').fill('Koppel consultvragen.');
+  await page.locator('#afspraak-form button[type="submit"]').click();
+  await waitForStableRouteflowRoot(page, '[data-schedule-focus-shell="ready"]');
+  await page.waitForFunction(
+    (title) =>
+      document.body.textContent?.includes('Afspraak opgeslagen.') &&
+      document.body.textContent?.includes(title),
+    appointmentTitle,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}#consult-verslag-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#consult-verslag-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-consult-upload-report-fields="collapsed"]',
+      '[data-consult-upload-link-fields="collapsed"]',
+      '[data-consult-upload-context-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+  await page.waitForFunction(
+    (title) =>
+      [
+        ...document.querySelectorAll('#consult-verslag-form select[name="afspraakId"] option'),
+      ].some((option) => option.textContent?.includes(title)),
+    appointmentTitle,
+    { timeout: 10_000 },
+  );
+  const appointmentValue = await page.evaluate((title) => {
+    const options = [
+      ...document.querySelectorAll('#consult-verslag-form select[name="afspraakId"] option'),
+    ];
+    return options.find((option) => option.textContent?.includes(title))?.value ?? '';
+  }, appointmentTitle);
+  if (!appointmentValue) {
+    const optionLabels = await page
+      .locator('#consult-verslag-form select[name="afspraakId"] option')
+      .allTextContents();
+    throw new Error(
+      `Afspraakoptie voor consultvraagkoppeling niet gevonden. Opties: ${optionLabels.join(' | ')}`,
+    );
+  }
+  await page.locator('#consult-verslag-form [name="datum"]').fill('2099-06-30');
+  await page.locator('#consult-verslag-form [name="titel"]').fill(consultTitle);
+  await page
+    .locator('#consult-verslag-form [name="tekst"]')
+    .fill('Besproken welke vervolgvraag bij het consult hoort. Noteer de vraag voor de arts.');
+  await page.locator('#consult-verslag-form select[name="afspraakId"]').selectOption(appointmentValue);
+  await page.locator('#consult-verslag-form [name="consultAuteur"]').fill('Voorbeeldarts');
+  await page.locator('#consult-verslag-form select[name="consultImportReviewStatus"]').selectOption('gereviewd');
+  await page.locator('#consult-verslag-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const field = document.querySelector('#consult-verslag-form textarea[name="tekst"]');
+      return field instanceof HTMLTextAreaElement && field.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}#vragen?route=beheer`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#vragen?route=beheer');
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+  await page.locator('#vraag-form textarea[name="vraag"]').fill('Welke vervolgstap hoort bij dit consult?');
+  await page.locator('#vraag-form select[name="voorAfspraakId"]').selectOption(appointmentValue);
+  await page.locator('#vraag-form input[name="prioriteit"]').fill('1');
+  await page.locator('#vraag-form select[name="beantwoord"]').selectOption('false');
+  await page.locator('#vraag-form button[type="submit"]').click();
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+
+  await page.goto(`${url}#dossier?route=imaging`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#dossier?route=imaging');
+  await waitForStableRouteflowRoot(page, '[data-hub-detail-panel="consult-verslagen"]');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-hub-detail-panel="consult-verslagen"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+  await page.waitForSelector('[data-consult-question-link-review-form="ready"]', {
+    state: 'attached',
+    timeout: 10_000,
+  });
+  await page.evaluate(() => {
+    const form = document.querySelector('[data-consult-question-link-review-form="ready"]');
+    let parent = form?.parentElement;
+    while (parent) {
+      if (parent instanceof HTMLDetailsElement) parent.open = true;
+      parent = parent.parentElement;
+    }
+  });
+  await page.waitForSelector('[data-consult-question-link-review-form="ready"]', {
+    state: 'visible',
+    timeout: 10_000,
+  });
+  await page
+    .locator('[data-consult-question-link-review-form="ready"] select[name="consultQuestionLinkReviewStatus"]')
+    .first()
+    .selectOption('gereviewd');
+  await page
+    .locator('[data-consult-question-link-review-form="ready"] button[type="submit"]')
+    .first()
+    .click();
+  await page.waitForFunction(
+    () => document.body.textContent?.includes('Open vraag gekoppeld aan consultdocument.'),
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, targetHash);
+  await waitForStableRouteflowRoot(page, '[data-question-focus-shell="ready"]');
+  await page.waitForSelector('[data-question-consult-link-board="ready"]', {
     state: 'attached',
     timeout: 10_000,
   });
