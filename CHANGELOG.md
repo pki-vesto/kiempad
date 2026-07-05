@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1907 Premium Claude Design UI: inactieve gefocuste mobiele Traject-badges
+  houden in forced-colors Canvas/CanvasText systeemtonen en een rustiger
+  gewicht, zodat status leesbaar blijft zonder actieve badge-styling te
+  kopiëren.
 - G1906 Premium Claude Design UI: inactieve gefocuste mobiele Traject-titels
   houden in forced-colors een rustiger gewicht en geen underline, zodat
   keyboardfocus niet op actieve route-emphasis lijkt.
