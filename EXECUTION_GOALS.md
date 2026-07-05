@@ -15359,7 +15359,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, UI, tests
 - **ADR Needed:** no
 - **Score:** 106
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #881
 
 ### G551 — aanbeveling artscheck actieknop
 
@@ -18128,6 +18129,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3898
+
+### G1981 — Daily Recommendations: source confidence routeflow evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G550 toont bronconfidence op dagadvieskaarten, maar aparte browser-/routeflow-evidence moet nog bewaken dat label, score, bron, datum, reviewstatus, broncategorieen en uitleg zichtbaar blijven.
+- **User Impact:** Een latere thema- of layoutwijziging kan de bronbasis-uitleg laten wegvallen terwijl unit-tests nog groen blijven.
+- **Desired Outcome:** Routeflow- of browser-smoke bewaakt bronconfidence op dagadvieskaarten op desktop, tablet en mobiel.
+- **User Value:** Gebruikers blijven zien waarop een suggestie lokaal is gebaseerd voordat zij die bewaren, corrigeren of bespreken.
+- **Acceptance Criteria:** Evidence opent Dagadvies en verifieert `data-daily-recommendation-bronconfidence="ready"`; label, score, bron, datum, reviewstatus, broncategorieen en uitleg blijven zichtbaar; viewports blijven zonder horizontale overflow; geen diagnose, dosering, kansberekening, behandelkeuzeadvies, OCR-tekst, bestandsinhoud, secrets of trackingpayloads; backlog health blijft op minimaal 100 open goals.
+- **Affected Screens:** Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations UI, routeflow smoke, source confidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3900
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

@@ -18675,6 +18675,7 @@ function renderDailyRecommendationItem(
       <p class="small-print daily-recommendation-personalization" data-daily-recommendation-personalization="ready" data-daily-recommendation-personalization-status="${escapeAttribute(personalisatie.status)}" data-daily-recommendation-personalization-negative-temporary="${personalisatie.negativeFeedbackIsTemporary ? 'true' : 'false'}">
         Personalisatie: ${escapeHtml(personalisatie.label)} · ${escapeHtml(personalisatie.selectionHint)}. ${escapeHtml(personalisatie.explainability)}
       </p>
+      ${item.bronconfidence ? renderDailyRecommendationBronconfidence(item.bronconfidence) : ''}
       ${
         item.checklist
           ? `<ol class="compact-list rec-checklist">${item.checklist
@@ -18741,6 +18742,39 @@ function renderDailyRecommendationItem(
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
     `,
   });
+}
+
+function renderDailyRecommendationBronconfidence(
+  bronconfidence: NonNullable<DailyRecommendation['bronconfidence']>,
+): string {
+  return `
+    <dl class="daily-recommendation-bronconfidence" data-daily-recommendation-bronconfidence="ready" data-daily-recommendation-bronconfidence-label="${escapeAttribute(bronconfidence.label)}" data-daily-recommendation-bronconfidence-score="${bronconfidence.score}" data-daily-recommendation-bronconfidence-review="${bronconfidence.reviewStatus}">
+      <div>
+        <dt>Bronconfidence</dt>
+        <dd>${escapeHtml(bronconfidence.label)} · ${bronconfidence.score}%</dd>
+      </div>
+      <div>
+        <dt>Bron</dt>
+        <dd>${escapeHtml(bronconfidence.bron)}</dd>
+      </div>
+      <div>
+        <dt>Datum</dt>
+        <dd>${escapeHtml(bronconfidence.datum)}</dd>
+      </div>
+      <div>
+        <dt>Reviewstatus</dt>
+        <dd>${escapeHtml(bronconfidence.reviewStatus)}</dd>
+      </div>
+      <div>
+        <dt>Broncategorieen</dt>
+        <dd>${bronconfidence.bronCategorieen.map(escapeHtml).join(' · ')}</dd>
+      </div>
+      <div>
+        <dt>Uitleg</dt>
+        <dd>${escapeHtml(bronconfidence.uitlegVoorLeken)}</dd>
+      </div>
+    </dl>
+  `;
 }
 
 function renderDailyRecommendationChecklistItem(

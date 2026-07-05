@@ -75,6 +75,10 @@
   eventlogs tonen per suggestie hoe Kiempad de status gebruikt, inclusief uitleg
   dat niet-passend lager prioriteert maar vergelijkbare suggesties niet
   definitief verbergt.
+- **G550 Dagadvies bronconfidence:** dagadvieskaarten tonen per suggestie een
+  bronconfidenceblok met label, score, bron, datum, reviewstatus,
+  broncategorieen en lekenuitleg, zodat bronbasis controleerbaar blijft zonder
+  bewijsweging of behandeladvies.
 - **G553 Dagadvies eigenaarsfilter:** de dagadviesroute toont een zichtbaar
   eigenaarsfilter waarmee vrouw-, man- of samen-suggesties lokaal verborgen en
   hersteld kunnen worden; bron, datum en reviewstatus blijven zichtbaar vanuit

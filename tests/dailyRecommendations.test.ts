@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   bouwDagelijksAanbevelingsoverzicht,
+  bouwDailyRecommendationBronconfidence,
   bouwDailyRecommendationPersonalisatie,
   controleerDailyRecommendationPolicyRegressions,
   controleerSupplementBoundary,
@@ -59,12 +60,21 @@ describe('dagelijkse aanbevelingen', () => {
         bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
         datum: '2026-06-24',
         reviewStatus: 'concept_te_controleren',
-        correctieVelden: ['dagadviesTekst', 'bronselectie', 'reviewstatus'],
+        correctieVelden: ['dagadviesTekst', 'bronselectie', 'bronconfidence', 'reviewstatus'],
       },
     });
     expect(overzicht.vrouw[0]?.inputMinimisatie?.gebruikteInputCategorieen).toEqual(
       expect.arrayContaining(['agenda', 'medicatieplanning', 'vragenlijst']),
     );
+    expect(overzicht.vrouw[0]?.bronconfidence).toMatchObject({
+      label: 'sterk',
+      bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
+      datum: '2026-06-24',
+      reviewStatus: 'concept_te_controleren',
+      bronCategorieen: expect.arrayContaining(['agenda', 'medicatieplanning', 'vragenlijst']),
+    });
+    expect(overzicht.vrouw[0]?.bronconfidence?.score).toBeGreaterThanOrEqual(75);
+    expect(overzicht.vrouw[0]?.bronconfidence?.uitlegVoorLeken).toContain('Sterke bronbasis');
     expect(overzicht.vrouw[0]?.inputMinimisatie?.uitgeslotenInputCategorieen).toEqual(
       expect.arrayContaining(['vrije dossier/OCR-tekst', 'trackingdata', 'locatiegegevens']),
     );
@@ -246,6 +256,58 @@ describe('dagelijkse aanbevelingen', () => {
     expect(controleerDailyRecommendationPolicyRegressions(overzicht)).toEqual([]);
   });
 
+  it('maakt bronconfidence labels zonder medische claim of behandeladvies', () => {
+    const beperkt = bouwDailyRecommendationBronconfidence(
+      {
+        id: 'basis',
+        owner: 'samen',
+        titel: 'Basisnotitie',
+        detail: 'Controleer lokale dagstart.',
+        bron: 'Lokale dagstart',
+        waarschuwing: 'Algemene dagnotitie.',
+      },
+      ['Lokale dagstart'],
+      '2026-06-24',
+    );
+    const sterk = bouwDailyRecommendationBronconfidence(
+      {
+        id: 'context',
+        owner: 'vrouw',
+        titel: 'Contextnotitie',
+        detail: 'Controleer lokale bronnen.',
+        bron: 'Agenda, medicatie en vragenlijst',
+        waarschuwing: 'Algemene dagnotitie.',
+        datum: '2026-06-24',
+        checklist: [{ label: 'Controle', bron: 'Agenda', disclaimer: 'Alleen context.' }],
+      },
+      [
+        'Agenda: Echo controle op 2026-06-24 09:30',
+        'Medicatieplanning: Progesteron op 2026-06-24 08:00',
+        'Vragenlijst: 1 open vraag/vragen',
+        'Trajectfase: stimulatie',
+      ],
+      '2026-06-24',
+    );
+
+    expect(beperkt).toMatchObject({
+      label: 'beperkt',
+      score: expect.any(Number),
+      bron: 'Lokale dagstart',
+      datum: '2026-06-24',
+      reviewStatus: 'concept_te_controleren',
+      bronCategorieen: ['lokale dagstart'],
+    });
+    expect(sterk.label).toBe('sterk');
+    expect(sterk.score).toBeGreaterThan(beperkt.score);
+    expect(sterk.bronCategorieen).toEqual(
+      expect.arrayContaining(['agenda', 'medicatieplanning', 'vragenlijst', 'trajectfase']),
+    );
+    const policyText = `${beperkt.uitlegVoorLeken} ${sterk.uitlegVoorLeken}`;
+    expect(policyText).not.toMatch(
+      /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b|diagnose|kansberekening|behandelkeuzeadvies|beste behandeling|kies voor/i,
+    );
+  });
+
   it('bewaakt daily recommendation policy regression fixtures met metadata en verboden patronen', () => {
     const overzicht = bouwDagelijksAanbevelingsoverzicht({
       datum: '2026-06-24',
@@ -296,7 +358,12 @@ describe('dagelijkse aanbevelingen', () => {
         bron: expect.any(String),
         datum: '2026-06-24',
         reviewStatus: 'concept_te_controleren',
-        correctieVelden: expect.arrayContaining(['dagadviesTekst', 'bronselectie', 'reviewstatus']),
+        correctieVelden: expect.arrayContaining([
+          'dagadviesTekst',
+          'bronselectie',
+          'bronconfidence',
+          'reviewstatus',
+        ]),
       });
     }
   });
@@ -318,7 +385,7 @@ describe('dagelijkse aanbevelingen', () => {
             reviewStatus: 'concept_te_controleren',
             gebruikteInputCategorieen: ['lokale dagstart'],
             uitgeslotenInputCategorieen: ['vrije dossier/OCR-tekst'],
-            correctieVelden: ['dagadviesTekst', 'bronselectie', 'reviewstatus'],
+            correctieVelden: ['dagadviesTekst', 'bronselectie', 'bronconfidence', 'reviewstatus'],
             waarschuwing: 'Alleen fixturetekst.',
           },
         },
@@ -449,7 +516,7 @@ describe('dagelijkse aanbevelingen', () => {
         expect.objectContaining({
           datum: '2026-06-24',
           reviewStatus: 'concept_te_controleren',
-          correctieVelden: ['dagadviesTekst', 'bronselectie', 'reviewstatus'],
+          correctieVelden: ['dagadviesTekst', 'bronselectie', 'bronconfidence', 'reviewstatus'],
         }),
       ]),
     );

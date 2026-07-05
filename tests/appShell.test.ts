@@ -3621,6 +3621,11 @@ describe('app shell', () => {
     expect(css).toContain(
       '.daily-recommendation-list--dual-owner .daily-recommendation-group--samen {',
     );
+    expect(css).toContain('.daily-recommendation-bronconfidence {');
+    expect(css).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
+    expect(css).toContain(
+      '.daily-recommendation-bronconfidence[data-daily-recommendation-bronconfidence-label="beperkt"] {',
+    );
     expect(css).toContain('.rec-overflow__toggle {');
     expect(css).toContain('min-width: 44px;');
     expect(css).toContain('min-height: 44px;');
@@ -3708,6 +3713,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.daily-recommendation-list--dual-owner {');
     expect(mobileCss).toContain('.daily-recommendation-dual-owner-lane {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(mobileCss).toContain(
+      '.daily-recommendation-list--dual-owner .daily-recommendation-bronconfidence {',
+    );
+    expect(mobileCss).toContain(
+      '.daily-recommendation-list--dual-owner .daily-recommendation-bronconfidence dd {',
+    );
     expect(mobileCss).toContain(
       'grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(40px, auto);',
     );
@@ -4115,7 +4126,22 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('Dagcheck zonder extra medicatiemoment');
     expect(emptyContextRecommendations).toContain('Inputminimalisatiebron');
     expect(emptyContextRecommendations).toContain('Reviewstatus</dt><dd>concept_te_controleren');
-    expect(emptyContextRecommendations).toContain('Correctievelden</dt><dd>dagadviesTekst');
+    expect(emptyContextRecommendations).toContain(
+      'Correctievelden</dt><dd>dagadviesTekst · bronselectie · bronconfidence · reviewstatus',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-recommendation-bronconfidence="ready"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-recommendation-bronconfidence-label="',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-recommendation-bronconfidence-review="concept_te_controleren"',
+    );
+    expect(emptyContextRecommendations).toContain('<dt>Bronconfidence</dt>');
+    expect(emptyContextRecommendations).toContain('<dt>Broncategorieen</dt>');
+    expect(emptyContextRecommendations).toContain('<dt>Uitleg</dt>');
+    expect(emptyContextRecommendations).toContain('Controleer bronselectie en reviewstatus');
     expect(emptyContextRecommendations).toContain('name="dailyRecommendationCorrection"');
     expect(emptyContextRecommendations).toContain('name="dailyRecommendationReviewStatus"');
     expect(emptyContextRecommendations).toContain('Mannelijke leefstijl- en voorbereidingskaart');
@@ -4254,6 +4280,10 @@ describe('app shell', () => {
     expect(contextualRecommendations).toContain('Gebruikte inputcategorieen');
     expect(contextualRecommendations).toContain('medicatieplanning');
     expect(contextualRecommendations).toContain('vragenlijst');
+    expect(contextualRecommendations).toContain(
+      'data-daily-recommendation-bronconfidence-label="sterk"',
+    );
+    expect(contextualRecommendations).toContain('Sterke bronbasis');
     expect(contextualRecommendations).toContain('trackingdata');
     expect(contextualRecommendations).toContain(
       'data-recommendation-id="samen-behandelvoorbereiding"',
