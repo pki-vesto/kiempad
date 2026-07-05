@@ -42,11 +42,13 @@ import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
 import {
   bepaalDossierUploadProfiel,
+  bepaalZiekenhuisDocumentType,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   type DossierBeeldClassificatie,
   EMBRYO_STATUS_LABELS,
   formatBytes,
   type ImagingRepositoryFilter,
+  ZIEKENHUIS_DOCUMENT_TYPE_LABELS,
 } from './domain/dossier';
 import { DossierStore } from './domain/dossierStore';
 import { EventLogStore } from './domain/eventLogStore';
@@ -93,6 +95,7 @@ import type {
   Traject,
   TrajectFase,
   Vraag,
+  ZiekenhuisDocumentType,
 } from './domain/types';
 import {
   describeDossierUploadFailure,
@@ -775,6 +778,7 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       'input[name="dossierBestanden"]',
       'select[name="categorie"]',
       'select[name="uploadProfiel"]',
+      'select[name="ziekenhuisDocumentTypeCorrectie"]',
     ]) {
       dossierForm.querySelector(selector)?.addEventListener('change', () => {
         void updateAttachmentEnvelopeBatchStatus(dossierForm);
@@ -1113,6 +1117,9 @@ async function saveDossierDocumentsFromForm(
     const titel = optionalString(data.get('titel'));
     const categorie = parseDossierCategorie(data.get('categorie'));
     const uploadProfiel = parseDossierUploadProfiel(data.get('uploadProfiel'));
+    const ziekenhuisDocumentTypeCorrectie = parseZiekenhuisDocumentTypeCorrectie(
+      data.get('ziekenhuisDocumentTypeCorrectie'),
+    );
     const afspraakId = optionalString(data.get('afspraakId'));
     const trajectId = optionalString(data.get('trajectId'));
     const notitie = optionalString(data.get('notitie'));
@@ -1150,6 +1157,11 @@ async function saveDossierDocumentsFromForm(
         },
         afspraakId,
         trajectId,
+        metadataCorrectie: ziekenhuisDocumentTypeCorrectie
+          ? {
+              ziekenhuisDocumentType: ziekenhuisDocumentTypeCorrectie,
+            }
+          : undefined,
         notitie,
         beeldMetadata:
           beeldContext ||
@@ -1235,6 +1247,9 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
   const data = new FormData(form);
   const categorie = parseDossierCategorie(data.get('categorie'));
   const gekozenProfiel = parseDossierUploadProfiel(data.get('uploadProfiel'));
+  const ziekenhuisDocumentTypeCorrectie = parseZiekenhuisDocumentTypeCorrectie(
+    data.get('ziekenhuisDocumentTypeCorrectie'),
+  );
   const validation = validateDossierUploadFiles(files);
   const list = document.createElement('ul');
   list.className = 'compact-list';
@@ -1254,7 +1269,13 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
       ? `${describeDossierUploadRejection(rejected, fileIndex)} · geweigerd · ${rejected.reason ?? 'controleer bestandstype of grootte'}`
       : `${file.name} · ${
           profiel ? DOSSIER_UPLOAD_PROFIEL_LABELS[profiel] : 'Onbekend profiel'
-        } · ${file.type || 'onbekend bestandstype'} · ${formatBytes(file.size)}`;
+        } · ${file.type || 'onbekend bestandstype'} · ${formatBytes(file.size)}${beschrijfZiekenhuisDocumentTypePreview(
+          {
+            profiel,
+            bestandsNaam: file.name,
+            correctie: ziekenhuisDocumentTypeCorrectie,
+          },
+        )}`;
     const envelopeCheck = evaluateAttachmentEnvelopeMetadata({
       contentType: rejected ? undefined : file.type || undefined,
       sizeBytes: rejected ? undefined : file.size,
@@ -1274,6 +1295,25 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
       ? summarizeDossierUploadValidation(validation)
       : 'Conceptrecords klaar voor controle. Pas datum, categorie, uploadprofiel of koppelingen aan vóór opslag.';
   container.append(intro, list);
+}
+
+function beschrijfZiekenhuisDocumentTypePreview(input: {
+  profiel: DossierDocument['uploadProfiel'];
+  bestandsNaam: string;
+  correctie: ZiekenhuisDocumentType | 'onbekend' | undefined;
+}): string {
+  if (input.correctie === 'onbekend') return ' · ziekenhuisdocumenttype: onbekend gereviewd';
+  if (input.correctie) {
+    return ` · ziekenhuisdocumenttype: ${ZIEKENHUIS_DOCUMENT_TYPE_LABELS[input.correctie]} gereviewd`;
+  }
+
+  const herkend = bepaalZiekenhuisDocumentType({
+    uploadProfiel: input.profiel,
+    tekst: input.bestandsNaam,
+  });
+  return herkend
+    ? ` · ziekenhuisdocumenttype concept: ${ZIEKENHUIS_DOCUMENT_TYPE_LABELS[herkend]}`
+    : '';
 }
 
 async function updateAttachmentEnvelopeBatchStatus(form: HTMLFormElement): Promise<void> {
@@ -3600,6 +3640,26 @@ function parseDossierUploadProfiel(
     value === 'behandelverslag' ||
     value === 'pdf' ||
     value === 'afbeelding'
+  ) {
+    return value;
+  }
+
+  return undefined;
+}
+
+function parseZiekenhuisDocumentTypeCorrectie(
+  value: FormDataEntryValue | null,
+): ZiekenhuisDocumentType | 'onbekend' | undefined {
+  if (value === 'onbekend') return value;
+  if (
+    value === 'patientenportaal_export' ||
+    value === 'verwijsbrief' ||
+    value === 'ontslagbrief' ||
+    value === 'operatieverslag' ||
+    value === 'lab_rapport' ||
+    value === 'beeldverslag' ||
+    value === 'toestemmingsformulier' ||
+    value === 'algemeen_ziekenhuisdocument'
   ) {
     return value;
   }

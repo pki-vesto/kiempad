@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G568 Fertility Intelligence: dossieruploads hebben nu een
+  ziekenhuisdocumenttype-reviewcorrectie met automatisch voorstel, onbekend-keuze
+  en taxonomiewaarden die encrypted worden bewaard en gebruikt worden voor
+  dossierindex en zoeken.
 - G567 Fertility Intelligence: de dossierupload toont nu een aparte
   groottecontrole met 25 MB per bestand, 50 MB per selectie, centrale
   413-context en een herstelbaar retry-pad zonder bestandsnamen, OCR-tekst of

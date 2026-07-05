@@ -282,6 +282,10 @@
   shows a dedicated preflight size feedback layer with per-file and per-selection limits,
   central 413 context, and recoverable retry copy without filenames, OCR text, encoded content,
   or medical payload details.
+- **Hospital document taxonomy review correction — done in G568 / issue #902.** The Dossier
+  upload metadata step now lets users review the detected hospital document type, choose a
+  taxonomy value, or mark it unknown before encrypted storage; the reviewed value feeds dossier
+  index/search without medical advice.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
