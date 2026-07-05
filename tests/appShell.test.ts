@@ -5821,6 +5821,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.treatment-overview-stage-board {');
     expect(mobileCss).toContain('.treatment-overview-stage-board__lanes {');
     expect(mobileCss).toContain('.treatment-overview-stage-board__lane {');
+    expect(mobileCss).toContain('grid-template-areas:');
+    expect(mobileCss).toContain('"focus focus"');
+    expect(mobileCss).toContain('"planning finance"');
+    expect(mobileCss).toContain('"context admin"');
+    expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
+    expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');
+    expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="finance"] {');
+    expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="context"] {');
+    expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="admin"] {');
     expect(mobileCss).toContain('.treatment-workbench-route-board {');
     expect(mobileCss).toContain('.treatment-workbench-route-board__lanes {');
     expect(mobileCss).toContain('.treatment-workbench-route-board__lane {');
@@ -43634,7 +43643,19 @@ describe('app shell', () => {
     expect(html).toContain('data-treatment-task-routes="ready"');
     expect(html).toContain('data-command-task-routes="ready"');
     expect(html).toContain(
-      'href="#traject?route=overzicht" aria-current="page" data-command-route-density="filled"',
+      'href="#traject?route=overzicht" aria-current="page" data-command-route-density="filled" data-command-route-group="focus"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=fasen" data-command-route-density="filled" data-command-route-group="planning"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=vergoeding" data-command-route-density="filled" data-command-route-group="finance"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=context" data-command-route-density="action" data-command-route-group="context"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=beheer" data-command-route-density="filled" data-command-route-group="admin"',
     );
     expect(html).toContain(
       'class="command-task-route__cue" data-command-route-cue="Start">Start</em>',
@@ -43652,10 +43673,6 @@ describe('app shell', () => {
       'class="command-task-route__cue" data-command-route-cue="Archief">Archief</em>',
     );
     expect(html).toContain('class="command-task-route__badge">graph</strong>');
-    expect(html).toContain('href="#traject?route=fasen"');
-    expect(html).toContain('href="#traject?route=vergoeding"');
-    expect(html).toContain('href="#traject?route=context"');
-    expect(html).toContain('href="#traject?route=beheer"');
     expect(html).toContain('id="traject-route-overzicht"');
     expect(html).toContain('class="treatment-route-section command-route-section"');
     expect(html).toContain('class="treatment-route-section__header command-route-section__header"');

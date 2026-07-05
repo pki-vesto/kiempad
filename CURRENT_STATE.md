@@ -203,6 +203,11 @@
   fasen, vergoeding, context en beheer. Hrefs, badges, aria-current states,
   command-task hooks en privacygrenzen blijven intact terwijl de rail minder
   als één dichte navigatiestrook leest.
+- **G1889 Traject mobile route grouping:** op mobiel groepeert de Traject
+  route-rail de startroute over de volle breedte, planning/vergoeding als
+  middenrij en context/beheer als vervolgrij. De bestaande routehrefs,
+  aria-current states, badges, command-task hooks en desktop density-cues
+  blijven intact.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

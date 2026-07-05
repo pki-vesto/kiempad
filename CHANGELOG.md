@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1889 Premium Claude Design UI: de mobiele Traject route-rail groepeert
+  overzicht als brede startroute, fasen/vergoeding als middenrij en
+  context/beheer als rustige vervolgrij. Bestaande hrefs, aria-current states,
+  badges, command-task hooks en desktop density-cues blijven intact.
 - G1888 Premium Claude Design UI: de Traject route-rail toont nu compacte
   cue-chips en vaste density-indicatoren voor overzicht, fasen, vergoeding,
   context en beheer. Bestaande hrefs, badges, aria-current states,

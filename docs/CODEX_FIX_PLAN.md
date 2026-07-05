@@ -157,6 +157,10 @@
   The Traject route rail now shows compact cue chips and stable density indicators for overview,
   phases, reimbursement, context and management, preserving route hrefs, badges, aria-current
   states, command-task hooks and privacy boundaries on desktop and mobile.
+- **Treatment mobile rail first-viewport route grouping — done in G1889 / issue #3720.**
+  On mobile, the Traject route rail now groups overview as a full-width start route, phases and
+  reimbursement as the middle row, and context and management as the follow-up row, preserving
+  route hrefs, badges, aria-current states, command-task hooks and desktop density cues.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
