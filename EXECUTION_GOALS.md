@@ -14404,7 +14404,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, AI payload preview, privacy, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #811
 
 ### G483 — wetenschappelijke en patientvriendelijke samenvattingen
 
@@ -18056,6 +18057,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3889
+
+### G1977 — Research Intelligence: literature query builder routeflow evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** De G482 literatuur-querybuilder is zichtbaar en getest, maar heeft nog geen aparte routeflow-evidence voor viewport-overflow, bewerkbare termen en privacygrenzen.
+- **User Impact:** Een latere themawijziging kan de querypreview, gede-identificeerde context of bewaaractie onzichtbaar maken zonder dat browser-evidence dit direct vangt.
+- **Desired Outcome:** Routeflow-smoke bewaakt de querybuilder op de Kennis researchroute met desktop, tablet, mobile en small-mobile evidence.
+- **User Value:** Gebruikers houden een scanbare researchzoekstart zonder dossierplaintext of netwerkactie.
+- **Acceptance Criteria:** Routeflow opent de Kennis researchroute en verifieert `data-literature-query-builder="ready"`; evidence dekt querypreview, gede-identificeerde contextlabels, bewerkbare termen, bewaaractie en uitgesloten-contextchips; desktop, tablet, mobile en small-mobile blijven begrensd zonder horizontale pagina-overflow; geen dossierplaintext, consulttekst, OCR-tekst, filenames, secrets, trackingpayloads, diagnose, dosering, kansclaim of behandelkeuzeadvies wordt toegevoegd; backlog health blijft op minimaal 100 open goals.
+- **Affected Screens:** Kennis, Research Intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Knowledge research route, routeflow smoke, privacy evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3891
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

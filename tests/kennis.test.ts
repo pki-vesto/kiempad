@@ -4,6 +4,7 @@ import {
   bepaalKennisKostenJaar,
   berekenVolgendeKennisVerificatie,
   bouwEenvoudigeResearchSamenvattingen,
+  bouwLiteratuurDiscoveryQuery,
   bouwPubMedQueryPreview,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
@@ -207,6 +208,52 @@ describe('kennis domeinregels', () => {
     ].join(' ');
     expect(tekst).not.toMatch(/\bdiagnose|behandelkeuzeadvies|kansberekening\b/i);
     expect(tekst).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bouwt een gede-identificeerde literatuur discovery query uit brede dossiercontext', () => {
+    const query = bouwLiteratuurDiscoveryQuery({
+      netwerkOptIn: false,
+      datum: '2026-07-05',
+      dossierContextBronnen: [
+        { id: 'traject-t1', type: 'traject', label: 'Traject: Poging 1 met persoonsnaam' },
+        { id: 'consult-c1', type: 'consult', label: 'Consult: 2026-06-01 · intake arts' },
+        { id: 'document-d1', type: 'document', label: 'Dossierdocument: labuitslag.pdf' },
+      ],
+    });
+
+    expect(query).toMatchObject({
+      id: 'literatuur-discovery-query-zonder-dossierplaintext',
+      bron: 'PubMed',
+      datum: '2026-07-05',
+      reviewStatus: 'concept_te_controleren',
+      contextBronnen: ['consult', 'document', 'traject'],
+    });
+    expect(query.zoektermen).toEqual(
+      expect.arrayContaining(['fertility', 'IVF', 'ICSI', 'embryo', 'male factor']),
+    );
+    expect(query.contextLabels).toEqual(
+      expect.arrayContaining([
+        'actief traject aanwezig',
+        'consultcontext aanwezig',
+        'dossierdocumentcontext aanwezig',
+      ]),
+    );
+    expect(query.previewUrl).toContain('pubmed.ncbi.nlm.nih.gov');
+    expect(query.opslagNotitie).toContain('Literatuurquery:');
+    expect(query.opslagNotitie).toContain('Gede-identificeerde context');
+    expect(query.uitgeslotenContext).toEqual(
+      expect.arrayContaining([
+        'geen trajectnaam',
+        'geen consulttitel',
+        'geen documenttitel',
+        'geen OCR-tekst of bronbestand',
+      ]),
+    );
+    const serialized = JSON.stringify(query);
+    expect(serialized).not.toContain('Poging 1');
+    expect(serialized).not.toContain('intake arts');
+    expect(serialized).not.toContain('labuitslag.pdf');
+    expect(query.waarschuwing).toContain('zonder netwerkactie');
   });
 
   it('bouwt wetenschappelijke samenvattingen per researchpublicatie met bron en datum', () => {

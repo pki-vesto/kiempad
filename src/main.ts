@@ -2442,6 +2442,11 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
     void saveResearchItemFromForm(event.currentTarget, root, state);
   });
 
+  root.querySelector('#literature-query-builder-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveLiteratureQueryBuilderFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelectorAll<HTMLFormElement>('.research-relevance-review-form').forEach((form) => {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -2543,6 +2548,37 @@ async function saveResearchItemFromForm(
     ),
     eenvoudigeSamenvatting: optionalString(data.get('researchEenvoudigeSamenvatting')),
     relevantieVoorGebruiker: optionalString(data.get('researchRelevantieVoorGebruiker')),
+  });
+  await reloadAndRender(root, state);
+}
+
+async function saveLiteratureQueryBuilderFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.kennisStore) return;
+
+  const data = new FormData(target);
+  const terms = String(data.get('literatureQueryTerms') ?? '')
+    .split(/[\n,]+/)
+    .map((term) => term.trim())
+    .filter(Boolean)
+    .join(' ');
+  const datum =
+    optionalString(data.get('literatureQueryDatum')) ?? new Date().toISOString().slice(0, 10);
+  const bron =
+    optionalString(data.get('literatureQueryBron')) ?? 'https://pubmed.ncbi.nlm.nih.gov/';
+  await state.kennisStore.saveResearchItem({
+    titel: `Literatuurzoekvraag ${datum}`,
+    bron,
+    notitie: [
+      `Query: ${terms}`,
+      `Querydatum: ${datum}`,
+      'Bron: PubMed querypreview',
+      'Context: gede-identificeerde algemene fertiliteitstermen; geen dossier-, consult- of OCR-tekst.',
+      'Reviewstatus: concept te controleren voor handmatig openen of delen.',
+    ].join('\n'),
   });
   await reloadAndRender(root, state);
 }

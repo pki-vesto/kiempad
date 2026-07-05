@@ -369,6 +369,10 @@
   `recommendationAction=supplementArtscheck`, `dailyAdviceSupplementArtscheckAction` and
   `npm run smoke:routeflows`, with a maintenance-doc guard for label, source/disclaimer and
   action button without dosage, interaction claims, treatment replacement or payload leakage.
+- **Literatuur discovery querybuilder — done in G482 / issue #811.** Kennis/Research now shows a
+  visible `data-literature-query-builder="ready"` PubMed query preview with de-identified context
+  labels, editable terms, excluded-context chips and a local save-as-research-concept action,
+  while tests guard minimisation, route ordering and the no-network/no-dossier-plaintext boundary.
 - **Artscheck question reviewstatus routeflow evidence — done in G1940 / issue #3826.** The
   Vragen list now keeps artscheck review cards in a stacked, readable layout with compact
   Concept/Gereviewd badges, and routeflow smoke creates both an artscheck question and a normal

@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G482 Research Intelligence: de Kennis researchroute toont nu een
+  literatuur-querybuilder met PubMed-preview, gede-identificeerde contextlabels,
+  bewerkbare zoektermen, uitgesloten-contextchips en een lokale bewaaractie als
+  researchconcept zonder netwerkactie of dossier-, consult- of OCR-plaintext.
 - G1946 supplement artscheck action release evidence: releasecontext en
   onderhoudsdocs noemen nu `npm run smoke:routeflows`, target
   `daily-advice-supplement-artscheck-action`, `data-supplement-artscheck-action`,

@@ -98,6 +98,7 @@ import {
 import {
   bepaalKennisKostenJaar,
   bouwEenvoudigeResearchSamenvattingen,
+  bouwLiteratuurDiscoveryQuery,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwResearchDossierContextBronnen,
@@ -112,6 +113,7 @@ import {
   KENNIS_CATEGORIE_LABELS,
   type KennisFilter,
   kennisItemsPerCategorie,
+  type LiteratuurDiscoveryQuery,
   type PubMedQueryPreview,
   type ResearchAggregatiePlan,
   type ResearchBron,
@@ -13969,6 +13971,10 @@ function renderKennisScreen(state: AppShellState): string {
     researchBronnen,
     state.settings.researchNetwerk.ingeschakeld,
   );
+  const literatuurDiscoveryQuery = bouwLiteratuurDiscoveryQuery({
+    dossierContextBronnen: researchDossierContextBronnen,
+    netwerkOptIn: state.settings.researchNetwerk.ingeschakeld,
+  });
   const activeKnowledgeRoute = state.activeKnowledgeRoute ?? 'read';
   const activeKennisFilterCount =
     (filter.zoekterm?.trim() ? 1 : 0) +
@@ -14077,6 +14083,7 @@ function renderKennisScreen(state: AppShellState): string {
           relevance: researchRelevantie.length,
           trends: researchTrendGroepen.length,
         })}
+        ${renderLiteratuurDiscoveryQueryBuilder(literatuurDiscoveryQuery)}
         <section id="knowledge-research-primary-focus" class="knowledge-research-primary-focus" aria-label="Kennis research primaire focus" data-knowledge-research-primary-focus="ready">
           ${renderKnowledgeResearchReader({
             sources: researchBronnen.length,
@@ -15009,6 +15016,49 @@ function renderKnowledgeResearchReader(input: {
         <p class="small-print">Kiempad toont hier geen dossierplaintext of OCR-tekst en geeft geen behandeladvies; gebruik de lagen als voorbereiding op gesprek met je kliniek.</p>
       </div>
     </details>
+  `;
+}
+
+function renderLiteratuurDiscoveryQueryBuilder(query: LiteratuurDiscoveryQuery): string {
+  return `
+    <section id="knowledge-literature-query-builder" class="literature-query-builder" aria-label="Literatuur discovery querybuilder" data-literature-query-builder="ready">
+      <header class="literature-query-builder__header">
+        <div>
+          <p class="kp-card__eyebrow">Literatuur zoeken</p>
+          <h3>Gede-identificeerde zoekvraag</h3>
+        </div>
+        <p>Maak een controleerbare PubMed-zoekstart met algemene termen. Kiempad opent geen netwerkverbinding en neemt geen dossier-, consult- of OCR-tekst mee.</p>
+      </header>
+      <div class="literature-query-builder__grid">
+        <div class="literature-query-builder__preview" data-literature-query-preview="ready">
+          <span>Querypreview</span>
+          <strong data-literature-query-preview-query="${escapeAttribute(query.query)}">${escapeHtml(query.query)}</strong>
+          <small>Bron: ${escapeHtml(query.bron)} · ${escapeHtml(query.datum)} · ${escapeHtml(query.reviewStatus.replaceAll('_', ' '))}</small>
+        </div>
+        <div class="literature-query-builder__context" data-literature-query-context="deidentified">
+          <span>Gebruikte context</span>
+          <ul>
+            ${query.contextLabels.map((label) => `<li>${escapeHtml(label)}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      <form id="literature-query-builder-form" class="literature-query-builder__form compact-form" data-literature-query-builder-form="ready">
+        <input type="hidden" name="literatureQueryBron" value="${escapeAttribute(query.previewUrl)}" />
+        <input type="hidden" name="literatureQueryDatum" value="${escapeAttribute(query.datum)}" />
+        <label>
+          Zoektermen aanpassen
+          <textarea name="literatureQueryTerms" rows="3" required>${escapeHtml(query.zoektermen.join(', '))}</textarea>
+        </label>
+        <div class="literature-query-builder__excluded" data-literature-query-excluded-context="ready">
+          ${query.uitgeslotenContext.map((item) => `<span>${escapeHtml(item)}</span>`).join('')}
+        </div>
+        <div class="command-form-actions" data-literature-query-actions="ready">
+          <button type="submit">Bewaar query als researchconcept</button>
+          <a class="form-cancel-link" href="#knowledge-research-sources" data-form-cancel-action="literature-query">Bronnen bekijken</a>
+        </div>
+      </form>
+      <p class="small-print">${escapeHtml(query.waarschuwing)}</p>
+    </section>
   `;
 }
 
