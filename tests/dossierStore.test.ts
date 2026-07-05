@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   bouwDossierIndex,
+  bouwDossierReviewWachtrij,
   bouwDossierTijdlijn,
   bouwImagingRepository,
+  zoekDossierDocumenten,
 } from '../src/domain/dossier';
 import { DossierStore } from '../src/domain/dossierStore';
 import { bouwFertilityTimeline } from '../src/domain/fertilityTimeline';
@@ -333,6 +335,66 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('poging-gecorrigeerd');
     expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
     expect(JSON.stringify(updated.metadata.normalisatie)).not.toMatch(
+      /\bdiagnose|dosering|behandelkeuzeadvies\b/i,
+    );
+  });
+
+  it('corrigeert OCR-review versleuteld en gebruikt correctietekst pas na review', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-01',
+      titel: 'OCR review rapport',
+      categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
+      bestandsNaam: 'ocr-review-rapport.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRmLWdlaGVpbQ==',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'Concept OCR fragment met AMH',
+        confidenceScore: 0.42,
+        reviewStatus: 'concept',
+        verwerktOp: '2026-07-05T08:00:00.000Z',
+      },
+    });
+
+    expect(zoekDossierDocumenten([saved], 'gecorrigeerde')).toEqual([]);
+
+    const updated = await store.updateOcrReviewCorrectie(saved.id, {
+      tekst: 'Gecorrigeerde OCR tekst voor labuitslag',
+      metadataNotitie: 'Bronfragment gecontroleerd voor metadata.',
+      reviewStatus: 'gereviewd',
+      bijgewerktOp: '2026-07-05T09:00:00.000Z',
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(updated.ocr).toMatchObject({
+      reviewStatus: 'gereviewd',
+      correctie: {
+        tekst: 'Gecorrigeerde OCR tekst voor labuitslag',
+        metadataNotitie: 'Bronfragment gecontroleerd voor metadata.',
+        bijgewerktOp: '2026-07-05T09:00:00.000Z',
+      },
+    });
+    expect(updated.metadata.extractieBronnen).toEqual(
+      expect.arrayContaining(['ocr-tekst-gereviewd', 'ocr-reviewnotitie']),
+    );
+    expect(bouwDossierReviewWachtrij([updated])[0]).toMatchObject({
+      reviewStatus: 'gereviewd',
+      prioriteit: 'laag',
+    });
+    expect(zoekDossierDocumenten([updated], 'gecorrigeerde')).toEqual([
+      { document: updated, matches: ['OCR-tekst'] },
+    ]);
+    expect(raw?.payload.ciphertext).not.toContain('OCR review rapport');
+    expect(raw?.payload.ciphertext).not.toContain('ocr-review-rapport.pdf');
+    expect(raw?.payload.ciphertext).not.toContain('Concept OCR fragment');
+    expect(raw?.payload.ciphertext).not.toContain('Gecorrigeerde OCR tekst');
+    expect(raw?.payload.ciphertext).not.toContain('Bronfragment gecontroleerd');
+    expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
+    expect(JSON.stringify(updated.ocr?.correctie)).not.toMatch(
       /\bdiagnose|dosering|behandelkeuzeadvies\b/i,
     );
   });

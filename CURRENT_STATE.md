@@ -83,6 +83,10 @@
   aparte correctieflow voor bronlabel, datum en reviewstatus; de gecorrigeerde
   bronmetadata wordt encrypted op hetzelfde dossierrecord bewaard en gebruikt in
   bronlabels zonder de kliniekwaarde te veranderen.
+- **G578 OCR-review correctieformulier:** OCR-documenten tonen nu een compacte
+  correctieflow voor OCR-tekst, metadata-notitie en reviewstatus; gereviewde
+  correcties worden encrypted bewaard en concept-OCR wordt niet als zoektekst
+  gebruikt voordat de review is afgerond.
 - **G579 Metadata-normalisatie correctieformulier:** dossierdocumenten tonen nu
   een compacte correctieflow voor datum, bron, documenttype, onderzoekstype,
   poging, afspraak en onzekerheid; originele waarden blijven auditcontext,

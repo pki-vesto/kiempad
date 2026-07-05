@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G578 Fertility Intelligence: OCR-documenten tonen nu een reviewformulier voor
+  correctietekst, metadata-notitie en reviewstatus; gereviewde OCR-correcties
+  worden encrypted opgeslagen en concept-OCR telt niet mee voor zoeken.
 - G579 Fertility Intelligence: dossierdocumenten tonen nu een
   metadata-normalisatieformulier voor datum, bron, documenttype,
   onderzoekstype, poging, afspraak en onzekerheid; correcties blijven encrypted

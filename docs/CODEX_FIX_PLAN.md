@@ -296,6 +296,10 @@
   cards now expose a focused correction flow for source label, source date, and review status;
   corrected source metadata is saved encrypted on the existing record without changing the clinic
   quality value.
+- **OCR review correction form — done in G578 / issue #922.** OCR dossier records now expose a
+  compact review form for corrected text, metadata note and review status; reviewed corrections
+  are stored encrypted and concept OCR no longer contributes to dossier search text before
+  review is complete.
 - **Metadata normalization correction form — done in G579 / issue #924.** Dossier documents now
   expose a compact correction form for normalized date, source, document type, research type,
   attempt, appointment and uncertainty; corrections are stored encrypted while original values

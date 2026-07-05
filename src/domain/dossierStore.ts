@@ -231,6 +231,52 @@ export class DossierStore {
     return updated;
   }
 
+  async updateOcrReviewCorrectie(
+    documentId: string,
+    correctie: {
+      reviewStatus: NonNullable<DossierDocument['ocr']>['reviewStatus'];
+      bijgewerktOp: string;
+      tekst?: string;
+      metadataNotitie?: string;
+    },
+  ): Promise<DossierDocument> {
+    const record = await this.documenten.get(documentId);
+    if (!record?.value.ocr) {
+      throw new Error('OCR-record niet gevonden.');
+    }
+
+    const document = record.value;
+    const ocr = record.value.ocr;
+    const updatedOcr: NonNullable<DossierDocument['ocr']> = {
+      ...ocr,
+      reviewStatus: correctie.reviewStatus,
+      correctie:
+        correctie.tekst || correctie.metadataNotitie
+          ? {
+              tekst: correctie.tekst,
+              metadataNotitie: correctie.metadataNotitie,
+              bijgewerktOp: correctie.bijgewerktOp,
+            }
+          : ocr.correctie,
+    };
+    const metadataBronnen = new Set(document.metadata.extractieBronnen);
+    if (correctie.reviewStatus === 'gereviewd') {
+      metadataBronnen.add('ocr-tekst-gereviewd');
+      if (correctie.metadataNotitie) metadataBronnen.add('ocr-reviewnotitie');
+    }
+
+    const updated: DossierDocument = {
+      ...document,
+      ocr: updatedOcr,
+      metadata: {
+        ...document.metadata,
+        extractieBronnen: Array.from(metadataBronnen),
+      },
+    };
+    await this.documenten.saveWithId(updated);
+    return updated;
+  }
+
   async delete(id: string): Promise<void> {
     await this.documenten.delete(id);
   }

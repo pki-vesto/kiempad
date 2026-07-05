@@ -925,11 +925,15 @@ function bouwDossierZoekVelden(
   document: DossierDocument,
 ): Array<{ label: string; waarde: string }> {
   const index = bouwDossierIndex([document])[0];
+  const gereviewdeOcrTekst =
+    document.ocr?.reviewStatus === 'gereviewd'
+      ? (document.ocr.correctie?.tekst ?? document.ocr.tekst)
+      : undefined;
   return [
     { label: 'titel', waarde: document.titel },
     { label: 'bestandsnaam', waarde: document.bestandsNaam },
     { label: 'notitie', waarde: document.notitie ?? '' },
-    { label: 'OCR-tekst', waarde: document.ocr?.tekst ?? '' },
+    { label: 'OCR-tekst', waarde: gereviewdeOcrTekst ?? '' },
     {
       label: 'documenttype',
       waarde:
