@@ -54,6 +54,26 @@ export class VraagStore {
     await this.vragen.saveWithId(markeerVraagBeantwoord(record.value, antwoord));
   }
 
+  async updateArtscheckReviewStatus(
+    vraagId: string,
+    reviewStatus: NonNullable<Vraag['artscheckMetadata']>['reviewStatus'],
+  ): Promise<Vraag> {
+    const record = await this.vragen.get(vraagId);
+    if (!record?.value.artscheckMetadata) {
+      throw new Error('Artscheckvraag niet gevonden.');
+    }
+
+    const updated: Vraag = {
+      ...record.value,
+      artscheckMetadata: {
+        ...record.value.artscheckMetadata,
+        reviewStatus,
+      },
+    };
+    await this.vragen.saveWithId(updated);
+    return updated;
+  }
+
   async movePriority(vraagId: string, richting: 'omhoog' | 'omlaag'): Promise<void> {
     const records = await this.vragen.list();
     const reordered = herprioriteerVraag(

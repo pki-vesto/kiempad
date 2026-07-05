@@ -86,4 +86,36 @@ describe('VraagStore', () => {
       ['Eerste vraag', 2],
     ]);
   });
+
+  it('bewaart artscheckmetadata en reviewstatuscorrectie versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      vraag: 'Vraag aan kliniek, arts of apotheek: supplement bespreken?',
+      beantwoord: false,
+      artscheckMetadata: {
+        bron: 'daily_recommendation',
+        bronId: 'rec-secret-supplement',
+        bronLabel: 'Supplement dagadvies',
+        datum: '2026-07-05T09:00:00.000Z',
+        reviewStatus: 'concept',
+      },
+    });
+
+    const updated = await store.updateArtscheckReviewStatus(saved.id, 'gereviewd');
+    const raw = await driver.getRecord(saved.id);
+
+    expect(updated.artscheckMetadata).toMatchObject({
+      bronId: 'rec-secret-supplement',
+      bronLabel: 'Supplement dagadvies',
+      reviewStatus: 'gereviewd',
+    });
+    expect((await store.list())[0]?.vraag.artscheckMetadata?.reviewStatus).toBe('gereviewd');
+    expect(raw?.payload.ciphertext).not.toContain('supplement bespreken');
+    expect(raw?.payload.ciphertext).not.toContain('rec-secret-supplement');
+    expect(raw?.payload.ciphertext).not.toContain('Supplement dagadvies');
+    expect(JSON.stringify(updated.artscheckMetadata)).not.toMatch(
+      /\bdiagnose|dosering|behandelkeuzeadvies\b/i,
+    );
+  });
 });

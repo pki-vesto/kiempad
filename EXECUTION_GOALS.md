@@ -15727,7 +15727,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations, vragen, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ completed
 
 ### G577 — import-inbox retry per bestand
 
@@ -17510,6 +17510,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 28
 - **Status:** ☐ open
 - **Issue:** #3824
+
+### G1940 — Daily Recommendations: artscheck vraag reviewstatus routeflow evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** Artscheckvragen uit dagadvies hebben nu bronmetadata en een corrigeerbare reviewstatus, maar routeflow-bewijs moet nog bewaken dat badge, select en bewaaractie op desktop en mobiel scanbaar blijven.
+- **User Impact:** Zonder visuele evidence kan een latere themawijziging de artscheckstatus in de vragenroute verbergen, laten overlappen of als onduidelijke extra formulierlaag tonen.
+- **Desired Outcome:** Routeflow-smoke of equivalente visuele evidence controleert de artscheckvraag-reviewstatus zonder medische payloads of broninhoud.
+- **User Value:** Gebruikers blijven zien welke artscheckvragen nog concept zijn en kunnen ze rustig als gereviewd markeren voor consultvoorbereiding.
+- **Acceptance Criteria:** Routeflow smoke of equivalente visuele evidence controleert `data-question-artscheck-review`, `data-question-artscheck-review-state` en `data-question-artscheck-review-form` op desktop en mobiel; concept/gereviewd badge, select en bewaaractie blijven scanbaar zonder page-level horizontale overflow; gewone vragen zonder artscheckmetadata tonen geen extra reviewformulier; tests en fixtures blijven vrij van secrets, medische payloads, diagnose, dosering en behandelkeuzeadvies; backlog health blijft op 100+ open doelen.
+- **Affected Screens:** Vragen, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations, vragen UI, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3826
 
 ### G1924 — Premium Claude Design UI: daily recommendation owner scan mobile density polish
 

@@ -7,6 +7,7 @@ export type VraagInput = {
   prioriteit?: number;
   beantwoord: boolean;
   antwoord?: string;
+  artscheckMetadata?: Vraag['artscheckMetadata'];
 };
 
 export type GegenereerdeVragenlijstItem = {
@@ -31,6 +32,7 @@ export function maakVraag(id: string, input: VraagInput): Vraag {
     prioriteit: normaliseerPrioriteit(input.prioriteit),
     beantwoord: input.beantwoord,
     antwoord: normaliseerOptioneleTekst(input.antwoord),
+    artscheckMetadata: normaliseerArtscheckMetadata(input.artscheckMetadata),
   };
 }
 
@@ -178,6 +180,23 @@ function normaliseerPrioriteit(value: number | undefined): number | undefined {
   if (!Number.isFinite(value)) return undefined;
   const rounded = Math.round(value ?? 0);
   return rounded > 0 ? rounded : undefined;
+}
+
+function normaliseerArtscheckMetadata(
+  metadata: Vraag['artscheckMetadata'] | undefined,
+): Vraag['artscheckMetadata'] | undefined {
+  if (!metadata) return undefined;
+  const bronId = normaliseerOptioneleTekst(metadata.bronId);
+  const bronLabel = normaliseerOptioneleTekst(metadata.bronLabel);
+  const datum = normaliseerOptioneleTekst(metadata.datum);
+  if (!bronId || !bronLabel || !datum) return undefined;
+  return {
+    bron: 'daily_recommendation',
+    bronId,
+    bronLabel,
+    datum,
+    reviewStatus: metadata.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+  };
 }
 
 function vraagPrioriteit(vraag: Vraag): number {

@@ -103,6 +103,13 @@ export interface Vraag {
   prioriteit?: number;
   beantwoord: boolean;
   antwoord?: string;
+  artscheckMetadata?: {
+    bron: 'daily_recommendation';
+    bronId: string;
+    bronLabel: string;
+    datum: IsoDate;
+    reviewStatus: 'concept' | 'gereviewd';
+  };
 }
 
 export interface KennisItem {

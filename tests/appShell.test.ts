@@ -7900,6 +7900,48 @@ describe('app shell', () => {
     expect(html).toContain('Antwoord: De kliniek belt morgen.');
   });
 
+  it('toont artscheckvraag bronmetadata en corrigeerbare reviewstatus zonder medische payload', () => {
+    const html = renderAppShell(
+      'vragen',
+      makeStartState({
+        vraagStatus: 'Artscheck-reviewstatus bijgewerkt.',
+        vragen: [
+          {
+            vraag: {
+              id: 'vraag-artscheck',
+              vraag: 'Vraag aan kliniek, arts of apotheek: supplement bespreken?',
+              beantwoord: false,
+              artscheckMetadata: {
+                bron: 'daily_recommendation',
+                bronId: 'rec-supplement',
+                bronLabel: 'Supplement dagadvies',
+                datum: '2026-07-05T09:00:00.000Z',
+                reviewStatus: 'concept',
+              },
+            },
+          },
+        ],
+      }),
+    );
+
+    expect(html).toContain('Artscheck-reviewstatus bijgewerkt.');
+    expect(html).toContain('data-question-artscheck-review="ready"');
+    expect(html).toContain('data-question-artscheck-review-state="concept"');
+    expect(html).toContain('data-question-artscheck-review-badge="concept"');
+    expect(html).toContain('Artscheck concept');
+    expect(html).toContain('name="artscheckReviewStatus"');
+    expect(html).toContain('class="question-artscheck-review-form compact-form"');
+    expect(html).toContain('data-question-artscheck-review-form="ready"');
+    expect(html).toContain('name="vraagId" value="vraag-artscheck"');
+    expect(html).toContain('Reviewstatus bewaren');
+    expect(html).toContain('Bron: Supplement dagadvies');
+    const artscheckSnippet = html.slice(
+      html.indexOf('data-question-artscheck-review-state="concept"'),
+      html.indexOf('class="question-priority-form compact-form"'),
+    );
+    expect(artscheckSnippet).not.toMatch(/\bdiagnose|dosering|behandelkeuzeadvies\b/i);
+  });
+
   it('toont één actieve questionroute tegelijk', () => {
     const html = renderAppShell('vragen', {
       trajecten: [],
