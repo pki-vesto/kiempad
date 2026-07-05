@@ -36,6 +36,10 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain("form.querySelector('[data-attachment-envelope-batch]')");
     expect(mainSource).toContain('fileInput.files ?? []');
     expect(mainSource).toContain('summary.total === 0');
+    expect(mainSource).toContain('attachmentEnvelopeProgress');
+    expect(mainSource).toContain("'hashing'");
+    expect(mainSource).toContain("'complete'");
+    expect(mainSource).toContain('Hashcontrole bezig');
     expect(mainSource).toContain('Geen bestandsnamen of broninhoud in deze batchstatus.');
     expect(mainSource).not.toContain('echo-foto-privenaam.jpg');
     expect(mainSource).not.toContain('base64-bijlage-inhoud');
