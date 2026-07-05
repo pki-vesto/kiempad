@@ -16573,8 +16573,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 67
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3708
+
+### G1884 — Premium Claude Design UI: treatment management route first-viewport management board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Traject/Beheer kan als lange beheerpagina voelen wanneer bewerken, nieuwe poging, archief, context en detailbeheer tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is of ze een bestaand traject bewerken, een nieuwe poging toevoegen of archiefacties nodig hebben.
+- **Desired Outcome:** Traject/Beheer opent met een compact first-viewport management board voor huidig traject bewerken, nieuwe poging, archief, behandelcontext en volledige beheerdetails.
+- **User Value:** Trajectbeheer voelt rustiger en taakgerichter zonder bestaande form-id's, input names, archiefacties, herstel/verwijderacties, routehooks of privacygrenzen te verliezen.
+- **Acceptance Criteria:** Traject/Beheer opent met compacte lanes voor huidig traject bewerken, nieuwe poging, archief, behandelcontext en volledige beheerdetails; volledige formulieren, archieflijsten en destructieve acties blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande form ids, input names, archive/restore/delete actions, route hooks, timeline anchors en privacy boundaries; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw treatment payload wordt toegevoegd.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, forms, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 66
+- **Status:** ☐ open
+- **Issue:** #3710
 
 ### G586 — replay conflict recovery status UI
 

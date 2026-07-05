@@ -20860,6 +20860,14 @@ function renderTrajectScreen(state: AppShellState): string {
           data: { 'treatment-route-summary': 'fasen' },
           ariaLabel: 'Faseplanning route-samenvatting',
         })}
+        ${renderTreatmentPhaseBoard({
+          currentPhaseLabel: selectedCurrentPhaseLabel,
+          phaseCount: selected?.fasen.length ?? 0,
+          completedPhaseCount:
+            selected?.fasen.filter((fase) => Boolean(fase.eindDatum)).length ?? 0,
+          hasTreatment: Boolean(selected),
+          contextCount: fertilityTimeline.items.length + (graphWeergave?.edges.length ?? 0),
+        })}
         <div class="treatment-phase-console" data-treatment-phase-layout="single-input">
           <div id="treatment-phase-primary" class="summary-panel treatment-phase-primary" data-treatment-phase-primary="current-phase">
             <h3>${escapeHtml(selectedCurrentPhaseLabel)}</h3>
@@ -20902,7 +20910,7 @@ function renderTrajectScreen(state: AppShellState): string {
                 <a href="#traject?route=beheer">Traject beheren</a>
                 <a href="#traject?route=vergoeding">Vergoeding bekijken</a>
               </nav>
-              <section class="treatment-phase-followup__timeline" aria-label="Volledige fasetijdlijn">
+              <section id="treatment-phase-timeline" class="treatment-phase-followup__timeline" aria-label="Volledige fasetijdlijn">
                 <div class="panel-heading"><h2>Fasen</h2>${fasenButtons}</div>
                 ${
                   selected
@@ -21209,6 +21217,83 @@ function renderTreatmentOverviewStageBoard(input: {
           .map(
             (lane) => `
               <a class="treatment-overview-stage-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-overview-stage-lane="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
+}
+
+function renderTreatmentPhaseBoard(input: {
+  currentPhaseLabel: string;
+  phaseCount: number;
+  completedPhaseCount: number;
+  hasTreatment: boolean;
+  contextCount: number;
+}): string {
+  const lanes = [
+    {
+      id: 'active',
+      href: '#treatment-phase-primary',
+      label: 'Actieve fase',
+      title: input.currentPhaseLabel,
+      detail: 'Begin bij de fase die nu als huidig staat.',
+      cue: input.hasTreatment ? 'Nu' : 'Leeg',
+    },
+    {
+      id: 'history',
+      href: '#treatment-phase-timeline',
+      label: 'Fasehistorie',
+      title: `${input.completedPhaseCount} afgerond`,
+      detail: 'Bekijk eerdere en volgende fasen pas in de vervolgtijdlijn.',
+      cue: 'Historie',
+    },
+    {
+      id: 'actions',
+      href: '#traject?route=beheer',
+      label: 'Faseacties',
+      title: input.hasTreatment ? 'Beheer apart' : 'Traject aanmaken',
+      detail: 'Open beheer zonder formulieren in de eerste faseviewport.',
+      cue: 'Acties',
+    },
+    {
+      id: 'context',
+      href: '#traject?route=context',
+      label: 'Behandelcontext',
+      title: `${input.contextCount} contextitem${input.contextCount === 1 ? '' : 's'}`,
+      detail: 'Tijdlijn en graph blijven een aparte contextlaag.',
+      cue: 'Context',
+    },
+    {
+      id: 'planning',
+      href: '#treatment-phase-followup',
+      label: 'Volledige planning',
+      title: `${input.phaseCount} fase${input.phaseCount === 1 ? '' : 's'}`,
+      detail: 'Open de volledige faselijst wanneer je wilt vergelijken.',
+      cue: 'Planning',
+    },
+  ];
+
+  return `
+    <section class="treatment-phase-board" aria-label="Faseplanning startlaag" data-treatment-phase-board="first-viewport">
+      <header class="treatment-phase-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Fasebord</p>
+          <h3>Kies eerst je faselaag</h3>
+        </div>
+        <p>Actieve fase, historie, acties, context en volledige planning staan als aparte keuzes.</p>
+      </header>
+      <nav class="treatment-phase-board__lanes" aria-label="Faseplanning eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="treatment-phase-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-phase-lane="${escapeAttribute(lane.id)}">
                 <span>${escapeHtml(lane.label)}</span>
                 <strong>${escapeHtml(lane.title)}</strong>
                 <small>${escapeHtml(lane.detail)}</small>

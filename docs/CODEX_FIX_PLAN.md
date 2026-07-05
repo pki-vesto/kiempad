@@ -129,6 +129,11 @@
   reimbursement and full treatment context before the existing status and context panels,
   preserving route hooks, forms, timeline anchors, reimbursement anchors and graph context on
   desktop and mobile.
+- **Treatment phases first-viewport phase board — done in G1883 / issue #3708.**
+  Traject/Fasen now opens with one compact phase board for active phase, phase history, phase
+  actions, treatment context and full planning before the existing current-phase card and follow-up
+  timeline, preserving phase buttons, treatment forms, route hooks, timeline anchors and graph
+  context on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

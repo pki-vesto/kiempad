@@ -173,6 +173,11 @@
   volledige behandelcontext. De bestaande routehooks, formulieren,
   tijdlijnankers, vergoedingankers en graphcontext blijven bereikbaar zonder de
   eerste viewport als trajectstapel te vullen.
+- **G1883 Traject/Fasen phase board:** Traject/Fasen start met een compact
+  fasebord voor actieve fase, fasehistorie, faseacties, behandelcontext en
+  volledige planning. De bestaande faseknoppen, vervolgcontext, tijdlijnankers
+  en graphcontext blijven bereikbaar zonder de eerste viewport als
+  faseplanningstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
