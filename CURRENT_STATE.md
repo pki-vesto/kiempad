@@ -105,6 +105,11 @@
   De volledige kostenlijst en bewerkformulieren blijven via bestaande overzicht-,
   vergoeding-, formulier- en historyankers bereikbaar zonder de eerste viewport
   als lange factuurstapel te vullen.
+- **G1869 Medicatiehistorie intakebord:** de Medicatie-historieroute start met
+  een compact intakebord voor vandaag, planning, actieve medicatie en
+  doseerhistorie. De volledige middelen-, voorraad- en innamelijsten blijven via
+  bestaande vandaag-, planning-, beheer- en historyankers bereikbaar zonder de
+  eerste viewport als lange medicatiestapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

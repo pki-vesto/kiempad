@@ -18949,6 +18949,8 @@ function renderMedicatieScreen(state: AppShellState): string {
     .flatMap((bundle) => bundle.doseLogs)
     .filter((doseLog) => doseLog.geplandOp >= now && !doseLog.geplandOp.startsWith(`${today}T`))
     .sort((a, b) => a.geplandOp.localeCompare(b.geplandOp));
+  const activeMedicationCount = state.medicatie.filter((bundle) => bundle.medicatie.actief).length;
+  const doseLogCount = state.medicatie.reduce((total, bundle) => total + bundle.doseLogs.length, 0);
 
   const deleteMedicatieButton = selected
     ? `<button class="danger-button" id="delete-medicatie" type="button" data-medicatie-id="${selected.medicatie.id}" aria-label="Verwijder medicatie: ${escapeAttribute(selected.medicatie.naam)}">Verwijder medicatie</button>`
@@ -19139,6 +19141,14 @@ function renderMedicatieScreen(state: AppShellState): string {
           ariaLabel: 'Medicatiehistorie route-samenvatting',
         })}
         ${renderMedicatieStatus(state.medicatieStatus, 'historie')}
+        ${renderMedicationHistoryIntakeBoard({
+          todayCount: todayLogs.length,
+          completedToday,
+          plannedCount: plannedLogs.length,
+          medicationCount: state.medicatie.length,
+          activeMedicationCount,
+          doseLogCount,
+        })}
         ${disclosure({
           summary: 'Middelen, voorraad en historie tonen',
           id: 'medication-history-disclosure',
@@ -19204,6 +19214,81 @@ function renderMedicationFocusShell(input: { workspace: string }): string {
           ${input.workspace}
         </div>
       </div>
+    </section>
+  `;
+}
+
+function renderMedicationHistoryIntakeBoard(input: {
+  todayCount: number;
+  completedToday: number;
+  plannedCount: number;
+  medicationCount: number;
+  activeMedicationCount: number;
+  doseLogCount: number;
+}): string {
+  const lanes: readonly {
+    id: string;
+    href: string;
+    eyebrow: string;
+    title: string;
+    detail: string;
+    cue: string;
+  }[] = [
+    {
+      id: 'today',
+      href: '#medicatie?route=vandaag',
+      eyebrow: 'Vandaag',
+      title: `${input.completedToday}/${input.todayCount} afgevinkt`,
+      detail: 'Dagmomenten open je apart als afvinklijst.',
+      cue: 'Afvinken',
+    },
+    {
+      id: 'planning',
+      href: '#medicatie?route=planning',
+      eyebrow: 'Planning',
+      title: `${input.plannedCount} later`,
+      detail: 'Komende momenten blijven in de planningslaag.',
+      cue: 'Plannen',
+    },
+    {
+      id: 'active-medication',
+      href: '#medicatie?route=beheer',
+      eyebrow: 'Actief',
+      title: `${input.activeMedicationCount}/${input.medicationCount} middel(en)`,
+      detail: 'Voorraad, kliniektekst en media beheer je bewust apart.',
+      cue: 'Beheer',
+    },
+    {
+      id: 'dose-history',
+      href: '#medication-history-disclosure',
+      eyebrow: 'Historie',
+      title: `${input.doseLogCount} moment(en)`,
+      detail: 'Volledige middelen- en doseerhistorie open je als naslag.',
+      cue: 'Teruglezen',
+    },
+  ];
+
+  return `
+    <section class="medication-history-intake-board" aria-label="Medicatiehistorie intakebord" data-medication-history-intake-board="first-viewport">
+      <header class="medication-history-intake-board__header">
+        <p class="kp-card__eyebrow">Intakebord</p>
+        <h3>Kies eerst je medicatielaag</h3>
+        <p>Open vandaag, planning, actieve medicatie of doseerhistorie zonder meteen alle middelen te tonen.</p>
+      </header>
+      <nav class="medication-history-intake-board__lanes" aria-label="Medicatiehistorie laag kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="medication-history-intake-board__lane" href="${lane.href}" data-medication-history-intake-lane="${lane.id}">
+                <span>${lane.eyebrow}</span>
+                <strong>${lane.title}</strong>
+                <small>${lane.detail}</small>
+                <em>${lane.cue}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }

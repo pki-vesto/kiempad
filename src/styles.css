@@ -16638,6 +16638,27 @@ h2 {
     flex: 0 0 min(210px, 46vw);
     scroll-snap-align: start;
   }
+
+  .medication-history-intake-board {
+    padding: 12px;
+  }
+
+  .medication-history-intake-board__lanes {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .medication-history-intake-board__lanes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .medication-history-intake-board__lane {
+    flex: 0 0 min(204px, 74vw);
+    min-height: 126px;
+    scroll-snap-align: start;
+  }
 }
 
 .command-form-section {
@@ -17979,6 +18000,96 @@ h2 {
 .medication-planning-followup__list h3 {
   margin: 0;
   font-size: 0.95rem;
+}
+
+.medication-history-intake-board {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 58%),
+    var(--surface);
+}
+
+.medication-history-intake-board__header {
+  display: grid;
+  gap: 4px;
+  max-width: 760px;
+}
+
+.medication-history-intake-board__header h3,
+.medication-history-intake-board__header p {
+  margin: 0;
+}
+
+.medication-history-intake-board__header > p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.medication-history-intake-board__lanes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.medication-history-intake-board__lane {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  min-height: 132px;
+  align-content: start;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--surface-2));
+  color: var(--text);
+  text-decoration: none;
+}
+
+.medication-history-intake-board__lane:hover,
+.medication-history-intake-board__lane:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  outline: none;
+}
+
+.medication-history-intake-board__lane span {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 820;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.medication-history-intake-board__lane strong {
+  overflow-wrap: anywhere;
+  font-size: 1rem;
+  line-height: 1.18;
+}
+
+.medication-history-intake-board__lane small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.medication-history-intake-board__lane em {
+  width: fit-content;
+  margin-top: auto;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 820;
 }
 
 .medication-form {
@@ -28134,6 +28245,27 @@ summary[class*="__summary"]:focus-visible,
 
   .medication-task-route {
     flex: 0 0 min(190px, 76vw);
+    scroll-snap-align: start;
+  }
+
+  .medication-history-intake-board {
+    padding: 12px;
+  }
+
+  .medication-history-intake-board__lanes {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .medication-history-intake-board__lanes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .medication-history-intake-board__lane {
+    flex: 0 0 min(204px, 74vw);
+    min-height: 126px;
     scroll-snap-align: start;
   }
 
