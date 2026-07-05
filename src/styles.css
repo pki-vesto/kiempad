@@ -30698,6 +30698,27 @@ summary[class*="__summary"]:focus-visible,
       white-space: nowrap;
     }
 
+    .treatment-task-route:focus-visible {
+      border-color: Highlight;
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
+      box-shadow: none;
+    }
+
+    .treatment-task-route:focus-visible .command-task-route__top {
+      gap: 12px;
+    }
+
+    .treatment-task-route:focus-visible :is(.command-task-route__badge, .command-task-route__cue) {
+      margin-inline: 1px;
+      outline: 1px solid CanvasText;
+      outline-offset: 2px;
+    }
+
+    .treatment-task-route:focus-visible .command-task-route__cue {
+      margin-top: 3px;
+    }
+
     .treatment-task-route[aria-current="page"]:focus-visible {
       color: HighlightText;
       outline-offset: 4px;
@@ -30711,16 +30732,10 @@ summary[class*="__summary"]:focus-visible,
 
     .treatment-task-route[aria-current="page"]:focus-visible
       :is(.command-task-route__badge, .command-task-route__cue) {
+      margin-inline: 1px;
       border-color: HighlightText;
       outline: 1px solid HighlightText;
-      outline-offset: 1px;
-    }
-
-    .treatment-task-route:focus-visible {
-      border-color: Highlight;
-      outline: 2px solid Highlight;
-      outline-offset: 3px;
-      box-shadow: none;
+      outline-offset: 2px;
     }
 
     .treatment-task-route :is(span, strong, small, em) {

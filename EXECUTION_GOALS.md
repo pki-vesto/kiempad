@@ -16862,8 +16862,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 50
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3742
+
+### G1901 — Premium Claude Design UI: treatment mobile rail forced-colors inactive focus text polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Mobiele Traject routefocus heeft nu expliciete forced-colors spacing voor badge- en cue-outlines, maar inactieve gefocuste routekaarten kunnen nog explicietere tekstbehandeling gebruiken.
+- **User Impact:** High-contrast toetsenbordgebruikers kunnen inactieve gefocuste routes minder snel scannen als label, metatekst, badge en cue dezelfde behandeling delen als niet-gefocuste routes.
+- **Desired Outcome:** Inactieve gefocuste mobiele Traject-routekaarten hebben expliciete forced-colors tekstbehandeling voor titel, supporting text, badge en cue.
+- **User Value:** Keyboardfocus blijft ook op niet-actieve routes leesbaar en rustig zonder verwarring met de actieve route.
+- **Acceptance Criteria:** Mobile Traject inactive focused route cards have explicit forced-colors text handling for title, supporting text, badge and cue; existing route hrefs, aria-current states, badges, cue pills, command-task hooks, route groups, active-route promotion, reduced-motion behavior, forced-colors contrast, spacing, active label/cue handling, supporting text fit, active focus text handling and focus cue spacing remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors inactive focus text behavior or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 49
+- **Status:** ☐ open
+- **Issue:** #3744
 
 ### G586 — replay conflict recovery status UI
 
