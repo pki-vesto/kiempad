@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1865 Premium Claude Design UI: behandelcontext opent nu met een compact
+  eerste-viewport beslisbord voor faseplanning, timeline, vergoeding en graph.
+  De volledige fertility timeline en graphcontext blijven bereikbaar als
+  vervolgcontext in plaats van als eerste lange contextstapel.
 - G1864 Premium Claude Design UI: de Dossier-tijdlijn opent nu met een compact
   eerste-viewport event board voor uploads, consulten, beelden en embryo's. De
   volledige documenttijdlijn en behandelgeschiedenis blijven bereikbaar als

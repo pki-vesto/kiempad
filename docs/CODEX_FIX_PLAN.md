@@ -2259,6 +2259,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - Partial G1864/#3670: Dossier timeline now starts with a compact first-viewport
   event board for uploads, consults, imaging and embryo context, while the full
   document timeline and treatment history remain reachable as follow-up context.
+- Partial G1865/#3672: Treatment context now starts with a compact
+  first-viewport decision board for phase planning, fertility timeline,
+  reimbursement and graph context, while full timeline and graph details remain
+  reachable as follow-up context.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record

@@ -16267,8 +16267,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment context UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3672
+
+### G1866 — Premium Claude Design UI: wellbeing history first-viewport signal board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De welzijnsgeschiedenis kan nog als lange stapel openen wanneer recente signalen, symptoomhistorie, cyclusdata en mentale check-ins tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke welzijnslaag eerst relevant is.
+- **Desired Outcome:** Welzijnsgeschiedenis opent met een compact first-viewport signal board voor recente signalen, symptomen, cyclusdata en mentale check-ins.
+- **User Value:** Welzijnsinzicht voelt sneller navigeerbaar zonder symptom-, cycle- of check-inhooks te verliezen.
+- **Acceptance Criteria:** Wellbeing history opent met compacte lanes voor recente signalen, symptomen, cyclusdata en mentale check-ins; volledige historie- en detaillijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande wellbeing-, symptom-, cycle- en check-inhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen diagnose, dosering, behandelkeuzeadvies, token, secret of medische plaintext wordt toegevoegd.
+- **Affected Screens:** Welzijn
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Wellbeing history UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 84
+- **Status:** ☐ open
+- **Issue:** #3674
 
 ### G586 — replay conflict recovery status UI
 
