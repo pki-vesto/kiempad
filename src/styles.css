@@ -30731,12 +30731,19 @@ summary[class*="__summary"]:focus-visible,
       flex: 0 1 auto;
       max-width: min(88px, 46%);
       min-width: 0;
+      min-height: 23px;
+      padding: 3px 7px;
       border-color: CanvasText;
       background: ButtonFace;
       color: ButtonText;
+      line-height: 1.18;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {
+      margin-top: 4px;
     }
 
     .treatment-task-route[aria-current="page"]:focus-visible {
