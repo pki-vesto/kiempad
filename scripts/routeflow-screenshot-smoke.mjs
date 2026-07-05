@@ -2606,12 +2606,14 @@ async function assertRouteflows(browser, options) {
         const activePanel = document.querySelector('[data-screen-stage-scroll="active-workspace"]');
         const routeFocusDock = document.querySelector('[data-route-focus-dock="ready"]');
         const routeFocusDockActiveLink = routeFocusDock?.querySelector('a[aria-current="page"]');
+        const routeFocusDockLinkRow = routeFocusDockActiveLink?.closest('.route-focus-dock__links');
         const routeFocusDockBadge = routeFocusDock?.querySelector('[data-route-focus-badge]');
         const appShellRect = appShell?.getBoundingClientRect();
         const contentRect = content?.getBoundingClientRect();
         const activePanelRect = activePanel?.getBoundingClientRect();
         const routeFocusDockRect = routeFocusDock?.getBoundingClientRect();
         const routeFocusDockActiveLinkRect = routeFocusDockActiveLink?.getBoundingClientRect();
+        const routeFocusDockLinkRowRect = routeFocusDockLinkRow?.getBoundingClientRect();
         const routeFocusDockBadgeRect = routeFocusDockBadge?.getBoundingClientRect();
         const appShellStyle = appShell ? getComputedStyle(appShell) : null;
         const contentStyle = content ? getComputedStyle(content) : null;
@@ -4863,6 +4865,12 @@ async function assertRouteflows(browser, options) {
                 routeFocusDockActiveLinkRect.width > 0 &&
                 routeFocusDockActiveLinkRect.height > 0,
             ),
+            routeFocusDockActiveLinkInRowViewport: Boolean(
+              routeFocusDockActiveLinkRect &&
+                routeFocusDockLinkRowRect &&
+                routeFocusDockActiveLinkRect.left >= routeFocusDockLinkRowRect.left - 4 &&
+                routeFocusDockActiveLinkRect.right <= routeFocusDockLinkRowRect.right + 4,
+            ),
             routeFocusDockBadgeVisible: Boolean(
               routeFocusDockBadgeRect &&
                 routeFocusDockBadgeRect.width > 0 &&
@@ -5036,6 +5044,7 @@ async function assertRouteflows(browser, options) {
           !evidence.appFrame.routeFocusDockBeforePanel ||
           !evidence.appFrame.routeFocusDockRoute ||
           !evidence.appFrame.routeFocusDockActiveLinkVisible ||
+          !evidence.appFrame.routeFocusDockActiveLinkInRowViewport ||
           !evidence.appFrame.routeFocusDockBadgeVisible ||
           evidence.appFrame.bodyScrolls)
       ) {

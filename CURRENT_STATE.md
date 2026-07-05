@@ -218,6 +218,10 @@
   aparte kliniekfilter met veilige resultaatcontext voor bron, datum en
   reviewstatus, zodat historische records per kliniek scanbaar worden zonder
   bronpayload of behandeladvies.
+- **G2022 routefocus-dock actieve route automatisch in beeld:** `main.ts`
+  centreert de actieve routefocus-link na render en browsernavigatie, en
+  routeflow-smoke bewaakt dat de actieve routeknop binnen de zichtbare linkrij
+  blijft op bounded layouts.
 - **G2021 routefocus-dock live route badges:** de sticky routefocus-dock toont
   nu per taakroute veilige live badges met lokale aantallen of neutrale
   statuslabels, zodat gebruikers direct zien waar inhoud of open werk zit

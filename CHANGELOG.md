@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2022 routefocus-dock actieve route automatisch in beeld: de actieve
+  routefocus-link wordt na render en browsernavigatie horizontaal gecentreerd,
+  zodat deeplinks en reloads de actieve taakroute bovenin zichtbaar houden.
 - G2021 routefocus-dock live route badges: de sticky routefocus-dock toont nu
   per route veilige live badges met aantallen of neutrale statuslabels, zodat
   gebruikers bovenin zien waar inhoud of open werk zit zonder medische payload.

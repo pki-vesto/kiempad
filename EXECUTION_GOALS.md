@@ -18835,6 +18835,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Status:** ☑ done
 - **Issue:** #3980
 
+### G2022 — Premium Claude Design UI: routefocus-dock actieve route automatisch in beeld
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De routefocus-dock is horizontaal scrollbaar, waardoor een directe link of browsernavigatie de actieve routeknop buiten de zichtbare rij kan laten.
+- **User Impact:** Gebruikers kunnen bovenin opnieuw moeten zoeken welke taakroute actief is, vooral op mobiel en small-mobile.
+- **Desired Outcome:** Na render en browsernavigatie wordt de actieve routefocus-link automatisch gecentreerd binnen de routefocus-rij.
+- **User Value:** De actieve taakroute blijft direct zichtbaar zonder handmatig horizontaal zoeken.
+- **Acceptance Criteria:** `main.ts` aligneert de actieve routefocus-link na render en popstate volgens het bestaande workspace-strip patroon; routeflow-smoke bewaakt dat de actieve routefocus-link zichtbaar binnen de linkrij staat; er wordt geen medische payload, OCR-tekst, diagnose, dosering, kansberekening of behandeladvies toegevoegd; backlog/docs blijven synchroon.
+- **Affected Screens:** App-shell, routefocus chrome, mobiele/deeplink navigatie
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** AppShell, main bootstrap, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☑ done
+- **Issue:** #3982
+
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
 - **Epic:** Fertility Intelligence

@@ -18,6 +18,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('[data-route-focus-dock="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockBeforePanel');
     expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockActiveLinkVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockActiveLinkInRowViewport');
     expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockBadgeVisible');
     expect(routeflowScreenshotSmokeScript).toContain('routeFocusDockRoute');
     expect(routeflowScreenshotSmokeScript).toContain('appFrame');

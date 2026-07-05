@@ -300,7 +300,9 @@ function render(root: HTMLElement, state: RuntimeState): void {
     ),
   });
   alignActiveWorkspaceStripButton(root);
+  alignActiveRouteFocusLink(root);
   requestAnimationFrame(() => alignActiveWorkspaceStripButton(root));
+  requestAnimationFrame(() => alignActiveRouteFocusLink(root));
   bindBinarySwitchControls(root);
   bindSettingsControls(root, state);
   bindThemeControls(root, state);
@@ -424,6 +426,21 @@ function alignActiveWorkspaceStripButton(root: HTMLElement): void {
       activeWorkspaceButton.offsetLeft -
       switcher.clientWidth / 2 +
       activeWorkspaceButton.clientWidth / 2;
+  }
+}
+
+function alignActiveRouteFocusLink(root: HTMLElement): void {
+  const activeRouteFocusLink = root.querySelector<HTMLAnchorElement>(
+    '[data-route-focus-dock="ready"] .route-focus-dock__links a[aria-current="page"]',
+  );
+  if (!activeRouteFocusLink) return;
+
+  const linkRow = activeRouteFocusLink.closest('.route-focus-dock__links');
+  if (linkRow instanceof HTMLElement) {
+    linkRow.scrollLeft =
+      activeRouteFocusLink.offsetLeft -
+      linkRow.clientWidth / 2 +
+      activeRouteFocusLink.clientWidth / 2;
   }
 }
 
@@ -662,6 +679,7 @@ async function mount(): Promise<void> {
   window.addEventListener('hashchange', () => render(app, state));
   window.addEventListener('popstate', () => {
     requestAnimationFrame(() => alignActiveWorkspaceStripButton(app));
+    requestAnimationFrame(() => alignActiveRouteFocusLink(app));
   });
 }
 
