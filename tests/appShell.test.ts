@@ -5898,6 +5898,17 @@ describe('app shell', () => {
       '.treatment-task-route[aria-current="page"]:focus-visible\n      :is(.command-task-route__badge, .command-task-route__cue) {',
     );
     expect(mobileCss).toContain('outline: 1px solid HighlightText;');
+    expect(mobileCss).toContain('outline-offset: 2px;');
+    expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
+    expect(mobileCss).toContain('.treatment-task-route:focus-visible .command-task-route__top {');
+    expect(mobileCss).toContain('gap: 12px;');
+    expect(mobileCss).toContain(
+      '.treatment-task-route:focus-visible :is(.command-task-route__badge, .command-task-route__cue) {',
+    );
+    expect(mobileCss).toContain('margin-inline: 1px;');
+    expect(mobileCss).toContain('outline: 1px solid CanvasText;');
+    expect(mobileCss).toContain('.treatment-task-route:focus-visible .command-task-route__cue {');
+    expect(mobileCss).toContain('margin-top: 3px;');
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');

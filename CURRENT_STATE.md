@@ -248,6 +248,9 @@
   actieve mobiele Traject-route houdt tijdens forced-colors keyboardfocus
   expliciete titel-, metatekst-, badge- en cuekleuren, zodat focus duidelijk
   blijft zonder tekstoverlap.
+- **G1900 Traject mobile forced-colors focus cue spacing:** mobiele Traject
+  routefocus krijgt in forced-colors extra gap, margin en outline-offset rond
+  badge- en cuepills, zodat focus-outlines leesbaar blijven zonder crowding.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

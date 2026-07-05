@@ -194,6 +194,9 @@
 - **Treatment mobile rail forced-colors active focus text polish — done in G1899 / issue #3740.**
   The promoted active mobile Traject route now keeps title, supporting text, badge and cue colors
   explicit during forced-colors keyboard focus, preserving focus clarity without text overlap.
+- **Treatment mobile rail forced-colors focus cue spacing polish — done in G1900 / issue #3742.**
+  Mobile Traject focused route cards now add forced-colors gap, margin and outline-offset spacing
+  for badge and cue pills, keeping focus outlines readable without crowding.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
