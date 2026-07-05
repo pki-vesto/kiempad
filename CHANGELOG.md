@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1839 Premium Claude Design UI: actieve Dossier-upload routekaart-micro-labels
+  houden op small-mobile forced-colors nu expliciet `font-optical-sizing: auto`,
+  zodat het kleine actieve label compact blijft naast titel, context en focuscue.
 - G1859 attachment-envelope forced-colors release evidence: changelog en current
   state noemen nu de releasecontext voor forced-colors batch evidence met
   `npm run smoke:routeflows`, `attachmentEnvelopeBatchForcedColorsEvidence` en
