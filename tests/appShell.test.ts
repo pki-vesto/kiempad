@@ -5387,6 +5387,28 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Trajectcontext"');
     expect(html).toContain('aria-label="Behandelwerkbank acties"');
     expect(html).toContain('href="#traject?route=context"');
+    expect(html).toContain(
+      'aria-label="Trajectoverzicht stage startlaag" data-treatment-overview-stage-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je trajectlaag');
+    expect(html).toContain('data-treatment-overview-stage-lane="phase"');
+    expect(html).toContain('data-treatment-overview-stage-lane="next"');
+    expect(html).toContain('data-treatment-overview-stage-lane="timeline"');
+    expect(html).toContain('data-treatment-overview-stage-lane="reimbursement"');
+    expect(html).toContain('data-treatment-overview-stage-lane="context"');
+    expect(html).toContain(
+      'href="#traject-treatment-workbench-phase" data-treatment-overview-stage-lane="phase"',
+    );
+    expect(html).toContain('href="#traject?route=fasen" data-treatment-overview-stage-lane="next"');
+    expect(html).toContain(
+      'href="#traject?route=context" data-treatment-overview-stage-lane="timeline"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=vergoeding" data-treatment-overview-stage-lane="reimbursement"',
+    );
+    expect(html).toContain(
+      'href="#treatment-overview-disclosure" data-treatment-overview-stage-lane="context"',
+    );
     const workbenchIndex = html.indexOf('data-treatment-first-viewport="workbench"');
     const routeNavIndex = html.indexOf('data-treatment-task-routes="ready"');
     expect(workbenchIndex).toBeGreaterThan(-1);
@@ -5408,6 +5430,9 @@ describe('app shell', () => {
     expect(html).toContain('Inzichten openen');
     expect(html).toContain('Volledige tijdlijn openen');
     expect(html).toContain('id="treatment-context-timeline-disclosure"');
+    expect(html.indexOf('data-treatment-overview-stage-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="treatment-overview-disclosure"'),
+    );
     expect(html).toContain('data-treatment-context-decision-board="first-viewport"');
     expect(html).toContain('aria-label="Behandelcontext beslisbord"');
     expect(html).toContain('Kies eerst je contextlaag');
@@ -5657,6 +5682,10 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-context-decision-board__lane:hover,');
     expect(css).toContain('.treatment-context-decision-board__lane:focus-visible {');
     expect(css).toContain('.treatment-context-decision-board__lane em {');
+    expect(css).toContain('.treatment-overview-stage-board {');
+    expect(css).toContain('.treatment-overview-stage-board__lanes {');
+    expect(css).toContain('.treatment-overview-stage-board__lane {');
+    expect(css).toContain('.treatment-overview-stage-board__lane:hover,');
     expect(css).toContain('.treatment-task-routes {');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.treatment-workbench :where(.phase-hero__label) {');
@@ -5706,6 +5735,9 @@ describe('app shell', () => {
     expect(css).toContain('.fertility-timeline-reader__lane:focus-visible {');
     expect(css).toContain('.fertility-timeline-reader__lane em {');
     expect(css).toContain('@media (max-width: 720px)');
+    expect(mobileCss).toContain('.treatment-overview-stage-board {');
+    expect(mobileCss).toContain('.treatment-overview-stage-board__lanes {');
+    expect(mobileCss).toContain('.treatment-overview-stage-board__lane {');
     expect(mobileCss).toContain(
       '.content:has([data-treatment-focus-shell="ready"]) > .workspace-map,',
     );

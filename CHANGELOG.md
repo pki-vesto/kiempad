@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1882 Premium Claude Design UI: Traject/Overzicht opent nu met een compact
+  stagebord voor huidige fase, volgende stap, tijdlijn, vergoeding en volledige
+  behandelcontext. De bestaande routehooks, formulieren, tijdlijnankers,
+  vergoedingankers en graphcontext blijven bereikbaar zonder als eerste lange
+  trajectstapel te starten.
 - G1881 Premium Claude Design UI: Kennis/AI opent nu met een compact previewbord
   voor AI-preview, samenvatting bewaren, instellingen, researchnetwerk en
   volledige AI-context. De bestaande preview-, opslag-, instellingen- en

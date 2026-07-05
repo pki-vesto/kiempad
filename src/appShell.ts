@@ -20810,6 +20810,16 @@ function renderTrajectScreen(state: AppShellState): string {
           data: { 'treatment-route-summary': 'overzicht' },
           ariaLabel: 'Trajectoverzicht route-samenvatting',
         })}
+        ${renderTreatmentOverviewStageBoard({
+          phaseLabel: selectedCurrentPhaseLabel,
+          nextStep: selected ? bepaalVolgendeStap(selected) : 'Maak eerst een traject aan.',
+          timelineCount: fertilityTimeline.items.length,
+          remainingReimbursements: vergoeding.resterend,
+          hasTreatmentContext:
+            Boolean(selected) ||
+            fertilityTimeline.items.length > 0 ||
+            (graphWeergave?.edges.length ?? 0) > 0,
+        })}
         ${disclosure({
           summary: 'Statusverdeling en actieve pogingen',
           id: 'treatment-overview-disclosure',
@@ -21122,6 +21132,83 @@ function renderTreatmentContextDecisionBoard(input: {
           .map(
             (lane) => `
               <a class="treatment-context-decision-board__lane" href="${lane.href}" data-treatment-context-decision-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
+}
+
+function renderTreatmentOverviewStageBoard(input: {
+  phaseLabel: string;
+  nextStep: string;
+  timelineCount: number;
+  remainingReimbursements: number;
+  hasTreatmentContext: boolean;
+}): string {
+  const lanes = [
+    {
+      id: 'phase',
+      href: '#traject-treatment-workbench-phase',
+      label: 'Huidige fase',
+      title: input.phaseLabel,
+      detail: 'Start bij de actuele fase voordat je alle trajectdetails opent.',
+      cue: 'Fase',
+    },
+    {
+      id: 'next',
+      href: '#traject?route=fasen',
+      label: 'Volgende stap',
+      title: input.nextStep,
+      detail: 'Open faseplanning als je de volgende stap wilt controleren.',
+      cue: 'Planning',
+    },
+    {
+      id: 'timeline',
+      href: '#traject?route=context',
+      label: 'Tijdlijn',
+      title: `${input.timelineCount} item${input.timelineCount === 1 ? '' : 's'}`,
+      detail: 'Bekijk timeline en graphcontext pas als vervolglaag.',
+      cue: 'Context',
+    },
+    {
+      id: 'reimbursement',
+      href: '#traject?route=vergoeding',
+      label: 'Vergoeding',
+      title: `${input.remainingReimbursements} resterend`,
+      detail: 'Open vergoedingstatus zonder polisinterpretatie.',
+      cue: 'Polis',
+    },
+    {
+      id: 'context',
+      href: '#treatment-overview-disclosure',
+      label: 'Volledige context',
+      title: input.hasTreatmentContext ? 'Context beschikbaar' : 'Nog leeg',
+      detail: 'Open statusverdeling en actieve pogingen als vervolg.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="treatment-overview-stage-board" aria-label="Trajectoverzicht stage startlaag" data-treatment-overview-stage-board="first-viewport">
+      <header class="treatment-overview-stage-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Trajectstage</p>
+          <h3>Kies eerst je trajectlaag</h3>
+        </div>
+        <p>Huidige fase, volgende stap, tijdlijn, vergoeding en volledige context staan als aparte keuzes.</p>
+      </header>
+      <nav class="treatment-overview-stage-board__lanes" aria-label="Trajectoverzicht eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="treatment-overview-stage-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-overview-stage-lane="${escapeAttribute(lane.id)}">
                 <span>${escapeHtml(lane.label)}</span>
                 <strong>${escapeHtml(lane.title)}</strong>
                 <small>${escapeHtml(lane.detail)}</small>
