@@ -13590,6 +13590,12 @@ function renderKennisScreen(state: AppShellState): string {
             </details>
           </div>
         </details>
+        ${renderKnowledgeAiPreviewBoard({
+          aiEnabled: state.settings.ai.ingeschakeld,
+          networkEnabled: state.settings.researchNetwerk.ingeschakeld,
+          previewReady: Boolean(state.aiPreview),
+          hasError: Boolean(state.aiError),
+        })}
         <div class="knowledge-ai-console" data-knowledge-ai-console="ready">
           <details class="summary-panel knowledge-ai-console__preview knowledge-ai-preview-choice" data-knowledge-ai-console-region="preview" data-knowledge-ai-preview-choice="collapsed">
             <summary class="knowledge-ai-preview-choice__summary">
@@ -13833,6 +13839,87 @@ function renderKennisScreen(state: AppShellState): string {
       `,
         }),
       })}
+    </section>
+  `;
+}
+
+function renderKnowledgeAiPreviewBoard(input: {
+  aiEnabled: boolean;
+  networkEnabled: boolean;
+  previewReady: boolean;
+  hasError: boolean;
+}): string {
+  const previewStatus = input.hasError
+    ? 'Controle nodig'
+    : input.previewReady
+      ? 'Preview klaar'
+      : 'Geen preview';
+  const lanes = [
+    {
+      id: 'preview',
+      href: '#ai-preview-form',
+      label: 'Preview',
+      title: previewStatus,
+      detail: 'Open bron, previewtekst, foutstatus en previewactie.',
+      cue: 'Controle',
+    },
+    {
+      id: 'summary',
+      href: '#ai-summary-form',
+      label: 'Bewaren',
+      title: input.previewReady ? 'Samenvatting' : 'Geen preview',
+      detail: 'Open samenvatting bewaren pas na expliciete controle.',
+      cue: 'Opslag',
+    },
+    {
+      id: 'settings',
+      href: '#ai-settings-form',
+      label: 'Instellingen',
+      title: input.aiEnabled ? 'AI aan' : 'AI uit',
+      detail: 'Controleer opt-in, opslagmodus en on-device status.',
+      cue: 'Opt-in',
+    },
+    {
+      id: 'network',
+      href: '#research-network-form',
+      label: 'Researchnetwerk',
+      title: input.networkEnabled ? 'Netwerk aan' : 'Netwerk uit',
+      detail: 'Open aggregatieplan, PubMed-preview en bronregister.',
+      cue: 'Netwerk',
+    },
+    {
+      id: 'context',
+      href: '#knowledge-ai-support',
+      label: 'Volledige context',
+      title: 'AI-context',
+      detail: 'Open bewaren, instellingen en netwerkbeheer als vervolg.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="knowledge-ai-preview-board" aria-label="Kennis AI preview startlaag" data-knowledge-ai-preview-board="first-viewport">
+      <header class="knowledge-ai-preview-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Previewbord</p>
+          <h3>Kies eerst je AI-laag</h3>
+        </div>
+        <p>Preview, bewaren, instellingen, researchnetwerk en volledige context staan als aparte keuzes.</p>
+      </header>
+      <nav class="knowledge-ai-preview-board__lanes" aria-label="Kennis AI eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="knowledge-ai-preview-board__lane" href="${escapeAttribute(lane.href)}" data-knowledge-ai-preview-lane="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }
