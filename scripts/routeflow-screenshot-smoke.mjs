@@ -1267,6 +1267,8 @@ const targets = [
       '[data-embryo-tracking-scan-card="sources"]',
       '[data-embryo-tracking-grid="compact"]',
       '[data-embryo-tracking-card="ready"]',
+      '[data-embryo-source-label-correction="ready"]',
+      '[data-embryo-source-label-correction-form="ready"]',
     ],
     embryoTrackingScanOverflow: true,
     dossierConsole: true,
@@ -3971,15 +3973,45 @@ async function assertRouteflows(browser, options) {
               const aliasDisplay = rootElement?.querySelector(
                 '[data-embryo-alias-review-display="ready"]',
               );
+              const sourceCorrection = rootElement?.querySelector(
+                '[data-embryo-source-label-correction="ready"]',
+              );
+              const sourceCorrectionForm = rootElement?.querySelector(
+                '[data-embryo-source-label-correction-form="ready"]',
+              );
+              const sourceLabelInput = sourceCorrectionForm?.querySelector(
+                'input[name="embryoBronCorrectieLabel"]',
+              );
+              const sourceDateInput = sourceCorrectionForm?.querySelector(
+                'input[name="embryoBronCorrectieDatum"]',
+              );
+              const sourceReviewSelect = sourceCorrectionForm?.querySelector(
+                'select[name="embryoBronCorrectieReviewStatus"]',
+              );
+              const sourceSaveButton = sourceCorrectionForm?.querySelector('button[type="submit"]');
               const comparison = rootElement?.textContent?.includes('Embryovergelijking') ?? false;
               const scanRect = scan?.getBoundingClientRect();
               const gridRect = grid?.getBoundingClientRect();
               const cardRect = card?.getBoundingClientRect();
               const aliasRect = aliasDisplay?.getBoundingClientRect();
+              const sourceCorrectionRect = sourceCorrection?.getBoundingClientRect();
+              const sourceCorrectionFormRect = sourceCorrectionForm?.getBoundingClientRect();
+              const sourceLabelRect = sourceLabelInput?.getBoundingClientRect();
+              const sourceDateRect = sourceDateInput?.getBoundingClientRect();
+              const sourceReviewRect = sourceReviewSelect?.getBoundingClientRect();
+              const sourceSaveRect = sourceSaveButton?.getBoundingClientRect();
               const rootRect = rootElement?.getBoundingClientRect();
               const scanStyle = scan ? getComputedStyle(scan) : null;
               const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
               const rootText = rootElement?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const sourceReviewOptions = [
+                ...(sourceReviewSelect instanceof HTMLSelectElement
+                  ? sourceReviewSelect.options
+                  : []),
+              ].map((option) => ({
+                value: option.value,
+                text: option.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+              }));
               return {
                 scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
                 scanCardIds: scanCards.map((scanCard) => scanCard.id),
@@ -4006,6 +4038,49 @@ async function assertRouteflows(browser, options) {
                 ),
                 aliasDisplayText:
                   aliasDisplay?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                sourceCorrectionVisible: Boolean(
+                  sourceCorrectionRect &&
+                    sourceCorrectionRect.width > 0 &&
+                    sourceCorrectionRect.height > 0,
+                ),
+                sourceCorrectionFormVisible: Boolean(
+                  sourceCorrectionFormRect &&
+                    sourceCorrectionFormRect.width > 0 &&
+                    sourceCorrectionFormRect.height > 0,
+                ),
+                sourceLabelVisible: Boolean(
+                  sourceLabelRect && sourceLabelRect.width > 0 && sourceLabelRect.height > 0,
+                ),
+                sourceDateVisible: Boolean(
+                  sourceDateRect && sourceDateRect.width > 0 && sourceDateRect.height > 0,
+                ),
+                sourceReviewVisible: Boolean(
+                  sourceReviewRect && sourceReviewRect.width > 0 && sourceReviewRect.height > 0,
+                ),
+                sourceSaveVisible: Boolean(
+                  sourceSaveRect && sourceSaveRect.width > 0 && sourceSaveRect.height > 0,
+                ),
+                sourceReviewOptionValues: sourceReviewOptions.map((option) => option.value),
+                sourceReviewOptionTexts: sourceReviewOptions.map((option) => option.text),
+                sourceReviewValue:
+                  sourceReviewSelect instanceof HTMLSelectElement ? sourceReviewSelect.value : '',
+                sourceCorrectionContained:
+                  Boolean(
+                    rootRect &&
+                      sourceCorrectionRect &&
+                      sourceCorrectionFormRect &&
+                      sourceLabelRect &&
+                      sourceDateRect &&
+                      sourceReviewRect &&
+                      sourceSaveRect,
+                  ) &&
+                  sourceCorrectionRect.left >= rootRect.left - 1 &&
+                  sourceCorrectionRect.right <= rootRect.right + 1 &&
+                  sourceCorrectionFormRect.right <= rootRect.right + 1 &&
+                  sourceLabelRect.right <= rootRect.right + 1 &&
+                  sourceDateRect.right <= rootRect.right + 1 &&
+                  sourceReviewRect.right <= rootRect.right + 1 &&
+                  sourceSaveRect.right <= rootRect.right + 1,
                 comparisonCopyPresent: comparison,
                 hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|behandelkeuzeadvies|\b\d+\s?%\s?kans|ranking|rankscore/i.test(
                   `${scanText} ${rootText}`,
@@ -5219,6 +5294,24 @@ async function assertRouteflows(browser, options) {
           !evidence.embryoTrackingScanOverflow.aliasDisplayText.includes('Kliniek-ID:') ||
           !evidence.embryoTrackingScanOverflow.aliasDisplayText.includes('Aliasbron:') ||
           !evidence.embryoTrackingScanOverflow.aliasDisplayText.includes('Aliasreview:') ||
+          !evidence.embryoTrackingScanOverflow.sourceCorrectionVisible ||
+          !evidence.embryoTrackingScanOverflow.sourceCorrectionFormVisible ||
+          !evidence.embryoTrackingScanOverflow.sourceLabelVisible ||
+          !evidence.embryoTrackingScanOverflow.sourceDateVisible ||
+          !evidence.embryoTrackingScanOverflow.sourceReviewVisible ||
+          !evidence.embryoTrackingScanOverflow.sourceSaveVisible ||
+          !evidence.embryoTrackingScanOverflow.sourceReviewOptionValues.includes('concept') ||
+          !evidence.embryoTrackingScanOverflow.sourceReviewOptionValues.includes('gereviewd') ||
+          !evidence.embryoTrackingScanOverflow.sourceReviewOptionTexts.includes(
+            'Concept - bron controleren',
+          ) ||
+          !evidence.embryoTrackingScanOverflow.sourceReviewOptionTexts.includes(
+            'Gereviewd - bron klopt',
+          ) ||
+          !['concept', 'gereviewd'].includes(
+            evidence.embryoTrackingScanOverflow.sourceReviewValue,
+          ) ||
+          !evidence.embryoTrackingScanOverflow.sourceCorrectionContained ||
           !evidence.embryoTrackingScanOverflow.comparisonCopyPresent ||
           evidence.embryoTrackingScanOverflow.hasForbiddenText)
       ) {
