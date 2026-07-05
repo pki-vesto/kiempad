@@ -472,7 +472,16 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeProgress');
     expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeBatchForcedColors');
     expect(routeflowScreenshotSmokeScript).toContain(
-      "target.attachmentEnvelopeBatchForcedColors && options.label !== 'small-mobile'",
+      "await page.emulateMedia({ forcedColors: 'active' })",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "await page.emulateMedia({ forcedColors: 'none' })",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'hashing.scrollHeight > hashing.clientHeight + 1',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'completeInvalid.scrollHeight > completeInvalid.clientHeight + 1',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
       "window.matchMedia('(forced-colors: active)').matches",
