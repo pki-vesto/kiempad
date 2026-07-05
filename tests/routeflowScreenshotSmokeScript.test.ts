@@ -354,6 +354,18 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'dossierupload size-feedback mist overflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('dossierHospitalTypeReview: true');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-dossier-hospital-type-review="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'select[name="ziekenhuisDocumentTypeCorrectie"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-dossier-hospital-type-review-hint="safe"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('beforeConceptPreview');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'ziekenhuisdocumenttype-review mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('closedDetailsSelectors');
     expect(routeflowScreenshotSmokeScript).toContain(
       'upload-console toont niet precies de gekozen werkstroom',

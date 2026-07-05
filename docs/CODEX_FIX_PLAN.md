@@ -144,6 +144,11 @@
   central limit cards, recoverable badge, retry copy, and envelope ordering stay visible and
   bounded across desktop, tablet, mobile, and small-mobile without filenames, OCR text, or
   attachment payloads in the evidence.
+- **Ziekenhuisdocumenttype review evidence — done in G1930 / issue #3807.** Dossierupload metadata
+  routeflow coverage now opens the nested metadata review and measures the hospital document type
+  correction directly: automatic proposal, unknown choice, taxonomy values, safe hint,
+  conceptpreview, and envelope controls remain visible and bounded across desktop, tablet, and
+  mobile without filenames, OCR text, or medical payloads in the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving
