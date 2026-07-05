@@ -4368,6 +4368,28 @@ function renderDossierScreen(state: AppShellState): string {
                 Embryo
                 <input name="embryoLabel" autocomplete="off" required placeholder="Bijvoorbeeld: embryo 1" />
               </label>
+              <label data-embryo-alias-review="quality">
+                Alias of Kiempad-label
+                <input name="embryoAliasLabel" autocomplete="off" placeholder="Bijvoorbeeld: embryo A of E1" />
+              </label>
+              <label>
+                Kliniek-ID
+                <input name="embryoKliniekId" autocomplete="off" placeholder="Bijvoorbeeld: lab-id E1" />
+              </label>
+              <label>
+                Alias bronlabel
+                <input name="embryoAliasBronLabel" autocomplete="off" placeholder="Bijvoorbeeld: labrapport of portaal" />
+              </label>
+              <label>
+                Alias reviewstatus
+                <select name="embryoAliasReviewStatus">
+                  <option value="concept">Concept - alias controleren</option>
+                  <option value="gereviewd">Gereviewd - alias klopt</option>
+                </select>
+              </label>
+              <p class="field-hint" data-embryo-alias-review-hint="safe">
+                Controleer bronlabel, kliniek-ID en Kiempad-label naast elkaar; Kiempad gebruikt deze alias alleen om hetzelfde embryo te herkennen.
+              </p>
               <label>
                 Dag
                 <input name="embryoDag" type="number" min="1" max="7" step="1" />
@@ -4519,6 +4541,14 @@ function renderDossierScreen(state: AppShellState): string {
                 Embryo
                 <input name="embryoLabel" autocomplete="off" required placeholder="Bijvoorbeeld: embryo 1" />
               </label>
+              <label data-embryo-alias-review="status">
+                Alias of Kiempad-label
+                <input name="embryoAliasLabel" autocomplete="off" placeholder="Bijvoorbeeld: embryo A of E1" />
+              </label>
+              <label>
+                Kliniek-ID
+                <input name="embryoKliniekId" autocomplete="off" placeholder="Bijvoorbeeld: lab-id E1" />
+              </label>
               <label>
                 Status
                 <select name="embryoStatus">
@@ -4541,6 +4571,20 @@ function renderDossierScreen(state: AppShellState): string {
               Bron status
               <input name="embryoBron" autocomplete="off" placeholder="Bijvoorbeeld: labrapport, portaal of embryoloog" />
             </label>
+            <label>
+              Alias bronlabel
+              <input name="embryoAliasBronLabel" autocomplete="off" placeholder="Bijvoorbeeld: labrapport of portaal" />
+            </label>
+            <label>
+              Alias reviewstatus
+              <select name="embryoAliasReviewStatus">
+                <option value="concept">Concept - alias controleren</option>
+                <option value="gereviewd">Gereviewd - alias klopt</option>
+              </select>
+            </label>
+            <p class="field-hint" data-embryo-alias-review-hint="safe">
+              Controleer bronlabel, kliniek-ID en Kiempad-label naast elkaar; Kiempad gebruikt deze alias alleen om hetzelfde embryo te herkennen.
+            </p>
             <label>
               Reviewstatus status-event
               <select name="embryoReviewStatus">
@@ -11925,6 +11969,13 @@ function renderEmbryoVergelijking(vergelijking: EmbryoVergelijking): string {
         ${vergelijking.embryos
           .map((embryo) => {
             const details = [
+              `Kiempad-id: ${embryo.canonicalEmbryoId}`,
+              embryo.kliniekIds.length > 0
+                ? `Kliniek-ID: ${embryo.kliniekIds.join(', ')}`
+                : undefined,
+              embryo.aliasReviewStatussen.length > 0
+                ? `Aliasreview: ${embryo.aliasReviewStatussen.join(', ')}`
+                : undefined,
               embryo.embryoDagen.length > 0 ? `Dagen: ${embryo.embryoDagen.join(', ')}` : undefined,
               embryo.kwaliteiten.length > 0
                 ? `Kwaliteit: ${embryo.kwaliteiten.join(', ')}`
@@ -12028,6 +12079,22 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
     item.kwaliteitBronLabels.length > 0
       ? `Kwaliteit bronlabels: ${item.kwaliteitBronLabels.join(' | ')}`
       : undefined,
+    item.bronLabels.length > 0 ? `Bronlabels: ${item.bronLabels.join(', ')}` : undefined,
+    item.kliniekIds.length > 0 ? `Kliniek-ID: ${item.kliniekIds.join(', ')}` : undefined,
+    item.aliasCorrecties.length > 0
+      ? `Aliasreview: ${item.aliasCorrecties
+          .map((alias) =>
+            [
+              alias.aliasLabel,
+              alias.kliniekId ? `kliniek ${alias.kliniekId}` : undefined,
+              alias.bronLabel ? `bron ${alias.bronLabel}` : undefined,
+              alias.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+            ]
+              .filter((value): value is string => Boolean(value))
+              .join(' · '),
+          )
+          .join(' | ')}`
+      : undefined,
     item.statussen.length > 0 ? `Status: ${item.statussen.join(', ')}` : undefined,
     item.meetmomenten.length > 0 ? `Meetmoment: ${item.meetmomenten.join(', ')}` : undefined,
     item.kliniekTerminologieen.length > 0
@@ -12052,10 +12119,13 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
           <span>${item.historie.length} moment${item.historie.length === 1 ? '' : 'en'}</span>
         </header>
         <dl class="embryo-tracking-card__facts" aria-label="Embryo tracking feiten">
+          <div><dt>Kiempad-ID</dt><dd>${escapeHtml(item.canonicalEmbryoId)}</dd></div>
+          <div><dt>Kliniek-ID</dt><dd>${escapeHtml(item.kliniekIds.join(', ') || 'Niet vastgelegd')}</dd></div>
           <div><dt>Laatste datum</dt><dd>${escapeHtml(item.laatsteDatum || 'Onbekend')}</dd></div>
           <div><dt>Kwaliteit</dt><dd>${escapeHtml(item.kwaliteiten.join(', ') || 'Niet vastgelegd')}</dd></div>
           <div><dt>Status</dt><dd>${escapeHtml(item.statussen.join(', ') || 'Niet vastgelegd')}</dd></div>
-          <div><dt>Bronnen</dt><dd>${escapeHtml(item.bronnen.join(', ') || 'Geen bronlabel')}</dd></div>
+          <div><dt>Bronlabels</dt><dd>${escapeHtml(item.bronLabels.join(', ') || 'Geen bronlabel')}</dd></div>
+          <div><dt>Aliasreview</dt><dd>${escapeHtml(item.aliasCorrecties.map((alias) => `${alias.aliasLabel} · ${alias.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept'}`).join(', ') || 'Geen aliascorrectie')}</dd></div>
         </dl>
         <p class="linked-note embryo-tracking-card__metadata">${details.map(escapeHtml).join(' · ')}</p>
         <section class="embryo-tracking-card__history" aria-label="Embryo-historie compact">
@@ -12776,6 +12846,15 @@ function renderEmbryoDetails(document: DossierDocument): string {
     `Datum: ${document.metadata.documentDatum ?? document.datum}`,
     `Reviewstatus: ${reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept'}`,
   ];
+  const alias = document.embryo.aliasCorrectie;
+  const aliasDetails = alias
+    ? [
+        `Alias: ${alias.aliasLabel}`,
+        alias.kliniekId ? `Kliniek-ID: ${alias.kliniekId}` : undefined,
+        alias.bronLabel ? `Aliasbron: ${alias.bronLabel}` : undefined,
+        `Aliasreview: ${alias.reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept'}`,
+      ].filter((label): label is string => Boolean(label))
+    : [];
   const details = [
     `Embryo: ${document.embryo.label}`,
     document.embryo.dag ? `Dag ${document.embryo.dag}` : undefined,
@@ -12792,6 +12871,11 @@ function renderEmbryoDetails(document: DossierDocument): string {
     <p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>
     <p class="linked-note">Kliniekbeoordeling als bronregistratie: ${escapeHtml(kliniekBeoordeling.tekst)} · Bron: ${escapeHtml(kliniekBeoordeling.bron)} · Datum: ${escapeHtml(kliniekBeoordeling.datum)}</p>
     <p class="linked-note">${bronlabelDetails.map(escapeHtml).join(' · ')}</p>
+    ${
+      aliasDetails.length > 0
+        ? `<p class="linked-note" data-embryo-alias-review-display="ready">${aliasDetails.map(escapeHtml).join(' · ')}</p>`
+        : ''
+    }
   `;
 }
 

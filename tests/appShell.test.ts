@@ -8701,6 +8701,15 @@ describe('app shell', () => {
       '<details class="dossier-upload-optional embryo-quality-link-fields" data-embryo-quality-link-fields="collapsed" open',
     );
     expect(embryoQualityForm).toContain('name="embryoLabel"');
+    expect(embryoQualityForm).toContain('data-embryo-alias-review="quality"');
+    expect(embryoQualityForm).toContain('name="embryoAliasLabel"');
+    expect(embryoQualityForm).toContain('name="embryoKliniekId"');
+    expect(embryoQualityForm).toContain('name="embryoAliasBronLabel"');
+    expect(embryoQualityForm).toContain('name="embryoAliasReviewStatus"');
+    expect(embryoQualityForm).toContain('Concept - alias controleren');
+    expect(embryoQualityForm).toContain('Gereviewd - alias klopt');
+    expect(embryoQualityForm).toContain('data-embryo-alias-review-hint="safe"');
+    expect(embryoQualityForm).toContain('bronlabel, kliniek-ID en Kiempad-label');
     expect(embryoQualityForm).toContain('name="embryoDag"');
     expect(embryoQualityForm).toContain('name="embryoMeetmoment"');
     expect(embryoQualityForm).toContain('name="embryoKwaliteit"');
@@ -8748,6 +8757,11 @@ describe('app shell', () => {
       '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-status-submit-feedback-details="collapsed" open',
     );
     expect(embryoStatusForm).toContain('name="embryoLabel"');
+    expect(embryoStatusForm).toContain('data-embryo-alias-review="status"');
+    expect(embryoStatusForm).toContain('name="embryoAliasLabel"');
+    expect(embryoStatusForm).toContain('name="embryoKliniekId"');
+    expect(embryoStatusForm).toContain('name="embryoAliasBronLabel"');
+    expect(embryoStatusForm).toContain('name="embryoAliasReviewStatus"');
     expect(embryoStatusForm).toContain('name="embryoStatus"');
     expect(embryoStatusForm).toContain('name="embryoBron"');
     expect(embryoStatusForm).toContain('name="embryoReviewStatus"');
@@ -39364,6 +39378,12 @@ describe('app shell', () => {
             kliniekTerminologie: 'Gardner-score',
             bron: 'Labrapport',
             reviewStatus: 'gereviewd',
+            aliasCorrectie: {
+              aliasLabel: 'Embryo A',
+              kliniekId: 'E1',
+              bronLabel: 'Portaal',
+              reviewStatus: 'gereviewd',
+            },
             status: 'teruggeplaatst',
           },
           analyse: {
@@ -39433,6 +39453,10 @@ describe('app shell', () => {
     expect(html).toContain('name="embryoKliniekTerminologie"');
     expect(html).toContain('name="embryoBron"');
     expect(html).toContain('name="embryoReviewStatus"');
+    expect(html).toContain('name="embryoAliasLabel"');
+    expect(html).toContain('name="embryoKliniekId"');
+    expect(html).toContain('name="embryoAliasBronLabel"');
+    expect(html).toContain('name="embryoAliasReviewStatus"');
     expect(html).toContain('Reviewstatus bronlabel');
     expect(html).toContain('Reviewstatus status-event');
     expect(html).toContain('Terugplaatsing · 2026-05-04 11:00');
@@ -39458,19 +39482,28 @@ describe('app shell', () => {
     expect(html).toContain('data-embryo-tracking-grid="compact"');
     expect(html).toContain('class="embryo-tracking-card"');
     expect(html).toContain('data-embryo-tracking-card="ready"');
-    expect(html).toContain('data-embryo-tracking-id="embryo:traject-1:embryo-1"');
+    expect(html).toContain('data-embryo-tracking-id="embryo:traject-1:embryo-a"');
     expect(html).toContain('data-embryo-tracking-id="embryo:traject-1:embryo-2"');
     expect(html).toContain('aria-label="Embryo tracking feiten"');
+    expect(html).toContain('<dt>Kiempad-ID</dt><dd>embryo:traject-1:embryo-a</dd>');
+    expect(html).toContain('<dt>Kliniek-ID</dt><dd>E1</dd>');
     expect(html).toContain('<dt>Laatste datum</dt><dd>2026-05-04</dd>');
     expect(html).toContain('<dt>Kwaliteit</dt><dd>4AA</dd>');
     expect(html).toContain('<dt>Status</dt><dd>teruggeplaatst</dd>');
-    expect(html).toContain('<dt>Bronnen</dt><dd>Labrapport</dd>');
+    expect(html).toContain(
+      '<dt>Bronlabels</dt><dd>Labrapport, Portaal, embryokwaliteit-Embryo 1.json</dd>',
+    );
+    expect(html).toContain('<dt>Aliasreview</dt><dd>Embryo A · gereviewd</dd>');
     expect(html).toContain('aria-label="Embryo-historie compact"');
     expect(html).toContain('aria-label="Embryobronnen"');
     expect(html).toContain('Embryovergelijking per poging');
     expect(html).toContain('Poging: traject-1 · Sortering: embryo-label alfabetisch');
-    expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-1');
+    expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-a');
     expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-2');
+    expect(html).toContain('Aliasreview: Embryo A · kliniek E1 · bron Portaal · gereviewd');
+    expect(html).toContain(
+      'Alias: Embryo A · Kliniek-ID: E1 · Aliasbron: Portaal · Aliasreview: Gereviewd',
+    );
     expect(html).toContain(
       'Kwaliteit bronlabels: 4AA · bronlabel Labrapport · 2026-05-04 · gereviewd',
     );
@@ -39491,13 +39524,13 @@ describe('app shell', () => {
       'Kwaliteit bronlabels: 4BB · bronlabel Labrapport · 2026-05-04 · concept',
     );
     expect(html).toContain(
-      'Embryo 1 · Dagen: 5 · Kwaliteit: 4AA · Kliniektekst: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport',
+      'Embryo A · Kiempad-id: embryo:traject-1:embryo-a · Kliniek-ID: E1 · Aliasreview: gereviewd · Dagen: 5 · Kwaliteit: 4AA · Kliniektekst: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport',
     );
     expect(html).toContain(
       'Notitie: Pogingnotitie: Kort antagonistprotocol volgens kliniek. | Afspraak Terugplaatsing: Neem legitimatie en kliniekbrief mee.',
     );
     expect(html).toContain(
-      'Embryo 2 · Dagen: 5 · Kwaliteit: 4BB · Kliniektekst: 4BB · Status: ingevroren · Meetmoment: Dag 5 blastocyst · Bron: Labrapport',
+      'Embryo 2 · Kiempad-id: embryo:traject-1:embryo-2 · Dagen: 5 · Kwaliteit: 4BB · Kliniektekst: 4BB · Status: ingevroren · Meetmoment: Dag 5 blastocyst · Bron: Labrapport',
     );
     const vergelijkingStart = html.indexOf('Embryovergelijking per poging');
     const vergelijkingEnd = html.indexOf('</section>', vergelijkingStart);
@@ -39508,7 +39541,7 @@ describe('app shell', () => {
     expect(vergelijkingSection).not.toMatch(/\b(beste|slechtste|kans|score|kleuradvies)\b/i);
     expect(html).toContain('Embryo-historie');
     expect(html).toContain(
-      '2026-05-04 · Terugplaatsing · dag 5 · kliniektekst 4AA · terminologie Gardner-score · Bron: Labrapport',
+      '2026-05-04 · Terugplaatsing · alias Embryo A · kliniek-id E1 · dag 5 · kliniektekst 4AA · terminologie Gardner-score · Bron: Labrapport',
     );
     expect(html).toContain(
       '2026-05-04T11:00 · Afspraak terugplaatsing · Terugplaatsing · Transfer gepland met embryo 1. · Bron: Agenda',

@@ -75,6 +75,10 @@
   tekstveldnotities als concept of gereviewde bronmetadata bewaren, zodat
   samenvattingen, actiepunten en vragen duidelijk op gecontroleerde broncontext
   kunnen leunen zonder medische adviesinhoud.
+- **G571 Embryo-ID alias reviewcorrectie:** embryokwaliteit en embryostatus
+  kunnen een alias, kliniek-ID, bronlabel en reviewstatus vastleggen; het
+  embryo-dossier en de vergelijking tonen gecorrigeerde alias, Kiempad-ID en
+  kliniek-ID naast elkaar zonder medische interpretatie.
 - **G1331 Dossier zoekconsole:** de Dossier-zoekroute groepeert zoeken,
   privacycontrole en inhoudsindex in drie herkenbare panelen. De route opent als
   compacte zoekwerkruimte in plaats van losse formulier-, privacy- en indexblokken.

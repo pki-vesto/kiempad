@@ -116,6 +116,82 @@ describe('embryoDossier', () => {
     expect(maakEmbryoIdVoorPoging(undefined, 'E2')).toBe('embryo:zonder-traject:e2');
   });
 
+  it('gebruikt gereviewde embryo-aliascorrecties voor dossier en vergelijking zonder advies', () => {
+    const embryoA = maakDossierDocument('doc-alias-a', {
+      datum: '2026-06-12',
+      titel: 'Embryokwaliteit bronlabel',
+      categorie: 'embryo',
+      bestandsNaam: 'embryo-alias-a.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '4AA',
+        bron: 'Labrapport',
+        aliasCorrectie: {
+          aliasLabel: 'Embryo A',
+          kliniekId: 'E1',
+          bronLabel: 'Portaal',
+          reviewStatus: 'gereviewd',
+        },
+      },
+    });
+    const embryoB = maakDossierDocument('doc-alias-b', {
+      datum: '2026-06-12',
+      titel: 'Embryokwaliteit tweede bronlabel',
+      categorie: 'embryo',
+      bestandsNaam: 'embryo-alias-b.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 2',
+        kwaliteit: '4BB',
+        bron: 'Labrapport',
+      },
+    });
+
+    const dossiers = bouwEmbryoDossiers([embryoA, embryoB]);
+    const aliasDossier = dossiers.find((item) => item.embryoLabel === 'Embryo A');
+
+    expect(aliasDossier).toMatchObject({
+      canonicalEmbryoId: 'embryo:traject-1:embryo-a',
+      embryoLabel: 'Embryo A',
+      kliniekIds: ['E1'],
+      bronLabels: expect.arrayContaining(['Labrapport', 'Portaal', 'embryo-alias-a.json']),
+      aliasCorrecties: [
+        {
+          aliasLabel: 'Embryo A',
+          kliniekId: 'E1',
+          bronLabel: 'Portaal',
+          reviewStatus: 'gereviewd',
+        },
+      ],
+    });
+
+    expect(bouwEmbryoVergelijkingen(dossiers)[0]?.embryos).toEqual([
+      expect.objectContaining({
+        embryoLabel: 'Embryo 2',
+        canonicalEmbryoId: 'embryo:traject-1:embryo-2',
+      }),
+      expect.objectContaining({
+        embryoLabel: 'Embryo A',
+        canonicalEmbryoId: 'embryo:traject-1:embryo-a',
+        kliniekIds: ['E1'],
+        aliasReviewStatussen: ['gereviewd'],
+      }),
+    ]);
+
+    const aliasSurface = JSON.stringify({
+      aliasCorrecties: aliasDossier?.aliasCorrecties,
+      vergelijking: bouwEmbryoVergelijkingen(dossiers)[0]?.embryos,
+    });
+    expect(aliasSurface).not.toMatch(/\b(diagnose|kans|behandelkeuzeadvies|beste)\b/i);
+  });
+
   it('bouwt een chronologische embryo-historie van bevruchting tot eindstatus', () => {
     const bevruchting = maakDossierDocument('doc-bevrucht', {
       datum: '2026-06-10',
@@ -369,6 +445,9 @@ describe('embryoDossier', () => {
         embryos: [
           {
             embryoLabel: 'Embryo 1',
+            canonicalEmbryoId: 'embryo:traject-1:embryo-1',
+            kliniekIds: [],
+            aliasReviewStatussen: [],
             embryoDagen: [5],
             kwaliteiten: ['4AA'],
             kliniekTeksten: ['4AA'],
@@ -380,6 +459,9 @@ describe('embryoDossier', () => {
           },
           {
             embryoLabel: 'Embryo 2',
+            canonicalEmbryoId: 'embryo:traject-1:embryo-2',
+            kliniekIds: [],
+            aliasReviewStatussen: [],
             embryoDagen: [5],
             kwaliteiten: ['4BB'],
             kliniekTeksten: ['4BB'],

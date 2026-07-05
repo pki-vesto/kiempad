@@ -289,6 +289,9 @@
 - **Consult note text import review correction — done in G570 / issue #906.** The Consult upload
   context now lets users save text-field consult notes as concept or reviewed source metadata
   before summaries, action points, or follow-up questions rely on that context.
+- **Embryo-ID alias review correction — done in G571 / issue #908.** Embryo quality and status
+  forms now save reviewed alias metadata with clinic IDs and source labels; embryo dossiers and
+  comparisons show the corrected alias next to Kiempad IDs without adding medical interpretation.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

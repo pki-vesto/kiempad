@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1731 |
+| ☑ klaar | 1732 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -733,7 +733,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G568 | Fertility Intelligence: ziekenhuisdocument taxonomie reviewcorrectie | P1 | F5 | ☑ |
 | G569 | Product Quality & Automation: imaging lock-state visual regression fixture | P1 | F5 | ☐ |
 | G570 | Fertility Intelligence: consultnotitie tekstimport reviewcorrectie | P1 | F5 | ☑ |
-| G571 | Fertility Intelligence: embryo-ID alias reviewcorrectie | P1 | F5 | ☐ |
+| G571 | Fertility Intelligence: embryo-ID alias reviewcorrectie | P1 | F5 | ☑ |
 | G572 | Fertility Intelligence: embryo kwaliteit bronlabel correctieflow | P1 | F5 | ☐ |
 | G573 | Fertility Timeline & Knowledge Graph: graph payload leak regression fixtures | P1 | F5 | ☐ |
 | G574 | Daily Recommendations: supplement artscheck actieflow | P1 | F5 | ☐ |
@@ -2093,12 +2093,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1929 | Fertility Intelligence: dossierupload size feedback routeflow overflow evidence | P1 | F5 | ☐ |
 | G1930 | Fertility Intelligence: ziekenhuisdocumenttype reviewcorrectie routeflow evidence | P1 | F5 | ☐ |
 | G1931 | Fertility Intelligence: consultnotitie tekstimport reviewstatus routeflow evidence | P1 | F5 | ☐ |
+| G1932 | Fertility Intelligence: embryo-ID alias reviewcorrectie routeflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1930** (id's G001 t/m G1931; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1931** (id's G001 t/m G1932; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

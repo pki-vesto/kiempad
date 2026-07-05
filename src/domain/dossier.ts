@@ -30,6 +30,7 @@ export type DossierDocumentInput = {
     kliniekTerminologie?: string;
     bron?: string;
     reviewStatus?: NonNullable<DossierDocument['embryo']>['reviewStatus'];
+    aliasCorrectie?: NonNullable<DossierDocument['embryo']>['aliasCorrectie'];
     status?: DossierDocument['embryo'] extends infer Embryo
       ? Embryo extends { status?: infer Status }
         ? Status
@@ -1607,6 +1608,9 @@ function normaliseerEmbryo(
   if (!label && !kwaliteit) return undefined;
   if (!label) throw new Error('Embryolabel is verplicht voor embryokwaliteit.');
   if (!kwaliteit) throw new Error('Kwaliteit is verplicht voor embryokwaliteit.');
+  const aliasLabel = input?.aliasCorrectie?.aliasLabel.trim();
+  const kliniekId = input?.aliasCorrectie?.kliniekId?.trim();
+  const aliasBronLabel = input?.aliasCorrectie?.bronLabel?.trim();
 
   return {
     label,
@@ -1622,6 +1626,14 @@ function normaliseerEmbryo(
     kliniekTerminologie: input?.kliniekTerminologie?.trim() || undefined,
     bron: input?.bron?.trim() || undefined,
     reviewStatus: input?.reviewStatus ?? 'concept',
+    aliasCorrectie: aliasLabel
+      ? {
+          aliasLabel,
+          kliniekId: kliniekId || undefined,
+          bronLabel: aliasBronLabel || undefined,
+          reviewStatus: input?.aliasCorrectie?.reviewStatus ?? 'concept',
+        }
+      : undefined,
     status: input?.status,
   };
 }
