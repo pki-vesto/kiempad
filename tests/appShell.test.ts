@@ -39206,6 +39206,14 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-checkin-card__note {');
     expect(css).toContain('.decision-task-routes {');
     expect(css).toContain('border-radius: 12px;');
+    expect(css).toContain('.decision-history-review-board {');
+    expect(css).toContain('.decision-history-review-board__header {');
+    expect(css).toContain('.decision-history-review-board__lanes {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.decision-history-review-board__lane {');
+    expect(css).toContain('.decision-history-review-board__lane:hover,');
+    expect(css).toContain('.decision-history-review-board__lane:focus-visible {');
+    expect(css).toContain('.decision-history-review-board__lane em {');
     expect(css).toContain('.insight-workbench :where(.stat-row) {');
     expect(css).toContain('scroll-snap-type: x proximity;');
     expect(css).toContain('.insight-workbench :where(.stat) {');
@@ -39243,6 +39251,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain(
       '.decision-focus-shell__workspace .domain-split-workspace__context {',
     );
+    expect(mobileCss).toContain('.decision-history-review-board__lanes {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.decision-history-review-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(mobileCss).toContain('grid-column: auto;');
   });
 
@@ -41927,6 +41939,28 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Afwegingen geschiedenis route-samenvatting"');
     expect(html).toContain('data-decision-route-summary="history"');
     expect(html).toContain('Beslisverslagen openen');
+    expect(html).toContain('aria-label="Beslisgeschiedenis reviewbord"');
+    expect(html).toContain('data-decision-history-review-board="first-viewport"');
+    expect(html).toContain('Kies eerst je beslislaag');
+    expect(html).toContain(
+      'Open opties, keuze, notities of eerdere verslagen zonder meteen alle beslisdetails te tonen.',
+    );
+    expect(html).toContain('aria-label="Beslisgeschiedenis laag kiezen"');
+    expect(html).toContain('data-decision-history-review-lane="options"');
+    expect(html).toContain('href="#afwegingen-compare-disclosure"');
+    expect(html).toContain('2 optie(s)');
+    expect(html).toContain('data-decision-history-review-lane="choice"');
+    expect(html).toContain('href="#afwegingen-choice-disclosure"');
+    expect(html).toContain('1 vastgelegd');
+    expect(html).toContain('data-decision-history-review-lane="notes"');
+    expect(html).toContain('href="#decision-form"');
+    expect(html).toContain('1 gekoppeld aan een vraag voor de arts.');
+    expect(html).toContain('data-decision-history-review-lane="reports"');
+    expect(html).toContain('href="#afwegingen-history-disclosure"');
+    expect(html).toContain('1 verslag(en)');
+    expect(html.indexOf('data-decision-history-review-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-decision-disclosure="history"'),
+    );
     expect(html).toContain('Opties vergelijken');
     expect(html).toContain('Keuze vastleggen');
     expect(html).toContain('Beslisverslagen');

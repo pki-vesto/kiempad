@@ -2058,6 +2058,7 @@ function renderAfwegingenScreen(state: AppShellState): string {
   const decisions = state.decisions ?? [];
   const chosenCount = decisions.filter((decision) => Boolean(decision.keuze)).length;
   const linkedQuestionCount = decisions.filter((decision) => Boolean(decision.vraagId)).length;
+  const optionCount = decisions.reduce((total, decision) => total + decision.opties.length, 0);
   const activeDecisionRoute = state.activeDecisionRoute ?? 'prepare';
 
   const decisionWorkspace = domainSplitWorkspace({
@@ -2197,6 +2198,12 @@ function renderAfwegingenScreen(state: AppShellState): string {
           ariaLabel: 'Afwegingen geschiedenis route-samenvatting',
           data: { 'decision-route-summary': 'history' },
         })}
+        ${renderDecisionHistoryReviewBoard({
+          decisionCount: decisions.length,
+          chosenCount,
+          linkedQuestionCount,
+          optionCount,
+        })}
         <details id="afwegingen-history-disclosure" class="kp-disclosure" data-decision-disclosure="history">
           <summary class="kp-disclosure__summary">Beslisverslagen openen</summary>
           <div class="kp-disclosure__body">
@@ -2236,6 +2243,81 @@ function renderDecisionFocusShell(input: { workspace: string }): string {
           ${input.workspace}
         </div>
       </div>
+    </section>
+  `;
+}
+
+function renderDecisionHistoryReviewBoard(input: {
+  decisionCount: number;
+  chosenCount: number;
+  linkedQuestionCount: number;
+  optionCount: number;
+}): string {
+  const openCount = Math.max(0, input.decisionCount - input.chosenCount);
+
+  const lanes: readonly {
+    id: string;
+    href: string;
+    eyebrow: string;
+    title: string;
+    detail: string;
+    cue: string;
+  }[] = [
+    {
+      id: 'options',
+      href: '#afwegingen-compare-disclosure',
+      eyebrow: 'Opties',
+      title: `${input.optionCount} optie(s)`,
+      detail: 'Voors en tegens blijven in de vergelijklaag.',
+      cue: 'Vergelijken',
+    },
+    {
+      id: 'choice',
+      href: '#afwegingen-choice-disclosure',
+      eyebrow: 'Keuze',
+      title: `${input.chosenCount} vastgelegd`,
+      detail: `${openCount} open beslisnotitie(s) zonder keuze.`,
+      cue: 'Bewust kiezen',
+    },
+    {
+      id: 'notes',
+      href: '#decision-form',
+      eyebrow: 'Notities',
+      title: `${input.decisionCount} notitie(s)`,
+      detail: `${input.linkedQuestionCount} gekoppeld aan een vraag voor de arts.`,
+      cue: 'Aanvullen',
+    },
+    {
+      id: 'reports',
+      href: '#afwegingen-history-disclosure',
+      eyebrow: 'Verslagen',
+      title: `${input.decisionCount} verslag(en)`,
+      detail: 'Volledige beslisverslagen open je als naslag.',
+      cue: 'Teruglezen',
+    },
+  ];
+
+  return `
+    <section class="decision-history-review-board" aria-label="Beslisgeschiedenis reviewbord" data-decision-history-review-board="first-viewport">
+      <header class="decision-history-review-board__header">
+        <p class="kp-card__eyebrow">Reviewbord</p>
+        <h3>Kies eerst je beslislaag</h3>
+        <p>Open opties, keuze, notities of eerdere verslagen zonder meteen alle beslisdetails te tonen.</p>
+      </header>
+      <nav class="decision-history-review-board__lanes" aria-label="Beslisgeschiedenis laag kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="decision-history-review-board__lane" href="${lane.href}" data-decision-history-review-lane="${lane.id}">
+                <span>${lane.eyebrow}</span>
+                <strong>${lane.title}</strong>
+                <small>${lane.detail}</small>
+                <em>${lane.cue}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }
