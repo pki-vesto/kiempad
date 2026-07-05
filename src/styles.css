@@ -30698,6 +30698,24 @@ summary[class*="__summary"]:focus-visible,
       white-space: nowrap;
     }
 
+    .treatment-task-route[aria-current="page"]:focus-visible {
+      color: HighlightText;
+      outline-offset: 4px;
+    }
+
+    .treatment-task-route[aria-current="page"]:focus-visible
+      :is(.command-task-route__top > span, small) {
+      color: HighlightText;
+      text-decoration-color: HighlightText;
+    }
+
+    .treatment-task-route[aria-current="page"]:focus-visible
+      :is(.command-task-route__badge, .command-task-route__cue) {
+      border-color: HighlightText;
+      outline: 1px solid HighlightText;
+      outline-offset: 1px;
+    }
+
     .treatment-task-route:focus-visible {
       border-color: Highlight;
       outline: 2px solid Highlight;

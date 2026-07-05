@@ -5888,6 +5888,16 @@ describe('app shell', () => {
     expect(mobileCss).toContain('margin-top: -1px;');
     expect(mobileCss).toContain('padding-right: 4px;');
     expect(mobileCss).toContain('line-height: 1.25;');
+    expect(mobileCss).toContain('.treatment-task-route[aria-current="page"]:focus-visible {');
+    expect(mobileCss).toContain('outline-offset: 4px;');
+    expect(mobileCss).toContain(
+      '.treatment-task-route[aria-current="page"]:focus-visible\n      :is(.command-task-route__top > span, small) {',
+    );
+    expect(mobileCss).toContain('text-decoration-color: HighlightText;');
+    expect(mobileCss).toContain(
+      '.treatment-task-route[aria-current="page"]:focus-visible\n      :is(.command-task-route__badge, .command-task-route__cue) {',
+    );
+    expect(mobileCss).toContain('outline: 1px solid HighlightText;');
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');

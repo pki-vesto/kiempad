@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1899 Premium Claude Design UI: de gepromoveerde actieve mobiele
+  Traject-route houdt tijdens forced-colors keyboardfocus expliciete titel-,
+  metatekst-, badge- en cuekleuren, zodat focus duidelijk blijft zonder
+  tekstoverlap.
 - G1898 Premium Claude Design UI: de gepromoveerde actieve mobiele
   Traject-route krijgt in forced-colors extra row-gap en expliciete
   supporting-text fit, zodat metatekst gescheiden blijft van label, badge en
