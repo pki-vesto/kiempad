@@ -3696,6 +3696,11 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('.daily-recommendation-owner-visibility__grid {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(css).toContain('.daily-advice-feedback-analytics {');
+    expect(css).toContain('.daily-advice-feedback-analytics__grid {');
+    expect(css).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
+    expect(mobileCss).toContain('.daily-advice-feedback-analytics__grid {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(mobileCss).toContain('.daily-advice-owner-scan {');
     expect(mobileCss).toContain('.daily-advice-owner-scan__card {');
     expect(mobileCss).toContain('flex: 0 0 min(164px, 58vw);');
@@ -4579,7 +4584,17 @@ describe('app shell', () => {
 
     expect(html).toContain('Suggestie bewaard: Dagcheck zonder extra medicatiemoment.');
     expect(html).toContain('data-daily-advice-feedback-summary-count="ready"');
+    expect(html).toContain('data-daily-advice-feedback-analytics="ready"');
+    expect(html).toContain('data-daily-advice-feedback-analytics-total="1"');
+    expect(html).toContain('data-daily-advice-feedback-analytics-review="concept_te_controleren"');
     expect(html).toContain('data-daily-advice-feedback-summary="ready"');
+    expect(html).toContain('Feedback zonder tracking');
+    expect(html).toContain('<dt>Statussen</dt><dd>Gedaan: 1</dd>');
+    expect(html).toContain('<dt>Eigenaars</dt><dd>Vrouw: 1</dd>');
+    expect(html).toContain('<dt>Laatste feedback</dt><dd>2026-06-24T12:00:00.000Z</dd>');
+    expect(html).toContain('<dt>Bron</dt><dd>Encrypted lokaal eventlog</dd>');
+    expect(html).toContain('<dt>Reviewstatus</dt><dd>concept_te_controleren</dd>');
+    expect(html).toContain('Geen externe analytics of cookies.');
     expect(html).toContain('Lokale feedback: Gedaan: 1.');
     expect(html).toContain('id="daily-recommendation-feedback-filter-form"');
     expect(html).toContain('data-daily-recommendation-feedback-status="gedaan"');

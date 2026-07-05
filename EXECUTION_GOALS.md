@@ -15388,7 +15388,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, encrypted storage, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #883
 
 ### G553 — aanbevelingen verbergen per eigenaar
 
@@ -18146,6 +18147,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3900
+
+### G1982 — Daily Recommendations: feedback analytics routeflow evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G552 toont lokale feedbackanalytics zonder tracking, maar aparte browser-/routeflow-evidence moet nog bewaken dat statusverdeling, eigenaarverdeling, laatste datum, bron, reviewstatus en no-tracking copy zichtbaar blijven.
+- **User Impact:** Een latere thema- of layoutwijziging kan feedbackcontext laten wegvallen terwijl unit-tests nog groen blijven.
+- **Desired Outcome:** Routeflow- of browser-smoke bewaakt lokale feedbackanalytics op Dagadvies op desktop, tablet en mobiel.
+- **User Value:** Gebruikers blijven begrijpen wat zij eerder met suggesties deden zonder externe analytics of tracking.
+- **Acceptance Criteria:** Evidence opent Dagadvies met lokale feedback-eventlogs; `data-daily-advice-feedback-analytics="ready"`, total, statusverdeling, eigenaarverdeling, laatste datum, bron, reviewstatus en no-tracking copy blijven zichtbaar; viewports blijven zonder horizontale overflow; geen diagnose, dosering, kansberekening, behandelkeuzeadvies, OCR-tekst, bestandsinhoud, secrets of trackingpayloads; backlog health blijft op minimaal 100 open goals.
+- **Affected Screens:** Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations UI, feedback analytics, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3902
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

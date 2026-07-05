@@ -79,6 +79,10 @@
   bronconfidenceblok met label, score, bron, datum, reviewstatus,
   broncategorieen en lekenuitleg, zodat bronbasis controleerbaar blijft zonder
   bewijsweging of behandeladvies.
+- **G552 Dagadvies feedbackanalytics zonder tracking:** de Dagadvies-werkbank
+  toont lokale feedbackanalytics uit encrypted eventlogs met statusverdeling,
+  eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en expliciete
+  no-tracking copy.
 - **G553 Dagadvies eigenaarsfilter:** de dagadviesroute toont een zichtbaar
   eigenaarsfilter waarmee vrouw-, man- of samen-suggesties lokaal verborgen en
   hersteld kunnen worden; bron, datum en reviewstatus blijven zichtbaar vanuit

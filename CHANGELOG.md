@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G552 Daily Recommendations: de Dagadvies-werkbank toont nu lokale
+  feedbackanalytics zonder tracking met statusverdeling, eigenaarverdeling,
+  laatste feedbackdatum, bron, reviewstatus en expliciete no-tracking copy.
 - G550 Daily Recommendations: dagadvieskaarten tonen nu een bronconfidenceblok
   met label, score, bron, datum, reviewstatus, broncategorieen en uitleg voor
   leken zonder bewijsweging of behandeladvies.
