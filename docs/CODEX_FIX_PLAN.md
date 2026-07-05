@@ -2223,6 +2223,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   attachment-envelope batch target and captures hashing plus complete/invalid
   style evidence, including border, outline and text-decoration signals without
   filenames, payloads, OCR text or medical plaintext.
+- Partial G1856/#3654: Attachment-envelope forced-colors routeflow evidence is
+  now collected locally around the batchstatus measurement, including
+  small-mobile horizontal and vertical overflow checks for hashing plus
+  complete/invalid states without perturbing the rest of the small-mobile route.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record

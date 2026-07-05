@@ -1891,12 +1891,7 @@ async function assertRouteflows(browser, options) {
     for (const target of targets) {
       if (options.label === 'small-mobile' && !target.smallMobileViewport) continue;
       try {
-        await page.emulateMedia({
-          forcedColors:
-            target.attachmentEnvelopeBatchForcedColors && options.label !== 'small-mobile'
-              ? 'active'
-              : 'none',
-        });
+        await page.emulateMedia({ forcedColors: 'none' });
         await page.goto(`${url}${target.hash}`, { waitUntil: 'networkidle' });
       await unlockIfNeeded(page, target.hash);
       if (target.prepare === 'filled-consult-card') {
@@ -2026,7 +2021,8 @@ async function assertRouteflows(browser, options) {
           undefined,
           { timeout: 10_000 },
         );
-        if (target.attachmentEnvelopeBatchForcedColors && options.label !== 'small-mobile') {
+        if (target.attachmentEnvelopeBatchForcedColors) {
+          await page.emulateMedia({ forcedColors: 'active' });
           attachmentEnvelopeBatchForcedColors = {
             hashing: await collectAttachmentEnvelopeBatchForcedColors(page, {
               batch: 'hash-pending',
@@ -2034,6 +2030,7 @@ async function assertRouteflows(browser, options) {
             }),
             completeInvalid: await collectAttachmentEnvelopeBatchForcedColors(page),
           };
+          await page.emulateMedia({ forcedColors: 'none' });
         }
       }
       if (target.dailyAdviceFeedbackNavigation) {
@@ -3386,7 +3383,9 @@ async function assertRouteflows(browser, options) {
             combinedText,
           ) ||
           hashing.scrollWidth > hashing.clientWidth + 1 ||
-          completeInvalid.scrollWidth > completeInvalid.clientWidth + 1
+          completeInvalid.scrollWidth > completeInvalid.clientWidth + 1 ||
+          hashing.scrollHeight > hashing.clientHeight + 1 ||
+          completeInvalid.scrollHeight > completeInvalid.clientHeight + 1
         ) {
           throw new Error(
             `${options.label}/${target.screen}: attachment-envelope forced-colors batchprogress mist onderscheidende evidence (${JSON.stringify(
@@ -3735,6 +3734,8 @@ async function collectAttachmentEnvelopeBatchForcedColors(page, stateOverride) {
       titleTextDecorationStyle: titleStyle?.textDecorationStyle ?? '',
       scrollWidth: batch instanceof HTMLElement ? batch.scrollWidth : 0,
       clientWidth: batch instanceof HTMLElement ? batch.clientWidth : 0,
+      scrollHeight: batch instanceof HTMLElement ? batch.scrollHeight : 0,
+      clientHeight: batch instanceof HTMLElement ? batch.clientHeight : 0,
     };
     if (batch instanceof HTMLElement) {
       batch.dataset.attachmentEnvelopeBatch = originalBatch ?? '';
