@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1808 |
+| ☑ klaar | 1809 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **2016** |
+| **Totaal** | **2017** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -674,7 +674,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G509 | Fertility Intelligence: OCR-resultaat bronfragment navigatie | P1 | F5 | ☐ |
 | G510 | Fertility Intelligence: ziekenhuisdocument type-taxonomie | P0 | F5 | ☑ |
 | G511 | Fertility Intelligence: fertiliteitsrapport samenvatting als conceptkennis | P1 | F5 | ☐ |
-| G512 | Fertility Intelligence: historische records zoekfilter op kliniek | P1 | F5 | ☐ |
+| G512 | Fertility Intelligence: historische records zoekfilter op kliniek | P1 | F5 | ☑ |
 | G513 | Fertility Intelligence: historische records zoekfilter op poging | P1 | F5 | ☐ |
 | G514 | Fertility Intelligence: documentreview wachtrij per confidence | P0 | F5 | ☑ |
 | G515 | Fertility Intelligence: medische bronverwijzing per tijdlijnitem | P0 | F5 | ☑ |
@@ -2179,12 +2179,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2015 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error error release guard | P1 | F5 | ☐ |
 | G2016 | Fertility Intelligence: consultvraagkoppeling zichtbaar in vragenroute | P1 | F5 | ☑ |
 | G2017 | Fertility Intelligence: consultvraagkoppeling routeflow evidence | P1 | F5 | ☐ |
+| G2018 | Fertility Intelligence: historische records zoekfilter op poging | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 2016** (id's G001 t/m G2017; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 2017** (id's G001 t/m G2018; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

@@ -619,12 +619,18 @@ function reviewPrioriteitRang(prioriteit: DossierReviewWachtrijItem['prioriteit'
 export function zoekDossierDocumenten(
   items: readonly DossierDocument[],
   zoekterm: string | undefined,
+  filters: { kliniek?: string } = {},
 ): DossierZoekResultaat[] {
   const normalizedQuery = normaliseerZoektekst(zoekterm ?? '');
-  if (!normalizedQuery)
-    return sorteerDossierDocumenten(items).map((document) => ({ document, matches: [] }));
+  const normalizedKliniek = normaliseerZoektekst(filters.kliniek ?? '');
+  const gesorteerdeDocumenten = sorteerDossierDocumenten(items).filter((document) => {
+    if (!normalizedKliniek) return true;
+    return normaliseerZoektekst(document.metadata?.instelling ?? '') === normalizedKliniek;
+  });
 
-  return sorteerDossierDocumenten(items)
+  if (!normalizedQuery) return gesorteerdeDocumenten.map((document) => ({ document, matches: [] }));
+
+  return gesorteerdeDocumenten
     .map((document) => {
       const velden = bouwDossierZoekVelden(document);
       const matches = velden
