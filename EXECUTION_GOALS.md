@@ -15467,7 +15467,9 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #3787
+
 ### G559 — research trend dashboard visual system
 
 - **Epic:** Premium Claude Design UI
@@ -17223,6 +17225,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 29
 - **Status:** ☐ open
 - **Issue:** #3785
+
+### G1922 — Premium Claude Design UI: embryo tracking scan mobile density polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De nieuwe embryo tracking-scan maakt embryo-dossiers sneller scanbaar, maar de mobiele dichtheid kan nog expliciet worden verfijnd en bewaakt.
+- **User Impact:** Gebruikers op kleine schermen kunnen alsnog extra horizontaal scannen als embryo-scan-tegels later te breed of te lang worden.
+- **Desired Outcome:** Embryo tracking-scan blijft compact, leesbaar en zonder overlap op mobiel terwijl lege en gevulde embryostaten duidelijk blijven.
+- **User Value:** Gebruikers houden snel overzicht over embryo-dossiers, meetmomenten, status-events en bronnen zonder meteen detailkaarten te lezen.
+- **Acceptance Criteria:** Mobile embryo tracking scan tiles remain readable without horizontal page overflow; empty and populated embryo states remain visually distinct; existing embryo dossier cards, status events, comparison copy and data-hooks remain intact; app-shell or routeflow tests cover scan density or no-overlap behavior; backlog health remains at 100+ open goals.
+- **Affected Screens:** Dossier, Embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo UI, Dossier UI, Claude Design, app-shell tests
+- **ADR Needed:** no
+- **Score:** 28
+- **Status:** ☐ open
+- **Issue:** #3788
 
 ### G586 — replay conflict recovery status UI
 

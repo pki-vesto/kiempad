@@ -4976,6 +4976,7 @@ function renderDossierScreen(state: AppShellState): string {
           </summary>
           <div class="kp-disclosure__body">
             <h2 id="dossier-embryo-dossiers">Embryo-dossiers</h2>
+            ${renderEmbryoTrackingScan(embryoDossiers)}
             ${renderEmbryoVergelijkingen(embryoVergelijkingen)}
             ${
               embryoDossiers.length > 0
@@ -11896,6 +11897,75 @@ function renderEmbryoVergelijking(vergelijking: EmbryoVergelijking): string {
       </ul>
       <p class="small-print">${escapeHtml(vergelijking.waarschuwing)}</p>
     </section>
+  `;
+}
+
+function renderEmbryoTrackingScan(embryoDossiers: readonly EmbryoDossierItem[]): string {
+  const dossierCount = embryoDossiers.length;
+  const measurementCount = embryoDossiers.reduce(
+    (total, dossier) => total + dossier.meetmomenten.length,
+    0,
+  );
+  const statusEventCount = embryoDossiers.reduce(
+    (total, dossier) => total + dossier.statusEvents.length,
+    0,
+  );
+  const sourceCount = embryoDossiers.reduce(
+    (total, dossier) => total + dossier.documenten.length,
+    0,
+  );
+  const conceptCount = embryoDossiers.reduce(
+    (total, dossier) =>
+      total +
+      dossier.statusEvents.filter((event) => event.reviewStatus === 'concept').length +
+      dossier.kwaliteitBronLabels.filter((label) => label.toLowerCase().includes('concept')).length,
+    0,
+  );
+  const cards = [
+    {
+      id: 'dossiers',
+      label: 'Dossiers',
+      value: String(dossierCount),
+      detail: dossierCount === 0 ? "Nog geen embryo's" : 'Per embryo gebundeld',
+      href: '#embryo-quality-form',
+    },
+    {
+      id: 'measurements',
+      label: 'Meetmomenten',
+      value: String(measurementCount),
+      detail: 'Dag, kwaliteit en bron',
+      href: '#dossier-embryo-dossiers',
+    },
+    {
+      id: 'status',
+      label: 'Status-events',
+      value: String(statusEventCount),
+      detail: conceptCount > 0 ? `${conceptCount} concept` : 'Feitelijk vastgelegd',
+      href: '#embryo-status-event-form',
+    },
+    {
+      id: 'sources',
+      label: 'Bronnen',
+      value: String(sourceCount),
+      detail: 'Geen kansberekening',
+      href: '#dossier-embryo-dossiers',
+    },
+  ];
+
+  return `
+    <nav class="embryo-tracking-scan" data-embryo-tracking-scan="ready" aria-label="Embryo tracking overzicht">
+      ${cards
+        .map(
+          (
+            card,
+          ) => `<a class="embryo-tracking-scan__card" href="${escapeAttribute(card.href)}" data-embryo-tracking-scan-card="${escapeAttribute(card.id)}">
+            <span>${escapeHtml(card.label)}</span>
+            <strong>${escapeHtml(card.value)}</strong>
+            <small>${escapeHtml(card.detail)}</small>
+          </a>`,
+        )
+        .join('')}
+    </nav>
   `;
 }
 

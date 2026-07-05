@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1721 |
+| ☑ klaar | 1722 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1920** |
+| **Totaal** | **1921** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -720,7 +720,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G555 | Premium Claude Design UI: fertility intelligence dossier inbox layout | P1 | F5 | ☑ |
 | G556 | Premium Claude Design UI: imaging repository compare layout | P1 | F5 | ☑ |
 | G557 | Premium Claude Design UI: consult intelligence review layout | P1 | F5 | ☑ |
-| G558 | Premium Claude Design UI: embryo tracking compact cards | P1 | F5 | ☐ |
+| G558 | Premium Claude Design UI: embryo tracking compact cards | P1 | F5 | ☑ |
 | G559 | Premium Claude Design UI: research trend dashboard visual system | P1 | F5 | ☐ |
 | G560 | Premium Claude Design UI: daily recommendation dual-owner cards | P1 | F5 | ☐ |
 | G561 | Product Quality & Automation: active goal floor maintenance test | P0 | F5 | ☑ |
@@ -2083,12 +2083,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1919 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus cue text contrast polish | P1 | F5 | ☑ |
 | G1920 | Premium Claude Design UI: treatment mobile rail forced-colors inactive focus cue text fill polish | P1 | F5 | ☐ |
 | G1921 | Premium Claude Design UI: consult review scan mobile density polish | P1 | F5 | ☐ |
+| G1922 | Premium Claude Design UI: embryo tracking scan mobile density polish | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1920** (id's G001 t/m G1921; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1921** (id's G001 t/m G1922; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

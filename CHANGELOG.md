@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G558 Premium Claude Design UI: Embryo-dossiers starten met een compacte
+  tracking-scan voor dossiers, meetmomenten, status-events en bronnen voordat
+  vergelijkingen en detailkaarten verschijnen.
 - G557 Premium Claude Design UI: Consultverslagen starten met een compacte
   review-scan voor verslagen, samenvattingen, actiepunten en bronreview voordat
   de detailkaarten verschijnen.
