@@ -278,6 +278,10 @@
 - **Daily recommendation owner scan mobile density — done in G1924 / issue #3794.** The owner
   scan now uses tighter mobile snap cards with shorter height and short review/artscheck cues,
   so vrouw, man, and samen are easier to scan before opening the detailed suggestion list.
+- **Dossierupload size feedback — done in G567 / issue #3804.** The Dossier upload form now
+  shows a dedicated preflight size feedback layer with per-file and per-selection limits,
+  central 413 context, and recoverable retry copy without filenames, OCR text, encoded content,
+  or medical payload details.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

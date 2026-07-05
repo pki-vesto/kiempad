@@ -63,6 +63,10 @@
   alleen documentupload. Consultverslagen, embryokwaliteit, embryostatus en review
   blijven als routekaarten bereikbaar en openen pas via hun anker, zodat de intake
   niet meer als één lange pagina met alle formulieren tegelijk leest.
+- **G567 Dossierupload groottefeedback:** de eerste uploadstap toont een aparte
+  groottecontrole met per-bestandlimiet, selectielimiet, centrale 413-context en
+  herstelbare retry-copy zonder bestandsnamen, OCR-tekst of medische inhoud in de
+  zichtbare statusmelding.
 - **G1331 Dossier zoekconsole:** de Dossier-zoekroute groepeert zoeken,
   privacycontrole en inhoudsindex in drie herkenbare panelen. De route opent als
   compacte zoekwerkruimte in plaats van losse formulier-, privacy- en indexblokken.

@@ -167,7 +167,10 @@ import type {
 } from './domain/types';
 import {
   DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE,
+  DOSSIER_UPLOAD_MAX_FILE_BYTES,
+  DOSSIER_UPLOAD_MAX_TOTAL_BYTES,
   describeDossierUploadLimits,
+  formatUploadBytes,
 } from './domain/uploadValidation';
 import {
   beantwoordeVragenPerAfspraak,
@@ -3825,9 +3828,7 @@ function renderDossierScreen(state: AppShellState): string {
             Bestanden
             <input name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required />
           </label>
-          <p class="field-hint" data-dossier-upload-size-guidance="ready">
-            ${describeDossierUploadLimits()} Bij een te groot pakket kun je bestanden verwijderen en opnieuw uploaden; Kiempad toont alleen type en grootte in foutmeldingen.
-          </p>
+          ${renderDossierUploadSizeFeedback()}
           <section class="attachment-envelope-status" aria-label="Attachment envelope metadata controle" data-attachment-envelope-surface="dossier-upload">
             <div data-attachment-envelope-validation="idle">
               <strong>Envelope controle</strong>
@@ -5434,6 +5435,31 @@ function renderDossierUploadTriage(input: {
         <p class="small-print">${DOSSIER_CONTEXT_DISCLAIMER}</p>
       </div>
     </details>
+  `;
+}
+
+function renderDossierUploadSizeFeedback(): string {
+  const maxFileLabel = formatUploadBytes(DOSSIER_UPLOAD_MAX_FILE_BYTES);
+  const maxTotalLabel = formatUploadBytes(DOSSIER_UPLOAD_MAX_TOTAL_BYTES);
+
+  return `
+    <section class="dossier-upload-size-feedback" aria-label="Groottecontrole voor dossierupload" data-dossier-upload-size-feedback="preflight" data-dossier-upload-size-guidance="ready" data-dossier-upload-max-file-bytes="${DOSSIER_UPLOAD_MAX_FILE_BYTES}" data-dossier-upload-max-total-bytes="${DOSSIER_UPLOAD_MAX_TOTAL_BYTES}">
+      <header class="dossier-upload-size-feedback__header">
+        <div>
+          <strong>Groottecontrole</strong>
+          <span>${describeDossierUploadLimits()}</span>
+        </div>
+        <span class="dossier-upload-size-feedback__badge" data-dossier-upload-size-status="recoverable">Herstelbaar</span>
+      </header>
+      <div class="dossier-upload-size-feedback__grid" data-dossier-upload-size-limit-grid="ready">
+        <p data-dossier-upload-size-limit="file"><span>Per bestand</span><strong>${maxFileLabel}</strong></p>
+        <p data-dossier-upload-size-limit="selection"><span>Per selectie</span><strong>${maxTotalLabel}</strong></p>
+        <p data-dossier-upload-size-limit="central"><span>Centrale opslag</span><strong>kan 413 blokkeren</strong></p>
+      </div>
+      <p class="field-hint" data-dossier-upload-size-retry="safe">
+        Bij een te groot pakket kun je bestanden verwijderen, splitsen of opnieuw selecteren. Kiempad toont alleen technisch type, grootte en limietstatus; bestandsnaam, OCR-tekst, gecodeerde inhoud en medische inhoud blijven buiten deze melding.
+      </p>
+    </section>
   `;
 }
 
