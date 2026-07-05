@@ -309,6 +309,10 @@
   inactieve gefocuste mobiele Traject-cues gebruiken een rustiger 700-gewicht,
   zodat cue-labels leesbaar blijven zonder met statusbadges of actieve
   route-emphasis te concurreren.
+- **G1916 Traject mobile forced-colors inactive focus cue outline contrast:**
+  inactieve gefocuste mobiele Traject-cues gebruiken CanvasText outlines, zodat
+  de externe focusrand contrasteert met de route-canvaslaag na het lagere
+  cuegewicht.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
