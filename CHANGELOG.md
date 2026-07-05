@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1922 Premium Claude Design UI: de Embryo-dossiers tracking-scan is op mobiel
+  compacter met smallere snapkaarten, lagere kaarthoogte en compactere labels,
+  zodat dossiers, meetmomenten, status-events en bronnen sneller scanbaar zijn.
 - G1921 Premium Claude Design UI: de Consultverslagen review-scan is op mobiel
   compacter met smallere snapkaarten, lagere kaarthoogte en compactere labels,
   zodat verslagen, samenvattingen, actiepunten en bronreview sneller scanbaar zijn.

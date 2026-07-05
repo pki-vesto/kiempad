@@ -11953,7 +11953,7 @@ function renderEmbryoTrackingScan(embryoDossiers: readonly EmbryoDossierItem[]):
   ];
 
   return `
-    <nav class="embryo-tracking-scan" data-embryo-tracking-scan="ready" aria-label="Embryo tracking overzicht">
+    <nav class="embryo-tracking-scan" data-embryo-tracking-scan="ready" data-embryo-tracking-scan-density="mobile-compact" aria-label="Embryo tracking overzicht">
       ${cards
         .map(
           (
