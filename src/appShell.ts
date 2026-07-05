@@ -3165,9 +3165,14 @@ function renderStatusFeedback(
   if (!status && !error) return '';
 
   const state = status && error ? 'mixed' : status ? 'success' : 'error';
+  const centralSessionRenewalRecoveryAnnouncement =
+    kind === 'backup' && status?.startsWith('Centrale sessieherstelactie verwerkt.');
+  const announcementAttributes = centralSessionRenewalRecoveryAnnouncement
+    ? ' role="status" aria-live="polite" aria-atomic="true" data-central-session-renewal-recovery-announcement="polite"'
+    : '';
 
   return `
-    <section class="status-feedback" data-status-feedback-kind="${kind}" data-status-feedback-state="${state}">
+    <section class="status-feedback" data-status-feedback-kind="${kind}" data-status-feedback-state="${state}"${announcementAttributes}>
       ${status ? `<p class="linked-note">${escapeHtml(sanitizeStatusFeedback(status))}</p>` : ''}
       ${error ? `<p class="form-error" role="alert">${escapeHtml(sanitizeStatusFeedback(error))}</p>` : ''}
     </section>

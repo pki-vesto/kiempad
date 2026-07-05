@@ -15897,8 +15897,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, Back-up status feedback, accessibility tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3636
+
+### G1848 — Central session renewal recovery focus target management
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De sessie-renewal herstelbevestiging wordt nu rustig aangekondigd, maar keyboardfocus wordt nog niet expliciet naar een stabiel hersteldoel gebracht.
+- **User Impact:** Keyboard- en screenreadergebruikers kunnen na recovery nog handmatig moeten zoeken naar de bevestiging.
+- **Desired Outcome:** Kiempad kan na sessie-renewal recovery focus gecontroleerd naar de Back-up herstelbevestiging sturen zonder layout jump.
+- **User Value:** Het centrale sessieherstelpad voelt afgerond en navigeerbaar voor toetsenbordgebruikers.
+- **Acceptance Criteria:** Focus beweegt alleen na recovery flow en niet bij normale actieve sessie; focusdoel is stabiel en zichtbaar zonder layout jump op desktop, tablet en mobile; geen passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload, filename of medische plaintext in copy of testfixtures; tests dekken focus target, normale afwezigheid en routeflow-stabiliteit; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Back-up, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, Back-up status feedback, route focus, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3638
 
 ### G584 — paginated record load status UI
 

@@ -42313,9 +42313,12 @@ describe('app shell', () => {
     const recoveryBackupZone = extractBackupImportPrivacyZone(recoveryHtml);
 
     expect(normalHtml).not.toContain('Centrale sessieherstelactie verwerkt');
+    expect(normalHtml).not.toContain('data-central-session-renewal-recovery-announcement');
     expect(recoveryHtml).toContain('Centrale sessieherstelactie verwerkt');
     expect(recoveryHtml).toContain('Controleer de centrale overdrachtstatus hieronder');
     expect(recoveryHtml).toContain('Laatste actie verwerkt');
+    expect(recoveryHtml).toContain('data-central-session-renewal-recovery-announcement="polite"');
+    expect(recoveryHtml).toContain('role="status" aria-live="polite" aria-atomic="true"');
     expect(recoveryBackupZone).not.toContain('central-token');
     expect(recoveryBackupZone).not.toContain('passphrase');
     expect(recoveryBackupZone).not.toContain('sessie-id');

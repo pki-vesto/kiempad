@@ -2223,3 +2223,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   browser-session focus marker before reload, returns to the Back-up status
   route, and shows a generic recovery cue in the Back-up status area without
   tokens, passphrases, session ids, record payloads or medical plaintext.
+- Partial G1847/#3636: The central session renewal recovery cue now uses a
+  specific polite live-region marker with `role="status"` and `aria-atomic`
+  only for the recovery confirmation, leaving normal active session status
+  quiet while preserving the no-token/no-payload boundary.
