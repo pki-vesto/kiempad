@@ -18303,8 +18303,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research sources, release evidence, maintenance tests
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3918
+
+### G1991 — Research Intelligence: offline cache metadata missing-term release-state guard
+
+- **Epic:** Research Intelligence
+- **Problem:** G1990 legt het compacte missing-term foutmeldingcontract vast, maar release-state context rond dit contract moet nog apart bewaakt worden.
+- **User Impact:** Onderhoud kan anders niet zien of het missing-term contract nog in release-state evidence wordt genoemd.
+- **Desired Outcome:** Release-state evidence verwijst naar het G1990 offline cache metadata missing-term contract met veilige technische labels.
+- **User Value:** Beheer ziet contractdrift voor offline cache metadata release-evidence zonder medische payload of lange documentcontext.
+- **Acceptance Criteria:** Release-state evidence noemt het G1990 compacte missing-term contract; evidence verwijst naar `knowledge-research-offline-cache-metadata` en `data-research-offline-cache-metadata`; output bevat geen diagnose, dosering, kansberekening, behandelkeuzeadvies, secrets, gezondheidsdata of plaintext medische payloads; docs of backlog verwijzen naar het doel.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research sources, release evidence, maintenance tests
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3920
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

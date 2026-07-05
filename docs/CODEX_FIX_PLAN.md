@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G1990 Research Intelligence offline cache metadata missing-term error contract — done in G1990 / issue #3918.** Maintenance-docs test snapshott nu het exacte offline-cache missing-term foutmeldingcontract met veilige technische labels voor `knowledge-research-offline-cache-metadata` en `data-research-offline-cache-metadata`.
 - **G1989 Research Intelligence offline cache metadata release evidence missing-term fixture — done in G1989 / issue #3916.** Maintenance-docs test geeft nu compact terug wanneer `knowledge-research-offline-cache-metadata` of `data-research-offline-cache-metadata` uit release-evidence ontbreekt, met veilige metadata-context en privacygrens.
 - **G1988 Research Intelligence offline cache metadata release evidence freshness guard — done in G1988 / issue #3914.** Runbook, completion audit, changelog, current state en maintenance-test koppelen `knowledge-research-offline-cache-metadata`, `data-research-offline-cache-metadata` en `researchOfflineCacheMetadata` aan cachebron, datum, reviewstatus, cachetype, correctievelden en privacygrens.
 - **G1987 Research Intelligence offline cache metadata routeflow evidence — done in G1987 / issue #3912.** Routeflow-smoke bewaakt nu `knowledge-research-offline-cache-metadata` met cachebron, datum, reviewstatus, cachetype, correctievelden en niet-medische payloadgrens.
