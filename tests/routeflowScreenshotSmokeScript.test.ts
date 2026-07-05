@@ -282,6 +282,30 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'research trend-scan mist routeflow-overflow evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'knowledge-research-offline-cache-metadata'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('researchOfflineCacheMetadata');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-offline-cache-metadata="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-offline-cache-source="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-offline-cache-review="concept_te_controleren"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-offline-cache-type="lokale_cache"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-offline-cache-date="Nog geen publicatiedatum"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('hasCorrectionFields');
+    expect(routeflowScreenshotSmokeScript).toContain('hasLayExplanation');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'research offline-cache metadata mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceCompactList');

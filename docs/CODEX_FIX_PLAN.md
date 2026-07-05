@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G1987 Research Intelligence offline cache metadata routeflow evidence — done in G1987 / issue #3912.** Routeflow-smoke bewaakt nu `knowledge-research-offline-cache-metadata` met cachebron, datum, reviewstatus, cachetype, correctievelden en niet-medische payloadgrens.
 - **G545 Research Intelligence researchbibliotheek offline cache metadata — done in G545 / issue #876.** Researchbronnen tonen nu offline cache metadata met cachebron, datum, reviewstatus, cachetype, correctievelden en lekenuitleg.
 - **G546 Research Intelligence research item artsbespreek-vraag generator — done in G546 / issue #877.** Researchrelevantie toont nu neutrale vragen voor de kliniek met bron, datum, reviewstatus, correctievelden en lekenuitleg.
 - **G541 Research Intelligence research item broncitatie parser — done in G541 / issue #872.** Researchsamenvattingen tonen nu een parsed broncitatieblok met bron, datum, reviewstatus, citationtype, origineel en correctievelden.

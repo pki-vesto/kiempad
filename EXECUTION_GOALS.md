@@ -18252,8 +18252,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research sources, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3912
+
+### G1988 — Research Intelligence: offline cache metadata release evidence freshness guard
+
+- **Epic:** Research Intelligence
+- **Problem:** De offline cache metadata heeft routeflow-evidence, maar release-evidence moet vers blijven zodat cachebron, datum, reviewstatus, cachetype en correctievelden niet uit onderhoudscontext verdwijnen.
+- **User Impact:** Gebruikers kunnen anders na release- of themarondes alsnog bronherleiding kwijtraken zonder dat de onderhoudscheck dit benoemt.
+- **Desired Outcome:** Release-evidence verwijst naar de offline cache metadata routeflow target, selectors en niet-medische grens.
+- **User Value:** Gebruikers behouden controleerbare lokale researchmetadata doordat releasechecks de broncontext expliciet blijven noemen.
+- **Acceptance Criteria:** Release evidence noemt `knowledge-research-offline-cache-metadata` en `data-research-offline-cache-metadata`; evidence noemt cachebron, datum, reviewstatus, cachetype en correctievelden; evidence bevestigt dat geen diagnose, dosering, kansberekening, behandelkeuzeadvies, secrets, gezondheidsdata of plaintext medische payloads worden toegevoegd; docs of backlog verwijzen naar het doel.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research sources, release evidence, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3914
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
