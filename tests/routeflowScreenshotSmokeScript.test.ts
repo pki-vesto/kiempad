@@ -450,6 +450,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-backup-reminder-card="ready"]',
       '[data-central-session-renewal-recovery-announcement="polite"]',
       '[data-central-session-renewal-recovery-focus-target="ready"]',
+      '[data-attachment-envelope-batch]',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(selector);
     }
@@ -466,6 +467,13 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('centralSessionRenewalRecoveryFocus');
     expect(routeflowScreenshotSmokeScript).toContain(
       'sessieherstel-focus mist stabiele routeflow-evidence',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('attachmentEnvelopeBatchStatus');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '3 items: 2 klaar, 0 hash-pending, 1 controle nodig.',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'attachment-envelope batchstatus mist veilige compacte evidence',
     );
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'consult-card-filled'");
     expect(routeflowScreenshotSmokeScript).toContain("prepare: 'filled-consult-card'");

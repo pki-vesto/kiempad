@@ -2207,6 +2207,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   batch summary for selected files, counting ready, hash-pending and
   control-needed items through the shared envelope helper without filenames,
   source content, OCR text, base64 or medical context.
+- Partial G1852/#3646: Routeflow smoke now simulates a privacy-safe dossier
+  file selection and verifies the attachment-envelope batch summary counts,
+  compact layout and no filename/payload leakage across desktop, tablet,
+  mobile and small-mobile.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record

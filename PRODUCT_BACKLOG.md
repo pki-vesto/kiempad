@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1652 |
+| ☑ klaar | 1653 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1851** |
+| **Totaal** | **1852** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2013,13 +2013,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1849 | Central Encrypted Platform: central session renewal recovery focus visual ring | P1 | F5 | ☑ |
 | G1850 | Central Encrypted Platform: central session renewal recovery focus routeflow evidence | P1 | F5 | ☑ |
 | G1851 | Central Encrypted Platform: central session renewal recovery focus loading handoff | P1 | F5 | ☐ |
-| G1852 | Central Encrypted Platform: attachment envelope batch status routeflow evidence | P1 | F5 | ☐ |
+| G1852 | Central Encrypted Platform: attachment envelope batch status routeflow evidence | P1 | F5 | ☑ |
+| G1853 | Central Encrypted Platform: attachment envelope batch hash progress UI | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1851** (id's G001 t/m G1852; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1852** (id's G001 t/m G1853; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

@@ -1143,6 +1143,7 @@ const targets = [
       '[data-dossier-upload-file-choice="ready"]',
       '[data-attachment-envelope-surface="dossier-upload"]',
       '[data-attachment-envelope-validation="idle"]',
+      '[data-attachment-envelope-batch]',
       '[data-dossier-upload-metadata="collapsed"]',
       '[data-dossier-upload-metadata="collapsed"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-optional="koppelingen"]',
@@ -1181,6 +1182,8 @@ const targets = [
     ],
     dossierConsole: true,
     uploadConsole: true,
+    attachmentEnvelopeBatchStatus: true,
+    smallMobileViewport: true,
   },
   {
     screen: 'dossier-upload-metadata',
@@ -1992,6 +1995,30 @@ async function assertRouteflows(browser, options) {
         }
         imageOpenFieldFocus = { documentOverflowBefore: baseline.documentOverflowBefore, rows };
       }
+      if (target.attachmentEnvelopeBatchStatus) {
+        await page.evaluate(() => {
+          const input = document.querySelector('input[name="dossierBestanden"]');
+          if (!(input instanceof HTMLInputElement)) return;
+          const transfer = new DataTransfer();
+          transfer.items.add(new File(['routeflow attachment one'], '', { type: 'application/pdf' }));
+          transfer.items.add(new File(['routeflow attachment two'], '', { type: 'image/jpeg' }));
+          transfer.items.add(new File(['routeflow attachment review'], '', { type: '' }));
+          input.files = transfer.files;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+        await page.waitForFunction(
+          () => {
+            const batch = document.querySelector('[data-attachment-envelope-batch]');
+            return (
+              batch instanceof HTMLElement &&
+              batch.dataset.attachmentEnvelopeBatch === 'invalid' &&
+              batch.textContent?.includes('3 items: 2 klaar, 0 hash-pending, 1 controle nodig.')
+            );
+          },
+          undefined,
+          { timeout: 10_000 },
+        );
+      }
       if (target.dailyAdviceFeedbackNavigation) {
         await assertDailyAdviceFeedbackNavigation(page);
       }
@@ -2530,6 +2557,22 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const attachmentEnvelopeBatchStatus = routeflow.attachmentEnvelopeBatchStatus
+          ? (() => {
+              const batch = document.querySelector('[data-attachment-envelope-batch]');
+              const rect = batch?.getBoundingClientRect();
+              return {
+                visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+                state:
+                  batch instanceof HTMLElement ? batch.dataset.attachmentEnvelopeBatch ?? '' : '',
+                text: batch?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                scrollWidth: batch instanceof HTMLElement ? batch.scrollWidth : 0,
+                clientWidth: batch instanceof HTMLElement ? batch.clientWidth : 0,
+                right: rect?.right ?? 0,
+                viewportWidth: window.innerWidth,
+              };
+            })()
+          : null;
         const imageSummaryChips = routeflow.imageSummaryChips
           ? [
               ...document.querySelectorAll(
@@ -2914,6 +2957,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceCompactList,
           startLaunchpad,
           uploadConsole,
+          attachmentEnvelopeBatchStatus,
           imageSummaryChips,
           imageFieldLabels,
           imageOpenFields,
@@ -3272,6 +3316,30 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: upload-console toont niet precies de gekozen werkstroom (${JSON.stringify(evidence.uploadConsole)}).`,
+        );
+      }
+      if (
+        evidence.attachmentEnvelopeBatchStatus &&
+        (!evidence.attachmentEnvelopeBatchStatus.visible ||
+          evidence.attachmentEnvelopeBatchStatus.state !== 'invalid' ||
+          !evidence.attachmentEnvelopeBatchStatus.text.includes(
+            '3 items: 2 klaar, 0 hash-pending, 1 controle nodig.',
+          ) ||
+          !evidence.attachmentEnvelopeBatchStatus.text.includes(
+            'Geen bestandsnamen of broninhoud',
+          ) ||
+          /routeflow|\.pdf|\.jpg|\.jpeg|base64|OCR|diagnose|behandelkeuzeadvies/i.test(
+            evidence.attachmentEnvelopeBatchStatus.text,
+          ) ||
+          evidence.attachmentEnvelopeBatchStatus.scrollWidth >
+            evidence.attachmentEnvelopeBatchStatus.clientWidth + 1 ||
+          evidence.attachmentEnvelopeBatchStatus.right >
+            evidence.attachmentEnvelopeBatchStatus.viewportWidth + 1)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: attachment-envelope batchstatus mist veilige compacte evidence (${JSON.stringify(
+            evidence.attachmentEnvelopeBatchStatus,
+          )}).`,
         );
       }
       if (

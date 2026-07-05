@@ -16046,8 +16046,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Routeflow smoke, Dossier upload, attachment envelope helper
 - **ADR Needed:** no
 - **Score:** 101
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3646
+
+### G1853 — Attachment envelope batch hash progress UI
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De routeflow bewaakt nu de afgeronde batchstatus, maar grotere selecties kunnen tijdens lokale hashberekening nog duidelijker progress feedback gebruiken.
+- **User Impact:** Gebruikers met grotere uploadselecties zien nog niet expliciet wanneer batchstatus van hash-pending naar klaar gaat.
+- **Desired Outcome:** Dossier upload toont rustige voortgang terwijl attachment-envelope hashes lokaal worden berekend.
+- **User Value:** Grote uploadselecties voelen voorspelbaarder zonder bestandsnamen of broninhoud te tonen.
+- **Acceptance Criteria:** UI onderscheidt initiële hash-pending van afgeronde lokale hashberekening; copy blijft generiek zonder filename, token, secret, base64, OCR-tekst, recordpayload of medische plaintext; tests dekken pending-to-ready status.
+- **Affected Screens:** Dossier upload, imaging upload, embryo upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier upload, attachment envelope helper, main runtime
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+- **Issue:** #3648
 
 ### G586 — replay conflict recovery status UI
 
