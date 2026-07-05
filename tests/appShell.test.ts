@@ -5850,6 +5850,13 @@ describe('app shell', () => {
     expect(mobileCss).toContain('@media (prefers-reduced-motion: reduce)');
     expect(mobileCss).toContain('transition: none;');
     expect(mobileCss).toContain('transform: none;');
+    expect(mobileCss).toContain('@media (forced-colors: active)');
+    expect(mobileCss).toContain('background: Canvas;');
+    expect(mobileCss).toContain('background: Highlight;');
+    expect(mobileCss).toContain('color: HighlightText;');
+    expect(mobileCss).toContain('.treatment-task-route[aria-current="page"]::before {');
+    expect(mobileCss).toContain('background: HighlightText;');
+    expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="finance"] {');

@@ -16743,8 +16743,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 57
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3728
+
+### G1894 — Premium Claude Design UI: treatment mobile rail forced-colors badge contrast polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De mobiele Traject routekaart heeft nu forced-colors behandeling, maar badges kunnen in actieve en inactieve routekaarten nog explicieter contrast krijgen.
+- **User Impact:** Gebruikers in high-contrast mode kunnen routebadges minder snel lezen wanneer kaart- en badgestatussen samenvallen.
+- **Desired Outcome:** Mobiele Traject routebadges hebben expliciete forced-colors behandeling voor actieve en inactieve routekaarten.
+- **User Value:** Routeaantallen en statusbadges blijven leesbaar in high-contrast omgevingen.
+- **Acceptance Criteria:** Mobile Traject route badges have explicit forced-colors handling for active and inactive route cards; existing route hrefs, aria-current states, badges, command-task hooks, route groups, active-route promotion, focus feedback, reduced-motion behavior and forced-colors route-card handling remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors badge readability or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 56
+- **Status:** ☐ open
+- **Issue:** #3730
 
 ### G586 — replay conflict recovery status UI
 
