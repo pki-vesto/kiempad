@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1878 Premium Claude Design UI: Kennis/Research opent nu met een compact
+  bronselectiebord voor bronnen, eenvoudige uitleg, wetenschappelijke
+  samenvatting, relevantie en volledige researchcontext. De bestaande
+  broncache, samenvattingspanelen, trendcontext en vervolgcontext blijven
+  bereikbaar zonder als eerste lange researchstapel te starten.
 - G1877 Premium Claude Design UI: Dagadvies opent nu met een compact
   selectiebord voor vandaag, eigenaarroutes, feedback, artscheck en volledige
   adviescontext. De bestaande eigenaarwerkbank, actieplanner, feedbackfilter en

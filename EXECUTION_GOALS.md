@@ -16488,8 +16488,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 72
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3698
+
+### G1879 — Premium Claude Design UI: knowledge library route first-viewport index board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Kennis/Bibliotheek kan als lange categorie-, kaart- en bewerkstapel voelen wanneer categorieën, zichtbare items, filters, kaartacties en volledige bibliotheekcontext tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten scannen voordat duidelijk is of ze eerst een categorie, filter, itemkaart of bewerkactie nodig hebben.
+- **Desired Outcome:** Kennis/Bibliotheek opent met een compact first-viewport index board voor categorieën, zichtbare items, filters, bewerkacties en volledige bibliotheekcontext.
+- **User Value:** De kennisbibliotheek voelt rustiger en taakgerichter zonder bestaande categorieankers, filters, kaartacties, verificatielabels of routehooks te verliezen.
+- **Acceptance Criteria:** Kennis/Bibliotheek opent met compacte lanes voor categorieën, zichtbare items, filters, bewerkacties en volledige bibliotheekcontext; volledige categoriekaarten, itemlijsten en bewerkpanelen blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande category anchors, filter state, card actions, verification labels en route hooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen medische plaintext, token, secret, OCR-tekst, bestandsinhoud of raw knowledge payload wordt toegevoegd.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Knowledge UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 71
+- **Status:** ☐ open
+- **Issue:** #3700
 
 ### G586 — replay conflict recovery status UI
 

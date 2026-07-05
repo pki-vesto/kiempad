@@ -13380,6 +13380,13 @@ function renderKennisScreen(state: AppShellState): string {
             </div>
           </div>
         </details>
+        ${renderKnowledgeResearchSourceBoard({
+          sources: researchBronnen.length,
+          scientific: researchSamenvattingen.length,
+          patient: eenvoudigeResearchSamenvattingen.length,
+          relevance: researchRelevantie.length,
+          trends: researchTrendGroepen.length,
+        })}
         <section id="knowledge-research-primary-focus" class="knowledge-research-primary-focus" aria-label="Kennis research primaire focus" data-knowledge-research-primary-focus="ready">
           ${renderKnowledgeResearchReader({
             sources: researchBronnen.length,
@@ -13913,6 +13920,83 @@ function renderKnowledgeResearchWorkbenchDisclosure(workbench: string): string {
         ${workbench}
       </div>
     </details>
+  `;
+}
+
+function renderKnowledgeResearchSourceBoard(input: {
+  sources: number;
+  scientific: number;
+  patient: number;
+  relevance: number;
+  trends: number;
+}): string {
+  const lanes = [
+    {
+      id: 'sources',
+      href: '#knowledge-research-sources',
+      label: 'Bronnen',
+      title: `${input.sources} bron${input.sources === 1 ? '' : 'nen'}`,
+      detail: 'Controleer bron, datum en citation voordat je conclusies leest.',
+      cue: 'Herkomst',
+    },
+    {
+      id: 'simple',
+      href: '#knowledge-research-patient-summaries',
+      label: 'Eenvoudig',
+      title: `${input.patient} uitleg${input.patient === 1 ? '' : 'en'}`,
+      detail: 'Lees gewone taal per publicatie zonder vakjargon als startlaag.',
+      cue: 'Lekenlaag',
+    },
+    {
+      id: 'scientific',
+      href: '#knowledge-research-scientific-summaries',
+      label: 'Wetenschappelijk',
+      title: `${input.scientific} samenvatting${input.scientific === 1 ? '' : 'en'}`,
+      detail: 'Open methode, bevindingen en beperkingen alleen wanneer nodig.',
+      cue: 'Verdieping',
+    },
+    {
+      id: 'relevance',
+      href: '#knowledge-research-trends',
+      label: 'Relevantie',
+      title: `${input.relevance} context${input.relevance === 1 ? '' : 's'}`,
+      detail: 'Bekijk relevantie als gesprekshulp, niet als behandeladvies.',
+      cue: 'Vragen',
+    },
+    {
+      id: 'context',
+      href: '#knowledge-research-followup',
+      label: 'Volledige context',
+      title: `${input.trends} trendgroep${input.trends === 1 ? '' : 'en'}`,
+      detail: 'Open bronnen, samenvattingen, relaties en trends als vervolg.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="knowledge-research-source-board" aria-label="Kennis research bronselectie" data-knowledge-research-source-board="first-viewport">
+      <header class="knowledge-research-source-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Bronselectie</p>
+          <h3>Kies eerst je researchingang</h3>
+        </div>
+        <p>Bronnen, eenvoudige uitleg, wetenschappelijke samenvatting, relevantie en volledige context staan los van elkaar.</p>
+      </header>
+      <nav class="knowledge-research-source-board__lanes" aria-label="Kennis research eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="knowledge-research-source-board__lane" href="${escapeAttribute(lane.href)}" data-knowledge-research-source-lane="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
   `;
 }
 
