@@ -15863,7 +15863,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, central session renewal feedback, route focus, tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3632
 
 ### G1846 — Central replay conflict recovery focus feedback
@@ -15882,6 +15882,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 105
 - **Status:** ☐ open
 - **Issue:** #3634
+
+### G1847 — Central session renewal recovery aria-live confirmation
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De sessie-renewal herstelcue is na reload zichtbaar, maar nog niet expliciet als rustige livebevestiging voor assistieve technologie gemarkeerd.
+- **User Impact:** Screenreadergebruikers kunnen de terugkeerstatus missen als focus elders in de Back-up route staat.
+- **Desired Outcome:** Kiempad kan een generieke sessie-renewal herstelbevestiging met aria-live of gelijkwaardige focusveilige semantiek tonen.
+- **User Value:** Herstel na centrale sessieverval is ook auditief terugvindbaar zonder technische details.
+- **Acceptance Criteria:** Back-up kan een generieke sessie-renewal recovery bevestiging met aria-live of gelijkwaardige focusveilige semantiek tonen; bevestiging verschijnt alleen na recovery flow en niet bij normale actieve sessie; geen passphrase, token, sessie-id, cursor, base64, OCR-tekst, recordpayload, filename of medische plaintext in copy of testfixtures; tests dekken announcement semantiek en normale afwezigheid; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Back-up, centrale syncstatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, Back-up status feedback, accessibility tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3636
 
 ### G584 — paginated record load status UI
 

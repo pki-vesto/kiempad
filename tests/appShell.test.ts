@@ -42300,6 +42300,30 @@ describe('app shell', () => {
     expect(failedSyncFeedback).not.toContain('BASE64_MEDISCHE_PAYLOAD');
   });
 
+  it('toont sessie-renewal recovery focuscue alleen als veilige backupstatus', () => {
+    const normalHtml = renderAppShell('backup', makeStartState({ storageMode: 'central-api' }));
+    const recoveryHtml = renderAppShell(
+      'backup',
+      makeStartState({
+        storageMode: 'central-api',
+        backupStatus:
+          'Centrale sessieherstelactie verwerkt. Controleer de centrale overdrachtstatus hieronder.',
+      }),
+    );
+    const recoveryBackupZone = extractBackupImportPrivacyZone(recoveryHtml);
+
+    expect(normalHtml).not.toContain('Centrale sessieherstelactie verwerkt');
+    expect(recoveryHtml).toContain('Centrale sessieherstelactie verwerkt');
+    expect(recoveryHtml).toContain('Controleer de centrale overdrachtstatus hieronder');
+    expect(recoveryHtml).toContain('Laatste actie verwerkt');
+    expect(recoveryBackupZone).not.toContain('central-token');
+    expect(recoveryBackupZone).not.toContain('passphrase');
+    expect(recoveryBackupZone).not.toContain('sessie-id');
+    expect(recoveryBackupZone).not.toContain('recordpayload');
+    expect(recoveryBackupZone).not.toContain('OCR_RAW_PAYLOAD');
+    expect(recoveryBackupZone).not.toContain('BASE64_MEDISCHE_PAYLOAD');
+  });
+
   it('toont replayconflict reloadactie alleen bij herstelbare centrale conflictstatus', () => {
     const idleHtml = renderAppShell(
       'backup',

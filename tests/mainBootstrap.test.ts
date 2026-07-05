@@ -171,4 +171,16 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('window.location.reload()');
     expect(mainSource).not.toContain('session id token passphrase payload');
   });
+
+  it('zet sessie-renewal herstel na reload terug op een veilige backup focuscue', () => {
+    expect(mainSource).toContain('CENTRAL_SESSION_RENEWAL_RECOVERY_FOCUS_KEY');
+    expect(mainSource).toContain('kiempad.central-session-renewal-recovery-focus');
+    expect(mainSource).toContain('markCentralSessionRenewalRecoveryFocus()');
+    expect(mainSource).toContain('consumeCentralSessionRenewalRecoveryFocus()');
+    expect(mainSource).toContain(
+      "window.history.replaceState(null, '', '#backup?route=controleren')",
+    );
+    expect(mainSource).toContain('Centrale sessieherstelactie verwerkt.');
+    expect(mainSource).not.toContain('central-token secret passphrase sessie-id recordpayload');
+  });
 });
