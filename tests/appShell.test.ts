@@ -2323,6 +2323,13 @@ describe('app shell', () => {
     expect(css).toContain('.medication-planning-followup__summary {');
     expect(css).toContain('.medication-planning-followup__body {');
     expect(css).toContain('.medication-planning-followup__links {');
+    expect(css).toContain('.medication-history-intake-board {');
+    expect(css).toContain('.medication-history-intake-board__header {');
+    expect(css).toContain('.medication-history-intake-board__lanes {');
+    expect(css).toContain('.medication-history-intake-board__lane {');
+    expect(css).toContain('.medication-history-intake-board__lane:hover,');
+    expect(css).toContain('.medication-history-intake-board__lane:focus-visible {');
+    expect(css).toContain('.medication-history-intake-board__lane em {');
     expect(css).toContain('.medication-progress {');
     expect(css).toContain('.medication-progress__track {');
     expect(css).toContain('.medication-progress__counts {');
@@ -2491,6 +2498,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.medication-focus-shell {');
     expect(mobileCss).toContain('.medication-focus-shell__body {');
     expect(mobileCss).toContain('.medication-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.medication-history-intake-board__lanes {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.medication-history-intake-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(mobileCss).toContain('.medication-form-section {');
     expect(mobileCss).toContain('.medication-form-actions {');
     expect(css).toContain('@media (max-width: 420px)');
@@ -6466,6 +6477,28 @@ describe('app shell', () => {
       'Bekijk middelen, voorraad, instructies en innameloghistorie los van het beheerscherm.',
     );
     expect(html).toContain('id="medication-history-disclosure"');
+    expect(html).toContain('aria-label="Medicatiehistorie intakebord"');
+    expect(html).toContain('data-medication-history-intake-board="first-viewport"');
+    expect(html).toContain('Kies eerst je medicatielaag');
+    expect(html).toContain(
+      'Open vandaag, planning, actieve medicatie of doseerhistorie zonder meteen alle middelen te tonen.',
+    );
+    expect(html).toContain('aria-label="Medicatiehistorie laag kiezen"');
+    expect(html).toContain('data-medication-history-intake-lane="today"');
+    expect(html).toContain('href="#medicatie?route=vandaag"');
+    expect(html).toContain('1/3 afgevinkt');
+    expect(html).toContain('data-medication-history-intake-lane="planning"');
+    expect(html).toContain('href="#medicatie?route=planning"');
+    expect(html).toContain('0 later');
+    expect(html).toContain('data-medication-history-intake-lane="active-medication"');
+    expect(html).toContain('href="#medicatie?route=beheer"');
+    expect(html).toContain('1/1 middel(en)');
+    expect(html).toContain('data-medication-history-intake-lane="dose-history"');
+    expect(html).toContain('href="#medication-history-disclosure"');
+    expect(html).toContain('3 moment(en)');
+    expect(html.indexOf('data-medication-history-intake-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="medication-history-disclosure"'),
+    );
     expect(html).toContain('Middelen, voorraad en historie tonen');
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="medication-history-disclosure" open',

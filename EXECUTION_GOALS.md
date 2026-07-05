@@ -16335,8 +16335,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication history UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 81
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3680
+
+### G1870 — Premium Claude Design UI: schedule history first-viewport planning board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De agendageschiedenis kan nog als lange stapel openen wanneer vandaag, komende afspraken, voorbereiding en afspraakgeschiedenis tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke planninglaag eerst relevant is.
+- **Desired Outcome:** Agendageschiedenis opent met een compact first-viewport planning board voor vandaag, komende afspraken, voorbereiding en afspraakgeschiedenis.
+- **User Value:** Planning voelt sneller navigeerbaar zonder schedule-, planning-, preparation-, appointment form- of historyhooks te verliezen.
+- **Acceptance Criteria:** Schedule history opent met compacte lanes voor vandaag, komende afspraken, voorbereiding en afspraakgeschiedenis; volledige afspraak- en detaillijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande schedule-, planning-, preparation-, appointment form- en historyhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen diagnose, behandelkeuzeadvies, token, secret of medische plaintext wordt toegevoegd.
+- **Affected Screens:** Agenda
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Schedule history UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 80
+- **Status:** ☐ open
+- **Issue:** #3682
 
 ### G586 — replay conflict recovery status UI
 

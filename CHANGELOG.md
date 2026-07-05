@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1869 Premium Claude Design UI: medicatiehistorie opent nu met een compact
+  eerste-viewport intakebord voor vandaag, planning, actieve medicatie en
+  doseerhistorie. De volledige middelen-, voorraad- en innamelijsten blijven
+  bereikbaar via bestaande ankers zonder als eerste lange medicatiestapel te
+  starten.
 - G1868 Premium Claude Design UI: kostenhistorie opent nu met een compact
   eerste-viewport kostenbord voor totalen, vergoeding, eigen risico en
   kostenhistorie. De volledige kostenlijst en bewerkformulieren blijven bereikbaar
