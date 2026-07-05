@@ -2946,6 +2946,25 @@ describe('app shell', () => {
     expect(html).toContain('data-start-launchpad="ready"');
     expect(html).toContain('data-start-console-region="launchpad"');
     expect(html).toContain('data-start-launchpad-region="header"');
+    expect(html).toContain('data-start-launchpad-region="focus-board"');
+    expect(html).toContain(
+      'aria-label="Start first-viewport focus board" data-start-first-viewport-board="ready"',
+    );
+    expect(html).toContain('Kies eerst je werkvlak');
+    expect(html).toContain('data-start-first-viewport-lane="today"');
+    expect(html).toContain('data-start-first-viewport-lane="planning"');
+    expect(html).toContain('data-start-first-viewport-lane="recommendations"');
+    expect(html).toContain('data-start-first-viewport-lane="questions"');
+    expect(html).toContain('data-start-first-viewport-lane="dashboard"');
+    expect(html).toContain('href="#start-today" data-start-first-viewport-lane="today"');
+    expect(html).toContain('href="#agenda" data-start-first-viewport-lane="planning"');
+    expect(html).toContain(
+      'href="#start-recommendations" data-start-first-viewport-lane="recommendations"',
+    );
+    expect(html).toContain('href="#vragen?route=open" data-start-first-viewport-lane="questions"');
+    expect(html).toContain(
+      'href="#start-dashboard-followup" data-start-first-viewport-lane="dashboard"',
+    );
     expect(html).toContain('data-start-launchpad-region="primary"');
     expect(html).toContain('id="start-primary-day-action"');
     expect(html).toContain('data-start-primary-day-action="ready"');
@@ -2991,6 +3010,9 @@ describe('app shell', () => {
     expect(html).toContain('data-start-workspace-card="insight"');
     expect(html).toContain('data-start-workspace-card="control"');
     expect(html.indexOf('data-start-focus-shell="ready"')).toBeLessThan(
+      html.indexOf('data-start-first-viewport-board="ready"'),
+    );
+    expect(html.indexOf('data-start-first-viewport-board="ready"')).toBeLessThan(
       html.indexOf('data-start-primary-day-action="ready"'),
     );
     expect(html).toContain('data-start-focus-region="workspaces"');
@@ -3142,10 +3164,17 @@ describe('app shell', () => {
     expect(css).toContain('.settings-preferences-board__lane:hover,');
     expect(css).toContain('.settings-detail-disclosure__body {');
     expect(css).toContain('.settings-theme-form {');
+    expect(css).toContain('.start-first-viewport-board {');
+    expect(css).toContain('.start-first-viewport-board__lanes {');
+    expect(css).toContain('.start-first-viewport-board__lane {');
+    expect(css).toContain('.start-first-viewport-board__lane:hover,');
+    expect(css).toContain('.start-focus-shell__board,');
     expect(mobileCss).toContain('.settings-preferences-board__lanes {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.settings-preferences-board__lane {');
     expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
+    expect(mobileCss).toContain('.start-first-viewport-board__lanes {');
+    expect(mobileCss).toContain('.start-first-viewport-board__lane {');
     expect(mobileCss).toContain('.theme-form {');
     expect(mobileCss).toContain('.theme-form__label {');
     expect(css).toContain('.theme-form[data-theme-control="compact"] {');

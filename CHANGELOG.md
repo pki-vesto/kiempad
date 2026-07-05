@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1875 Premium Claude Design UI: Start opent nu met een compact
+  first-viewport focus board voor vandaag, planning, suggesties, vragen en
+  dashboardcontext. De bestaande dagactie, werkbanen, cockpit en setup blijven
+  bereikbaar zonder als eerste lange dashboardstapel te starten.
 - G1874 Premium Claude Design UI: instellingen openen nu met een compact
   eerste-viewport preferences board voor identiteit, gedeelde modus, thema,
   notificatieprivacy en detailvelden. De bestaande naam-, gedeelde-modus-,

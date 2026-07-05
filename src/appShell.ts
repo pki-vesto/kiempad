@@ -15881,6 +15881,20 @@ function renderStartScreen(state: AppShellState): string {
     [
       renderStartFocusShell({
         header: startHeader,
+        focusBoard: renderStartFirstViewportBoard({
+          nextAppointment,
+          nextReminder,
+          openQuestions,
+          recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
+            (total, owner) => total + dailyRecommendations[owner].length,
+            0,
+          ),
+          hasDashboardContext:
+            Boolean(activeTraject) ||
+            state.afspraken.length > 0 ||
+            state.herinneringen.length > 0 ||
+            (state.dossierDocuments?.length ?? 0) > 0,
+        }),
         primaryDayAction,
         cockpit: startCockpit,
         workspaceDeck: startWorkspaceDeck,
@@ -15926,6 +15940,7 @@ function renderStartTodayConsole(input: {
 
 function renderStartFocusShell(input: {
   header: string;
+  focusBoard: string;
   primaryDayAction: string;
   cockpit: string;
   workspaceDeck: string;
@@ -15935,6 +15950,9 @@ function renderStartFocusShell(input: {
     <section class="start-focus-shell" aria-label="Start focusruimte" data-start-focus-shell="ready" data-start-launchpad="ready" data-start-console-region="launchpad">
       <div class="start-focus-shell__header" data-start-launchpad-region="header">
         ${input.header}
+      </div>
+      <div class="start-focus-shell__board" data-start-launchpad-region="focus-board">
+        ${input.focusBoard}
       </div>
       <div class="start-focus-shell__body">
         <div class="start-focus-shell__primary" data-start-launchpad-region="primary">
@@ -15965,6 +15983,83 @@ function renderStartFocusShell(input: {
           </details>
         </div>
       </div>
+    </section>
+  `;
+}
+
+function renderStartFirstViewportBoard(input: {
+  nextAppointment: string;
+  nextReminder: string;
+  openQuestions: string;
+  recommendationCount: number;
+  hasDashboardContext: boolean;
+}): string {
+  const lanes = [
+    {
+      id: 'today',
+      href: '#start-today',
+      label: 'Vandaag',
+      title: 'Dagactie',
+      detail: 'Open planning, dagtaken en snelle vastlegging in één compacte vandaagroute.',
+      cue: 'Nu',
+    },
+    {
+      id: 'planning',
+      href: '#agenda',
+      label: 'Planning',
+      title: input.nextAppointment,
+      detail: input.nextReminder,
+      cue: 'Agenda',
+    },
+    {
+      id: 'recommendations',
+      href: '#start-recommendations',
+      label: 'Suggesties',
+      title: `${input.recommendationCount} kaart${input.recommendationCount === 1 ? '' : 'en'}`,
+      detail: 'Bekijk dagadvies apart van planning en dossiercontext.',
+      cue: 'Dagadvies',
+    },
+    {
+      id: 'questions',
+      href: '#vragen?route=open',
+      label: 'Vragen',
+      title: input.openQuestions,
+      detail: 'Open consultvragen zonder door het volledige dashboard te scrollen.',
+      cue: 'Consult',
+    },
+    {
+      id: 'dashboard',
+      href: '#start-dashboard-followup',
+      label: 'Dashboardcontext',
+      title: input.hasDashboardContext ? 'Context beschikbaar' : 'Nog leeg',
+      detail: 'Open dossierbasis, werkbanen en setup pas als vervolgcontext.',
+      cue: 'Details',
+    },
+  ];
+
+  return `
+    <section class="start-first-viewport-board" aria-label="Start first-viewport focus board" data-start-first-viewport-board="ready">
+      <header class="start-first-viewport-board__header">
+        <div>
+          <p class="start-cockpit__eyebrow">Startkeuze</p>
+          <h2>Kies eerst je werkvlak</h2>
+        </div>
+        <p>Vandaag, planning, suggesties, vragen en dashboardcontext staan als aparte routes in plaats van één lange startpagina.</p>
+      </header>
+      <nav class="start-first-viewport-board__lanes" aria-label="Start werkvlak kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="start-first-viewport-board__lane" href="${lane.href}" data-start-first-viewport-lane="${lane.id}">
+                <span>${lane.label}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${lane.cue}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }

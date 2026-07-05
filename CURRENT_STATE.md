@@ -135,6 +135,10 @@
   notificatieprivacy en detailvelden. De bestaande naam-, gedeelde-modus-,
   thema- en voorbeelddataformulieren blijven via een detailsectie bereikbaar
   zonder de eerste viewport als lange instellingenstapel te vullen.
+- **G1875 Start focus board:** Start opent nu met een compact first-viewport
+  bord voor vandaag, planning, suggesties, vragen en dashboardcontext. De
+  bestaande dagactie, werkbanen, cockpit en setup blijven bereikbaar zonder de
+  eerste viewport als lange dashboardstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
