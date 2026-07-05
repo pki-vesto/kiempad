@@ -28278,10 +28278,11 @@ summary[class*="__summary"]:focus-visible,
 
   .research-trend-scan {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     overflow-x: auto;
     padding-bottom: 2px;
     scroll-snap-type: x proximity;
+    scrollbar-width: none;
   }
 
   .research-trend-scan::-webkit-scrollbar {
@@ -28289,9 +28290,26 @@ summary[class*="__summary"]:focus-visible,
   }
 
   .research-trend-scan__card {
-    flex: 0 0 min(142px, 66vw);
-    min-height: 76px;
+    gap: 3px;
+    flex: 0 0 min(124px, 48vw);
+    min-height: 66px;
+    padding: 8px;
     scroll-snap-align: start;
+  }
+
+  .research-trend-scan__card span {
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    line-height: 1.12;
+  }
+
+  .research-trend-scan__card strong {
+    font-size: 0.92rem;
+  }
+
+  .research-trend-scan__card small {
+    font-size: 0.68rem;
+    line-height: 1.2;
   }
 
   .embryo-tracking-grid {

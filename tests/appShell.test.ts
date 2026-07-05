@@ -42150,6 +42150,7 @@ describe('app shell', () => {
     expect(emptyDashboard).toContain('<dt>Groepen</dt><dd>0</dd>');
     expect(emptyDashboard).toContain('<dt>Items</dt><dd>0</dd>');
     expect(emptyDashboard).toContain('data-research-trend-scan="ready"');
+    expect(emptyDashboard).toContain('data-research-trend-scan-density="mobile-compact"');
     expect(emptyDashboard).toContain('aria-label="Research trend overzicht"');
     expect(emptyDashboard).toContain('data-research-trend-scan-card="topics"');
     expect(emptyDashboard).toContain('data-research-trend-scan-card="publications"');
@@ -42223,6 +42224,7 @@ describe('app shell', () => {
     expect(contextualDashboard).toContain('data-research-trend-item="research-ivf-icsi-embryo"');
     expect(contextualDashboard).toContain('data-research-trend-item="research-man-leefstijl-bron"');
     expect(contextualDashboard).toContain('data-research-trend-scan="ready"');
+    expect(contextualDashboard).toContain('data-research-trend-scan-density="mobile-compact"');
     expect(contextualDashboard).toContain('data-research-trend-scan-card="topics"');
     expect(contextualDashboard).toContain('data-research-trend-scan-card="publications"');
     expect(contextualDashboard).toContain('data-research-trend-scan-card="sources"');
@@ -42263,6 +42265,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.research-trend-scan {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.research-trend-scan__card {');
+    expect(mobileCss).toContain('flex: 0 0 min(124px, 48vw);');
+    expect(mobileCss).toContain('min-height: 66px;');
     expect(mobileCss).toContain('.research-trend-dashboard__grid {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
   });

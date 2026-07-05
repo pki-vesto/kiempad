@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1923 Premium Claude Design UI: de Researchtrends scan is op mobiel compacter
+  met smallere snapkaarten, lagere kaarthoogte en compactere labels, zodat
+  onderwerpen, publicaties, bronnen en laatste update sneller scanbaar zijn.
 - G1922 Premium Claude Design UI: de Embryo-dossiers tracking-scan is op mobiel
   compacter met smallere snapkaarten, lagere kaarthoogte en compactere labels,
   zodat dossiers, meetmomenten, status-events en bronnen sneller scanbaar zijn.

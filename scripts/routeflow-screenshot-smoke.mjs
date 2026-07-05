@@ -117,6 +117,7 @@ const targets = [
       '#knowledge-research-trends',
       '[data-knowledge-research-trends-choice="collapsed"]',
       '[data-research-trend-dashboard="ready"]',
+      '[data-research-trend-scan-density="mobile-compact"]',
       '[data-research-relevance-panel="ready"]',
     ],
     closedDetailsSelectors: [

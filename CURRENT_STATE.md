@@ -89,6 +89,9 @@
 - **G559 research trend-scan:** het researchtrenddashboard start met een compacte
   scanlaag voor onderwerpen, publicaties, bronnen en laatste update, zodat trends
   eerst als overzicht lezen voordat de losse trendkaarten volgen.
+- **G1923 mobiele research trend-scan dichtheid:** op mobiel gebruikt de
+  researchscan smallere snapkaarten met lagere hoogte en compactere labels, zodat
+  onderwerpen, publicaties, bronnen en laatste update sneller tegelijk scanbaar zijn.
 - **G560 dagadvies owner-scan:** de Dagadviesroute toont in de eerste laag nu drie
   compacte kaarten voor vrouw, man en samen, zodat persoonlijke en gezamenlijke
   suggesties eerst scanbaar zijn voordat de gebruiker beslislinks of de volledige

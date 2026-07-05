@@ -269,6 +269,9 @@
 - **Research trend dashboard scan — done in G559 / issue #3791.** Researchtrends now open with
   a compact scan for topics, publications, source references, and latest update before detailed
   trend cards.
+- **Research trend scan mobile density — done in G1923 / issue #3790.** The Researchtrends scan
+  now uses tighter mobile snap cards with shorter height and compact labels, making topics,
+  publications, sources, and latest update faster to scan before opening trend detail cards.
 - **Daily recommendation dual-owner scan — done in G560 / issue #3793.** Dagadvies now shows a
   first-viewport owner scan for vrouw, man, and samen before the decision lanes and full
   suggestion list, keeping feedback filters, owner workbench hooks, and non-medical copy intact.
