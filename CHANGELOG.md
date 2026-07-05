@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G545 Research Intelligence: researchbronnen tonen nu offline cache metadata
+  met cachebron, datum, reviewstatus, cachetype, correctievelden en uitleg voor
+  leken.
 - G546 Research Intelligence: researchrelevantie toont nu neutrale vragen voor
   de kliniek met bron, datum, reviewstatus, correctievelden en uitleg voor leken.
 - G541 Research Intelligence: researchsamenvattingen tonen nu een parsed

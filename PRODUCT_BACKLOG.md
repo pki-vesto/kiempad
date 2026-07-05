@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1777 |
+| ☑ klaar | 1778 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **1985** |
+| **Totaal** | **1986** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -707,7 +707,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G542 | Research Intelligence: patientvriendelijke samenvatting leesniveau guard | P1 | F5 | ☑ |
 | G543 | Research Intelligence: research trend update timestamp | P1 | F5 | ☑ |
 | G544 | Research Intelligence: research relevantie uitleg onzekerheidslabel | P0 | F5 | ☑ |
-| G545 | Research Intelligence: researchbibliotheek offline cache metadata | P1 | F5 | ☐ |
+| G545 | Research Intelligence: researchbibliotheek offline cache metadata | P1 | F5 | ☑ |
 | G546 | Research Intelligence: research item artsbespreek-vraag generator | P1 | F5 | ☑ |
 | G547 | Daily Recommendations: dagadvies engine input-minimalisatie | P0 | F5 | ☑ |
 | G548 | Daily Recommendations: vrouw aanbeveling cyclusfase context | P0 | F5 | ☑ |
@@ -2148,12 +2148,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1984 | Research Intelligence: patient summary reading-level routeflow evidence | P1 | F5 | ☐ |
 | G1985 | Research Intelligence: source citation parser routeflow evidence | P1 | F5 | ☐ |
 | G1986 | Research Intelligence: clinician question generator routeflow evidence | P1 | F5 | ☐ |
+| G1987 | Research Intelligence: offline cache metadata routeflow evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1985** (id's G001 t/m G1986; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1986** (id's G001 t/m G1987; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

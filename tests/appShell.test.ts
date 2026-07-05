@@ -41485,6 +41485,20 @@ describe('app shell', () => {
     expect(html).toContain('Lokale cache');
     expect(html).toContain('Eigen artikel embryo-cultuur');
     expect(html).toContain('https://voorbeeld.test/embryo-cultuur');
+    expect(html).toContain('data-research-offline-cache-metadata="ready"');
+    expect(html).toContain('data-research-offline-cache-review="concept_te_controleren"');
+    expect(html).toContain('data-research-offline-cache-type="lokale_cache"');
+    expect(html).toContain('data-research-offline-cache-source="ready"');
+    expect(html).toContain('data-research-offline-cache-date="Nog geen publicatiedatum"');
+    expect(html).toContain('<dt>Cachebron</dt><dd>https://voorbeeld.test/embryo-cultuur</dd>');
+    expect(html).toContain('<dt>Datum</dt><dd>Nog geen publicatiedatum</dd>');
+    expect(html).toContain('<dt>Reviewstatus</dt><dd>concept_te_controleren</dd>');
+    expect(html).toContain(
+      '<dt>Correctievelden</dt><dd>bron · datum · cacheType · reviewstatus</dd>',
+    );
+    expect(html).toContain(
+      'Deze bron staat offline in je lokale researchbibliotheek; controleer bron, datum en relevantie zelf.',
+    );
     expect(html).toContain('Allowlist: PubMed');
     expect(html).toContain('Handmatige review: Bron staat niet op de research-source allowlist');
     expect(html).toContain('Bronverificatie');

@@ -81,6 +81,9 @@
   een lokale update-datum, bron, reviewstatus, correctievelden en uitleg voor leken,
   zodat gebruikers trendmetadata kunnen controleren zonder medisch advies of
   keuzehulp.
+- **G545 researchbibliotheek offline cache metadata:** researchbronnen tonen
+  cachebron, datum, reviewstatus, cachetype en correctievelden, zodat lokale
+  researchbronnen controleerbaar blijven zonder netwerkactie.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.

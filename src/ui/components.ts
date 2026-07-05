@@ -349,6 +349,7 @@ export function researchSourceCard(opts: {
   detail: string;
   id?: string;
   source?: string;
+  body?: string;
   className?: string;
   data?: Record<string, string>;
 }): string {
@@ -365,6 +366,7 @@ export function researchSourceCard(opts: {
     <h3 class="kp-research-source-card__title">${escapeHtml(opts.title)}</h3>
     <p class="kp-research-source-card__meta">${escapeHtml(opts.meta)}</p>
     <p class="kp-research-source-card__detail">${escapeHtml(opts.detail)}</p>
+    ${opts.body ?? ''}
   </li>`;
 }
 

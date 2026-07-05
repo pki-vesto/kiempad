@@ -15292,7 +15292,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, encrypted storage, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #876
 
 ### G546 — research item artsbespreek-vraag generator
 
@@ -18236,6 +18237,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3910
+
+### G1987 — Research Intelligence: offline cache metadata routeflow evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** De researchbibliotheek toont offline cache metadata, maar routeflow-bewijs moet expliciet blijven vastleggen dat cachebron, datum, reviewstatus, cachetype en correctievelden bereikbaar blijven na UI-wijzigingen.
+- **User Impact:** Gebruikers kunnen anders minder goed zien welke researchbronnen lokaal beschikbaar zijn en welke metadata controle vraagt.
+- **Desired Outcome:** Routeflow- en release-evidence noemen de offline cache metadata, inclusief data-hooks, bronherleiding en niet-medische grens.
+- **User Value:** Gebruikers blijven zien welke researchbronnen lokaal beschikbaar zijn en welke metadata zij moeten controleren voordat zij de bron gebruiken.
+- **Acceptance Criteria:** Evidence noemt `data-research-offline-cache-metadata`; evidence noemt bron, datum, reviewstatus, cachetype en correctievelden; evidence bewaakt dat geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt getoond; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research sources, routeflow smoke, release evidence
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3912
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
