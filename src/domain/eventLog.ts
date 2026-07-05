@@ -7,6 +7,8 @@ export type EventLogInput = {
   detail?: string;
 };
 
+export type ImportRetryEventLogStatus = 'opnieuw_klaargezet' | 'niet_ondersteund';
+
 export const EVENT_CATEGORIE_LABELS: Record<EventLog['categorie'], string> = {
   kluis: 'Kluis',
   backup: 'Back-up',
@@ -104,6 +106,14 @@ export function validateEventLogDetailAllowlist(
   return findings;
 }
 
+export function maakImportRetryEventLogDetail(input: {
+  recordId: string;
+  status: ImportRetryEventLogStatus;
+}): string {
+  const recordId = sanitizeImportRetryRecordId(input.recordId);
+  return `Importretry record-id ${recordId}; status ${input.status}.`;
+}
+
 function createAllowedDetailSet(entries = EVENT_LOG_ALLOWED_DETAIL_EXAMPLES): Set<string> {
   const findings = validateEventLogDetailAllowlist(entries);
   if (findings.length > 0) {
@@ -131,9 +141,18 @@ function isHighRiskEvent(input: {
 
 const EVENT_LOG_SENSITIVE_DETAIL_PATTERNS = [
   /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i,
+  /\b[\w.-]+\.(?:pdf|jpg|jpeg|png|txt|csv|json|bin)\b/i,
+  /\b(?:OCR_RAW|BASE64|data:application|data:image|payload|ciphertext)\b/i,
   /\b(?:naam|patient|patiënt|bsn|burgerservicenummer|geboortedatum|dossiernummer|patientnummer|patiëntnummer)\s*:/i,
   /\b(?:vraag|antwoord|medicatie|afspraak|echo|embryo|labuitslag|symptoom)\s*:/i,
+  /\b(?:diagnose|dosering|behandelkeuzeadvies|gezondheidsdata|plaintext|secret|token)\b/i,
   /\b(?:progesteron|gonal|ovitrelle|fyremadel|decapeptyl|utrogestan)\b/i,
 ];
 
 const EVENT_LOG_ALLOWED_DETAILS = createAllowedDetailSet();
+
+function sanitizeImportRetryRecordId(recordId: string): string {
+  const trimmed = recordId.trim();
+  if (/^[A-Za-z0-9:_-]{1,120}$/.test(trimmed)) return trimmed;
+  return 'record-id-redacted';
+}

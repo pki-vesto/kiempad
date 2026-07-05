@@ -127,6 +127,22 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('Dossierdocument verwijderd uit de import-inbox.');
   });
 
+  it('houdt importretry-eventlogdetail via de redaction helper', () => {
+    const legacyInlineDetail = [
+      'detail: `Importretry record-id $',
+      '{result.document.id}; status $',
+      '{result.status}.`',
+    ].join('');
+
+    expect(mainSource).toContain('maakImportRetryEventLogDetail');
+    expect(mainSource).toContain("gebeurtenis: 'Dossierimport retry'");
+    expect(mainSource).toContain('recordId: result.document.id');
+    expect(mainSource).toContain('status: result.status');
+    expect(mainSource).not.toContain(legacyInlineDetail);
+    expect(mainSource).not.toContain('retry-private-rapport.pdf');
+    expect(mainSource).not.toContain('OCR_RAW BASE64 payload');
+  });
+
   it('vervangt native delete-confirms door inline bevestigingen', () => {
     expect(mainSource).toContain('function showInlineDeleteConfirmation(');
     expect(mainSource).toContain('[data-inline-delete-confirm="ready"]');

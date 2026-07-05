@@ -3,6 +3,7 @@ import {
   EVENT_LOG_ALLOWED_DETAIL_EXAMPLES,
   isEventLogDetailPrivacySafe,
   maakEventLog,
+  maakImportRetryEventLogDetail,
   sorteerEventLogs,
   validateEventLogDetailAllowlist,
 } from '../src/domain/eventLog';
@@ -101,6 +102,49 @@ describe('eventLog', () => {
     }
   });
 
+  it('bewaakt importretry-eventlogcopy als technische status plus veilige record-id', () => {
+    const detail = maakImportRetryEventLogDetail({
+      recordId: 'doc_retry_20260705',
+      status: 'opnieuw_klaargezet',
+    });
+
+    expect(detail).toBe('Importretry record-id doc_retry_20260705; status opnieuw_klaargezet.');
+    expect(
+      isEventLogDetailPrivacySafe({
+        categorie: 'systeem',
+        gebeurtenis: 'Dossierimport retry',
+        detail,
+      }),
+    ).toBe(true);
+    expect(() =>
+      maakEventLog('event-import-retry', {
+        categorie: 'systeem',
+        gebeurtenis: 'Dossierimport retry',
+        detail,
+      }),
+    ).not.toThrow();
+    expect(detail).not.toMatch(
+      /retry-private-rapport\.pdf|OCR_RAW|BASE64|data:application|cHJpdmF0ZS1wYXlsb2Fk|diagnose|dosering|behandelkeuzeadvies|secret|token|gezondheidsdata/i,
+    );
+  });
+
+  it('redigeert importretry-record-id wanneer die op broninformatie lijkt', () => {
+    const detail = maakImportRetryEventLogDetail({
+      recordId: 'retry-private-rapport.pdf',
+      status: 'niet_ondersteund',
+    });
+
+    expect(detail).toBe('Importretry record-id record-id-redacted; status niet_ondersteund.');
+    expect(detail).not.toContain('retry-private-rapport.pdf');
+    expect(
+      isEventLogDetailPrivacySafe({
+        categorie: 'systeem',
+        gebeurtenis: 'Dossierimport retry',
+        detail,
+      }),
+    ).toBe(true);
+  });
+
   it('vereist rationale voor eventlogdetail-allowlist entries', () => {
     expect(validateEventLogDetailAllowlist(EVENT_LOG_ALLOWED_DETAIL_EXAMPLES)).toEqual([]);
     expect(EVENT_LOG_ALLOWED_DETAIL_EXAMPLES.map((entry) => entry.value)).toEqual([
@@ -148,6 +192,21 @@ describe('eventLog', () => {
         categorie: 'backup' as const,
         gebeurtenis: 'Versleutelde back-up geïmporteerd',
         detail: 'Dossiernummer: TEST-0001 verwerkt.',
+      },
+      {
+        categorie: 'systeem' as const,
+        gebeurtenis: 'Dossierimport retry',
+        detail: 'Importretry record-id doc-1; bestand retry-private-rapport.pdf.',
+      },
+      {
+        categorie: 'systeem' as const,
+        gebeurtenis: 'Dossierimport retry',
+        detail: 'Importretry record-id doc-1; OCR_RAW BASE64 payload cHJpdmF0ZS1wYXlsb2Fk.',
+      },
+      {
+        categorie: 'systeem' as const,
+        gebeurtenis: 'Dossierimport retry',
+        detail: 'Importretry record-id doc-1; diagnose en dosering in behandelkeuzeadvies.',
       },
     ];
 

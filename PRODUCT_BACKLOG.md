@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1762 |
+| ☑ klaar | 1763 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1961** |
+| **Totaal** | **1962** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2100,7 +2100,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1936 | Fertility Intelligence: metadata-normalisatie correctieformulier routeflow evidence | P1 | F5 | ☑ |
 | G1937 | Fertility Intelligence: OCR-review correctieformulier routeflow evidence | P1 | F5 | ☑ |
 | G1938 | Fertility Intelligence: import-inbox retry routeflow overflow evidence | P1 | F5 | ☑ |
-| G1939 | Fertility Intelligence: import-inbox retry eventlog redaction evidence | P1 | F5 | ☐ |
+| G1939 | Fertility Intelligence: import-inbox retry eventlog redaction evidence | P1 | F5 | ☑ |
 | G1940 | Daily Recommendations: artscheck vraag reviewstatus routeflow evidence | P1 | F5 | ☑ |
 | G1941 | Daily Recommendations: supplement artscheck actieflow routeflow evidence | P1 | F5 | ☑ |
 | G1942 | Fertility Intelligence: embryo image classification review routeflow evidence | P1 | F5 | ☑ |
@@ -2124,12 +2124,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1960 | Fertility Intelligence: embryo-ID alias review release evidence | P1 | F5 | ☐ |
 | G1961 | Fertility Intelligence: embryo bronlabel correctieflow release evidence | P1 | F5 | ☐ |
 | G1962 | Fertility Intelligence: imaging metadata reviewcorrectie release evidence | P1 | F5 | ☐ |
+| G1963 | Fertility Intelligence: import-inbox retry eventlog redaction release evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1961** (id's G001 t/m G1962; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1962** (id's G001 t/m G1963; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
