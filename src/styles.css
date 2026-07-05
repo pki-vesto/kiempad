@@ -30773,6 +30773,10 @@ summary[class*="__summary"]:focus-visible,
 
     .treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {
       margin-top: 4px;
+      border-color: CanvasText;
+      background: ButtonFace;
+      color: ButtonText;
+      font-weight: 720;
     }
 
     .treatment-task-route[aria-current="page"]:focus-visible {

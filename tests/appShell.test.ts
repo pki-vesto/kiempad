@@ -5946,6 +5946,7 @@ describe('app shell', () => {
       '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {',
     );
     expect(mobileCss).toContain('margin-top: 4px;');
+    expect(mobileCss).toContain('font-weight: 720;');
     expect(mobileCss).toContain('.treatment-task-route :is(span, strong, small, em) {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="focus"] {');
     expect(mobileCss).toContain('.treatment-task-route[data-command-route-group="planning"] {');
