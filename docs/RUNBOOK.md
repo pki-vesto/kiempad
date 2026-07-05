@@ -106,6 +106,15 @@ pad zonder lokale vault-hercreatie.
   actieknop, standaardregels zonder extra artscheckactie en horizontale overflow.
   Blijvende evidence mag geen dosering, interactieclaim, behandelvervanging,
   medische payload, secret of trackingpayload bevatten.
+- **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
+  `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te
+  verzamelen. De smoke controleert `data-research-offline-cache-metadata`,
+  cachebron, datum, reviewstatus, cachetype en correctievelden, inclusief de
+  lekenuitleg dat bron, datum en relevantie gecontroleerd moeten worden.
+  Blijvende evidence mag geen diagnose, dosering, kansberekening,
+  behandelkeuzeadvies, secret, gezondheidsdata of plaintext medische payload
+  bevatten.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en
   herlaadt de app-shell.

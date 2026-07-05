@@ -18269,8 +18269,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research sources, release evidence, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3914
+
+### G1989 — Research Intelligence: offline cache metadata release evidence missing-term fixture
+
+- **Epic:** Research Intelligence
+- **Problem:** De G1988 freshness guard koppelt release-evidence aan offline cache metadata, maar een compacte missing-term fixture moet nog expliciet bewaken welke fout ontstaat wanneer target- of selectortermen ontbreken.
+- **User Impact:** Gebruikers kunnen anders regressies missen als release-evidence gedeeltelijk aanwezig blijft maar de belangrijkste cachemetadata-term is weggevallen.
+- **Desired Outcome:** Maintenance-evidence heeft een kleine missing-term fixture voor offline cache metadata release evidence.
+- **User Value:** Onderhoud blijft duidelijk wanneer cachebron, datum, reviewstatus, cachetype of correctievelden niet meer in release-evidence genoemd worden.
+- **Acceptance Criteria:** Fixture faalt wanneer release-evidence `knowledge-research-offline-cache-metadata` of `data-research-offline-cache-metadata` mist; fixture noemt cachebron, datum, reviewstatus, cachetype en correctievelden; fixture-output bevat geen diagnose, dosering, kansberekening, behandelkeuzeadvies, secrets, gezondheidsdata of plaintext medische payloads; docs of backlog verwijzen naar het doel.
+- **Affected Screens:** Kennis
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research sources, release evidence, maintenance tests
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3916
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

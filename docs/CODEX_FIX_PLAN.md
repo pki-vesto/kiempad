@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G1988 Research Intelligence offline cache metadata release evidence freshness guard — done in G1988 / issue #3914.** Runbook, completion audit, changelog, current state en maintenance-test koppelen `knowledge-research-offline-cache-metadata`, `data-research-offline-cache-metadata` en `researchOfflineCacheMetadata` aan cachebron, datum, reviewstatus, cachetype, correctievelden en privacygrens.
 - **G1987 Research Intelligence offline cache metadata routeflow evidence — done in G1987 / issue #3912.** Routeflow-smoke bewaakt nu `knowledge-research-offline-cache-metadata` met cachebron, datum, reviewstatus, cachetype, correctievelden en niet-medische payloadgrens.
 - **G545 Research Intelligence researchbibliotheek offline cache metadata — done in G545 / issue #876.** Researchbronnen tonen nu offline cache metadata met cachebron, datum, reviewstatus, cachetype, correctievelden en lekenuitleg.
 - **G546 Research Intelligence research item artsbespreek-vraag generator — done in G546 / issue #877.** Researchrelevantie toont nu neutrale vragen voor de kliniek met bron, datum, reviewstatus, correctievelden en lekenuitleg.

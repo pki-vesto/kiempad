@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1779 |
+| ☑ klaar | 1780 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
-| **Totaal** | **1987** |
+| **Totaal** | **1988** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2149,13 +2149,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1985 | Research Intelligence: source citation parser routeflow evidence | P1 | F5 | ☐ |
 | G1986 | Research Intelligence: clinician question generator routeflow evidence | P1 | F5 | ☐ |
 | G1987 | Research Intelligence: offline cache metadata routeflow evidence | P1 | F5 | ☑ |
-| G1988 | Research Intelligence: offline cache metadata release evidence freshness guard | P1 | F5 | ☐ |
+| G1988 | Research Intelligence: offline cache metadata release evidence freshness guard | P1 | F5 | ☑ |
+| G1989 | Research Intelligence: offline cache metadata release evidence missing-term fixture | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1987** (id's G001 t/m G1988; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1988** (id's G001 t/m G1989; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

@@ -17,6 +17,13 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1988 offline cache metadata release evidence freshness guard:
+  releasecontext en onderhoudsdocs noemen nu `npm run smoke:routeflows`,
+  target `knowledge-research-offline-cache-metadata`,
+  `data-research-offline-cache-metadata` en `researchOfflineCacheMetadata`, zodat
+  cachebron, datum, reviewstatus, cachetype en correctievelden gekoppeld blijven
+  zonder diagnose, dosering, kansberekening, behandelkeuzeadvies, secret,
+  gezondheidsdata of plaintext medische payload.
 - G1987 Research Intelligence offline cache metadata routeflow evidence:
   `npm run smoke:routeflows` bewaakt nu target
   `knowledge-research-offline-cache-metadata`, inclusief

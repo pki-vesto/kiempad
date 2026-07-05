@@ -87,6 +87,13 @@
 - **G1987 offline cache metadata routeflow evidence:** de routeflow-smoke opent
   de researchbronnenlaag en bewaakt cachebron, datum, reviewstatus, cachetype,
   correctievelden en niet-medische payloadgrens voor offline cache metadata.
+- **G1988 offline cache metadata release evidence freshness guard:**
+  releasecontext in changelog, current state, runbook en completion audit noemt
+  `npm run smoke:routeflows`, `knowledge-research-offline-cache-metadata`,
+  `data-research-offline-cache-metadata` en `researchOfflineCacheMetadata`, zodat
+  cachebron, datum, reviewstatus, cachetype en correctievelden gekoppeld blijven
+  zonder diagnose, dosering, kansberekening, behandelkeuzeadvies, secret,
+  gezondheidsdata of plaintext medische payload.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.

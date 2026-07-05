@@ -4100,6 +4100,60 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G1946');
   });
 
+  it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
+    const requiredTerms = [
+      'Offline cache metadata evidence',
+      'knowledge-research-offline-cache-metadata',
+      'researchOfflineCacheMetadata',
+      'data-research-offline-cache-metadata',
+      'npm run smoke:routeflows',
+      'cachebron',
+      'datum',
+      'reviewstatus',
+      'cachetype',
+      'correctievelden',
+      'lekenuitleg',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+      'secret',
+      'gezondheidsdata',
+      'plaintext medische payload',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1988 offline cache metadata release evidence freshness guard',
+      'knowledge-research-offline-cache-metadata',
+      'data-research-offline-cache-metadata',
+      'researchOfflineCacheMetadata',
+      'cachebron, datum, reviewstatus, cachetype en correctievelden gekoppeld blijven',
+      'zonder diagnose, dosering, kansberekening, behandelkeuzeadvies, secret,',
+      'gezondheidsdata of plaintext medische payload',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'knowledge-research-offline-cache-metadata'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('researchOfflineCacheMetadata: true');
+    expect(backlog).toContain('G1988');
+    expect(executionGoals).toContain('G1988');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',

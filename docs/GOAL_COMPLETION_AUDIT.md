@@ -196,6 +196,22 @@ dagadvieslijst of artscheckactie voor supplementvragen wijzigt.
 - **Privacygrens:** blijvende evidence mag geen dosering, interactieclaim,
   behandelvervanging, medische payload, secret of trackingpayload bevatten.
 
+## Offline Cache Metadata Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de researchbronnenlijst,
+offline cache metadata of Kennis researchroute wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `researchOfflineCacheMetadata` in de routeflow target
+  `knowledge-research-offline-cache-metadata`.
+- **Command:** `npm run smoke:routeflows` controleert
+  `data-research-offline-cache-metadata` in de researchbronnenlaag.
+- **Scope:** de evidence bewaakt cachebron, datum, reviewstatus, cachetype,
+  correctievelden en lekenuitleg, inclusief lokale cache en handmatige seedbron.
+- **Privacygrens:** blijvende evidence mag geen diagnose, dosering,
+  kansberekening, behandelkeuzeadvies, secret, gezondheidsdata of plaintext
+  medische payload bevatten.
+
 ## Beslissing
 
 Markeer een doel alleen als `☑ klaar` wanneer ieder requirement direct bewijs heeft.
