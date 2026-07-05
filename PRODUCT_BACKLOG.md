@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1805 |
+| ☑ klaar | 1806 |
 | ◐ bezig | 0 |
 | ☐ open | 109 |
 | ☒ archived | 99 |
@@ -2175,13 +2175,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2011 | Research Intelligence: offline cache metadata release-state contract error-contract error error error missing-term error contract | P1 | F5 | ☑ |
 | G2012 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error release guard | P1 | F5 | ☑ |
 | G2013 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error missing-term fixture | P1 | F5 | ☑ |
-| G2014 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error missing-term error contract | P1 | F5 | ☐ |
+| G2014 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error missing-term error contract | P1 | F5 | ☑ |
+| G2015 | Research Intelligence: offline cache metadata release-state contract error-contract error error error error error release guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 2013** (id's G001 t/m G2014; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 2014** (id's G001 t/m G2015; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
