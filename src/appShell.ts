@@ -1703,6 +1703,12 @@ function renderLogboekScreen(state: AppShellState): string {
           ariaLabel: 'Logboek recent route-samenvatting',
           data: { 'eventlog-route-summary': 'recent' },
         })}
+        ${renderEventLogAuditBoard({
+          central: isCentralStorage(state),
+          eventCount: logs.length,
+          highRiskCount: highRiskLogs.length,
+          categoryCount: Object.keys(categoryCounts).length,
+        })}
         <details id="logboek-recent-disclosure" class="kp-disclosure" data-eventlog-disclosure="recent">
           <summary class="kp-disclosure__summary">Recente auditregels openen</summary>
           <div class="kp-disclosure__body">
@@ -1805,6 +1811,79 @@ function renderLogboekScreen(state: AppShellState): string {
       ariaLabel: isCentralStorage(state) ? 'Gebeurtenissenlog' : 'Lokaal gebeurtenissenlog',
     },
   );
+}
+
+function renderEventLogAuditBoard(input: {
+  central: boolean;
+  eventCount: number;
+  highRiskCount: number;
+  categoryCount: number;
+}): string {
+  const lanes: Array<{
+    key: 'privacy' | 'missed' | 'system' | 'history';
+    href: string;
+    eyebrow: string;
+    value: string;
+    label: string;
+    detail: string;
+  }> = [
+    {
+      key: 'privacy',
+      href: '#logboek-route-privacy',
+      eyebrow: 'Privacy',
+      value: String(input.highRiskCount),
+      label: 'Signalen',
+      detail: 'Controleer risicosignalen zonder auditdetails te openen.',
+    },
+    {
+      key: 'missed',
+      href: '#logboek-privacy-disclosure',
+      eyebrow: 'Gemiste acties',
+      value: input.highRiskCount > 0 ? 'Check' : '0',
+      label: 'Aandacht',
+      detail: 'Open alleen privacygevoelige regels wanneer actie nodig is.',
+    },
+    {
+      key: 'system',
+      href: '#logboek-route-categorieen',
+      eyebrow: 'Systeem',
+      value: String(input.categoryCount),
+      label: 'Categorieen',
+      detail: 'Scan systeemsoorten als compacte categoriekaart.',
+    },
+    {
+      key: 'history',
+      href: '#logboek-recent-disclosure',
+      eyebrow: 'Historie',
+      value: String(input.eventCount),
+      label: input.central ? 'Centraal' : 'Lokaal',
+      detail: 'Open de volledige audithistorie pas als naslag.',
+    },
+  ];
+
+  return `
+    <section class="eventlog-audit-board" aria-label="Logboek audit board" data-eventlog-audit-board="first-viewport">
+      <header class="eventlog-audit-board__header">
+        <p class="kp-card__eyebrow">Audit board</p>
+        <h3>Kies eerst je auditlaag</h3>
+        <p>Privacystatus, aandachtspunten, systeemcategorieen en audithistorie blijven gescheiden voordat je de volledige lijst opent.</p>
+      </header>
+      <nav class="eventlog-audit-board__lanes" aria-label="Logboek audit routes">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="eventlog-audit-board__lane" href="${lane.href}" data-eventlog-audit-lane="${lane.key}">
+                <span>${lane.eyebrow}</span>
+                <strong>${escapeHtml(lane.value)}</strong>
+                <em>${escapeHtml(lane.label)}</em>
+                <small>${lane.detail}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
 }
 
 function renderEventLogFocusShell(input: { workspace: string }): string {

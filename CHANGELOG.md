@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1872 Premium Claude Design UI: het logboek opent op de recente route nu met een
+  compact eerste-viewport audit board voor privacystatus, aandachtspunten,
+  systeemcategorieen en audithistorie. De volledige event- en privacytijdlijnen
+  blijven bereikbaar via bestaande ankers zonder als eerste lange auditstapel te
+  starten.
 - G1871 Premium Claude Design UI: herinneringen openen op de komende-route nu met
   een compact eerste-viewport notification board voor toestemming, planning,
   privacy en herinneringsgeschiedenis. De volledige fallback- en

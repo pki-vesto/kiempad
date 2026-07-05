@@ -2230,10 +2230,18 @@ describe('app shell', () => {
     expect(css).toContain('.eventlog-privacy-followup__summary {');
     expect(css).toContain('.eventlog-privacy-followup__body {');
     expect(css).toContain('.eventlog-privacy-followup__links {');
+    expect(css).toContain('.eventlog-audit-board {');
+    expect(css).toContain('.eventlog-audit-board__header {');
+    expect(css).toContain('.eventlog-audit-board__lanes {');
+    expect(css).toContain('.eventlog-audit-board__lane {');
+    expect(css).toContain('.eventlog-audit-board__lane:hover,');
+    expect(css).toContain('.eventlog-audit-board__lane em {');
     expect(css).toContain('.eventlog-timeline {');
     expect(css).toContain('.eventlog-timeline__item[data-state="missed"] .kp-timeline__body {');
     expect(css).toContain('.eventlog-timeline__facts {');
     expect(css).toContain('.eventlog-timeline__safe-detail {');
+    expect(mobileCss).toContain('.eventlog-audit-board__lanes {');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(css).toContain('.notification-focus-shell {');
     expect(css).toContain('.notification-focus-shell__header {');
     expect(css).toContain('.notification-focus-shell__body {');
@@ -43078,6 +43086,25 @@ describe('app shell', () => {
     expect(html).toContain('Eerst auditstatus scannen');
     expect(html).toContain('aria-label="Logboek recent route-samenvatting"');
     expect(html).toContain('data-eventlog-route-summary="recent"');
+    expect(html).toContain(
+      'aria-label="Logboek audit board" data-eventlog-audit-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je auditlaag');
+    expect(html).toContain('data-eventlog-audit-lane="privacy"');
+    expect(html).toContain('data-eventlog-audit-lane="missed"');
+    expect(html).toContain('data-eventlog-audit-lane="system"');
+    expect(html).toContain('data-eventlog-audit-lane="history"');
+    expect(html).toContain('href="#logboek-route-privacy" data-eventlog-audit-lane="privacy"');
+    expect(html).toContain('href="#logboek-privacy-disclosure" data-eventlog-audit-lane="missed"');
+    expect(html).toContain('href="#logboek-route-categorieen" data-eventlog-audit-lane="system"');
+    expect(html).toContain('href="#logboek-recent-disclosure" data-eventlog-audit-lane="history"');
+    expect(html).toContain('<span>Privacy</span>');
+    expect(html).toContain('<span>Gemiste acties</span>');
+    expect(html).toContain('<span>Systeem</span>');
+    expect(html).toContain('<span>Historie</span>');
+    expect(html.indexOf('data-eventlog-audit-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="logboek-recent-disclosure"'),
+    );
     expect(html).toContain('Recente auditregels openen');
     expect(html).toContain('class="kp-timeline eventlog-timeline"');
     expect(html).toContain('data-eventlog-timeline="recent"');
