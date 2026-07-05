@@ -1679,10 +1679,16 @@ const targets = [
       '[data-hub-detail-panel="consult-verslagen"]',
     ],
     requiredSelectors: [
+      '[data-consult-review-scan="ready"]',
+      '[data-consult-review-scan-card="reports"]',
+      '[data-consult-review-scan-card="summaries"]',
+      '[data-consult-review-scan-card="actions"]',
+      '[data-consult-review-scan-card="sources"]',
       '.consult-card__status span',
     ],
     presentSelectors: [
       '[data-hub-detail-panel="consult-verslagen"][open]',
+      '.consult-review-scan',
       '[data-consult-card="compact"]',
       '.consult-card__header',
       '.consult-card__status',

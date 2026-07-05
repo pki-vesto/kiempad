@@ -11780,6 +11780,10 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-hub-detail-panel="consult-verslagen"');
     expect(emptyHtml).toContain('Gesprekken, actiepunten en bronreview');
     expect(emptyHtml).toContain('<em>0 verslagen</em>');
+    expect(emptySection).toContain('data-consult-review-scan="ready"');
+    expect(emptySection).toContain('aria-label="Consult review overzicht"');
+    expect(emptySection).toContain('data-consult-review-scan-card="reports"');
+    expect(emptySection).toContain('Nog geen gesprekken');
     expect(emptySection).toContain('Nog geen consultverslagen als apart recordtype vastgelegd.');
 
     const html = renderAppShell('dossier', {
@@ -11876,6 +11880,17 @@ describe('app shell', () => {
     expect(html).toContain('Gesprekken, actiepunten en bronreview');
     expect(html).toContain('<em>1 verslagen</em>');
     expect(section).toContain('data-consult-card="compact"');
+    expect(section).toContain('data-consult-review-scan="ready"');
+    expect(section).toContain('data-consult-review-scan-card="reports"');
+    expect(section).toContain('data-consult-review-scan-card="summaries"');
+    expect(section).toContain('data-consult-review-scan-card="actions"');
+    expect(section).toContain('data-consult-review-scan-card="sources"');
+    expect(section).toContain('<span>Verslagen</span>');
+    expect(section).toContain('<strong>1</strong>');
+    expect(section).toContain('Apart recordtype');
+    expect(section).toContain('Rustig bijgelezen');
+    expect(section).toContain('Vraag of taak');
+    expect(section).toContain('Herleiding, geen advies');
     expect(section).toContain('class="consult-card__header"');
     expect(section).toContain('aria-label="Consultstatus"');
     expect(section).toContain('8 metadata');
