@@ -160,6 +160,10 @@
   en de foutmeldingcontext `Offline cache metadata release-state contract error releasecontext ontbreekt voor termen`
   in changelog en current-state blijven staan met alleen `offline cache metadata
   missing-term error contract` en `veilige technische labels`.
+- **G2001 offline cache metadata release-state contract error-contract
+  missing-term fixture:** de maintenance-test meldt compact wanneer de veilige
+  labels `offline cache metadata missing-term error contract` of `veilige
+  technische labels` uit G1999 error-contract release-evidence verdwijnen.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.

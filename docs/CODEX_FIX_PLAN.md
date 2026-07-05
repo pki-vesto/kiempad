@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G2001 Research Intelligence offline cache metadata release-state contract error-contract missing-term fixture — done in G2001 / issue #3940.** Maintenance-docs test geeft nu compact terug wanneer de veilige labels `offline cache metadata missing-term error contract` of `veilige technische labels` uit G1999 error-contract release-evidence ontbreken.
 - **G2000 Research Intelligence offline cache metadata release-state contract error-contract release guard — done in G2000 / issue #3938.** Maintenance-docs test bewaakt nu release-evidence voor het G1999 `offline-cache-metadata-release-state-contract-error-missing-term-error-contract` met de foutmeldingcontext `Offline cache metadata release-state contract error releasecontext ontbreekt voor termen` en veilige contractlabels.
 - **G1999 Research Intelligence offline cache metadata release-state contract error missing-term error contract — done in G1999 / issue #3936.** Maintenance-docs test snapshott nu de exacte G1998 contracterror release missing-term foutmelding met alleen `offline cache metadata missing-term error contract` en `veilige technische labels` als veilige contractlabels.
 - **G1998 Research Intelligence offline cache metadata release-state contract error missing-term fixture — done in G1998 / issue #3934.** Maintenance-docs test geeft nu compact terug wanneer de veilige labels `offline cache metadata missing-term error contract` of `veilige technische labels` uit G1996 contracterror release-evidence ontbreken.
