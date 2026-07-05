@@ -363,6 +363,12 @@
   checklist rows now expose stable label, source/disclaimer, and per-row artscheck action hooks,
   with a compact desktop/mobile layout and routeflow smoke evidence that standard checklist rows
   do not show the extra action or leak dosage, interaction, treatment, tracking, or secret text.
+- **Supplement artscheck action release evidence — done in G1946 / issue #3838.** Runbook,
+  completion-audit, changelog and current-state releasecontext now explicitly point to
+  `daily-advice-supplement-artscheck-action`, `data-supplement-artscheck-action`,
+  `recommendationAction=supplementArtscheck`, `dailyAdviceSupplementArtscheckAction` and
+  `npm run smoke:routeflows`, with a maintenance-doc guard for label, source/disclaimer and
+  action button without dosage, interaction claims, treatment replacement or payload leakage.
 - **Artscheck question reviewstatus routeflow evidence — done in G1940 / issue #3826.** The
   Vragen list now keeps artscheck review cards in a stacked, readable layout with compact
   Concept/Gereviewd badges, and routeflow smoke creates both an artscheck question and a normal

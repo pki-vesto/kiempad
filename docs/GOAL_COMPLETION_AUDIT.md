@@ -179,6 +179,23 @@ classificatiereview, imaging metadata review of forced-colors focuscontrole wijz
   beeldpayload, OCR-tekst, diagnose, dosering, kansberekening, secret of
   trackingpayload bevatten.
 
+## Supplement Artscheck Action Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de supplementchecklist,
+dagadvieslijst of artscheckactie voor supplementvragen wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `dailyAdviceSupplementArtscheckAction` in de routeflow target
+  `daily-advice-supplement-artscheck-action`.
+- **Command:** `npm run smoke:routeflows` controleert de supplementregel met
+  `data-supplement-artscheck-action="available"` en
+  `recommendationAction=supplementArtscheck`.
+- **Scope:** de evidence bewaakt dat label, bron/disclaimer en actieknop gekoppeld
+  blijven, dat standaard checklistregels geen extra artscheckactie tonen en dat er
+  geen horizontale overflow ontstaat.
+- **Privacygrens:** blijvende evidence mag geen dosering, interactieclaim,
+  behandelvervanging, medische payload, secret of trackingpayload bevatten.
+
 ## Beslissing
 
 Markeer een doel alleen als `☑ klaar` wanneer ieder requirement direct bewijs heeft.

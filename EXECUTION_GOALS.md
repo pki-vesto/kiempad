@@ -18037,8 +18037,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations, supplement checklist, release evidence
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3838
+
+### G1976 — Daily Recommendations: supplement artscheck action release evidence freshness guard
+
+- **Epic:** Daily Recommendations
+- **Problem:** De G1946 release-evidence verwijst naar de supplement-artscheckactie, maar toekomstige wijzigingen aan routeflow-targets, action names of selectors kunnen die verwijzing verouderen.
+- **User Impact:** Gebruikers kunnen regressies missen als de artscheckactie nog werkt in de UI maar release-evidence niet meer aan de actuele selector of submitwaarde gekoppeld is.
+- **Desired Outcome:** Een freshness guard bewaakt dat release-evidence, routeflow target, selector en `recommendationAction` samen blijven wijzigen.
+- **User Value:** Supplementvragen blijven aantoonbaar veilig naar consultvoorbereiding om te zetten zonder adviesclaim.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan target `daily-advice-supplement-artscheck-action`; guard test noemt `data-supplement-artscheck-action` en `recommendationAction=supplementArtscheck`; guard faalt als `dailyAdviceSupplementArtscheckAction` of de submitwaarde verdwijnt; geen dosering, interactieclaim, behandelvervanging, medische payload, secrets of trackingpayload wordt toegevoegd; backlog health blijft op minimaal 100 open goals.
+- **Affected Screens:** Dagadvies, Start
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations, routeflow smoke, release evidence, maintenance docs
+- **ADR Needed:** no
+- **Score:** 27
+- **Status:** ☐ open
+- **Issue:** #3889
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

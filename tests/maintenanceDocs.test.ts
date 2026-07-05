@@ -4045,6 +4045,61 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G1945');
   });
 
+  it('documenteert G1946 supplement artscheck action release evidence', () => {
+    const requiredTerms = [
+      'Supplement artscheck action evidence',
+      'daily-advice-supplement-artscheck-action',
+      'dailyAdviceSupplementArtscheckAction',
+      'data-supplement-artscheck-action="available"',
+      'recommendationAction=supplementArtscheck',
+      'npm run smoke:routeflows',
+      'label',
+      'bron/disclaimer',
+      'actieknop',
+      'standaard checklistregels',
+      'horizontale overflow',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'dosering',
+      'interactieclaim',
+      'behandelvervanging',
+      'medische payload',
+      'secret',
+      'trackingpayload',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1946 supplement artscheck action release evidence',
+      'daily-advice-supplement-artscheck-action',
+      'data-supplement-artscheck-action',
+      'recommendationAction=supplementArtscheck',
+      'dailyAdviceSupplementArtscheckAction',
+      'label, bron/disclaimer en actieknop gekoppeld blijven',
+      'zonder dosering, interactieclaim of behandelvervanging',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'daily-advice-supplement-artscheck-action'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'button[name="recommendationAction"][value="supplementArtscheck"]',
+    );
+    expect(backlog).toContain('G1946');
+    expect(executionGoals).toContain('G1946');
+  });
+
   it('documenteert G1088 central health monitor CI failure artifact evidence', () => {
     for (const requiredTerm of [
       'CI health-monitor failure-artifact evidence (G1087/G1088)',
