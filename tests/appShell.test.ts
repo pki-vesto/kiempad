@@ -5371,6 +5371,36 @@ describe('app shell', () => {
     expect(html).toContain('Traject, fase en context eerst');
     expect(html).toContain('Actief: overzicht');
     expect(html).toContain('id="traject-treatment-workbench-phase"');
+    expect(html).toContain(
+      'aria-label="Behandelwerkbank route startlaag" data-treatment-workbench-route-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je werkbanklaag');
+    expect(html).toContain('data-treatment-workbench-route-lane="phase"');
+    expect(html).toContain('data-treatment-workbench-route-lane="next"');
+    expect(html).toContain('data-treatment-workbench-route-lane="timeline"');
+    expect(html).toContain('data-treatment-workbench-route-lane="safety"');
+    expect(html).toContain('data-treatment-workbench-route-lane="routes"');
+    expect(html).toContain(
+      'href="#traject-treatment-workbench-phase" data-treatment-workbench-route-lane="phase"',
+    );
+    expect(html).toContain(
+      'href="#treatment-workbench-next" data-treatment-workbench-route-lane="next"',
+    );
+    expect(html).toContain(
+      'href="#traject?route=context" data-treatment-workbench-route-lane="timeline"',
+    );
+    expect(html).toContain(
+      'href="#treatment-workbench-snapshot" data-treatment-workbench-route-lane="safety"',
+    );
+    expect(html).toContain(
+      'href="#treatment-workbench-actions" data-treatment-workbench-route-lane="routes"',
+    );
+    expect(html).toContain('id="treatment-workbench-snapshot"');
+    expect(html).toContain('id="treatment-workbench-next"');
+    expect(html).toContain('id="treatment-workbench-actions"');
+    expect(html.indexOf('data-treatment-workbench-route-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-treatment-snapshot="ready"'),
+    );
     expect(html).toContain('data-treatment-snapshot="ready"');
     expect(html).toContain('data-treatment-snapshot-card="phase"');
     expect(html).toContain('data-treatment-snapshot-card="next-action"');
@@ -5699,6 +5729,10 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-workbench {');
     expect(css).toContain('[data-treatment-first-viewport="workbench"]');
     expect(css).toContain('.treatment-workbench__header {');
+    expect(css).toContain('.treatment-workbench-route-board {');
+    expect(css).toContain('.treatment-workbench-route-board__lanes {');
+    expect(css).toContain('.treatment-workbench-route-board__lane {');
+    expect(css).toContain('.treatment-workbench-route-board__lane:hover,');
     expect(css).toContain('.treatment-workbench__grid {');
     expect(css).toContain('grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);');
     expect(css).toContain('.treatment-workbench__actions {');
@@ -5781,6 +5815,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.treatment-overview-stage-board {');
     expect(mobileCss).toContain('.treatment-overview-stage-board__lanes {');
     expect(mobileCss).toContain('.treatment-overview-stage-board__lane {');
+    expect(mobileCss).toContain('.treatment-workbench-route-board {');
+    expect(mobileCss).toContain('.treatment-workbench-route-board__lanes {');
+    expect(mobileCss).toContain('.treatment-workbench-route-board__lane {');
     expect(mobileCss).toContain('.treatment-context-timeline-board {');
     expect(mobileCss).toContain('.treatment-context-timeline-board__lanes {');
     expect(mobileCss).toContain('.treatment-context-timeline-board__lane {');

@@ -193,6 +193,11 @@
   volledige inzichten. De bestaande timelinefilters, graphankers,
   bronmetadata, routehooks en privacygrenzen blijven bereikbaar zonder de
   eerste viewport als inzichtenstapel te vullen.
+- **G1887 Traject workbench route board:** de Traject-zijwerkbank start met
+  een compact routebord voor huidige fase, volgende actie, timeline,
+  werkgrens en routeacties. De bestaande workbenchankers, phase hero, stats,
+  actielinks en disclaimergrenzen blijven bereikbaar zonder de eerste viewport
+  als dichte contextkolom te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

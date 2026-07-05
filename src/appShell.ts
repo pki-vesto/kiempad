@@ -21634,11 +21634,22 @@ function renderTreatmentWorkbench(input: {
         </div>
         <p class="treatment-workbench__status">Actief: ${escapeHtml(activeRouteCopy)}</p>
       </header>
+      ${renderTreatmentWorkbenchRouteBoard({
+        currentPhaseLabel: huidigeFase
+          ? TRAJECT_FASE_LABELS[huidigeFase.fase]
+          : input.selected
+            ? 'Fase kiezen'
+            : 'Geen traject',
+        nextAction,
+        timelineCount: input.timeline.items.length,
+        safetyLabel: `${input.timeline.contextSignalen.length} signaal${input.timeline.contextSignalen.length === 1 ? '' : 'en'} · ${input.graph?.edges.length ?? 0} relaties`,
+        activeRouteLabel: activeRouteCopy,
+      })}
       ${treatmentSnapshot}
       <div class="treatment-workbench__grid">
         ${phaseHero}
         <section class="treatment-workbench__panel" aria-label="Trajectcontext">
-          <div class="treatment-workbench__next">
+          <div id="treatment-workbench-next" class="treatment-workbench__next">
             <p class="kp-card__eyebrow">Nu eerst</p>
             <h3>${escapeHtml(nextAction)}</h3>
             <p>${TREATMENT_CONTEXT_DISCLAIMER}</p>
@@ -21651,13 +21662,90 @@ function renderTreatmentWorkbench(input: {
             { label: 'Resterend', value: String(input.vergoeding.resterend) },
             { label: 'Archief', value: String(input.archivedCount) },
           ])}
-          <nav class="treatment-workbench__actions" aria-label="Behandelwerkbank acties">
+          <nav id="treatment-workbench-actions" class="treatment-workbench__actions" aria-label="Behandelwerkbank acties">
             <a href="#traject?route=overzicht">Overzicht</a>
             <a href="#traject?route=context">Timeline</a>
             <a href="#traject?route=vergoeding">Vergoeding</a>
           </nav>
         </section>
       </div>
+    </section>
+  `;
+}
+
+function renderTreatmentWorkbenchRouteBoard(input: {
+  currentPhaseLabel: string;
+  nextAction: string;
+  timelineCount: number;
+  safetyLabel: string;
+  activeRouteLabel: string;
+}): string {
+  const lanes = [
+    {
+      id: 'phase',
+      href: '#traject-treatment-workbench-phase',
+      label: 'Huidige fase',
+      title: input.currentPhaseLabel,
+      detail: 'Open de fasekaart zonder de rest van de werkbank te scannen.',
+      cue: 'Fase',
+    },
+    {
+      id: 'next',
+      href: '#treatment-workbench-next',
+      label: 'Volgende actie',
+      title: input.nextAction,
+      detail: 'Lees alleen de eerstvolgende trajectactie en werkgrens.',
+      cue: 'Nu',
+    },
+    {
+      id: 'timeline',
+      href: '#traject?route=context',
+      label: 'Timeline',
+      title: `${input.timelineCount} item${input.timelineCount === 1 ? '' : 's'}`,
+      detail: 'Open timeline en graph als aparte contextroute.',
+      cue: 'Context',
+    },
+    {
+      id: 'safety',
+      href: '#treatment-workbench-snapshot',
+      label: 'Werkgrens',
+      title: input.safetyLabel,
+      detail: 'Bekijk contextsignalen zonder medisch advies of kansberekening.',
+      cue: 'Grens',
+    },
+    {
+      id: 'routes',
+      href: '#treatment-workbench-actions',
+      label: 'Routeacties',
+      title: `Actief: ${input.activeRouteLabel}`,
+      detail: 'Spring naar overzicht, timeline of vergoeding.',
+      cue: 'Routes',
+    },
+  ];
+
+  return `
+    <section class="treatment-workbench-route-board" aria-label="Behandelwerkbank route startlaag" data-treatment-workbench-route-board="first-viewport">
+      <header class="treatment-workbench-route-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Werkbankroutes</p>
+          <h3>Kies eerst je werkbanklaag</h3>
+        </div>
+        <p>Huidige fase, volgende actie, timeline, werkgrens en routeacties staan als aparte keuzes.</p>
+      </header>
+      <nav class="treatment-workbench-route-board__lanes" aria-label="Behandelwerkbank eerste keuze">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="treatment-workbench-route-board__lane" href="${escapeAttribute(lane.href)}" data-treatment-workbench-route-lane="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
     </section>
   `;
 }
@@ -21693,7 +21781,7 @@ function renderTreatmentSnapshot(input: {
       : 'Geen ontbrekende context';
 
   return `
-    <section class="treatment-snapshot" aria-label="Trajectscan" data-treatment-snapshot="ready">
+    <section id="treatment-workbench-snapshot" class="treatment-snapshot" aria-label="Trajectscan" data-treatment-snapshot="ready">
       <article class="treatment-snapshot__card" data-treatment-snapshot-card="phase">
         <p>Huidige fase</p>
         <strong>${escapeHtml(phaseLabel)}</strong>

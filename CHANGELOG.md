@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1887 Premium Claude Design UI: de Traject-zijwerkbank opent nu met een
+  compact routebord voor huidige fase, volgende actie, timeline, werkgrens en
+  routeacties. De bestaande workbenchankers, phase hero, stats, actielinks en
+  disclaimergrenzen blijven bereikbaar zonder als eerste dichte contextkolom te
+  starten.
 - G1886 Premium Claude Design UI: Traject/Context opent nu met een compact
   contextbord voor timeline, graph, fasecontext, vergoeding en volledige
   inzichten. De bestaande timelinefilters, graphankers, bronmetadata,

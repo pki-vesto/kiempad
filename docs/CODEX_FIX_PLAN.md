@@ -149,6 +149,10 @@
   reimbursement context and full insight details before the existing timeline and graph
   disclosures, preserving timeline filters, graph anchors, source metadata and privacy boundaries
   on desktop and mobile.
+- **Treatment workbench first-viewport route board — done in G1887 / issue #3716.**
+  The Traject side workbench now opens with one compact route board for current phase, next action,
+  timeline, safety boundary and route actions before the full workbench cards, preserving workbench
+  anchors, route hooks, phase hero, stats and disclaimer boundaries on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
