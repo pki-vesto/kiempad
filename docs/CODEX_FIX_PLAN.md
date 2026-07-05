@@ -92,6 +92,10 @@
   privacy, and detail settings before the full settings fields disclosure, preserving personal
   settings, theme, owner labels, example data, and notification privacy routes on desktop and
   mobile.
+- **Start first-viewport focus board — done in G1875 / issue #3692.** Start now opens with one
+  compact focus board for today, planning, recommendations, questions, and dashboard context
+  before the existing day action and dashboard follow-up, preserving today console, daily
+  advice, question, cockpit, workspace, and setup routes on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
