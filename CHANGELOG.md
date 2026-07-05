@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1866 Premium Claude Design UI: welzijnsgeschiedenis opent nu met een compact
+  eerste-viewport signaalbord voor recente signalen, symptomen, cyclusmetingen
+  en mentale check-ins. De volledige historie blijft bereikbaar als vervolgcontext
+  zonder als eerste lange welzijnsstapel te starten.
 - G1865 Premium Claude Design UI: behandelcontext opent nu met een compact
   eerste-viewport beslisbord voor faseplanning, timeline, vergoeding en graph.
   De volledige fertility timeline en graphcontext blijven bereikbaar als

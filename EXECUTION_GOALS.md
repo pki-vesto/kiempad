@@ -16284,8 +16284,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Wellbeing history UI, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 84
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3674
+
+### G1867 — Premium Claude Design UI: decision history first-viewport review board
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De beslisgeschiedenis kan nog als lange stapel openen wanneer opties, gekozen beslissing, notities en eerdere beslisverslagen tegelijk aandacht vragen.
+- **User Impact:** Gebruikers moeten scannen en scrollen voordat duidelijk is welke beslisinformatie eerst relevant is.
+- **Desired Outcome:** Beslisgeschiedenis opent met een compact first-viewport review board voor opties, gekozen beslissing, notities en eerdere beslisverslagen.
+- **User Value:** Keuzehistorie voelt sneller navigeerbaar zonder decision-, comparison-, choice- of historyhooks te verliezen.
+- **Acceptance Criteria:** Decision history opent met compacte lanes voor opties, gekozen beslissing, notities en eerdere beslisverslagen; volledige decision- en detaillijsten blijven bereikbaar zonder als één lange first-viewport pagina te verschijnen; mobile en desktop behouden bestaande decision-, comparison-, choice- en historyhooks; app-shell of routeflow tests dekken layout en no-overlap gedrag; geen diagnose, dosering, behandelkeuzeadvies, token, secret of medische plaintext wordt toegevoegd.
+- **Affected Screens:** Afwegingen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Decision history UI, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 83
+- **Status:** ☐ open
+- **Issue:** #3676
 
 ### G586 — replay conflict recovery status UI
 
