@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1750 |
+| ☑ klaar | 1751 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1949** |
+| **Totaal** | **1950** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2096,7 +2096,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1932 | Fertility Intelligence: embryo-ID alias reviewcorrectie routeflow evidence | P1 | F5 | ☐ |
 | G1933 | Fertility Intelligence: embryo bronlabel correctieflow routeflow evidence | P1 | F5 | ☐ |
 | G1934 | Fertility Intelligence: imaging metadata reviewcorrectie routeflow evidence | P1 | F5 | ☐ |
-| G1935 | Fertility Intelligence: historische tijdlijnreview routeflow evidence | P1 | F5 | ☐ |
+| G1935 | Fertility Intelligence: historische tijdlijnreview routeflow evidence | P1 | F5 | ☑ |
 | G1936 | Fertility Intelligence: metadata-normalisatie correctieformulier routeflow evidence | P1 | F5 | ☑ |
 | G1937 | Fertility Intelligence: OCR-review correctieformulier routeflow evidence | P1 | F5 | ☑ |
 | G1938 | Fertility Intelligence: import-inbox retry routeflow overflow evidence | P1 | F5 | ☑ |
@@ -2112,12 +2112,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1948 | Fertility Intelligence: import-inbox retry overflow release evidence | P1 | F5 | ☐ |
 | G1949 | Fertility Intelligence: OCR-review correctieformulier release evidence | P1 | F5 | ☐ |
 | G1950 | Fertility Intelligence: metadata-normalisatie correctieformulier release evidence | P1 | F5 | ☐ |
+| G1951 | Fertility Intelligence: historische tijdlijnreview release evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1949** (id's G001 t/m G1950; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1950** (id's G001 t/m G1951; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
