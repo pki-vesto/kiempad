@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G488 Daily Recommendations: dagadvieskaarten tonen nu uitlegbare
+  personalisatiefeedback op basis van lokale encrypted eventlogstatussen;
+  niet-passend verlaagt prioriteit maar verbergt vergelijkbare suggesties niet
+  definitief.
 - G485 Research Intelligence: het research trenddashboard toont nu per
   onderwerp publicatieperiode, bron, update-status, laatste check en
   relevantie-uitleg naast de bestaande trendscan, zonder bewijsweging of

@@ -4546,6 +4546,9 @@ describe('app shell', () => {
     expect(html).toContain('id="daily-recommendation-feedback-filter-form"');
     expect(html).toContain('data-daily-recommendation-feedback-status="gedaan"');
     expect(html).toContain('Feedbackstatus: Gedaan');
+    expect(html).toContain('data-daily-recommendation-personalization="ready"');
+    expect(html).toContain('data-daily-recommendation-personalization-status="gedaan"');
+    expect(html).toContain('Personalisatie: Gedaan · Herhaalbaar als context.');
     expect(html).toContain('name="recommendationAction" value="gedaan"');
     const feedbackStart = html.indexOf('data-daily-recommendation-feedback-status="gedaan"');
     const feedbackSnippet = html.slice(feedbackStart, feedbackStart + 160);
@@ -4608,6 +4611,38 @@ describe('app shell', () => {
     );
     expect(filteredRecommendations).toContain('Accent = meeste');
     expect(filteredRecommendations).toContain('Licht = geen match');
+
+    const rejectedHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [
+        {
+          id: 'event-feedback-rejected',
+          datum: '2026-06-24T12:00:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagelijkse suggestie afgewezen',
+          detail: 'Eigen aandachtspunten vastleggen (man-basisdag)',
+        },
+      ],
+      activeStartRoute: 'recommendations',
+    });
+    const rejectedRecommendations = extractDailyRecommendationsSection(rejectedHtml);
+
+    expect(rejectedRecommendations).toContain(
+      'data-daily-recommendation-personalization-status="niet_passend"',
+    );
+    expect(rejectedRecommendations).toContain(
+      'data-daily-recommendation-personalization-negative-temporary="true"',
+    );
+    expect(rejectedRecommendations).toContain('Niet passend · Lager prioriteren, niet verbergen.');
+    expect(rejectedRecommendations).toContain('niet definitief verborgen');
+    expect(rejectedRecommendations).toContain('Eigen aandachtspunten vastleggen');
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owner="vrouw"',
     );

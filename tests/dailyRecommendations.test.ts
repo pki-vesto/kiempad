@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   bouwDagelijksAanbevelingsoverzicht,
+  bouwDailyRecommendationPersonalisatie,
   controleerDailyRecommendationPolicyRegressions,
   controleerSupplementBoundary,
   DAILY_RECOMMENDATION_POLICY_FIXTURES,
@@ -493,6 +494,39 @@ describe('dagelijkse aanbevelingen', () => {
         'Supplementregel bevat een interactie- of combinatieclaim.',
         'Supplementregel suggereert vervanging van behandeling of medicatie.',
       ]),
+    );
+  });
+
+  it('legt feedbackpersonalisatie uit zonder negatieve feedback definitief te verbergen', () => {
+    const nietPassend = bouwDailyRecommendationPersonalisatie('niet_passend');
+    const gedaan = bouwDailyRecommendationPersonalisatie('gedaan');
+    const geenFeedback = bouwDailyRecommendationPersonalisatie();
+
+    expect(nietPassend).toMatchObject({
+      status: 'niet_passend',
+      label: 'Niet passend',
+      selectionHint: 'Lager prioriteren, niet verbergen',
+      negativeFeedbackIsTemporary: true,
+    });
+    expect(nietPassend.explainability).toContain('niet definitief verborgen');
+    expect(gedaan).toMatchObject({
+      status: 'gedaan',
+      selectionHint: 'Herhaalbaar als context',
+      negativeFeedbackIsTemporary: false,
+    });
+    expect(geenFeedback).toMatchObject({
+      status: 'geen_feedback',
+      selectionHint: 'Normale selectie',
+    });
+
+    const policyText = [
+      nietPassend.explainability,
+      nietPassend.selectionHint,
+      gedaan.explainability,
+      geenFeedback.explainability,
+    ].join(' ');
+    expect(policyText).not.toMatch(
+      /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b|diagnose|kansberekening|behandelkeuzeadvies|beste behandeling|kies voor/i,
     );
   });
 
