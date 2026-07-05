@@ -30719,6 +30719,20 @@ summary[class*="__summary"]:focus-visible,
       margin-top: 3px;
     }
 
+    .treatment-task-route:not([aria-current="page"]):focus-visible
+      :is(.command-task-route__top > span, small) {
+      color: CanvasText;
+      font-weight: 780;
+      text-decoration: none;
+    }
+
+    .treatment-task-route:not([aria-current="page"]):focus-visible
+      :is(.command-task-route__badge, .command-task-route__cue) {
+      border-color: CanvasText;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+
     .treatment-task-route[aria-current="page"]:focus-visible {
       color: HighlightText;
       outline-offset: 4px;
