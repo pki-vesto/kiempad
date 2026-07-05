@@ -12947,14 +12947,26 @@ describe('app shell', () => {
     expect(populatedCompare).toContain('data-imaging-compare-state="ready"');
     expect(populatedCompare).toContain('class="imaging-compare-grid"');
     expect(populatedCompare).toContain('class="imaging-compare-card"');
+    expect(populatedCompare).toContain('data-imaging-compare-card="doc-compare-2"');
+    expect(populatedCompare).toContain('data-imaging-compare-card="doc-compare-1"');
+    expect(populatedCompare).toContain('data-imaging-compare-preview="ready"');
+    expect(populatedCompare).toContain('data-imaging-compare-preview-kind="safe-surface"');
+    expect(populatedCompare).toContain('data-imaging-compare-preview-state="thumbnail"');
     expect(populatedCompare).toContain('Eerste beeld');
     expect(populatedCompare).toContain('Tweede beeld');
     expect(populatedCompare).toContain('2026-05-04 · Embryo compare rechts');
     expect(populatedCompare).toContain('2026-05-02 · Echo compare links');
+    expect(populatedCompare).toContain('<dt>Datum</dt><dd>2026-05-04</dd>');
+    expect(populatedCompare).toContain('<dt>Bron</dt><dd>Testlab</dd>');
     expect(populatedCompare).toContain('<dt>Type</dt><dd>Embryo-afbeelding</dd>');
+    expect(populatedCompare).toContain('<dt>Notitie</dt><dd>Embryo 1 dag 5</dd>');
     expect(populatedCompare).toContain('<dt>Context</dt><dd>Embryo 1 dag 5</dd>');
     expect(populatedCompare).toContain('<dt>Preview</dt><dd>Thumbnail en preview beschikbaar</dd>');
     expect(populatedCompare).toContain('<dt>Koppeling</dt><dd>Embryodag 5</dd>');
+    expect(populatedCompare).toContain('Lokale preview beschikbaar');
+    expect(populatedCompare).toContain(
+      'Open het beeldrecord voor de lokale thumbnail uit versleutelde opslag.',
+    );
     expect(populatedCompare).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
     expect(populatedCompare).toContain('Soorten: Embryo-afbeelding en Echo.');
     expect(populatedCompare).toContain('Kiempad interpreteert beelden niet medisch.');
@@ -13023,8 +13035,14 @@ describe('app shell', () => {
     const lockedCompare = extractImagingComparePanel(lockedHtml);
 
     expect(lockedCompare).toContain('data-imaging-compare-state="ready"');
+    expect(lockedCompare).toContain('data-imaging-compare-preview-state="locked"');
+    expect(lockedCompare).toContain('<dt>Bron</dt><dd>Bron verborgen tot ontgrendeling</dd>');
     expect(lockedCompare).toContain(
       '<dt>Preview</dt><dd>Preview beschikbaar na ontgrendeling</dd>',
+    );
+    expect(lockedCompare).toContain('Preview vergrendeld');
+    expect(lockedCompare).toContain(
+      'Ontgrendel de versleutelde opslag om het beeld in het overzicht te bekijken.',
     );
     expect(lockedCompare).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
     expect(lockedHtml).toContain('Previewstatus');

@@ -1190,6 +1190,48 @@ const targets = [
     ],
   },
   {
+    screen: 'dossier-imaging-compare-no-interpretation',
+    hash: '#dossier?route=imaging',
+    rootSelector: '[data-dossier-imaging-disclosure="repository"]',
+    expectedText: 'Beeldmomenten vergelijken',
+    prepare: 'imaging-compare-no-interpretation',
+    activeRouteSelector: '[data-dossier-route="imaging"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-dossier-imaging-disclosure="repository"]',
+    ],
+    requiredSelectors: [
+      '[data-imaging-compare-state="ready"]',
+    ],
+    presentSelectors: [
+      '[data-imaging-compare-card]',
+      '[data-imaging-compare-field="datum"]',
+      '[data-imaging-compare-field="bron"]',
+      '[data-imaging-compare-field="type"]',
+      '[data-imaging-compare-field="notitie"]',
+      '[data-imaging-compare-preview-kind="safe-surface"]',
+      '[data-imaging-compare-preview-state="thumbnail"]',
+      '[data-imaging-compare-field="context"]',
+      '[data-imaging-compare-field="preview"]',
+      '[data-imaging-compare-field="koppeling"]',
+      '.imaging-compare-summary',
+    ],
+    imagingCompareEvidence: true,
+    dossierConsole: true,
+    smallMobileViewport: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.dossier-imaging-inspection-board__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+      '[data-hub-detail-panel="consult-verslagen"] .hub-detail-disclosure__summary small',
+      '[data-hub-detail-panel="embryo-dossiers"] .hub-detail-disclosure__summary small',
+    ],
+  },
+  {
     screen: 'dossier-upload-choice',
     hash: '#dossier',
     rootSelector: '#dossier-route-upload',
@@ -2317,6 +2359,9 @@ async function assertRouteflows(browser, options) {
       }
       if (target.prepare === 'embryo-image-classification-review') {
         await prepareEmbryoImageClassificationReview(page, target.hash);
+      }
+      if (target.prepare === 'imaging-compare-no-interpretation') {
+        await prepareImagingCompareNoInterpretation(page, target.hash);
       }
       if (target.prepare === 'embryo-alias-review-display') {
         await prepareEmbryoAliasReviewDisplay(page, target.hash);
@@ -4384,6 +4429,46 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const imagingCompareEvidence = routeflow.imagingCompareEvidence
+          ? (() => {
+              const panel = document.querySelector('[data-dossier-imaging-disclosure="repository"]');
+              const compare = panel?.querySelector('[data-imaging-compare-state="ready"]');
+              const cards = [...(compare?.querySelectorAll('[data-imaging-compare-card]') ?? [])];
+              const fields = [
+                'datum',
+                'bron',
+                'type',
+                'notitie',
+                'context',
+                'preview',
+                'koppeling',
+              ].map((field) => compare?.querySelector(`[data-imaging-compare-field="${field}"]`));
+              const previews = [
+                ...(compare?.querySelectorAll('[data-imaging-compare-preview-kind="safe-surface"]') ??
+                  []),
+              ];
+              const compareRect = compare?.getBoundingClientRect();
+              const panelRect = panel?.getBoundingClientRect();
+              const text = compare?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                visible: Boolean(compareRect && compareRect.width > 0 && compareRect.height > 0),
+                cards: cards.length,
+                fields: fields.filter(Boolean).length,
+                previews: previews.length,
+                contained:
+                  Boolean(compareRect && panelRect) &&
+                  compareRect.left >= panelRect.left - 1 &&
+                  compareRect.right <= panelRect.right + 1,
+                hasDate: text.includes('2026-07-02') && text.includes('2026-07-04'),
+                hasSource: text.includes('Routeflow kliniek') && text.includes('Routeflow lab'),
+                hasType: text.includes('Echo') && text.includes('Embryo-afbeelding'),
+                hasNote: text.includes('Routeflow links') && text.includes('Routeflow embryo dag 5'),
+                hasForbiddenText: /kwaliteitsscore|selectieadvies|rangorde|afwijkend|kansberekening|behandelkeuzeadvies|data:image|base64|OCR_RAW|routeflow-compare-links\.jpg|routeflow-compare-rechts\.jpg/i.test(
+                  text,
+                ),
+              };
+            })()
+          : null;
         const wellbeingConsole = routeflow.wellbeingConsole
           ? (() => {
               const body = document.querySelector('[data-wellbeing-console="ready"]');
@@ -4565,6 +4650,7 @@ async function assertRouteflows(browser, options) {
           researchTrendScanOverflow,
           embryoImageClassificationReview,
           imagingMetadataReviewLocked,
+          imagingCompareEvidence,
           wellbeingConsole,
           treatmentConsole,
           timelineConsole,
@@ -5512,6 +5598,23 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: imaging metadata locked-review mist privacy-evidence of lekt broninformatie (${JSON.stringify(evidence.imagingMetadataReviewLocked)}).`,
+        );
+      }
+      if (
+        evidence.imagingCompareEvidence &&
+        (!evidence.imagingCompareEvidence.visible ||
+          evidence.imagingCompareEvidence.cards < 2 ||
+          evidence.imagingCompareEvidence.fields < 7 ||
+          evidence.imagingCompareEvidence.previews < 2 ||
+          !evidence.imagingCompareEvidence.contained ||
+          !evidence.imagingCompareEvidence.hasDate ||
+          !evidence.imagingCompareEvidence.hasSource ||
+          !evidence.imagingCompareEvidence.hasType ||
+          !evidence.imagingCompareEvidence.hasNote ||
+          evidence.imagingCompareEvidence.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: beeldvergelijking mist datum/bron/type/notitie-evidence of lekt interpretatie/payload (${JSON.stringify(evidence.imagingCompareEvidence)}).`,
         );
       }
       if (
@@ -6704,6 +6807,93 @@ async function prepareEmbryoImageClassificationReview(page, targetHash) {
       : '[data-embryo-image-classification-review="concept"]',
     { timeout: 10_000 },
   );
+}
+
+async function prepareImagingCompareNoInterpretation(page, targetHash) {
+  await page.goto(`${url}#dossier-upload-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#dossier-upload-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+
+  async function openImageContext() {
+    await page.evaluate(() => {
+      for (const selector of [
+        '[data-dossier-upload-metadata="collapsed"]',
+        '[data-dossier-upload-metadata-fields="collapsed"]',
+        '[data-dossier-upload-optional="beeldcontext"]',
+        '[data-dossier-upload-image-fields="collapsed"]',
+        '[data-dossier-upload-optional="embryo-labcontext"]',
+        '[data-dossier-upload-lab-fields="collapsed"]',
+      ]) {
+        const details = document.querySelector(selector);
+        if (details instanceof HTMLDetailsElement) details.open = true;
+      }
+    });
+  }
+
+  async function submitImage({
+    name,
+    title,
+    date,
+    source,
+    context,
+    embryoLabel = '',
+    embryoDay = '',
+  }) {
+    await openImageContext();
+    await page.locator('input[name="dossierBestanden"]').setInputFiles({
+      name,
+      mimeType: 'image/jpeg',
+      buffer: Buffer.from(`safe synthetic compare fixture ${title}`),
+    });
+    await page.locator('#dossier-upload-form [name="datum"]').fill(date);
+    await page.locator('#dossier-upload-form [name="titel"]').fill(title);
+    await page.locator('#dossier-upload-form [name="categorie"]').selectOption('beeld');
+    await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('afbeelding');
+    await page.locator('#dossier-upload-form [name="beeldBron"]').fill(source);
+    await page.locator('#dossier-upload-form [name="beeldContext"]').fill(context);
+    await page.locator('#dossier-upload-form [name="beeldEmbryoLabel"]').fill(embryoLabel);
+    await page.locator('#dossier-upload-form [name="beeldEmbryoDag"]').fill(embryoDay);
+    await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+    await page.locator('#dossier-upload-form button[type="submit"]').click();
+    await page.waitForFunction(
+      () => {
+        const titleInput = document.querySelector('#dossier-upload-form input[name="titel"]');
+        return titleInput instanceof HTMLInputElement && titleInput.value === '';
+      },
+      undefined,
+      { timeout: 10_000 },
+    );
+  }
+
+  await submitImage({
+    name: 'routeflow-compare-links.jpg',
+    title: 'Routeflow echo compare links',
+    date: '2026-07-02',
+    source: 'Routeflow kliniek',
+    context: 'Routeflow links',
+  });
+  await submitImage({
+    name: 'routeflow-compare-rechts.jpg',
+    title: 'Routeflow embryo compare rechts',
+    date: '2026-07-04',
+    source: 'Routeflow lab',
+    context: 'Routeflow embryo dag 5',
+    embryoLabel: 'Embryo routeflow',
+    embryoDay: '5',
+  });
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-dossier-imaging-disclosure="repository"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+  await page.waitForSelector('[data-imaging-compare-state="ready"]', { timeout: 10_000 });
 }
 
 async function prepareEmbryoAliasReviewDisplay(page, targetHash) {

@@ -174,6 +174,11 @@
   status plus safe record-id only and rejecting filenames, OCR/base64/payload, diagnosis, dosage,
   treatment advice, secrets and plaintext health data while keeping retry, storage and UI hooks
   intact.
+- **Imaging comparison without medical interpretation — done in G473 / issue #802.** Dossier
+  imaging compare cards now expose date, source, type, note, context, preview status and linkage
+  via `data-imaging-compare-*` hooks, use safe preview surfaces without data URLs or base64, and
+  routeflow smoke covers two synthetic image moments across desktop, tablet, mobile and
+  small-mobile while rejecting score, ranking, abnormality, chance and treatment-advice text.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

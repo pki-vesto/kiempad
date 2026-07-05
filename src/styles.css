@@ -3560,12 +3560,55 @@ h2 {
 
 .imaging-compare-card {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(128px, 0.72fr);
+  align-items: stretch;
   gap: 10px;
   min-width: 0;
   padding: 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   background: var(--surface-subtle);
+}
+
+.imaging-compare-card__body,
+.imaging-compare-card__preview {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.imaging-compare-preview-tile {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  min-height: 100%;
+  padding: 12px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 58%),
+    var(--surface);
+}
+
+.imaging-compare-preview-tile strong,
+.imaging-compare-preview-tile span {
+  overflow-wrap: anywhere;
+}
+
+.imaging-compare-preview-tile strong {
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.imaging-compare-preview-tile span {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.imaging-compare-card__preview .imaging-compare-preview-tile {
+  min-height: 100%;
 }
 
 .imaging-compare-card__label {
@@ -4358,6 +4401,10 @@ h2 {
 
 @media (max-width: 720px) {
   .imaging-compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .imaging-compare-card {
     grid-template-columns: 1fr;
   }
 }

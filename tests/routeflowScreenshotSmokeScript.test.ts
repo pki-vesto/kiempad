@@ -653,6 +653,21 @@ describe('routeflow screenshot smoke script', () => {
       '[data-attachment-preview-kind="imaging-thumbnail"][data-attachment-preview-state="locked"]',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-imaging-compare-no-interpretation'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "prepare: 'imaging-compare-no-interpretation'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('prepareImagingCompareNoInterpretation');
+    expect(routeflowScreenshotSmokeScript).toContain('imagingCompareEvidence');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-imaging-compare-field="bron"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-imaging-compare-preview-kind="safe-surface"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'beeldvergelijking mist datum/bron/type/notitie-evidence',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
       'embryoImageClassificationForcedColorsEvidence: true',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
