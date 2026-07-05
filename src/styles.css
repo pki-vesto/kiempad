@@ -30637,11 +30637,18 @@ summary[class*="__summary"]:focus-visible,
       background: HighlightText;
     }
 
+    .treatment-task-route .command-task-route__top {
+      gap: 10px;
+    }
+
     .treatment-task-route .command-task-route__badge,
     .treatment-task-route .command-task-route__cue {
+      min-height: 22px;
+      padding: 3px 8px;
       border-color: CanvasText;
       background: Canvas;
       color: CanvasText;
+      line-height: 1.2;
     }
 
     .treatment-task-route[aria-current="page"] .command-task-route__badge,

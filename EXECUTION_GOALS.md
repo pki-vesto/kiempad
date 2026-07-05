@@ -16777,8 +16777,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 55
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3732
+
+### G1896 — Premium Claude Design UI: treatment mobile rail forced-colors label fit polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De mobiele Traject cue- en badgespacing is nu bewaakt, maar lange routelabels kunnen in forced-colors nog explicietere fitregels naast badges en cuepills gebruiken.
+- **User Impact:** Gebruikers in high-contrast mode kunnen label, badge en cue minder snel onderscheiden als tekstfit te veel druk geeft.
+- **Desired Outcome:** Mobiele Traject routelabels hebben expliciete forced-colors fitbehandeling naast badges en cuepills.
+- **User Value:** Routekaarten blijven scanbaar met lange labels zonder de compacte mobiele routegroep te verdringen.
+- **Acceptance Criteria:** Mobile Traject route labels have explicit forced-colors fit handling beside badges and cue pills; existing route hrefs, aria-current states, badges, command-task hooks, route groups, active-route promotion, focus feedback, reduced-motion behavior, forced-colors contrast and spacing remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors label fit or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 54
+- **Status:** ☐ open
+- **Issue:** #3734
 
 ### G586 — replay conflict recovery status UI
 
