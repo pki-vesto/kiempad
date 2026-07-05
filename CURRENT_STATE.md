@@ -77,6 +77,9 @@
 - **G557 consult review-scan:** de Consultverslagen-sectie start met een compacte
   scanlaag voor verslagen, samenvattingen, actiepunten en bronreview, zodat de
   gebruiker eerst overzicht krijgt voordat detailkaarten en reviewformulieren volgen.
+- **G1921 mobiele consult review-scan dichtheid:** op mobiel gebruikt de
+  consultscan smallere snapkaarten met lagere hoogte en compactere labels, zodat
+  verslagen, samenvattingen, actiepunten en bronreview sneller tegelijk scanbaar zijn.
 - **G558 embryo tracking-scan:** de Embryo-dossiers-sectie start met een compacte
   scanlaag voor dossiers, meetmomenten, status-events en bronnen, zodat
   embryohistorie eerst als overzicht leest voordat vergelijkingen en detailkaarten volgen.

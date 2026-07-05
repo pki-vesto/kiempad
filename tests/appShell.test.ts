@@ -11805,6 +11805,7 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Gesprekken, actiepunten en bronreview');
     expect(emptyHtml).toContain('<em>0 verslagen</em>');
     expect(emptySection).toContain('data-consult-review-scan="ready"');
+    expect(emptySection).toContain('data-consult-review-scan-density="mobile-compact"');
     expect(emptySection).toContain('aria-label="Consult review overzicht"');
     expect(emptySection).toContain('data-consult-review-scan-card="reports"');
     expect(emptySection).toContain('Nog geen gesprekken');
@@ -11905,6 +11906,7 @@ describe('app shell', () => {
     expect(html).toContain('<em>1 verslagen</em>');
     expect(section).toContain('data-consult-card="compact"');
     expect(section).toContain('data-consult-review-scan="ready"');
+    expect(section).toContain('data-consult-review-scan-density="mobile-compact"');
     expect(section).toContain('data-consult-review-scan-card="reports"');
     expect(section).toContain('data-consult-review-scan-card="summaries"');
     expect(section).toContain('data-consult-review-scan-card="actions"');
@@ -12011,6 +12013,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.consult-review-board__lane {');
     expect(mobileCss).toContain('flex: 0 0 min(156px, 70vw);');
+    expect(mobileCss).toContain('.consult-review-scan__card {');
+    expect(mobileCss).toContain('flex: 0 0 min(124px, 48vw);');
+    expect(mobileCss).toContain('min-height: 66px;');
     expect(mobileCss).toContain('.consult-review-layout__header,');
     expect(mobileCss).toContain('.consult-review-layout__body {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');

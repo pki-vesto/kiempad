@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1921 Premium Claude Design UI: de Consultverslagen review-scan is op mobiel
+  compacter met smallere snapkaarten, lagere kaarthoogte en compactere labels,
+  zodat verslagen, samenvattingen, actiepunten en bronreview sneller scanbaar zijn.
 - G1924 Premium Claude Design UI: de Dagadvies owner-scan is op mobiel
   compacter met smallere snapkaarten, lagere kaartdichtheid en korte
   review-/artscheckregels, zodat vrouw/man/samen sneller tegelijk scanbaar zijn.

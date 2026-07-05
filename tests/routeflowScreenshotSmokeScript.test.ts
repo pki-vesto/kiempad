@@ -215,6 +215,9 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-daily-advice-owner-scan-density="mobile-compact"]',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-consult-review-scan-density="mobile-compact"]',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceCompactList');

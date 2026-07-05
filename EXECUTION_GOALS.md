@@ -17227,8 +17227,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult UI, Dossier UI, Claude Design, app-shell tests
 - **ADR Needed:** no
 - **Score:** 29
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3785
+
+### G1926 — Premium Claude Design UI: consult review scan routeflow overflow evidence
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De compacte consult review-scan is nu dichter op mobiel, maar expliciete overflow-evidence kan nog verder worden uitgebreid.
+- **User Impact:** Zonder routeflow-overflow evidence kan een latere wijziging opnieuw brede consult-scan kaarten introduceren die de eerste viewport onrustig maken.
+- **Desired Outcome:** Routeflow-evidence bewijst dat consult review-scan kaarten zichtbaar blijven en geen page-level horizontale overflow veroorzaken.
+- **User Value:** Gebruikers houden een rustige mobiele Consultverslagenroute waarin verslagen, samenvattingen, actiepunten en bronreview scanbaar blijven zonder brede pagina-uitloop.
+- **Acceptance Criteria:** Routeflow smoke or equivalent visual evidence covers consult review-scan overflow behavior; scan cards remain visible before consult details; existing consult card anchors, review forms and data-hooks remain intact; backlog health remains at 100+ open goals.
+- **Affected Screens:** Dossier, Consult intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consult UI, routeflow smoke, Claude Design
+- **ADR Needed:** no
+- **Score:** 26
+- **Status:** ☐ open
+- **Issue:** #3798
 
 ### G1922 — Premium Claude Design UI: embryo tracking scan mobile density polish
 

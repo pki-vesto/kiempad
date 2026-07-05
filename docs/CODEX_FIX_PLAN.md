@@ -257,6 +257,9 @@
 - **Consult intelligence review scan — done in G557 / issue #3784.** Consultverslagen now open
   with a compact review scan for reports, summaries, action points, and source review before the
   detailed consult cards, keeping existing upload, review, and anchor hooks intact.
+- **Consult review scan mobile density — done in G1921 / issue #3785.** The Consultverslagen
+  review scan now uses tighter mobile snap cards with shorter height and compact labels, making
+  reports, summaries, actions, and source review faster to scan before opening detail cards.
 - **Embryo tracking compact scan — done in G558 / issue #3787.** Embryo-dossiers now open with
   a compact tracking scan for dossiers, measurement moments, status events, and source records
   before comparisons and detailed embryo cards.
