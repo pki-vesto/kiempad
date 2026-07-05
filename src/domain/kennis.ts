@@ -111,8 +111,20 @@ export type EenvoudigeResearchSamenvatting = {
   eenvoudigeSamenvatting: string;
   patientSummary: string;
   sourceCitation: string;
+  leesniveauGuard: PatientvriendelijkeSamenvattingLeesniveauGuard;
   aiConcept: boolean;
   waarschuwing: string;
+};
+
+export type PatientvriendelijkeSamenvattingLeesniveauGuard = {
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  status: 'begrijpelijk_concept' | 'controle_nodig';
+  gemiddeldeZinLengte: number;
+  vaktaalSignalering: string[];
+  correctieVelden: string[];
+  uitlegVoorLeken: string;
 };
 
 export type ResearchDossierContextBron = {
@@ -682,6 +694,12 @@ export function bouwEenvoudigeResearchSamenvattingen(
           item.researchPublicatie.bron,
           item.researchPublicatie.publicatieDatum,
         ),
+      leesniveauGuard: bouwPatientvriendelijkeSamenvattingLeesniveauGuard({
+        tekst:
+          item.researchPublicatie.patientSummary ?? item.researchPublicatie.eenvoudigeSamenvatting,
+        bron: item.researchPublicatie.bron,
+        datum: item.researchPublicatie.publicatieDatum,
+      }),
       aiConcept: item.ai_gegenereerd,
       waarschuwing:
         'Patientvriendelijke conceptsamenvatting in gewone taal met bronverwijzing; controleer publicatie en kliniekcontext. Dit is geen diagnose, dosering of behandelkeuzeadvies.',
@@ -691,6 +709,45 @@ export function bouwEenvoudigeResearchSamenvattingen(
         b.publicatieDatum.localeCompare(a.publicatieDatum) ||
         a.titel.localeCompare(b.titel, 'nl-NL'),
     );
+}
+
+export function bouwPatientvriendelijkeSamenvattingLeesniveauGuard(input: {
+  tekst: string;
+  bron: string;
+  datum: string;
+}): PatientvriendelijkeSamenvattingLeesniveauGuard {
+  const zinnen = input.tekst
+    .split(/[.!?]+/)
+    .map((zin) => zin.trim())
+    .filter(Boolean);
+  const woorden = input.tekst.split(/\s+/).filter(Boolean);
+  const gemiddeldeZinLengte =
+    zinnen.length > 0 ? Math.round((woorden.length / zinnen.length) * 10) / 10 : woorden.length;
+  const vaktaalSignalering = bepaalPatientSamenvattingVaktaal(input.tekst);
+  const status =
+    input.tekst.length >= 80 && gemiddeldeZinLengte <= 22 && vaktaalSignalering.length === 0
+      ? 'begrijpelijk_concept'
+      : 'controle_nodig';
+
+  return {
+    bron: input.bron,
+    datum: input.datum,
+    reviewStatus: 'concept_te_controleren',
+    status,
+    gemiddeldeZinLengte,
+    vaktaalSignalering,
+    correctieVelden: [
+      'patientSummary',
+      'eenvoudigeSamenvatting',
+      'bron',
+      'publicatieDatum',
+      'reviewstatus',
+    ],
+    uitlegVoorLeken:
+      status === 'begrijpelijk_concept'
+        ? 'Deze samenvatting gebruikt korte zinnen en gewone woorden genoeg voor een eerste lezing; controleer de tekst nog zelf.'
+        : 'Deze samenvatting heeft extra controle nodig op lengte of vaktaal voordat hij prettig leesbaar is.',
+  };
 }
 
 export function bouwResearchDossierContextBronnen(input: {
@@ -1261,6 +1318,20 @@ function normaliseerResearchBronHost(bron: string): string | undefined {
   } catch {
     return undefined;
   }
+}
+
+function bepaalPatientSamenvattingVaktaal(tekst: string): string[] {
+  const lower = tekst.toLocaleLowerCase('nl-NL');
+  const signalen = [
+    'prospectieve',
+    'cohortstudie',
+    'hazard ratio',
+    'laboratoriumparameters',
+    'statistisch significant',
+    'odds ratio',
+  ];
+
+  return signalen.filter((signaal) => lower.includes(signaal));
 }
 
 function bepaalResearchTrendOnderwerpen(item: KennisItem): ResearchTrendOnderwerp[] {

@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G542 Research Intelligence: eenvoudige researchsamenvattingen tonen nu een
+  patientvriendelijke leesniveauguard met bron, datum, reviewstatus,
+  vaktaalsignalering, correctievelden en uitleg voor leken.
 - G543 Research Intelligence: researchtrendkaarten tonen nu een controleerbare
   update-timestamp met datum, bron, reviewstatus, correctievelden en lekenuitleg
   op basis van lokale researchbibliotheekmetadata, zonder medische keuzehulp.
