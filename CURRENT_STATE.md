@@ -116,9 +116,17 @@
   diagnose, dosering, kansberekening, behandelkeuzeadvies, secret,
   gezondheidsdata of plaintext medische payload.
 - **G1993 offline cache metadata release-state error contract:** de exacte
-  release-state missing-term foutmelding is als compact maintenance-contract
-  gesnapshott met veilige labels `offline cache metadata missing-term error
-  contract` en `veilige technische labels`.
+  release-state missing-term foutmelding is als
+  `offline-cache-metadata-release-state-missing-term-contract` gesnapshott; de
+  contractcontext bewaakt `Offline cache metadata release-state ontbreekt voor termen`
+  met veilige labels `offline cache metadata missing-term error contract` en
+  `veilige technische labels`.
+- **G1994 offline cache metadata release-state contract release guard:**
+  release-evidence bewaakt dat het G1993
+  `offline-cache-metadata-release-state-missing-term-contract` en de
+  foutmeldingcontext `Offline cache metadata release-state ontbreekt voor termen`
+  in changelog en current-state blijven staan met alleen `offline cache metadata
+  missing-term error contract` en `veilige technische labels`.
 - **G546 research artsbespreekvragen:** researchrelevantie toont neutrale
   conceptvragen voor de kliniek met bron, datum, reviewstatus en correctievelden,
   zodat gebruikers researchcontext als gesprekvoorbereiding kunnen controleren.
