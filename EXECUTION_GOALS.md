@@ -17066,8 +17066,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 38
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3766
+
+### G1913 — Premium Claude Design UI: treatment mobile rail forced-colors inactive focus badge outline color polish
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Inactieve gefocuste mobiele Traject-routekaarten hebben nu expliciete badge-border style/width, maar de badge-outline kleur leunt nog op de generieke badge/cue focusregel.
+- **User Impact:** High-contrast toetsenbordgebruikers kunnen statusbadges minder rustig scannen als de outlinekleur niet expliciet aansluit op de inactive badge-state.
+- **Desired Outcome:** Inactieve gefocuste mobiele Traject-routekaarten hebben expliciete forced-colors badge-outline kleurbehandeling die statusbadges duidelijk maar rustig houdt.
+- **User Value:** Statusbadges blijven voorspelbaar leesbaar tijdens keyboardfocus zonder actieve route-emphasis te kopiëren.
+- **Acceptance Criteria:** Mobile Traject inactive focused route cards have explicit forced-colors badge outline color handling that stays distinct from active route badge pills and inactive cue treatment; existing route hrefs, aria-current states, badges, cue pills, command-task hooks, route groups, active-route promotion, reduced-motion behavior, forced-colors contrast, spacing, active label/cue handling, supporting text fit, active focus text handling, focus cue spacing, inactive focus text handling, inactive focus cue fit, inactive focus cue rhythm, inactive focus meta rhythm, inactive focus label fit, inactive focus label weight, inactive focus badge tone, inactive focus cue tone, inactive focus cue border, inactive focus cue outline offset, inactive focus badge outline offset and inactive focus badge border style remain intact; desktop treatment route density cues and mobile grouping remain stable; app-shell or routeflow tests cover forced-colors inactive focus badge outline color or no-overlap behavior on mobile; no medical plaintext, token, secret, OCR text, file content or raw treatment payload is added.
+- **Affected Screens:** Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, mobile route rail, Claude Design, app-shell tests, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 37
+- **Status:** ☐ open
+- **Issue:** #3768
 
 ### G586 — replay conflict recovery status UI
 
