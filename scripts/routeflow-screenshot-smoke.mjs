@@ -1072,6 +1072,44 @@ const targets = [
     ],
   },
   {
+    screen: 'dossier-imaging-embryo-classification-review',
+    hash: '#dossier?route=imaging',
+    rootSelector: '[data-dossier-imaging-disclosure="repository"]',
+    expectedText: 'Classificatievoorstel: Concept',
+    prepare: 'embryo-image-classification-review',
+    activeRouteSelector: '[data-dossier-route="imaging"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-dossier-imaging-disclosure="repository"]',
+    ],
+    requiredSelectors: [
+      '[data-imaging-metadata-review="ready"]',
+      '[data-embryo-image-classification-review="concept"]',
+      'select[name="imagingMetadataSoort"]',
+      'input[name="imagingMetadataEmbryoLabel"]',
+      'input[name="imagingMetadataEmbryoId"]',
+      'select[name="imagingMetadataReviewStatus"]',
+    ],
+    presentSelectors: [
+      'option[value="embryo_afbeelding"]:checked',
+      'input[name="imagingMetadataEmbryoDag"]',
+      'input[name="imagingMetadataLaboratoriumContext"]',
+    ],
+    embryoImageClassificationReview: true,
+    dossierConsole: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.dossier-imaging-inspection-board__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+      '[data-hub-detail-panel="consult-verslagen"] .hub-detail-disclosure__summary small',
+      '[data-hub-detail-panel="embryo-dossiers"] .hub-detail-disclosure__summary small',
+    ],
+  },
+  {
     screen: 'dossier-upload-choice',
     hash: '#dossier',
     rootSelector: '#dossier-route-upload',
@@ -1917,6 +1955,9 @@ async function assertRouteflows(browser, options) {
       await unlockIfNeeded(page, target.hash);
       if (target.prepare === 'filled-consult-card') {
         await prepareFilledConsultCard(page, target.hash);
+      }
+      if (target.prepare === 'embryo-image-classification-review') {
+        await prepareEmbryoImageClassificationReview(page, target.hash);
       }
       if (target.prepare === 'central-session-renewal-recovery-focus') {
         await prepareCentralSessionRenewalRecoveryFocus(page, target.hash);
@@ -2840,6 +2881,57 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const embryoImageClassificationReview = routeflow.embryoImageClassificationReview
+          ? (() => {
+              const panel = document.querySelector('[data-dossier-imaging-disclosure="repository"]');
+              const reviewForm = panel?.querySelector('[data-imaging-metadata-review="ready"]');
+              const review = panel?.querySelector(
+                '[data-embryo-image-classification-review="concept"]',
+              );
+              const type = panel?.querySelector('select[name="imagingMetadataSoort"]');
+              const label = panel?.querySelector('input[name="imagingMetadataEmbryoLabel"]');
+              const id = panel?.querySelector('input[name="imagingMetadataEmbryoId"]');
+              const status = panel?.querySelector('select[name="imagingMetadataReviewStatus"]');
+              const elements = [review, type, label, id, status].filter(
+                (element) => element instanceof HTMLElement,
+              );
+              const rects = elements.map((element) => element.getBoundingClientRect());
+              const text = reviewForm?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const forbiddenFragments = [
+                'kwaliteitsscore',
+                'selectieadvies',
+                'beeld' + 'payload',
+                'OCR-tekst',
+                'diagnose',
+                'dosering',
+                'kansberekening',
+                'tracking' + 'payload',
+                'data:image',
+                'base64',
+                'token',
+                'secret',
+              ];
+              return {
+                panelOpen: panel instanceof HTMLDetailsElement ? panel.open : false,
+                conceptVisible: Boolean(
+                  rects[0] && rects[0].width > 0 && rects[0].height > 0,
+                ),
+                fieldCount: elements.length,
+                fieldsVisible: rects.every((rect) => rect.width > 0 && rect.height > 0),
+                typeValue: type instanceof HTMLSelectElement ? type.value : '',
+                embryoLabelValue: label instanceof HTMLInputElement ? label.value : '',
+                embryoIdValue: id instanceof HTMLInputElement ? id.value : '',
+                reviewStatusValue: status instanceof HTMLSelectElement ? status.value : '',
+                hasForbiddenText: forbiddenFragments.some((fragment) =>
+                  text.toLowerCase().includes(fragment.toLowerCase()),
+                ),
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1,
+              };
+            })()
+          : null;
         const wellbeingConsole = routeflow.wellbeingConsole
           ? (() => {
               const body = document.querySelector('[data-wellbeing-console="ready"]');
@@ -3006,6 +3098,7 @@ async function assertRouteflows(browser, options) {
           knowledgeConsole,
           consultConsole,
           filledConsultCard,
+          embryoImageClassificationReview,
           wellbeingConsole,
           treatmentConsole,
           timelineConsole,
@@ -3566,6 +3659,23 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: gevulde consultkaart mist compacte browser-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.filledConsultCard)}).`,
+        );
+      }
+      if (
+        evidence.embryoImageClassificationReview &&
+        (!evidence.embryoImageClassificationReview.panelOpen ||
+          !evidence.embryoImageClassificationReview.conceptVisible ||
+          evidence.embryoImageClassificationReview.fieldCount < 5 ||
+          !evidence.embryoImageClassificationReview.fieldsVisible ||
+          evidence.embryoImageClassificationReview.typeValue !== 'embryo_afbeelding' ||
+          evidence.embryoImageClassificationReview.embryoLabelValue !== 'Embryo A' ||
+          evidence.embryoImageClassificationReview.embryoIdValue !== 'E-A' ||
+          evidence.embryoImageClassificationReview.reviewStatusValue !== 'concept' ||
+          evidence.embryoImageClassificationReview.hasForbiddenText ||
+          evidence.embryoImageClassificationReview.hasHorizontalOverflow)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: embryo-beeldclassificatie review mist routeflow-evidence of lekt verboden tekst (${JSON.stringify(evidence.embryoImageClassificationReview)}).`,
         );
       }
       if (
@@ -4420,6 +4530,65 @@ async function prepareFilledConsultCard(page, targetHash) {
   );
 
   await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareEmbryoImageClassificationReview(page, targetHash) {
+  await page.goto(`${url}#dossier-upload-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#dossier-upload-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata-fields="collapsed"]',
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-image-fields="collapsed"]',
+      '[data-dossier-upload-optional="embryo-labcontext"]',
+      '[data-dossier-upload-lab-fields="collapsed"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+
+  await page.locator('input[name="dossierBestanden"]').setInputFiles({
+    name: 'embryo-review.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from('safe synthetic image fixture'),
+  });
+  await page.locator('#dossier-upload-form [name="datum"]').fill('2026-06-26');
+  await page.locator('#dossier-upload-form [name="titel"]').fill('Embryo reviewbeeld');
+  await page.locator('#dossier-upload-form [name="categorie"]').selectOption('beeld');
+  await page.locator('#dossier-upload-form [name="uploadProfiel"]').selectOption('afbeelding');
+  await page.locator('#dossier-upload-form [name="beeldBron"]').fill('Labportaal');
+  await page.locator('#dossier-upload-form [name="beeldEmbryoLabel"]').fill('Embryo A');
+  await page.locator('#dossier-upload-form [name="beeldEmbryoId"]').fill('E-A');
+  await page.locator('#dossier-upload-form [name="beeldEmbryoDag"]').fill('5');
+  await page.locator('#dossier-upload-form [name="beeldLaboratoriumContext"]').fill('Dag 5 labbeeld');
+  await page.locator('#dossier-upload-form [name="conceptBevestigd"]').check();
+  await page.locator('#dossier-upload-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const title = document.querySelector('#dossier-upload-form input[name="titel"]');
+      return title instanceof HTMLInputElement && title.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+  await page.evaluate(() => {
+    for (const selector of [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-dossier-imaging-disclosure="repository"]',
+    ]) {
+      const details = document.querySelector(selector);
+      if (details instanceof HTMLDetailsElement) details.open = true;
+    }
+  });
+  await page.waitForSelector('[data-embryo-image-classification-review="concept"]', {
+    timeout: 10_000,
+  });
 }
 
 async function prepareCentralSessionRenewalRecoveryFocus(page, targetHash) {

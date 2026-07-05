@@ -16270,6 +16270,8 @@ h2 {
 }
 
 .hub-detail-disclosure__summary em {
+  box-sizing: border-box;
+  min-width: 0;
   padding: 4px 8px;
   border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
   border-radius: var(--radius-pill);
@@ -16278,6 +16280,8 @@ h2 {
   font-size: 0.72rem;
   font-style: normal;
   font-weight: 850;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -20780,6 +20784,7 @@ h2 {
   font-size: 0.72rem;
   font-style: normal;
   font-weight: 850;
+  white-space: nowrap;
 }
 
 .command-task-routes {
