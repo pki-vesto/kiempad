@@ -11,6 +11,7 @@
 
 ## Implementation Progress
 
+- **G512 Fertility Intelligence historische records zoekfilter op kliniek — done in G512 / issue #843.** Dossier Zoeken heeft nu een aparte kliniekfilter met veilige resultaatcontext voor bron, datum en reviewstatus, naast vrije tekst zoeken en zonder bronpayload of behandeladvies.
 - **G2016 Fertility Intelligence consultvraagkoppeling zichtbaar in vragenroute — done in G2016 / issue #3970.** De Vragen-route toont consult-linked vraagmetadata met bronlabel, datum en reviewstatus in open vragen, alle vragen en het geselecteerde vraagformulier zonder medische payload of behandeladvies.
 - **G522 Fertility Intelligence consultdocument koppelen aan open vragen — done in G522 / issue #853.** Consultkaarten tonen nu een compacte open-vragenroute voor vragen die aan dezelfde consultafspraak hangen, inclusief bronlabel, datum, reviewstatus en een lokaal bewaarformulier voor de koppeling zonder consultpayload of behandeladvies.
 - **G2014 Research Intelligence offline cache metadata release-state contract error-contract error error error error missing-term error contract — done in G2014 / issue #3966.** Maintenance-docs test snapshott nu de exacte G2013 error-contract error error error error release missing-term foutmelding met alleen `offline cache metadata missing-term error contract` en `veilige technische labels` als veilige contractlabels.

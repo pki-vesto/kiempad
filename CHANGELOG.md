@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G512 historische records zoekfilter op kliniek: Dossier Zoeken heeft nu een
+  aparte kliniekfilter met veilige resultaatcontext voor bron, datum en
+  reviewstatus, naast vrije tekst zoeken en zonder bronpayload of behandeladvies.
 - G2016 consultvraagkoppeling zichtbaar in vragenroute: de Vragen-route toont
   consult-linked vraagmetadata met bronlabel, datum en reviewstatus in open
   vragen, alle vragen en het geselecteerde vraagformulier, zonder medische

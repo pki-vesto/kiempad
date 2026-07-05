@@ -8491,6 +8491,18 @@ describe('app shell', () => {
               },
               overschrevenDoorGebruiker: false,
             },
+            historischeTijdlijnReview: {
+              reviewStatus: 'bevestigd',
+              datum: '2026-05-01',
+              bron: 'Erasmus MC',
+              zichtbaarheid: 'zichtbaar',
+              bijgewerktOp: '2026-06-23',
+              origineleWaarden: {
+                formulierDatum: '2026-05-01',
+                metadataDatum: '2026-05-01',
+                bron: 'Erasmus MC',
+              },
+            },
             extractieBronnen: [
               'bronbestand',
               'formulierdatum',
@@ -8514,6 +8526,7 @@ describe('app shell', () => {
       ],
       dossierStatus: '1 dossierbestand in de lokale kluis opgeslagen.',
       dossierZoekterm: 'erasmus',
+      dossierKliniekFilter: 'Erasmus MC',
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
@@ -8531,7 +8544,18 @@ describe('app shell', () => {
     expect(html).toContain('id="dossier-search-form"');
     expect(html).toContain('name="dossierZoekterm"');
     expect(html).toContain('value="erasmus"');
-    expect(html).toContain('1 resultaat voor "erasmus"');
+    expect(html).toContain('name="dossierKliniekFilter"');
+    expect(html).toContain('<option value="Erasmus MC" selected>Erasmus MC</option>');
+    expect(html).toContain('data-dossier-clinic-filter-state="active"');
+    expect(html).toContain('data-dossier-clinic-filter-chip="active"');
+    expect(html).toContain('Kliniek: Erasmus MC');
+    expect(html).toContain('data-dossier-search-clear="filters"');
+    expect(html).toContain('1 resultaat voor "erasmus" binnen Erasmus MC');
+    expect(html).toContain('data-dossier-clinic-filter-results="ready"');
+    expect(html).toContain('data-dossier-clinic-filter-result="gereviewd"');
+    expect(html).toContain('Bron: Erasmus MC');
+    expect(html).toContain('Datum: 2026-05-01');
+    expect(html).toContain('data-dossier-clinic-filter-review-status="gereviewd"');
     expect(html).toContain('Inhoudsindex');
     expect(html).toContain('Import-inbox');
     expect(html).toContain(
@@ -11797,7 +11821,9 @@ describe('app shell', () => {
     expect(emptyHtml).not.toContain(
       '<details class="dossier-search-result-choice" data-dossier-search-result-choice="collapsed" open>',
     );
-    expect(emptyHtml).toContain('href="#dossier?route=search">Wis zoekterm</a>');
+    expect(emptyHtml).toContain(
+      'href="#dossier?route=search" data-dossier-search-clear="filters">Wis filters</a>',
+    );
     expect(emptyHtml).toContain('Privacy en toegankelijkheid');
     expect(emptyHtml).toContain('Inhoudsindex');
     expect(emptyDisclosure).toContain('data-dossier-secondary-privacy="collapsed"');

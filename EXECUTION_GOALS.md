@@ -14827,7 +14827,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Search, dossier, tests
 - **ADR Needed:** no
 - **Score:** 107
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #843
 
 ### G513 — historische records zoekfilter op poging
 
@@ -18765,6 +18766,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 80
 - **Status:** ☐ open
 - **Issue:** #3972
+
+### G2018 — Fertility Intelligence: historische records zoekfilter op poging
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G512 maakt kliniekfiltering zichtbaar in Dossier Zoeken, maar gebruikers kunnen historische records nog niet apart op poging filteren.
+- **User Impact:** Bij meerdere behandelpogingen blijft het zoeken door historische records onnodig breed.
+- **Desired Outcome:** Dossier Zoeken krijgt een expliciete pogingfilter naast vrije tekst en kliniekfiltering, met compacte resultaatcontext.
+- **User Value:** Gebruikers kunnen historische onderzoeken sneller per poging terugvinden zonder bronbestanden of medische payload te openen.
+- **Acceptance Criteria:** Dossier search includes a separate attempt/poging filter next to free text and clinic filtering; results remain compact and show source, date and review status without opening source payloads; filtering works with historical record metadata and does not expose OCR text, filenames beyond safe labels, diagnosis, dosage, chance calculation or treatment-choice advice; desktop, tablet and mobile layouts remain bounded without becoming a long list; backlog/docs stay aligned.
+- **Affected Screens:** Dossier Zoeken
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Search, dossier, tests
+- **ADR Needed:** no
+- **Score:** 107
+- **Status:** ☐ open
+- **Issue:** #3974
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

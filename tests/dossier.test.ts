@@ -1610,7 +1610,7 @@ describe('dossier', () => {
       mimeType: 'image/jpeg',
       grootteBytes: 1024,
       inhoudBase64: 'anBn',
-      notitie: 'Geen labtekst',
+      notitie: 'Geen labtekst uit UMC Utrecht',
     });
 
     expect(zoekDossierDocumenten([match, geenMatch], 'amh')).toEqual([
@@ -1622,6 +1622,14 @@ describe('dossier', () => {
     expect(
       zoekDossierDocumenten([match, geenMatch], '').map((result) => result.document.id),
     ).toEqual(['doc-match', 'doc-geen-match']);
+    expect(
+      zoekDossierDocumenten([match, geenMatch], '', { kliniek: 'Erasmus MC' }).map(
+        (result) => result.document.id,
+      ),
+    ).toEqual(['doc-match']);
+    expect(zoekDossierDocumenten([match, geenMatch], 'amh', { kliniek: 'UMC Utrecht' })).toEqual(
+      [],
+    );
   });
 
   it('formatteert bestandsgrootte compact', () => {
