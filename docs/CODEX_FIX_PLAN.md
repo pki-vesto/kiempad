@@ -71,6 +71,10 @@
   Historie now opens with one compact intake board for today, planning, active medication, and
   dose history before the full history disclosure, preserving today, planning, management, import,
   and history anchors on desktop and mobile.
+- **Schedule history first-viewport planning board — done in G1870 / issue #3682.** Agenda
+  Historie now opens with one compact planning board for today, upcoming appointments,
+  preparation, and appointment history before the full history disclosure, preserving overview,
+  upcoming, planning, import, and history anchors on desktop and mobile.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

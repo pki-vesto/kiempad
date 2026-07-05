@@ -17,6 +17,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1870 Premium Claude Design UI: agendageschiedenis opent nu met een compact
+  eerste-viewport planningbord voor vandaag, komende afspraken, voorbereiding en
+  afspraakgeschiedenis. De volledige afspraakgeschiedenis blijft bereikbaar via
+  bestaande ankers zonder als eerste lange planningstapel te starten.
 - G1869 Premium Claude Design UI: medicatiehistorie opent nu met een compact
   eerste-viewport intakebord voor vandaag, planning, actieve medicatie en
   doseerhistorie. De volledige middelen-, voorraad- en innamelijsten blijven

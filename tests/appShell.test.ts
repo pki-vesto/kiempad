@@ -2289,6 +2289,13 @@ describe('app shell', () => {
     expect(css).toContain('.schedule-planning-followup {');
     expect(css).toContain('.schedule-planning-followup__summary {');
     expect(css).toContain('.schedule-planning-followup__body {');
+    expect(css).toContain('.schedule-history-planning-board {');
+    expect(css).toContain('.schedule-history-planning-board__header {');
+    expect(css).toContain('.schedule-history-planning-board__lanes {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.schedule-history-planning-board__lane {');
+    expect(css).toContain('.schedule-history-planning-board__lane:hover,');
+    expect(css).toContain('.schedule-history-planning-board__lane em {');
     expect(css).toContain('.schedule-form {');
     expect(css).toContain('.schedule-form-section {');
     expect(css).toContain('.schedule-form-section--primary {');
@@ -2297,6 +2304,9 @@ describe('app shell', () => {
     expect(css).toContain('.schedule-date-block {');
     expect(css).toContain('.schedule-appointment-card {');
     expect(css).toContain('[data-schedule-appointment-type="echo"]');
+    expect(mobileCss).toContain('.schedule-history-planning-board__lanes {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('flex: 0 0 min(204px, 74vw);');
     expect(css).toContain(
       '.schedule-appointment-card__status[data-schedule-appointment-status="past"]',
     );
@@ -5043,6 +5053,33 @@ describe('app shell', () => {
     expect(html).toContain('data-schedule-route="historie"');
     expect(html).toContain('id="schedule-upcoming-actions-disclosure"');
     expect(html).toContain('id="schedule-import-disclosure"');
+    expect(html).toContain(
+      'aria-label="Agendageschiedenis planningbord" data-schedule-history-planning-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je planninglaag');
+    expect(html).toContain('data-schedule-history-planning-lane="today"');
+    expect(html).toContain('data-schedule-history-planning-lane="upcoming"');
+    expect(html).toContain('data-schedule-history-planning-lane="preparation"');
+    expect(html).toContain('data-schedule-history-planning-lane="history"');
+    expect(html).toContain(
+      'href="#agenda?route=overzicht" data-schedule-history-planning-lane="today"',
+    );
+    expect(html).toContain(
+      'href="#agenda?route=komend" data-schedule-history-planning-lane="upcoming"',
+    );
+    expect(html).toContain(
+      'href="#agenda?route=plannen" data-schedule-history-planning-lane="preparation"',
+    );
+    expect(html).toContain(
+      'href="#schedule-history-disclosure" data-schedule-history-planning-lane="history"',
+    );
+    expect(html).toContain('<span>Vandaag</span>');
+    expect(html).toContain('<span>Komend</span>');
+    expect(html).toContain('<span>Voorbereiding</span>');
+    expect(html).toContain('<span>Historie</span>');
+    expect(html.indexOf('data-schedule-history-planning-board="first-viewport"')).toBeLessThan(
+      html.indexOf('id="schedule-history-disclosure"'),
+    );
     expect(html).toContain('id="schedule-history-disclosure"');
     expect(html).not.toContain(
       '<details class="kp-disclosure" id="schedule-upcoming-actions-disclosure" open',

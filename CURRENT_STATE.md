@@ -110,6 +110,11 @@
   doseerhistorie. De volledige middelen-, voorraad- en innamelijsten blijven via
   bestaande vandaag-, planning-, beheer- en historyankers bereikbaar zonder de
   eerste viewport als lange medicatiestapel te vullen.
+- **G1870 Agendageschiedenis planningbord:** de Agenda-historieroute start met
+  een compact planningbord voor vandaag, komende afspraken, voorbereiding en
+  afspraakgeschiedenis. De volledige afspraakgeschiedenis blijft via bestaande
+  overzicht-, komend-, plannen- en historyankers bereikbaar zonder de eerste
+  viewport als lange planningstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
