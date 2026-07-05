@@ -232,6 +232,10 @@
   badge- en cuepills hebben in forced-colors nu extra gap, min-height,
   padding en line-height, zodat de compacte routegroepen leesbaar blijven
   zonder crowding.
+- **G1896 Traject mobile forced-colors label fit:** mobiele Traject
+  routelabels krijgen in forced-colors expliciete ellipsis- en min-width
+  regels naast begrensde badge- en cuepills, zodat lange labels niet tegen de
+  statuspills drukken.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en

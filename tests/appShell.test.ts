@@ -5858,9 +5858,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('background: HighlightText;');
     expect(mobileCss).toContain('.treatment-task-route .command-task-route__top {');
     expect(mobileCss).toContain('gap: 10px;');
+    expect(mobileCss).toContain('.treatment-task-route .command-task-route__top > span {');
+    expect(mobileCss).toContain('text-overflow: ellipsis;');
     expect(mobileCss).toContain('.treatment-task-route .command-task-route__badge,');
     expect(mobileCss).toContain('.treatment-task-route .command-task-route__cue {');
     expect(mobileCss).toContain('min-height: 22px;');
+    expect(mobileCss).toContain('max-width: min(82px, 48%);');
     expect(mobileCss).toContain('padding: 3px 8px;');
     expect(mobileCss).toContain('line-height: 1.2;');
     expect(mobileCss).toContain(
