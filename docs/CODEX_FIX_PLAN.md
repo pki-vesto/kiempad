@@ -2215,6 +2215,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   explicit pending-to-ready progress state, announcing local hash calculation
   as busy and then complete while keeping filenames, source content, OCR text,
   base64 and medical context out of the status copy.
+- Partial G1854/#3650: Attachment-envelope batch progress states now have
+  forced-colors system-color evidence for hashing, complete and invalid states,
+  using border, outline and text-decoration differences without filenames,
+  payloads, OCR text or medical plaintext.
 - Partial G584/#934: Central record pagination now has a reusable load-status
   iterator plus a generic Back-up route status row for loading, empty-page,
   complete and error states without passphrases, tokens, cursors, record
