@@ -30637,6 +30637,20 @@ summary[class*="__summary"]:focus-visible,
       background: HighlightText;
     }
 
+    .treatment-task-route[aria-current="page"] .command-task-route__top {
+      align-items: center;
+    }
+
+    .treatment-task-route[aria-current="page"] .command-task-route__top > span {
+      flex: 1 1 auto;
+      max-width: calc(100% - 96px);
+      color: HighlightText;
+      font-weight: 850;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
     .treatment-task-route .command-task-route__top {
       gap: 10px;
     }
@@ -30664,6 +30678,12 @@ summary[class*="__summary"]:focus-visible,
       border-color: HighlightText;
       background: HighlightText;
       color: Highlight;
+    }
+
+    .treatment-task-route[aria-current="page"] .command-task-route__cue {
+      align-self: flex-start;
+      max-width: min(96px, 42%);
+      text-align: center;
     }
 
     .treatment-task-route:focus-visible {

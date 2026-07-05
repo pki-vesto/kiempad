@@ -236,6 +236,10 @@
   routelabels krijgen in forced-colors expliciete ellipsis- en min-width
   regels naast begrensde badge- en cuepills, zodat lange labels niet tegen de
   statuspills drukken.
+- **G1897 Traject mobile forced-colors active cue label:** de gepromoveerde
+  actieve mobiele Traject-route krijgt in forced-colors eigen labelnadruk en
+  begrensde cue-uitlijning, zodat label, badge en cue binnen de volle kaart
+  duidelijk gescheiden blijven.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
