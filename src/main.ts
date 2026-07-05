@@ -2797,6 +2797,12 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
       void moveVraagPriorityFromForm(event.currentTarget, event.submitter, root, state);
     });
   });
+  root.querySelectorAll<HTMLFormElement>('.question-artscheck-review-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveVraagArtscheckReviewFromForm(event.currentTarget, root, state);
+    });
+  });
 
   root.querySelector('#delete-vraag')?.addEventListener('click', (event) => {
     const button = event.currentTarget;
@@ -2854,6 +2860,33 @@ async function moveVraagPriorityFromForm(
   await state.vraagStore.movePriority(vraagId, richting);
   state.vraagStatus = 'Vraagprioriteit bijgewerkt.';
   await reloadAndRender(root, state);
+}
+
+async function saveVraagArtscheckReviewFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.vraagStore) return;
+  const data = new FormData(target);
+  const vraagId = optionalString(data.get('vraagId'));
+  const reviewStatus = parseArtscheckReviewStatus(data.get('artscheckReviewStatus'));
+  if (!vraagId) return;
+
+  try {
+    await state.vraagStore.updateArtscheckReviewStatus(vraagId, reviewStatus);
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Artscheckvraag reviewstatus bijgewerkt',
+      detail: `Artscheckvraag ${vraagId}; reviewstatus ${reviewStatus}.`,
+    });
+    state.vraagStatus = 'Artscheck-reviewstatus bijgewerkt.';
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.vraagStatus =
+      error instanceof Error ? error.message : 'Artscheck-reviewstatus bewaren is mislukt.';
+    render(root, state);
+  }
 }
 
 function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
@@ -3360,6 +3393,13 @@ async function handleDailyRecommendationAction(
         bron: String(data.get('bron') ?? ''),
       }),
       beantwoord: false,
+      artscheckMetadata: {
+        bron: 'daily_recommendation',
+        bronId: recommendationId,
+        bronLabel: titel,
+        datum: new Date().toISOString(),
+        reviewStatus: 'concept',
+      },
     });
     await state.eventLogStore?.record({
       categorie: 'systeem',
@@ -3369,6 +3409,26 @@ async function handleDailyRecommendationAction(
     state.dailyRecommendationStatus = `Artscheckvraag gemaakt: ${titel}.`;
     await reloadAndRender(root, state);
   }
+}
+
+function parseArtscheckMetadataFromForm(data: FormData): Vraag['artscheckMetadata'] | undefined {
+  const bronId = optionalString(data.get('artscheckBronId'));
+  const bronLabel = optionalString(data.get('artscheckBronLabel'));
+  const datum = optionalString(data.get('artscheckDatum'));
+  if (!bronId || !bronLabel || !datum) return undefined;
+  return {
+    bron: 'daily_recommendation',
+    bronId,
+    bronLabel,
+    datum,
+    reviewStatus: parseArtscheckReviewStatus(data.get('artscheckReviewStatus')),
+  };
+}
+
+function parseArtscheckReviewStatus(
+  value: FormDataEntryValue | null,
+): NonNullable<Vraag['artscheckMetadata']>['reviewStatus'] {
+  return value === 'gereviewd' ? 'gereviewd' : 'concept';
 }
 
 function parseDailyRecommendationReviewStatus(
@@ -3504,6 +3564,7 @@ async function saveVraagFromForm(
     prioriteit: optionalPositiveNumber(data.get('prioriteit')),
     beantwoord: data.get('beantwoord') === 'true',
     antwoord: optionalString(data.get('antwoord')),
+    artscheckMetadata: parseArtscheckMetadataFromForm(data),
   });
 
   state.vraagStatus = 'Vraag opgeslagen.';

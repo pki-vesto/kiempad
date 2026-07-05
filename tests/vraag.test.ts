@@ -28,6 +28,31 @@ describe('vraag domeinregels', () => {
     });
   });
 
+  it('bewaart artscheckmetadata met bron, datum en reviewstatus', () => {
+    const vraag = maakVraag('vraag-artscheck', {
+      vraag: 'Vraag aan kliniek, arts of apotheek: supplement bespreken?',
+      beantwoord: false,
+      artscheckMetadata: {
+        bron: 'daily_recommendation',
+        bronId: 'rec-supplement',
+        bronLabel: 'Supplement dagadvies',
+        datum: '2026-07-05T09:00:00.000Z',
+        reviewStatus: 'concept',
+      },
+    });
+
+    expect(vraag.artscheckMetadata).toEqual({
+      bron: 'daily_recommendation',
+      bronId: 'rec-supplement',
+      bronLabel: 'Supplement dagadvies',
+      datum: '2026-07-05T09:00:00.000Z',
+      reviewStatus: 'concept',
+    });
+    expect(JSON.stringify(vraag.artscheckMetadata)).not.toMatch(
+      /\bdiagnose|dosering|behandelkeuzeadvies\b/i,
+    );
+  });
+
   it('sorteert openstaande vragen op consultprioriteit', () => {
     const sorted = sorteerVragen([
       { id: 'vraag-2', vraag: 'Tweede vraag', prioriteit: 2, beantwoord: false },

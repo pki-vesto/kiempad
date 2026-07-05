@@ -19262,6 +19262,7 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
           </select>
         </label>
       </section>
+      ${renderVraagArtscheckMetadataFormSection(vraag)}
       <section class="command-form-section" data-command-form-section="vraag-antwoord">
         <p class="command-form-section__eyebrow">Antwoord</p>
         <label>
@@ -19279,6 +19280,30 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
         }
       </div>
     </form>
+  `;
+}
+
+function renderVraagArtscheckMetadataFormSection(vraag: VraagBundle['vraag'] | undefined): string {
+  if (!vraag?.artscheckMetadata) return '';
+  const metadata = vraag.artscheckMetadata;
+  return `
+      <section class="command-form-section" data-command-form-section="vraag-artscheck-review" data-question-artscheck-review="ready">
+        <p class="command-form-section__eyebrow">Artscheck</p>
+        <input type="hidden" name="artscheckBronId" value="${escapeAttribute(metadata.bronId)}" />
+        <input type="hidden" name="artscheckBronLabel" value="${escapeAttribute(metadata.bronLabel)}" />
+        <input type="hidden" name="artscheckDatum" value="${escapeAttribute(metadata.datum)}" />
+        <p class="linked-note dossier-status-row">
+          Bron: ${escapeHtml(metadata.bronLabel)} · ${formatDateTime(metadata.datum)}
+          ${renderVraagArtscheckReviewBadge(metadata.reviewStatus)}
+        </p>
+        <label>
+          Artscheck reviewstatus
+          <select name="artscheckReviewStatus">
+            ${renderOption('concept', 'Concept', metadata.reviewStatus)}
+            ${renderOption('gereviewd', 'Gereviewd', metadata.reviewStatus)}
+          </select>
+        </label>
+      </section>
   `;
 }
 
@@ -19338,8 +19363,10 @@ function renderVragenList(bundles: VraagBundle[]): string {
               <div>
                 <h3>${escapeHtml(bundle.vraag.vraag)}</h3>
                 <p>${bundle.vraag.beantwoord ? 'Beantwoord' : 'Openstaand'}${bundle.vraag.prioriteit ? ` · Prioriteit ${bundle.vraag.prioriteit}` : ''}${bundle.afspraak ? ` · ${escapeHtml(bundle.afspraak.titel)}` : ''}</p>
+                ${renderVraagArtscheckMetadataSummary(bundle.vraag)}
                 ${bundle.vraag.antwoord ? `<p class="linked-note">Antwoord: ${escapeHtml(bundle.vraag.antwoord)}</p>` : ''}
               </div>
+              ${renderVraagArtscheckReviewForm(bundle.vraag)}
               <form class="question-priority-form compact-form" data-vraag-id="${escapeAttribute(bundle.vraag.id)}">
                 <button class="phase-button secondary" type="submit" name="richting" value="omhoog" aria-label="Verplaats vraag omhoog: ${escapeAttribute(bundle.vraag.vraag)}">Omhoog</button>
                 <button class="phase-button secondary" type="submit" name="richting" value="omlaag" aria-label="Verplaats vraag omlaag: ${escapeAttribute(bundle.vraag.vraag)}">Omlaag</button>
@@ -19350,6 +19377,46 @@ function renderVragenList(bundles: VraagBundle[]): string {
         .join('')}
     </ol>
   `;
+}
+
+function renderVraagArtscheckMetadataSummary(vraag: VraagBundle['vraag']): string {
+  if (!vraag.artscheckMetadata) return '';
+  return `
+                <p class="linked-note dossier-status-row" data-question-artscheck-review-state="${escapeAttribute(vraag.artscheckMetadata.reviewStatus)}">
+                  Artscheck: bron ${escapeHtml(vraag.artscheckMetadata.bronLabel)} · ${formatDateTime(vraag.artscheckMetadata.datum)}
+                  ${renderVraagArtscheckReviewBadge(vraag.artscheckMetadata.reviewStatus)}
+                </p>
+  `;
+}
+
+function renderVraagArtscheckReviewForm(vraag: VraagBundle['vraag']): string {
+  if (!vraag.artscheckMetadata) return '';
+  return `
+              <form class="question-artscheck-review-form compact-form" data-question-artscheck-review-form="ready">
+                <input type="hidden" name="vraagId" value="${escapeAttribute(vraag.id)}" />
+                <label>
+                  Review
+                  <select name="artscheckReviewStatus">
+                    ${renderOption('concept', 'Concept', vraag.artscheckMetadata.reviewStatus)}
+                    ${renderOption('gereviewd', 'Gereviewd', vraag.artscheckMetadata.reviewStatus)}
+                  </select>
+                </label>
+                <button class="phase-button secondary" type="submit">Reviewstatus bewaren</button>
+              </form>
+  `;
+}
+
+function renderVraagArtscheckReviewBadge(
+  reviewStatus: NonNullable<VraagBundle['vraag']['artscheckMetadata']>['reviewStatus'],
+): string {
+  return statusBadge({
+    label: reviewStatus === 'gereviewd' ? 'Artscheck gereviewd' : 'Artscheck concept',
+    tone: reviewStatus === 'gereviewd' ? 'success' : 'warning',
+    className: 'status-badge--question',
+    data: {
+      'question-artscheck-review-badge': reviewStatus,
+    },
+  });
 }
 
 function beschrijfOpenstaandeVragen(state: AppShellState): string {
