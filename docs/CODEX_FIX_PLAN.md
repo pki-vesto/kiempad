@@ -124,6 +124,11 @@
   routeflow coverage now measures the owner-scan rail directly: vrouw, man, and samen cards stay
   visible before decision lanes and list details while the scan container remains bounded inside
   the route root across desktop, tablet, and mobile without medical payload text in the evidence.
+- **Consult review-scan overflow evidence — done in G1926 / issue #3798.** Consultverslagen
+  routeflow coverage now measures the compact review-scan directly: reports, summaries, actions,
+  and sources cards stay visible before consult detail cards while the scan container remains
+  bounded inside the route root across desktop, tablet, and mobile without consult payload text in
+  the evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

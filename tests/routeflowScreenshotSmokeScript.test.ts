@@ -554,9 +554,11 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain("prepare: 'filled-consult-card'");
     expect(routeflowScreenshotSmokeScript).toContain('filledConsultCard: true');
     expect(routeflowScreenshotSmokeScript).toContain('prepareFilledConsultCard');
+    expect(routeflowScreenshotSmokeScript).toContain('scanBeforeCard');
+    expect(routeflowScreenshotSmokeScript).toContain('scanContained');
     expect(routeflowScreenshotSmokeScript).toContain('statusChipCount');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'gevulde consultkaart mist compacte browser-evidence',
+      'consult review-scan mist routeflow-overflow evidence',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
       "screen: 'dossier-imaging-embryo-classification-review'",
