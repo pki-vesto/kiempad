@@ -40024,6 +40024,24 @@ describe('app shell', () => {
     expect(html).toContain('Open researchanker, eigen-kennisanker, opslagstatus en routecontext.');
     expect(html).toContain('href="#research-item-form"');
     expect(html).toContain('href="#knowledge-own-item-disclosure"');
+    expect(html).toContain(
+      'aria-label="Kennis toevoegen input startlaag" data-knowledge-add-input-board="first-viewport"',
+    );
+    expect(html).toContain('Kies eerst je toevoeglaag');
+    expect(html).toContain('data-knowledge-add-input-lane="research"');
+    expect(html).toContain('data-knowledge-add-input-lane="own"');
+    expect(html).toContain('data-knowledge-add-input-lane="required"');
+    expect(html).toContain('data-knowledge-add-input-lane="storage"');
+    expect(html).toContain('data-knowledge-add-input-lane="context"');
+    expect(html).toContain('href="#research-item-form" data-knowledge-add-input-lane="research"');
+    expect(html).toContain(
+      'href="#knowledge-own-item-disclosure" data-knowledge-add-input-lane="own"',
+    );
+    expect(html).toContain('href="#research-item-form" data-knowledge-add-input-lane="required"');
+    expect(html).toContain('href="#knowledge-overview" data-knowledge-add-input-lane="storage"');
+    expect(html).toContain(
+      'href="#knowledge-own-item-disclosure" data-knowledge-add-input-lane="context"',
+    );
     expect(html).toContain('data-knowledge-add-layout="single-input"');
     expect(html).toContain('data-knowledge-add-primary="research"');
     expect(html).toContain('data-knowledge-add-research-input-choice="collapsed"');
@@ -40067,6 +40085,9 @@ describe('app shell', () => {
     );
     expect(html.indexOf('data-knowledge-add-action-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#research-item-form"'),
+    );
+    expect(html.indexOf('data-knowledge-add-input-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-knowledge-add-layout="single-input"'),
     );
     expect(html).not.toContain(
       '<details class="command-route-summary knowledge-add-route-status-choice" aria-label="Kennis toevoegen route-samenvatting" data-knowledge-route-summary="add" data-knowledge-add-route-status-choice="collapsed" open>',
@@ -41159,6 +41180,13 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-add-action-choice:not([open]) > .knowledge-add-action-choice__body {',
     );
+    expect(css).toContain('.knowledge-add-input-board {');
+    expect(css).toContain('.knowledge-add-input-board__lanes {');
+    expect(css).toContain('.knowledge-add-input-board__lane {');
+    expect(css).toContain('.knowledge-add-input-board__lane:hover,');
+    expect(mobileCss).toContain('.knowledge-add-input-board {');
+    expect(mobileCss).toContain('.knowledge-add-input-board__lanes {');
+    expect(mobileCss).toContain('.knowledge-add-input-board__lane {');
     expect(css).toContain('.knowledge-add-research-input-choice {');
     expect(css).toContain('.knowledge-add-research-input-choice__summary {');
     expect(css).toContain('.knowledge-add-research-input-choice__body {');

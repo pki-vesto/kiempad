@@ -158,6 +158,11 @@
   volledige bibliotheekcontext. De bestaande categoriekaarten, filters,
   itemlijsten, verificatielabels en bewerkacties blijven bereikbaar zonder de
   eerste viewport als bibliotheekstapel te vullen.
+- **G1880 Kennis/Toevoegen input board:** Kennis/Toevoegen start met een compact
+  inputbord voor researchinvoer, eigen kennis, verplichte velden, opslagstatus en
+  volledige toevoegcontext. De bestaande formulier-id's, input names,
+  eigen-kennisroute, feedback en annuleeracties blijven bereikbaar zonder de
+  eerste viewport als invoerstapel te vullen.
 - **G1859 attachment-envelope forced-colors release evidence:** releasecontext in
   changelog en current state noemt `npm run smoke:routeflows`,
   `attachmentEnvelopeBatchForcedColorsEvidence` en
