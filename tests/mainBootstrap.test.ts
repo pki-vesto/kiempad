@@ -191,21 +191,32 @@ describe('main bootstrap', () => {
 
   it('brengt de actieve mobiele workspace-strip knop na render horizontaal in beeld', () => {
     expect(mainSource).toContain('alignActiveWorkspaceStripButton(root)');
+    expect(mainSource).toContain('alignActiveRouteFocusLink(root)');
     expect(mainSource).toContain(
       'requestAnimationFrame(() => alignActiveWorkspaceStripButton(root))',
     );
+    expect(mainSource).toContain('requestAnimationFrame(() => alignActiveRouteFocusLink(root))');
     expect(mainSource).toContain("window.addEventListener('popstate'");
     expect(mainSource).toContain(
       'requestAnimationFrame(() => alignActiveWorkspaceStripButton(app))',
     );
+    expect(mainSource).toContain('requestAnimationFrame(() => alignActiveRouteFocusLink(app))');
     expect(mainSource).toContain('function alignActiveWorkspaceStripButton(root: HTMLElement)');
+    expect(mainSource).toContain('function alignActiveRouteFocusLink(root: HTMLElement)');
     expect(mainSource).toContain(
       '\'[data-workspace-strip="ready"] .workspace-strip__switcher a[aria-current="page"]\'',
     );
+    expect(mainSource).toContain(
+      '\'[data-route-focus-dock="ready"] .route-focus-dock__links a[aria-current="page"]\'',
+    );
     expect(mainSource).toContain("activeWorkspaceButton.closest('.workspace-strip__switcher')");
+    expect(mainSource).toContain("activeRouteFocusLink.closest('.route-focus-dock__links')");
     expect(mainSource).toContain('switcher.scrollLeft =');
+    expect(mainSource).toContain('linkRow.scrollLeft =');
     expect(mainSource).toContain('activeWorkspaceButton.offsetLeft');
+    expect(mainSource).toContain('activeRouteFocusLink.offsetLeft');
     expect(mainSource).not.toContain('activeWorkspaceButton.scrollIntoView');
+    expect(mainSource).not.toContain('activeRouteFocusLink.scrollIntoView');
   });
 
   it('mapt centrale replayconflicten naar generieke herstelcopy zonder plaintext fallback', () => {
