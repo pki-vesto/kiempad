@@ -7,6 +7,7 @@ export type VraagInput = {
   prioriteit?: number;
   beantwoord: boolean;
   antwoord?: string;
+  consultKoppelingen?: Vraag['consultKoppelingen'];
   artscheckMetadata?: Vraag['artscheckMetadata'];
 };
 
@@ -32,6 +33,7 @@ export function maakVraag(id: string, input: VraagInput): Vraag {
     prioriteit: normaliseerPrioriteit(input.prioriteit),
     beantwoord: input.beantwoord,
     antwoord: normaliseerOptioneleTekst(input.antwoord),
+    consultKoppelingen: normaliseerConsultKoppelingen(input.consultKoppelingen),
     artscheckMetadata: normaliseerArtscheckMetadata(input.artscheckMetadata),
   };
 }
@@ -197,6 +199,28 @@ function normaliseerArtscheckMetadata(
     datum,
     reviewStatus: metadata.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
   };
+}
+
+function normaliseerConsultKoppelingen(
+  koppelingen: Vraag['consultKoppelingen'] | undefined,
+): Vraag['consultKoppelingen'] | undefined {
+  const normalized = (koppelingen ?? [])
+    .map((koppeling) => {
+      const consultVerslagId = normaliseerOptioneleTekst(koppeling.consultVerslagId);
+      const bronLabel = normaliseerOptioneleTekst(koppeling.bronLabel);
+      const datum = normaliseerOptioneleTekst(koppeling.datum);
+      if (!consultVerslagId || !bronLabel || !datum) return undefined;
+      return {
+        consultVerslagId,
+        bronLabel,
+        datum,
+        reviewStatus: koppeling.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+      };
+    })
+    .filter((koppeling): koppeling is NonNullable<Vraag['consultKoppelingen']>[number] =>
+      Boolean(koppeling),
+    );
+  return normalized.length > 0 ? normalized : undefined;
 }
 
 function vraagPrioriteit(vraag: Vraag): number {

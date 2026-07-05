@@ -14967,7 +14967,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consults, questions, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
+- **Issue:** #853
 
 ### G523 — consultactie omzetten naar herinnering
 
@@ -18730,6 +18731,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 27
 - **Status:** ☐ open
 - **Issue:** #3968
+
+### G2016 — Fertility Intelligence: consultvraagkoppeling zichtbaar in vragenroute
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G522 maakt consultvraagkoppelingen zichtbaar op consultkaarten, maar de Vragen-route toont nog niet welke open vragen al aan een consultdocument gekoppeld zijn.
+- **User Impact:** Gebruikers moeten anders vanuit Dossier terugzoeken of een open vraag al bij een consultdocument hoort.
+- **Desired Outcome:** De Vragen-route toont consult-linked vraagmetadata met bron, datum en reviewstatus zonder de volledige dossierkaart te openen.
+- **User Value:** Consultvoorbereiding blijft rustiger: gebruikers zien in de vraagcontext meteen welke vragen uit of bij een consultdocument komen.
+- **Acceptance Criteria:** Vragen route shows consult-linked question metadata with source, date and review status; users can distinguish concept and reviewed consult-question links from regular open questions; UI remains compact on desktop, tablet and mobile without becoming one long list; output avoids diagnosis, dosage, chance calculation, treatment-choice advice, secrets, health payloads and plaintext medical payloads; backlog/docs stay aligned.
+- **Affected Screens:** Vragen, Dossier
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Questions, consults, app shell
+- **ADR Needed:** no
+- **Score:** 80
+- **Status:** ☐ open
+- **Issue:** #3970
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

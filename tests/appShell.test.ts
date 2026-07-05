@@ -12281,7 +12281,33 @@ describe('app shell', () => {
       ],
       medicatie: [],
       herinneringen: [],
-      vragen: [],
+      vragen: [
+        {
+          vraag: {
+            id: 'vraag-consult-link',
+            vraag: 'Welke vervolgstap moeten we bespreken?',
+            voorAfspraakId: 'afspraak-consult-review',
+            beantwoord: false,
+            consultKoppelingen: [
+              {
+                consultVerslagId: 'consult-review-state',
+                bronLabel: 'Consult: evaluatiegesprek',
+                datum: '2026-05-08',
+                reviewStatus: 'gereviewd',
+              },
+            ],
+          },
+        },
+        {
+          vraag: {
+            id: 'vraag-andere-afspraak',
+            vraag:
+              'Deze vraag hoort bij een ander gesprek met diagnose 150 mg behandelkeuzeadvies.',
+            voorAfspraakId: 'afspraak-anders',
+            beantwoord: false,
+          },
+        },
+      ],
       kennisItems: [],
       consultVerslagen: [
         {
@@ -12378,9 +12404,11 @@ describe('app shell', () => {
     expect(section).toContain('8 metadata');
     expect(section).toContain('samenvatting');
     expect(section).toContain('1 actiepunt');
+    expect(section).toContain('1 open vraag');
     expect(section).toContain('data-consult-card-section="tekst"');
     expect(section).toContain('data-consult-card-section="samenvatting"');
     expect(section).toContain('data-consult-card-section="actiepunten"');
+    expect(section).toContain('data-consult-card-section="open-vragen"');
     expect(section).toContain('data-consult-card-section="correctieverschil"');
     expect(section).toContain('data-consult-review-board="first-viewport"');
     expect(section).toContain('aria-label="Consult review werkbank"');
@@ -12392,15 +12420,19 @@ describe('app shell', () => {
     expect(section).toContain('href="#consult-review-consult-review-state-samenvatting"');
     expect(section).toContain('data-consult-review-board-lane="actions"');
     expect(section).toContain('href="#consult-review-consult-review-state-actiepunten"');
+    expect(section).toContain('data-consult-review-board-lane="questions"');
+    expect(section).toContain('href="#consult-review-consult-review-state-open-vragen"');
     expect(section).toContain('data-consult-review-board-lane="source"');
     expect(section).toContain('href="#consult-review-consult-review-state-broncontext"');
     expect(section).toContain('Tekst klaar');
     expect(section).toContain('Concept klaar');
     expect(section).toContain('1 punt');
+    expect(section).toContain('1 vraag');
     expect(section).toContain('1 bron');
     expect(section).toContain('id="consult-review-consult-review-state-tekst"');
     expect(section).toContain('id="consult-review-consult-review-state-samenvatting"');
     expect(section).toContain('id="consult-review-consult-review-state-actiepunten"');
+    expect(section).toContain('id="consult-review-consult-review-state-open-vragen"');
     expect(section).toContain('id="consult-review-consult-review-state-broncontext"');
     expect(section).toContain('Consult review state');
     expect(section).toContain('Consultdatum: 2026-05-08');
@@ -12447,6 +12479,20 @@ describe('app shell', () => {
     expect(section).toContain('Eigenaar: samen');
     expect(section).toContain('Datum: 2026-06-25');
     expect(section).toContain('Status: concept');
+    expect(section).toContain('data-consult-question-links="ready"');
+    expect(section).toContain('Open vragen</p> <h4>Vragen bij dit consultdocument</h4>');
+    expect(section).toContain('Welke vervolgstap moeten we bespreken?');
+    expect(section).toContain(
+      'Bron: Consult: evaluatiegesprek · Datum: 2026-05-08 · Reviewstatus: gereviewd',
+    );
+    expect(section).toContain('class="consult-question-link-review-form compact-form"');
+    expect(section).toContain('name="consultVerslagId" value="consult-review-state"');
+    expect(section).toContain('name="vraagId" value="vraag-consult-link"');
+    expect(section).toContain('name="consultQuestionLinkSourceLabel"');
+    expect(section).toContain('name="consultQuestionLinkReviewStatus"');
+    expect(section).toContain('Koppeling bewaren');
+    expect(section).not.toContain('vraag-andere-afspraak');
+    expect(section).not.toContain('Deze vraag hoort bij een ander gesprek');
     expect(section).not.toContain('Y29uc3VsdC1wYXlsb2Fk');
     expect(section).not.toContain('data:application/pdf;base64');
     expect(section).not.toContain('diagnose stellen');
@@ -12459,9 +12505,11 @@ describe('app shell', () => {
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
     expect(css).toContain('.consult-review-board {');
     expect(css).toContain('.consult-review-board__lanes {');
-    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('grid-template-columns: repeat(5, minmax(0, 1fr));');
     expect(css).toContain('.consult-review-board__lane {');
     expect(css).toContain('min-height: 76px;');
+    expect(css).toContain('.consult-question-link {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(220px, 0.72fr);');
     expect(css).toContain('.consult-review-layout__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(240px, 0.76fr);');
     expect(css).toContain('.consult-review-layout__panel[data-consult-review-panel="summary"]');
@@ -12469,6 +12517,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.consult-review-board__lane {');
     expect(mobileCss).toContain('flex: 0 0 min(156px, 70vw);');
+    expect(mobileCss).toContain('.consult-question-link {');
+    expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.consult-review-scan__card {');
     expect(mobileCss).toContain('flex: 0 0 min(124px, 48vw);');
     expect(mobileCss).toContain('min-height: 66px;');
