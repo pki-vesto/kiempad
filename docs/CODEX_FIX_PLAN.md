@@ -164,6 +164,11 @@
   `data-embryo-source-label-correction-form="ready"` directly: bronlabel, source date,
   reviewstatus and save action remain visible and bounded across desktop, tablet and mobile
   without secrets, medical payloads or plaintext health data in the evidence.
+- **Imaging metadata review evidence — done in G1934 / issue #3815.** Dossier imaging routeflow
+  coverage now measures `data-imaging-metadata-review="ready"` and the locked review variant:
+  beeldtype, source label, date, attempt, appointment, EXIF status, reviewstatus and save action
+  remain visible and bounded across desktop, tablet and mobile while locked previews expose no
+  thumbnail, image payload or plaintext source filename in the review evidence.
 - **Daily advice first-viewport selection board — done in G1877 / issue #3696.** Dagadvies now
   opens with one compact selection board for today, owner routes, feedback, arts-check, and full
   recommendation context before the existing decision and action layers, preserving

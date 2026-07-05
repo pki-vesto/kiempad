@@ -1160,9 +1160,15 @@ const targets = [
       '[data-imaging-metadata-review="ready"]',
       '[data-embryo-image-classification-review="concept"]',
       'select[name="imagingMetadataSoort"]',
+      'input[name="imagingMetadataBron"]',
+      'input[name="imagingMetadataDatum"]',
+      'input[name="imagingMetadataPogingId"]',
+      'input[name="imagingMetadataAfspraakId"]',
       'input[name="imagingMetadataEmbryoLabel"]',
       'input[name="imagingMetadataEmbryoId"]',
+      'select[name="imagingMetadataExifStatus"]',
       'select[name="imagingMetadataReviewStatus"]',
+      '[data-imaging-metadata-review="ready"] button[type="submit"]',
     ],
     presentSelectors: [
       'option[value="embryo_afbeelding"]:checked',
@@ -1243,6 +1249,36 @@ const targets = [
       '.hub-workflow-header__copy p',
       '.dossier-upload-triage__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
+    screen: 'dossier-imaging-metadata-review-locked',
+    hash: '#dossier?route=imaging&preview=locked',
+    rootSelector: '[data-dossier-imaging-disclosure="repository"]',
+    expectedText: 'Beeldmetadata review',
+    prepare: 'embryo-image-classification-review',
+    activeRouteSelector: '[data-dossier-route="imaging"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: [
+      '[data-dossier-imaging-followup="collapsed"]',
+      '[data-dossier-imaging-context-choice="collapsed"]',
+      '[data-dossier-imaging-disclosure="repository"]',
+    ],
+    requiredSelectors: [
+      '[data-imaging-metadata-review="locked"]',
+      '[data-attachment-preview-kind="imaging-preview"][data-attachment-preview-state="locked"]',
+      '[data-attachment-preview-kind="imaging-thumbnail"][data-attachment-preview-state="locked"]',
+    ],
+    imagingMetadataReviewLocked: true,
+    dossierConsole: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.dossier-imaging-inspection-board__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+      '[data-hub-detail-panel="consult-verslagen"] .hub-detail-disclosure__summary small',
+      '[data-hub-detail-panel="embryo-dossiers"] .hub-detail-disclosure__summary small',
     ],
   },
   {
@@ -4160,11 +4196,17 @@ async function assertRouteflows(browser, options) {
                 '[data-embryo-image-classification-review="concept"]',
               );
               const type = panel?.querySelector('select[name="imagingMetadataSoort"]');
+              const source = panel?.querySelector('input[name="imagingMetadataBron"]');
+              const date = panel?.querySelector('input[name="imagingMetadataDatum"]');
+              const attempt = panel?.querySelector('input[name="imagingMetadataPogingId"]');
+              const appointment = panel?.querySelector('input[name="imagingMetadataAfspraakId"]');
               const label = panel?.querySelector('input[name="imagingMetadataEmbryoLabel"]');
               const id = panel?.querySelector('input[name="imagingMetadataEmbryoId"]');
+              const exif = panel?.querySelector('select[name="imagingMetadataExifStatus"]');
               const status = panel?.querySelector('select[name="imagingMetadataReviewStatus"]');
+              const save = reviewForm?.querySelector('button[type="submit"]');
               const reviewStrong = review?.querySelector('strong');
-              const elements = [review, type, label, id, status].filter(
+              const elements = [review, type, source, date, attempt, appointment, label, id, exif, status, save].filter(
                 (element) => element instanceof HTMLElement,
               );
               const rects = elements.map((element) => element.getBoundingClientRect());
@@ -4185,8 +4227,13 @@ async function assertRouteflows(browser, options) {
               const focusRows = routeflow.embryoImageClassificationForcedColorsFocusEvidence
                 ? [
                     ['type', type],
+                    ['source', source],
+                    ['date', date],
+                    ['attempt', attempt],
+                    ['appointment', appointment],
                     ['embryoLabel', label],
                     ['embryoId', id],
+                    ['exifStatus', exif],
                     ['reviewStatus', status],
                   ].map(([field, element]) => {
                     if (!(element instanceof HTMLElement)) {
@@ -4259,9 +4306,19 @@ async function assertRouteflows(browser, options) {
                 fieldCount: elements.length,
                 fieldsVisible: rects.every((rect) => rect.width > 0 && rect.height > 0),
                 typeValue: type instanceof HTMLSelectElement ? type.value : '',
+                sourceValue: source instanceof HTMLInputElement ? source.value : '',
+                dateValue: date instanceof HTMLInputElement ? date.value : '',
+                attemptValue: attempt instanceof HTMLInputElement ? attempt.value : '',
+                appointmentValue: appointment instanceof HTMLInputElement ? appointment.value : '',
                 embryoLabelValue: label instanceof HTMLInputElement ? label.value : '',
                 embryoIdValue: id instanceof HTMLInputElement ? id.value : '',
+                exifStatusValue: exif instanceof HTMLSelectElement ? exif.value : '',
                 reviewStatusValue: status instanceof HTMLSelectElement ? status.value : '',
+                saveVisible:
+                  save instanceof HTMLElement &&
+                  save.getBoundingClientRect().width > 0 &&
+                  save.getBoundingClientRect().height > 0,
+                saveText: save?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
                 forcedColorsActive: window.matchMedia('(forced-colors: active)').matches,
                 reviewBorderStyle: reviewStyle?.borderStyle ?? '',
                 reviewBorderWidth: reviewStyle?.borderWidth ?? '',
@@ -4277,6 +4334,53 @@ async function assertRouteflows(browser, options) {
                   document.documentElement.scrollWidth >
                     document.documentElement.clientWidth + 1 ||
                   document.body.scrollWidth > document.body.clientWidth + 1,
+              };
+            })()
+          : null;
+        const imagingMetadataReviewLocked = routeflow.imagingMetadataReviewLocked
+          ? (() => {
+              const panel = document.querySelector('[data-dossier-imaging-disclosure="repository"]');
+              const locked = panel?.querySelector('[data-imaging-metadata-review="locked"]');
+              const lockedPreview = panel?.querySelector(
+                '[data-attachment-preview-kind="imaging-preview"][data-attachment-preview-state="locked"]',
+              );
+              const lockedThumbnail = panel?.querySelector(
+                '[data-attachment-preview-kind="imaging-thumbnail"][data-attachment-preview-state="locked"]',
+              );
+              const readyForm = panel?.querySelector('[data-imaging-metadata-review="ready"]');
+              const lockedRect = locked?.getBoundingClientRect();
+              const previewRect = lockedPreview?.getBoundingClientRect();
+              const thumbnailRect = lockedThumbnail?.getBoundingClientRect();
+              const rootRect = panel?.getBoundingClientRect();
+              const text = [locked, lockedPreview, lockedThumbnail]
+                .map((element) => element?.textContent?.replace(/\s+/g, ' ').trim() ?? '')
+                .join(' ');
+              const forbiddenMatch = text.match(
+                /(embryo-review\.png|data:image|base64|safe synthetic image fixture|Labportaal|E-A|Dag 5 labbeeld|OCR_RAW|MEDISCHE PAYLOAD|secret|token|routeflow)/i,
+              );
+              return {
+                panelOpen: panel instanceof HTMLDetailsElement ? panel.open : false,
+                lockedVisible: Boolean(lockedRect && lockedRect.width > 0 && lockedRect.height > 0),
+                lockedPreviewVisible: Boolean(
+                  previewRect && previewRect.width > 0 && previewRect.height > 0,
+                ),
+                lockedThumbnailVisible: Boolean(
+                  thumbnailRect && thumbnailRect.width > 0 && thumbnailRect.height > 0,
+                ),
+                readyFormPresent: Boolean(readyForm),
+                hasImageElement: Boolean(
+                  panel?.querySelector(
+                    '[data-attachment-preview-kind="imaging-preview"] img, [data-attachment-preview-kind="imaging-thumbnail"] img',
+                  ),
+                ),
+                contained:
+                  Boolean(rootRect && lockedRect && previewRect && thumbnailRect) &&
+                  lockedRect.left >= rootRect.left - 1 &&
+                  lockedRect.right <= rootRect.right + 1 &&
+                  previewRect.right <= rootRect.right + 1 &&
+                  thumbnailRect.right <= rootRect.right + 1,
+                forbiddenMatch: forbiddenMatch?.[0] ?? '',
+                hasForbiddenText: Boolean(forbiddenMatch),
               };
             })()
           : null;
@@ -4460,6 +4564,7 @@ async function assertRouteflows(browser, options) {
           embryoTrackingScanOverflow,
           researchTrendScanOverflow,
           embryoImageClassificationReview,
+          imagingMetadataReviewLocked,
           wellbeingConsole,
           treatmentConsole,
           timelineConsole,
@@ -5347,12 +5452,21 @@ async function assertRouteflows(browser, options) {
         evidence.embryoImageClassificationReview &&
         (!evidence.embryoImageClassificationReview.panelOpen ||
           !evidence.embryoImageClassificationReview.conceptVisible ||
-          evidence.embryoImageClassificationReview.fieldCount < 5 ||
+          evidence.embryoImageClassificationReview.fieldCount < 11 ||
           !evidence.embryoImageClassificationReview.fieldsVisible ||
           evidence.embryoImageClassificationReview.typeValue !== 'embryo_afbeelding' ||
+          evidence.embryoImageClassificationReview.sourceValue !== 'Labportaal' ||
+          evidence.embryoImageClassificationReview.dateValue !== '2026-06-26' ||
+          typeof evidence.embryoImageClassificationReview.attemptValue !== 'string' ||
+          typeof evidence.embryoImageClassificationReview.appointmentValue !== 'string' ||
           evidence.embryoImageClassificationReview.embryoLabelValue !== 'Embryo A' ||
           evidence.embryoImageClassificationReview.embryoIdValue !== 'E-A' ||
+          !['geisoleerd', 'geen_exif', 'onbekend'].includes(
+            evidence.embryoImageClassificationReview.exifStatusValue,
+          ) ||
           evidence.embryoImageClassificationReview.reviewStatusValue !== 'concept' ||
+          !evidence.embryoImageClassificationReview.saveVisible ||
+          evidence.embryoImageClassificationReview.saveText !== 'Beeldmetadata bewaren' ||
           (target.embryoImageClassificationForcedColorsEvidence &&
             (!evidence.embryoImageClassificationReview.forcedColorsActive ||
               evidence.embryoImageClassificationReview.reviewBorderStyle === 'none' ||
@@ -5362,7 +5476,7 @@ async function assertRouteflows(browser, options) {
                 (field) => field.borderStyle === 'none' || !field.backgroundColor || !field.color,
               ) ||
               (target.embryoImageClassificationForcedColorsFocusEvidence &&
-                (evidence.embryoImageClassificationReview.focusRows.length !== 4 ||
+                (evidence.embryoImageClassificationReview.focusRows.length !== 9 ||
                   evidence.embryoImageClassificationReview.focusRows.some(
                     (field) =>
                       !field.active ||
@@ -5383,6 +5497,21 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: embryo-beeldclassificatie review mist routeflow-evidence of lekt verboden tekst (${JSON.stringify(evidence.embryoImageClassificationReview)}).`,
+        );
+      }
+      if (
+        evidence.imagingMetadataReviewLocked &&
+        (!evidence.imagingMetadataReviewLocked.panelOpen ||
+          !evidence.imagingMetadataReviewLocked.lockedVisible ||
+          !evidence.imagingMetadataReviewLocked.lockedPreviewVisible ||
+          !evidence.imagingMetadataReviewLocked.lockedThumbnailVisible ||
+          evidence.imagingMetadataReviewLocked.readyFormPresent ||
+          evidence.imagingMetadataReviewLocked.hasImageElement ||
+          !evidence.imagingMetadataReviewLocked.contained ||
+          evidence.imagingMetadataReviewLocked.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: imaging metadata locked-review mist privacy-evidence of lekt broninformatie (${JSON.stringify(evidence.imagingMetadataReviewLocked)}).`,
         );
       }
       if (
@@ -6569,9 +6698,12 @@ async function prepareEmbryoImageClassificationReview(page, targetHash) {
       if (details instanceof HTMLDetailsElement) details.open = true;
     }
   });
-  await page.waitForSelector('[data-embryo-image-classification-review="concept"]', {
-    timeout: 10_000,
-  });
+  await page.waitForSelector(
+    targetHash.includes('preview=locked')
+      ? '[data-imaging-metadata-review="locked"]'
+      : '[data-embryo-image-classification-review="concept"]',
+    { timeout: 10_000 },
+  );
 }
 
 async function prepareEmbryoAliasReviewDisplay(page, targetHash) {
