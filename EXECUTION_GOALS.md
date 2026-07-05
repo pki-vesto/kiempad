@@ -16080,8 +16080,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell CSS, Dossier upload, attachment envelope tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3650
+
+### G1855 — Attachment envelope batch forced-colors routeflow screenshot evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De forced-colors batch progress states zijn via CSS-contracten bewaakt, maar visuele routeflow-screenshot evidence ontbreekt nog.
+- **User Impact:** High-contrast regressies kunnen later door CSS of layoutwijzigingen visueel terugkomen zonder screenshotvergelijking.
+- **Desired Outcome:** Routeflow evidence toont hashing/complete/invalid batchstates ook in forced-colors zonder bestandsnamen of inhoud.
+- **User Value:** Uploadstatus blijft aantoonbaar scanbaar en privacyveilig voor high-contrast gebruikers.
+- **Acceptance Criteria:** Forced-colors routeflow of screenshot smoke bewaakt hashing, complete en invalid states; evidence vermijdt filename, token, secret, base64, OCR-tekst, recordpayload en medische plaintext; docs/backlog verwijzen naar het doel.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Routeflow smoke, Dossier upload, attachment envelope tests
+- **ADR Needed:** no
+- **Score:** 96
+- **Status:** ☐ open
+- **Issue:** #3652
 
 ### G586 — replay conflict recovery status UI
 

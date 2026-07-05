@@ -21250,6 +21250,51 @@ summary[class*="__summary"]:focus-visible,
     text-shadow: none;
   }
 
+  .attachment-envelope-status {
+    border-color: ButtonText;
+    background: Canvas;
+    box-shadow: none;
+    forced-color-adjust: auto;
+  }
+
+  .attachment-envelope-status div {
+    padding-left: 8px;
+    border-left: 3px solid ButtonText;
+  }
+
+  .attachment-envelope-status [data-attachment-envelope-progress="hashing"] {
+    border-left-color: Highlight;
+  }
+
+  .attachment-envelope-status [data-attachment-envelope-progress="hashing"] strong {
+    color: Highlight;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .attachment-envelope-status [data-attachment-envelope-progress="complete"] {
+    border-left-color: ButtonText;
+  }
+
+  .attachment-envelope-status [data-attachment-envelope-progress="complete"] strong {
+    color: CanvasText;
+  }
+
+  .attachment-envelope-status [data-attachment-envelope-batch="invalid"] {
+    border-left-color: Highlight;
+    outline: 1px solid ButtonText;
+    outline-offset: 2px;
+  }
+
+  .attachment-envelope-status [data-attachment-envelope-batch="invalid"] strong {
+    color: ButtonText;
+    text-decoration: underline;
+    text-decoration-style: double;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
   [data-daily-advice-feedback-workflow-reset="ready"],
   [data-daily-recommendation-list-filter-reset="ready"],
   [data-daily-recommendation-feedback-filter-reset="ready"] {

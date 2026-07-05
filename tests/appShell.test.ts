@@ -9823,6 +9823,46 @@ describe('app shell', () => {
     expect(css).toContain('border-radius: 5px;');
   });
 
+  it('bewaakt forced-colors states voor attachment-envelope batchprogress zonder payloadtekst', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+    const forcedColorsCss = extractCssMediaBlock(css, 'forced-colors: active');
+
+    expect(forcedColorsCss).toContain('.attachment-envelope-status {');
+    expect(forcedColorsCss).toContain('border-color: ButtonText;');
+    expect(forcedColorsCss).toContain('background: Canvas;');
+    expect(forcedColorsCss).toContain('forced-color-adjust: auto;');
+    expect(forcedColorsCss).toContain('.attachment-envelope-status div {');
+    expect(forcedColorsCss).toContain('border-left: 3px solid ButtonText;');
+    expect(forcedColorsCss).toContain(
+      '.attachment-envelope-status [data-attachment-envelope-progress="hashing"] {',
+    );
+    expect(forcedColorsCss).toContain('border-left-color: Highlight;');
+    expect(forcedColorsCss).toContain(
+      '.attachment-envelope-status [data-attachment-envelope-progress="hashing"] strong {',
+    );
+    expect(forcedColorsCss).toContain('color: Highlight;');
+    expect(forcedColorsCss).toContain(
+      '.attachment-envelope-status [data-attachment-envelope-progress="complete"] {',
+    );
+    expect(forcedColorsCss).toContain(
+      '.attachment-envelope-status [data-attachment-envelope-progress="complete"] strong {',
+    );
+    expect(forcedColorsCss).toContain('color: CanvasText;');
+    expect(forcedColorsCss).toContain(
+      '.attachment-envelope-status [data-attachment-envelope-batch="invalid"] {',
+    );
+    expect(forcedColorsCss).toContain('outline: 1px solid ButtonText;');
+    expect(forcedColorsCss).toContain(
+      '.attachment-envelope-status [data-attachment-envelope-batch="invalid"] strong {',
+    );
+    expect(forcedColorsCss).toContain('text-decoration-style: double;');
+    expect(forcedColorsCss).not.toContain('echo-foto-privenaam.jpg');
+    expect(forcedColorsCss).not.toContain('base64-bijlage-inhoud');
+    expect(forcedColorsCss).not.toContain('OCR-tekst');
+    expect(forcedColorsCss).not.toContain('record payload');
+    expect(forcedColorsCss).not.toContain('behandelkeuzeadvies');
+  });
+
   it('bewaakt target- en focuscue parity voor dossier-feedback return in standaard, reduced-motion en forced-colors context', () => {
     const populatedDocument: DossierDocument = {
       id: 'cue-parity-populated',
