@@ -305,6 +305,26 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'research trend update-timestamp mist routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'knowledge-research-literature-query-builder'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('literatureQueryBuilder');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-literature-query-builder="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-literature-query-preview-query]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-literature-query-context="deidentified"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('textarea[name="literatureQueryTerms"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-literature-query-excluded-context="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('termsEditable');
+    expect(routeflowScreenshotSmokeScript).toContain('excludedChipTexts');
+    expect(routeflowScreenshotSmokeScript).toContain('excludedInternalScroll');
+    expect(routeflowScreenshotSmokeScript).toContain('hasNoNetworkCopy');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'literature query-builder mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain("prepare: 'daily-advice-feedback-analytics'");
     expect(routeflowScreenshotSmokeScript).toContain('prepareDailyAdviceFeedbackAnalytics');
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceFeedbackAnalytics');

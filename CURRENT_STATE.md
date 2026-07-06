@@ -67,6 +67,11 @@
   PubMed-querypreview met gede-identificeerde contextlabels, bewerkbare
   zoektermen, uitgesloten-contextchips en een lokale bewaaractie als
   researchconcept zonder netwerkactie, dossierplaintext, consulttekst of OCR-tekst.
+- **G1977 Literatuur querybuilder routeflow evidence:** routeflow-smoke bewaakt
+  `data-literature-query-builder`, querypreview, gede-identificeerde
+  contextlabels, bewerkbare termen, bewaaractie, uitgesloten-contextchips en
+  bounded layout op desktop, tablet, mobiel en small-mobile zonder
+  dossierplaintext of trackingpayload.
 - **G485 Research trenddashboard:** researchtrends tonen per onderwerp nu
   publicatieperiode, bron, update-status, laatste check en relevantie-uitleg naast
   de bestaande trendscan, zodat ontwikkelingen scanbaar blijven zonder

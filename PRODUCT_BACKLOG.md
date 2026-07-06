@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1824 |
+| ☑ klaar | 1825 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **2023** |
+| **Totaal** | **2024** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2138,7 +2138,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1974 | Fertility Intelligence: embryo event recovery and offline persistence evidence | P1 | F5 | ☐ |
 | G1975 | Fertility Intelligence: embryo image classification release evidence freshness guard | P1 | F5 | ☐ |
 | G1976 | Daily Recommendations: supplement artscheck action release evidence freshness guard | P1 | F5 | ☐ |
-| G1977 | Research Intelligence: literature query builder routeflow evidence | P1 | F5 | ☐ |
+| G1977 | Research Intelligence: literature query builder routeflow evidence | P1 | F5 | ☑ |
 | G1978 | Research Intelligence: trend dashboard metadata routeflow evidence | P1 | F5 | ☐ |
 | G1979 | Daily Recommendations: personalization feedback routeflow evidence | P1 | F5 | ☑ |
 | G1980 | Daily Recommendations: owner visibility routeflow evidence | P1 | F5 | ☑ |
@@ -2186,12 +2186,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2022 | Premium Claude Design UI: routefocus-dock actieve route automatisch in beeld | P1 | F5 | ☑ |
 | G2023 | Daily Recommendations: owner visibility release evidence freshness guard | P1 | F5 | ☐ |
 | G2024 | Daily Recommendations: personalization feedback release evidence freshness guard | P1 | F5 | ☐ |
+| G2025 | Research Intelligence: literature query builder release evidence freshness guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 2023** (id's G001 t/m G2024; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 2024** (id's G001 t/m G2025; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

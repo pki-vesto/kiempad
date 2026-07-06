@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1977 literature query builder routeflow evidence: routeflow-smoke bewaakt
+  `data-literature-query-builder` met querypreview, gede-identificeerde
+  contextlabels, bewerkbare termen, bewaaractie, uitgesloten-contextchips en
+  bounded layout op desktop, tablet, mobiel en small-mobile zonder
+  dossierplaintext, bestandsnamen, secrets, trackingpayload of medisch advies.
 - G1979 personalization feedback routeflow evidence: routeflow-smoke opent
   Dagadvies met lokale `niet_passend` feedbackstatus en bewaakt
   `data-daily-recommendation-personalization`, status, tijdelijke

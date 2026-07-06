@@ -267,6 +267,27 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-research-literature-query-builder',
+    hash: '#kennis?route=read',
+    rootSelector: '[data-knowledge-focus-shell="ready"]',
+    expectedText: 'Gede-identificeerde zoekvraag',
+    requiredSelectors: [
+      '[data-literature-query-builder="ready"]',
+      '[data-literature-query-preview="ready"]',
+      '[data-literature-query-preview-query]',
+      '[data-literature-query-context="deidentified"]',
+      '#literature-query-builder-form',
+      '[data-literature-query-builder-form="ready"]',
+      'textarea[name="literatureQueryTerms"]',
+      '[data-literature-query-excluded-context="ready"]',
+      '[data-literature-query-actions="ready"]',
+      '[data-literature-query-actions="ready"] button[type="submit"]',
+      '[data-form-cancel-action="literature-query"]',
+    ],
+    literatureQueryBuilder: true,
+    smallMobileViewport: true,
+  },
+  {
     screen: 'knowledge-research-reading-level',
     hash: '#kennis?route=read',
     rootSelector: '[data-knowledge-focus-shell="ready"]',
@@ -4926,6 +4947,113 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const literatureQueryBuilder = routeflow.literatureQueryBuilder
+          ? (() => {
+              const builder = rootElement?.querySelector('[data-literature-query-builder="ready"]');
+              const preview = builder?.querySelector('[data-literature-query-preview="ready"]');
+              const previewQuery = builder?.querySelector('[data-literature-query-preview-query]');
+              const context = builder?.querySelector(
+                '[data-literature-query-context="deidentified"]',
+              );
+              const contextLabels = [...(context?.querySelectorAll('li') ?? [])].map(
+                (item) => item.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+              );
+              const form = builder?.querySelector('[data-literature-query-builder-form="ready"]');
+              const terms = form?.querySelector('textarea[name="literatureQueryTerms"]');
+              const excluded = builder?.querySelector(
+                '[data-literature-query-excluded-context="ready"]',
+              );
+              const excludedChips = [...(excluded?.querySelectorAll('span') ?? [])].map((chip) => {
+                const rect = chip.getBoundingClientRect();
+                return {
+                  text: chip.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  right: rect.right,
+                };
+              });
+              const actions = builder?.querySelector('[data-literature-query-actions="ready"]');
+              const saveAction = actions?.querySelector('button[type="submit"]');
+              const sourceAction = actions?.querySelector(
+                '[data-form-cancel-action="literature-query"]',
+              );
+              const builderRect = builder?.getBoundingClientRect();
+              const previewRect = preview?.getBoundingClientRect();
+              const contextRect = context?.getBoundingClientRect();
+              const formRect = form?.getBoundingClientRect();
+              const termsRect = terms?.getBoundingClientRect();
+              const excludedRect = excluded?.getBoundingClientRect();
+              const saveRect = saveAction?.getBoundingClientRect();
+              const sourceRect = sourceAction?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const builderText = builder?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const queryText =
+                previewQuery?.getAttribute('data-literature-query-preview-query') ?? '';
+              const termsValue = terms instanceof HTMLTextAreaElement ? terms.value : '';
+              const evidenceText = [
+                builderText,
+                queryText,
+                termsValue,
+                contextLabels.join(' '),
+                excludedChips.map((chip) => chip.text).join(' '),
+              ].join(' ');
+              return {
+                builderVisible: Boolean(
+                  builderRect && builderRect.width > 0 && builderRect.height > 0,
+                ),
+                previewVisible: Boolean(
+                  previewRect && previewRect.width > 0 && previewRect.height > 0,
+                ),
+                queryPresent:
+                  queryText.includes('fertility') &&
+                  queryText.includes('IVF') &&
+                  queryText.includes('embryo'),
+                contextVisible: Boolean(
+                  contextRect && contextRect.width > 0 && contextRect.height > 0,
+                ),
+                contextMode: context?.getAttribute('data-literature-query-context') ?? '',
+                contextLabels,
+                formVisible: Boolean(formRect && formRect.width > 0 && formRect.height > 0),
+                termsVisible: Boolean(termsRect && termsRect.width > 0 && termsRect.height > 0),
+                termsEditable: terms instanceof HTMLTextAreaElement && !terms.disabled,
+                termsValue,
+                excludedVisible: Boolean(
+                  excludedRect && excludedRect.width > 0 && excludedRect.height > 0,
+                ),
+                excludedChipTexts: excludedChips.map((chip) => chip.text),
+                excludedChipsVisible: excludedChips.filter((chip) => chip.visible).length,
+                saveVisible: Boolean(saveRect && saveRect.width > 0 && saveRect.height > 0),
+                saveText: saveAction?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                sourceActionVisible: Boolean(
+                  sourceRect && sourceRect.width > 0 && sourceRect.height > 0,
+                ),
+                contained:
+                  Boolean(rootRect && builderRect && previewRect && contextRect && formRect) &&
+                  builderRect.left >= rootRect.left - 1 &&
+                  builderRect.right <= rootRect.right + 1 &&
+                  previewRect.right <= builderRect.right + 1 &&
+                  contextRect.right <= builderRect.right + 1 &&
+                  formRect.right <= builderRect.right + 1,
+                excludedContained:
+                  Boolean(builderRect && excludedRect) &&
+                  excludedRect.left >= builderRect.left - 1 &&
+                  excludedRect.right <= builderRect.right + 1,
+                excludedInternalScroll:
+                  excluded instanceof HTMLElement
+                    ? excluded.scrollWidth > excluded.clientWidth + 1
+                    : false,
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1,
+                hasNoNetworkCopy:
+                  builderText.includes('opent geen netwerkverbinding') &&
+                  builderText.includes('neemt geen dossier-, consult- of OCR-tekst mee'),
+                hasForbiddenText: /Poging 1|intake arts|labuitslag\.pdf|BASE64|OCR_RAW|data:application|passphrase|token|secret|\bdiagnose\b|\bdosering\b|\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  evidenceText,
+                ),
+              };
+            })()
+          : null;
         const researchSourceCitation = routeflow.researchSourceCitation
           ? (() => {
               const scan = rootElement?.querySelector('[data-research-source-citation-scan="ready"]');
@@ -5681,6 +5809,7 @@ async function assertRouteflows(browser, options) {
           filledConsultCard,
           embryoTrackingScanOverflow,
           researchTrendScanOverflow,
+          literatureQueryBuilder,
           researchSourceCitation,
           researchReadingLevel,
           researchClinicianQuestions,
@@ -6721,6 +6850,36 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: research trend update-timestamp mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchTrendScanOverflow)}).`,
+        );
+      }
+      if (
+        evidence.literatureQueryBuilder &&
+        (!evidence.literatureQueryBuilder.builderVisible ||
+          !evidence.literatureQueryBuilder.previewVisible ||
+          !evidence.literatureQueryBuilder.queryPresent ||
+          !evidence.literatureQueryBuilder.contextVisible ||
+          evidence.literatureQueryBuilder.contextMode !== 'deidentified' ||
+          evidence.literatureQueryBuilder.contextLabels.length < 1 ||
+          !evidence.literatureQueryBuilder.formVisible ||
+          !evidence.literatureQueryBuilder.termsVisible ||
+          !evidence.literatureQueryBuilder.termsEditable ||
+          !evidence.literatureQueryBuilder.termsValue.includes('fertility') ||
+          !evidence.literatureQueryBuilder.excludedVisible ||
+          evidence.literatureQueryBuilder.excludedChipsVisible < 3 ||
+          !evidence.literatureQueryBuilder.excludedChipTexts.includes(
+            'geen OCR-tekst of bronbestand',
+          ) ||
+          !evidence.literatureQueryBuilder.saveVisible ||
+          evidence.literatureQueryBuilder.saveText !== 'Bewaar query als researchconcept' ||
+          !evidence.literatureQueryBuilder.sourceActionVisible ||
+          !evidence.literatureQueryBuilder.contained ||
+          !evidence.literatureQueryBuilder.excludedContained ||
+          evidence.literatureQueryBuilder.hasHorizontalOverflow ||
+          !evidence.literatureQueryBuilder.hasNoNetworkCopy ||
+          evidence.literatureQueryBuilder.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: literature query-builder mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.literatureQueryBuilder)}).`,
         );
       }
       if (
