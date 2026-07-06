@@ -4619,6 +4619,69 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('- **Status:** ☑ done');
   });
 
+  it('documenteert G1953 treatment mobile rail forced-colors cue text fill release evidence', () => {
+    const requiredTerms = [
+      'Treatment mobile rail forced-colors cue text fill evidence',
+      '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue',
+      'ButtonFace',
+      'ButtonText',
+      'CanvasText',
+      '-webkit-text-fill-color: ButtonText',
+      'forced-color-adjust: auto',
+      'text-decoration-color: ButtonText',
+      'Highlight cue-fill distinctie',
+      'npm run test -- tests/appShell.test.ts',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'medische payload',
+      'OCR-tekst',
+      'broninhoud',
+      'secret',
+      'token',
+      'trackingpayload',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1953 treatment mobile rail forced-colors cue text fill release evidence',
+      'npm run test -- tests/appShell.test.ts',
+      '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue',
+      'ButtonFace',
+      'ButtonText',
+      'CanvasText',
+      '-webkit-text-fill-color: ButtonText',
+      'forced-color-adjust: auto',
+      'Highlight cue-fill distinctie',
+      'zonder medische payload, OCR-tekst, broninhoud,',
+      'secret, token of trackingpayload',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + appShellTestSource).toContain(requiredTerm);
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(appShellTestSource).toContain("extractCssMediaBlock(css, 'forced-colors: active')");
+    expect(appShellTestSource).toContain(
+      '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue {',
+    );
+    expect(appShellTestSource).toContain('background-color: ButtonFace;');
+    expect(appShellTestSource).toContain('color: ButtonText;');
+    expect(appShellTestSource).toContain('border-block-color: CanvasText;');
+    expect(appShellTestSource).toContain('-webkit-text-fill-color: ButtonText;');
+    expect(appShellTestSource).toContain('forced-color-adjust: auto;');
+    expect(appShellTestSource).toContain('-webkit-text-fill-color: Highlight;');
+    expect(backlog).toContain(
+      'G1953 | Premium Claude Design UI: treatment mobile rail forced-colors cue text fill release evidence | P1 | F5 | ☑',
+    );
+    expect(executionGoals).toContain('### G1953');
+    expect(executionGoals).toContain('- **Status:** ☑ done');
+  });
+
   it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
     const requiredTerms = [
       'Offline cache metadata evidence',

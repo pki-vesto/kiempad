@@ -17914,8 +17914,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, mobile route rail, release evidence
 - **ADR Needed:** no
 - **Score:** 26
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3852
+
+### G2034 — Premium Claude Design UI: treatment mobile rail forced-colors cue text fill freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** De G1953 release-evidence koppelt de mobiele Traject-rail forced-colors cue text-fill bescherming aan app-shell CSS-tests, maar toekomstige wijzigingen aan selectors, inactive focus cue styling of active cue distinctie kunnen die documentatie verouderen.
+- **User Impact:** Zonder freshness guard kan een release later melden dat inactive cue pills leesbaar blijven terwijl ButtonFace/ButtonText fill, CanvasText border/outline of active Highlight-distinctie niet meer door dezelfde test bewezen wordt.
+- **Desired Outcome:** Voeg een guard toe die treatment mobile rail forced-colors cue text-fill release-evidence synchroon houdt met de app-shell CSS-test en de relevante forced-colors CSS-regels.
+- **User Value:** Gebruikers in high-contrast/forced-colors houden leesbare mobiele Traject-cues zonder dat release-evidence medische payloads, OCR-tekst, broninhoud of trackingdata nodig heeft.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan de app-shell forced-colors CSS-test voor `.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue`; guard test noemt `ButtonFace`, `ButtonText`, `CanvasText`, `-webkit-text-fill-color: ButtonText`, `forced-color-adjust: auto` en actieve `Highlight` cue-fill distinctie; guard faalt als inactive cue text fill, active cue fill distinctie of forced-colors focus selector verdwijnt; evidence sluit medische payloads, OCR-tekst, broninhoud, secrets, tokens en trackingpayloads uit; backlog health blijft op 100+ open goals.
+- **Affected Screens:** Traject, mobiele route-rail, forced-colors release evidence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Treatment UI, app-shell CSS tests, maintenance docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #4014
 
 ### G1954 — Premium Claude Design UI: consult review scan release evidence
 

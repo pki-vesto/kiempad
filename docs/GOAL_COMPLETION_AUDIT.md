@@ -323,6 +323,22 @@ decision lanes, detail-lijst of mobiele raildichtheid wijzigt.
 - **Privacygrens:** blijvende evidence mag geen medische payload, OCR-tekst,
   broninhoud, secret, token of trackingpayload bevatten.
 
+## Treatment Mobile Rail Forced-Colors Cue Text Fill Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de mobiele Traject-route-rail,
+forced-colors cue pills of focusstijlen rond `command-task-route__cue` wijzigen.
+
+- **Test-locatie:** `tests/appShell.test.ts` bewaakt de forced-colors CSS-regels
+  voor `.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue`.
+- **Command:** `npm run test -- tests/appShell.test.ts` controleert de app-shell
+  CSS contracten voor inactive focused cue pills en actieve cue distinctie.
+- **Scope:** de evidence bewaakt `ButtonFace` achtergrond, `ButtonText` tekst,
+  `CanvasText` border/outline, `-webkit-text-fill-color: ButtonText`,
+  `forced-color-adjust: auto`, `text-decoration-color: ButtonText` en actieve
+  Highlight cue-fill distinctie.
+- **Privacygrens:** blijvende evidence mag geen medische payload, OCR-tekst,
+  broninhoud, secret, token of trackingpayload bevatten.
+
 ## Offline Cache Metadata Evidence
 
 Gebruik deze aanvullende release-evidence wanneer de researchbronnenlijst,

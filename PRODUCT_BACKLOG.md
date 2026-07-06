@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1833 |
+| ☑ klaar | 1834 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **2032** |
+| **Totaal** | **2033** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2114,7 +2114,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1950 | Fertility Intelligence: metadata-normalisatie correctieformulier release evidence | P1 | F5 | ☑ |
 | G1951 | Fertility Intelligence: historische tijdlijnreview release evidence | P1 | F5 | ☑ |
 | G1952 | Premium Claude Design UI: daily recommendation owner scan release evidence | P1 | F5 | ☑ |
-| G1953 | Premium Claude Design UI: treatment mobile rail forced-colors cue text fill release evidence | P1 | F5 | ☐ |
+| G1953 | Premium Claude Design UI: treatment mobile rail forced-colors cue text fill release evidence | P1 | F5 | ☑ |
 | G1954 | Premium Claude Design UI: consult review scan release evidence | P1 | F5 | ☐ |
 | G1955 | Premium Claude Design UI: embryo tracking scan release evidence | P1 | F5 | ☐ |
 | G1956 | Premium Claude Design UI: research trend scan release evidence | P1 | F5 | ☐ |
@@ -2195,6 +2195,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2031 | Fertility Intelligence: metadata-normalisatie release evidence freshness guard | P1 | F5 | ☐ |
 | G2032 | Fertility Intelligence: historische tijdlijnreview release evidence freshness guard | P1 | F5 | ☐ |
 | G2033 | Premium Claude Design UI: daily owner-scan release evidence freshness guard | P1 | F5 | ☐ |
+| G2034 | Premium Claude Design UI: treatment mobile rail forced-colors cue text fill freshness guard | P1 | F5 | ☐ |
 
 ---
 
