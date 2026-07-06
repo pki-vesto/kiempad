@@ -4555,6 +4555,70 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('- **Status:** ☑ done');
   });
 
+  it('documenteert G1952 daily recommendation owner scan release evidence', () => {
+    const requiredTerms = [
+      'Daily recommendation owner-scan evidence',
+      'daily-advice-console',
+      'dailyAdviceOwnerScanOverflow',
+      'data-daily-advice-owner-scan="ready"',
+      'data-daily-advice-owner-scan-density="mobile-compact"',
+      'data-daily-advice-owner-scan-card="vrouw"',
+      'data-daily-advice-owner-scan-card="man"',
+      'data-daily-advice-owner-scan-card="samen"',
+      'scan-before-decision/list ordering',
+      'npm run smoke:routeflows',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'medische payload',
+      'OCR-tekst',
+      'broninhoud',
+      'secret',
+      'token',
+      'trackingpayload',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1952 daily recommendation owner scan release evidence',
+      'daily-advice-console',
+      'dailyAdviceOwnerScanOverflow',
+      'data-daily-advice-owner-scan="ready"',
+      'data-daily-advice-owner-scan-density="mobile-compact"',
+      'data-daily-advice-owner-scan-card="vrouw"',
+      'data-daily-advice-owner-scan-card="man"',
+      'data-daily-advice-owner-scan-card="samen"',
+      'vrouw, man en samen zichtbaar blijven',
+      'scan-before-decision/list ordering',
+      'zonder medische payload, OCR-tekst, broninhoud,',
+      'secret, token of trackingpayload',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'daily-advice-console'");
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceOwnerScanOverflow');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-owner-scan="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-owner-scan-card="vrouw"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-owner-scan-card="man"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-owner-scan-card="samen"]');
+    expect(routeflowScreenshotSmokeScript).toContain('owner-scan mist routeflow-overflow evidence');
+    expect(routeflowScreenshotSmokeScript).toContain('hasHorizontalOverflow');
+    expect(backlog).toContain(
+      'G1952 | Premium Claude Design UI: daily recommendation owner scan release evidence | P1 | F5 | ☑',
+    );
+    expect(executionGoals).toContain('### G1952');
+    expect(executionGoals).toContain('- **Status:** ☑ done');
+  });
+
   it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
     const requiredTerms = [
       'Offline cache metadata evidence',

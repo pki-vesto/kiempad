@@ -17880,8 +17880,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations UI, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 26
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3850
+
+### G2033 — Premium Claude Design UI: daily owner-scan release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** De G1952 release-evidence koppelt de Dagadvies owner-scan aan routeflow selectors, maar toekomstige wijzigingen aan target, evidenceflag, owner cards of overflowcontrole kunnen die documentatie verouderen.
+- **User Impact:** Zonder freshness guard kan een release later melden dat de owner-scan bewaakt is terwijl vrouw, man, samen, ordering of overflow niet meer door dezelfde routeflow evidence bewezen wordt.
+- **Desired Outcome:** Voeg een guard toe die owner-scan release-evidence synchroon houdt met routeflow target, selectors, owner-card evidence en scan-before-decision/list ordering.
+- **User Value:** Gebruikers houden een compacte Dagadvies eigenaarsscan voor vrouw, man en samen zonder dat release-evidence medische payloads, OCR-tekst, broninhoud of trackingdata nodig heeft.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan `data-daily-advice-owner-scan="ready"` en `dailyAdviceOwnerScanOverflow`; guard test noemt `data-daily-advice-owner-scan-card="vrouw"`, `data-daily-advice-owner-scan-card="man"` en `data-daily-advice-owner-scan-card="samen"`; guard faalt als owner-scan evidenceflag, card count, scan-before-decision/list ordering of horizontal-overflow controle verdwijnt; evidence sluit medische payloads, OCR-tekst, broninhoud, secrets, tokens en trackingpayloads uit; backlog health blijft op 100+ open goals.
+- **Affected Screens:** Dagadvies, routeflow smoke, release evidence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Recommendations UI, routeflow smoke, maintenance docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #4012
 
 ### G1953 — Premium Claude Design UI: treatment mobile rail forced-colors cue text fill release evidence
 

@@ -303,6 +303,26 @@ documenttijdlijn, imaging privacyhooks of de centrale tijdlijn wijzigt.
   bronbestandsnamen, OCR-payload, locked beeldbron-plaintext, secret of
   trackingdata bevatten.
 
+## Daily Recommendation Owner-Scan Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de Dagadvies owner-scan,
+decision lanes, detail-lijst of mobiele raildichtheid wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `dailyAdviceOwnerScanOverflow` in de routeflow target `daily-advice-console`.
+- **Command:** `npm run smoke:routeflows` controleert
+  `data-daily-advice-owner-scan="ready"`,
+  `data-daily-advice-owner-scan-density="mobile-compact"`,
+  `data-daily-advice-owner-scan-card="vrouw"`,
+  `data-daily-advice-owner-scan-card="man"` en
+  `data-daily-advice-owner-scan-card="samen"`.
+- **Scope:** de evidence bewaakt dat vrouw, man en samen zichtbaar blijven voordat
+  decision lanes en list details verschijnen, dat scan-before-decision/list ordering
+  intact blijft en dat de owner-scan rail binnen de pagina begrensd blijft zonder
+  page-level horizontale overflow.
+- **Privacygrens:** blijvende evidence mag geen medische payload, OCR-tekst,
+  broninhoud, secret, token of trackingpayload bevatten.
+
 ## Offline Cache Metadata Evidence
 
 Gebruik deze aanvullende release-evidence wanneer de researchbronnenlijst,
