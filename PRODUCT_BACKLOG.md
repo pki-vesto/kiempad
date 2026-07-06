@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1818 |
+| ☑ klaar | 1819 |
 | ◐ bezig | 0 |
-| ☐ open | 104 |
+| ☐ open | 103 |
 | ☒ archived | 99 |
 | **Totaal** | **2021** |
 
@@ -2145,7 +2145,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1981 | Daily Recommendations: source confidence routeflow evidence | P1 | F5 | ☐ |
 | G1982 | Daily Recommendations: feedback analytics routeflow evidence | P1 | F5 | ☐ |
 | G1983 | Research Intelligence: trend update timestamp routeflow evidence | P1 | F5 | ☐ |
-| G1984 | Research Intelligence: patient summary reading-level routeflow evidence | P1 | F5 | ☐ |
+| G1984 | Research Intelligence: patient summary reading-level routeflow evidence | P1 | F5 | ☑ |
 | G1985 | Research Intelligence: source citation parser routeflow evidence | P1 | F5 | ☑ |
 | G1986 | Research Intelligence: clinician question generator routeflow evidence | P1 | F5 | ☑ |
 | G1987 | Research Intelligence: offline cache metadata routeflow evidence | P1 | F5 | ☑ |

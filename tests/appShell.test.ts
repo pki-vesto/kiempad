@@ -10880,6 +10880,10 @@ describe('app shell', () => {
     expect(css).toContain('.research-source-citation-scan__grid {');
     expect(css).toContain('.research-source-citation-scan__card {');
     expect(css).toContain('.research-source-citation-scan__card:hover,');
+    expect(css).toContain('.research-reading-level-scan {');
+    expect(css).toContain('.research-reading-level-scan__grid {');
+    expect(css).toContain('.research-reading-level-scan__card {');
+    expect(css).toContain('.research-reading-level-scan__card:hover,');
     expect(mobileCss).toContain('.knowledge-research-source-board {');
     expect(mobileCss).toContain('.knowledge-research-source-board__lanes {');
     expect(mobileCss).toContain('.knowledge-research-source-board__lane {');
@@ -10917,6 +10921,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('flex: 0 0 min(184px, 74vw);');
     expect(mobileCss).toContain('.research-source-citation-scan__grid {');
     expect(mobileCss).toContain('.research-source-citation-scan__card {');
+    expect(mobileCss).toContain('.research-reading-level-scan__grid {');
+    expect(mobileCss).toContain('.research-reading-level-scan__card {');
     expect(mobileCss).toContain('.dossier-upload-action-path {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.dossier-upload-action-path__item {');
@@ -41294,6 +41300,12 @@ describe('app shell', () => {
     expect(html).toContain('data-research-source-citation-scan-card="review-type"');
     expect(html).toContain('data-research-source-citation-scan-card="corrections"');
     expect(html).toContain('Controleer broncitatie eerst');
+    expect(html).toContain('data-research-reading-level-scan="ready"');
+    expect(html).toContain('data-research-reading-level-scan-card="status"');
+    expect(html).toContain('data-research-reading-level-scan-card="source-date"');
+    expect(html).toContain('data-research-reading-level-scan-card="review-jargon"');
+    expect(html).toContain('data-research-reading-level-scan-card="corrections"');
+    expect(html).toContain('Controleer eenvoudige uitleg eerst');
     expect(html).toContain('id="knowledge-research-scientific-summaries"');
     expect(html).toContain('id="knowledge-research-patient-summaries"');
     expect(html).toContain('data-research-summary-component="scientific-list"');
@@ -41305,6 +41317,9 @@ describe('app shell', () => {
       html.indexOf('data-research-source-citation-scan="ready"'),
     );
     expect(html.indexOf('data-research-source-citation-scan="ready"')).toBeLessThan(
+      html.indexOf('data-research-reading-level-scan="ready"'),
+    );
+    expect(html.indexOf('data-research-reading-level-scan="ready"')).toBeLessThan(
       html.indexOf('data-research-summary-component="scientific-list"'),
     );
     expect(html).not.toContain(
@@ -42991,6 +43006,15 @@ describe('app shell', () => {
     expect(html).toContain('data-research-source-citation-parser="ready"');
     expect(html).toContain('data-research-source-citation-review="concept_te_controleren"');
     expect(html).toContain('data-research-source-citation-date="2026-05-10"');
+    expect(html).toContain('data-research-reading-level-scan="ready"');
+    expect(html).toContain('data-research-reading-level-scan-count="1"');
+    expect(html).toContain('data-research-reading-level-scan-card="status"');
+    expect(html).toContain('data-research-reading-level-scan-card="source-date"');
+    expect(html).toContain('data-research-reading-level-scan-card="review-jargon"');
+    expect(html).toContain('data-research-reading-level-scan-card="corrections"');
+    expect(html.indexOf('data-research-reading-level-scan="ready"')).toBeLessThan(
+      html.indexOf('data-research-summary-reading-level-guard="ready"'),
+    );
     expect(html).toContain('data-research-summary-reading-level-guard="ready"');
     expect(html).toContain('data-research-summary-reading-level-status="begrijpelijk_concept"');
     expect(html).toContain('data-research-summary-reading-level-review="concept_te_controleren"');

@@ -14842,6 +14842,9 @@ function renderKennisScreen(state: AppShellState): string {
                       ...researchSamenvattingen.map((item) => item.broncitatie),
                       ...eenvoudigeResearchSamenvattingen.map((item) => item.broncitatie),
                     ])}
+                    ${renderResearchSummaryReadingLevelScan(
+                      eenvoudigeResearchSamenvattingen.map((item) => item.leesniveauGuard),
+                    )}
                     <div class="knowledge-route-grid knowledge-route-grid--research">
                       <div id="knowledge-research-scientific-summaries" class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
                       <div id="knowledge-research-patient-summaries" class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
@@ -15942,6 +15945,71 @@ function renderResearchSourceCitationScan(citaties: readonly ResearchBroncitatie
           .map(
             (lane) => `
               <a class="research-source-citation-scan__card" href="#knowledge-research-scientific-summaries" data-research-source-citation-scan-card="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.value)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </div>
+    </section>
+  `;
+}
+
+function renderResearchSummaryReadingLevelScan(
+  guards: readonly PatientvriendelijkeSamenvattingLeesniveauGuard[],
+): string {
+  const eerste = guards[0];
+  const statussen = Array.from(new Set(guards.map((guard) => guard.status).filter(Boolean)));
+  const reviewStatussen = Array.from(
+    new Set(guards.map((guard) => guard.reviewStatus).filter(Boolean)),
+  );
+  const vaktaal = Array.from(new Set(guards.flatMap((guard) => guard.vaktaalSignalering)));
+  const correctieVelden = Array.from(
+    new Set(guards.flatMap((guard) => guard.correctieVelden).filter(Boolean)),
+  );
+  const lanes = [
+    {
+      id: 'status',
+      label: 'Leesniveau',
+      value: statussen.length > 0 ? statussen.join(' · ') : 'nog geen status',
+      detail: `${guards.length} eenvoudige uitleg${guards.length === 1 ? '' : 'en'}`,
+    },
+    {
+      id: 'source-date',
+      label: 'Bron en datum',
+      value: eerste ? eerste.bron : 'Geen bron',
+      detail: eerste ? eerste.datum : 'Nog geen publicatiedatum',
+    },
+    {
+      id: 'review-jargon',
+      label: 'Review en vaktaal',
+      value: reviewStatussen.length > 0 ? reviewStatussen.join(' · ') : 'nog geen review',
+      detail: vaktaal.length > 0 ? vaktaal.join(' · ') : 'Geen signaalwoorden',
+    },
+    {
+      id: 'corrections',
+      label: 'Correctievelden',
+      value: `${correctieVelden.length} veld${correctieVelden.length === 1 ? '' : 'en'}`,
+      detail: correctieVelden.length > 0 ? correctieVelden.join(' · ') : 'Nog niets te controleren',
+    },
+  ];
+
+  return `
+    <section class="research-reading-level-scan" aria-label="Research leesniveau scan" data-research-reading-level-scan="ready" data-research-reading-level-scan-count="${escapeAttribute(String(guards.length))}">
+      <header class="research-reading-level-scan__header">
+        <div>
+          <p class="kp-card__eyebrow">Leesniveau</p>
+          <h3>Controleer eenvoudige uitleg eerst</h3>
+        </div>
+        <p>Status, bron, datum, reviewstatus, vaktaalsignalering en correctievelden blijven zichtbaar voordat je de eenvoudige samenvatting gebruikt.</p>
+      </header>
+      <div class="research-reading-level-scan__grid">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="research-reading-level-scan__card" href="#knowledge-research-patient-summaries" data-research-reading-level-scan-card="${escapeAttribute(lane.id)}">
                 <span>${escapeHtml(lane.label)}</span>
                 <strong>${escapeHtml(lane.value)}</strong>
                 <small>${escapeHtml(lane.detail)}</small>

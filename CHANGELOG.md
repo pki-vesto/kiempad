@@ -17,6 +17,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1984 patient summary reading-level routeflow evidence: Kennis Research toont
+  nu een compacte leesniveau-scan voor eenvoudige researchuitleg met status,
+  bron, datum, reviewstatus, vaktaalsignalering en correctievelden vóór de
+  eenvoudige samenvattingen. Routeflow-smoke bewaakt
+  `data-research-summary-reading-level-guard` en de scan op desktop, tablet en
+  mobiel zonder secrets, plaintext payload of medisch advies.
 - G1985 source citation parser routeflow evidence: Kennis Research toont nu een
   compacte broncitatie-scan voor parserstatus, bron, datum, reviewstatus,
   citationtype en correctievelden vóór de researchsamenvattingen. Routeflow-smoke

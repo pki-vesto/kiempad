@@ -310,6 +310,15 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'research source-citation parser mist routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'knowledge-research-reading-level'");
+    expect(routeflowScreenshotSmokeScript).toContain('researchReadingLevel');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-research-reading-level-scan="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-summary-reading-level-guard="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'research reading-level guard mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       "screen: 'knowledge-research-clinician-questions'",
     );
