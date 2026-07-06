@@ -923,7 +923,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G758 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release-state guard | P1 | F5 | ☑ |
 | G759 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release missing-term fixture | P1 | F5 | ☑ |
 | G760 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release text contract | P1 | F5 | ☑ |
-| G761 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release-state guard | P1 | F5 | ☐ |
+| G761 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release-state guard | P1 | F5 | ☒ |
 | G762 | Central Encrypted Platform: missing key metadata recovery audit handoff | P1 | F5 | ☑ |
 | G763 | Central Encrypted Platform: missing key metadata support handoff copy contract | P1 | F5 | ☑ |
 | G764 | Central Encrypted Platform: support handoff contract helper | P1 | F5 | ☑ |
@@ -968,7 +968,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G803 | Central Encrypted Platform: recovery contract helper release-state message error contract release release release release guard | P1 | F5 | ☑ |
 | G804 | Central Encrypted Platform: recovery contract helper release-state message error contract release release release release guard negative fixture | P1 | F5 | ☑ |
 | G805 | Central Encrypted Platform: recovery contract helper release-state message error contract release release release release negative compact contract | P1 | F5 | ☑ |
-| G806 | Central Encrypted Platform: recovery contract helper release-state message error contract release release release release release guard | P1 | F5 | ☐ |
+| G806 | Central Encrypted Platform: recovery contract helper release-state message error contract release release release release release guard | P1 | F5 | ☒ |
 | G807 | Premium Claude Design UI: dossier inbox state regression guard | P1 | F5 | ☑ |
 | G808 | Premium Claude Design UI: imaging compare empty and locked states | P1 | F5 | ☑ |
 | G809 | Premium Claude Design UI: consult intelligence review states | P1 | F5 | ☑ |
@@ -1212,7 +1212,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1047 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry privacy states | P1 | F5 | ☑ |
 | G1048 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup privacy states | P1 | F5 | ☑ |
 | G1049 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states | P1 | F5 | ☑ |
-| G1050 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt privacy states | P1 | F5 | ☐ |
+| G1050 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt privacy states | P1 | F5 | ☒ |
 | G1051 | Fertility Intelligence: imaging timeline privacy audit evidence | P1 | F5 | ☐ |
 | G1052 | Fertility Intelligence: consult transcript source audit evidence | P1 | F5 | ☐ |
 | G1053 | Fertility Intelligence: consult action review audit evidence | P1 | F5 | ☐ |
@@ -1287,7 +1287,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1122 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract | P1 | F5 | ☑ |
 | G1123 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard | P1 | F5 | ☑ |
 | G1124 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard missing-term fixture | P1 | F5 | ☑ |
-| G1125 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard compact contract | P1 | F5 | ☐ |
+| G1125 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard compact contract | P1 | F5 | ☒ |
 | G1126 | Premium Claude Design UI: dossier dashboard simplification for historical upload and imaging review | P1 | F5 | ☑ |
 | G1127 | Premium Claude Design UI: dossier secondary privacy panels progressive disclosure | P1 | F5 | ☑ |
 | G1128 | Premium Claude Design UI: dossier content section scan anchors | P1 | F5 | ☑ |
@@ -2196,6 +2196,18 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2032 | Fertility Intelligence: historische tijdlijnreview release evidence freshness guard | P1 | F5 | ☐ |
 | G2033 | Premium Claude Design UI: daily owner-scan release evidence freshness guard | P1 | F5 | ☐ |
 | G2034 | Premium Claude Design UI: treatment mobile rail forced-colors cue text fill freshness guard | P1 | F5 | ☐ |
+| G2035 | Premium Claude Design UI: View-transition render-boundary (native, zero-dep) | P0 | F5 | ☐ |
+| G2036 | Premium Claude Design UI: State-behoudende DOM-morph rendering | P0 | F5 | ☐ |
+| G2037 | Premium Claude Design UI: Shared-element schermtransities | P1 | F5 | ☐ |
+| G2038 | Premium Claude Design UI: Motion- en elevation-tokenschaal | P1 | F5 | ☐ |
+| G2039 | Premium Claude Design UI: Entrance- en stagger-animaties (Web Animations API) | P1 | F5 | ☐ |
+| G2040 | Premium Claude Design UI: Micro-interacties en diepte | P1 | F5 | ☐ |
+| G2041 | Premium Claude Design UI: Laad- en optimistic states op async-paden | P1 | F5 | ☐ |
+| G2042 | Premium Claude Design UI: Async-overgangschoreografie (skeleton → content) | P2 | F5 | ☐ |
+| G2043 | Premium Claude Design UI: PWA-polish (installeerbaar, standalone) | P1 | F5 | ☐ |
+| G2044 | Premium Claude Design UI: Tauri desktop-shell (OPTIONEEL — beslissing vereist) | P2 | F5 | ☐ |
+| G2045 | Premium Claude Design UI: styles.css opsplitsen in modules | P2 | F5 | ☐ |
+| G2046 | Premium Claude Design UI: appShell.ts opsplitsen per scherm/domein | P2 | F5 | ☐ |
 
 ---
 

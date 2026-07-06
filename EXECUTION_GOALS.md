@@ -21673,7 +21673,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G762 — missing key metadata recovery audit handoff
 
@@ -22303,7 +22303,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
 - **ADR Needed:** no
 - **Score:** 112
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G807 — dossier inbox state regression guard
 
@@ -25780,7 +25780,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment assistive archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G1051 — imaging timeline privacy audit evidence
 
@@ -26830,7 +26830,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G1126 — dossier dashboard simplification for historical upload and imaging review
 
@@ -27695,3 +27695,206 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **ADR Needed:** no
 - **Score:** 66
 - **Status:** ☑ done
+### G2035 — Premium Claude Design UI: View-transition render-boundary (native, zero-dep)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De hele app-shell wordt per state herbouwd via `root.innerHTML = renderAppShell(...)` (64 render-paden), waardoor schermwissels hard "klikken" zonder continuïteit.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Eén centrale render-boundary `mountView(root, html)` wrapt de render in `document.startViewTransition(...)` met progressive-enhancement fallback, zodat schermovergangen vloeien.
+- **User Value:** De app voelt professioneel en samenhangend i.p.v. als een statische HTML-pagina.
+- **Acceptance Criteria:** Een helper `mountView(root, html)` wordt door alle render-paden gebruikt; niemand zet nog rechtstreeks `innerHTML` op de shell-root. Gebruikt `document.startViewTransition` wanneer beschikbaar, anders directe render (progressive enhancement). Uit bij `prefers-reduced-motion: reduce`. Geen wijziging aan wat gerenderd wordt, alleen hoe. Vitest/DOM-test dekt: beschikbaar → transition-pad, niet beschikbaar → directe render, reduced-motion → directe render.
+- **Affected Screens:** Alle schermen (app-shell render)
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** src/main.ts, src/styles.css (::view-transition*)
+- **ADR Needed:** no
+- **Score:** 118
+- **Status:** ☐ open
+- **Issue:** #4016
+
+### G2036 — Premium Claude Design UI: State-behoudende DOM-morph rendering
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De destroy-rebuild via `innerHTML` verliest scrollpositie, focus, ingetypte tekst en `<details>`-standen bij elke render.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** DOM-diffing (morphdom gevendord in src/vendor/, of eigen minimale reconciler) behoudt UI-state; `mountView` morpht i.p.v. innerHTML te vervangen.
+- **User Value:** Interacties voelen continu en betrouwbaar; geen flikker of verspringen meer.
+- **Acceptance Criteria:** Na een render blijven scrollpositie, actief focus-element, `<details open>` en formulier-inputwaarden behouden (Vitest/DOM-test bewijst dit). Combineert correct met G2035 (morph binnen de view-transition). `assets:check` + `deps:review` groen; geen externe URL, geen transitieve deps; gevendorde code single-file, MIT/BSD/Apache, gepind, met licentie-header. ADR-0010 legt keuze (morphdom-vendored vs eigen reconciler), licentie en supply-chain-afweging vast.
+- **Affected Screens:** Alle schermen (app-shell render)
+- **Priority:** P0
+- **Complexity:** L
+- **Related Components:** src/main.ts, src/vendor/
+- **ADR Needed:** yes (ADR-0010)
+- **Score:** 110
+- **Status:** ☐ open
+- **Issue:** #4017
+
+### G2037 — Premium Claude Design UI: Shared-element schermtransities
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Terugkerende elementen (header, actieve nav-pill, workspace-strip) verspringen bij navigatie i.p.v. mee te bewegen.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Deze elementen krijgen een `view-transition-name` zodat ze morphen tussen schermen.
+- **User Value:** Navigatie voelt ruimtelijk en gelaagd i.p.v. als losse pagina-loads.
+- **Acceptance Criteria:** Header en actieve navigatie-indicator behouden visuele continuïteit tussen schermen. Namen zijn uniek per gelijktijdig zichtbaar element (geen dubbele `view-transition-name`). Reduced-motion-safe; fallback ongewijzigd.
+- **Affected Screens:** Alle schermen, navigatie, header
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** src/styles.css, src/ui/components.ts
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #4018
+
+### G2038 — Premium Claude Design UI: Motion- en elevation-tokenschaal
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Er is nauwelijks een motion-systeem: 1 `@keyframes` en 2 `animation:` in 32k regels CSS; alleen losse `--motion`/`--shadow-*`.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Een tokenschaal voor duraties (`--dur-*`), easings (`--ease-*`) en elevation (`--elevation-0..3`) bovenop de bestaande tokens.
+- **User Value:** Consistente, onderhoudbare beweging en diepte in de hele app.
+- **Acceptance Criteria:** Tokens gedefinieerd in `:root` + dark-variant; bestaande waarden blijven backward-compatible. Alle nieuwe animaties/transities gebruiken deze tokens (geen magic numbers). Documentatie-comment bij het tokenblok in styles.css.
+- **Affected Screens:** Alle schermen (tokens)
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** src/styles.css
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #4019
+
+### G2039 — Premium Claude Design UI: Entrance- en stagger-animaties (Web Animations API)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Content verschijnt hard; er is geen entrance-choreografie die diepte suggereert.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Kaarten/lijsten faden/sliden subtiel in met lichte stagger via een kleine WAAPI-helper (zero-dep).
+- **User Value:** De interface voelt levend en verzorgd zonder trager te worden.
+- **Acceptance Criteria:** Helper `animateIn(el, { delay })` o.i.d.; kaarten en lijstitems gebruiken hem. Volledig uit bij reduced-motion; geen layout-shift/CLS door de animatie. Werkt samen met morph: alleen nieuw ingevoegde nodes animeren, geen re-animatie van ongewijzigde items. Optioneel (aparte ADR-0010-uitbreiding): Motion One gevendord i.p.v. WAAPI; default blijft WAAPI zonder dependency.
+- **Affected Screens:** Kaarten en lijsten (alle schermen)
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** src/ui/components.ts, src/styles.css
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #4020
+
+### G2040 — Premium Claude Design UI: Micro-interacties en diepte
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Hover/active/focus en diepte zijn niet gesystematiseerd; de UI oogt vlak.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Consistente hover/active/focus-states, pressed-feedback en gelaagde surfaces met de elevation-tokens.
+- **User Value:** Elk element voelt tastbaar en responsief.
+- **Acceptance Criteria:** Interactieve elementen hebben consistente hover/active/focus-visuals (elevation + subtiele transform), tokengestuurd. Zichtbare focus-ring voldoet aan WCAG (contrast + niet alleen kleur). Geen regressie in bestaande componenten (visuele smoke-scripts blijven groen).
+- **Affected Screens:** Interactieve elementen (alle schermen)
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** src/styles.css, src/ui/components.ts
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #4021
+
+### G2041 — Premium Claude Design UI: Laad- en optimistic states op async-paden
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Echte async (central sync, unlock, backup, IndexedDB) heeft nauwelijks laadfeedback; de UI bevriest of blijft leeg.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Skeleton-/laad-/optimistic states op de async-momenten, met hergebruik van `loadingSkeleton`, `statusMessage`, `errorBanner`.
+- **User Value:** De app voelt substantieel en responsief tijdens bewerkingen.
+- **Acceptance Criteria:** Central sync / dataset-load / unlock / backup tonen een skeleton of laadstatus tijdens de operatie i.p.v. een lege of bevroren UI. Foutpaden gebruiken `errorBanner`; geen gevoelige inhoud in status/skeleton (geen payload, passphrase, token, bestandsnaam, OCR-tekst of medische data). Vitest dekt de laad→gereed→fout-overgangen.
+- **Affected Screens:** Ontgrendelscherm, Back-up, Central sync, Dossier
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** src/storage/*, src/main.ts, src/ui/components.ts
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #4022
+
+### G2042 — Premium Claude Design UI: Async-overgangschoreografie (skeleton → content)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Bij het laden klapt content hard over de skeleton heen.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Content vervangt skeleton met een cross-fade/morph, consistent met de Fase A/B-transities.
+- **User Value:** Laadmomenten voelen vloeiend i.p.v. schokkerig.
+- **Acceptance Criteria:** Content vervangt skeleton met een cross-fade/morph; reduced-motion-safe. Geen dubbele animatie bij herhaalde renders van dezelfde data.
+- **Affected Screens:** Alle async-schermen
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** src/main.ts, src/ui/components.ts
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** #4023
+
+### G2043 — Premium Claude Design UI: PWA-polish (installeerbaar, standalone)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Kiempad draait als browsertab; de bestaande `vite-plugin-pwa` wordt niet volledig benut.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Volledig manifest (standalone display, maskable icons, themekleur, splash) zodat Kiempad als echte app installeert.
+- **User Value:** Kiempad voelt als een geïnstalleerde app, niet als een webpagina.
+- **Acceptance Criteria:** Installeerbaar op desktop + mobiel; opent in standalone-venster. Manifest + icons compleet; Lighthouse PWA-installability groen. Alle assets lokaal (`assets:check` groen); offline-smoke (`smoke:offline`) blijft groen.
+- **Affected Screens:** App-shell / installatie (alle)
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** vite.config.ts, public/, manifest
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #4024
+
+### G2044 — Premium Claude Design UI: Tauri desktop-shell (OPTIONEEL — beslissing vereist)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Een PWA voelt voor sommigen minder "echt" dan een native desktop-app; Tauri zou local-first/privacy goed passen maar voegt een buildketen toe.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** ADR-0011 weegt Tauri af t.o.v. PWA-only en bevat een expliciete go/no-go voor Peter; alleen bij go een minimale shell bouwen.
+- **User Value:** Optioneel een native desktop-app-gevoel zonder de webcode weg te gooien.
+- **Acceptance Criteria:** ADR-0011 weegt Tauri af (voordelen, buildketen, onderhoudslast, privacy-impact) t.o.v. PWA-only blijven; met expliciete go/no-go voor Peter. Bij go: minimale Tauri-shell die de bestaande build laadt, zonder nieuwe netwerktoegang, met CI-build; local-first en encryptie ongewijzigd. Bij no-go: ADR gesloten met motivatie; geen code. VEREIST Peters akkoord vóór implementatie.
+- **Affected Screens:** Desktop-verpakking
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** nieuwe src-tauri/, CI
+- **ADR Needed:** yes (ADR-0011)
+- **Score:** 70
+- **Status:** ☐ open
+- **Issue:** #4025
+
+### G2045 — Premium Claude Design UI: styles.css opsplitsen in modules
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `styles.css` is een monoliet van 32.440 regels, waardoor design-polish praktisch onwerkbaar is.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Opsplitsen in `src/styles/` (tokens/base/layout/components/screens), samengevoegd via Vite CSS-imports, byte-identieke output waar mogelijk.
+- **User Value:** Polish en iteratie op het design worden weer haalbaar.
+- **Acceptance Criteria:** Visuele smoke-scripts (`smoke:routeflows`, `smoke:context-signals`, `smoke:split-workspaces`) tonen geen regressie. Build-resultaat ongewijzigd; puur mechanische refactor.
+- **Affected Screens:** Alle schermen (stijl)
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** src/styles/, vite.config.ts
+- **ADR Needed:** no
+- **Score:** 70
+- **Status:** ☐ open
+- **Issue:** #4026
+
+### G2046 — Premium Claude Design UI: appShell.ts opsplitsen per scherm/domein
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `appShell.ts` is een render-monoliet van 23.688 regels.
+- **User Impact:** Zonder deze verbetering blijft de app als een eenvoudige HTML-pagina aanvoelen: schermwissels zonder continuïteit, geen diepte en geen laadchoreografie.
+- **Desired Outcome:** Opsplitsen in modules per scherm/domein; publieke render-API ongewijzigd.
+- **User Value:** Onderhoudbaarheid en veilige iteratie op schermen.
+- **Acceptance Criteria:** `typecheck` + volledige testsuite groen; geen gedragswijziging. Geen circulaire imports; publieke render-API ongewijzigd.
+- **Affected Screens:** Alle schermen (render)
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** src/appShell.ts → src/screens/
+- **ADR Needed:** no
+- **Score:** 70
+- **Status:** ☐ open
+- **Issue:** #4027
