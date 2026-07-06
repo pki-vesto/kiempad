@@ -180,12 +180,17 @@ const targets = [
       '[data-research-trend-scan="ready"]',
       '[data-research-trend-scan-density="mobile-compact"]',
       '[data-research-trend-grid="ready"]',
+      '[data-research-trend-update-timestamp="ready"]',
     ],
     presentSelectors: [
       '[data-research-trend-scan-card="topics"]',
       '[data-research-trend-scan-card="publications"]',
       '[data-research-trend-scan-card="sources"]',
       '[data-research-trend-scan-card="latest"]',
+      '[data-research-trend-update-date]',
+      '[data-research-trend-update-source="ready"]',
+      '[data-research-trend-update-correction="ready"]',
+      '[data-research-trend-update-explanation="ready"]',
       '[data-research-trend-card]',
       '[data-research-trend-item]',
       '[data-research-source-component="source-list"]',
@@ -4505,6 +4510,19 @@ async function assertRouteflows(browser, options) {
               const dashboard = rootElement?.querySelector('[data-research-trend-dashboard="ready"]');
               const grid = rootElement?.querySelector('[data-research-trend-grid="ready"]');
               const detailCard = rootElement?.querySelector('[data-research-trend-card]');
+              const updateTimestamp = rootElement?.querySelector(
+                '[data-research-trend-update-timestamp="ready"]',
+              );
+              const updateDate = rootElement?.querySelector('[data-research-trend-update-date]');
+              const updateSource = rootElement?.querySelector(
+                '[data-research-trend-update-source="ready"]',
+              );
+              const updateCorrection = rootElement?.querySelector(
+                '[data-research-trend-update-correction="ready"]',
+              );
+              const updateExplanation = rootElement?.querySelector(
+                '[data-research-trend-update-explanation="ready"]',
+              );
               const trendItem = rootElement?.querySelector('[data-research-trend-item]');
               const sourceList = rootElement?.querySelector('[data-research-source-component="source-list"]');
               const researchForm = rootElement?.querySelector('#research-item-form');
@@ -4513,10 +4531,15 @@ async function assertRouteflows(browser, options) {
               const dashboardRect = dashboard?.getBoundingClientRect();
               const gridRect = grid?.getBoundingClientRect();
               const detailCardRect = detailCard?.getBoundingClientRect();
+              const updateTimestampRect = updateTimestamp?.getBoundingClientRect();
+              const updateDateRect = updateDate?.getBoundingClientRect();
+              const updateSourceRect = updateSource?.getBoundingClientRect();
+              const updateCorrectionRect = updateCorrection?.getBoundingClientRect();
               const rootRect = rootElement?.getBoundingClientRect();
               const scanStyle = scan ? getComputedStyle(scan) : null;
               const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
-              const rootText = rootElement?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const timestampText = updateTimestamp?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const dashboardText = dashboard?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
               return {
                 scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
                 scanCardIds: scanCards.map((scanCard) => scanCard.id),
@@ -4543,12 +4566,49 @@ async function assertRouteflows(browser, options) {
                 detailCardVisible: Boolean(
                   detailCardRect && detailCardRect.width > 0 && detailCardRect.height > 0,
                 ),
+                updateTimestampVisible: Boolean(
+                  updateTimestampRect &&
+                    updateTimestampRect.width > 0 &&
+                    updateTimestampRect.height > 0,
+                ),
+                updateTimestampBeforeItem:
+                  Boolean(updateTimestamp && trendItem) &&
+                  Boolean(
+                    updateTimestamp.compareDocumentPosition(trendItem) &
+                      Node.DOCUMENT_POSITION_FOLLOWING,
+                  ),
+                updateReviewStatus:
+                  updateTimestamp?.getAttribute('data-research-trend-update-review') ?? '',
+                updateDate:
+                  updateDate?.getAttribute('data-research-trend-update-date') ?? '',
+                updateDateVisible: Boolean(
+                  updateDateRect && updateDateRect.width > 0 && updateDateRect.height > 0,
+                ),
+                updateSourceVisible: Boolean(
+                  updateSourceRect && updateSourceRect.width > 0 && updateSourceRect.height > 0,
+                ),
+                updateCorrectionVisible: Boolean(
+                  updateCorrectionRect &&
+                    updateCorrectionRect.width > 0 &&
+                    updateCorrectionRect.height > 0,
+                ),
+                updateExplanationPresent: Boolean(updateExplanation),
+                updateLabelsPresent:
+                  timestampText.includes('Laatst bijgewerkt') &&
+                  timestampText.includes('Bron') &&
+                  timestampText.includes('Controleerbaar') &&
+                  timestampText.includes('Uitleg'),
+                updateCorrectionFieldsPresent:
+                  timestampText.includes('trendUpdateDatum') &&
+                  timestampText.includes('bronselectie') &&
+                  timestampText.includes('reviewstatus'),
+                updateSourcePresent: timestampText.includes('Lokale researchbibliotheekmetadata'),
                 trendItemPresent: Boolean(trendItem),
                 sourceListPresent: Boolean(sourceList),
                 researchFormPresent: Boolean(researchForm),
                 networkFormPresent: Boolean(networkForm),
-                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|diagnose stellen|dosering aanpassen|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
-                  `${scanText} ${rootText}`,
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|\bdiagnose\b|\bdosering\b|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  `${scanText} ${timestampText} ${dashboardText}`,
                 ),
               };
             })()
@@ -6242,6 +6302,17 @@ async function assertRouteflows(browser, options) {
           !evidence.researchTrendScanOverflow.dashboardVisible ||
           !evidence.researchTrendScanOverflow.scanContained ||
           !evidence.researchTrendScanOverflow.detailCardVisible ||
+          !evidence.researchTrendScanOverflow.updateTimestampVisible ||
+          !evidence.researchTrendScanOverflow.updateTimestampBeforeItem ||
+          evidence.researchTrendScanOverflow.updateReviewStatus !== 'concept_te_controleren' ||
+          !evidence.researchTrendScanOverflow.updateDate ||
+          !evidence.researchTrendScanOverflow.updateDateVisible ||
+          !evidence.researchTrendScanOverflow.updateSourceVisible ||
+          !evidence.researchTrendScanOverflow.updateCorrectionVisible ||
+          !evidence.researchTrendScanOverflow.updateExplanationPresent ||
+          !evidence.researchTrendScanOverflow.updateLabelsPresent ||
+          !evidence.researchTrendScanOverflow.updateCorrectionFieldsPresent ||
+          !evidence.researchTrendScanOverflow.updateSourcePresent ||
           !evidence.researchTrendScanOverflow.trendItemPresent ||
           !evidence.researchTrendScanOverflow.sourceListPresent ||
           !evidence.researchTrendScanOverflow.researchFormPresent ||
@@ -6249,7 +6320,7 @@ async function assertRouteflows(browser, options) {
           evidence.researchTrendScanOverflow.hasForbiddenText)
       ) {
         throw new Error(
-          `${options.label}/${target.screen}: research trend-scan mist routeflow-overflow evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchTrendScanOverflow)}).`,
+          `${options.label}/${target.screen}: research trend update-timestamp mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchTrendScanOverflow)}).`,
         );
       }
       if (

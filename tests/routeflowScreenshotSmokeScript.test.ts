@@ -289,11 +289,21 @@ describe('routeflow screenshot smoke script', () => {
     );
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'knowledge-research-trend-scan'");
     expect(routeflowScreenshotSmokeScript).toContain('researchTrendScanOverflow');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-trend-update-timestamp="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('[data-research-trend-update-date]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-research-trend-update-source="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-trend-update-correction="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('updateReviewStatus');
+    expect(routeflowScreenshotSmokeScript).toContain('updateCorrectionFieldsPresent');
     expect(routeflowScreenshotSmokeScript).toContain('scanBeforeDetail');
     expect(routeflowScreenshotSmokeScript).toContain('sourceListPresent');
     expect(routeflowScreenshotSmokeScript).toContain('researchFormPresent');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'research trend-scan mist routeflow-overflow evidence',
+      'research trend update-timestamp mist routeflow-evidence',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
       "screen: 'knowledge-research-source-citation'",

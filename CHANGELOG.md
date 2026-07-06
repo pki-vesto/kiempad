@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1983 trend update timestamp routeflow evidence: routeflow-smoke bewaakt nu
+  `data-research-trend-update-timestamp` in Kennis Research met datum, bron,
+  reviewstatus, correctievelden en uitleg vóór trenditems. De evidence blokkeert
+  secrets, plaintext payload, diagnose, dosering, kansberekening en
+  behandelkeuzeadvies.
 - G1984 patient summary reading-level routeflow evidence: Kennis Research toont
   nu een compacte leesniveau-scan voor eenvoudige researchuitleg met status,
   bron, datum, reviewstatus, vaktaalsignalering en correctievelden vóór de
