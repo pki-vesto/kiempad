@@ -92,6 +92,10 @@
   een lokale update-datum, bron, reviewstatus, correctievelden en uitleg voor leken,
   zodat gebruikers trendmetadata kunnen controleren zonder medisch advies of
   keuzehulp.
+- **G1983 trend update timestamp routeflow evidence:** routeflow-smoke bewaakt
+  `data-research-trend-update-timestamp` met datum, bron, reviewstatus,
+  correctievelden en uitleg vóór de trenditems, zonder secrets, plaintext
+  payload, diagnose, dosering, kansberekening of behandelkeuzeadvies.
 - **G545 researchbibliotheek offline cache metadata:** researchbronnen tonen
   cachebron, datum, reviewstatus, cachetype en correctievelden, zodat lokale
   researchbronnen controleerbaar blijven zonder netwerkactie.
