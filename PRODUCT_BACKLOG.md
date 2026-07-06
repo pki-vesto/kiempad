@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1827 |
+| ☑ klaar | 1828 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **2026** |
+| **Totaal** | **2027** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2108,7 +2108,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1944 | Fertility Intelligence: embryo image classification forced-colors focus evidence | P1 | F5 | ☑ |
 | G1945 | Fertility Intelligence: embryo image classification forced-colors focus release evidence | P1 | F5 | ☑ |
 | G1946 | Daily Recommendations: supplement artscheck action release evidence | P1 | F5 | ☑ |
-| G1947 | Daily Recommendations: artscheck vraag reviewstatus release evidence | P1 | F5 | ☐ |
+| G1947 | Daily Recommendations: artscheck vraag reviewstatus release evidence | P1 | F5 | ☑ |
 | G1948 | Fertility Intelligence: import-inbox retry overflow release evidence | P1 | F5 | ☐ |
 | G1949 | Fertility Intelligence: OCR-review correctieformulier release evidence | P1 | F5 | ☐ |
 | G1950 | Fertility Intelligence: metadata-normalisatie correctieformulier release evidence | P1 | F5 | ☐ |
@@ -2189,12 +2189,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2025 | Research Intelligence: literature query builder release evidence freshness guard | P1 | F5 | ☐ |
 | G2026 | Research Intelligence: trend dashboard metadata release evidence freshness guard | P1 | F5 | ☐ |
 | G2027 | Daily Recommendations: supplement artscheck freshness missing-term fixture | P1 | F5 | ☐ |
+| G2028 | Daily Recommendations: artscheck reviewstatus release evidence freshness guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 2026** (id's G001 t/m G2027; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 2027** (id's G001 t/m G2028; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

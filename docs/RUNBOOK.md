@@ -116,6 +116,15 @@ pad zonder lokale vault-hercreatie.
   label, bron/disclaimer, actieknop en standaardregels zonder extra actie, zonder
   dosering, interactieclaim, behandelvervanging, medische payload, secret of
   trackingpayload.
+- **Artscheck vraag reviewstatus evidence (G1947):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
+  `question-artscheck-review-status` `questionArtscheckReviewStatus` te verzamelen.
+  De smoke controleert `data-question-artscheck-review`,
+  `data-question-artscheck-review-state` en
+  `data-question-artscheck-review-form`, bewaakt badge, select en bewaaractie en
+  houdt de no-extra-form controle voor gewone vragen zonder artscheckmetadata vast.
+  Blijvende evidence mag geen diagnose, dosering, behandelkeuzeadvies, medische
+  payload, secret of trackingpayload bevatten.
 - **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
   gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
   `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te

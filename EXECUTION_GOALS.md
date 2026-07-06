@@ -18016,8 +18016,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations, vragen UI, release evidence
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3840
+
+### G2028 — Daily Recommendations: artscheck reviewstatus release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** De G1947 release-evidence koppelt artscheckvraag-reviewstatus aan routeflow selectors, maar toekomstige wijzigingen aan target, evidenceflag of no-extra-form controle kunnen die documentatie verouderen.
+- **User Impact:** Zonder freshness guard kan een release later melden dat artscheckreview bewaakt is terwijl badge, select, bewaaractie of gewone-vraagcontrole niet meer door dezelfde selectors worden bewezen.
+- **Desired Outcome:** Voeg een guard toe die release-evidence voor artscheckvraag-reviewstatus synchroon houdt met routeflow target, selectors en no-extra-form controle.
+- **User Value:** Gebruikers blijven erop vertrouwen dat artscheckvragen rustig als concept/gereviewd beheerd kunnen worden zonder extra formulieren op gewone vragen.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan `question-artscheck-review-status`; guard test noemt `data-question-artscheck-review`, `data-question-artscheck-review-state` en `data-question-artscheck-review-form`; guard faalt als routeflow evidenceflag of no-extra-form controle verdwijnt; evidence sluit diagnose, dosering, behandelkeuzeadvies, medische payloads, secrets, tokens en trackingpayloads uit; backlog health blijft op 100+ open goals.
+- **Affected Screens:** Vragen, Dagadvies, release evidence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily Recommendations, vragen UI, routeflow smoke, maintenance docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #4002
 
 ### G1941 — Daily Recommendations: supplement artscheck actieflow routeflow evidence
 

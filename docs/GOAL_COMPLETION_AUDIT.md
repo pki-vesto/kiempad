@@ -202,6 +202,23 @@ dagadvieslijst of artscheckactie voor supplementvragen wijzigt.
 - **Privacygrens:** blijvende evidence mag geen dosering, interactieclaim,
   behandelvervanging, medische payload, secret of trackingpayload bevatten.
 
+## Artscheck Vraag Reviewstatus Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de vragenroute,
+artscheckvraagmetadata of reviewstatuscontrole wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `questionArtscheckReviewStatus` in de routeflow target
+  `question-artscheck-review-status`.
+- **Command:** `npm run smoke:routeflows` controleert
+  `data-question-artscheck-review`, `data-question-artscheck-review-state` en
+  `data-question-artscheck-review-form`.
+- **Scope:** de evidence bewaakt dat badge, select en bewaaractie vindbaar blijven
+  en dat gewone vragen zonder artscheckmetadata blijven zonder extra
+  reviewformulier als no-extra-form controle.
+- **Privacygrens:** blijvende evidence mag geen diagnose, dosering,
+  behandelkeuzeadvies, medische payload, secret of trackingpayload bevatten.
+
 ## Offline Cache Metadata Evidence
 
 Gebruik deze aanvullende release-evidence wanneer de researchbronnenlijst,
