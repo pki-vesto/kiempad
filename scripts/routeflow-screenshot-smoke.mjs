@@ -1255,8 +1255,10 @@ const targets = [
       '.daily-recommendation-list--dual-owner .rec-action--primary',
       '.daily-recommendation-list--dual-owner .rec-action--ghost',
       '.daily-recommendation-list--dual-owner .rec-overflow__toggle',
+      '[data-daily-recommendation-bronconfidence="ready"]',
     ],
     dailyAdviceCompactList: true,
+    dailyAdviceBronconfidence: true,
     smallMobileViewport: true,
   },
   {
@@ -3219,6 +3221,61 @@ async function assertRouteflows(browser, options) {
                   ),
                 hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|\bdiagnose\b|\bdosering\b|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
                   analyticsText,
+                ),
+              };
+            })()
+          : null;
+        const dailyAdviceBronconfidence = routeflow.dailyAdviceBronconfidence
+          ? (() => {
+              const list = document.querySelector('[data-daily-advice-list-mode="dual-owner-cards"]');
+              const confidence = document.querySelector(
+                '[data-daily-recommendation-bronconfidence="ready"]',
+              );
+              const card = confidence?.closest('.kp-recommendation-card');
+              const confidenceRect = confidence?.getBoundingClientRect();
+              const cardRect = card?.getBoundingClientRect();
+              const listRect = list?.getBoundingClientRect();
+              const text = confidence?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const label = confidence?.getAttribute(
+                'data-daily-recommendation-bronconfidence-label',
+              ) ?? '';
+              const score = confidence?.getAttribute(
+                'data-daily-recommendation-bronconfidence-score',
+              ) ?? '';
+              const review = confidence?.getAttribute(
+                'data-daily-recommendation-bronconfidence-review',
+              ) ?? '';
+              return {
+                visible: Boolean(
+                  confidenceRect && confidenceRect.width > 0 && confidenceRect.height > 0,
+                ),
+                cardVisible: Boolean(cardRect && cardRect.width > 0 && cardRect.height > 0),
+                label,
+                score,
+                review,
+                hasLabel: ['sterk', 'gemiddeld', 'beperkt'].includes(label),
+                hasScore: /^\d+$/.test(score) && Number(score) >= 0 && Number(score) <= 100,
+                hasSource: text.includes('Bron') && /dossier|agenda|kennis|consult|basis/i.test(text),
+                hasDate: text.includes('Datum') && /20\d\d-\d\d-\d\d/.test(text),
+                hasReview: text.includes('Reviewstatus') && text.includes('concept_te_controleren'),
+                hasCategories: text.includes('Broncategorieen') && /dossier|agenda|kennis|basis/i.test(text),
+                hasExplanation: text.includes('Uitleg') && text.length > 80,
+                contained:
+                  Boolean(listRect && confidenceRect) &&
+                  confidenceRect.left >= listRect.left - 1 &&
+                  confidenceRect.right <= listRect.right + 1,
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  Boolean(
+                    listRect &&
+                      confidenceRect &&
+                      (confidenceRect.left < listRect.left - 1 ||
+                        confidenceRect.right > listRect.right + 1),
+                  ),
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|\bdiagnose\b|\bdosering\b|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  text,
                 ),
               };
             })()
@@ -5414,6 +5471,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceCompactList,
           dailyAdviceOwnerScanOverflow,
           dailyAdviceFeedbackAnalytics,
+          dailyAdviceBronconfidence,
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
           questionConsultLinkRoute,
@@ -5847,6 +5905,26 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: mobiele dagadvieslijst is niet compact of verliest acties/disclaimer (${JSON.stringify(evidence.dailyAdviceCompactList)}).`,
+        );
+      }
+      if (
+        evidence.dailyAdviceBronconfidence &&
+        (!evidence.dailyAdviceBronconfidence.visible ||
+          !evidence.dailyAdviceBronconfidence.cardVisible ||
+          !evidence.dailyAdviceBronconfidence.hasLabel ||
+          !evidence.dailyAdviceBronconfidence.hasScore ||
+          !evidence.dailyAdviceBronconfidence.hasSource ||
+          !evidence.dailyAdviceBronconfidence.hasDate ||
+          evidence.dailyAdviceBronconfidence.review !== 'concept_te_controleren' ||
+          !evidence.dailyAdviceBronconfidence.hasReview ||
+          !evidence.dailyAdviceBronconfidence.hasCategories ||
+          !evidence.dailyAdviceBronconfidence.hasExplanation ||
+          !evidence.dailyAdviceBronconfidence.contained ||
+          evidence.dailyAdviceBronconfidence.hasHorizontalOverflow ||
+          evidence.dailyAdviceBronconfidence.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: dagadvies bronconfidence mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.dailyAdviceBronconfidence)}).`,
         );
       }
       if (

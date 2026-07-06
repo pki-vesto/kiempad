@@ -309,6 +309,11 @@
   bronconfidenceblok met label, score, bron, datum, reviewstatus,
   broncategorieen en lekenuitleg, zodat bronbasis controleerbaar blijft zonder
   bewijsweging of behandeladvies.
+- **G1981 Dagadvies bronconfidence routeflow evidence:** routeflow-smoke bewaakt
+  `data-daily-recommendation-bronconfidence` in de Dagadvieskaartlijst met
+  label, score, bron, datum, reviewstatus, broncategorieen en lekenuitleg op
+  desktop, tablet, mobiel en small-mobile zonder horizontale overflow of
+  trackingpayload.
 - **G552 Dagadvies feedbackanalytics zonder tracking:** de Dagadvies-werkbank
   toont lokale feedbackanalytics uit encrypted eventlogs met statusverdeling,
   eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en expliciete
