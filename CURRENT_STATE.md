@@ -324,6 +324,11 @@
   eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en no-tracking
   copy op desktop, tablet en mobiel zonder horizontale overflow of
   trackingpayload.
+- **G1980 Dagadvies owner visibility routeflow evidence:** routeflow-smoke opent
+  Dagadvies met een lokaal verborgen eigenaar en bewaakt
+  `data-daily-recommendation-owner-visibility`, hidden-count, eigenaarstatus,
+  bron, datum, reviewstatus, herstelactie en zichtbare lijstfiltering zonder
+  trackingpayload.
 - **G553 Dagadvies eigenaarsfilter:** de dagadviesroute toont een zichtbaar
   eigenaarsfilter waarmee vrouw-, man- of samen-suggesties lokaal verborgen en
   hersteld kunnen worden; bron, datum en reviewstatus blijven zichtbaar vanuit

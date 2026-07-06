@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1822 |
+| ☑ klaar | 1823 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **2021** |
+| **Totaal** | **2022** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2141,7 +2141,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1977 | Research Intelligence: literature query builder routeflow evidence | P1 | F5 | ☐ |
 | G1978 | Research Intelligence: trend dashboard metadata routeflow evidence | P1 | F5 | ☐ |
 | G1979 | Daily Recommendations: personalization feedback routeflow evidence | P1 | F5 | ☐ |
-| G1980 | Daily Recommendations: owner visibility routeflow evidence | P1 | F5 | ☐ |
+| G1980 | Daily Recommendations: owner visibility routeflow evidence | P1 | F5 | ☑ |
 | G1981 | Daily Recommendations: source confidence routeflow evidence | P1 | F5 | ☑ |
 | G1982 | Daily Recommendations: feedback analytics routeflow evidence | P1 | F5 | ☑ |
 | G1983 | Research Intelligence: trend update timestamp routeflow evidence | P1 | F5 | ☑ |
@@ -2184,12 +2184,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2020 | Premium Claude Design UI: sticky routefocus-dock tegen lange pagina | P1 | F5 | ☑ |
 | G2021 | Premium Claude Design UI: routefocus-dock live route badges | P1 | F5 | ☑ |
 | G2022 | Premium Claude Design UI: routefocus-dock actieve route automatisch in beeld | P1 | F5 | ☑ |
+| G2023 | Daily Recommendations: owner visibility release evidence freshness guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 2021** (id's G001 t/m G2022; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 2022** (id's G001 t/m G2023; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

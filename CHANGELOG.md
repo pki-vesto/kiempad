@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1980 owner visibility routeflow evidence: routeflow-smoke opent Dagadvies
+  met een lokaal verborgen eigenaar en bewaakt
+  `data-daily-recommendation-owner-visibility`, hidden-count, eigenaarstatus,
+  bron, datum, reviewstatus, herstelactie en zichtbare lijstfiltering zonder
+  secrets, trackingpayload of medisch advies.
 - G1981 source confidence routeflow evidence: routeflow-smoke bewaakt nu
   `data-daily-recommendation-bronconfidence` in de Dagadvieskaartlijst met label,
   score, bron, datum, reviewstatus, broncategorieen en lekenuitleg op desktop,
