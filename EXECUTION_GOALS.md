@@ -18084,7 +18084,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge research route, routeflow smoke, privacy evidence
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3891
 
 ### G1978 — Research Intelligence: trend dashboard metadata routeflow evidence
@@ -18885,6 +18885,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 104
 - **Status:** ☐ open
 - **Issue:** #3994
+
+### G2025 — Research Intelligence: literature query builder release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** Literature query-builder routeflow evidence bewaakt de gede-identificeerde zoekstart, maar release- en contextbewijs moeten expliciet blijven aantonen dat de querybuilder geen dossierplaintext, bestandsnamen, consulttekst of netwerk-/trackingpayload toont.
+- **User Impact:** Zonder vers releasebewijs kan een latere UI- of themewijziging privacygevoelige context of overflow rond de querybuilder laten terugkeren zonder dat dit in de PR-context zichtbaar wordt.
+- **Desired Outcome:** Release- en documentatie-evidence verwijst naar de literature query-builder datahooks en benoemt de bewerkbare, gede-identificeerde queryvelden zonder gevoelige inhoud.
+- **User Value:** Gebruikers houden een controleerbare researchzoekstart die veilig voorbereidt op literatuuronderzoek zonder dossierinhoud te lekken.
+- **Acceptance Criteria:** Release/docs evidence references `data-literature-query-builder` and `literatureQueryBuilder` routeflow evidence; evidence mentions query preview, deidentified context labels, editable terms, save action, excluded-context chips, bounded layout and no-network/no-tracking boundary; evidence excludes dossier plaintext, consult text, OCR text, filenames, secrets, tracking payloads, diagnosis, dosage, chance claims and treatment-choice advice; backlog health remains at minimum 100 open goals.
+- **Affected Screens:** Kennis, Research Intelligence, routeflow evidence, release/context docs
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Knowledge research route, routeflow smoke, release docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #3996
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
