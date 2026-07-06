@@ -311,6 +311,14 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   bron/disclaimer, actieknop en standaardregels zonder extra actie actueel blijven
   zonder dosering, interactieclaim, behandelvervanging, medische payload,
   secret of trackingpayload.
+- G1947 artscheck vraag reviewstatus release evidence: releasecontext en
+  onderhoudsdocs noemen nu `npm run smoke:routeflows`, target
+  `question-artscheck-review-status`, `questionArtscheckReviewStatus`,
+  `data-question-artscheck-review`, `data-question-artscheck-review-state` en
+  `data-question-artscheck-review-form`, zodat badge, select en bewaaractie vindbaar blijven
+  en gewone vragen zonder artscheckmetadata blijven zonder extra reviewformulier,
+  zonder diagnose, dosering, behandelkeuzeadvies, medische payload,
+  secret of trackingpayload.
 - G1945 embryo image classification forced-colors focus release evidence:
   releasecontext en onderhoudsdocs noemen nu
   `npm run smoke:routeflows`, target `dossier-imaging-embryo-classification-review`

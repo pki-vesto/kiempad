@@ -444,6 +444,13 @@
   Vragen list now keeps artscheck review cards in a stacked, readable layout with compact
   Concept/Gereviewd badges, and routeflow smoke creates both an artscheck question and a normal
   question to verify badge, select, save action, no-extra-form behavior, and no horizontal overflow.
+- **Artscheck vraag reviewstatus release evidence — done in G1947 / issue #3840.** Runbook,
+  completion-audit, changelog and current-state releasecontext now explicitly point to
+  `question-artscheck-review-status`, `questionArtscheckReviewStatus`,
+  `data-question-artscheck-review`, `data-question-artscheck-review-state` and
+  `data-question-artscheck-review-form`, including the no-extra-form control for ordinary
+  questions without artscheck metadata and the no diagnosis, dosage, treatment-choice advice,
+  medical payload, secret or tracking payload boundary.
 - **Dossierupload size feedback — done in G567 / issue #3804.** The Dossier upload form now
   shows a dedicated preflight size feedback layer with per-file and per-selection limits,
   central 413 context, and recoverable retry copy without filenames, OCR text, encoded content,

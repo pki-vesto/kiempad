@@ -4222,6 +4222,64 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('- **Status:** ☑ done');
   });
 
+  it('documenteert G1947 artscheck vraag reviewstatus release evidence', () => {
+    const requiredTerms = [
+      'Artscheck vraag reviewstatus evidence',
+      'question-artscheck-review-status',
+      'questionArtscheckReviewStatus',
+      'data-question-artscheck-review',
+      'data-question-artscheck-review-state',
+      'data-question-artscheck-review-form',
+      'no-extra-form controle',
+      'badge, select en bewaaractie',
+      'npm run smoke:routeflows',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'diagnose',
+      'dosering',
+      'behandelkeuzeadvies',
+      'medische payload',
+      'secret',
+      'trackingpayload',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1947 artscheck vraag reviewstatus release evidence',
+      'question-artscheck-review-status',
+      'data-question-artscheck-review',
+      'data-question-artscheck-review-state',
+      'data-question-artscheck-review-form',
+      'gewone vragen zonder artscheckmetadata blijven zonder extra reviewformulier',
+      'badge, select en bewaaractie vindbaar blijven',
+      'zonder diagnose, dosering, behandelkeuzeadvies, medische payload,',
+      'secret of trackingpayload',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'question-artscheck-review-status'");
+    expect(routeflowScreenshotSmokeScript).toContain('questionArtscheckReviewStatus');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-question-artscheck-review-form="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('standardReviewFormCount !== 0');
+    expect(backlog).toContain(
+      'G1947 | Daily Recommendations: artscheck vraag reviewstatus release evidence | P1 | F5 | ☑',
+    );
+    expect(executionGoals).toContain('### G1947');
+    expect(executionGoals).toContain('- **Status:** ☑ done');
+  });
+
   it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
     const requiredTerms = [
       'Offline cache metadata evidence',

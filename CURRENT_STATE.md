@@ -692,6 +692,14 @@
   bron/disclaimer, actieknop en standaardregels zonder extra actie samen actueel
   blijven zonder dosering, interactieclaim, behandelvervanging, medische payload,
   secret of trackingpayload.
+- **G1947 artscheck vraag reviewstatus release evidence:** releasecontext in
+  changelog en current state noemt `npm run smoke:routeflows`,
+  `question-artscheck-review-status`, `questionArtscheckReviewStatus`,
+  `data-question-artscheck-review`, `data-question-artscheck-review-state` en
+  `data-question-artscheck-review-form`, zodat badge, select en bewaaractie vindbaar blijven
+  en gewone vragen zonder artscheckmetadata blijven zonder extra reviewformulier,
+  zonder diagnose, dosering, behandelkeuzeadvies, medische payload,
+  secret of trackingpayload.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
