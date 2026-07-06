@@ -146,6 +146,24 @@ pad zonder lokale vault-hercreatie.
   de locked variant zonder bronplaintext vast. Blijvende evidence mag geen
   OCR-payload, bronbestandsnamen, locked beeldbron-plaintext, medische plaintext,
   secret of trackingdata bevatten.
+- **Metadata-normalisatie correctieformulier evidence (G1950):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
+  `dossier-metadata-normalization-correction` `dossierMetadataNormalizationCorrection`
+  te verzamelen. De smoke controleert `data-metadata-normalization-correction`,
+  `data-metadata-normalization-field="date"`,
+  `data-metadata-normalization-field="source"`,
+  `data-metadata-normalization-field="document-type"`,
+  `data-metadata-normalization-field="research-type"`,
+  `data-metadata-normalization-field="attempt"`,
+  `data-metadata-normalization-field="appointment"`,
+  `data-metadata-normalization-field="certainty"`,
+  `data-metadata-normalization-action="save"` en
+  `data-metadata-normalization-locked-boundary`, bewaakt dat datum, bron,
+  documenttype, onderzoekstype, poging, afspraak, onzekerheid en bewaaractie
+  scanbaar blijven zonder horizontale overflow en houdt de locked variant zonder
+  bronplaintext vast. Blijvende evidence mag geen medische payload,
+  bronbestandsnamen, OCR-payload, locked beeldbron-plaintext, secret of
+  trackingdata bevatten.
 - **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
   gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
   `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te
