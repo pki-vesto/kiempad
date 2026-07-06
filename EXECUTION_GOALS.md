@@ -18067,8 +18067,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations, routeflow smoke, release evidence, maintenance docs
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3889
+
+### G2027 — Daily Recommendations: supplement artscheck freshness missing-term fixture
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** De G1976 freshness guard koppelt de supplement-artscheck release-evidence aan routeflow target, selector en submitwaarde, maar er is nog geen expliciete missing-term fixture voor de foutmelding.
+- **User Impact:** Zonder missing-term fixture kan een toekomstige testwijziging minder duidelijk melden welke evidence-term ontbreekt.
+- **Desired Outcome:** Voeg een onderhoudsfixture toe die bewijst dat ontbrekende supplement-artscheck release-evidence termen herkenbaar falen zonder medische payloads.
+- **User Value:** Gebruikers blijven indirect beschermd tegen regressies doordat releasechecks precies melden welke artscheck-evidence opnieuw gekoppeld moet worden.
+- **Acceptance Criteria:** Fixture of unit test dekt ontbrekende `daily-advice-supplement-artscheck-action` release-term; fixture of unit test dekt ontbrekende `data-supplement-artscheck-action` en `recommendationAction=supplementArtscheck` evidence; foutmelding noemt de ontbrekende term zonder medische payloads, secrets, tokens, trackingdata, dosering, interactieclaims of behandelvervangend advies; backlog health blijft op 100+ open goals.
+- **Affected Screens:** Dagadvies, Start, maintenance docs
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily Recommendations, routeflow smoke, release evidence, maintenance docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #4000
 
 ### G1977 — Research Intelligence: literature query builder routeflow evidence
 

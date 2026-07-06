@@ -684,6 +684,14 @@
   `daily-advice-supplement-artscheck-action`, `data-supplement-artscheck-action`,
   `recommendationAction=supplementArtscheck` en `dailyAdviceSupplementArtscheckAction`, zodat label, bron/disclaimer en actieknop gekoppeld blijven
   zonder dosering, interactieclaim of behandelvervanging.
+- **G1976 supplement artscheck action release evidence freshness guard:**
+  onderhoudstests koppelen releasecontext aan
+  `daily-advice-supplement-artscheck-action`, `dailyAdviceSupplementArtscheckAction`,
+  `data-supplement-artscheck-action` en
+  `recommendationAction=supplementArtscheck`, zodat de submitwaarde, label,
+  bron/disclaimer, actieknop en standaardregels zonder extra actie samen actueel
+  blijven zonder dosering, interactieclaim, behandelvervanging, medische payload,
+  secret of trackingpayload.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
