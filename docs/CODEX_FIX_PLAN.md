@@ -459,6 +459,15 @@
   `data-attachment-delete-kind="dossier-import"`, including the review-ready no-retry
   control and the no source filename, OCR payload, medical plaintext, secret or tracking
   data boundary.
+- **OCR-review correction form release evidence — done in G1949 / issue #3844.** Runbook,
+  completion-audit, changelog and current-state releasecontext now explicitly point to
+  `dossier-ocr-review-correction`, `dossierOcrReviewCorrection`,
+  `data-ocr-review-correction`, `data-ocr-review-field="correction-text"`,
+  `data-ocr-review-field="metadata-note"`, `data-ocr-review-field="review-status"`,
+  `data-ocr-review-action="save"` and `data-ocr-review-locked-boundary`, including
+  correction text, metadata note, review status, save action, locked variant without source
+  plaintext, and the no OCR payload, source filename, medical plaintext, secret or tracking
+  data boundary.
 - **Dossierupload size feedback — done in G567 / issue #3804.** The Dossier upload form now
   shows a dedicated preflight size feedback layer with per-file and per-selection limits,
   central 413 context, and recoverable retry copy without filenames, OCR text, encoded content,

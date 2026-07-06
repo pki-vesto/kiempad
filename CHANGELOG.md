@@ -327,6 +327,15 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   retry- en verwijderactie scanbaar blijven en reviewklare imports zonder retryactie
   blijven, zonder bestandsinhoud, OCR-payload, bronbestandsnamen, medische plaintext,
   secret of trackingdata.
+- G1949 OCR-review correctieformulier release evidence: releasecontext en
+  onderhoudsdocs noemen nu `npm run smoke:routeflows`, target
+  `dossier-ocr-review-correction`, `dossierOcrReviewCorrection`,
+  `data-ocr-review-correction`, `data-ocr-review-field="correction-text"`,
+  `data-ocr-review-field="metadata-note"`, `data-ocr-review-field="review-status"`,
+  `data-ocr-review-action="save"` en `data-ocr-review-locked-boundary`, zodat
+  correctietekst, metadata-notitie, reviewstatus en bewaaractie scanbaar blijven en
+  de locked variant zonder bronplaintext blijft, zonder OCR-payload, bronbestandsnamen, medische plaintext,
+  secret of trackingdata.
 - G1945 embryo image classification forced-colors focus release evidence:
   releasecontext en onderhoudsdocs noemen nu
   `npm run smoke:routeflows`, target `dossier-imaging-embryo-classification-review`

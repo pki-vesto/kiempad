@@ -17778,8 +17778,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** OCR review, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3844
+
+### G2030 — Fertility Intelligence: OCR-review release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** De G1949 release-evidence koppelt OCR-reviewcorrectie aan routeflow selectors, maar toekomstige wijzigingen aan target, evidenceflag, ready/locked variant of privacygrens kunnen die documentatie verouderen.
+- **User Impact:** Zonder freshness guard kan een release later melden dat OCR-review bewaakt is terwijl correctietekst, metadata-notitie, reviewstatus, bewaaractie of locked boundary niet meer door dezelfde selectors worden bewezen.
+- **Desired Outcome:** Voeg een guard toe die OCR-review release-evidence synchroon houdt met routeflow target, selectors, ready/locked evidence en privacygrens.
+- **User Value:** Gebruikers kunnen onzeker OCR-werk blijven corrigeren zonder dat release-evidence OCR-payloads, bronbestandsnamen of medische plaintext nodig heeft.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan `dossier-ocr-review-correction`; guard test noemt `data-ocr-review-correction`, `data-ocr-review-field`, `data-ocr-review-action` en `data-ocr-review-locked-boundary`; guard faalt als OCR-review evidenceflag, ready form, locked variant of save action verdwijnt; evidence sluit OCR-payloads, bronbestandsnamen, locked beeldbron-plaintext, medische plaintext, secrets, tokens en trackingpayloads uit; backlog health blijft op 100+ open goals.
+- **Affected Screens:** Dossier Documenttijdlijn, Dossier reviewwachtrij, release evidence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** OCR review, routeflow smoke, maintenance docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #4006
 
 ### G1950 — Fertility Intelligence: metadata-normalisatie correctieformulier release evidence
 

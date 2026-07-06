@@ -4341,6 +4341,70 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('- **Status:** ☑ done');
   });
 
+  it('documenteert G1949 OCR-review correctieformulier release evidence', () => {
+    const requiredTerms = [
+      'OCR-review correctieformulier evidence',
+      'dossier-ocr-review-correction',
+      'dossierOcrReviewCorrection',
+      'data-ocr-review-correction',
+      'data-ocr-review-field="correction-text"',
+      'data-ocr-review-field="metadata-note"',
+      'data-ocr-review-field="review-status"',
+      'data-ocr-review-action="save"',
+      'data-ocr-review-locked-boundary',
+      'locked variant zonder bronplaintext',
+      'npm run smoke:routeflows',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'OCR-payload',
+      'bronbestandsnamen',
+      'locked beeldbron-plaintext',
+      'medische plaintext',
+      'secret',
+      'trackingdata',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1949 OCR-review correctieformulier release evidence',
+      'dossier-ocr-review-correction',
+      'data-ocr-review-correction',
+      'data-ocr-review-field="correction-text"',
+      'data-ocr-review-field="metadata-note"',
+      'data-ocr-review-field="review-status"',
+      'data-ocr-review-action="save"',
+      'data-ocr-review-locked-boundary',
+      'correctietekst, metadata-notitie, reviewstatus en bewaaractie scanbaar blijven',
+      'locked variant zonder bronplaintext',
+      'zonder OCR-payload, bronbestandsnamen, medische plaintext,',
+      'secret of trackingdata',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'dossier-ocr-review-correction'");
+    expect(routeflowScreenshotSmokeScript).toContain('dossierOcrReviewCorrection');
+    expect(routeflowScreenshotSmokeScript).toContain('data-ocr-review-correction="ready"');
+    expect(routeflowScreenshotSmokeScript).toContain('data-ocr-review-correction="locked"');
+    expect(routeflowScreenshotSmokeScript).toContain('data-ocr-review-action="save"');
+    expect(routeflowScreenshotSmokeScript).toContain("actionText !== 'OCR-review bewaren'");
+    expect(routeflowScreenshotSmokeScript).toContain('hasHorizontalOverflow');
+    expect(backlog).toContain(
+      'G1949 | Fertility Intelligence: OCR-review correctieformulier release evidence | P1 | F5 | ☑',
+    );
+    expect(executionGoals).toContain('### G1949');
+    expect(executionGoals).toContain('- **Status:** ☑ done');
+  });
+
   it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
     const requiredTerms = [
       'Offline cache metadata evidence',

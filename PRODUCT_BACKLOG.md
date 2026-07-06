@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1829 |
+| ☑ klaar | 1830 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **2028** |
+| **Totaal** | **2029** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2110,7 +2110,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1946 | Daily Recommendations: supplement artscheck action release evidence | P1 | F5 | ☑ |
 | G1947 | Daily Recommendations: artscheck vraag reviewstatus release evidence | P1 | F5 | ☑ |
 | G1948 | Fertility Intelligence: import-inbox retry overflow release evidence | P1 | F5 | ☑ |
-| G1949 | Fertility Intelligence: OCR-review correctieformulier release evidence | P1 | F5 | ☐ |
+| G1949 | Fertility Intelligence: OCR-review correctieformulier release evidence | P1 | F5 | ☑ |
 | G1950 | Fertility Intelligence: metadata-normalisatie correctieformulier release evidence | P1 | F5 | ☐ |
 | G1951 | Fertility Intelligence: historische tijdlijnreview release evidence | P1 | F5 | ☐ |
 | G1952 | Premium Claude Design UI: daily recommendation owner scan release evidence | P1 | F5 | ☐ |
@@ -2191,12 +2191,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2027 | Daily Recommendations: supplement artscheck freshness missing-term fixture | P1 | F5 | ☐ |
 | G2028 | Daily Recommendations: artscheck reviewstatus release evidence freshness guard | P1 | F5 | ☐ |
 | G2029 | Fertility Intelligence: import-inbox retry release evidence freshness guard | P1 | F5 | ☐ |
+| G2030 | Fertility Intelligence: OCR-review release evidence freshness guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 2028** (id's G001 t/m G2029; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 2029** (id's G001 t/m G2030; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
