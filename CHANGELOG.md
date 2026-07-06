@@ -319,6 +319,14 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   en gewone vragen zonder artscheckmetadata blijven zonder extra reviewformulier,
   zonder diagnose, dosering, behandelkeuzeadvies, medische payload,
   secret of trackingpayload.
+- G1948 import-inbox retry overflow release evidence: releasecontext en
+  onderhoudsdocs noemen nu `npm run smoke:routeflows`, target
+  `dossier-import-inbox-retry`, `dossierImportInboxRetry`,
+  `data-dossier-import-retry-state`, `data-dossier-import-actionbar`,
+  `data-dossier-import-retry-form` en `data-dossier-import-retry-action`, zodat
+  retry- en verwijderactie scanbaar blijven en reviewklare imports zonder retryactie
+  blijven, zonder bestandsinhoud, OCR-payload, bronbestandsnamen, medische plaintext,
+  secret of trackingdata.
 - G1945 embryo image classification forced-colors focus release evidence:
   releasecontext en onderhoudsdocs noemen nu
   `npm run smoke:routeflows`, target `dossier-imaging-embryo-classification-review`

@@ -17744,8 +17744,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier import-inbox, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3842
+
+### G2029 — Fertility Intelligence: import-inbox retry release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** De G1948 release-evidence koppelt import-inbox retry aan routeflow selectors, maar toekomstige wijzigingen aan target, evidenceflag of reviewklare no-retry controle kunnen die documentatie verouderen.
+- **User Impact:** Zonder freshness guard kan een release later melden dat importretry-overflow bewaakt is terwijl retry, verwijderactie of reviewklare no-retry status niet meer door dezelfde selectors worden bewezen.
+- **Desired Outcome:** Voeg een guard toe die import-inbox retry release-evidence synchroon houdt met routeflow target, selectors en reviewklare no-retry controle.
+- **User Value:** Gebruikers houden een herstelbare import-inbox zonder dat release-evidence bronbestanden, OCR-payloads of medische plaintext nodig heeft.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan `dossier-import-inbox-retry`; guard test noemt `data-dossier-import-retry-state`, `data-dossier-import-retry-form`, `data-dossier-import-retry-action` en `data-dossier-import-actionbar`; guard faalt als retry evidenceflag of reviewklare no-retry controle verdwijnt; evidence sluit bronbestandsnamen, OCR-payloads, medische plaintext, secrets, tokens en trackingpayloads uit; backlog health blijft op 100+ open goals.
+- **Affected Screens:** Dossier review, import-inbox, release evidence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier import-inbox, routeflow smoke, maintenance docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #4004
 
 ### G1949 — Fertility Intelligence: OCR-review correctieformulier release evidence
 

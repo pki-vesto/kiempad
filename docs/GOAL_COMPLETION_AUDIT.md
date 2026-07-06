@@ -219,6 +219,23 @@ artscheckvraagmetadata of reviewstatuscontrole wijzigt.
 - **Privacygrens:** blijvende evidence mag geen diagnose, dosering,
   behandelkeuzeadvies, medische payload, secret of trackingpayload bevatten.
 
+## Import-inbox Retry Overflow Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de dossier import-inbox,
+retryactie, verwijderactie of documentreview-layout wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `dossierImportInboxRetry` in de routeflow target `dossier-import-inbox-retry`.
+- **Command:** `npm run smoke:routeflows` controleert
+  `data-dossier-import-retry-state`, `data-dossier-import-actionbar`,
+  `data-dossier-import-retry-form`, `data-dossier-import-retry-action` en
+  `data-attachment-delete-kind="dossier-import"`.
+- **Scope:** de evidence bewaakt dat retry- en verwijderactie scanbaar blijven
+  zonder page-level horizontale overflow en dat
+  reviewklare imports zonder retryactie blijven.
+- **Privacygrens:** blijvende evidence mag geen bestandsinhoud, OCR-payload,
+  bronbestandsnamen, medische plaintext, secret of trackingdata bevatten.
+
 ## Offline Cache Metadata Evidence
 
 Gebruik deze aanvullende release-evidence wanneer de researchbronnenlijst,

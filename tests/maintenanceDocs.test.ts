@@ -4280,6 +4280,67 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('- **Status:** ☑ done');
   });
 
+  it('documenteert G1948 import-inbox retry overflow release evidence', () => {
+    const requiredTerms = [
+      'Import-inbox retry overflow evidence',
+      'dossier-import-inbox-retry',
+      'dossierImportInboxRetry',
+      'data-dossier-import-retry-state',
+      'data-dossier-import-actionbar',
+      'data-dossier-import-retry-form',
+      'data-dossier-import-retry-action',
+      'data-attachment-delete-kind="dossier-import"',
+      'reviewklare imports zonder retryactie',
+      'npm run smoke:routeflows',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'bestandsinhoud',
+      'OCR-payload',
+      'bronbestandsnamen',
+      'medische plaintext',
+      'secret',
+      'trackingdata',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1948 import-inbox retry overflow release evidence',
+      'dossier-import-inbox-retry',
+      'data-dossier-import-retry-state',
+      'data-dossier-import-actionbar',
+      'data-dossier-import-retry-form',
+      'data-dossier-import-retry-action',
+      'retry- en verwijderactie scanbaar blijven',
+      'reviewklare imports zonder retryactie',
+      'zonder bestandsinhoud, OCR-payload, bronbestandsnamen, medische plaintext,',
+      'secret of trackingdata',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'dossier-import-inbox-retry'");
+    expect(routeflowScreenshotSmokeScript).toContain('dossierImportInboxRetry');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-dossier-import-retry-action="available"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('completedHasRetryAction');
+    expect(routeflowScreenshotSmokeScript).toContain('hasHorizontalOverflow');
+    expect(backlog).toContain(
+      'G1948 | Fertility Intelligence: import-inbox retry overflow release evidence | P1 | F5 | ☑',
+    );
+    expect(executionGoals).toContain('### G1948');
+    expect(executionGoals).toContain('- **Status:** ☑ done');
+  });
+
   it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
     const requiredTerms = [
       'Offline cache metadata evidence',
