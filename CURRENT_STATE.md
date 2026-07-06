@@ -700,6 +700,14 @@
   en gewone vragen zonder artscheckmetadata blijven zonder extra reviewformulier,
   zonder diagnose, dosering, behandelkeuzeadvies, medische payload,
   secret of trackingpayload.
+- **G1948 import-inbox retry overflow release evidence:** releasecontext in
+  changelog en current state noemt `npm run smoke:routeflows`,
+  `dossier-import-inbox-retry`, `dossierImportInboxRetry`,
+  `data-dossier-import-retry-state`, `data-dossier-import-actionbar`,
+  `data-dossier-import-retry-form` en `data-dossier-import-retry-action`, zodat
+  retry- en verwijderactie scanbaar blijven en reviewklare imports zonder retryactie
+  blijven, zonder bestandsinhoud, OCR-payload, bronbestandsnamen, medische plaintext,
+  secret of trackingdata.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

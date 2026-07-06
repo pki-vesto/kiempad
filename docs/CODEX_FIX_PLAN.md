@@ -451,6 +451,14 @@
   `data-question-artscheck-review-form`, including the no-extra-form control for ordinary
   questions without artscheck metadata and the no diagnosis, dosage, treatment-choice advice,
   medical payload, secret or tracking payload boundary.
+- **Import-inbox retry overflow release evidence — done in G1948 / issue #3842.** Runbook,
+  completion-audit, changelog and current-state releasecontext now explicitly point to
+  `dossier-import-inbox-retry`, `dossierImportInboxRetry`,
+  `data-dossier-import-retry-state`, `data-dossier-import-actionbar`,
+  `data-dossier-import-retry-form`, `data-dossier-import-retry-action` and
+  `data-attachment-delete-kind="dossier-import"`, including the review-ready no-retry
+  control and the no source filename, OCR payload, medical plaintext, secret or tracking
+  data boundary.
 - **Dossierupload size feedback — done in G567 / issue #3804.** The Dossier upload form now
   shows a dedicated preflight size feedback layer with per-file and per-selection limits,
   central 413 context, and recoverable retry copy without filenames, OCR text, encoded content,

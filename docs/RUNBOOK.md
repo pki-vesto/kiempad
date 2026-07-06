@@ -125,6 +125,16 @@ pad zonder lokale vault-hercreatie.
   houdt de no-extra-form controle voor gewone vragen zonder artscheckmetadata vast.
   Blijvende evidence mag geen diagnose, dosering, behandelkeuzeadvies, medische
   payload, secret of trackingpayload bevatten.
+- **Import-inbox retry overflow evidence (G1948):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
+  `dossier-import-inbox-retry` `dossierImportInboxRetry` te verzamelen. De smoke
+  controleert `data-dossier-import-retry-state`, `data-dossier-import-actionbar`,
+  `data-dossier-import-retry-form`, `data-dossier-import-retry-action` en
+  `data-attachment-delete-kind="dossier-import"`, bewaakt dat retry- en
+  verwijderactie scanbaar blijven zonder horizontale overflow en houdt
+  reviewklare imports zonder retryactie vast. Blijvende evidence mag geen bestandsinhoud,
+  OCR-payload, bronbestandsnamen, medische plaintext, secret of trackingdata
+  bevatten.
 - **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
   gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
   `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te
