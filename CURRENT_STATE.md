@@ -734,6 +734,19 @@
   documenttype, onderzoekstype, poging, afspraak, onzekerheid en bewaaractie scanbaar blijven en
   de locked variant zonder bronplaintext blijft, zonder medische payload, bronbestandsnamen, OCR-payload,
   secret of trackingdata.
+- **G1951 historische tijdlijnreview release evidence:** releasecontext in
+  changelog en current state noemt `npm run smoke:routeflows`, target
+  `dossier-historical-timeline-review`, `dossierHistoricalTimelineReview`,
+  `data-historical-timeline-review`,
+  `data-historical-timeline-review-field="date"`,
+  `data-historical-timeline-review-field="source"`,
+  `data-historical-timeline-review-field="review-status"`,
+  `data-historical-timeline-review-field="visibility"`,
+  `data-historical-timeline-review-action="save"` en
+  `data-historical-timeline-review-locked-boundary`, zodat datum, bron,
+  reviewstatus, zichtbaarheid en bewaaractie scanbaar blijven en de locked variant
+  zonder bronplaintext blijft, zonder medische payload, bronbestandsnamen, OCR-payload,
+  secret of trackingdata.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

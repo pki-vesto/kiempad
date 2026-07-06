@@ -17846,8 +17846,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier timeline, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3848
+
+### G2032 — Fertility Intelligence: historische tijdlijnreview release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** De G1951 release-evidence koppelt historische tijdlijnreview aan routeflow selectors, maar toekomstige wijzigingen aan target, evidenceflag, ready/locked variant of privacygrens kunnen die documentatie verouderen.
+- **User Impact:** Zonder freshness guard kan een release later melden dat historische tijdlijnreview bewaakt is terwijl datum, bron, reviewstatus, zichtbaarheid, bewaaractie of locked boundary niet meer door dezelfde selectors worden bewezen.
+- **Desired Outcome:** Voeg een guard toe die historische tijdlijnreview release-evidence synchroon houdt met routeflow target, selectors, ready/locked evidence en privacygrens.
+- **User Value:** Gebruikers kunnen historische dossiermomenten blijven bevestigen, corrigeren of verbergen zonder dat release-evidence medische payloads, OCR-payloads, bronbestandsnamen of plaintext locked bronwaarden nodig heeft.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan `dossier-historical-timeline-review`; guard test noemt `data-historical-timeline-review`, `data-historical-timeline-review-field`, `data-historical-timeline-review-action` en `data-historical-timeline-review-locked-boundary`; guard faalt als historische tijdlijnreview evidenceflag, ready form, locked variant of save action verdwijnt; evidence sluit medische payloads, OCR-payloads, bronbestandsnamen, locked beeldbron-plaintext, secrets, tokens en trackingpayloads uit; backlog health blijft op 100+ open goals.
+- **Affected Screens:** Dossier Documenttijdlijn, centrale timeline, release evidence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier timeline, routeflow smoke, maintenance docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #4010
 
 ### G1952 — Premium Claude Design UI: daily recommendation owner scan release evidence
 

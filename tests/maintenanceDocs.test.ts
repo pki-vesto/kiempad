@@ -4484,6 +4484,77 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('- **Status:** ☑ done');
   });
 
+  it('documenteert G1951 historische tijdlijnreview release evidence', () => {
+    const requiredTerms = [
+      'Historische tijdlijnreview evidence',
+      'dossier-historical-timeline-review',
+      'dossierHistoricalTimelineReview',
+      'data-historical-timeline-review',
+      'data-historical-timeline-review-field="date"',
+      'data-historical-timeline-review-field="source"',
+      'data-historical-timeline-review-field="review-status"',
+      'data-historical-timeline-review-field="visibility"',
+      'data-historical-timeline-review-action="save"',
+      'data-historical-timeline-review-locked-boundary',
+      'locked variant zonder bronplaintext',
+      'npm run smoke:routeflows',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'medische payload',
+      'bronbestandsnamen',
+      'OCR-payload',
+      'locked beeldbron-plaintext',
+      'secret',
+      'trackingdata',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1951 historische tijdlijnreview release evidence',
+      'dossier-historical-timeline-review',
+      'dossierHistoricalTimelineReview',
+      'data-historical-timeline-review',
+      'data-historical-timeline-review-field="date"',
+      'data-historical-timeline-review-field="source"',
+      'data-historical-timeline-review-field="review-status"',
+      'data-historical-timeline-review-field="visibility"',
+      'data-historical-timeline-review-action="save"',
+      'data-historical-timeline-review-locked-boundary',
+      'reviewstatus, zichtbaarheid en bewaaractie scanbaar blijven',
+      'locked variant zonder bronplaintext',
+      'zonder medische payload, bronbestandsnamen, OCR-payload,',
+      'secret of trackingdata',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-historical-timeline-review'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('dossierHistoricalTimelineReview');
+    expect(routeflowScreenshotSmokeScript).toContain('data-historical-timeline-review="ready"');
+    expect(routeflowScreenshotSmokeScript).toContain('data-historical-timeline-review="locked"');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'data-historical-timeline-review-action="save"',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain("actionText !== 'Tijdlijnreview bewaren'");
+    expect(routeflowScreenshotSmokeScript).toContain('hasHorizontalOverflow');
+    expect(backlog).toContain(
+      'G1951 | Fertility Intelligence: historische tijdlijnreview release evidence | P1 | F5 | ☑',
+    );
+    expect(executionGoals).toContain('### G1951');
+    expect(executionGoals).toContain('- **Status:** ☑ done');
+  });
+
   it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
     const requiredTerms = [
       'Offline cache metadata evidence',
