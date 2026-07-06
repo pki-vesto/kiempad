@@ -313,6 +313,12 @@
   toont lokale feedbackanalytics uit encrypted eventlogs met statusverdeling,
   eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en expliciete
   no-tracking copy.
+- **G1982 Dagadvies feedbackanalytics routeflow evidence:** routeflow-smoke
+  opent Dagadvies met lokale feedback-eventlogs en bewaakt
+  `data-daily-advice-feedback-analytics`, total, statusverdeling,
+  eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en no-tracking
+  copy op desktop, tablet en mobiel zonder horizontale overflow of
+  trackingpayload.
 - **G553 Dagadvies eigenaarsfilter:** de dagadviesroute toont een zichtbaar
   eigenaarsfilter waarmee vrouw-, man- of samen-suggesties lokaal verborgen en
   hersteld kunnen worden; bron, datum en reviewstatus blijven zichtbaar vanuit

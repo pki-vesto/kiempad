@@ -1169,6 +1169,7 @@ const targets = [
   {
     screen: 'daily-advice-feedback-filter-route',
     hash: '#start-recommendations?feedback=artscheck',
+    prepare: 'daily-advice-feedback-analytics',
     rootSelector: '[data-daily-advice-focus-shell="ready"]',
     expectedText: 'Te doen vandaag',
     openSelectors: [
@@ -1197,6 +1198,9 @@ const targets = [
       '[data-daily-advice-owner-choice-route="man"]',
       '[data-daily-advice-owner-choice-route="samen"]',
       '[data-daily-advice-owner-details="collapsed"]',
+      '[data-daily-advice-feedback-analytics="ready"]',
+      '[data-daily-advice-feedback-summary-count="ready"]',
+      '[data-daily-advice-feedback-summary="ready"]',
       '[data-hub-detail-panel="daily-recommendation-list"]',
       '[data-daily-advice-list-choice="ready"]',
       '[data-daily-advice-full-list="collapsed"]',
@@ -1227,6 +1231,7 @@ const targets = [
       '[data-daily-advice-owner-details="collapsed"] .daily-advice-owner-details__summary small',
     ],
     dailyAdviceFeedbackNavigation: true,
+    dailyAdviceFeedbackAnalytics: true,
   },
   {
     screen: 'daily-advice-mobile-compact-list',
@@ -2624,6 +2629,9 @@ async function assertRouteflows(browser, options) {
       if (target.prepare === 'question-consult-link-route') {
         await prepareQuestionConsultLinkRoute(page, target.hash);
       }
+      if (target.prepare === 'daily-advice-feedback-analytics') {
+        await prepareDailyAdviceFeedbackAnalytics(page, target.hash);
+      }
       if (target.prepare === 'research-source-citation') {
         await prepareResearchSourceCitation(page, target.hash);
       }
@@ -3147,6 +3155,71 @@ async function assertRouteflows(browser, options) {
                 hasInternalScroll:
                   scan instanceof HTMLElement ? scan.scrollWidth > scan.clientWidth + 1 : false,
                 hasForbiddenText,
+              };
+            })()
+          : null;
+        const dailyAdviceFeedbackAnalytics = routeflow.dailyAdviceFeedbackAnalytics
+          ? (() => {
+              const analytics = document.querySelector(
+                '[data-daily-advice-feedback-analytics="ready"]',
+              );
+              const count = analytics?.querySelector(
+                '[data-daily-advice-feedback-summary-count="ready"]',
+              );
+              const summary = analytics?.querySelector('[data-daily-advice-feedback-summary="ready"]');
+              const shell = document.querySelector('[data-daily-advice-focus-shell="ready"]');
+              const analyticsRect = analytics?.getBoundingClientRect();
+              const countRect = count?.getBoundingClientRect();
+              const summaryRect = summary?.getBoundingClientRect();
+              const shellRect = shell?.getBoundingClientRect();
+              const analyticsText = analytics?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const summaryText = summary?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const total = analytics?.getAttribute('data-daily-advice-feedback-analytics-total') ?? '';
+              return {
+                visible: Boolean(
+                  analyticsRect && analyticsRect.width > 0 && analyticsRect.height > 0,
+                ),
+                countVisible: Boolean(countRect && countRect.width > 0 && countRect.height > 0),
+                summaryVisible: Boolean(
+                  summaryRect && summaryRect.width > 0 && summaryRect.height > 0,
+                ),
+                total,
+                reviewStatus:
+                  analytics?.getAttribute('data-daily-advice-feedback-analytics-review') ?? '',
+                hasStatusDistribution:
+                  summaryText.includes('Statussen') &&
+                  /Gedaan: [1-9]|Artscheck: [1-9]|Niet passend: [1-9]/.test(summaryText),
+                hasOwnerDistribution:
+                  summaryText.includes('Eigenaars') &&
+                  /Vrouw: [1-9]|Man: [1-9]|Samen: [1-9]/.test(summaryText),
+                hasLatestDate:
+                  summaryText.includes('Laatste feedback') && /20\d\d-\d\d-\d\dT/.test(summaryText),
+                hasSource:
+                  summaryText.includes('Bron') &&
+                  summaryText.includes('Encrypted lokaal eventlog'),
+                hasReview:
+                  summaryText.includes('Reviewstatus') &&
+                  summaryText.includes('concept_te_controleren'),
+                hasNoTrackingCopy:
+                  analyticsText.includes('Feedback zonder tracking') &&
+                  summaryText.includes('Geen externe analytics of cookies.'),
+                contained:
+                  Boolean(shellRect && analyticsRect) &&
+                  analyticsRect.left >= shellRect.left - 1 &&
+                  analyticsRect.right <= shellRect.right + 1,
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1 ||
+                  Boolean(
+                    shellRect &&
+                      analyticsRect &&
+                      (analyticsRect.left < shellRect.left - 1 ||
+                        analyticsRect.right > shellRect.right + 1),
+                  ),
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|\bdiagnose\b|\bdosering\b|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  analyticsText,
+                ),
               };
             })()
           : null;
@@ -5340,6 +5413,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceConsole,
           dailyAdviceCompactList,
           dailyAdviceOwnerScanOverflow,
+          dailyAdviceFeedbackAnalytics,
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
           questionConsultLinkRoute,
@@ -5727,6 +5801,27 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: dagadvies owner-scan mist routeflow-overflow evidence (${JSON.stringify(evidence.dailyAdviceOwnerScanOverflow)}).`,
+        );
+      }
+      if (
+        evidence.dailyAdviceFeedbackAnalytics &&
+        (!evidence.dailyAdviceFeedbackAnalytics.visible ||
+          !evidence.dailyAdviceFeedbackAnalytics.countVisible ||
+          !evidence.dailyAdviceFeedbackAnalytics.summaryVisible ||
+          Number(evidence.dailyAdviceFeedbackAnalytics.total) < 1 ||
+          evidence.dailyAdviceFeedbackAnalytics.reviewStatus !== 'concept_te_controleren' ||
+          !evidence.dailyAdviceFeedbackAnalytics.hasStatusDistribution ||
+          !evidence.dailyAdviceFeedbackAnalytics.hasOwnerDistribution ||
+          !evidence.dailyAdviceFeedbackAnalytics.hasLatestDate ||
+          !evidence.dailyAdviceFeedbackAnalytics.hasSource ||
+          !evidence.dailyAdviceFeedbackAnalytics.hasReview ||
+          !evidence.dailyAdviceFeedbackAnalytics.hasNoTrackingCopy ||
+          !evidence.dailyAdviceFeedbackAnalytics.contained ||
+          evidence.dailyAdviceFeedbackAnalytics.hasHorizontalOverflow ||
+          evidence.dailyAdviceFeedbackAnalytics.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: dagadvies feedbackanalytics mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.dailyAdviceFeedbackAnalytics)}).`,
         );
       }
       if (
@@ -8525,6 +8620,30 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   if (gevondenPayload) {
     throw new Error(`dagadvies feedbackfilter toont verboden payloadtekst: ${gevondenPayload}`);
   }
+}
+
+async function prepareDailyAdviceFeedbackAnalytics(page, targetHash) {
+  await page.goto(`${url}#start-recommendations`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#start-recommendations');
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await openDailyAdviceListDetails(page);
+  await openDetails(page, '[data-daily-advice-full-list="collapsed"]');
+  await page.evaluate(() => {
+    const action = document.querySelector('button[name="recommendationAction"][value="gedaan"]');
+    const form = action?.closest('form');
+    if (!(form instanceof HTMLFormElement) || !(action instanceof HTMLButtonElement)) {
+      throw new Error('Dagadvies feedbackactie ontbreekt.');
+    }
+    form.requestSubmit(action);
+  });
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, targetHash);
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await page
+    .locator('[data-daily-advice-feedback-analytics="ready"]')
+    .waitFor({ state: 'attached', timeout: 10_000 });
 }
 
 async function openDailyAdviceListDetails(page) {

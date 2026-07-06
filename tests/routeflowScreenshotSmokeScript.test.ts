@@ -305,6 +305,21 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'research trend update-timestamp mist routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'daily-advice-feedback-analytics'");
+    expect(routeflowScreenshotSmokeScript).toContain('prepareDailyAdviceFeedbackAnalytics');
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceFeedbackAnalytics');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-daily-advice-feedback-analytics="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-daily-advice-feedback-summary="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('hasStatusDistribution');
+    expect(routeflowScreenshotSmokeScript).toContain('hasOwnerDistribution');
+    expect(routeflowScreenshotSmokeScript).toContain('hasNoTrackingCopy');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'dagadvies feedbackanalytics mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       "screen: 'knowledge-research-source-citation'",
     );

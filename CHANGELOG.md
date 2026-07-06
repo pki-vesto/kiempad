@@ -17,6 +17,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1982 feedback analytics routeflow evidence: routeflow-smoke opent Dagadvies
+  met lokale feedback-eventlogs en bewaakt
+  `data-daily-advice-feedback-analytics`, total, statusverdeling,
+  eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en no-tracking
+  copy op desktop, tablet en mobiel zonder horizontale overflow, secrets,
+  trackingpayload of medisch advies.
 - G1983 trend update timestamp routeflow evidence: routeflow-smoke bewaakt nu
   `data-research-trend-update-timestamp` in Kennis Research met datum, bron,
   reviewstatus, correctievelden en uitleg vóór trenditems. De evidence blokkeert
