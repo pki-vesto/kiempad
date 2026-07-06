@@ -757,6 +757,14 @@
   `data-daily-advice-owner-scan-card="samen"`, zodat vrouw, man en samen zichtbaar blijven,
   scan-before-decision/list ordering intact blijft en de rail begrensd blijft,
   zonder medische payload, OCR-tekst, broninhoud, secret, token of trackingpayload.
+- **G1953 treatment mobile rail forced-colors cue text fill release evidence:**
+  releasecontext in changelog en current state noemt
+  `npm run test -- tests/appShell.test.ts`,
+  `.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue`,
+  `ButtonFace`, `ButtonText`, `CanvasText`, `-webkit-text-fill-color: ButtonText`,
+  `forced-color-adjust: auto` en actieve Highlight cue-fill distinctie, zodat
+  inactive focused cue pills leesbaar blijven zonder actieve cue-styling te kopiëren,
+  zonder medische payload, OCR-tekst, broninhoud, secret, token of trackingpayload.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

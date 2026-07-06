@@ -191,6 +191,15 @@ pad zonder lokale vault-hercreatie.
   binnen de pagina begrensd blijft zonder horizontale overflow. Blijvende evidence
   mag geen medische payload, OCR-tekst, broninhoud, secret, token of
   trackingpayload bevatten.
+- **Treatment mobile rail forced-colors cue text fill evidence (G1953):**
+  `npm run test -- tests/appShell.test.ts` bewaakt de app-shell CSS-test voor
+  `.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue`.
+  De test controleert inactive focused cue pills met `ButtonFace` achtergrond,
+  `ButtonText` tekst, `CanvasText` border/outline, `-webkit-text-fill-color: ButtonText`,
+  `forced-color-adjust: auto` en `text-decoration-color: ButtonText`, plus actieve
+  Highlight cue-fill distinctie zodat actieve cue pills onderscheidend blijven.
+  Blijvende evidence mag geen medische payload, OCR-tekst, broninhoud, secret,
+  token of trackingpayload bevatten.
 - **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
   gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
   `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te
