@@ -1234,6 +1234,31 @@ const targets = [
     dailyAdviceFeedbackAnalytics: true,
   },
   {
+    screen: 'daily-advice-personalization-feedback-route',
+    hash: '#start-recommendations',
+    prepare: 'daily-advice-personalization-feedback',
+    rootSelector: '[data-daily-advice-focus-shell="ready"]',
+    expectedText: 'Lager prioriteren, niet verbergen',
+    openSelectors: [
+      '[data-daily-advice-followup="collapsed"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-advice-full-list="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-daily-advice-focus-shell="ready"]',
+      '[data-daily-advice-console="ready"]',
+      '[data-daily-advice-list-mode="dual-owner-cards"]',
+      '[data-recommendation-id="man-basisdag"]',
+      '[data-recommendation-id="man-basisdag"] [data-daily-recommendation-feedback-status="niet_passend"]',
+      '[data-recommendation-id="man-basisdag"] [data-daily-recommendation-personalization="ready"]',
+      '[data-recommendation-id="man-basisdag"] [data-daily-recommendation-personalization-status="niet_passend"]',
+      '[data-recommendation-id="man-basisdag"] [data-daily-recommendation-personalization-negative-temporary="true"]',
+      '[data-recommendation-id="vrouw-basisdag"]',
+      '[data-recommendation-id="samen-voeding-supplement-checklist"]',
+    ],
+    dailyAdvicePersonalizationFeedback: true,
+  },
+  {
     screen: 'daily-advice-owner-visibility-route',
     hash: '#start-recommendations',
     prepare: 'daily-advice-owner-visibility',
@@ -2661,6 +2686,9 @@ async function assertRouteflows(browser, options) {
       if (target.prepare === 'daily-advice-owner-visibility') {
         await prepareDailyAdviceOwnerVisibility(page, target.hash);
       }
+      if (target.prepare === 'daily-advice-personalization-feedback') {
+        await prepareDailyAdvicePersonalizationFeedback(page, target.hash);
+      }
       if (target.prepare === 'research-source-citation') {
         await prepareResearchSourceCitation(page, target.hash);
       }
@@ -3314,6 +3342,68 @@ async function assertRouteflows(browser, options) {
                   document.body.scrollWidth > document.body.clientWidth + 1,
                 hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|\bdiagnose\b|\bdosering\b|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
                   text,
+                ),
+              };
+            })()
+          : null;
+        const dailyAdvicePersonalizationFeedback = routeflow.dailyAdvicePersonalizationFeedback
+          ? (() => {
+              const list = document.querySelector('[data-daily-advice-list-mode="dual-owner-cards"]');
+              const card = list?.querySelector('[data-recommendation-id="man-basisdag"]');
+              const feedback = card?.querySelector(
+                '[data-daily-recommendation-feedback-status="niet_passend"]',
+              );
+              const personalization = card?.querySelector(
+                '[data-daily-recommendation-personalization="ready"]',
+              );
+              const visibleWomanRecommendation = list?.querySelector(
+                '[data-recommendation-id="vrouw-basisdag"]',
+              );
+              const visibleSharedRecommendation = list?.querySelector(
+                '[data-recommendation-id="samen-voeding-supplement-checklist"]',
+              );
+              const cardRect = card?.getBoundingClientRect();
+              const personalizationRect = personalization?.getBoundingClientRect();
+              const listRect = list?.getBoundingClientRect();
+              const cardText = card?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const feedbackText = feedback?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const personalizationText =
+                personalization?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const evidenceText = `${feedbackText} ${personalizationText}`;
+              return {
+                cardVisible: Boolean(cardRect && cardRect.width > 0 && cardRect.height > 0),
+                feedbackVisible: Boolean(feedback),
+                personalizationVisible: Boolean(
+                  personalizationRect &&
+                    personalizationRect.width > 0 &&
+                    personalizationRect.height > 0,
+                ),
+                status:
+                  personalization?.getAttribute(
+                    'data-daily-recommendation-personalization-status',
+                  ) ?? '',
+                negativeTemporary:
+                  personalization?.getAttribute(
+                    'data-daily-recommendation-personalization-negative-temporary',
+                  ) ?? '',
+                hasFeedbackLabel: cardText.includes('Feedbackstatus: Niet passend'),
+                hasLowerPriorityCopy: personalizationText.includes(
+                  'Lager prioriteren, niet verbergen',
+                ),
+                hasNotDefinitiveCopy: personalizationText.includes('niet definitief verborgen'),
+                otherRecommendationsVisible: Boolean(
+                  visibleWomanRecommendation && visibleSharedRecommendation,
+                ),
+                contained:
+                  Boolean(listRect && personalizationRect) &&
+                  personalizationRect.left >= listRect.left - 1 &&
+                  personalizationRect.right <= listRect.right + 1,
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1,
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|\bdiagnose\b|\bdosering\b|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  evidenceText,
                 ),
               };
             })()
@@ -5565,6 +5655,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceOwnerScanOverflow,
           dailyAdviceFeedbackAnalytics,
           dailyAdviceOwnerVisibility,
+          dailyAdvicePersonalizationFeedback,
           dailyAdviceBronconfidence,
           dailyAdviceSupplementArtscheckAction,
           questionArtscheckReviewStatus,
@@ -5997,6 +6088,25 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: dagadvies owner-visibility mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.dailyAdviceOwnerVisibility)}).`,
+        );
+      }
+      if (
+        evidence.dailyAdvicePersonalizationFeedback &&
+        (!evidence.dailyAdvicePersonalizationFeedback.cardVisible ||
+          !evidence.dailyAdvicePersonalizationFeedback.feedbackVisible ||
+          !evidence.dailyAdvicePersonalizationFeedback.personalizationVisible ||
+          evidence.dailyAdvicePersonalizationFeedback.status !== 'niet_passend' ||
+          evidence.dailyAdvicePersonalizationFeedback.negativeTemporary !== 'true' ||
+          !evidence.dailyAdvicePersonalizationFeedback.hasFeedbackLabel ||
+          !evidence.dailyAdvicePersonalizationFeedback.hasLowerPriorityCopy ||
+          !evidence.dailyAdvicePersonalizationFeedback.hasNotDefinitiveCopy ||
+          !evidence.dailyAdvicePersonalizationFeedback.otherRecommendationsVisible ||
+          !evidence.dailyAdvicePersonalizationFeedback.contained ||
+          evidence.dailyAdvicePersonalizationFeedback.hasHorizontalOverflow ||
+          evidence.dailyAdvicePersonalizationFeedback.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: dagadvies personalisatiefeedback mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.dailyAdvicePersonalizationFeedback)}).`,
         );
       }
       if (
@@ -8864,6 +8974,34 @@ async function prepareDailyAdviceOwnerVisibility(page, targetHash) {
   await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
   await page
     .locator('[data-daily-recommendation-owner-visibility-hidden-count="1"]')
+    .waitFor({ state: 'attached', timeout: 10_000 });
+}
+
+async function prepareDailyAdvicePersonalizationFeedback(page, targetHash) {
+  await page.goto(`${url}#start-recommendations`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#start-recommendations');
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await openDailyAdviceListDetails(page);
+  await openDetails(page, '[data-daily-advice-full-list="collapsed"]');
+  await page.evaluate(() => {
+    const card = document.querySelector('[data-recommendation-id="man-basisdag"]');
+    const action = card?.querySelector('button[name="recommendationAction"][value="afwijzen"]');
+    const form = action?.closest('form');
+    if (!(form instanceof HTMLFormElement) || !(action instanceof HTMLButtonElement)) {
+      throw new Error('Dagadvies niet-passend feedbackactie ontbreekt.');
+    }
+    form.requestSubmit(action);
+  });
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, targetHash);
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await openDailyAdviceListDetails(page);
+  await openDetails(page, '[data-daily-advice-full-list="collapsed"]');
+  await page
+    .locator('[data-recommendation-id="man-basisdag"]')
+    .locator('[data-daily-recommendation-personalization-status="niet_passend"]')
     .waitFor({ state: 'attached', timeout: 10_000 });
 }
 

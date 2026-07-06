@@ -337,6 +337,25 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'dagadvies owner-visibility mist routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'daily-advice-personalization-feedback-route'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "prepare: 'daily-advice-personalization-feedback'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('prepareDailyAdvicePersonalizationFeedback');
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdvicePersonalizationFeedback');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-daily-recommendation-personalization="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-daily-recommendation-personalization-negative-temporary="true"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('hasLowerPriorityCopy');
+    expect(routeflowScreenshotSmokeScript).toContain('hasNotDefinitiveCopy');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'dagadvies personalisatiefeedback mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceBronconfidence');
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-daily-recommendation-bronconfidence="ready"]',
