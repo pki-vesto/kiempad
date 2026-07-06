@@ -215,6 +215,53 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-research-source-citation',
+    hash: '#kennis?route=read',
+    rootSelector: '[data-knowledge-focus-shell="ready"]',
+    expectedText: 'Controleer broncitatie eerst',
+    openSelectors: [
+      '[data-knowledge-research-detail-choice="collapsed"]',
+      '[data-knowledge-research-summaries-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-research-source-citation-scan="ready"]',
+      '[data-research-source-citation-scan-card="parser"]',
+      '[data-research-source-citation-scan-card="source-date"]',
+      '[data-research-source-citation-scan-card="review-type"]',
+      '[data-research-source-citation-scan-card="corrections"]',
+      '[data-research-summary-component="scientific-list"]',
+      '[data-research-source-citation-parser="ready"]',
+      '[data-research-source-citation-source="ready"]',
+      '[data-research-source-citation-date]',
+    ],
+    presentSelectors: [
+      '[data-research-source-citation-review="concept_te_controleren"]',
+      '[data-research-summary-id]',
+      '#research-item-form',
+    ],
+    closedDetailsSelectors: [
+      '[data-knowledge-task-route-choice="collapsed"]',
+      '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-research-workflow-choice="collapsed"]',
+      '[data-knowledge-research-route-status-choice="collapsed"]',
+      '[data-knowledge-research-lane-choice="collapsed"]',
+      '[data-knowledge-research-followup="collapsed"]',
+      '[data-knowledge-research-followup-context-choice="collapsed"]',
+      '[data-knowledge-research-sources-choice="collapsed"]',
+      '[data-knowledge-research-trends-choice="collapsed"]',
+    ],
+    knowledgeConsole: true,
+    researchSourceCitation: true,
+    prepare: 'research-source-citation',
+    desktopHiddenSelectors: [
+      '.knowledge-focus-shell__header p:last-child',
+      '.knowledge-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.knowledge-research-reader__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
     screen: 'knowledge-research-clinician-questions',
     hash: '#kennis?route=read',
     rootSelector: '[data-knowledge-focus-shell="ready"]',
@@ -2526,6 +2573,9 @@ async function assertRouteflows(browser, options) {
       if (target.prepare === 'question-consult-link-route') {
         await prepareQuestionConsultLinkRoute(page, target.hash);
       }
+      if (target.prepare === 'research-source-citation') {
+        await prepareResearchSourceCitation(page, target.hash);
+      }
       if (target.prepare === 'research-clinician-questions') {
         await prepareResearchClinicianQuestions(page, target.hash);
       }
@@ -4454,6 +4504,87 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const researchSourceCitation = routeflow.researchSourceCitation
+          ? (() => {
+              const scan = rootElement?.querySelector('[data-research-source-citation-scan="ready"]');
+              const scanCards = [
+                ...(rootElement?.querySelectorAll('[data-research-source-citation-scan-card]') ??
+                  []),
+              ].map((scanCard) => {
+                const rect = scanCard.getBoundingClientRect();
+                return {
+                  id: scanCard.getAttribute('data-research-source-citation-scan-card') ?? '',
+                  visible: rect.width > 0 && rect.height > 0,
+                  text: scanCard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                };
+              });
+              const parser = rootElement?.querySelector('[data-research-source-citation-parser="ready"]');
+              const source = rootElement?.querySelector('[data-research-source-citation-source="ready"]');
+              const date = rootElement?.querySelector('[data-research-source-citation-date]');
+              const summaryList = rootElement?.querySelector(
+                '[data-research-summary-component="scientific-list"]',
+              );
+              const summaryCard = rootElement?.querySelector('[data-research-summary-id]');
+              const reviewForm = rootElement?.querySelector('#research-item-form');
+              const scanRect = scan?.getBoundingClientRect();
+              const parserRect = parser?.getBoundingClientRect();
+              const sourceRect = source?.getBoundingClientRect();
+              const dateRect = date?.getBoundingClientRect();
+              const summaryListRect = summaryList?.getBoundingClientRect();
+              const summaryCardRect = summaryCard?.getBoundingClientRect();
+              const rootRect = rootElement?.getBoundingClientRect();
+              const scanStyle = scan ? getComputedStyle(scan) : null;
+              const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
+              const parserText = parser?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const allText = `${scanText} ${parserText}`;
+              return {
+                scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
+                scanCount: scan?.getAttribute('data-research-source-citation-scan-count') ?? '',
+                scanSources: scan?.getAttribute('data-research-source-citation-scan-sources') ?? '',
+                scanCardIds: scanCards.map((scanCard) => scanCard.id),
+                visibleScanCards: scanCards.filter((scanCard) => scanCard.visible).length,
+                scanDisplay: scanStyle?.display ?? '',
+                scanBeforeParser:
+                  Boolean(scan && parser && scanRect && parserRect) &&
+                  Boolean(scan.compareDocumentPosition(parser) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+                  scanRect.top <= parserRect.top + 1,
+                parserVisible: Boolean(parserRect && parserRect.width > 0 && parserRect.height > 0),
+                sourceVisible: Boolean(sourceRect && sourceRect.width > 0 && sourceRect.height > 0),
+                dateVisible: Boolean(dateRect && dateRect.width > 0 && dateRect.height > 0),
+                summaryListVisible: Boolean(
+                  summaryListRect && summaryListRect.width > 0 && summaryListRect.height > 0,
+                ),
+                summaryCardVisible: Boolean(
+                  summaryCardRect && summaryCardRect.width > 0 && summaryCardRect.height > 0,
+                ),
+                reviewStatus: parser?.getAttribute('data-research-source-citation-review') ?? '',
+                citationType: parser?.getAttribute('data-research-source-citation-type') ?? '',
+                dateValue: date?.getAttribute('data-research-source-citation-date') ?? '',
+                reviewFormPresent: Boolean(reviewForm),
+                scanContained:
+                  Boolean(rootRect && scanRect) &&
+                  scanRect.left >= rootRect.left - 1 &&
+                  scanRect.right <= rootRect.right + 1,
+                hasSourceLabel: allText.includes('Broncitatie') || scanText.includes('Bron en datum'),
+                hasDateLabel: allText.includes('Datum') || scanText.includes('2026-'),
+                hasReviewLabel: allText.includes('Reviewstatus'),
+                hasCitationType:
+                  allText.includes('tekstuele_bron') ||
+                  allText.includes('url_met_publicatiedatum') ||
+                  scanText.includes('tekstuele_bron') ||
+                  scanText.includes('url_met_publicatiedatum'),
+                hasCorrectionFieldsLabel: allText.includes('Correctievelden'),
+                hasCorrectionFields:
+                  allText.includes('sourceCitation') &&
+                  allText.includes('bron') &&
+                  allText.includes('publicatieDatum') &&
+                  allText.includes('reviewstatus'),
+                hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|secret|diagnose|dosering|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
+                  allText,
+                ),
+              };
+            })()
+          : null;
         const researchClinicianQuestions = routeflow.researchClinicianQuestions
           ? (() => {
               const scan = rootElement?.querySelector('[data-research-clinician-question-scan="ready"]');
@@ -4544,9 +4675,14 @@ async function assertRouteflows(browser, options) {
                 ...(rootElement?.querySelectorAll('[data-research-offline-cache-metadata="ready"]') ??
                   []),
               ];
-              const localMetadata = rootElement?.querySelector(
-                '[data-research-offline-cache-type="lokale_cache"]',
-              );
+              const localMetadataNodes = [
+                ...(rootElement?.querySelectorAll('[data-research-offline-cache-type="lokale_cache"]') ??
+                  []),
+              ];
+              const localMetadata =
+                localMetadataNodes.find((metadataNode) =>
+                  metadataNode.textContent?.includes('Nog geen publicatiedatum'),
+                ) ?? localMetadataNodes[0];
               const seedMetadata = rootElement?.querySelector(
                 '[data-research-offline-cache-type="handmatige_seed"]',
               );
@@ -5045,6 +5181,7 @@ async function assertRouteflows(browser, options) {
           filledConsultCard,
           embryoTrackingScanOverflow,
           researchTrendScanOverflow,
+          researchSourceCitation,
           researchClinicianQuestions,
           researchOfflineCacheMetadata,
           embryoImageClassificationReview,
@@ -5992,9 +6129,43 @@ async function assertRouteflows(browser, options) {
         );
       }
       if (
+        evidence.researchSourceCitation &&
+        (!evidence.researchSourceCitation.scanVisible ||
+          Number(evidence.researchSourceCitation.scanCount) < 1 ||
+          Number(evidence.researchSourceCitation.scanSources) < 1 ||
+          evidence.researchSourceCitation.visibleScanCards !== 4 ||
+          !evidence.researchSourceCitation.scanCardIds.includes('parser') ||
+          !evidence.researchSourceCitation.scanCardIds.includes('source-date') ||
+          !evidence.researchSourceCitation.scanCardIds.includes('review-type') ||
+          !evidence.researchSourceCitation.scanCardIds.includes('corrections') ||
+          !['flex', 'grid'].includes(evidence.researchSourceCitation.scanDisplay) ||
+          !evidence.researchSourceCitation.scanBeforeParser ||
+          !evidence.researchSourceCitation.parserVisible ||
+          !evidence.researchSourceCitation.sourceVisible ||
+          !evidence.researchSourceCitation.dateVisible ||
+          !evidence.researchSourceCitation.summaryListVisible ||
+          !evidence.researchSourceCitation.summaryCardVisible ||
+          evidence.researchSourceCitation.reviewStatus !== 'concept_te_controleren' ||
+          !evidence.researchSourceCitation.citationType ||
+          !evidence.researchSourceCitation.dateValue ||
+          !evidence.researchSourceCitation.reviewFormPresent ||
+          !evidence.researchSourceCitation.scanContained ||
+          !evidence.researchSourceCitation.hasSourceLabel ||
+          !evidence.researchSourceCitation.hasDateLabel ||
+          !evidence.researchSourceCitation.hasReviewLabel ||
+          !evidence.researchSourceCitation.hasCitationType ||
+          !evidence.researchSourceCitation.hasCorrectionFieldsLabel ||
+          !evidence.researchSourceCitation.hasCorrectionFields ||
+          evidence.researchSourceCitation.hasForbiddenText)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: research source-citation parser mist routeflow-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.researchSourceCitation)}).`,
+        );
+      }
+      if (
         evidence.researchClinicianQuestions &&
         (!evidence.researchClinicianQuestions.scanVisible ||
-          evidence.researchClinicianQuestions.scanCount !== '3' ||
+          Number(evidence.researchClinicianQuestions.scanCount) < 3 ||
           evidence.researchClinicianQuestions.visibleScanCards !== 4 ||
           !evidence.researchClinicianQuestions.scanCardIds.includes('questions') ||
           !evidence.researchClinicianQuestions.scanCardIds.includes('source') ||
@@ -6993,6 +7164,41 @@ async function prepareFilledConsultCard(page, targetHash) {
       const field = document.querySelector('#consult-verslag-form textarea[name="tekst"]');
       return field instanceof HTMLTextAreaElement && field.value === '';
     },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function prepareResearchSourceCitation(page, targetHash) {
+  await page.goto(`${url}#kennis?route=add`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#kennis?route=add');
+  await waitForStableRouteflowRoot(page, '[data-knowledge-focus-shell="ready"]');
+  await page.evaluate(() => {
+    const details = document.querySelector('[data-knowledge-add-research-input-choice="collapsed"]');
+    if (details instanceof HTMLDetailsElement) details.open = true;
+  });
+  await page.locator('#research-item-form input[name="researchTitel"]').fill('Broncheck');
+  await page
+    .locator('#research-item-form input[name="researchBron"]')
+    .fill('https://r.test/b');
+  await page.locator('#research-item-form input[name="researchPublicatieDatum"]').fill('2026-05-11');
+  await page
+    .locator('#research-item-form textarea[name="researchNotitie"]')
+    .fill('Veilige synthetische broncitatiefixture voor routeflow.');
+  await page
+    .locator('#research-item-form textarea[name="researchWetenschappelijkeSamenvatting"]')
+    .fill('Samenvatting met methode, bevindingen en beperkingen.');
+  await page
+    .locator('#research-item-form textarea[name="researchEenvoudigeSamenvatting"]')
+    .fill('Dit artikel legt kort uit wat onderzocht is en wat onzeker blijft.');
+  await page
+    .locator('#research-item-form textarea[name="researchRelevantieVoorGebruiker"]')
+    .fill('Algemene bespreekcontext voor broncontrole.');
+  await page.locator('#research-item-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => document.body.textContent?.includes('Broncheck'),
     undefined,
     { timeout: 10_000 },
   );

@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1985 source citation parser routeflow evidence: Kennis Research toont nu een
+  compacte broncitatie-scan voor parserstatus, bron, datum, reviewstatus,
+  citationtype en correctievelden vóór de researchsamenvattingen. Routeflow-smoke
+  bewaakt `data-research-source-citation-parser` en de scan op desktop, tablet en
+  mobiel zonder secrets, plaintext payload of medisch advies.
 - G1986 clinician question generator routeflow evidence: Kennis Research toont nu
   een compacte artsvragen-scan voor vraagtekst, bron, datum, reviewstatus en
   correctievelden vóór de researchrelevantie-details. Routeflow-smoke bewaakt

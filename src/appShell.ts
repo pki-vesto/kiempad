@@ -14838,6 +14838,10 @@ function renderKennisScreen(state: AppShellState): string {
                       relevance: researchRelevantie.length,
                       sources: researchBronnen.length,
                     })}
+                    ${renderResearchSourceCitationScan([
+                      ...researchSamenvattingen.map((item) => item.broncitatie),
+                      ...eenvoudigeResearchSamenvattingen.map((item) => item.broncitatie),
+                    ])}
                     <div class="knowledge-route-grid knowledge-route-grid--research">
                       <div id="knowledge-research-scientific-summaries" class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
                       <div id="knowledge-research-patient-summaries" class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
@@ -15873,6 +15877,71 @@ function renderResearchClinicianQuestionScan(
           .map(
             (lane) => `
               <a class="research-clinician-question-scan__card" href="#knowledge-research-trends" data-research-clinician-question-scan-card="${escapeAttribute(lane.id)}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.value)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </div>
+    </section>
+  `;
+}
+
+function renderResearchSourceCitationScan(citaties: readonly ResearchBroncitatie[]): string {
+  const eerste = citaties[0];
+  const bronnen = new Set(citaties.map((citatie) => citatie.bron).filter(Boolean));
+  const reviewStatussen = Array.from(
+    new Set(citaties.map((citatie) => citatie.reviewStatus).filter(Boolean)),
+  );
+  const citationTypes = Array.from(
+    new Set(citaties.map((citatie) => citatie.citationType).filter(Boolean)),
+  );
+  const correctieVelden = Array.from(
+    new Set(citaties.flatMap((citatie) => citatie.correctieVelden).filter(Boolean)),
+  );
+  const lanes = [
+    {
+      id: 'parser',
+      label: 'Broncitatie',
+      value: `${citaties.length} parser${citaties.length === 1 ? '' : 's'}`,
+      detail: eerste ? eerste.citationTekst : 'Nog geen broncitatie om te controleren.',
+    },
+    {
+      id: 'source-date',
+      label: 'Bron en datum',
+      value: eerste ? eerste.bron : 'Geen bron',
+      detail: eerste ? eerste.datum : 'Nog geen publicatiedatum',
+    },
+    {
+      id: 'review-type',
+      label: 'Review en type',
+      value: reviewStatussen.length > 0 ? reviewStatussen.join(' · ') : 'nog geen review',
+      detail: citationTypes.length > 0 ? citationTypes.join(' · ') : 'nog geen citationtype',
+    },
+    {
+      id: 'corrections',
+      label: 'Correctievelden',
+      value: `${correctieVelden.length} veld${correctieVelden.length === 1 ? '' : 'en'}`,
+      detail: correctieVelden.length > 0 ? correctieVelden.join(' · ') : 'Nog niets te controleren',
+    },
+  ];
+
+  return `
+    <section class="research-source-citation-scan" aria-label="Research broncitatie scan" data-research-source-citation-scan="ready" data-research-source-citation-scan-count="${escapeAttribute(String(citaties.length))}" data-research-source-citation-scan-sources="${escapeAttribute(String(bronnen.size))}">
+      <header class="research-source-citation-scan__header">
+        <div>
+          <p class="kp-card__eyebrow">Broncitatie</p>
+          <h3>Controleer broncitatie eerst</h3>
+        </div>
+        <p>Bron, datum, reviewstatus, citationtype en correctievelden blijven zichtbaar voordat je de researchsamenvatting leest.</p>
+      </header>
+      <div class="research-source-citation-scan__grid">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="research-source-citation-scan__card" href="#knowledge-research-scientific-summaries" data-research-source-citation-scan-card="${escapeAttribute(lane.id)}">
                 <span>${escapeHtml(lane.label)}</span>
                 <strong>${escapeHtml(lane.value)}</strong>
                 <small>${escapeHtml(lane.detail)}</small>

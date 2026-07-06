@@ -77,6 +77,11 @@
 - **G542 researchsamenvatting leesniveauguard:** eenvoudige researchsamenvattingen
   tonen bron, datum, reviewstatus, vaktaalsignalering en corrigeerbare velden,
   zodat de gebruiker kan zien of lekenuitleg begrijpelijk genoeg is.
+- **G1985 source citation parser routeflow evidence:** de Kennis Researchroute
+  toont een compacte broncitatie-scan vóór de researchsamenvattingen en
+  routeflow-smoke bewaakt `data-research-source-citation-parser`, bron, datum,
+  reviewstatus, citationtype en correctievelden zonder secrets, plaintext payload
+  of medisch advies.
 - **G543 researchtrend update-timestamp:** researchtrendkaarten tonen per onderwerp
   een lokale update-datum, bron, reviewstatus, correctievelden en uitleg voor leken,
   zodat gebruikers trendmetadata kunnen controleren zonder medisch advies of
