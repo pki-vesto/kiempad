@@ -366,6 +366,16 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   reviewstatus, zichtbaarheid en bewaaractie scanbaar blijven en de locked variant
   zonder bronplaintext blijft, zonder medische payload, bronbestandsnamen, OCR-payload,
   secret of trackingdata.
+- G1952 daily recommendation owner scan release evidence: releasecontext en
+  onderhoudsdocs noemen nu `npm run smoke:routeflows`, target
+  `daily-advice-console`, `dailyAdviceOwnerScanOverflow`,
+  `data-daily-advice-owner-scan="ready"`,
+  `data-daily-advice-owner-scan-density="mobile-compact"`,
+  `data-daily-advice-owner-scan-card="vrouw"`,
+  `data-daily-advice-owner-scan-card="man"` en
+  `data-daily-advice-owner-scan-card="samen"`, zodat vrouw, man en samen zichtbaar blijven,
+  scan-before-decision/list ordering intact blijft en de rail begrensd blijft,
+  zonder medische payload, OCR-tekst, broninhoud, secret, token of trackingpayload.
 - G1945 embryo image classification forced-colors focus release evidence:
   releasecontext en onderhoudsdocs noemen nu
   `npm run smoke:routeflows`, target `dossier-imaging-embryo-classification-review`

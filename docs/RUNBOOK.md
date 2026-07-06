@@ -178,6 +178,19 @@ pad zonder lokale vault-hercreatie.
   overflow en houdt de locked variant zonder bronplaintext vast. Blijvende evidence
   mag geen medische payload, bronbestandsnamen, OCR-payload,
   locked beeldbron-plaintext, secret of trackingdata bevatten.
+- **Daily recommendation owner-scan evidence (G1952):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
+  `daily-advice-console` `dailyAdviceOwnerScanOverflow` te verzamelen. De smoke
+  controleert `data-daily-advice-owner-scan="ready"`,
+  `data-daily-advice-owner-scan-density="mobile-compact"`,
+  `data-daily-advice-owner-scan-card="vrouw"`,
+  `data-daily-advice-owner-scan-card="man"` en
+  `data-daily-advice-owner-scan-card="samen"`, bewaakt dat vrouw, man en samen
+  zichtbaar blijven voordat decision lanes en list details verschijnen, houdt de
+  scan-before-decision/list ordering vast en controleert dat de owner-scan rail
+  binnen de pagina begrensd blijft zonder horizontale overflow. Blijvende evidence
+  mag geen medische payload, OCR-tekst, broninhoud, secret, token of
+  trackingpayload bevatten.
 - **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
   gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
   `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te

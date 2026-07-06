@@ -747,6 +747,16 @@
   reviewstatus, zichtbaarheid en bewaaractie scanbaar blijven en de locked variant
   zonder bronplaintext blijft, zonder medische payload, bronbestandsnamen, OCR-payload,
   secret of trackingdata.
+- **G1952 daily recommendation owner scan release evidence:** releasecontext in
+  changelog en current state noemt `npm run smoke:routeflows`,
+  `daily-advice-console`, `dailyAdviceOwnerScanOverflow`,
+  `data-daily-advice-owner-scan="ready"`,
+  `data-daily-advice-owner-scan-density="mobile-compact"`,
+  `data-daily-advice-owner-scan-card="vrouw"`,
+  `data-daily-advice-owner-scan-card="man"` en
+  `data-daily-advice-owner-scan-card="samen"`, zodat vrouw, man en samen zichtbaar blijven,
+  scan-before-decision/list ordering intact blijft en de rail begrensd blijft,
+  zonder medische payload, OCR-tekst, broninhoud, secret, token of trackingpayload.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
