@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1979 personalization feedback routeflow evidence: routeflow-smoke opent
+  Dagadvies met lokale `niet_passend` feedbackstatus en bewaakt
+  `data-daily-recommendation-personalization`, status, tijdelijke
+  negatieve-feedbackuitleg, zichtbare andere aanbevelingen en bounded layout
+  zonder secrets, trackingpayload of medisch advies.
 - G1980 owner visibility routeflow evidence: routeflow-smoke opent Dagadvies
   met een lokaal verborgen eigenaar en bewaakt
   `data-daily-recommendation-owner-visibility`, hidden-count, eigenaarstatus,

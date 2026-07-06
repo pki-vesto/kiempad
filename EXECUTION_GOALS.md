@@ -18118,7 +18118,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations UI, routeflow smoke, feedback evidence
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3896
 
 ### G1980 — Daily Recommendations: owner visibility routeflow evidence
@@ -18868,6 +18868,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 104
 - **Status:** ☐ open
 - **Issue:** #3992
+
+### G2024 — Daily Recommendations: personalization feedback release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** Personalisatiefeedback-routeflow evidence bewaakt de niet-passend uitleg, maar release- en contextbewijs moeten expliciet blijven aantonen dat deze feedbackuitleg zichtbaar en privacyveilig blijft.
+- **User Impact:** Zonder vers releasebewijs kan een latere UI- of themewijziging de negatieve-feedbackuitleg laten verdwijnen zonder dat dit in de PR-context zichtbaar wordt.
+- **Desired Outcome:** Release- en documentatie-evidence verwijst naar de personalisatiefeedback datahooks en benoemt de tijdelijke negatieve-feedbackstatus zonder gevoelige inhoud.
+- **User Value:** Gebruikers blijven begrijpen dat niet-passend vergelijkbare suggesties lager prioriteert en niet definitief verbergt.
+- **Acceptance Criteria:** Release/docs evidence references `data-daily-recommendation-personalization` and `dailyAdvicePersonalizationFeedback` routeflow evidence; evidence mentions feedback status, temporary negative-feedback handling, list visibility, bounded layout and no-tracking boundary; evidence excludes diagnosis, dosage, chance calculation, treatment-choice advice, OCR text, file content, secrets and tracking payloads; backlog health remains at minimum 100 open goals.
+- **Affected Screens:** Dagadvies, routeflow evidence, release/context docs
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily Recommendations, routeflow smoke, release docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #3994
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 

@@ -324,6 +324,11 @@
   eigenaarverdeling, laatste feedbackdatum, bron, reviewstatus en no-tracking
   copy op desktop, tablet en mobiel zonder horizontale overflow of
   trackingpayload.
+- **G1979 Dagadvies personalisatiefeedback routeflow evidence:** routeflow-smoke
+  opent Dagadvies met lokale `niet_passend` feedbackstatus en bewaakt
+  `data-daily-recommendation-personalization`, status, tijdelijke
+  negatieve-feedbackuitleg, zichtbare andere aanbevelingen en bounded layout
+  zonder trackingpayload.
 - **G1980 Dagadvies owner visibility routeflow evidence:** routeflow-smoke opent
   Dagadvies met een lokaal verborgen eigenaar en bewaakt
   `data-daily-recommendation-owner-visibility`, hidden-count, eigenaarstatus,
