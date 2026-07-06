@@ -10876,6 +10876,10 @@ describe('app shell', () => {
     expect(css).toContain('.research-clinician-question-metadata,');
     expect(css).toContain('.research-clinician-questions .metadata-list {');
     expect(css).toContain('.research-clinician-question-metadata__summary {');
+    expect(css).toContain('.research-source-citation-scan {');
+    expect(css).toContain('.research-source-citation-scan__grid {');
+    expect(css).toContain('.research-source-citation-scan__card {');
+    expect(css).toContain('.research-source-citation-scan__card:hover,');
     expect(mobileCss).toContain('.knowledge-research-source-board {');
     expect(mobileCss).toContain('.knowledge-research-source-board__lanes {');
     expect(mobileCss).toContain('.knowledge-research-source-board__lane {');
@@ -10911,6 +10915,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('flex: 0 0 min(164px, 72vw);');
     expect(mobileCss).toContain('.research-clinician-question-scan__grid {');
     expect(mobileCss).toContain('flex: 0 0 min(184px, 74vw);');
+    expect(mobileCss).toContain('.research-source-citation-scan__grid {');
+    expect(mobileCss).toContain('.research-source-citation-scan__card {');
     expect(mobileCss).toContain('.dossier-upload-action-path {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.dossier-upload-action-path__item {');
@@ -41282,6 +41288,12 @@ describe('app shell', () => {
     expect(html).toContain('href="#knowledge-research-trends"');
     expect(html).toContain('data-research-summary-reading-lane="source"');
     expect(html).toContain('href="#knowledge-research-sources"');
+    expect(html).toContain('data-research-source-citation-scan="ready"');
+    expect(html).toContain('data-research-source-citation-scan-card="parser"');
+    expect(html).toContain('data-research-source-citation-scan-card="source-date"');
+    expect(html).toContain('data-research-source-citation-scan-card="review-type"');
+    expect(html).toContain('data-research-source-citation-scan-card="corrections"');
+    expect(html).toContain('Controleer broncitatie eerst');
     expect(html).toContain('id="knowledge-research-scientific-summaries"');
     expect(html).toContain('id="knowledge-research-patient-summaries"');
     expect(html).toContain('data-research-summary-component="scientific-list"');
@@ -41290,6 +41302,9 @@ describe('app shell', () => {
       html.indexOf('data-research-summary-reading-board="first-viewport"'),
     );
     expect(html.indexOf('data-research-summary-reading-board="first-viewport"')).toBeLessThan(
+      html.indexOf('data-research-source-citation-scan="ready"'),
+    );
+    expect(html.indexOf('data-research-source-citation-scan="ready"')).toBeLessThan(
       html.indexOf('data-research-summary-component="scientific-list"'),
     );
     expect(html).not.toContain(
@@ -42858,6 +42873,16 @@ describe('app shell', () => {
       'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
     );
     expect(html).toContain('sourceCitation: Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.');
+    expect(html).toContain('data-research-source-citation-scan="ready"');
+    expect(html).toContain('data-research-source-citation-scan-count="2"');
+    expect(html).toContain('data-research-source-citation-scan-sources="1"');
+    expect(html).toContain('data-research-source-citation-scan-card="parser"');
+    expect(html).toContain('data-research-source-citation-scan-card="source-date"');
+    expect(html).toContain('data-research-source-citation-scan-card="review-type"');
+    expect(html).toContain('data-research-source-citation-scan-card="corrections"');
+    expect(html.indexOf('data-research-source-citation-scan="ready"')).toBeLessThan(
+      html.indexOf('data-research-source-citation-parser="ready"'),
+    );
     expect(html).toContain('data-research-source-citation-parser="ready"');
     expect(html).toContain('data-research-source-citation-review="concept_te_controleren"');
     expect(html).toContain('data-research-source-citation-type="tekstuele_bron"');

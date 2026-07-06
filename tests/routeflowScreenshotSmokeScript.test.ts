@@ -296,6 +296,21 @@ describe('routeflow screenshot smoke script', () => {
       'research trend-scan mist routeflow-overflow evidence',
     );
     expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'knowledge-research-source-citation'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('researchSourceCitation');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-source-citation-scan="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-research-source-citation-parser="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('citationType');
+    expect(routeflowScreenshotSmokeScript).toContain('url_met_publicatiedatum');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'research source-citation parser mist routeflow-evidence',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
       "screen: 'knowledge-research-clinician-questions'",
     );
     expect(routeflowScreenshotSmokeScript).toContain('researchClinicianQuestions');

@@ -18220,7 +18220,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research summaries, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3908
 
 ### G1986 — Research Intelligence: clinician question generator routeflow evidence
