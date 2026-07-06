@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1978 trend dashboard metadata routeflow evidence: routeflow-smoke bewaakt
+  `data-research-trend-dashboard`, topic cards, publicatie-/brontellingen,
+  laatste update, per-item periode, bron, update-status, laatste check,
+  relevantietekst en bounded layout op desktop, tablet, mobiel en small-mobile
+  zonder providerpayload, secrets, trackingpayload of medisch advies.
 - G1977 literature query builder routeflow evidence: routeflow-smoke bewaakt
   `data-literature-query-builder` met querypreview, gede-identificeerde
   contextlabels, bewerkbare termen, bewaaractie, uitgesloten-contextchips en

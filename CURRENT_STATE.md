@@ -76,6 +76,10 @@
   publicatieperiode, bron, update-status, laatste check en relevantie-uitleg naast
   de bestaande trendscan, zodat ontwikkelingen scanbaar blijven zonder
   bewijsweging, diagnose of behandeladvies.
+- **G1978 Research trenddashboard metadata routeflow evidence:** routeflow-smoke
+  bewaakt `data-research-trend-dashboard`, topic cards, publicatie-/brontellingen,
+  laatste update, per-item periode, bron, update-status, laatste check,
+  relevantietekst en bounded layout op desktop, tablet, mobiel en small-mobile.
 - **G541 research broncitatie-parser:** researchsamenvattingen tonen parsed
   broncitatie met bron, datum, reviewstatus, citationtype, origineel en
   correctievelden, zodat bronherleiding controleerbaar blijft.
