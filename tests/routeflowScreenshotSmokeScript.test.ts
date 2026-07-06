@@ -320,6 +320,18 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'dagadvies feedbackanalytics mist routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceBronconfidence');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-daily-recommendation-bronconfidence="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'data-daily-recommendation-bronconfidence-score',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('hasCategories');
+    expect(routeflowScreenshotSmokeScript).toContain('hasExplanation');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'dagadvies bronconfidence mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       "screen: 'knowledge-research-source-citation'",
     );

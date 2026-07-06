@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1821 |
+| ☑ klaar | 1822 |
 | ◐ bezig | 0 |
-| ☐ open | 101 |
+| ☐ open | 100 |
 | ☒ archived | 99 |
 | **Totaal** | **2021** |
 
@@ -2142,7 +2142,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1978 | Research Intelligence: trend dashboard metadata routeflow evidence | P1 | F5 | ☐ |
 | G1979 | Daily Recommendations: personalization feedback routeflow evidence | P1 | F5 | ☐ |
 | G1980 | Daily Recommendations: owner visibility routeflow evidence | P1 | F5 | ☐ |
-| G1981 | Daily Recommendations: source confidence routeflow evidence | P1 | F5 | ☐ |
+| G1981 | Daily Recommendations: source confidence routeflow evidence | P1 | F5 | ☑ |
 | G1982 | Daily Recommendations: feedback analytics routeflow evidence | P1 | F5 | ☑ |
 | G1983 | Research Intelligence: trend update timestamp routeflow evidence | P1 | F5 | ☑ |
 | G1984 | Research Intelligence: patient summary reading-level routeflow evidence | P1 | F5 | ☑ |

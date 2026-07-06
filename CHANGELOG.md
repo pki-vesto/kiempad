@@ -17,6 +17,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1981 source confidence routeflow evidence: routeflow-smoke bewaakt nu
+  `data-daily-recommendation-bronconfidence` in de Dagadvieskaartlijst met label,
+  score, bron, datum, reviewstatus, broncategorieen en lekenuitleg op desktop,
+  tablet, mobiel en small-mobile zonder horizontale overflow, secrets,
+  trackingpayload of medisch advies.
 - G1982 feedback analytics routeflow evidence: routeflow-smoke opent Dagadvies
   met lokale feedback-eventlogs en bewaakt
   `data-daily-advice-feedback-analytics`, total, statusverdeling,
