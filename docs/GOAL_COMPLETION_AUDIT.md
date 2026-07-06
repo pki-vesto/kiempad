@@ -236,6 +236,24 @@ retryactie, verwijderactie of documentreview-layout wijzigt.
 - **Privacygrens:** blijvende evidence mag geen bestandsinhoud, OCR-payload,
   bronbestandsnamen, medische plaintext, secret of trackingdata bevatten.
 
+## OCR-review Correctieformulier Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de OCR-reviewcorrectie,
+documenttijdlijn of locked dossierpreview wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `dossierOcrReviewCorrection` in de routeflow target
+  `dossier-ocr-review-correction`.
+- **Command:** `npm run smoke:routeflows` controleert
+  `data-ocr-review-correction`, `data-ocr-review-field="correction-text"`,
+  `data-ocr-review-field="metadata-note"`, `data-ocr-review-field="review-status"`,
+  `data-ocr-review-action="save"` en `data-ocr-review-locked-boundary`.
+- **Scope:** de evidence bewaakt dat correctietekst, metadata-notitie,
+  reviewstatus en bewaaractie scanbaar blijven zonder page-level horizontale
+  overflow en dat de locked variant zonder bronplaintext blijft.
+- **Privacygrens:** blijvende evidence mag geen OCR-payload, bronbestandsnamen,
+  locked beeldbron-plaintext, medische plaintext, secret of trackingdata bevatten.
+
 ## Offline Cache Metadata Evidence
 
 Gebruik deze aanvullende release-evidence wanneer de researchbronnenlijst,

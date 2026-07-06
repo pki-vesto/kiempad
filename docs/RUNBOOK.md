@@ -135,6 +135,17 @@ pad zonder lokale vault-hercreatie.
   reviewklare imports zonder retryactie vast. Blijvende evidence mag geen bestandsinhoud,
   OCR-payload, bronbestandsnamen, medische plaintext, secret of trackingdata
   bevatten.
+- **OCR-review correctieformulier evidence (G1949):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
+  `dossier-ocr-review-correction` `dossierOcrReviewCorrection` te verzamelen. De
+  smoke controleert `data-ocr-review-correction`,
+  `data-ocr-review-field="correction-text"`, `data-ocr-review-field="metadata-note"`,
+  `data-ocr-review-field="review-status"`, `data-ocr-review-action="save"` en
+  `data-ocr-review-locked-boundary`, bewaakt dat correctietekst, metadata-notitie,
+  reviewstatus en bewaaractie scanbaar blijven zonder horizontale overflow en houdt
+  de locked variant zonder bronplaintext vast. Blijvende evidence mag geen
+  OCR-payload, bronbestandsnamen, locked beeldbron-plaintext, medische plaintext,
+  secret of trackingdata bevatten.
 - **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
   gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
   `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te

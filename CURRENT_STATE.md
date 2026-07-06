@@ -708,6 +708,15 @@
   retry- en verwijderactie scanbaar blijven en reviewklare imports zonder retryactie
   blijven, zonder bestandsinhoud, OCR-payload, bronbestandsnamen, medische plaintext,
   secret of trackingdata.
+- **G1949 OCR-review correctieformulier release evidence:** releasecontext in
+  changelog en current state noemt `npm run smoke:routeflows`,
+  `dossier-ocr-review-correction`, `dossierOcrReviewCorrection`,
+  `data-ocr-review-correction`, `data-ocr-review-field="correction-text"`,
+  `data-ocr-review-field="metadata-note"`, `data-ocr-review-field="review-status"`,
+  `data-ocr-review-action="save"` en `data-ocr-review-locked-boundary`, zodat
+  correctietekst, metadata-notitie, reviewstatus en bewaaractie scanbaar blijven en
+  de locked variant zonder bronplaintext blijft, zonder OCR-payload, bronbestandsnamen, medische plaintext,
+  secret of trackingdata.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
