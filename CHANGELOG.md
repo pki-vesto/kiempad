@@ -303,6 +303,14 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   `daily-advice-supplement-artscheck-action`, `data-supplement-artscheck-action`,
   `recommendationAction=supplementArtscheck` en `dailyAdviceSupplementArtscheckAction`, zodat label, bron/disclaimer en actieknop gekoppeld blijven
   zonder dosering, interactieclaim of behandelvervanging.
+- G1976 supplement artscheck action release evidence freshness guard:
+  onderhoudstests koppelen releasecontext nu aan
+  `daily-advice-supplement-artscheck-action`, `dailyAdviceSupplementArtscheckAction`,
+  `data-supplement-artscheck-action` en
+  `recommendationAction=supplementArtscheck`, zodat submitwaarde, label,
+  bron/disclaimer, actieknop en standaardregels zonder extra actie actueel blijven
+  zonder dosering, interactieclaim, behandelvervanging, medische payload,
+  secret of trackingpayload.
 - G1945 embryo image classification forced-colors focus release evidence:
   releasecontext en onderhoudsdocs noemen nu
   `npm run smoke:routeflows`, target `dossier-imaging-embryo-classification-review`

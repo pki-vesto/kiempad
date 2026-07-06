@@ -425,6 +425,13 @@
   `recommendationAction=supplementArtscheck`, `dailyAdviceSupplementArtscheckAction` and
   `npm run smoke:routeflows`, with a maintenance-doc guard for label, source/disclaimer and
   action button without dosage, interaction claims, treatment replacement or payload leakage.
+- **Supplement artscheck action release evidence freshness guard — done in G1976 / issue
+  #3889.** Maintenance docs now fail if releasecontext drifts away from
+  `daily-advice-supplement-artscheck-action`, `dailyAdviceSupplementArtscheckAction`,
+  `data-supplement-artscheck-action` or `recommendationAction=supplementArtscheck`, keeping
+  label, source/disclaimer, action button and standard rows tied to the routeflow evidence
+  without dosage, interaction claims, treatment replacement, medical payloads, secrets or
+  tracking payloads.
 - **Literatuur discovery querybuilder — done in G482 / issue #811.** Kennis/Research now shows a
   visible `data-literature-query-builder="ready"` PubMed query preview with de-identified context
   labels, editable terms, excluded-context chips and a local save-as-research-concept action,

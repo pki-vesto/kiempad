@@ -106,6 +106,16 @@ pad zonder lokale vault-hercreatie.
   actieknop, standaardregels zonder extra artscheckactie en horizontale overflow.
   Blijvende evidence mag geen dosering, interactieclaim, behandelvervanging,
   medische payload, secret of trackingpayload bevatten.
+- **G1976 supplement artscheck action release evidence freshness guard:** de
+  onderhoudstest koppelt de release-evidence aan
+  `daily-advice-supplement-artscheck-action`, `dailyAdviceSupplementArtscheckAction`,
+  `data-supplement-artscheck-action` en de submitwaarde
+  `recommendationAction=supplementArtscheck`. Werk deze runbookregel, de
+  goal-completion-audit en de routeflow-smoke samen bij wanneer de selector,
+  routeflow target of submitwaarde wijzigt. De guard bewaakt
+  label, bron/disclaimer, actieknop en standaardregels zonder extra actie, zonder
+  dosering, interactieclaim, behandelvervanging, medische payload, secret of
+  trackingpayload.
 - **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
   gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
   `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te

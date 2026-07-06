@@ -4187,6 +4187,41 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('G1946');
   });
 
+  it('bewaakt G1976 supplement artscheck action release evidence freshness guard', () => {
+    const releaseEvidenceTerms = [
+      'G1976 supplement artscheck action release evidence freshness guard',
+      'daily-advice-supplement-artscheck-action',
+      'dailyAdviceSupplementArtscheckAction',
+      'data-supplement-artscheck-action',
+      'recommendationAction=supplementArtscheck',
+      'submitwaarde',
+      'label, bron/disclaimer, actieknop en standaardregels zonder extra actie',
+      'zonder dosering, interactieclaim, behandelvervanging, medische payload,',
+      'secret of trackingpayload',
+    ] as const;
+
+    for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+      expect(runbook + goalCompletionAudit + changelog + currentState).toContain(
+        releaseEvidenceTerm,
+      );
+    }
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'daily-advice-supplement-artscheck-action'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceSupplementArtscheckAction: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-supplement-artscheck-action="available"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'button[name="recommendationAction"][value="supplementArtscheck"]',
+    );
+    expect(backlog).toContain(
+      'G1976 | Daily Recommendations: supplement artscheck action release evidence freshness guard | P1 | F5 | ☑',
+    );
+    expect(executionGoals).toContain('### G1976');
+    expect(executionGoals).toContain('- **Status:** ☑ done');
+  });
+
   it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
     const requiredTerms = [
       'Offline cache metadata evidence',

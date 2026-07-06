@@ -190,6 +190,12 @@ dagadvieslijst of artscheckactie voor supplementvragen wijzigt.
 - **Command:** `npm run smoke:routeflows` controleert de supplementregel met
   `data-supplement-artscheck-action="available"` en
   `recommendationAction=supplementArtscheck`.
+- **G1976 supplement artscheck action release evidence freshness guard:** de
+  onderhoudstest koppelt deze release-evidence aan
+  `daily-advice-supplement-artscheck-action`, `dailyAdviceSupplementArtscheckAction`,
+  `data-supplement-artscheck-action` en de submitwaarde
+  `recommendationAction=supplementArtscheck`, zodat routeflow target, selector,
+  evidenceflag en submitwaarde samen wijzigen.
 - **Scope:** de evidence bewaakt dat label, bron/disclaimer en actieknop gekoppeld
   blijven, dat standaard checklistregels geen extra artscheckactie tonen en dat er
   geen horizontale overflow ontstaat.
