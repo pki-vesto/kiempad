@@ -164,6 +164,20 @@ pad zonder lokale vault-hercreatie.
   bronplaintext vast. Blijvende evidence mag geen medische payload,
   bronbestandsnamen, OCR-payload, locked beeldbron-plaintext, secret of
   trackingdata bevatten.
+- **Historische tijdlijnreview evidence (G1951):** `npm run smoke:routeflows`
+  gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
+  `dossier-historical-timeline-review` `dossierHistoricalTimelineReview` te
+  verzamelen. De smoke controleert `data-historical-timeline-review`,
+  `data-historical-timeline-review-field="date"`,
+  `data-historical-timeline-review-field="source"`,
+  `data-historical-timeline-review-field="review-status"`,
+  `data-historical-timeline-review-field="visibility"`,
+  `data-historical-timeline-review-action="save"` en
+  `data-historical-timeline-review-locked-boundary`, bewaakt dat datum, bron,
+  reviewstatus, zichtbaarheid en bewaaractie scanbaar blijven zonder horizontale
+  overflow en houdt de locked variant zonder bronplaintext vast. Blijvende evidence
+  mag geen medische payload, bronbestandsnamen, OCR-payload,
+  locked beeldbron-plaintext, secret of trackingdata bevatten.
 - **Offline cache metadata evidence (G1988):** `npm run smoke:routeflows`
   gebruikt `scripts/routeflow-screenshot-smoke.mjs` om in de target
   `knowledge-research-offline-cache-metadata` `researchOfflineCacheMetadata` te

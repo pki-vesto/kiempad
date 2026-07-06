@@ -280,6 +280,29 @@ documenttijdlijn, dossierzoekroute of locked dossierpreview wijzigt.
   bronbestandsnamen, OCR-payload, locked beeldbron-plaintext, secret of
   trackingdata bevatten.
 
+## Historische Tijdlijnreview Evidence
+
+Gebruik deze aanvullende release-evidence wanneer historische tijdlijnreview,
+documenttijdlijn, imaging privacyhooks of de centrale tijdlijn wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `dossierHistoricalTimelineReview` in de routeflow target
+  `dossier-historical-timeline-review`.
+- **Command:** `npm run smoke:routeflows` controleert
+  `data-historical-timeline-review`,
+  `data-historical-timeline-review-field="date"`,
+  `data-historical-timeline-review-field="source"`,
+  `data-historical-timeline-review-field="review-status"`,
+  `data-historical-timeline-review-field="visibility"`,
+  `data-historical-timeline-review-action="save"` en
+  `data-historical-timeline-review-locked-boundary`.
+- **Scope:** de evidence bewaakt dat datum, bron, reviewstatus, zichtbaarheid en
+  bewaaractie scanbaar blijven zonder page-level horizontale overflow en dat de
+  locked variant zonder bronplaintext blijft.
+- **Privacygrens:** blijvende evidence mag geen medische payload,
+  bronbestandsnamen, OCR-payload, locked beeldbron-plaintext, secret of
+  trackingdata bevatten.
+
 ## Offline Cache Metadata Evidence
 
 Gebruik deze aanvullende release-evidence wanneer de researchbronnenlijst,

@@ -353,6 +353,19 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   documenttype, onderzoekstype, poging, afspraak, onzekerheid en bewaaractie scanbaar blijven en
   de locked variant zonder bronplaintext blijft, zonder medische payload, bronbestandsnamen, OCR-payload,
   secret of trackingdata.
+- G1951 historische tijdlijnreview release evidence: releasecontext en
+  onderhoudsdocs noemen nu `npm run smoke:routeflows`, target
+  `dossier-historical-timeline-review`, `dossierHistoricalTimelineReview`,
+  `data-historical-timeline-review`,
+  `data-historical-timeline-review-field="date"`,
+  `data-historical-timeline-review-field="source"`,
+  `data-historical-timeline-review-field="review-status"`,
+  `data-historical-timeline-review-field="visibility"`,
+  `data-historical-timeline-review-action="save"` en
+  `data-historical-timeline-review-locked-boundary`, zodat datum, bron,
+  reviewstatus, zichtbaarheid en bewaaractie scanbaar blijven en de locked variant
+  zonder bronplaintext blijft, zonder medische payload, bronbestandsnamen, OCR-payload,
+  secret of trackingdata.
 - G1945 embryo image classification forced-colors focus release evidence:
   releasecontext en onderhoudsdocs noemen nu
   `npm run smoke:routeflows`, target `dossier-imaging-embryo-classification-review`
