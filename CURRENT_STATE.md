@@ -717,6 +717,23 @@
   correctietekst, metadata-notitie, reviewstatus en bewaaractie scanbaar blijven en
   de locked variant zonder bronplaintext blijft, zonder OCR-payload, bronbestandsnamen, medische plaintext,
   secret of trackingdata.
+- **G1950 metadata-normalisatie correctieformulier release evidence:**
+  releasecontext in changelog en current state noemt `npm run smoke:routeflows`,
+  `dossier-metadata-normalization-correction`,
+  `dossierMetadataNormalizationCorrection`,
+  `data-metadata-normalization-correction`,
+  `data-metadata-normalization-field="date"`,
+  `data-metadata-normalization-field="source"`,
+  `data-metadata-normalization-field="document-type"`,
+  `data-metadata-normalization-field="research-type"`,
+  `data-metadata-normalization-field="attempt"`,
+  `data-metadata-normalization-field="appointment"`,
+  `data-metadata-normalization-field="certainty"`,
+  `data-metadata-normalization-action="save"` en
+  `data-metadata-normalization-locked-boundary`, zodat datum, bron,
+  documenttype, onderzoekstype, poging, afspraak, onzekerheid en bewaaractie scanbaar blijven en
+  de locked variant zonder bronplaintext blijft, zonder medische payload, bronbestandsnamen, OCR-payload,
+  secret of trackingdata.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

@@ -17812,8 +17812,25 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier metadata, routeflow smoke, release evidence
 - **ADR Needed:** no
 - **Score:** 28
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3846
+
+### G2031 — Fertility Intelligence: metadata-normalisatie release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** De G1950 release-evidence koppelt metadata-normalisatiecorrectie aan routeflow selectors, maar toekomstige wijzigingen aan target, evidenceflag, ready/locked variant of privacygrens kunnen die documentatie verouderen.
+- **User Impact:** Zonder freshness guard kan een release later melden dat metadata-normalisatie bewaakt is terwijl datum, bron, documenttype, onderzoekstype, poging, afspraak, onzekerheid, bewaaractie of locked boundary niet meer door dezelfde selectors worden bewezen.
+- **Desired Outcome:** Voeg een guard toe die metadata-normalisatie release-evidence synchroon houdt met routeflow target, selectors, ready/locked evidence en privacygrens.
+- **User Value:** Gebruikers kunnen genormaliseerde dossiermetadata blijven corrigeren zonder dat release-evidence medische payloads, OCR-payloads, bronbestandsnamen of plaintext locked bronwaarden nodig heeft.
+- **Acceptance Criteria:** Guard test koppelt release-evidence aan `dossier-metadata-normalization-correction`; guard test noemt `data-metadata-normalization-correction`, `data-metadata-normalization-field`, `data-metadata-normalization-action` en `data-metadata-normalization-locked-boundary`; guard faalt als metadata-normalisatie evidenceflag, ready form, locked variant of save action verdwijnt; evidence sluit medische payloads, OCR-payloads, bronbestandsnamen, locked beeldbron-plaintext, secrets, tokens en trackingpayloads uit; backlog health blijft op 100+ open goals.
+- **Affected Screens:** Dossier Documenttijdlijn, Dossier zoeken, release evidence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier metadata, routeflow smoke, maintenance docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #4008
 
 ### G1951 — Fertility Intelligence: historische tijdlijnreview release evidence
 

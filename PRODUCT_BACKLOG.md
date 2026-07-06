@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1830 |
+| ☑ klaar | 1831 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **2029** |
+| **Totaal** | **2030** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2111,7 +2111,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1947 | Daily Recommendations: artscheck vraag reviewstatus release evidence | P1 | F5 | ☑ |
 | G1948 | Fertility Intelligence: import-inbox retry overflow release evidence | P1 | F5 | ☑ |
 | G1949 | Fertility Intelligence: OCR-review correctieformulier release evidence | P1 | F5 | ☑ |
-| G1950 | Fertility Intelligence: metadata-normalisatie correctieformulier release evidence | P1 | F5 | ☐ |
+| G1950 | Fertility Intelligence: metadata-normalisatie correctieformulier release evidence | P1 | F5 | ☑ |
 | G1951 | Fertility Intelligence: historische tijdlijnreview release evidence | P1 | F5 | ☐ |
 | G1952 | Premium Claude Design UI: daily recommendation owner scan release evidence | P1 | F5 | ☐ |
 | G1953 | Premium Claude Design UI: treatment mobile rail forced-colors cue text fill release evidence | P1 | F5 | ☐ |
@@ -2192,6 +2192,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2028 | Daily Recommendations: artscheck reviewstatus release evidence freshness guard | P1 | F5 | ☐ |
 | G2029 | Fertility Intelligence: import-inbox retry release evidence freshness guard | P1 | F5 | ☐ |
 | G2030 | Fertility Intelligence: OCR-review release evidence freshness guard | P1 | F5 | ☐ |
+| G2031 | Fertility Intelligence: metadata-normalisatie release evidence freshness guard | P1 | F5 | ☐ |
 
 ---
 

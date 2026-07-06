@@ -254,6 +254,32 @@ documenttijdlijn of locked dossierpreview wijzigt.
 - **Privacygrens:** blijvende evidence mag geen OCR-payload, bronbestandsnamen,
   locked beeldbron-plaintext, medische plaintext, secret of trackingdata bevatten.
 
+## Metadata-normalisatie Correctieformulier Evidence
+
+Gebruik deze aanvullende release-evidence wanneer de metadata-normalisatiecorrectie,
+documenttijdlijn, dossierzoekroute of locked dossierpreview wijzigt.
+
+- **Routeflow-locatie:** `scripts/routeflow-screenshot-smoke.mjs` verzamelt
+  `dossierMetadataNormalizationCorrection` in de routeflow target
+  `dossier-metadata-normalization-correction`.
+- **Command:** `npm run smoke:routeflows` controleert
+  `data-metadata-normalization-correction`,
+  `data-metadata-normalization-field="date"`,
+  `data-metadata-normalization-field="source"`,
+  `data-metadata-normalization-field="document-type"`,
+  `data-metadata-normalization-field="research-type"`,
+  `data-metadata-normalization-field="attempt"`,
+  `data-metadata-normalization-field="appointment"`,
+  `data-metadata-normalization-field="certainty"`,
+  `data-metadata-normalization-action="save"` en
+  `data-metadata-normalization-locked-boundary`.
+- **Scope:** de evidence bewaakt dat datum, bron, documenttype, onderzoekstype,
+  poging, afspraak, onzekerheid en bewaaractie scanbaar blijven zonder page-level
+  horizontale overflow en dat de locked variant zonder bronplaintext blijft.
+- **Privacygrens:** blijvende evidence mag geen medische payload,
+  bronbestandsnamen, OCR-payload, locked beeldbron-plaintext, secret of
+  trackingdata bevatten.
+
 ## Offline Cache Metadata Evidence
 
 Gebruik deze aanvullende release-evidence wanneer de researchbronnenlijst,

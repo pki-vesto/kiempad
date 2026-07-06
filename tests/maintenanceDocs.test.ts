@@ -4405,6 +4405,85 @@ describe('onderhoudsdocumentatie', () => {
     expect(executionGoals).toContain('- **Status:** ☑ done');
   });
 
+  it('documenteert G1950 metadata-normalisatie correctieformulier release evidence', () => {
+    const requiredTerms = [
+      'Metadata-normalisatie correctieformulier evidence',
+      'dossier-metadata-normalization-correction',
+      'dossierMetadataNormalizationCorrection',
+      'data-metadata-normalization-correction',
+      'data-metadata-normalization-field="date"',
+      'data-metadata-normalization-field="source"',
+      'data-metadata-normalization-field="document-type"',
+      'data-metadata-normalization-field="research-type"',
+      'data-metadata-normalization-field="attempt"',
+      'data-metadata-normalization-field="appointment"',
+      'data-metadata-normalization-field="certainty"',
+      'data-metadata-normalization-action="save"',
+      'data-metadata-normalization-locked-boundary',
+      'locked variant zonder bronplaintext',
+      'npm run smoke:routeflows',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'medische payload',
+      'bronbestandsnamen',
+      'OCR-payload',
+      'locked beeldbron-plaintext',
+      'secret',
+      'trackingdata',
+    ] as const;
+    const releaseEvidenceTerms = [
+      'G1950 metadata-normalisatie correctieformulier release evidence',
+      'dossier-metadata-normalization-correction',
+      'dossierMetadataNormalizationCorrection',
+      'data-metadata-normalization-correction',
+      'data-metadata-normalization-field="date"',
+      'data-metadata-normalization-field="source"',
+      'data-metadata-normalization-field="document-type"',
+      'data-metadata-normalization-field="research-type"',
+      'data-metadata-normalization-field="attempt"',
+      'data-metadata-normalization-field="appointment"',
+      'data-metadata-normalization-field="certainty"',
+      'data-metadata-normalization-action="save"',
+      'data-metadata-normalization-locked-boundary',
+      'documenttype, onderzoekstype, poging, afspraak, onzekerheid en bewaaractie scanbaar blijven',
+      'locked variant zonder bronplaintext',
+      'zonder medische payload, bronbestandsnamen, OCR-payload,',
+      'secret of trackingdata',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(runbook + goalCompletionAudit + routeflowScreenshotSmokeScript).toContain(
+        requiredTerm,
+      );
+    }
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(runbook + goalCompletionAudit).toContain(forbiddenTerm);
+    }
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseEvidenceTerm of releaseEvidenceTerms) {
+        expect(releaseDoc).toContain(releaseEvidenceTerm);
+      }
+    }
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'dossier-metadata-normalization-correction'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('dossierMetadataNormalizationCorrection');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'data-metadata-normalization-correction="ready"',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'data-metadata-normalization-correction="locked"',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('data-metadata-normalization-action="save"');
+    expect(routeflowScreenshotSmokeScript).toContain("actionText !== 'Normalisatie bewaren'");
+    expect(routeflowScreenshotSmokeScript).toContain('hasHorizontalOverflow');
+    expect(backlog).toContain(
+      'G1950 | Fertility Intelligence: metadata-normalisatie correctieformulier release evidence | P1 | F5 | ☑',
+    );
+    expect(executionGoals).toContain('### G1950');
+    expect(executionGoals).toContain('- **Status:** ☑ done');
+  });
+
   it('documenteert G1988 offline cache metadata release evidence freshness guard', () => {
     const requiredTerms = [
       'Offline cache metadata evidence',

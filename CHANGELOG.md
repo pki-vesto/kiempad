@@ -336,6 +336,23 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   correctietekst, metadata-notitie, reviewstatus en bewaaractie scanbaar blijven en
   de locked variant zonder bronplaintext blijft, zonder OCR-payload, bronbestandsnamen, medische plaintext,
   secret of trackingdata.
+- G1950 metadata-normalisatie correctieformulier release evidence: releasecontext
+  en onderhoudsdocs noemen nu `npm run smoke:routeflows`, target
+  `dossier-metadata-normalization-correction`,
+  `dossierMetadataNormalizationCorrection`,
+  `data-metadata-normalization-correction`,
+  `data-metadata-normalization-field="date"`,
+  `data-metadata-normalization-field="source"`,
+  `data-metadata-normalization-field="document-type"`,
+  `data-metadata-normalization-field="research-type"`,
+  `data-metadata-normalization-field="attempt"`,
+  `data-metadata-normalization-field="appointment"`,
+  `data-metadata-normalization-field="certainty"`,
+  `data-metadata-normalization-action="save"` en
+  `data-metadata-normalization-locked-boundary`, zodat datum, bron,
+  documenttype, onderzoekstype, poging, afspraak, onzekerheid en bewaaractie scanbaar blijven en
+  de locked variant zonder bronplaintext blijft, zonder medische payload, bronbestandsnamen, OCR-payload,
+  secret of trackingdata.
 - G1945 embryo image classification forced-colors focus release evidence:
   releasecontext en onderhoudsdocs noemen nu
   `npm run smoke:routeflows`, target `dossier-imaging-embryo-classification-review`
