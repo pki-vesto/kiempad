@@ -320,6 +320,23 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'dagadvies feedbackanalytics mist routeflow-evidence',
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "screen: 'daily-advice-owner-visibility-route'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'daily-advice-owner-visibility'");
+    expect(routeflowScreenshotSmokeScript).toContain('prepareDailyAdviceOwnerVisibility');
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceOwnerVisibility');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-daily-recommendation-owner-visibility="ready"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '[data-daily-recommendation-owner-visibility-action="restore"]',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('hiddenOwnerAbsentFromList');
+    expect(routeflowScreenshotSmokeScript).toContain('otherOwnersVisible');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'dagadvies owner-visibility mist routeflow-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceBronconfidence');
     expect(routeflowScreenshotSmokeScript).toContain(
       '[data-daily-recommendation-bronconfidence="ready"]',
