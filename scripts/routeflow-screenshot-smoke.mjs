@@ -210,6 +210,7 @@ const targets = [
     ],
     knowledgeConsole: true,
     researchTrendScanOverflow: true,
+    smallMobileViewport: true,
     desktopHiddenSelectors: [
       '.knowledge-focus-shell__header p:last-child',
       '.knowledge-route-section__header > p:last-child',
@@ -4842,8 +4843,15 @@ async function assertRouteflows(browser, options) {
                 };
               });
               const dashboard = rootElement?.querySelector('[data-research-trend-dashboard="ready"]');
+              const dashboardStats = [
+                ...(dashboard?.querySelectorAll('.research-trend-dashboard__stats div') ?? []),
+              ].map((stat) => ({
+                label: stat.querySelector('dt')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+                value: stat.querySelector('dd')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+              }));
               const grid = rootElement?.querySelector('[data-research-trend-grid="ready"]');
-              const detailCard = rootElement?.querySelector('[data-research-trend-card]');
+              const trendCards = [...(rootElement?.querySelectorAll('[data-research-trend-card]') ?? [])];
+              const detailCard = trendCards[0];
               const updateTimestamp = rootElement?.querySelector(
                 '[data-research-trend-update-timestamp="ready"]',
               );
@@ -4858,6 +4866,20 @@ async function assertRouteflows(browser, options) {
                 '[data-research-trend-update-explanation="ready"]',
               );
               const trendItem = rootElement?.querySelector('[data-research-trend-item]');
+              const trendItemMetadata = trendItem?.querySelector(
+                '[data-research-trend-item-metadata="ready"]',
+              );
+              const itemPeriod = trendItem?.querySelector('[data-research-trend-item-period]');
+              const itemSource = trendItem?.querySelector(
+                '[data-research-trend-item-source="ready"]',
+              );
+              const itemUpdate = trendItem?.querySelector('[data-research-trend-item-update]');
+              const itemLastCheck = trendItem?.querySelector(
+                '[data-research-trend-item-last-check="ready"]',
+              );
+              const itemRelevance = trendItem?.querySelector(
+                '[data-research-trend-item-relevance="ready"]',
+              );
               const sourceList = rootElement?.querySelector('[data-research-source-component="source-list"]');
               const researchForm = rootElement?.querySelector('#research-item-form');
               const networkForm = rootElement?.querySelector('#research-network-form');
@@ -4869,11 +4891,25 @@ async function assertRouteflows(browser, options) {
               const updateDateRect = updateDate?.getBoundingClientRect();
               const updateSourceRect = updateSource?.getBoundingClientRect();
               const updateCorrectionRect = updateCorrection?.getBoundingClientRect();
+              const trendItemMetadataRect = trendItemMetadata?.getBoundingClientRect();
+              const itemPeriodRect = itemPeriod?.getBoundingClientRect();
+              const itemSourceRect = itemSource?.getBoundingClientRect();
+              const itemUpdateRect = itemUpdate?.getBoundingClientRect();
+              const itemLastCheckRect = itemLastCheck?.getBoundingClientRect();
+              const itemRelevanceRect = itemRelevance?.getBoundingClientRect();
               const rootRect = rootElement?.getBoundingClientRect();
               const scanStyle = scan ? getComputedStyle(scan) : null;
               const scanText = scanCards.map((scanCard) => scanCard.text).join(' ');
               const timestampText = updateTimestamp?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
               const dashboardText = dashboard?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const metadataText = trendItemMetadata?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const relevanceText = itemRelevance?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              const latestUpdateText =
+                scanCards.find((scanCard) => scanCard.id === 'latest')?.text ?? '';
+              const scanCardValue = (id) =>
+                scanCards
+                  .find((scanCard) => scanCard.id === id)
+                  ?.text.match(/\b\d{1,4}(?:-\d{2}-\d{2})?\b/)?.[0] ?? '';
               return {
                 scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
                 scanCardIds: scanCards.map((scanCard) => scanCard.id),
@@ -4891,6 +4927,16 @@ async function assertRouteflows(browser, options) {
                 dashboardVisible: Boolean(
                   dashboardRect && dashboardRect.width > 0 && dashboardRect.height > 0,
                 ),
+                dashboardState: dashboard?.getAttribute('data-research-trend-state') ?? '',
+                dashboardStats,
+                topicCardCount: trendCards.length,
+                topicCardIds: trendCards.map(
+                  (card) => card.getAttribute('data-research-trend-card') ?? '',
+                ),
+                publicationCount: scanCardValue('publications'),
+                sourceCount: scanCardValue('sources'),
+                latestUpdate: scanCardValue('latest'),
+                latestUpdateText,
                 scanContained:
                   Boolean(rootRect && scanRect) &&
                   scanRect.left >= rootRect.left - 1 &&
@@ -4938,9 +4984,47 @@ async function assertRouteflows(browser, options) {
                   timestampText.includes('reviewstatus'),
                 updateSourcePresent: timestampText.includes('Lokale researchbibliotheekmetadata'),
                 trendItemPresent: Boolean(trendItem),
+                itemMetadataVisible: Boolean(
+                  trendItemMetadataRect &&
+                    trendItemMetadataRect.width > 0 &&
+                    trendItemMetadataRect.height > 0,
+                ),
+                itemPeriodVisible: Boolean(
+                  itemPeriodRect && itemPeriodRect.width > 0 && itemPeriodRect.height > 0,
+                ),
+                itemPeriod:
+                  itemPeriod?.getAttribute('data-research-trend-item-period') ?? '',
+                itemSourceVisible: Boolean(
+                  itemSourceRect && itemSourceRect.width > 0 && itemSourceRect.height > 0,
+                ),
+                itemUpdateVisible: Boolean(
+                  itemUpdateRect && itemUpdateRect.width > 0 && itemUpdateRect.height > 0,
+                ),
+                itemUpdate:
+                  itemUpdate?.getAttribute('data-research-trend-item-update') ?? '',
+                itemLastCheckVisible: Boolean(
+                  itemLastCheckRect &&
+                    itemLastCheckRect.width > 0 &&
+                    itemLastCheckRect.height > 0,
+                ),
+                itemRelevanceVisible: Boolean(
+                  itemRelevanceRect &&
+                    itemRelevanceRect.width > 0 &&
+                    itemRelevanceRect.height > 0,
+                ),
+                itemMetadataLabelsPresent:
+                  metadataText.includes('Periode') &&
+                  metadataText.includes('Bron') &&
+                  metadataText.includes('Update-status') &&
+                  metadataText.includes('Laatste check'),
+                itemRelevancePresent: relevanceText.length > 20,
                 sourceListPresent: Boolean(sourceList),
                 researchFormPresent: Boolean(researchForm),
                 networkFormPresent: Boolean(networkForm),
+                hasHorizontalOverflow:
+                  document.documentElement.scrollWidth >
+                    document.documentElement.clientWidth + 1 ||
+                  document.body.scrollWidth > document.body.clientWidth + 1,
                 hasForbiddenText: /BASE64|OCR_RAW|data:application|passphrase|token|\bdiagnose\b|\bdosering\b|kansberekening|behandelkeuzeadvies|tracking-payload|MEDISCHE PAYLOAD/i.test(
                   `${scanText} ${timestampText} ${dashboardText}`,
                 ),
@@ -6829,6 +6913,12 @@ async function assertRouteflows(browser, options) {
           !evidence.researchTrendScanOverflow.scanBeforeGrid ||
           !evidence.researchTrendScanOverflow.scanBeforeDetail ||
           !evidence.researchTrendScanOverflow.dashboardVisible ||
+          evidence.researchTrendScanOverflow.dashboardState !== 'filled' ||
+          Number(evidence.researchTrendScanOverflow.publicationCount) < 1 ||
+          Number(evidence.researchTrendScanOverflow.sourceCount) < 1 ||
+          !evidence.researchTrendScanOverflow.latestUpdateText.includes('Laatste update') ||
+          evidence.researchTrendScanOverflow.topicCardCount < 1 ||
+          evidence.researchTrendScanOverflow.topicCardIds.length < 1 ||
           !evidence.researchTrendScanOverflow.scanContained ||
           !evidence.researchTrendScanOverflow.detailCardVisible ||
           !evidence.researchTrendScanOverflow.updateTimestampVisible ||
@@ -6843,9 +6933,20 @@ async function assertRouteflows(browser, options) {
           !evidence.researchTrendScanOverflow.updateCorrectionFieldsPresent ||
           !evidence.researchTrendScanOverflow.updateSourcePresent ||
           !evidence.researchTrendScanOverflow.trendItemPresent ||
+          !evidence.researchTrendScanOverflow.itemMetadataVisible ||
+          !evidence.researchTrendScanOverflow.itemPeriodVisible ||
+          !evidence.researchTrendScanOverflow.itemPeriod ||
+          !evidence.researchTrendScanOverflow.itemSourceVisible ||
+          !evidence.researchTrendScanOverflow.itemUpdateVisible ||
+          !evidence.researchTrendScanOverflow.itemUpdate ||
+          !evidence.researchTrendScanOverflow.itemLastCheckVisible ||
+          !evidence.researchTrendScanOverflow.itemRelevanceVisible ||
+          !evidence.researchTrendScanOverflow.itemMetadataLabelsPresent ||
+          !evidence.researchTrendScanOverflow.itemRelevancePresent ||
           !evidence.researchTrendScanOverflow.sourceListPresent ||
           !evidence.researchTrendScanOverflow.researchFormPresent ||
           !evidence.researchTrendScanOverflow.networkFormPresent ||
+          evidence.researchTrendScanOverflow.hasHorizontalOverflow ||
           evidence.researchTrendScanOverflow.hasForbiddenText)
       ) {
         throw new Error(

@@ -300,6 +300,20 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('updateReviewStatus');
     expect(routeflowScreenshotSmokeScript).toContain('updateCorrectionFieldsPresent');
     expect(routeflowScreenshotSmokeScript).toContain('scanBeforeDetail');
+    expect(routeflowScreenshotSmokeScript).toContain('dashboardState');
+    expect(routeflowScreenshotSmokeScript).toContain('publicationCount');
+    expect(routeflowScreenshotSmokeScript).toContain('sourceCount');
+    expect(routeflowScreenshotSmokeScript).toContain('latestUpdate');
+    expect(routeflowScreenshotSmokeScript).toContain('latestUpdateText');
+    expect(routeflowScreenshotSmokeScript).toContain('topicCardIds');
+    expect(routeflowScreenshotSmokeScript).toContain('itemMetadataVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('itemPeriodVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('itemSourceVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('itemUpdateVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('itemLastCheckVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('itemRelevanceVisible');
+    expect(routeflowScreenshotSmokeScript).toContain('itemMetadataLabelsPresent');
+    expect(routeflowScreenshotSmokeScript).toContain('itemRelevancePresent');
     expect(routeflowScreenshotSmokeScript).toContain('sourceListPresent');
     expect(routeflowScreenshotSmokeScript).toContain('researchFormPresent');
     expect(routeflowScreenshotSmokeScript).toContain(

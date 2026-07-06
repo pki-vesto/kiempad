@@ -18101,7 +18101,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge research route, trend dashboard, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3893
 
 ### G1979 — Daily Recommendations: personalization feedback routeflow evidence
@@ -18902,6 +18902,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 104
 - **Status:** ☐ open
 - **Issue:** #3996
+
+### G2026 — Research Intelligence: trend dashboard metadata release evidence freshness guard
+
+- **Epic:** Personal Fertility Intelligence Platform
+- **Problem:** Trenddashboard metadata routeflow evidence bewaakt topic cards en per-item metadata, maar release- en contextbewijs moeten expliciet blijven aantonen dat tellingen en metadata zichtbaar en privacyveilig blijven.
+- **User Impact:** Zonder vers releasebewijs kan een latere UI- of themewijziging publicatie-/brontellingen, laatste update of per-item metadata laten verdwijnen zonder dat dit in de PR-context zichtbaar wordt.
+- **Desired Outcome:** Release- en documentatie-evidence verwijst naar de trenddashboard datahooks en benoemt de bewaakte metadata zonder gevoelige inhoud of externe providerpayload.
+- **User Value:** Gebruikers blijven researchontwikkelingen per onderwerp en periode begrijpen vanuit een scanbaar dashboard.
+- **Acceptance Criteria:** Release/docs evidence references `data-research-trend-dashboard` and `researchTrendScanOverflow` routeflow evidence; evidence mentions topic cards, publication/source counts, latest update, per-item period, source, update status, last check, relevance copy and bounded layout; evidence excludes dossier plaintext, provider payloads, diagnosis, dosage, chance claims, treatment-choice advice, secrets, tracking payloads and external content; backlog health remains at minimum 100 open goals.
+- **Affected Screens:** Kennis, Research Intelligence, routeflow evidence, release/context docs
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Knowledge research route, trend dashboard, routeflow smoke, release docs
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+- **Issue:** #3998
 
 ### G1942 — Fertility Intelligence: embryo image classification review routeflow evidence
 
