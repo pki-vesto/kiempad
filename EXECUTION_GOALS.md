@@ -18169,7 +18169,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendations UI, feedback analytics, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 27
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #3902
 
 ### G1983 — Research Intelligence: trend update timestamp routeflow evidence
