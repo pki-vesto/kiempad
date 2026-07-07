@@ -27726,7 +27726,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** src/main.ts, src/vendor/
 - **ADR Needed:** yes (ADR-0010)
 - **Score:** 110
-- **Status:** ☐ open
+- **Status:** ☒ archived
 - **Issue:** #4017
 
 ### G2037 — Premium Claude Design UI: Shared-element schermtransities
@@ -27898,3 +27898,394 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 70
 - **Status:** ☐ open
 - **Issue:** #4027
+### G2047 — Premium Claude Design UI: ADR-0010 + doc-correcties (React→lit-html)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Docs claimden React terwijl er nul runtime-deps zijn.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** ADR-0010 vastgelegd; React-drift gecorrigeerd (ARCHITECTURE.md:41-42/225, MASTER_CONTEXT.md:33, statusnoot ADR-0001).
+- **User Value:** Docs en code komen overeen.
+- **Acceptance Criteria:** ADR-0010 aanwezig; alle React-claims gecorrigeerd.
+- **Affected Screens:** docs
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs/adr/0010, ARCHITECTURE.md, MASTER_CONTEXT.md
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ done
+- **Issue:** #4029
+
+### G2048 — Premium Claude Design UI: Reconcile UI-goals (re-scope #4017, koppel #4027, her-richt #4016)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** lit-html-keuze overlapt met eerder geregistreerde goals.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** #4017 (morphdom) ge-re-scoped/gesloten t.g.v. lit-html; #4027 gekoppeld aan Fase 2; #4016 her-richt op de nieuwe boundary.
+- **User Value:** Geen dubbel werk in de backlog.
+- **Acceptance Criteria:** #4017 re-scoped; #4027/#4016 toegelicht.
+- **Affected Screens:** backlog
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** issues #4016/#4017/#4027
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ done
+- **Issue:** #4029
+
+### G2049 — Premium Claude Design UI: Getypte router (src/ui/router.ts, parseRoute)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** 16 `normalize*`-functies (appShell.ts:499-790) parseren de hash herhaald met gedupliceerde `new URLSearchParams(...)`; render() roept ze los aan.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Eén `parseRoute(hash): Route { screen, subRoute, params }` in `src/ui/router.ts`; de 16 normalize* verhuizen hierheen; render() parset 1×.
+- **User Value:** Minder sprawl, één plek voor routing, testbaar.
+- **Acceptance Criteria:** `parseRoute` dekt alle 13 schermen + subroutes + queryfilters; bestaande normalize-tests geport naar `tests/ui/router.test.ts`. render() roept geen 16 normalizers meer inline aan; routegedrag identiek. Volledige gate + `smoke:routeflows` groen.
+- **Affected Screens:** Alle schermen (routing)
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** src/ui/router.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #4030
+
+### G2050 — Premium Claude Design UI: Render-boundary + dispatch→render + lit-html-dependency
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** render() (main.ts:214) herbouwt de hele shell via innerHTML per mutatie en herbindt 18 bind*-functies; focus/scroll/input gaan verloren.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** `#screen-root` scheidt chrome van scherm; `dispatch(action)`→targeted `renderScreen`; lit-html als eerste runtime-dep. Volledige shell-render alleen bij navigatie/global change. Legacy-schermen via innerHTML+scoped bind tot ze gemigreerd zijn.
+- **User Value:** Focus/scroll/input blijven behouden; mutaties thrashen de chrome niet meer.
+- **Acceptance Criteria:** `mountView`/`renderScreen`-boundary geïntroduceerd; same-screen mutatie behoudt focus/scroll (DOM-test bewijst dit). lit-html toegevoegd (MIT, gepind, geen transitieve deps); `deps:review` + `assets:check` groen; CSP ongewijzigd (`script-src 'self'`). Gedrag identiek; `smoke:routeflows`, `smoke:split-workspaces`, `smoke:context-signals`, `drill:backup`, `smoke:offline` groen. Vervangt de morphdom-aanpak van #4017.
+- **Affected Screens:** Alle schermen (rendering)
+- **Priority:** P0
+- **Complexity:** L
+- **Related Components:** src/ui/render.ts, src/main.ts, package.json
+- **ADR Needed:** no
+- **Score:** 110
+- **Status:** ☐ open
+- **Issue:** #4031
+
+### G2051 — Premium Claude Design UI: Getypt UI-statusmodel (UiFeedback)
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** ~35 losse ephemere `*Status`/`*Error`/`*Feedback`-velden op RuntimeState (main.ts:132-204) met veel bijna-dubbele render-code.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** `UiFeedback = {scope,tone,message}` + helper; domein-state losgekoppeld van UI-state; adopteer in de pilot.
+- **User Value:** Minder dubbele code; voorbereiding op één dispatch→render-pad en multi-device sync.
+- **Acceptance Criteria:** `UiFeedback`-type + helper toegevoegd; pilotscherm gebruikt het i.p.v. losse string-velden. Geen gedragswijziging elders; volledige gate groen.
+- **Affected Screens:** Alle schermen (status)
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** src/ui/state.ts
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #4032
+
+### G2052 — Premium Claude Design UI: Migreer scherm welzijn (pilot) naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderWelzijnScreen` (appShell.ts:14020-14179) rendert via full-page innerHTML en wordt herbonden door bindWelzijnControls (main.ts:2850-2866, 3 listeners); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/welzijn.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindWelzijnControls en de aanroep in render().
+- **User Value:** Het `welzijn`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/welzijn.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/welzijn.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** welzijn
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** src/ui/screens/welzijn.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #4033
+
+### G2053 — Premium Claude Design UI: Migreer scherm kosten naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderKostenScreen` (appShell.ts:16441-16620) rendert via full-page innerHTML en wordt herbonden door bindKostenControls (main.ts:2820-2849, 2); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/kosten.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindKostenControls en de aanroep in render().
+- **User Value:** Het `kosten`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/kosten.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/kosten.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** kosten
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** src/ui/screens/kosten.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** #4034
+
+### G2054 — Premium Claude Design UI: Migreer scherm afwegingen naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderAfwegingenScreen` (appShell.ts:2638-2814) rendert via full-page innerHTML en wordt herbonden door bindAfwegingControls (main.ts:2867-2977, 2); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/afwegingen.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindAfwegingControls en de aanroep in render().
+- **User Value:** Het `afwegingen`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/afwegingen.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/afwegingen.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** afwegingen
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** src/ui/screens/afwegingen.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** #4035
+
+### G2055 — Premium Claude Design UI: Migreer scherm logboek naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderLogboekScreen` (appShell.ts:2130-2318) rendert via full-page innerHTML en wordt herbonden door (read-only, geen bind); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/logboek.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder (geen bind aanwezig) en de aanroep in render().
+- **User Value:** Het `logboek`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/logboek.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; geen bind was nodig. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/logboek.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** logboek
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** src/ui/screens/logboek.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** #4036
+
+### G2056 — Premium Claude Design UI: Migreer scherm herinneringen naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderHerinneringenScreen` (appShell.ts:20918-21135) rendert via full-page innerHTML en wordt herbonden door bindHerinneringControls (main.ts:3086-3200, 5); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/herinneringen.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindHerinneringControls en de aanroep in render().
+- **User Value:** Het `herinneringen`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/herinneringen.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/herinneringen.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** herinneringen
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** src/ui/screens/herinneringen.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #4037
+
+### G2057 — Premium Claude Design UI: Migreer scherm backup naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderBackupScreen` (appShell.ts:3208-3430) rendert via full-page innerHTML en wordt herbonden door bindBackupControls (main.ts:747-790, 7); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/backup.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindBackupControls en de aanroep in render().
+- **User Value:** Het `backup`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/backup.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/backup.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** backup
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** src/ui/screens/backup.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #4038
+
+### G2058 — Premium Claude Design UI: Migreer scherm start naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderStartScreen` (appShell.ts:17863-18023) rendert via full-page innerHTML en wordt herbonden door bindQuickEntryControls + bindDailyRecommendationControls (main.ts:2321-2550); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/start.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindQuickEntryControls + bindDailyRecommendationControls en de aanroep in render().
+- **User Value:** Het `start`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/start.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/start.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** start
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** src/ui/screens/start.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #4039
+
+### G2059 — Premium Claude Design UI: Migreer scherm agenda naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderAgendaScreen` (appShell.ts:21488-21749) rendert via full-page innerHTML en wordt herbonden door bindAgendaControls (main.ts:3304-3384, 4); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/agenda.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindAgendaControls en de aanroep in render().
+- **User Value:** Het `agenda`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/agenda.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/agenda.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** agenda
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** src/ui/screens/agenda.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #4040
+
+### G2060 — Premium Claude Design UI: Migreer scherm vragen naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderVragenScreen` (appShell.ts:19880-20136) rendert via full-page innerHTML en wordt herbonden door bindVraagControls (main.ts:2978-3085, 5); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/vragen.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindVraagControls en de aanroep in render().
+- **User Value:** Het `vragen`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/vragen.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/vragen.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** vragen
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** src/ui/screens/vragen.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #4041
+
+### G2061 — Premium Claude Design UI: Migreer scherm medicatie naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderMedicatieScreen` (appShell.ts:22240-22491) rendert via full-page innerHTML en wordt herbonden door bindMedicatieControls (main.ts:3385-4415, 1031 regels); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/medicatie.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindMedicatieControls en de aanroep in render().
+- **User Value:** Het `medicatie`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/medicatie.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/medicatie.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** medicatie
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** src/ui/screens/medicatie.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 70
+- **Status:** ☐ open
+- **Issue:** #4042
+
+### G2062 — Premium Claude Design UI: Migreer scherm kennis naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderKennisScreen` (appShell.ts:14637-15243) rendert via full-page innerHTML en wordt herbonden door bindKennisControls (main.ts:2551-2819, 10); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/kennis.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindKennisControls en de aanroep in render().
+- **User Value:** Het `kennis`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/kennis.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/kennis.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** kennis
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** src/ui/screens/kennis.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #4043
+
+### G2063 — Premium Claude Design UI: Migreer scherm dossier naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderDossierScreen` (appShell.ts:4127-5834) rendert via full-page innerHTML en wordt herbonden door bindDossierControls (main.ts:791-2146, 1356 regels); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/dossier.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindDossierControls en de aanroep in render().
+- **User Value:** Het `dossier`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/dossier.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/dossier.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `smoke:dossier-routes` + `drill:backup` groen.
+- **Affected Screens:** dossier
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** src/ui/screens/dossier.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 70
+- **Status:** ☐ open
+- **Issue:** #4044
+
+### G2064 — Premium Claude Design UI: Migreer scherm traject naar lit-html
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `renderTrajectScreen` (appShell.ts:22982-25177) rendert via full-page innerHTML en wordt herbonden door bindTrajectControls (main.ts:3201-3303, 7); focus/scroll gaan verloren bij mutatie.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Extraheer het scherm naar `src/ui/screens/traject.ts` als lit-html template met inline events (`@click`→`dispatch`); verwijder bindTrajectControls en de aanroep in render().
+- **User Value:** Het `traject`-scherm rendert vloeiend met behoud van focus/scroll; het scherm leeft in één bestand.
+- **Acceptance Criteria:** Renderfunctie verhuisd naar `src/ui/screens/traject.ts` (lit-html); rendert identiek, alle `data-*`-attributen behouden. Events werken via `dispatch`; de bijbehorende `bind*`-functie en de aanroep in render() zijn verwijderd. Scherm-tests uit `tests/appShell.test.ts` gesplitst naar `tests/ui/traject.screen.test.ts`; testdekking daalt niet; brosse HTML-asserts waar mogelijk semantisch. Focus/scroll behouden bij mutatie; `smoke:routeflows` + `drill:backup` groen.
+- **Affected Screens:** traject
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** src/ui/screens/traject.ts, src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 70
+- **Status:** ☐ open
+- **Issue:** #4045
+
+### G2065 — Premium Claude Design UI: Dun appShell.ts + main.ts uit; verwijder focus/rAF-hacks
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na migratie resteren monoliet-restanten en `pendingFocus`/rAF-compensatie (main.ts:302-333) die niet meer nodig zijn.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** `appShell.ts`→dunne chrome-compositie (~500 regels); `main.ts`→bootstrap (~200 regels); focus/rAF-hacks weg; resterende status-velden→`UiFeedback`.
+- **User Value:** Onderhoudbaar, klein, AI-edit-veilig.
+- **Acceptance Criteria:** `appShell.ts` en `main.ts` teruggebracht tot chrome resp. bootstrap; geen gedragswijziging; volledige suite + alle smokes groen.
+- **Affected Screens:** Alle schermen
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** src/appShell.ts, src/main.ts
+- **ADR Needed:** no
+- **Score:** 70
+- **Status:** ☐ open
+- **Issue:** #4046
+
+### G2066 — Premium Claude Design UI: Multi-device sync via dispatch
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Er is nog geen enkele plek waar "data veranderd → UI bij" gebeurt voor updates van een ander toestel.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Centrale sync-updates (`deriveCentralSyncFeedback`, central-session-feedback) roepen hetzelfde `dispatch(...)` aan als lokale mutaties.
+- **User Value:** Consistente UI-updates ongeacht of de trigger lokaal of remote is.
+- **Acceptance Criteria:** Sync-updates lopen via `dispatch`→targeted render; `smoke:central` (indien gezet) + `drill:backup` groen; geen extra uitgaand verkeer.
+- **Affected Screens:** Alle schermen (sync)
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** src/ui/state.ts, src/storage/*
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #4047
+
+### G2067 — Premium Claude Design UI: Splits restant tests/appShell.test.ts
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `tests/appShell.test.ts` (48.315 regels) is één flat describe met 150+ `it()`; brosse HTML-string-asserts.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Restant (chrome/nav/integratie) opgesplitst/behouden als regressiesuite; brosse asserts semantisch waar mogelijk.
+- **User Value:** Sneller, minder bros, per-scherm onderhoudbaar.
+- **Acceptance Criteria:** Testdekking daalt niet; suite groen; data-attribuut-contracten behouden.
+- **Affected Screens:** Tests
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** tests/appShell.test.ts, tests/ui/*
+- **ADR Needed:** no
+- **Score:** 78
+- **Status:** ☐ open
+- **Issue:** #4048
+
+### G2068 — Premium Claude Design UI: Dev-only CSP localhost via Vite transformIndexHtml
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De productie-`index.html:7-9` bevat `connect-src http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*`; er is geen dev/prod-mechanisme.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Vite `transformIndexHtml`-plugin injecteert de localhost-entries alleen in `serve`/dev; productie-CSP verstrakt naar `'self'` + (indien gezet) de centrale API-origin.
+- **User Value:** Strakkere productie-CSP zonder de dev-flow te breken.
+- **Acceptance Criteria:** prod-`dist/index.html` bevat geen localhost in `connect-src`; dev werkt; `smoke:central` groen.
+- **Affected Screens:** Build/CSP
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** vite.config.ts, index.html
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** #4049
+
+### G2069 — Premium Claude Design UI: Iframe-print voor exportConsultPdf
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** `exportConsultPdf` (main.ts:3023-3039) gebruikt `window.open`+`document.write`; popup-blockers kunnen dit blokkeren.
+- **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
+- **Desired Outcome:** Vervang door een verborgen iframe-print; `maakConsultPrintHtml` blijft ongewijzigd.
+- **User Value:** Betrouwbaar printen zonder popup-afhankelijkheid.
+- **Acceptance Criteria:** Consult-PDF print betrouwbaar; `consultExport.test.ts` + een nieuwe test groen; geen popup nodig.
+- **Affected Screens:** Vragen (consult-PDF)
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** src/main.ts
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☐ open
+- **Issue:** #4050
+

@@ -2197,7 +2197,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2033 | Premium Claude Design UI: daily owner-scan release evidence freshness guard | P1 | F5 | ☐ |
 | G2034 | Premium Claude Design UI: treatment mobile rail forced-colors cue text fill freshness guard | P1 | F5 | ☐ |
 | G2035 | Premium Claude Design UI: View-transition render-boundary (native, zero-dep) | P0 | F5 | ☐ |
-| G2036 | Premium Claude Design UI: State-behoudende DOM-morph rendering | P0 | F5 | ☐ |
+| G2036 | Premium Claude Design UI: State-behoudende DOM-morph rendering | P0 | F5 | ☒ |
 | G2037 | Premium Claude Design UI: Shared-element schermtransities | P1 | F5 | ☐ |
 | G2038 | Premium Claude Design UI: Motion- en elevation-tokenschaal | P1 | F5 | ☐ |
 | G2039 | Premium Claude Design UI: Entrance- en stagger-animaties (Web Animations API) | P1 | F5 | ☐ |
@@ -2208,6 +2208,29 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2044 | Premium Claude Design UI: Tauri desktop-shell (OPTIONEEL — beslissing vereist) | P2 | F5 | ☐ |
 | G2045 | Premium Claude Design UI: styles.css opsplitsen in modules | P2 | F5 | ☐ |
 | G2046 | Premium Claude Design UI: appShell.ts opsplitsen per scherm/domein | P2 | F5 | ☐ |
+| G2047 | Premium Claude Design UI: ADR-0010 + doc-correcties (React→lit-html) | P1 | F5 | ☑ |
+| G2048 | Premium Claude Design UI: Reconcile UI-goals (re-scope #4017, koppel #4027, her-richt #4016) | P1 | F5 | ☑ |
+| G2049 | Premium Claude Design UI: Getypte router (src/ui/router.ts, parseRoute) | P1 | F5 | ☐ |
+| G2050 | Premium Claude Design UI: Render-boundary + dispatch→render + lit-html-dependency | P0 | F5 | ☐ |
+| G2051 | Premium Claude Design UI: Getypt UI-statusmodel (UiFeedback) | P1 | F5 | ☐ |
+| G2052 | Premium Claude Design UI: Migreer scherm welzijn (pilot) naar lit-html | P1 | F5 | ☐ |
+| G2053 | Premium Claude Design UI: Migreer scherm kosten naar lit-html | P2 | F5 | ☐ |
+| G2054 | Premium Claude Design UI: Migreer scherm afwegingen naar lit-html | P2 | F5 | ☐ |
+| G2055 | Premium Claude Design UI: Migreer scherm logboek naar lit-html | P2 | F5 | ☐ |
+| G2056 | Premium Claude Design UI: Migreer scherm herinneringen naar lit-html | P2 | F5 | ☐ |
+| G2057 | Premium Claude Design UI: Migreer scherm backup naar lit-html | P2 | F5 | ☐ |
+| G2058 | Premium Claude Design UI: Migreer scherm start naar lit-html | P2 | F5 | ☐ |
+| G2059 | Premium Claude Design UI: Migreer scherm agenda naar lit-html | P2 | F5 | ☐ |
+| G2060 | Premium Claude Design UI: Migreer scherm vragen naar lit-html | P2 | F5 | ☐ |
+| G2061 | Premium Claude Design UI: Migreer scherm medicatie naar lit-html | P2 | F5 | ☐ |
+| G2062 | Premium Claude Design UI: Migreer scherm kennis naar lit-html | P2 | F5 | ☐ |
+| G2063 | Premium Claude Design UI: Migreer scherm dossier naar lit-html | P2 | F5 | ☐ |
+| G2064 | Premium Claude Design UI: Migreer scherm traject naar lit-html | P2 | F5 | ☐ |
+| G2065 | Premium Claude Design UI: Dun appShell.ts + main.ts uit; verwijder focus/rAF-hacks | P2 | F5 | ☐ |
+| G2066 | Premium Claude Design UI: Multi-device sync via dispatch | P2 | F5 | ☐ |
+| G2067 | Premium Claude Design UI: Splits restant tests/appShell.test.ts | P2 | F5 | ☐ |
+| G2068 | Premium Claude Design UI: Dev-only CSP localhost via Vite transformIndexHtml | P2 | F5 | ☐ |
+| G2069 | Premium Claude Design UI: Iframe-print voor exportConsultPdf | P2 | F5 | ☐ |
 
 ---
 
