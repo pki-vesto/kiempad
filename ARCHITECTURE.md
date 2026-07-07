@@ -38,8 +38,8 @@ versleutelde records kunnen openen.
 
 Lagen:
 
-- **UI-laag** — schermen en componenten; warm, rustig, toegankelijk. Framework:
-  React (sluit aan op de frontend-conventie van `sentinel` en `nova-studio`).
+- **UI-laag** — schermen en componenten; warm, rustig, toegankelijk. Rendering:
+  vanilla TypeScript + `lit-html` (zie [ADR-0010](docs/adr/0010-ui-rendering-lit-html.md)).
 - **Domeinlaag** — pure TypeScript-logica en types (zie [`src/domain/`](src/domain/)
   en [`DATAMODEL.md`](DATAMODEL.md)). Bevat geen UI en geen opslagdetails; goed
   testbaar met Vitest.
@@ -222,6 +222,6 @@ Samengevat hierboven (sectie 2). De volledige entiteiten, velden en relaties sta
 | Opslag | Centrale encrypted database + legacy lokale vault | Plaintext server-DB | Plaintext centrale opslag past niet bij gezondheidsdata; de centrale laag mag alleen encrypted payloads en minimale indexmetadata bewaren. |
 | Platform | PWA (web, mobielvriendelijk) | Native iOS/Android app | Eén codebase, snel itereren, geen app-store; PWA dekt offline + notificaties voldoende. |
 | Backend | Kleine centrale encrypted data-API | Volledige medische backend met plaintext domeinrecords | Te groot aanvalsvlak; de backend moet blind blijven voor medische inhoud. |
-| Stack | TypeScript + Vite + React | Python + losse frontend (Sentinel-stijl) | Eén taal, client-side, sluit aan op `nova-studio`; lichter voor een MVP. |
+| Stack | TypeScript + Vite + lit-html | Python + losse frontend (Sentinel-stijl) | Eén taal, client-side, minimale runtime-deps + strikte CSP; lichter voor een MVP (ADR-0010). |
 | AI | Opt-in cloud-samenvatting met waarborgen | Standaard ingebouwde AI | Privacy: data mag niet ongevraagd naar derden; AI moet bewust en geminimaliseerd. |
 | Governance | Handmatig (met AI-assistentie) | Onder Sentinel autonome build | Privé-app met gevoelige data hoort niet in een automatische, op publieke repos gerichte pipeline (ADR-0005). |

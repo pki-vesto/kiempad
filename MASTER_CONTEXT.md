@@ -30,7 +30,7 @@ van medisch advies**, en is uitsluitend voor **privégebruik** (geen distributie
 - **Versleuteld at rest**: alle gevoelige data versleuteld (AES-GCM, sleutel uit
   passphrase).
 - **Geen standaard uitgaand verkeer**: niets naar derden zonder expliciete opt-in.
-- **Eén taal, lichte stack**: TypeScript/Vite/React, Vitest.
+- **Eén taal, lichte stack**: TypeScript/Vite/lit-html, Vitest (zie ADR-0010).
 - **Pure, testbare domeinlaag**, gescheiden van UI en opslag.
 - **Klein beginnen**, gefaseerd uitbreiden.
 

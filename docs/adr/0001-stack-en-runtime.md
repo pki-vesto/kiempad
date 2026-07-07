@@ -7,6 +7,9 @@ Date: 2026-06-23
 Accepted for the original MVP runtime. De data-architectuurkeuze "geen backend /
 lokale opslag primair" is vervangen door
 [`ADR-0009: Centrale versleutelde data-architectuur`](0009-centrale-versleutelde-data-architectuur.md).
+Het **UI-framework-deel** ("UI met React") is vervangen door
+[`ADR-0010: UI-rendering — vanilla TypeScript + lit-html`](0010-ui-rendering-lit-html.md);
+React is nooit geïmplementeerd. De overige keuzes (Vite, PWA, Vitest) blijven geldig.
 
 ## Context
 
