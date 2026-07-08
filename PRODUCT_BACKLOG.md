@@ -695,12 +695,12 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G530 | Fertility Intelligence: embryo terugplaatsing contextkaart | P1 | F5 | ☐ |
 | G531 | Fertility Timeline & Knowledge Graph: knowledge graph node schema | P0 | F5 | ☑ |
 | G532 | Fertility Timeline & Knowledge Graph: relationship edge provenance model | P0 | F5 | ☑ |
-| G533 | Fertility Timeline & Knowledge Graph: fertility timeline filter op brontype | P1 | F5 | ☐ |
-| G534 | Fertility Timeline & Knowledge Graph: fertility timeline maandgroepering | P1 | F5 | ☐ |
-| G535 | Fertility Timeline & Knowledge Graph: timeline item detail drawer zonder kaart-in-kaart | P1 | F5 | ☐ |
-| G536 | Fertility Timeline & Knowledge Graph: timeline export met bronlijst | P1 | F5 | ☐ |
+| G533 | Fertility Timeline & Knowledge Graph: fertility timeline filter op brontype | P1 | F5 | ☑ |
+| G534 | Fertility Timeline & Knowledge Graph: fertility timeline maandgroepering | P1 | F5 | ☑ |
+| G535 | Fertility Timeline & Knowledge Graph: timeline item detail drawer zonder kaart-in-kaart | P1 | F5 | ☑ |
+| G536 | Fertility Timeline & Knowledge Graph: timeline export met bronlijst | P1 | F5 | ☑ |
 | G537 | Fertility Timeline & Knowledge Graph: knowledge graph privacy boundary test | P0 | F5 | ☑ |
-| G538 | Fertility Timeline & Knowledge Graph: contextuele inzichten als vragen voor arts | P1 | F5 | ☐ |
+| G538 | Fertility Timeline & Knowledge Graph: contextuele inzichten als vragen voor arts | P1 | F5 | ☑ |
 | G539 | Research Intelligence: research source allowlist met rationale | P0 | F5 | ☑ |
 | G540 | Research Intelligence: PubMed query preview zonder dossierplaintext | P0 | F5 | ☑ |
 | G541 | Research Intelligence: research item broncitatie parser | P1 | F5 | ☑ |
@@ -1409,7 +1409,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1244 | Premium Claude Design UI: consultupload als zelfstandige hubflow zichtbaar maken | P1 | F5 | ☑ |
 | G1245 | Premium Claude Design UI: consult intelligence detailpanelen verdichten na consult-hubflow | P1 | F5 | ☑ |
 | G1246 | Premium Claude Design UI: consultkaarten inhoudelijk scannen met compacte samenvatting en acties | P1 | F5 | ☑ |
-| G1247 | Premium Claude Design UI: consultkaart browser-evidence uitbreiden met gevulde fixture | P1 | F5 | ☐ |
+| G1247 | Premium Claude Design UI: consultkaart browser-evidence uitbreiden met gevulde fixture | P1 | F5 | ☑ |
 | G1248 | Premium Claude Design UI: trajectscan in behandelwerkbank verdichten | P1 | F5 | ☑ |
 | G1249 | Premium Claude Design UI: startscan tussen hub en vervolgpanelen toevoegen | P1 | F5 | ☑ |
 | G1250 | Premium Claude Design UI: researchscan in kenniswerkbank toevoegen | P1 | F5 | ☑ |
