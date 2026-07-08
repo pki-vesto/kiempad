@@ -13976,7 +13976,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Routeflow smoke, seeded browser state, consult cards, tests
 - **ADR Needed:** no
 - **Score:** 26
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G1248 — trajectscan in behandelwerkbank verdichten
 
@@ -15123,7 +15123,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, filters, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G534 — fertility timeline maandgroepering
 
@@ -15137,7 +15137,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, UI, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G535 — timeline item detail drawer zonder kaart-in-kaart
 
@@ -15151,7 +15151,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, UI, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G536 — timeline export met bronlijst
 
@@ -15165,7 +15165,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, export, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G537 — knowledge graph privacy boundary test
 
@@ -15193,7 +15193,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge graph, questions, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G539 — research source allowlist met rationale
 
