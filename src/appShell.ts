@@ -1835,7 +1835,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'dossier') return renderDossierScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
   if (activeId === 'welzijn') return renderWelzijnScreenHtml(state);
-  if (activeId === 'afwegingen') return renderAfwegingenScreen(state);
+  if (activeId === 'afwegingen') return renderAfwegingenScreenHtml(state);
   if (activeId === 'kosten') return renderKostenScreenHtml(state);
   if (activeId === 'logboek') return renderLogboekScreen(state);
   if (activeId === 'backup') return renderBackupScreen(state);
@@ -2359,7 +2359,7 @@ function isHighRiskEventLogForUi(item: EventLog): boolean {
   );
 }
 
-function renderAfwegingenScreen(state: AppShellState): string {
+function renderAfwegingenScreenHtml(state: AppShellState): string {
   const decisions = state.decisions ?? [];
   const chosenCount = decisions.filter((decision) => Boolean(decision.keuze)).length;
   const linkedQuestionCount = decisions.filter((decision) => Boolean(decision.vraagId)).length;

@@ -27,6 +27,8 @@
   submit-events en dispatch; de drie voormalige handmatig gebonden listeners zijn verwijderd.
 - **G2053 kosten lit-html:** opslaan en verwijderen worden vanuit de eigen schermtemplate
   getypeerd gedispatcht; het kostenformulier behoudt zijn bestaande data-contracten.
+- **G2054 afwegingen lit-html:** voorbereiden en een keuze vastleggen gebruiken de eigen
+  schermtemplate met getypeerde submit-dispatch en zonder handmatige listeners.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.

@@ -130,6 +130,7 @@ import {
   type TreatmentRoute,
   type WellbeingRoute,
 } from './ui/router';
+import { type AfwegingAction, renderAfwegingenScreen } from './ui/screens/afwegingen';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
 import { createUiState, setUiFeedback, type UiState } from './ui/state';
@@ -342,7 +343,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
       ? renderWelzijnScreen(screenHtml, (action) => dispatchWelzijnAction(action, root, state))
       : route.screen === 'kosten'
         ? renderKostenScreen(screenHtml, (action) => dispatchKostenAction(action, root, state))
-        : undefined;
+        : route.screen === 'afwegingen'
+          ? renderAfwegingenScreen(screenHtml, (action) =>
+              dispatchAfwegingAction(action, root, state),
+            )
+          : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -376,7 +381,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
   bindVraagControls(root, state);
   bindDossierControls(root, state);
   bindKennisControls(root, state);
-  bindAfwegingControls(root, state);
   bindBackupControls(root, state);
   if (
     !state.loadingState &&
@@ -2914,18 +2918,16 @@ function dispatchWelzijnAction(
   }
 }
 
-function bindAfwegingControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#decision-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveDecisionFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelectorAll<HTMLFormElement>('.decision-choice-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveDecisionChoiceFromForm(event.currentTarget, root, state);
-    });
-  });
+function dispatchAfwegingAction(
+  action: AfwegingAction,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (action.type === 'save-decision') {
+    void saveDecisionFromForm(action.form, root, state);
+  } else {
+    void saveDecisionChoiceFromForm(action.form, root, state);
+  }
 }
 
 async function saveDecisionFromForm(
