@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1845 |
+| ☑ klaar | 1846 |
 | ◐ bezig | 0 |
-| ☐ open | 119 |
+| ☐ open | 118 |
 | ☒ archived | 104 |
 | **Totaal** | **2068** |
 
@@ -2213,7 +2213,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2049 | Premium Claude Design UI: Getypte router (src/ui/router.ts, parseRoute) | P1 | F5 | ☑ |
 | G2050 | Premium Claude Design UI: Render-boundary + dispatch→render + lit-html-dependency | P0 | F5 | ☑ |
 | G2051 | Premium Claude Design UI: Getypt UI-statusmodel (UiFeedback) | P1 | F5 | ☑ |
-| G2052 | Premium Claude Design UI: Migreer scherm welzijn (pilot) naar lit-html | P1 | F5 | ☐ |
+| G2052 | Premium Claude Design UI: Migreer scherm welzijn (pilot) naar lit-html | P1 | F5 | ☑ |
 | G2053 | Premium Claude Design UI: Migreer scherm kosten naar lit-html | P2 | F5 | ☐ |
 | G2054 | Premium Claude Design UI: Migreer scherm afwegingen naar lit-html | P2 | F5 | ☐ |
 | G2055 | Premium Claude Design UI: Migreer scherm logboek naar lit-html | P2 | F5 | ☐ |

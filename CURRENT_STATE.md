@@ -23,6 +23,8 @@
   via één dispatchpad en behouden de boundary-scroll en focus buiten het scherm.
 - **G2051 getypte UI-status:** `UiState` scheidt ephemere feedback van repositories en
   domeindata; welzijnsregistraties gebruiken een getypte scope, toon en boodschap.
+- **G2052 welzijn lit-html-pilot:** welzijn heeft een eigen schermtemplate met inline
+  submit-events en dispatch; de drie voormalige handmatig gebonden listeners zijn verwijderd.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
