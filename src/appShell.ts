@@ -1831,7 +1831,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'agenda') return renderAgendaScreenHtml(state);
   if (activeId === 'medicatie') return renderMedicatieScreen(state);
   if (activeId === 'herinneringen') return renderHerinneringenScreenHtml(state);
-  if (activeId === 'vragen') return renderVragenScreen(state);
+  if (activeId === 'vragen') return renderVragenScreenHtml(state);
   if (activeId === 'dossier') return renderDossierScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
   if (activeId === 'welzijn') return renderWelzijnScreenHtml(state);
@@ -19607,7 +19607,7 @@ function renderQuickEntryForm(): string {
   `;
 }
 
-function renderVragenScreen(state: AppShellState): string {
+function renderVragenScreenHtml(state: AppShellState): string {
   const selected = state.vragen[0];
   const activeQuestionRoute = state.activeQuestionRoute ?? 'open';
   const nextWithQuestions = volgendeAfspraakMetOpenVragen(
