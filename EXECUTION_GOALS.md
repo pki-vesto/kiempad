@@ -27959,14 +27959,14 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **User Impact:** Zonder deze stap blijft de UI monolithisch en verliest de app focus/scroll bij interacties.
 - **Desired Outcome:** `#screen-root` scheidt chrome van scherm; `dispatch(action)`→targeted `renderScreen`; lit-html als eerste runtime-dep. Volledige shell-render alleen bij navigatie/global change. Legacy-schermen via innerHTML+scoped bind tot ze gemigreerd zijn.
 - **User Value:** Focus/scroll/input blijven behouden; mutaties thrashen de chrome niet meer.
-- **Acceptance Criteria:** `mountView`/`renderScreen`-boundary geïntroduceerd; same-screen mutatie behoudt focus/scroll (DOM-test bewijst dit). lit-html toegevoegd (MIT, gepind, geen transitieve deps); `deps:review` + `assets:check` groen; CSP ongewijzigd (`script-src 'self'`). Gedrag identiek; `smoke:routeflows`, `smoke:split-workspaces`, `smoke:context-signals`, `drill:backup`, `smoke:offline` groen. Vervangt de morphdom-aanpak van #4017.
+- **Acceptance Criteria:** `mountView`/`renderScreen`-boundary geïntroduceerd; same-screen mutatie behoudt focus/scroll (DOM-test bewijst dit). `lit-html@3.3.3` toegevoegd (BSD-3-Clause, exact gepind; alleen `@types/trusted-types` als type-only transitieve dependency); `deps:review` + `assets:check` groen; CSP ongewijzigd (`script-src 'self'`). Gedrag identiek; `smoke:routeflows`, `smoke:split-workspaces`, `smoke:context-signals`, `drill:backup`, `smoke:offline` groen. Vervangt de morphdom-aanpak van #4017.
 - **Affected Screens:** Alle schermen (rendering)
 - **Priority:** P0
 - **Complexity:** L
 - **Related Components:** src/ui/render.ts, src/main.ts, package.json
 - **ADR Needed:** no
 - **Score:** 110
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #4031
 
 ### G2051 — Premium Claude Design UI: Getypt UI-statusmodel (UiFeedback)

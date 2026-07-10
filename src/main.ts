@@ -1,6 +1,7 @@
 import {
   type AppShellLoadingState,
   type AppShellState,
+  renderAppScreen,
   renderAppShell,
   renderStorageBootstrapError,
   renderVaultGate,
@@ -112,6 +113,7 @@ import {
   koppelWebAuthnPrf,
   vraagWebAuthnPrfSecret,
 } from './storage/webauthn';
+import { canRenderTargeted, mountView, renderScreen } from './ui/render';
 import {
   type BackupRoute,
   type DecisionRoute,
@@ -211,19 +213,34 @@ const DAILY_RECOMMENDATION_OWNER_LABELS: Record<DailyRecommendationOwner, string
 
 const CENTRAL_SESSION_RENEWAL_RECOVERY_FOCUS_KEY = 'kiempad.central-session-renewal-recovery-focus';
 
+type UiAction = () => void;
+
+function dispatch(root: HTMLElement, state: RuntimeState, action: UiAction = () => {}): void {
+  action();
+  renderCurrentState(root, state);
+}
+
 function render(root: HTMLElement, state: RuntimeState): void {
+  dispatch(root, state);
+}
+
+function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
   if (!state.session.isUnlocked()) {
-    root.innerHTML = renderVaultGate(state.hasVault, state.error, state.webAuthnStatus, {
-      storageMode: state.storageMode,
-      storageLabel: state.storageLabel,
-    });
+    mountView(
+      root,
+      renderVaultGate(state.hasVault, state.error, state.webAuthnStatus, {
+        storageMode: state.storageMode,
+        storageLabel: state.storageLabel,
+      }),
+      'vault',
+    );
     bindVaultForm(root, state);
     bindWebAuthnUnlock(root, state);
     return;
   }
 
   const route = parseRoute(window.location.hash);
-  root.innerHTML = renderAppShell(route.screen, {
+  const appShellState: AppShellState = {
     trajecten: state.trajecten,
     afspraken: state.afspraken,
     medicatie: state.medicatie,
@@ -303,16 +320,33 @@ function render(root: HTMLElement, state: RuntimeState): void {
       state.notificaties,
       createNotificationDetailMap(state),
     ),
-  });
+  };
+  const routeKey = window.location.hash || '#start';
+  const shell = root.querySelector<HTMLElement>('.app-shell');
+  const settingsSheetIsOpen = root.querySelector('[data-settings-sheet]') !== null;
+  const loadingPanelIsShown = root.querySelector('[data-screen-loading="true"]') !== null;
+  const targeted =
+    canRenderTargeted(root, routeKey, route.screen) &&
+    shell?.dataset.theme === state.settings.thema &&
+    settingsSheetIsOpen === state.settingsOpen &&
+    loadingPanelIsShown === Boolean(state.loadingState);
+
+  if (targeted) {
+    renderScreen(root, renderAppScreen(route.screen, appShellState));
+  } else {
+    mountView(root, renderAppShell(route.screen, appShellState), routeKey);
+  }
   alignActiveWorkspaceStripButton(root);
   alignActiveRouteFocusLink(root);
-  requestAnimationFrame(() => alignActiveWorkspaceStripButton(root));
-  requestAnimationFrame(() => alignActiveRouteFocusLink(root));
-  bindBinarySwitchControls(root);
-  bindSettingsControls(root, state);
-  bindThemeControls(root, state);
-  bindFirstRunSetupControls(root, state);
-  bindExampleDataControls(root, state);
+  if (!targeted) {
+    requestAnimationFrame(() => alignActiveWorkspaceStripButton(root));
+    requestAnimationFrame(() => alignActiveRouteFocusLink(root));
+    bindBinarySwitchControls(root);
+    bindSettingsControls(root, state);
+    bindThemeControls(root, state);
+    bindFirstRunSetupControls(root, state);
+    bindExampleDataControls(root, state);
+  }
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
   bindDailyRecommendationControls(root, state);
@@ -341,60 +375,62 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.settings,
     createNotificationDetailMap(state),
   );
-  root.querySelector('#lock-button')?.addEventListener('click', () => {
-    state.session.lock();
-    state.trajectStore = undefined;
-    state.agendaStore = undefined;
-    state.medicatieStore = undefined;
-    state.herinneringStore = undefined;
-    state.vraagStore = undefined;
-    state.kennisStore = undefined;
-    state.kostenStore = undefined;
-    state.decisionStore = undefined;
-    state.dossierStore = undefined;
-    state.consultVerslagStore = undefined;
-    state.eventLogStore = undefined;
-    state.symptomenStore = undefined;
-    state.cycleDataStore = undefined;
-    state.mentaleCheckInStore = undefined;
-    state.settingsStore = undefined;
-    state.trajecten = [];
-    state.afspraken = [];
-    state.medicatie = [];
-    state.herinneringen = [];
-    state.vragen = [];
-    state.kennisItems = [];
-    state.kennisFilter = undefined;
-    state.timelineFilter = undefined;
-    state.symptomLogs = [];
-    state.cycleData = [];
-    state.mentalCheckIns = [];
-    state.decisions = [];
-    state.dossierDocuments = [];
-    state.consultVerslagen = [];
-    state.kosten = [];
-    state.eventLogs = [];
-    state.settings = DEFAULT_APP_SETTINGS;
-    state.aiPreview = undefined;
-    state.aiError = undefined;
-    state.backupStatus = undefined;
-    state.backupError = undefined;
-    state.dossierStatus = undefined;
-    state.dossierError = undefined;
-    state.dossierZoekterm = undefined;
-    state.dossierKliniekFilter = undefined;
-    state.dossierPogingFilter = undefined;
-    state.imagingFilter = undefined;
-    state.timelineFilter = undefined;
-    state.agendaImportStatus = undefined;
-    state.agendaImportError = undefined;
-    state.medicatieImportStatus = undefined;
-    state.medicatieImportError = undefined;
-    state.settingsOpen = false;
-    clearScheduledNotifications();
-    state.error = undefined;
-    void refreshWebAuthnStatus(state).then(() => render(root, state));
-  });
+  if (!targeted) {
+    root.querySelector('#lock-button')?.addEventListener('click', () => {
+      state.session.lock();
+      state.trajectStore = undefined;
+      state.agendaStore = undefined;
+      state.medicatieStore = undefined;
+      state.herinneringStore = undefined;
+      state.vraagStore = undefined;
+      state.kennisStore = undefined;
+      state.kostenStore = undefined;
+      state.decisionStore = undefined;
+      state.dossierStore = undefined;
+      state.consultVerslagStore = undefined;
+      state.eventLogStore = undefined;
+      state.symptomenStore = undefined;
+      state.cycleDataStore = undefined;
+      state.mentaleCheckInStore = undefined;
+      state.settingsStore = undefined;
+      state.trajecten = [];
+      state.afspraken = [];
+      state.medicatie = [];
+      state.herinneringen = [];
+      state.vragen = [];
+      state.kennisItems = [];
+      state.kennisFilter = undefined;
+      state.timelineFilter = undefined;
+      state.symptomLogs = [];
+      state.cycleData = [];
+      state.mentalCheckIns = [];
+      state.decisions = [];
+      state.dossierDocuments = [];
+      state.consultVerslagen = [];
+      state.kosten = [];
+      state.eventLogs = [];
+      state.settings = DEFAULT_APP_SETTINGS;
+      state.aiPreview = undefined;
+      state.aiError = undefined;
+      state.backupStatus = undefined;
+      state.backupError = undefined;
+      state.dossierStatus = undefined;
+      state.dossierError = undefined;
+      state.dossierZoekterm = undefined;
+      state.dossierKliniekFilter = undefined;
+      state.dossierPogingFilter = undefined;
+      state.imagingFilter = undefined;
+      state.timelineFilter = undefined;
+      state.agendaImportStatus = undefined;
+      state.agendaImportError = undefined;
+      state.medicatieImportStatus = undefined;
+      state.medicatieImportError = undefined;
+      state.settingsOpen = false;
+      clearScheduledNotifications();
+      state.error = undefined;
+      void refreshWebAuthnStatus(state).then(() => render(root, state));
+    });
+  }
 }
 
 function deriveCentralSyncFeedback(state: RuntimeState): AppShellState['centralSyncFeedback'] {
@@ -4417,4 +4453,4 @@ function optionalNonNegativeNumber(value: FormDataEntryValue | null): number | u
 
 void mount();
 
-export { mount, render };
+export { dispatch, mount, render };

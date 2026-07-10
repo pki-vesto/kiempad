@@ -1820,6 +1820,7 @@ describe('app shell', () => {
     expect(html).toContain('data-screen-stage-screen="agenda"');
     expect(html).toContain('data-screen-stage-group="Vandaag"');
     expect(html).toContain('data-screen-stage-layout="bounded-workspace"');
+    expect(html).toContain('id="screen-root" data-screen-root="agenda"');
     expect(html).toContain('class="screen-stage__chrome" data-screen-stage-chrome="sticky"');
     expect(html).toContain('class="screen-stage__panel"');
     expect(html).toContain('data-screen-stage-panel="active"');

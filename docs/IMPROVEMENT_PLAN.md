@@ -33,6 +33,11 @@ geen JSX/build-wijziging, strikte CSP blijft). Het plan is uitgewerkt voor deze 
 bij elke stap staat een **[B/C]-noot** met wat zou verschillen bij Preact (B) of
 gedisciplineerd vanilla (C).
 
+**Supply-chaincorrectie (2026-07-10):** gebruik exact `lit-html@3.3.3` onder
+BSD-3-Clause. `@types/trusted-types` is toegestaan als enige type-only transitieve
+dependency; die voegt geen browserruntime toe. Dit vervangt de oorspronkelijke,
+feitelijk onhaalbare combinatie "MIT + geen transitieve deps".
+
 ## Aansluiting op reeds geregistreerde goals (G2035–G2046)
 
 - **G2036 / #4017 (morphdom)** → **vervalt / re-scope**: `lit-html` doet zelf keyed

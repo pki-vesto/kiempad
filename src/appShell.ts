@@ -814,9 +814,6 @@ export function renderAppShell(
   },
 ): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
-  const screenContent = state.loadingState
-    ? renderAppLoadingState(state.loadingState)
-    : renderScreenContent(activeId, activeScreen, state);
   const screenTitle = storageAwareScreenTitle(activeScreen, state);
   const screenIntro = storageAwareScreenIntro(activeScreen, state);
   const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
@@ -869,12 +866,21 @@ export function renderAppShell(
         </div>
 
         <section class="screen-stage__panel" aria-label="${escapeAttribute(activeScreen.label)} actief scherm" data-screen-stage-panel="active" data-screen-stage-scroll="active-workspace"${state.loadingState ? ' aria-busy="true" data-screen-loading="true"' : ''}>
-          ${screenContent}
-          ${renderScreenDisclaimer(activeScreen)}
+          <div id="screen-root" data-screen-root="${escapeAttribute(activeId)}">
+            ${renderAppScreen(activeId, state)}
+          </div>
         </section>
       </main>
     </div>
   `;
+}
+
+export function renderAppScreen(activeId: ScreenId, state: AppShellState): string {
+  const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
+  const screenContent = state.loadingState
+    ? renderAppLoadingState(state.loadingState)
+    : renderScreenContent(activeId, activeScreen, state);
+  return `${screenContent}${renderScreenDisclaimer(activeScreen)}`;
 }
 
 function renderAppLoadingState(loading: AppShellLoadingState): string {
