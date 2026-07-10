@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2051 getypt UI-statusmodel: ephemere feedback leeft per scope in `UiState`; het
+  welzijnspilotscherm gebruikt `UiFeedback` voor succesvolle registraties.
 - G2050 render-boundary: `#screen-root`, `mountView`, `renderScreen` en het centrale
   dispatchpad beperken same-screen mutaties tot de actieve werkruimte; `lit-html@3.3.3`
   is exact gepind en de gecorrigeerde BSD-3-Clause supply-chainkeuze is vastgelegd.

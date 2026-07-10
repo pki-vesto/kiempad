@@ -1881,6 +1881,24 @@ describe('app shell', () => {
     );
   });
 
+  it('rendert getypte welzijnsfeedback binnen het pilotscherm', () => {
+    const html = renderAppShell(
+      'welzijn',
+      makeStartState({
+        activeWellbeingRoute: 'log',
+        uiFeedback: {
+          scope: 'welzijn',
+          tone: 'success',
+          message: 'Mentale check-in opgeslagen.',
+        },
+      }),
+    );
+
+    expect(html).toContain('data-ui-feedback="welzijn"');
+    expect(html).toContain('data-ui-feedback-tone="success"');
+    expect(html).toContain('Mentale check-in opgeslagen.');
+  });
+
   it('groepeert primaire desktopnavigatie in Primair, Beheer en Privacy', () => {
     const html = renderAppShell('vragen');
 
