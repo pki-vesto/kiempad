@@ -140,6 +140,7 @@ import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderLogboekScreen } from './ui/screens/logboek';
 import { type MedicatieAction, renderMedicatieScreen } from './ui/screens/medicatie';
 import { renderStartScreen, type StartAction } from './ui/screens/start';
+import { renderTrajectScreen, type TrajectAction } from './ui/screens/traject';
 import { renderVragenScreen, type VragenAction } from './ui/screens/vragen';
 import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
 import { createUiState, setUiFeedback, type UiState } from './ui/state';
@@ -390,7 +391,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
                             ? renderDossierScreen(screenHtml, (action) =>
                                 dispatchDossierAction(action, root, state),
                               )
-                            : undefined;
+                            : route.screen === 'traject'
+                              ? renderTrajectScreen(screenHtml, (action) =>
+                                  dispatchTrajectAction(action, root, state),
+                                )
+                              : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -415,7 +420,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
     bindFirstRunSetupControls(root, state);
     bindExampleDataControls(root, state);
   }
-  bindTrajectControls(root, state);
   if (route.screen === 'dossier') initializeDossierForm(root);
   if (
     !state.loadingState &&
@@ -3080,68 +3084,49 @@ async function saveEigenHerinneringFromForm(
   await reloadAndRender(root, state);
 }
 
-function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#traject-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveTrajectFromForm(event.currentTarget, root, state);
-  });
-  root.querySelector('#graph-filter-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    applyGraphFilterFromForm(event.currentTarget, root, state);
-  });
-  root.querySelector('#timeline-filter-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    applyTimelineFilterFromForm(event.currentTarget, root, state);
-  });
-  root.querySelector('#traject-new-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveTrajectFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelectorAll<HTMLButtonElement>('.phase-button').forEach((button) => {
-    button.addEventListener('click', () => {
-      const trajectId = button.dataset.trajectId;
-      const fase = button.dataset.fase as TrajectFase | undefined;
-      if (!trajectId || !fase || !state.trajectStore) return;
-
-      void state.trajectStore.setCurrentPhase(trajectId, fase).then(() => {
-        state.trajectStatus = 'Trajectfase bijgewerkt.';
-        return reloadAndRender(root, state);
-      });
+function dispatchTrajectAction(
+  action: TrajectAction,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (action.type === 'save') {
+    void saveTrajectFromForm(action.form, root, state);
+  } else if (action.type === 'graph-filter') {
+    applyGraphFilterFromForm(action.form, root, state);
+  } else if (action.type === 'timeline-filter') {
+    applyTimelineFilterFromForm(action.form, root, state);
+  } else if (action.type === 'phase') {
+    const trajectId = action.button.dataset.trajectId;
+    const fase = action.button.dataset.fase as TrajectFase | undefined;
+    if (!trajectId || !fase || !state.trajectStore) return;
+    void state.trajectStore.setCurrentPhase(trajectId, fase).then(() => {
+      state.trajectStatus = 'Trajectfase bijgewerkt.';
+      return reloadAndRender(root, state);
     });
-  });
-
-  root.querySelector('#delete-traject')?.addEventListener('click', (event) => {
-    const button = event.currentTarget;
-    if (!(button instanceof HTMLButtonElement)) return;
-    const trajectId = button.dataset.trajectId;
+  } else if (action.type === 'delete') {
+    const trajectId = action.button.dataset.trajectId;
     if (!trajectId || !state.trajectStore) return;
-
-    showInlineDeleteConfirmation(button, root, {
+    showInlineDeleteConfirmation(action.button, root, {
       kind: 'traject',
       title: 'Traject verwijderen?',
       detail: DELETE_CONFIRMATIONS.traject,
       ariaLabel: 'Traject verwijderen bevestigen',
-      triggerLabel: button.getAttribute('aria-label') ?? 'Verwijder traject',
+      triggerLabel: action.button.getAttribute('aria-label') ?? 'Verwijder traject',
       onConfirm: () =>
         state.trajectStore?.delete(trajectId).then(() => {
           state.trajectStatus = 'Traject verwijderd.';
           return reloadAndRender(root, state);
         }),
     });
-  });
-
-  root.querySelectorAll<HTMLButtonElement>('.archive-traject').forEach((button) => {
-    button.addEventListener('click', () => {
-      const trajectId = button.dataset.trajectId;
-      if (!trajectId || !state.trajectStore) return;
-      const gearchiveerd = button.dataset.gearchiveerd === 'true';
-      void state.trajectStore.archive(trajectId, gearchiveerd).then(() => {
-        state.trajectStatus = gearchiveerd ? 'Traject gearchiveerd.' : 'Traject hersteld.';
-        return reloadAndRender(root, state);
-      });
+  } else {
+    const trajectId = action.button.dataset.trajectId;
+    if (!trajectId || !state.trajectStore) return;
+    const gearchiveerd = action.button.dataset.gearchiveerd === 'true';
+    void state.trajectStore.archive(trajectId, gearchiveerd).then(() => {
+      state.trajectStatus = gearchiveerd ? 'Traject gearchiveerd.' : 'Traject hersteld.';
+      return reloadAndRender(root, state);
     });
-  });
+  }
 }
 
 function applyGraphFilterFromForm(

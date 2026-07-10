@@ -1827,7 +1827,7 @@ function navSettingsIcon(): string {
 
 function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShellState): string {
   if (activeId === 'start') return renderStartScreenHtml(state);
-  if (activeId === 'traject') return renderTrajectScreen(state);
+  if (activeId === 'traject') return renderTrajectScreenHtml(state);
   if (activeId === 'agenda') return renderAgendaScreenHtml(state);
   if (activeId === 'medicatie') return renderMedicatieScreenHtml(state);
   if (activeId === 'herinneringen') return renderHerinneringenScreenHtml(state);
@@ -22709,7 +22709,7 @@ function renderDoseLogHistory(doseLogs: DoseLog[]): string {
   `;
 }
 
-function renderTrajectScreen(state: AppShellState): string {
+function renderTrajectScreenHtml(state: AppShellState): string {
   const actieveTrajecten = state.trajecten.filter((item) => item.traject.gearchiveerd !== true);
   const gearchiveerdeTrajecten = state.trajecten.filter(
     (item) => item.traject.gearchiveerd === true,

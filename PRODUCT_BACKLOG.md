@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1857 |
+| ☑ klaar | 1858 |
 | ◐ bezig | 0 |
-| ☐ open | 107 |
+| ☐ open | 106 |
 | ☒ archived | 104 |
 | **Totaal** | **2068** |
 
@@ -2225,7 +2225,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2061 | Premium Claude Design UI: Migreer scherm medicatie naar lit-html | P2 | F5 | ☑ |
 | G2062 | Premium Claude Design UI: Migreer scherm kennis naar lit-html | P2 | F5 | ☑ |
 | G2063 | Premium Claude Design UI: Migreer scherm dossier naar lit-html | P2 | F5 | ☑ |
-| G2064 | Premium Claude Design UI: Migreer scherm traject naar lit-html | P2 | F5 | ☐ |
+| G2064 | Premium Claude Design UI: Migreer scherm traject naar lit-html | P2 | F5 | ☑ |
 | G2065 | Premium Claude Design UI: Dun appShell.ts + main.ts uit; verwijder focus/rAF-hacks | P2 | F5 | ☐ |
 | G2066 | Premium Claude Design UI: Multi-device sync via dispatch | P2 | F5 | ☐ |
 | G2067 | Premium Claude Design UI: Splits restant tests/appShell.test.ts | P2 | F5 | ☐ |

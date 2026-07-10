@@ -47,6 +47,8 @@
   verificatie dispatchen vanuit de eigen schermtemplate zonder handmatige bindlaag.
 - **G2063 dossier lit-html:** upload, consult-, embryo-, imaging-, tijdlijn- en OCR-review
   dispatchen vanuit de eigen schermtemplate; attachment-preview blijft gericht bijgewerkt.
+- **G2064 traject lit-html:** trajectopslag, grafiek- en tijdlijnfilters, fase, archivering en
+  verwijderen dispatchen vanuit de eigen schermtemplate zonder handmatige bindlaag.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
