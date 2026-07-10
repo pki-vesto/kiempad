@@ -241,8 +241,8 @@ describe('main bootstrap', () => {
   });
 
   it('bindt de centrale sessie-renewal herstelactie aan een app-reload zonder payloaddetails', () => {
-    expect(mainSource).toContain('[data-central-session-renewal-action="reload"]');
-    expect(mainSource).toContain('[data-central-replay-conflict-action="reload"]');
+    expect(mainSource).toContain('dispatchBackupAction');
+    expect(mainSource).toContain("action.button.dataset.centralSessionRenewalAction === 'reload'");
     expect(mainSource).toContain('window.location.reload()');
     expect(mainSource).not.toContain('session id token passphrase payload');
   });

@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2057 backupscherm: export, import, syncpakket, veilige samenvatting en herstelreload
+  lopen via inline lit-html events en getypeerde dispatch.
 - G2056 herinneringenscherm: planning, snooze, notificatiepermissie en privacysettings
   dispatchen vanuit inline lit-html events; generieke notificatietekst blijft intact.
 - G2055 logboekscherm: het read-only audit- en privacyoverzicht heeft een eigen

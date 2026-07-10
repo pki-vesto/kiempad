@@ -1838,7 +1838,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'afwegingen') return renderAfwegingenScreenHtml(state);
   if (activeId === 'kosten') return renderKostenScreenHtml(state);
   if (activeId === 'logboek') return renderLogboekScreenHtml(state);
-  if (activeId === 'backup') return renderBackupScreen(state);
+  if (activeId === 'backup') return renderBackupScreenHtml(state);
 
   return `
     <section class="section-stack" aria-label="${screen.label}">
@@ -2929,7 +2929,7 @@ function renderDecisionOptionTags(optie: Decision['opties'][number]): string {
   `;
 }
 
-function renderBackupScreen(state: AppShellState): string {
+function renderBackupScreenHtml(state: AppShellState): string {
   const reminder = bepaalBackupReminder(state.settings.laatsteBackupOp);
   const central = isCentralStorage(state);
   const backupCopy = central

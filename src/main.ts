@@ -131,6 +131,7 @@ import {
   type WellbeingRoute,
 } from './ui/router';
 import { type AfwegingAction, renderAfwegingenScreen } from './ui/screens/afwegingen';
+import { type BackupAction, renderBackupScreen } from './ui/screens/backup';
 import { type HerinneringenAction, renderHerinneringenScreen } from './ui/screens/herinneringen';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderLogboekScreen } from './ui/screens/logboek';
@@ -355,7 +356,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
               ? renderHerinneringenScreen(screenHtml, (action) =>
                   dispatchHerinneringenAction(action, root, state),
                 )
-              : undefined;
+              : route.screen === 'backup'
+                ? renderBackupScreen(screenHtml, (action) =>
+                    dispatchBackupAction(action, root, state),
+                  )
+                : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -388,7 +393,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
   bindVraagControls(root, state);
   bindDossierControls(root, state);
   bindKennisControls(root, state);
-  bindBackupControls(root, state);
   if (
     !state.loadingState &&
     (state.centralSessionRenewalRecoveryPendingFocus ||
@@ -816,48 +820,26 @@ function focusCentralSessionRenewalRecoveryStatus(root: HTMLElement, state: Runt
   });
 }
 
-function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
-  root
-    .querySelectorAll<HTMLButtonElement>(
-      '[data-central-session-renewal-action="reload"], [data-central-replay-conflict-action="reload"]',
-    )
-    .forEach((button) => {
-      button.addEventListener('click', () => {
-        if (button.dataset.centralSessionRenewalAction === 'reload') {
-          reloadToCentralSessionRenewalRecoveryFocus();
-          return;
-        }
-        window.location.reload();
-      });
-    });
-
-  root.querySelector('#export-backup')?.addEventListener('click', () => {
+function dispatchBackupAction(action: BackupAction, root: HTMLElement, state: RuntimeState): void {
+  if (action.type === 'reload') {
+    if (action.button.dataset.centralSessionRenewalAction === 'reload') {
+      reloadToCentralSessionRenewalRecoveryFocus();
+    } else {
+      window.location.reload();
+    }
+  } else if (action.type === 'export-backup') {
     void exportBackup(root, state);
-  });
-
-  root.querySelector('#export-sync')?.addEventListener('click', () => {
+  } else if (action.type === 'export-sync') {
     void exportSync(root, state);
-  });
-
-  root.querySelectorAll<HTMLButtonElement>('[data-backup-copy-kind]').forEach((button) => {
-    button.addEventListener('click', () => {
-      void copyBackupSummary(button, root, state);
-    });
-  });
-
-  root.querySelector('#import-backup-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void importBackupFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#import-sync-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void importSyncFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#webauthn-enroll')?.addEventListener('click', () => {
+  } else if (action.type === 'copy-summary') {
+    void copyBackupSummary(action.button, root, state);
+  } else if (action.type === 'import-backup') {
+    void importBackupFromForm(action.form, root, state);
+  } else if (action.type === 'import-sync') {
+    void importSyncFromForm(action.form, root, state);
+  } else if (action.type === 'webauthn-enroll') {
     void enrollWebAuthnUnlock(root, state);
-  });
+  }
 }
 
 function bindDossierControls(root: HTMLElement, state: RuntimeState): void {

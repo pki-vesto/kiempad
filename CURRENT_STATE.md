@@ -33,6 +33,8 @@
   eigen schermtemplate en heeft bewust geen interactieve bindlaag.
 - **G2056 herinneringen lit-html:** planning, verplaatsen, permissie en privacykeuze
   lopen via getypeerde schermdispatch met behoud van generieke notificatietekst.
+- **G2057 backup lit-html:** backup- en syncimport/export, herstelreload en WebAuthn-koppeling
+  dispatchen vanuit de eigen schermtemplate; de herstel-drill blijft leidend.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
