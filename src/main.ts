@@ -131,6 +131,7 @@ import {
   type WellbeingRoute,
 } from './ui/router';
 import { type AfwegingAction, renderAfwegingenScreen } from './ui/screens/afwegingen';
+import { type AgendaAction, renderAgendaScreen } from './ui/screens/agenda';
 import { type BackupAction, renderBackupScreen } from './ui/screens/backup';
 import { type HerinneringenAction, renderHerinneringenScreen } from './ui/screens/herinneringen';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
@@ -365,7 +366,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
                   ? renderStartScreen(screenHtml, (action) =>
                       dispatchStartAction(action, root, state),
                     )
-                  : undefined;
+                  : route.screen === 'agenda'
+                    ? renderAgendaScreen(screenHtml, (action) =>
+                        dispatchAgendaAction(action, root, state),
+                      )
+                    : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -391,7 +396,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
     bindExampleDataControls(root, state);
   }
   bindTrajectControls(root, state);
-  bindAgendaControls(root, state);
   bindMedicatieControls(root, state);
   bindVraagControls(root, state);
   bindDossierControls(root, state);
@@ -3283,24 +3287,15 @@ function applyTimelineFilterFromForm(
   render(root, state);
 }
 
-function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#export-ics')?.addEventListener('click', () => {
+function dispatchAgendaAction(action: AgendaAction, root: HTMLElement, state: RuntimeState): void {
+  if (action.type === 'export') {
     exportAgendaIcs(state);
-  });
-
-  root.querySelector('#afspraak-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveAfspraakFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#ics-import-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void importAgendaIcsFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#delete-afspraak')?.addEventListener('click', (event) => {
-    const button = event.currentTarget;
-    if (!(button instanceof HTMLButtonElement)) return;
+  } else if (action.type === 'save') {
+    void saveAfspraakFromForm(action.form, root, state);
+  } else if (action.type === 'import') {
+    void importAgendaIcsFromForm(action.form, root, state);
+  } else {
+    const button = action.button;
     const afspraakId = button.dataset.afspraakId;
     if (!afspraakId || !state.agendaStore) return;
 
@@ -3317,7 +3312,7 @@ function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
         });
       },
     });
-  });
+  }
 }
 
 function exportAgendaIcs(state: RuntimeState): void {

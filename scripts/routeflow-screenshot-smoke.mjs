@@ -8834,16 +8834,21 @@ async function prepareQuestionConsultLinkRoute(page, targetHash) {
   await page.goto(`${url}#agenda?route=plannen`, { waitUntil: 'networkidle' });
   await unlockIfNeeded(page, '#agenda?route=plannen');
   await waitForStableRouteflowRoot(page, '[data-schedule-focus-shell="ready"]');
+  await page.waitForSelector('[data-lit-screen="agenda"]', { timeout: 10_000 });
   await page.locator('#afspraak-form input[name="titel"]').fill(appointmentTitle);
   await page.locator('#afspraak-form input[name="datumTijd"]').fill('2099-07-01T10:00');
   await page.locator('#afspraak-form select[name="type"]').selectOption('consult');
   await page.locator('#afspraak-form textarea[name="voorbereiding"]').fill('Koppel consultvragen.');
   await page.locator('#afspraak-form button[type="submit"]').click();
-  await waitForStableRouteflowRoot(page, '[data-schedule-focus-shell="ready"]');
   await page.waitForFunction(
-    (title) =>
-      document.body.textContent?.includes('Afspraak opgeslagen.') &&
-      document.body.textContent?.includes(title),
+    (title) => {
+      const titleInput = document.querySelector('#afspraak-form input[name="titel"]');
+      return (
+        document.body.textContent?.includes('Afspraak opgeslagen.') &&
+        titleInput instanceof HTMLInputElement &&
+        titleInput.value === title
+      );
+    },
     appointmentTitle,
     { timeout: 10_000 },
   );

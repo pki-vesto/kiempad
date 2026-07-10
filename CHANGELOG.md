@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2059 agendascherm: afsprakenacties en lokale ICS-import/-export dispatchen via inline
+  lit-html events; de voormalige agenda-bindlaag is verwijderd.
 - G2058 startscherm: snelle invoer en dagadviesinteracties lopen via inline lit-html
   events en getypeerde dispatch met behoud van de bestaande focusbewaking.
 - G2057 backupscherm: export, import, syncpakket, veilige samenvatting en herstelreload
