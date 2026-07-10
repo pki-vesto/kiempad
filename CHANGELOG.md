@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2052 welzijnspilot: het scherm mount als lit-html-template met inline submit-events
+  en dispatch voor check-ins, symptoomlogs en cyclusmetingen; de legacy bindlaag is weg.
 - G2051 getypt UI-statusmodel: ephemere feedback leeft per scope in `UiState`; het
   welzijnspilotscherm gebruikt `UiFeedback` voor succesvolle registraties.
 - G2050 render-boundary: `#screen-root`, `mountView`, `renderScreen` en het centrale

@@ -1834,7 +1834,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'vragen') return renderVragenScreen(state);
   if (activeId === 'dossier') return renderDossierScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
-  if (activeId === 'welzijn') return renderWelzijnScreen(state);
+  if (activeId === 'welzijn') return renderWelzijnScreenHtml(state);
   if (activeId === 'afwegingen') return renderAfwegingenScreen(state);
   if (activeId === 'kosten') return renderKostenScreen(state);
   if (activeId === 'logboek') return renderLogboekScreen(state);
@@ -13741,7 +13741,7 @@ function beschrijfPreviewLocatie(state: AppShellState): string {
     : 'Lokale preview uit de lokale kluis op dit toestel.';
 }
 
-function renderWelzijnScreen(state: AppShellState): string {
+function renderWelzijnScreenHtml(state: AppShellState): string {
   const logs = state.symptomLogs ?? [];
   const cycleData = state.cycleData ?? [];
   const checkIns = state.mentalCheckIns ?? [];

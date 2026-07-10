@@ -1,4 +1,4 @@
-import { html, render as renderTemplate } from 'lit-html';
+import { html, render as renderTemplate, type TemplateResult } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 import type { ScreenId } from './router';
@@ -21,6 +21,10 @@ export function canRenderTargeted(root: HTMLElement, routeKey: string, screen: S
 }
 
 export function renderScreen(root: HTMLElement, screenHtml: string): void {
+  renderScreenTemplate(root, html`${unsafeHTML(screenHtml)}`);
+}
+
+export function renderScreenTemplate(root: HTMLElement, template: TemplateResult): void {
   const boundary = root.querySelector<HTMLElement>('#screen-root');
   if (!boundary) throw new Error('De #screen-root render-boundary ontbreekt.');
 
@@ -43,7 +47,7 @@ export function renderScreen(root: HTMLElement, screenHtml: string): void {
     boundary.replaceChildren();
     initializedScreenBoundaries.add(boundary);
   }
-  renderTemplate(html`${unsafeHTML(screenHtml)}`, boundary);
+  renderTemplate(template, boundary);
   boundary.scrollTop = scrollTop;
   boundary.scrollLeft = scrollLeft;
 

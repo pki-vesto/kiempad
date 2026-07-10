@@ -113,7 +113,7 @@ import {
   koppelWebAuthnPrf,
   vraagWebAuthnPrfSecret,
 } from './storage/webauthn';
-import { canRenderTargeted, mountView, renderScreen } from './ui/render';
+import { canRenderTargeted, mountView, renderScreen, renderScreenTemplate } from './ui/render';
 import {
   type BackupRoute,
   type DecisionRoute,
@@ -130,6 +130,7 @@ import {
   type TreatmentRoute,
   type WellbeingRoute,
 } from './ui/router';
+import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
 import { createUiState, setUiFeedback, type UiState } from './ui/state';
 
 type RuntimeState = {
@@ -334,11 +335,25 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
     shell?.dataset.theme === state.settings.thema &&
     settingsSheetIsOpen === state.settingsOpen &&
     loadingPanelIsShown === Boolean(state.loadingState);
+  const screenHtml = renderAppScreen(route.screen, appShellState);
 
   if (targeted) {
-    renderScreen(root, renderAppScreen(route.screen, appShellState));
+    if (route.screen === 'welzijn') {
+      renderScreenTemplate(
+        root,
+        renderWelzijnScreen(screenHtml, (action) => dispatchWelzijnAction(action, root, state)),
+      );
+    } else {
+      renderScreen(root, screenHtml);
+    }
   } else {
     mountView(root, renderAppShell(route.screen, appShellState), routeKey);
+    if (route.screen === 'welzijn') {
+      renderScreenTemplate(
+        root,
+        renderWelzijnScreen(screenHtml, (action) => dispatchWelzijnAction(action, root, state)),
+      );
+    }
   }
   alignActiveWorkspaceStripButton(root);
   alignActiveRouteFocusLink(root);
@@ -360,7 +375,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
   bindVraagControls(root, state);
   bindDossierControls(root, state);
   bindKennisControls(root, state);
-  bindWelzijnControls(root, state);
   bindAfwegingControls(root, state);
   bindKostenControls(root, state);
   bindBackupControls(root, state);
@@ -2894,21 +2908,18 @@ function bindKostenControls(root: HTMLElement, state: RuntimeState): void {
   });
 }
 
-function bindWelzijnControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#mental-check-in-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveMentalCheckInFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#symptom-log-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveSymptomLogFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#cycle-data-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveCycleDataFromForm(event.currentTarget, root, state);
-  });
+function dispatchWelzijnAction(
+  action: WelzijnSubmitAction,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (action.type === 'mental-check-in') {
+    void saveMentalCheckInFromForm(action.form, root, state);
+  } else if (action.type === 'symptom-log') {
+    void saveSymptomLogFromForm(action.form, root, state);
+  } else {
+    void saveCycleDataFromForm(action.form, root, state);
+  }
 }
 
 function bindAfwegingControls(root: HTMLElement, state: RuntimeState): void {
