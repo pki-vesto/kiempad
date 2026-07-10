@@ -130,8 +130,11 @@ import {
   type TreatmentRoute,
   type WellbeingRoute,
 } from './ui/router';
+import { createUiState, setUiFeedback, type UiState } from './ui/state';
 
 type RuntimeState = {
+  /** Ephemere presentatiestatus blijft gescheiden van repositories en domeindata. */
+  ui: UiState;
   driver: EncryptedStorageDriver;
   storageMode: ClientStorageMode;
   storageLabel: string;
@@ -310,6 +313,7 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
         : state.dailyRecommendationFeedbackFilter,
     vraagStatus: state.vraagStatus,
     centralSyncFeedback: deriveCentralSyncFeedback(state),
+    uiFeedback: state.ui.feedback[route.screen],
     loadingState: state.loadingState,
     webAuthnStatus: state.webAuthnStatus,
     storageMode: state.storageMode,
@@ -393,6 +397,7 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
       state.cycleDataStore = undefined;
       state.mentaleCheckInStore = undefined;
       state.settingsStore = undefined;
+      state.ui = createUiState();
       state.trajecten = [];
       state.afspraken = [];
       state.medicatie = [];
@@ -686,6 +691,7 @@ async function mount(): Promise<void> {
   await registerKiempadServiceWorker().catch(() => undefined);
   const session = new VaultSession(driver);
   const state: RuntimeState = {
+    ui: createUiState(),
     driver,
     storageMode: storage.mode,
     storageLabel: storage.label,
@@ -3861,6 +3867,7 @@ async function saveSymptomLogFromForm(
     notitie: optionalString(data.get('notitie')),
   });
 
+  setUiFeedback(state.ui, 'welzijn', 'success', 'Symptoomlog opgeslagen.');
   await reloadAndRender(root, state);
 }
 
@@ -3878,6 +3885,7 @@ async function saveCycleDataFromForm(
     waarde: String(data.get('waarde') ?? ''),
   });
 
+  setUiFeedback(state.ui, 'welzijn', 'success', 'Cyclusmeting opgeslagen.');
   await reloadAndRender(root, state);
 }
 
@@ -3896,6 +3904,7 @@ async function saveMentalCheckInFromForm(
     notitie: optionalString(data.get('notitie')),
   });
 
+  setUiFeedback(state.ui, 'welzijn', 'success', 'Mentale check-in opgeslagen.');
   await reloadAndRender(root, state);
 }
 

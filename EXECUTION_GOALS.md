@@ -27983,7 +27983,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** src/ui/state.ts
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #4032
 
 ### G2052 — Premium Claude Design UI: Migreer scherm welzijn (pilot) naar lit-html

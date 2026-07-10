@@ -238,6 +238,7 @@ import type {
   TreatmentRoute,
   WellbeingRoute,
 } from './ui/router';
+import type { UiFeedback } from './ui/state';
 
 export const DISCLAIMER =
   'Kiempad is geen medisch hulpmiddel en geen vervanging van medisch advies. Schema’s en doseringen volgen altijd de kliniek.';
@@ -713,6 +714,7 @@ export type AppShellState = {
   dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   centralSyncFeedback?: Partial<Record<CentralSyncFeedbackKind, CentralSyncFeedbackItem>>;
+  uiFeedback?: UiFeedback;
   uploadAttachmentFeedback?: Partial<
     Record<UploadAttachmentFeedbackKind, UploadAttachmentFeedbackItem>
   >;
@@ -13883,6 +13885,7 @@ function renderWelzijnScreen(state: AppShellState): string {
           ariaLabel: 'Welzijn vastleggen route-samenvatting',
           data: { 'wellbeing-route-summary': 'log' },
         })}
+        ${renderUiFeedback(state.uiFeedback)}
         ${renderWellbeingLogConsole(state)}
       </section>
         `,
@@ -13896,6 +13899,11 @@ function renderWelzijnScreen(state: AppShellState): string {
     ],
     { className: 'wellbeing-command-layout', ariaLabel: 'Symptomen en welzijn' },
   );
+}
+
+function renderUiFeedback(feedback: UiFeedback | undefined): string {
+  if (!feedback) return '';
+  return `<p class="status-message" role="status" aria-live="polite" data-ui-feedback="${escapeAttribute(feedback.scope)}" data-ui-feedback-tone="${escapeAttribute(feedback.tone)}">${escapeHtml(feedback.message)}</p>`;
 }
 
 function renderWellbeingFocusShell(input: { workspace: string }): string {

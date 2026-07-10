@@ -21,6 +21,8 @@
 - **G2050 gerichte UI-rendering:** shell-chrome en `#screen-root` hebben afzonderlijke
   lit-html-boundaries; mutaties op dezelfde route renderen alleen het actieve scherm
   via één dispatchpad en behouden de boundary-scroll en focus buiten het scherm.
+- **G2051 getypte UI-status:** `UiState` scheidt ephemere feedback van repositories en
+  domeindata; welzijnsregistraties gebruiken een getypte scope, toon en boodschap.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
