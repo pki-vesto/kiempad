@@ -39,6 +39,8 @@
   focusbewaking dispatchen vanuit de eigen schermtemplate zonder handmatige bindlagen.
 - **G2059 agenda lit-html:** afspraken opslaan en verwijderen, ICS-import en -export
   dispatchen vanuit de eigen schermtemplate met behoud van planningroutes en data-contracten.
+- **G2060 vragen lit-html:** vraagopslag, prioriteit, artscheckreview, verwijderen en
+  consultexport dispatchen vanuit de eigen schermtemplate zonder handmatige bindlaag.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.

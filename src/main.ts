@@ -137,6 +137,7 @@ import { type HerinneringenAction, renderHerinneringenScreen } from './ui/screen
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderLogboekScreen } from './ui/screens/logboek';
 import { renderStartScreen, type StartAction } from './ui/screens/start';
+import { renderVragenScreen, type VragenAction } from './ui/screens/vragen';
 import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
 import { createUiState, setUiFeedback, type UiState } from './ui/state';
 
@@ -370,7 +371,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
                     ? renderAgendaScreen(screenHtml, (action) =>
                         dispatchAgendaAction(action, root, state),
                       )
-                    : undefined;
+                    : route.screen === 'vragen'
+                      ? renderVragenScreen(screenHtml, (action) =>
+                          dispatchVragenAction(action, root, state),
+                        )
+                      : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -397,7 +402,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
   }
   bindTrajectControls(root, state);
   bindMedicatieControls(root, state);
-  bindVraagControls(root, state);
   bindDossierControls(root, state);
   bindKennisControls(root, state);
   if (
@@ -2969,32 +2973,17 @@ async function saveKostenFromForm(
   await reloadAndRender(root, state);
 }
 
-function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#export-consult-pdf')?.addEventListener('click', () => {
+function dispatchVragenAction(action: VragenAction, root: HTMLElement, state: RuntimeState): void {
+  if (action.type === 'export-consult') {
     exportConsultPdf(root, state);
-  });
-
-  root.querySelector('#vraag-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveVraagFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelectorAll<HTMLFormElement>('.question-priority-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void moveVraagPriorityFromForm(event.currentTarget, event.submitter, root, state);
-    });
-  });
-  root.querySelectorAll<HTMLFormElement>('.question-artscheck-review-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveVraagArtscheckReviewFromForm(event.currentTarget, root, state);
-    });
-  });
-
-  root.querySelector('#delete-vraag')?.addEventListener('click', (event) => {
-    const button = event.currentTarget;
-    if (!(button instanceof HTMLButtonElement)) return;
+  } else if (action.type === 'save') {
+    void saveVraagFromForm(action.form, root, state);
+  } else if (action.type === 'priority') {
+    void moveVraagPriorityFromForm(action.form, action.submitter, root, state);
+  } else if (action.type === 'artscheck-review') {
+    void saveVraagArtscheckReviewFromForm(action.form, root, state);
+  } else {
+    const button = action.button;
     const vraagId = button.dataset.vraagId;
     if (!vraagId || !state.vraagStore) return;
 
@@ -3011,7 +3000,7 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
         });
       },
     });
-  });
+  }
 }
 
 function exportConsultPdf(root: HTMLElement, state: RuntimeState): void {
