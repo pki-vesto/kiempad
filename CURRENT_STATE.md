@@ -25,6 +25,8 @@
   domeindata; welzijnsregistraties gebruiken een getypte scope, toon en boodschap.
 - **G2052 welzijn lit-html-pilot:** welzijn heeft een eigen schermtemplate met inline
   submit-events en dispatch; de drie voormalige handmatig gebonden listeners zijn verwijderd.
+- **G2053 kosten lit-html:** opslaan en verwijderen worden vanuit de eigen schermtemplate
+  getypeerd gedispatcht; het kostenformulier behoudt zijn bestaande data-contracten.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.

@@ -1836,7 +1836,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'kennis') return renderKennisScreen(state);
   if (activeId === 'welzijn') return renderWelzijnScreenHtml(state);
   if (activeId === 'afwegingen') return renderAfwegingenScreen(state);
-  if (activeId === 'kosten') return renderKostenScreen(state);
+  if (activeId === 'kosten') return renderKostenScreenHtml(state);
   if (activeId === 'logboek') return renderLogboekScreen(state);
   if (activeId === 'backup') return renderBackupScreen(state);
 
@@ -16168,7 +16168,7 @@ function renderKennisFilterForm(filter: KennisFilter): string {
   `;
 }
 
-function renderKostenScreen(state: AppShellState): string {
+function renderKostenScreenHtml(state: AppShellState): string {
   const kosten = state.kosten ?? [];
   const overzicht = berekenKostenOverzicht(kosten);
   const vergoedCount = kosten.filter((item) => item.vergoed === 'ja').length;

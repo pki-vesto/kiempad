@@ -130,6 +130,7 @@ import {
   type TreatmentRoute,
   type WellbeingRoute,
 } from './ui/router';
+import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
 import { createUiState, setUiFeedback, type UiState } from './ui/state';
 
@@ -336,23 +337,23 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
     settingsSheetIsOpen === state.settingsOpen &&
     loadingPanelIsShown === Boolean(state.loadingState);
   const screenHtml = renderAppScreen(route.screen, appShellState);
+  const migratedTemplate =
+    route.screen === 'welzijn'
+      ? renderWelzijnScreen(screenHtml, (action) => dispatchWelzijnAction(action, root, state))
+      : route.screen === 'kosten'
+        ? renderKostenScreen(screenHtml, (action) => dispatchKostenAction(action, root, state))
+        : undefined;
 
   if (targeted) {
-    if (route.screen === 'welzijn') {
-      renderScreenTemplate(
-        root,
-        renderWelzijnScreen(screenHtml, (action) => dispatchWelzijnAction(action, root, state)),
-      );
+    if (migratedTemplate) {
+      renderScreenTemplate(root, migratedTemplate);
     } else {
       renderScreen(root, screenHtml);
     }
   } else {
     mountView(root, renderAppShell(route.screen, appShellState), routeKey);
-    if (route.screen === 'welzijn') {
-      renderScreenTemplate(
-        root,
-        renderWelzijnScreen(screenHtml, (action) => dispatchWelzijnAction(action, root, state)),
-      );
+    if (migratedTemplate) {
+      renderScreenTemplate(root, migratedTemplate);
     }
   }
   alignActiveWorkspaceStripButton(root);
@@ -376,7 +377,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
   bindDossierControls(root, state);
   bindKennisControls(root, state);
   bindAfwegingControls(root, state);
-  bindKostenControls(root, state);
   bindBackupControls(root, state);
   if (
     !state.loadingState &&
@@ -2878,33 +2878,25 @@ async function saveResearchNetworkSettingsFromForm(
   await reloadAndRender(root, state);
 }
 
-function bindKostenControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelectorAll<HTMLFormElement>('.kosten-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveKostenFromForm(event.currentTarget, root, state);
-    });
-  });
+function dispatchKostenAction(action: KostenAction, root: HTMLElement, state: RuntimeState): void {
+  if (action.type === 'save') {
+    void saveKostenFromForm(action.form, root, state);
+    return;
+  }
 
-  root.querySelectorAll<HTMLButtonElement>('.delete-kosten').forEach((button) => {
-    button.addEventListener('click', () => {
-      const kostenId = button.dataset.kostenId;
-      if (!kostenId || !state.kostenStore) return;
-
-      showInlineDeleteConfirmation(button, root, {
-        kind: 'kosten',
-        title: 'Kostenpost verwijderen?',
-        detail: DELETE_CONFIRMATIONS.kosten,
-        ariaLabel: 'Kostenpost verwijderen bevestigen',
-        triggerLabel: button.getAttribute('aria-label') ?? 'Verwijder kostenpost',
-        onConfirm: () => {
-          return state.kostenStore?.delete(kostenId).then(() => {
-            state.kostenStatus = 'Kostenpost verwijderd.';
-            return reloadAndRender(root, state);
-          });
-        },
-      });
-    });
+  const kostenId = action.button.dataset.kostenId;
+  if (!kostenId || !state.kostenStore) return;
+  showInlineDeleteConfirmation(action.button, root, {
+    kind: 'kosten',
+    title: 'Kostenpost verwijderen?',
+    detail: DELETE_CONFIRMATIONS.kosten,
+    ariaLabel: 'Kostenpost verwijderen bevestigen',
+    triggerLabel: action.button.getAttribute('aria-label') ?? 'Verwijder kostenpost',
+    onConfirm: () =>
+      state.kostenStore?.delete(kostenId).then(() => {
+        state.kostenStatus = 'Kostenpost verwijderd.';
+        return reloadAndRender(root, state);
+      }),
   });
 }
 
