@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import mainSource from '../src/main.ts?raw';
+import startScreenSource from '../src/ui/screens/start.ts?raw';
 
 describe('main bootstrap', () => {
   it('toont een centrale opslagfout zonder legacy fallback wanneer openClientStorage faalt', () => {
@@ -57,11 +58,14 @@ describe('main bootstrap', () => {
   });
 
   it('verwerkt dagelijkse aanbevelingen met een aparte artscheck-vraagactie', () => {
+    const startInteractionSource = `${mainSource}\n${startScreenSource}`;
     expect(mainSource).toContain("action === 'gedaan'");
     expect(mainSource).toContain("gebeurtenis: 'Dagelijkse suggestie gedaan'");
     expect(mainSource).toContain('Suggestie gemarkeerd als gedaan:');
-    expect(mainSource).toContain('[data-daily-recommendation-feedback-control="ready"]');
-    expect(mainSource).toContain('[data-daily-recommendation-owner-visibility-card]');
+    expect(startInteractionSource).toContain(
+      '[data-daily-recommendation-feedback-control="ready"]',
+    );
+    expect(startInteractionSource).toContain('[data-daily-recommendation-owner-visibility-card]');
     expect(mainSource).toContain('handleDailyRecommendationOwnerVisibilityAction');
     expect(mainSource).toContain(
       "gebeurtenis =\n    action === 'toon' ? 'Dagadvies eigenaar hersteld' : 'Dagadvies eigenaar verborgen'",
@@ -72,7 +76,7 @@ describe('main bootstrap', () => {
     );
     expect(mainSource).toContain('Dagadvies voor $' + '{ownerLabel} lokaal verborgen.');
     expect(mainSource).toContain('Dagadvies voor $' + '{ownerLabel} weer zichtbaar.');
-    expect(mainSource).toContain('[data-daily-advice-feedback-list-open="ready"]');
+    expect(startInteractionSource).toContain('[data-daily-advice-feedback-list-open="ready"]');
     expect(mainSource).toContain('openDailyRecommendationListPanel');
     expect(mainSource).toContain('[data-hub-detail-panel="daily-recommendation-list"]');
     expect(mainSource).toContain("panel.setAttribute('tabindex', '-1')");
@@ -83,11 +87,15 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('delete panel.dataset.dailyAdviceListFocus');
     expect(mainSource).toContain('status.remove()');
     expect(mainSource).toContain('Lijst geopend vanuit de actieve feedbackfilter.');
-    expect(mainSource).toContain('[data-daily-recommendation-reset-route-focus-close="ready"]');
-    expect(mainSource).toContain('[data-daily-recommendation-reset-route-focus="ready"]');
+    expect(startInteractionSource).toContain(
+      '[data-daily-recommendation-reset-route-focus-close="ready"]',
+    );
+    expect(startInteractionSource).toContain(
+      '[data-daily-recommendation-reset-route-focus="ready"]',
+    );
     expect(mainSource).toContain('isDailyRecommendationRouteFocusCloseGuarded');
     expect(mainSource).toContain("button.getAttribute('aria-disabled') === 'true'");
-    expect(mainSource).toContain('focusDailyRecommendationRouteFocusContext(resetRouteFocus)');
+    expect(mainSource).toContain('focusDailyRecommendationRouteFocusContext(action.status)');
     expect(mainSource).toContain('event.preventDefault()');
     expect(mainSource).toContain('event.stopPropagation()');
     expect(mainSource).toContain('dismissDailyRecommendationRouteFocusStatus(root, state)');
@@ -98,7 +106,7 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('focusDailyRecommendationRouteFocusStatus(root)');
     expect(mainSource).toContain('function focusDailyRecommendationRouteFocusStatus');
     expect(mainSource).toContain('status.focus({ preventScroll: true })');
-    expect(mainSource).toContain('querySelectorAll<HTMLFormElement>');
+    expect(startInteractionSource).toContain('querySelectorAll<HTMLFormElement>');
     expect(mainSource).toContain('applyDailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('dailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('const route = parseRoute(window.location.hash)');
@@ -106,12 +114,12 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('setDailyRecommendationFeedbackFilterHash');
     expect(mainSource).toContain('start-recommendations?feedback=');
     expect(mainSource).toContain("'start-recommendations'");
-    expect(mainSource).toContain(
+    expect(startInteractionSource).toContain(
       "submitter instanceof HTMLButtonElement && submitter.value === 'reset'",
     );
     expect(mainSource).toContain("action === 'artscheck' && state.vraagStore");
     expect(mainSource).toContain("action === 'supplementArtscheck' && state.vraagStore");
-    expect(mainSource).toContain(
+    expect(startInteractionSource).toContain(
       "'.daily-recommendation-action-form, .supplement-artscheck-action-form'",
     );
     expect(mainSource).toContain('Supplementregel omgezet naar artscheck');

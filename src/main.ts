@@ -135,6 +135,7 @@ import { type BackupAction, renderBackupScreen } from './ui/screens/backup';
 import { type HerinneringenAction, renderHerinneringenScreen } from './ui/screens/herinneringen';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderLogboekScreen } from './ui/screens/logboek';
+import { renderStartScreen, type StartAction } from './ui/screens/start';
 import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
 import { createUiState, setUiFeedback, type UiState } from './ui/state';
 
@@ -360,7 +361,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
                 ? renderBackupScreen(screenHtml, (action) =>
                     dispatchBackupAction(action, root, state),
                   )
-                : undefined;
+                : route.screen === 'start'
+                  ? renderStartScreen(screenHtml, (action) =>
+                      dispatchStartAction(action, root, state),
+                    )
+                  : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -386,8 +391,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
     bindExampleDataControls(root, state);
   }
   bindTrajectControls(root, state);
-  bindQuickEntryControls(root, state);
-  bindDailyRecommendationControls(root, state);
   bindAgendaControls(root, state);
   bindMedicatieControls(root, state);
   bindVraagControls(root, state);
@@ -2372,84 +2375,30 @@ async function buildWebAuthnStatus(session: VaultSession): Promise<WebAuthnViewS
   };
 }
 
-function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#quick-entry-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveQuickEntryFromForm(event.currentTarget, root, state);
-  });
-}
-
-function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState): void {
-  const resetRouteFocus = root.querySelector<HTMLElement>(
-    '[data-daily-recommendation-reset-route-focus="ready"]',
-  );
-  const resetRouteFocusClose = resetRouteFocus?.querySelector<HTMLButtonElement>(
-    '[data-daily-recommendation-reset-route-focus-close="ready"]',
-  );
-  resetRouteFocusClose?.addEventListener('focus', () => {
-    if (isDailyRecommendationRouteFocusCloseGuarded(resetRouteFocusClose)) {
-      focusDailyRecommendationRouteFocusContext(resetRouteFocus);
+function dispatchStartAction(action: StartAction, root: HTMLElement, state: RuntimeState): void {
+  if (action.type === 'quick-entry') {
+    void saveQuickEntryFromForm(action.form, root, state);
+  } else if (action.type === 'feedback-filter') {
+    applyDailyRecommendationFeedbackFilter(action.form, action.submitter, root, state);
+  } else if (action.type === 'owner-visibility') {
+    void handleDailyRecommendationOwnerVisibilityAction(action.form, action.submitter, root, state);
+  } else if (action.type === 'recommendation') {
+    void handleDailyRecommendationAction(action.form, action.submitter, root, state);
+  } else if (action.type === 'route-focus-close-focus') {
+    if (isDailyRecommendationRouteFocusCloseGuarded(action.button)) {
+      focusDailyRecommendationRouteFocusContext(action.status);
     }
-  });
-  resetRouteFocusClose?.addEventListener('click', (event) => {
-    if (isDailyRecommendationRouteFocusCloseGuarded(resetRouteFocusClose)) {
-      event.preventDefault();
-      event.stopPropagation();
-      focusDailyRecommendationRouteFocusContext(resetRouteFocus);
-      return;
+  } else if (action.type === 'route-focus-close-click') {
+    if (isDailyRecommendationRouteFocusCloseGuarded(action.button)) {
+      action.event.preventDefault();
+      action.event.stopPropagation();
+      focusDailyRecommendationRouteFocusContext(action.status);
+    } else {
+      dismissDailyRecommendationRouteFocusStatus(root, state);
     }
-    dismissDailyRecommendationRouteFocusStatus(root, state);
-  });
-
-  root
-    .querySelector<HTMLButtonElement>('[data-daily-advice-feedback-list-open="ready"]')
-    ?.addEventListener('click', () => {
-      openDailyRecommendationListPanel(root);
-    });
-
-  root
-    .querySelectorAll<HTMLFormElement>('[data-daily-recommendation-feedback-control="ready"]')
-    .forEach((form) => {
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        applyDailyRecommendationFeedbackFilter(
-          event.currentTarget,
-          (event as SubmitEvent).submitter,
-          root,
-          state,
-        );
-      });
-    });
-
-  root
-    .querySelectorAll<HTMLFormElement>('[data-daily-recommendation-owner-visibility-card]')
-    .forEach((form) => {
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        void handleDailyRecommendationOwnerVisibilityAction(
-          event.currentTarget,
-          (event as SubmitEvent).submitter,
-          root,
-          state,
-        );
-      });
-    });
-
-  root
-    .querySelectorAll<HTMLFormElement>(
-      '.daily-recommendation-action-form, .supplement-artscheck-action-form',
-    )
-    .forEach((form) => {
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        void handleDailyRecommendationAction(
-          event.currentTarget,
-          (event as SubmitEvent).submitter,
-          root,
-          state,
-        );
-      });
-    });
+  } else {
+    openDailyRecommendationListPanel(root);
+  }
 }
 
 async function handleDailyRecommendationOwnerVisibilityAction(
