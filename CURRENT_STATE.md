@@ -29,6 +29,8 @@
   getypeerd gedispatcht; het kostenformulier behoudt zijn bestaande data-contracten.
 - **G2054 afwegingen lit-html:** voorbereiden en een keuze vastleggen gebruiken de eigen
   schermtemplate met getypeerde submit-dispatch en zonder handmatige listeners.
+- **G2055 logboek lit-html:** het read-only audit- en privacyoverzicht mount via een
+  eigen schermtemplate en heeft bewust geen interactieve bindlaag.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
