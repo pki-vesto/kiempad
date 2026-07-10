@@ -15,6 +15,9 @@
 - **M1.1 app-skelet:** een Nederlandstalige, responsive Vite-app-shell met
   hash-navigatie tussen de hoofdschermen, rustige start-/werkruimte en zichtbare
   niet-medische disclaimer.
+- **G2049 getypte UI-router:** één `parseRoute` zet iedere hash om naar scherm,
+  subroute en veilige queryparameters; de render-bootstrap leest de route nog maar
+  eenmaal en de router heeft een eigen regressiesuite onder `tests/ui/`.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.

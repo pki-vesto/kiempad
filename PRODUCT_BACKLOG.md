@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1834 |
+| ☑ klaar | 1843 |
 | ◐ bezig | 0 |
-| ☐ open | 100 |
-| ☒ archived | 99 |
-| **Totaal** | **2033** |
+| ☐ open | 121 |
+| ☒ archived | 104 |
+| **Totaal** | **2068** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -2210,7 +2210,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2046 | Premium Claude Design UI: appShell.ts opsplitsen per scherm/domein | P2 | F5 | ☐ |
 | G2047 | Premium Claude Design UI: ADR-0010 + doc-correcties (React→lit-html) | P1 | F5 | ☑ |
 | G2048 | Premium Claude Design UI: Reconcile UI-goals (re-scope #4017, koppel #4027, her-richt #4016) | P1 | F5 | ☑ |
-| G2049 | Premium Claude Design UI: Getypte router (src/ui/router.ts, parseRoute) | P1 | F5 | ☐ |
+| G2049 | Premium Claude Design UI: Getypte router (src/ui/router.ts, parseRoute) | P1 | F5 | ☑ |
 | G2050 | Premium Claude Design UI: Render-boundary + dispatch→render + lit-html-dependency | P0 | F5 | ☐ |
 | G2051 | Premium Claude Design UI: Getypt UI-statusmodel (UiFeedback) | P1 | F5 | ☐ |
 | G2052 | Premium Claude Design UI: Migreer scherm welzijn (pilot) naar lit-html | P1 | F5 | ☐ |

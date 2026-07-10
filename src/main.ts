@@ -1,22 +1,6 @@
 import {
   type AppShellLoadingState,
   type AppShellState,
-  normalizeBackupRoute,
-  normalizeDailyRecommendationFeedbackFilter,
-  normalizeDecisionRoute,
-  normalizeDossierAddFlow,
-  normalizeDossierRoute,
-  normalizeEventLogRoute,
-  normalizeFinanceRoute,
-  normalizeKnowledgeRoute,
-  normalizeMedicationRoute,
-  normalizeNotificationRoute,
-  normalizeQuestionRoute,
-  normalizeScheduleRoute,
-  normalizeScreenId,
-  normalizeStartRoute,
-  normalizeTreatmentRoute,
-  normalizeWellbeingRoute,
   renderAppShell,
   renderStorageBootstrapError,
   renderVaultGate,
@@ -128,6 +112,22 @@ import {
   koppelWebAuthnPrf,
   vraagWebAuthnPrfSecret,
 } from './storage/webauthn';
+import {
+  type BackupRoute,
+  type DecisionRoute,
+  type DossierRoute,
+  type EventLogRoute,
+  type FinanceRoute,
+  type KnowledgeRoute,
+  type MedicationRoute,
+  type NotificationRoute,
+  parseRoute,
+  type QuestionRoute,
+  type ScheduleRoute,
+  type StartRoute,
+  type TreatmentRoute,
+  type WellbeingRoute,
+} from './ui/router';
 
 type RuntimeState = {
   driver: EncryptedStorageDriver;
@@ -222,7 +222,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     return;
   }
 
-  root.innerHTML = renderAppShell(normalizeScreenId(window.location.hash), {
+  const route = parseRoute(window.location.hash);
+  root.innerHTML = renderAppShell(route.screen, {
     trajecten: state.trajecten,
     afspraken: state.afspraken,
     medicatie: state.medicatie,
@@ -253,25 +254,29 @@ function render(root: HTMLElement, state: RuntimeState): void {
     dossierKliniekFilter: state.dossierKliniekFilter,
     dossierPogingFilter: state.dossierPogingFilter,
     imagingFilter: state.imagingFilter,
-    imagingPreviewLocked:
-      state.imagingPreviewLocked ||
-      new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('preview') === 'locked',
+    imagingPreviewLocked: state.imagingPreviewLocked || route.params.imagingPreviewLocked,
     graphFilter: state.graphFilter,
     timelineFilter: state.timelineFilter,
-    activeTreatmentRoute: normalizeTreatmentRoute(window.location.hash),
-    activeScheduleRoute: normalizeScheduleRoute(window.location.hash),
-    activeMedicationRoute: normalizeMedicationRoute(window.location.hash),
-    activeQuestionRoute: normalizeQuestionRoute(window.location.hash),
-    activeDossierRoute: normalizeDossierRoute(window.location.hash),
-    activeDossierAddFlow: normalizeDossierAddFlow(window.location.hash),
-    activeKnowledgeRoute: normalizeKnowledgeRoute(window.location.hash),
-    activeWellbeingRoute: normalizeWellbeingRoute(window.location.hash),
-    activeDecisionRoute: normalizeDecisionRoute(window.location.hash),
-    activeFinanceRoute: normalizeFinanceRoute(window.location.hash),
-    activeEventLogRoute: normalizeEventLogRoute(window.location.hash),
-    activeBackupRoute: normalizeBackupRoute(window.location.hash),
-    activeNotificationRoute: normalizeNotificationRoute(window.location.hash),
-    activeStartRoute: normalizeStartRoute(window.location.hash),
+    activeTreatmentRoute:
+      route.screen === 'traject' ? (route.subRoute as TreatmentRoute) : undefined,
+    activeScheduleRoute: route.screen === 'agenda' ? (route.subRoute as ScheduleRoute) : undefined,
+    activeMedicationRoute:
+      route.screen === 'medicatie' ? (route.subRoute as MedicationRoute) : undefined,
+    activeQuestionRoute: route.screen === 'vragen' ? (route.subRoute as QuestionRoute) : undefined,
+    activeDossierRoute: route.screen === 'dossier' ? (route.subRoute as DossierRoute) : undefined,
+    activeDossierAddFlow: route.params.dossierAddFlow,
+    activeKnowledgeRoute:
+      route.screen === 'kennis' ? (route.subRoute as KnowledgeRoute) : undefined,
+    activeWellbeingRoute:
+      route.screen === 'welzijn' ? (route.subRoute as WellbeingRoute) : undefined,
+    activeDecisionRoute:
+      route.screen === 'afwegingen' ? (route.subRoute as DecisionRoute) : undefined,
+    activeFinanceRoute: route.screen === 'kosten' ? (route.subRoute as FinanceRoute) : undefined,
+    activeEventLogRoute: route.screen === 'logboek' ? (route.subRoute as EventLogRoute) : undefined,
+    activeBackupRoute: route.screen === 'backup' ? (route.subRoute as BackupRoute) : undefined,
+    activeNotificationRoute:
+      route.screen === 'herinneringen' ? (route.subRoute as NotificationRoute) : undefined,
+    activeStartRoute: route.screen === 'start' ? (route.subRoute as StartRoute) : undefined,
     settingsOpen: state.settingsOpen,
     agendaStatus: state.agendaStatus,
     agendaImportStatus: state.agendaImportStatus,
@@ -283,8 +288,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     dailyRecommendationRouteFocusStatus: state.dailyRecommendationRouteFocusStatus,
     dailyRecommendationRouteFocusDismissed: state.dailyRecommendationRouteFocusDismissed,
     dailyRecommendationFeedbackFilter:
-      normalizeStartRoute(window.location.hash) === 'recommendations'
-        ? normalizeDailyRecommendationFeedbackFilter(window.location.hash)
+      route.screen === 'start' && route.subRoute === 'recommendations'
+        ? route.params.dailyRecommendationFeedbackFilter
         : state.dailyRecommendationFeedbackFilter,
     vraagStatus: state.vraagStatus,
     centralSyncFeedback: deriveCentralSyncFeedback(state),

@@ -101,9 +101,8 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('querySelectorAll<HTMLFormElement>');
     expect(mainSource).toContain('applyDailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('dailyRecommendationFeedbackFilter');
-    expect(mainSource).toContain(
-      'normalizeDailyRecommendationFeedbackFilter(window.location.hash)',
-    );
+    expect(mainSource).toContain('const route = parseRoute(window.location.hash)');
+    expect(mainSource).toContain('route.params.dailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('setDailyRecommendationFeedbackFilterHash');
     expect(mainSource).toContain('start-recommendations?feedback=');
     expect(mainSource).toContain("'start-recommendations'");
