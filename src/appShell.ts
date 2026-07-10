@@ -1833,7 +1833,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'herinneringen') return renderHerinneringenScreenHtml(state);
   if (activeId === 'vragen') return renderVragenScreenHtml(state);
   if (activeId === 'dossier') return renderDossierScreen(state);
-  if (activeId === 'kennis') return renderKennisScreen(state);
+  if (activeId === 'kennis') return renderKennisScreenHtml(state);
   if (activeId === 'welzijn') return renderWelzijnScreenHtml(state);
   if (activeId === 'afwegingen') return renderAfwegingenScreenHtml(state);
   if (activeId === 'kosten') return renderKostenScreenHtml(state);
@@ -14364,7 +14364,7 @@ function formatPersonalOwnerLabel(settings: AppSettings, owner: SymptomLog['owne
   return OWNER_LABELS.samen;
 }
 
-function renderKennisScreen(state: AppShellState): string {
+function renderKennisScreenHtml(state: AppShellState): string {
   const filter = state.kennisFilter ?? {};
   const filteredItems = filterKennisItems(state.kennisItems, filter);
   const hasVisibleKennisItems = filteredItems.length > 0;

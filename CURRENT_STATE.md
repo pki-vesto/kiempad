@@ -43,6 +43,8 @@
   consultexport dispatchen vanuit de eigen schermtemplate zonder handmatige bindlaag.
 - **G2061 medicatie lit-html:** middelopslag, schema-import, doseerregistratie en verwijderen
   dispatchen vanuit de eigen schermtemplate met behoud van medicatie-datahooks.
+- **G2062 kennis lit-html:** filters, eigen kennis, researchreviews, AI-instellingen en
+  verificatie dispatchen vanuit de eigen schermtemplate zonder handmatige bindlaag.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
