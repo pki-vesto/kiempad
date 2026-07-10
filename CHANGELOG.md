@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2063 dossierscherm: upload-, consult-, embryo-, imaging- en reviewacties dispatchen via
+  inline lit-html events met behoud van focus-return en attachment-envelopecontrole.
 - G2062 kennisscherm: filters, research-, AI- en verificatieacties dispatchen via inline
   lit-html events met behoud van alle kennis- en researchdatahooks.
 - G2061 medicatiescherm: middel-, schema- en doseeracties dispatchen via inline lit-html
