@@ -27724,7 +27724,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** L
 - **Related Components:** src/main.ts, src/vendor/
-- **ADR Needed:** yes (ADR-0010)
+- **ADR Needed:** no
+- **ADR:** ADR-0010
 - **Score:** 110
 - **Status:** ☒ archived
 - **Issue:** #4017
@@ -27860,7 +27861,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** L
 - **Related Components:** nieuwe src-tauri/, CI
-- **ADR Needed:** yes (ADR-0011)
+- **ADR Needed:** no
+- **ADR:** ADR-0011
 - **Score:** 70
 - **Status:** ☐ open
 - **Issue:** #4025
@@ -27898,6 +27900,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 70
 - **Status:** ☐ open
 - **Issue:** #4027
+
 ### G2047 — Premium Claude Design UI: ADR-0010 + doc-correcties (React→lit-html)
 
 - **Epic:** Premium Claude Design UI
@@ -27946,7 +27949,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** src/ui/router.ts, src/appShell.ts, src/main.ts
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #4030
 
 ### G2050 — Premium Claude Design UI: Render-boundary + dispatch→render + lit-html-dependency
@@ -28288,4 +28291,3 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 85
 - **Status:** ☐ open
 - **Issue:** #4050
-

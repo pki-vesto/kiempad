@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2049 getypte UI-router: `src/ui/router.ts` parset de hash één keer naar scherm,
+  subroute en veilige queryparameters; alle zestien legacy-normalizers zijn uit de
+  app-shell verplaatst en routerdekking staat apart onder `tests/ui/`.
 - G1978 trend dashboard metadata routeflow evidence: routeflow-smoke bewaakt
   `data-research-trend-dashboard`, topic cards, publicatie-/brontellingen,
   laatste update, per-item periode, bron, update-status, laatste check,

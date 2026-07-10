@@ -153,7 +153,6 @@ import {
   TRAJECT_FASE_TOELICHTING,
   type TrajectMetFasen,
 } from './domain/traject';
-
 import type {
   Afspraak,
   ConsultVerslag,
@@ -222,6 +221,23 @@ import {
   workflowPanel,
 } from './ui/components';
 import { escapeAttribute, escapeHtml } from './ui/escape';
+import type {
+  BackupRoute,
+  DecisionRoute,
+  DossierAddFlow,
+  DossierRoute,
+  EventLogRoute,
+  FinanceRoute,
+  KnowledgeRoute,
+  MedicationRoute,
+  NotificationRoute,
+  QuestionRoute,
+  ScheduleRoute,
+  ScreenId,
+  StartRoute,
+  TreatmentRoute,
+  WellbeingRoute,
+} from './ui/router';
 
 export const DISCLAIMER =
   'Kiempad is geen medisch hulpmiddel en geen vervanging van medisch advies. Schema’s en doseringen volgen altijd de kliniek.';
@@ -263,21 +279,6 @@ function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): str
     message,
   });
 }
-
-type ScreenId =
-  | 'start'
-  | 'traject'
-  | 'agenda'
-  | 'medicatie'
-  | 'herinneringen'
-  | 'vragen'
-  | 'dossier'
-  | 'kennis'
-  | 'welzijn'
-  | 'afwegingen'
-  | 'kosten'
-  | 'logboek'
-  | 'backup';
 
 type Screen = {
   id: ScreenId;
@@ -495,291 +496,6 @@ const DESKTOP_NAV_GROUPS: readonly {
 ];
 
 const DEFAULT_SCREEN = SCREENS[0] as Screen;
-
-export function normalizeScreenId(value: string | null | undefined): ScreenId {
-  const candidate = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
-  if (
-    [
-      'dossier-route-upload',
-      'dossier-route-review',
-      'dossier-route-search',
-      'dossier-route-imaging',
-      'dossier-route-timeline',
-      'dossier-upload-form',
-      'dossier-upload-image-context',
-      'consult-verslag-form',
-      'embryo-quality-form',
-      'embryo-status-event-form',
-      'dossier-search-form',
-      'imaging-filter-form',
-      'dossier-documenttijdlijn',
-      'dossier-behandelgeschiedenis',
-      'dossier-consultverslagen',
-      'dossier-imaging-repository',
-      'dossier-index',
-      'dossier-embryo-dossiers',
-    ].includes(candidate)
-  ) {
-    return 'dossier';
-  }
-  return SCREENS.some((screen) => screen.id === candidate) ? (candidate as ScreenId) : 'start';
-}
-
-type StartRoute = 'overview' | 'today' | 'recommendations';
-
-export function normalizeStartRoute(value: string | null | undefined): StartRoute {
-  const candidate = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
-  if (
-    candidate === 'start-today' ||
-    candidate === 'start-current-phase' ||
-    candidate === 'start-next-step' ||
-    candidate === 'start-quick-entry'
-  ) {
-    return 'today';
-  }
-  if (candidate === 'start-recommendations') return 'recommendations';
-  return 'overview';
-}
-
-export function normalizeDailyRecommendationFeedbackFilter(
-  value: string | null | undefined,
-): FertilityTimelineAanbevelingFeedbackStatus | undefined {
-  const query = value?.split('?')[1] ?? '';
-  const feedback = new URLSearchParams(query).get('feedback');
-  if (
-    feedback === 'bewaard' ||
-    feedback === 'gedaan' ||
-    feedback === 'niet_passend' ||
-    feedback === 'herinnering' ||
-    feedback === 'bespreken' ||
-    feedback === 'artscheck'
-  ) {
-    return feedback;
-  }
-  return undefined;
-}
-
-type TreatmentRoute = 'overzicht' | 'fasen' | 'vergoeding' | 'context' | 'beheer';
-
-const TREATMENT_ROUTES: readonly TreatmentRoute[] = [
-  'overzicht',
-  'fasen',
-  'vergoeding',
-  'context',
-  'beheer',
-];
-
-export function normalizeTreatmentRoute(value: string | null | undefined): TreatmentRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return TREATMENT_ROUTES.includes(route as TreatmentRoute)
-    ? (route as TreatmentRoute)
-    : 'overzicht';
-}
-
-type ScheduleRoute = 'overzicht' | 'komend' | 'plannen' | 'import' | 'historie';
-
-const SCHEDULE_ROUTES: readonly ScheduleRoute[] = [
-  'overzicht',
-  'komend',
-  'plannen',
-  'import',
-  'historie',
-];
-
-export function normalizeScheduleRoute(value: string | null | undefined): ScheduleRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return SCHEDULE_ROUTES.includes(route as ScheduleRoute) ? (route as ScheduleRoute) : 'overzicht';
-}
-
-type MedicationRoute = 'vandaag' | 'planning' | 'beheer' | 'import' | 'historie';
-
-const MEDICATION_ROUTES: readonly MedicationRoute[] = [
-  'vandaag',
-  'planning',
-  'beheer',
-  'import',
-  'historie',
-];
-
-export function normalizeMedicationRoute(value: string | null | undefined): MedicationRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return MEDICATION_ROUTES.includes(route as MedicationRoute)
-    ? (route as MedicationRoute)
-    : 'vandaag';
-}
-
-type QuestionRoute = 'open' | 'voorbereiden' | 'beheer' | 'verslagen' | 'alle';
-
-const QUESTION_ROUTES: readonly QuestionRoute[] = [
-  'open',
-  'voorbereiden',
-  'beheer',
-  'verslagen',
-  'alle',
-];
-
-export function normalizeQuestionRoute(value: string | null | undefined): QuestionRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return QUESTION_ROUTES.includes(route as QuestionRoute) ? (route as QuestionRoute) : 'open';
-}
-
-type DossierRoute = 'upload' | 'search' | 'imaging' | 'timeline';
-type DossierAddFlow =
-  | 'keuze'
-  | 'document'
-  | 'consult'
-  | 'embryo-quality'
-  | 'embryo-status'
-  | 'review';
-
-const DOSSIER_ROUTES: readonly DossierRoute[] = ['upload', 'search', 'imaging', 'timeline'];
-
-export function normalizeDossierRoute(value: string | null | undefined): DossierRoute {
-  const target = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
-  if (
-    [
-      'dossier-route-upload',
-      'dossier-upload-form',
-      'dossier-upload-image-context',
-      'consult-verslag-form',
-      'embryo-quality-form',
-      'embryo-status-event-form',
-    ].includes(target)
-  ) {
-    return 'upload';
-  }
-  if (['dossier-route-search', 'dossier-search-form'].includes(target)) return 'search';
-  if (
-    [
-      'dossier-route-imaging',
-      'imaging-filter-form',
-      'dossier-consultverslagen',
-      'dossier-imaging-repository',
-      'dossier-index',
-      'dossier-embryo-dossiers',
-    ].includes(target)
-  ) {
-    return 'imaging';
-  }
-  if (
-    ['dossier-route-timeline', 'dossier-documenttijdlijn', 'dossier-behandelgeschiedenis'].includes(
-      target,
-    )
-  ) {
-    return 'timeline';
-  }
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return DOSSIER_ROUTES.includes(route as DossierRoute) ? (route as DossierRoute) : 'upload';
-}
-
-export function normalizeDossierAddFlow(value: string | null | undefined): DossierAddFlow {
-  const target = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
-  if (target === 'dossier-upload-form' || target === 'dossier-upload-image-context') {
-    return 'document';
-  }
-  if (target === 'consult-verslag-form' || target === 'consult-context-fields') return 'consult';
-  if (target === 'embryo-quality-form') return 'embryo-quality';
-  if (target === 'embryo-status-event-form') return 'embryo-status';
-  if (
-    [
-      'dossier-route-review',
-      'dossier-review-queue-disclosure',
-      'dossier-inbox-disclosure',
-    ].includes(target)
-  ) {
-    return 'review';
-  }
-  return 'keuze';
-}
-
-type KnowledgeRoute = 'read' | 'add' | 'ai' | 'library';
-
-const KNOWLEDGE_ROUTES: readonly KnowledgeRoute[] = ['read', 'add', 'ai', 'library'];
-
-export function normalizeKnowledgeRoute(value: string | null | undefined): KnowledgeRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return KNOWLEDGE_ROUTES.includes(route as KnowledgeRoute) ? (route as KnowledgeRoute) : 'read';
-}
-
-type WellbeingRoute = 'overview' | 'history' | 'log';
-
-const WELLBEING_ROUTES: readonly WellbeingRoute[] = ['overview', 'history', 'log'];
-
-export function normalizeWellbeingRoute(value: string | null | undefined): WellbeingRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return WELLBEING_ROUTES.includes(route as WellbeingRoute)
-    ? (route as WellbeingRoute)
-    : 'overview';
-}
-
-type DecisionRoute = 'prepare' | 'compare' | 'choice' | 'history';
-
-const DECISION_ROUTES: readonly DecisionRoute[] = ['prepare', 'compare', 'choice', 'history'];
-
-export function normalizeDecisionRoute(value: string | null | undefined): DecisionRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return DECISION_ROUTES.includes(route as DecisionRoute) ? (route as DecisionRoute) : 'prepare';
-}
-
-type FinanceRoute = 'overzicht' | 'toevoegen' | 'vergoeding' | 'historie';
-
-const FINANCE_ROUTES: readonly FinanceRoute[] = [
-  'overzicht',
-  'toevoegen',
-  'vergoeding',
-  'historie',
-];
-
-export function normalizeFinanceRoute(value: string | null | undefined): FinanceRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return FINANCE_ROUTES.includes(route as FinanceRoute) ? (route as FinanceRoute) : 'overzicht';
-}
-
-type EventLogRoute = 'overzicht' | 'recent' | 'categorieen' | 'privacy';
-
-const EVENTLOG_ROUTES: readonly EventLogRoute[] = ['overzicht', 'recent', 'categorieen', 'privacy'];
-
-export function normalizeEventLogRoute(value: string | null | undefined): EventLogRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return EVENTLOG_ROUTES.includes(route as EventLogRoute) ? (route as EventLogRoute) : 'overzicht';
-}
-
-type BackupRoute = 'controleren' | 'export' | 'import' | 'herstel';
-
-const BACKUP_ROUTES: readonly BackupRoute[] = ['controleren', 'export', 'import', 'herstel'];
-
-export function normalizeBackupRoute(value: string | null | undefined): BackupRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return BACKUP_ROUTES.includes(route as BackupRoute) ? (route as BackupRoute) : 'controleren';
-}
-
-type NotificationRoute = 'status' | 'privacy' | 'plannen' | 'komend';
-
-const NOTIFICATION_ROUTES: readonly NotificationRoute[] = [
-  'status',
-  'privacy',
-  'plannen',
-  'komend',
-];
-
-export function normalizeNotificationRoute(value: string | null | undefined): NotificationRoute {
-  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
-  const route = new URLSearchParams(query).get('route');
-  return NOTIFICATION_ROUTES.includes(route as NotificationRoute)
-    ? (route as NotificationRoute)
-    : 'status';
-}
 
 type RouteFocusLink = {
   id: string;

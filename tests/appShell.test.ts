@@ -3,6 +3,22 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type AppShellState,
   DISCLAIMER,
+  renderAppShell,
+  renderStorageBootstrapError,
+  renderVaultGate,
+  SCREENS,
+} from '../src/appShell';
+import { ZIEKENHUIS_DOCUMENT_TYPE_LABELS } from '../src/domain/dossier';
+import { EXAMPLE_DATA_IDS } from '../src/domain/exampleData';
+import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
+import type { DossierDocument } from '../src/domain/types';
+import {
+  DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE,
+  DOSSIER_UPLOAD_MAX_FILE_BYTES,
+  DOSSIER_UPLOAD_MAX_TOTAL_BYTES,
+  describeDossierUploadLimits,
+} from '../src/domain/uploadValidation';
+import {
   normalizeBackupRoute,
   normalizeDailyRecommendationFeedbackFilter,
   normalizeDecisionRoute,
@@ -19,21 +35,7 @@ import {
   normalizeStartRoute,
   normalizeTreatmentRoute,
   normalizeWellbeingRoute,
-  renderAppShell,
-  renderStorageBootstrapError,
-  renderVaultGate,
-  SCREENS,
-} from '../src/appShell';
-import { ZIEKENHUIS_DOCUMENT_TYPE_LABELS } from '../src/domain/dossier';
-import { EXAMPLE_DATA_IDS } from '../src/domain/exampleData';
-import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
-import type { DossierDocument } from '../src/domain/types';
-import {
-  DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE,
-  DOSSIER_UPLOAD_MAX_FILE_BYTES,
-  DOSSIER_UPLOAD_MAX_TOTAL_BYTES,
-  describeDossierUploadLimits,
-} from '../src/domain/uploadValidation';
+} from '../src/ui/router';
 
 function makeStartState(overrides: Partial<AppShellState> = {}): AppShellState {
   return {
