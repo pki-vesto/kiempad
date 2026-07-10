@@ -131,6 +131,7 @@ import {
   type WellbeingRoute,
 } from './ui/router';
 import { type AfwegingAction, renderAfwegingenScreen } from './ui/screens/afwegingen';
+import { type HerinneringenAction, renderHerinneringenScreen } from './ui/screens/herinneringen';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderLogboekScreen } from './ui/screens/logboek';
 import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
@@ -350,7 +351,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
             )
           : route.screen === 'logboek'
             ? renderLogboekScreen(screenHtml)
-            : undefined;
+            : route.screen === 'herinneringen'
+              ? renderHerinneringenScreen(screenHtml, (action) =>
+                  dispatchHerinneringenAction(action, root, state),
+                )
+              : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -380,7 +385,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
   bindDailyRecommendationControls(root, state);
   bindAgendaControls(root, state);
   bindMedicatieControls(root, state);
-  bindHerinneringControls(root, state);
   bindVraagControls(root, state);
   bindDossierControls(root, state);
   bindKennisControls(root, state);
@@ -3138,13 +3142,16 @@ async function saveVraagArtscheckReviewFromForm(
   }
 }
 
-function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#eigen-herinnering-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveEigenHerinneringFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#request-notifications')?.addEventListener('click', () => {
+function dispatchHerinneringenAction(
+  action: HerinneringenAction,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (action.type === 'save') {
+    void saveEigenHerinneringFromForm(action.form, root, state);
+    return;
+  }
+  if (action.type === 'request-permission') {
     void requestNotificationPermissionAndRegister()
       .then((status) => {
         state.notificaties = status;
@@ -3162,14 +3169,11 @@ function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
         }));
         render(root, state);
       });
-  });
-
-  root.querySelector('#notification-privacy-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement) || !state.settingsStore) return;
-
-    const data = new FormData(form);
+    return;
+  }
+  if (action.type === 'save-privacy') {
+    if (!state.settingsStore) return;
+    const data = new FormData(action.form);
     const allowed = data.get('toonNotificatieDetailsOpVergrendelscherm') === 'true';
     void state.settingsStore.setNotificationDetailsAllowed(allowed).then((settings) => {
       state.settings = settings;
@@ -3184,27 +3188,19 @@ function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
       );
       render(root, state);
     });
-  });
-
-  root.querySelector('#warning-default-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement) || !state.settingsStore) return;
-
-    const data = new FormData(form);
+    return;
+  }
+  if (action.type === 'save-warning-default') {
+    if (!state.settingsStore) return;
+    const data = new FormData(action.form);
     const minutes = Number(data.get('afspraakWaarschuwingMinuten') ?? 30);
     void state.settingsStore.setAfspraakWaarschuwingMinuten(minutes).then((settings) => {
       state.settings = settings;
       render(root, state);
     });
-  });
-
-  root.querySelectorAll<HTMLFormElement>('.reminder-reschedule-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void rescheduleReminderFromForm(event.currentTarget, event.submitter, root, state);
-    });
-  });
+    return;
+  }
+  void rescheduleReminderFromForm(action.form, action.submitter, root, state);
 }
 
 async function rescheduleReminderFromForm(

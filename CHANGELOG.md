@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2056 herinneringenscherm: planning, snooze, notificatiepermissie en privacysettings
+  dispatchen vanuit inline lit-html events; generieke notificatietekst blijft intact.
 - G2055 logboekscherm: het read-only audit- en privacyoverzicht heeft een eigen
   lit-html-template zonder overbodige event- of bindlaag.
 - G2054 afwegingenscherm: nieuwe afwegingen en keuzeregistraties dispatchen via één
