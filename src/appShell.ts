@@ -1830,7 +1830,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'traject') return renderTrajectScreen(state);
   if (activeId === 'agenda') return renderAgendaScreen(state);
   if (activeId === 'medicatie') return renderMedicatieScreen(state);
-  if (activeId === 'herinneringen') return renderHerinneringenScreen(state);
+  if (activeId === 'herinneringen') return renderHerinneringenScreenHtml(state);
   if (activeId === 'vragen') return renderVragenScreen(state);
   if (activeId === 'dossier') return renderDossierScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
@@ -20645,7 +20645,7 @@ function beschrijfOpenstaandeVragen(state: AppShellState): string {
   return `${count} openstaande vraag${count === 1 ? '' : 'en'} voor de arts.`;
 }
 
-function renderHerinneringenScreen(state: AppShellState): string {
+function renderHerinneringenScreenHtml(state: AppShellState): string {
   const komende = komendeHerinneringen(state.herinneringen, localDateTimeIso(new Date()));
   const fallback = state.inAppFallbackNotifications ?? [];
   const activeNotificationRoute = state.activeNotificationRoute ?? 'status';
