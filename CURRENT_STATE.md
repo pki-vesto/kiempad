@@ -18,6 +18,9 @@
 - **G2049 getypte UI-router:** één `parseRoute` zet iedere hash om naar scherm,
   subroute en veilige queryparameters; de render-bootstrap leest de route nog maar
   eenmaal en de router heeft een eigen regressiesuite onder `tests/ui/`.
+- **G2050 gerichte UI-rendering:** shell-chrome en `#screen-root` hebben afzonderlijke
+  lit-html-boundaries; mutaties op dezelfde route renderen alleen het actieve scherm
+  via één dispatchpad en behouden de boundary-scroll en focus buiten het scherm.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.

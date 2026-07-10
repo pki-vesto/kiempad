@@ -24,7 +24,7 @@ grotendeels behouden; de medische-veiligheids- en privacy-invarianten (P1–P6,
 
 ## Decision
 
-- **UI-rendering via `lit-html`** (~3.5 KB, MIT, geen transitieve deps): één kleine,
+- **UI-rendering via exact gepind `lit-html@3.3.3`** (~3.5 KB, BSD-3-Clause): één kleine,
   auditbare runtime-dependency. Templates blijven pure `(state) → template`-functies;
   events gaan inline (`@click`) — de `bind*`-laag vervalt.
 - **Render-boundary:** shell-chrome wordt gescheiden van scherm-content (`#screen-root`);
@@ -43,8 +43,11 @@ grotendeels behouden; de medische-veiligheids- en privacy-invarianten (P1–P6,
 
 - Focus/scroll/input blijven behouden; de `pendingFocus`/rAF-compensatie kan worden verwijderd.
 - Eén runtime-dependency in plaats van nul — een bewuste, gedocumenteerde afwijking van de
-  strikte "nul-deps"-houding; verantwoord door kleine grootte, MIT-licentie en het ontbreken
-  van transitieve deps. Vastgelegd via `package.json` + `deps:review`.
+  strikte "nul-deps"-houding; verantwoord door kleine grootte en de BSD-3-Clause-licentie.
+  `@types/trusted-types` is de enige toegestane transitieve dependency en bevat uitsluitend
+  TypeScript-typedeclaraties, geen extra browserruntime. Vastgelegd via `package.json` +
+  `package-lock.json` + `deps:review`. Deze supply-chaincorrectie is op 2026-07-10 expliciet
+  geaccordeerd omdat gepubliceerde `lit-html`-versies niet onder MIT beschikbaar zijn.
 - De monolieten worden per scherm gesplitst naar `src/ui/screens/`; features leven daarna in één bestand.
 - Reeds geregistreerd doel **G2036 (morphdom, #4017)** vervalt: `lit-html` levert dezelfde
   keyed DOM-diffing; beide zou dubbel zijn. **G2035 (View-Transitions, #4016)** blijft en

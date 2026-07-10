@@ -17,6 +17,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2050 render-boundary: `#screen-root`, `mountView`, `renderScreen` en het centrale
+  dispatchpad beperken same-screen mutaties tot de actieve werkruimte; `lit-html@3.3.3`
+  is exact gepind en de gecorrigeerde BSD-3-Clause supply-chainkeuze is vastgelegd.
 - G2049 getypte UI-router: `src/ui/router.ts` parset de hash één keer naar scherm,
   subroute en veilige queryparameters; alle zestien legacy-normalizers zijn uit de
   app-shell verplaatst en routerdekking staat apart onder `tests/ui/`.
