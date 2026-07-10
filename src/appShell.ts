@@ -1828,7 +1828,7 @@ function navSettingsIcon(): string {
 function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShellState): string {
   if (activeId === 'start') return renderStartScreenHtml(state);
   if (activeId === 'traject') return renderTrajectScreen(state);
-  if (activeId === 'agenda') return renderAgendaScreen(state);
+  if (activeId === 'agenda') return renderAgendaScreenHtml(state);
   if (activeId === 'medicatie') return renderMedicatieScreen(state);
   if (activeId === 'herinneringen') return renderHerinneringenScreenHtml(state);
   if (activeId === 'vragen') return renderVragenScreen(state);
@@ -21215,7 +21215,7 @@ function renderServiceWorkerLabel(status: NotificationRuntimeStatus['serviceWork
   return 'niet ondersteund';
 }
 
-function renderAgendaScreen(state: AppShellState): string {
+function renderAgendaScreenHtml(state: AppShellState): string {
   const selected = state.afspraken[0];
   const activeScheduleRoute = state.activeScheduleRoute ?? 'overzicht';
   const now = new Date().toISOString().slice(0, 16);

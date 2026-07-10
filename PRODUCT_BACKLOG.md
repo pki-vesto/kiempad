@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1852 |
+| ☑ klaar | 1853 |
 | ◐ bezig | 0 |
-| ☐ open | 112 |
+| ☐ open | 111 |
 | ☒ archived | 104 |
 | **Totaal** | **2068** |
 
@@ -2220,7 +2220,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2056 | Premium Claude Design UI: Migreer scherm herinneringen naar lit-html | P2 | F5 | ☑ |
 | G2057 | Premium Claude Design UI: Migreer scherm backup naar lit-html | P2 | F5 | ☑ |
 | G2058 | Premium Claude Design UI: Migreer scherm start naar lit-html | P2 | F5 | ☑ |
-| G2059 | Premium Claude Design UI: Migreer scherm agenda naar lit-html | P2 | F5 | ☐ |
+| G2059 | Premium Claude Design UI: Migreer scherm agenda naar lit-html | P2 | F5 | ☑ |
 | G2060 | Premium Claude Design UI: Migreer scherm vragen naar lit-html | P2 | F5 | ☐ |
 | G2061 | Premium Claude Design UI: Migreer scherm medicatie naar lit-html | P2 | F5 | ☐ |
 | G2062 | Premium Claude Design UI: Migreer scherm kennis naar lit-html | P2 | F5 | ☐ |

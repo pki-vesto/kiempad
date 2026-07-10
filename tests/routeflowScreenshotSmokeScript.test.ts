@@ -498,6 +498,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain("screen: 'question-consult-link-route'");
     expect(routeflowScreenshotSmokeScript).toContain("prepare: 'question-consult-link-route'");
     expect(routeflowScreenshotSmokeScript).toContain('prepareQuestionConsultLinkRoute');
+    expect(routeflowScreenshotSmokeScript).toContain('titleInput.value === title');
     expect(routeflowScreenshotSmokeScript).toContain('questionConsultLinkRoute');
     expect(routeflowScreenshotSmokeScript).toContain('[data-question-consult-link-board="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain(
