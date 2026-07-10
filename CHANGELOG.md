@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2055 logboekscherm: het read-only audit- en privacyoverzicht heeft een eigen
+  lit-html-template zonder overbodige event- of bindlaag.
 - G2054 afwegingenscherm: nieuwe afwegingen en keuzeregistraties dispatchen via één
   inline lit-html submit-event; de voormalige bindlaag is verwijderd.
 - G2053 kostenscherm: kostenformulieren en verwijderacties lopen via inline lit-html

@@ -1837,7 +1837,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'welzijn') return renderWelzijnScreenHtml(state);
   if (activeId === 'afwegingen') return renderAfwegingenScreenHtml(state);
   if (activeId === 'kosten') return renderKostenScreenHtml(state);
-  if (activeId === 'logboek') return renderLogboekScreen(state);
+  if (activeId === 'logboek') return renderLogboekScreenHtml(state);
   if (activeId === 'backup') return renderBackupScreen(state);
 
   return `
@@ -1851,7 +1851,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   `;
 }
 
-function renderLogboekScreen(state: AppShellState): string {
+function renderLogboekScreenHtml(state: AppShellState): string {
   const logs = state.eventLogs ?? [];
   const highRiskLogs = logs.filter(isHighRiskEventLogForUi);
   const categoryCounts = logs.reduce<Record<EventLog['categorie'], number>>(

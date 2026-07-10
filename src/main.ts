@@ -132,6 +132,7 @@ import {
 } from './ui/router';
 import { type AfwegingAction, renderAfwegingenScreen } from './ui/screens/afwegingen';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
+import { renderLogboekScreen } from './ui/screens/logboek';
 import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
 import { createUiState, setUiFeedback, type UiState } from './ui/state';
 
@@ -347,7 +348,9 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
           ? renderAfwegingenScreen(screenHtml, (action) =>
               dispatchAfwegingAction(action, root, state),
             )
-          : undefined;
+          : route.screen === 'logboek'
+            ? renderLogboekScreen(screenHtml)
+            : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
