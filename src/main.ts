@@ -134,6 +134,7 @@ import { type AfwegingAction, renderAfwegingenScreen } from './ui/screens/afwegi
 import { type AgendaAction, renderAgendaScreen } from './ui/screens/agenda';
 import { type BackupAction, renderBackupScreen } from './ui/screens/backup';
 import { type HerinneringenAction, renderHerinneringenScreen } from './ui/screens/herinneringen';
+import { type KennisAction, renderKennisScreen } from './ui/screens/kennis';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderLogboekScreen } from './ui/screens/logboek';
 import { type MedicatieAction, renderMedicatieScreen } from './ui/screens/medicatie';
@@ -380,7 +381,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
                         ? renderMedicatieScreen(screenHtml, (action) =>
                             dispatchMedicatieAction(action, root, state),
                           )
-                        : undefined;
+                        : route.screen === 'kennis'
+                          ? renderKennisScreen(screenHtml, (action) =>
+                              dispatchKennisAction(action, root, state),
+                            )
+                          : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -407,7 +412,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
   }
   bindTrajectControls(root, state);
   bindDossierControls(root, state);
-  bindKennisControls(root, state);
   if (
     !state.loadingState &&
     (state.centralSessionRenewalRecoveryPendingFocus ||
@@ -2563,64 +2567,26 @@ function setDailyRecommendationFeedbackFilterHash(
     : 'start-recommendations';
 }
 
-function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#knowledge-filter-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    applyKennisFilterFromForm(event.currentTarget, (event as SubmitEvent).submitter, root, state);
-  });
-
-  root.querySelectorAll<HTMLFormElement>('.knowledge-item-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveEigenKennisItemFromForm(event.currentTarget, root, state);
-    });
-  });
-
-  root.querySelector('#research-item-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveResearchItemFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#literature-query-builder-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveLiteratureQueryBuilderFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelectorAll<HTMLFormElement>('.research-relevance-review-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveResearchRelevanceReviewFromForm(event.currentTarget, root, state);
-    });
-  });
-
-  root.querySelector('#ai-preview-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    saveAiPreviewFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#ai-summary-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveAiSummaryFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#ai-settings-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveAiSettingsFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#research-network-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveResearchNetworkSettingsFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelectorAll<HTMLButtonElement>('[data-kennis-id]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const itemId = button.dataset.kennisId;
-      if (!itemId || !state.kennisStore) return;
-
-      void state.kennisStore.markVerified(itemId, true).then(() => reloadAndRender(root, state));
-    });
-  });
+function dispatchKennisAction(action: KennisAction, root: HTMLElement, state: RuntimeState): void {
+  if (action.type === 'filter')
+    applyKennisFilterFromForm(action.form, action.submitter, root, state);
+  else if (action.type === 'item') void saveEigenKennisItemFromForm(action.form, root, state);
+  else if (action.type === 'research-item') void saveResearchItemFromForm(action.form, root, state);
+  else if (action.type === 'literature-query')
+    void saveLiteratureQueryBuilderFromForm(action.form, root, state);
+  else if (action.type === 'relevance-review')
+    void saveResearchRelevanceReviewFromForm(action.form, root, state);
+  else if (action.type === 'ai-preview') saveAiPreviewFromForm(action.form, root, state);
+  else if (action.type === 'ai-summary') void saveAiSummaryFromForm(action.form, root, state);
+  else if (action.type === 'ai-settings') void saveAiSettingsFromForm(action.form, root, state);
+  else if (action.type === 'research-network')
+    void saveResearchNetworkSettingsFromForm(action.form, root, state);
+  else {
+    if (action.type !== 'verify') return;
+    const itemId = action.button.dataset.kennisId;
+    if (!itemId || !state.kennisStore) return;
+    void state.kennisStore.markVerified(itemId, true).then(() => reloadAndRender(root, state));
+  }
 }
 
 async function saveEigenKennisItemFromForm(

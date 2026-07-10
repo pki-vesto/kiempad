@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1855 |
+| ☑ klaar | 1856 |
 | ◐ bezig | 0 |
-| ☐ open | 109 |
+| ☐ open | 108 |
 | ☒ archived | 104 |
 | **Totaal** | **2068** |
 
@@ -2223,7 +2223,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2059 | Premium Claude Design UI: Migreer scherm agenda naar lit-html | P2 | F5 | ☑ |
 | G2060 | Premium Claude Design UI: Migreer scherm vragen naar lit-html | P2 | F5 | ☑ |
 | G2061 | Premium Claude Design UI: Migreer scherm medicatie naar lit-html | P2 | F5 | ☑ |
-| G2062 | Premium Claude Design UI: Migreer scherm kennis naar lit-html | P2 | F5 | ☐ |
+| G2062 | Premium Claude Design UI: Migreer scherm kennis naar lit-html | P2 | F5 | ☑ |
 | G2063 | Premium Claude Design UI: Migreer scherm dossier naar lit-html | P2 | F5 | ☐ |
 | G2064 | Premium Claude Design UI: Migreer scherm traject naar lit-html | P2 | F5 | ☐ |
 | G2065 | Premium Claude Design UI: Dun appShell.ts + main.ts uit; verwijder focus/rAF-hacks | P2 | F5 | ☐ |
