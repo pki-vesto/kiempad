@@ -41,6 +41,8 @@
   dispatchen vanuit de eigen schermtemplate met behoud van planningroutes en data-contracten.
 - **G2060 vragen lit-html:** vraagopslag, prioriteit, artscheckreview, verwijderen en
   consultexport dispatchen vanuit de eigen schermtemplate zonder handmatige bindlaag.
+- **G2061 medicatie lit-html:** middelopslag, schema-import, doseerregistratie en verwijderen
+  dispatchen vanuit de eigen schermtemplate met behoud van medicatie-datahooks.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.

@@ -1829,7 +1829,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'start') return renderStartScreenHtml(state);
   if (activeId === 'traject') return renderTrajectScreen(state);
   if (activeId === 'agenda') return renderAgendaScreenHtml(state);
-  if (activeId === 'medicatie') return renderMedicatieScreen(state);
+  if (activeId === 'medicatie') return renderMedicatieScreenHtml(state);
   if (activeId === 'herinneringen') return renderHerinneringenScreenHtml(state);
   if (activeId === 'vragen') return renderVragenScreenHtml(state);
   if (activeId === 'dossier') return renderDossierScreen(state);
@@ -21967,7 +21967,7 @@ function renderAfspraakMeta(afspraak: Afspraak, trajectNaam?: string): string {
   return parts.length > 0 ? parts.join(' · ') : 'Geen extra details';
 }
 
-function renderMedicatieScreen(state: AppShellState): string {
+function renderMedicatieScreenHtml(state: AppShellState): string {
   const selected = state.medicatie[0];
   const activeMedicationRoute = state.activeMedicationRoute ?? 'vandaag';
   const today = new Date().toISOString().slice(0, 10);

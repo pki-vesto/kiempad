@@ -136,6 +136,7 @@ import { type BackupAction, renderBackupScreen } from './ui/screens/backup';
 import { type HerinneringenAction, renderHerinneringenScreen } from './ui/screens/herinneringen';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
 import { renderLogboekScreen } from './ui/screens/logboek';
+import { type MedicatieAction, renderMedicatieScreen } from './ui/screens/medicatie';
 import { renderStartScreen, type StartAction } from './ui/screens/start';
 import { renderVragenScreen, type VragenAction } from './ui/screens/vragen';
 import { renderWelzijnScreen, type WelzijnSubmitAction } from './ui/screens/welzijn';
@@ -375,7 +376,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
                       ? renderVragenScreen(screenHtml, (action) =>
                           dispatchVragenAction(action, root, state),
                         )
-                      : undefined;
+                      : route.screen === 'medicatie'
+                        ? renderMedicatieScreen(screenHtml, (action) =>
+                            dispatchMedicatieAction(action, root, state),
+                          )
+                        : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -401,7 +406,6 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
     bindExampleDataControls(root, state);
   }
   bindTrajectControls(root, state);
-  bindMedicatieControls(root, state);
   bindDossierControls(root, state);
   bindKennisControls(root, state);
   if (
@@ -3348,19 +3352,17 @@ async function importAgendaIcsFromForm(
   }
 }
 
-function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#medicatie-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveMedicatieFromForm(event.currentTarget, root, state);
-  });
-  root.querySelector('#medicatie-import-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void importMedicatieSchemaFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#delete-medicatie')?.addEventListener('click', (event) => {
-    const button = event.currentTarget;
-    if (!(button instanceof HTMLButtonElement)) return;
+function dispatchMedicatieAction(
+  action: MedicatieAction,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (action.type === 'save') {
+    void saveMedicatieFromForm(action.form, root, state);
+  } else if (action.type === 'import') {
+    void importMedicatieSchemaFromForm(action.form, root, state);
+  } else if (action.type === 'delete') {
+    const button = action.button;
     const medicatieId = button.dataset.medicatieId;
     if (!medicatieId || !state.medicatieStore) return;
 
@@ -3377,28 +3379,23 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
         });
       },
     });
-  });
+  } else {
+    const submitter = action.submitter;
+    if (!(submitter instanceof HTMLButtonElement)) return;
+    const doseLogId = action.form.dataset.doseLogId;
+    const status = submitter.value;
+    if (!doseLogId || !state.medicatieStore) return;
+    if (status !== 'genomen' && status !== 'overgeslagen') return;
+    const data = new FormData(action.form);
 
-  root.querySelectorAll<HTMLFormElement>('.dose-log-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const submitter = event.submitter;
-      if (!(submitter instanceof HTMLButtonElement)) return;
-      const doseLogId = form.dataset.doseLogId;
-      const status = submitter.value;
-      if (!doseLogId || !state.medicatieStore) return;
-      if (status !== 'genomen' && status !== 'overgeslagen') return;
-      const data = new FormData(form);
-
-      void state.medicatieStore
-        .markDoseLog(doseLogId, status, undefined, optionalString(data.get('doseLogNotitie')))
-        .then(() => {
-          state.medicatieStatus =
-            status === 'genomen' ? 'Medicatiemoment afgevinkt.' : 'Medicatiemoment overgeslagen.';
-          return reloadAndRender(root, state);
-        });
-    });
-  });
+    void state.medicatieStore
+      .markDoseLog(doseLogId, status, undefined, optionalString(data.get('doseLogNotitie')))
+      .then(() => {
+        state.medicatieStatus =
+          status === 'genomen' ? 'Medicatiemoment afgevinkt.' : 'Medicatiemoment overgeslagen.';
+        return reloadAndRender(root, state);
+      });
+  }
 }
 
 async function importMedicatieSchemaFromForm(
