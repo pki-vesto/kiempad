@@ -28187,7 +28187,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** src/ui/screens/dossier.ts, src/appShell.ts, src/main.ts
 - **ADR Needed:** no
 - **Score:** 70
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #4044
 
 ### G2064 — Premium Claude Design UI: Migreer scherm traject naar lit-html

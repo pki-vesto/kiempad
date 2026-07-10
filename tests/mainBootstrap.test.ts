@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import mainSource from '../src/main.ts?raw';
+import dossierScreenSource from '../src/ui/screens/dossier.ts?raw';
 import startScreenSource from '../src/ui/screens/start.ts?raw';
 
 describe('main bootstrap', () => {
@@ -33,7 +34,7 @@ describe('main bootstrap', () => {
 
   it('werkt attachment-envelope batchstatus bij vanuit de dossier file input', () => {
     expect(mainSource).toContain('summarizeAttachmentEnvelopeMetadataBatch');
-    expect(mainSource).toContain('updateAttachmentEnvelopeBatchStatus(dossierForm)');
+    expect(mainSource).toContain('updateAttachmentEnvelopeBatchStatus(form)');
     expect(mainSource).toContain("form.querySelector('[data-attachment-envelope-batch]')");
     expect(mainSource).toContain('fileInput.files ?? []');
     expect(mainSource).toContain('summary.total === 0');
@@ -136,8 +137,8 @@ describe('main bootstrap', () => {
   });
 
   it('verwerkt dossierimport verwijderen zonder documentinhoud te loggen', () => {
-    expect(mainSource).toContain("'.delete-dossier-document'");
-    expect(mainSource).toContain('showDossierDeleteConfirmation(button, root, state)');
+    expect(dossierScreenSource).toContain("'.delete-dossier-document'");
+    expect(mainSource).toContain('showDossierDeleteConfirmation(action.button, root, state)');
     expect(mainSource).toContain('[data-dossier-delete-confirm="ready"]');
     expect(mainSource).toContain("confirm.dataset.dossierDeleteConfirmAction = 'confirm'");
     expect(mainSource).not.toContain('window.confirm(DELETE_CONFIRMATIONS.dossierDocument)');
@@ -189,8 +190,8 @@ describe('main bootstrap', () => {
   });
 
   it('houdt feedback-teruglinks op hun formulieranker zonder vaste UI-overlap', () => {
-    expect(mainSource).toContain("'.dossier-submit-focus-return'");
-    expect(mainSource).toContain('const targetId = link.hash.slice(1)');
+    expect(dossierScreenSource).toContain("'.dossier-submit-focus-return'");
+    expect(mainSource).toContain('const targetId = action.link.hash.slice(1)');
     expect(mainSource).toContain("target.scrollIntoView({ block: 'start' })");
     expect(mainSource).toContain("window.history.replaceState(null, '', `#");
     expect(mainSource).toContain('target.focus({ preventScroll: true })');

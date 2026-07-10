@@ -133,6 +133,7 @@ import {
 import { type AfwegingAction, renderAfwegingenScreen } from './ui/screens/afwegingen';
 import { type AgendaAction, renderAgendaScreen } from './ui/screens/agenda';
 import { type BackupAction, renderBackupScreen } from './ui/screens/backup';
+import { type DossierAction, renderDossierScreen } from './ui/screens/dossier';
 import { type HerinneringenAction, renderHerinneringenScreen } from './ui/screens/herinneringen';
 import { type KennisAction, renderKennisScreen } from './ui/screens/kennis';
 import { type KostenAction, renderKostenScreen } from './ui/screens/kosten';
@@ -385,7 +386,11 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
                           ? renderKennisScreen(screenHtml, (action) =>
                               dispatchKennisAction(action, root, state),
                             )
-                          : undefined;
+                          : route.screen === 'dossier'
+                            ? renderDossierScreen(screenHtml, (action) =>
+                                dispatchDossierAction(action, root, state),
+                              )
+                            : undefined;
 
   if (targeted) {
     if (migratedTemplate) {
@@ -411,7 +416,7 @@ function renderCurrentState(root: HTMLElement, state: RuntimeState): void {
     bindExampleDataControls(root, state);
   }
   bindTrajectControls(root, state);
-  bindDossierControls(root, state);
+  if (route.screen === 'dossier') initializeDossierForm(root);
   if (
     !state.loadingState &&
     (state.centralSessionRenewalRecoveryPendingFocus ||
@@ -861,112 +866,62 @@ function dispatchBackupAction(action: BackupAction, root: HTMLElement, state: Ru
   }
 }
 
-function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelectorAll<HTMLAnchorElement>('.dossier-submit-focus-return').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const targetId = link.hash.slice(1);
-      if (!targetId) return;
-      const target = document.getElementById(targetId);
-      if (!target) return;
+function initializeDossierForm(root: HTMLElement): void {
+  const form = root.querySelector<HTMLFormElement>('#dossier-upload-form');
+  if (!form) return;
+  void updateAttachmentEnvelopeBatchStatus(form);
+  updateDossierConceptPreview(form);
+}
 
-      event.preventDefault();
-      target.scrollIntoView({ block: 'start' });
-      window.history.replaceState(null, '', `#${targetId}`);
-      target.focus({ preventScroll: true });
-    });
-  });
-
-  const dossierForm = root.querySelector('#dossier-upload-form');
-  dossierForm?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveDossierDocumentsFromForm(event.currentTarget, root, state);
-  });
-  if (dossierForm instanceof HTMLFormElement) {
-    for (const selector of [
-      'input[name="dossierBestanden"]',
-      'select[name="categorie"]',
-      'select[name="uploadProfiel"]',
-      'select[name="ziekenhuisDocumentTypeCorrectie"]',
-    ]) {
-      dossierForm.querySelector(selector)?.addEventListener('change', () => {
-        void updateAttachmentEnvelopeBatchStatus(dossierForm);
-        updateDossierConceptPreview(dossierForm);
-      });
-    }
-    void updateAttachmentEnvelopeBatchStatus(dossierForm);
-    updateDossierConceptPreview(dossierForm);
-  }
-
-  root.querySelector('#embryo-quality-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveEmbryoQualityFromForm(event.currentTarget, root, state);
-  });
-
-  root.querySelector('#embryo-status-event-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveEmbryoStatusEventFromForm(event.currentTarget, root, state);
-  });
-  root.querySelectorAll<HTMLFormElement>('.embryo-source-label-correction-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveEmbryoBronlabelCorrectieFromForm(event.currentTarget, root, state);
-    });
-  });
-
-  root.querySelector('#consult-verslag-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    void saveConsultVerslagFromForm(event.currentTarget, root, state);
-  });
-  root.querySelectorAll<HTMLFormElement>('.consult-samenvatting-review-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveConsultSamenvattingReviewFromForm(event.currentTarget, event.submitter, root, state);
-    });
-  });
-  root.querySelectorAll<HTMLFormElement>('.consult-question-link-review-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveConsultQuestionLinkFromForm(event.currentTarget, root, state);
-    });
-  });
-
-  root.querySelector('#dossier-search-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement)) return;
-    const data = new FormData(form);
+function dispatchDossierAction(
+  action: DossierAction,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (action.type === 'focus-return') {
+    const targetId = action.link.hash.slice(1);
+    const target = targetId ? document.getElementById(targetId) : null;
+    if (!target) return;
+    action.event.preventDefault();
+    target.scrollIntoView({ block: 'start' });
+    window.history.replaceState(null, '', `#${targetId}`);
+    target.focus({ preventScroll: true });
+  } else if (action.type === 'upload-change') {
+    void updateAttachmentEnvelopeBatchStatus(action.form);
+    updateDossierConceptPreview(action.form);
+  } else if (action.type === 'upload') {
+    void saveDossierDocumentsFromForm(action.form, root, state);
+  } else if (action.type === 'embryo-quality') {
+    void saveEmbryoQualityFromForm(action.form, root, state);
+  } else if (action.type === 'embryo-status') {
+    void saveEmbryoStatusEventFromForm(action.form, root, state);
+  } else if (action.type === 'embryo-source') {
+    void saveEmbryoBronlabelCorrectieFromForm(action.form, root, state);
+  } else if (action.type === 'consult') {
+    void saveConsultVerslagFromForm(action.form, root, state);
+  } else if (action.type === 'consult-summary') {
+    void saveConsultSamenvattingReviewFromForm(action.form, action.submitter, root, state);
+  } else if (action.type === 'consult-question-link') {
+    void saveConsultQuestionLinkFromForm(action.form, root, state);
+  } else if (action.type === 'search') {
+    const data = new FormData(action.form);
     state.dossierZoekterm = optionalString(data.get('dossierZoekterm'));
     state.dossierKliniekFilter = optionalString(data.get('dossierKliniekFilter'));
     state.dossierPogingFilter = optionalString(data.get('dossierPogingFilter'));
     render(root, state);
-  });
-  root.querySelector('[data-dossier-search-clear="filters"]')?.addEventListener('click', () => {
+  } else if (action.type === 'search-clear') {
     state.dossierZoekterm = undefined;
     state.dossierKliniekFilter = undefined;
     state.dossierPogingFilter = undefined;
     render(root, state);
-  });
-
-  root.querySelectorAll<HTMLButtonElement>('.delete-dossier-document').forEach((button) => {
-    button.addEventListener('click', () => {
-      const documentId = button.dataset.dossierDocumentId;
-      if (!documentId || !state.dossierStore) return;
-
-      showDossierDeleteConfirmation(button, root, state);
-    });
-  });
-  root.querySelectorAll<HTMLFormElement>('.dossier-import-retry-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void retryDossierImportFromForm(event.currentTarget, root, state);
-    });
-  });
-
-  root.querySelector('#imaging-filter-form')?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!(form instanceof HTMLFormElement)) return;
-    const data = new FormData(form);
+  } else if (action.type === 'delete') {
+    const documentId = action.button.dataset.dossierDocumentId;
+    if (!documentId || !state.dossierStore) return;
+    showDossierDeleteConfirmation(action.button, root, state);
+  } else if (action.type === 'import-retry') {
+    void retryDossierImportFromForm(action.form, root, state);
+  } else if (action.type === 'imaging-filter') {
+    const data = new FormData(action.form);
     state.imagingFilter = {
       soort: parseImagingSoort(data.get('imagingSoort')),
       datumVanaf: optionalString(data.get('imagingDatumVanaf')),
@@ -976,33 +931,15 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       embryoLabel: optionalString(data.get('imagingEmbryoLabel')),
     };
     render(root, state);
-  });
-  root.querySelectorAll<HTMLFormElement>('.imaging-metadata-review-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveImagingMetadataCorrectieFromForm(event.currentTarget, root, state);
-    });
-  });
-  root.querySelectorAll<HTMLFormElement>('.historical-timeline-review-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveHistorischeTijdlijnReviewFromForm(event.currentTarget, root, state);
-    });
-  });
-  root
-    .querySelectorAll<HTMLFormElement>('.metadata-normalization-correction-form')
-    .forEach((form) => {
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        void saveMetadataNormalisatieCorrectieFromForm(event.currentTarget, root, state);
-      });
-    });
-  root.querySelectorAll<HTMLFormElement>('.ocr-review-correction-form').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      void saveOcrReviewCorrectieFromForm(event.currentTarget, root, state);
-    });
-  });
+  } else if (action.type === 'imaging-review') {
+    void saveImagingMetadataCorrectieFromForm(action.form, root, state);
+  } else if (action.type === 'timeline-review') {
+    void saveHistorischeTijdlijnReviewFromForm(action.form, root, state);
+  } else if (action.type === 'metadata-normalization') {
+    void saveMetadataNormalisatieCorrectieFromForm(action.form, root, state);
+  } else if (action.type === 'ocr-review') {
+    void saveOcrReviewCorrectieFromForm(action.form, root, state);
+  }
 }
 
 function showDossierDeleteConfirmation(

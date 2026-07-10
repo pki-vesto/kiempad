@@ -1832,7 +1832,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'medicatie') return renderMedicatieScreenHtml(state);
   if (activeId === 'herinneringen') return renderHerinneringenScreenHtml(state);
   if (activeId === 'vragen') return renderVragenScreenHtml(state);
-  if (activeId === 'dossier') return renderDossierScreen(state);
+  if (activeId === 'dossier') return renderDossierScreenHtml(state);
   if (activeId === 'kennis') return renderKennisScreenHtml(state);
   if (activeId === 'welzijn') return renderWelzijnScreenHtml(state);
   if (activeId === 'afwegingen') return renderAfwegingenScreenHtml(state);
@@ -3848,7 +3848,7 @@ function bepaalDossierKliniekFilterReviewStatus(
   return document.metadata?.normalisatie?.overschrevenDoorGebruiker ? 'gereviewd' : 'concept';
 }
 
-function renderDossierScreen(state: AppShellState): string {
+function renderDossierScreenHtml(state: AppShellState): string {
   const documenten = state.dossierDocuments ?? [];
   const documentMap = new Map(documenten.map((document) => [document.id, document]));
   const consultVerslagen = state.consultVerslagen ?? [];
