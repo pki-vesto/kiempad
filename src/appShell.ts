@@ -1826,7 +1826,7 @@ function navSettingsIcon(): string {
 }
 
 function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShellState): string {
-  if (activeId === 'start') return renderStartScreen(state);
+  if (activeId === 'start') return renderStartScreenHtml(state);
   if (activeId === 'traject') return renderTrajectScreen(state);
   if (activeId === 'agenda') return renderAgendaScreen(state);
   if (activeId === 'medicatie') return renderMedicatieScreen(state);
@@ -17590,7 +17590,7 @@ function isEigenKennisItem(item: KennisItem): boolean {
   return !item.id.startsWith('seed-') && !item.ai_gegenereerd;
 }
 
-function renderStartScreen(state: AppShellState): string {
+function renderStartScreenHtml(state: AppShellState): string {
   const activeTraject = state.trajecten[0];
   const sortedFasen = activeTraject ? sorteerFasen(activeTraject.fasen) : [];
   const huidigeFase = activeTraject ? bepaalHuidigeFase(activeTraject.fasen) : undefined;

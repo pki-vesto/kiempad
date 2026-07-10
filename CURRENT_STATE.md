@@ -35,6 +35,8 @@
   lopen via getypeerde schermdispatch met behoud van generieke notificatietekst.
 - **G2057 backup lit-html:** backup- en syncimport/export, herstelreload en WebAuthn-koppeling
   dispatchen vanuit de eigen schermtemplate; de herstel-drill blijft leidend.
+- **G2058 start lit-html:** snelle invoer, dagadviesfilters, eigenaarszichtbaarheid en
+  focusbewaking dispatchen vanuit de eigen schermtemplate zonder handmatige bindlagen.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
