@@ -71,7 +71,7 @@ pad zonder lokale vault-hercreatie.
 - **PWA:** app laadt offline na eerste bezoek; service worker geregistreerd.
 - **Dossier cue parity smoke (G1172/G1173/G1176):**
   `.github/workflows/ci.yml` draait de expliciete stap `Dossier cue parity smoke`
-  met `npm run test -- tests/appShell.test.ts` na `Secrets scan` en
+  met `npm run test -- tests/ui/app-shell.integration.test.ts` na `Secrets scan` en
   `Sensitive fixture scan`, maar voordat de volledige `Test`-stap start. Deze stap
   bewaakt de feedback-return cueparity voor documentupload, consult, embryokwaliteit
   en embryo-status in standaard, reduced-motion en forced-colors context zonder
@@ -192,7 +192,7 @@ pad zonder lokale vault-hercreatie.
   mag geen medische payload, OCR-tekst, broninhoud, secret, token of
   trackingpayload bevatten.
 - **Treatment mobile rail forced-colors cue text fill evidence (G1953):**
-  `npm run test -- tests/appShell.test.ts` bewaakt de app-shell CSS-test voor
+  `npm run test -- tests/ui/app-shell.integration.test.ts` bewaakt de app-shell CSS-test voor
   `.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue`.
   De test controleert inactive focused cue pills met `ButtonFace` achtergrond,
   `ButtonText` tekst, `CanvasText` border/outline, `-webkit-text-fill-color: ButtonText`,

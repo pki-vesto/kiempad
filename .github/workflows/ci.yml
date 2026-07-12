@@ -29,7 +29,7 @@ jobs:
       - name: Sensitive fixture scan
         run: npm run fixtures:check
       - name: Dossier cue parity smoke
-        run: npm run test -- tests/appShell.test.ts
+        run: npm run test -- tests/ui/app-shell.integration.test.ts
       - name: Test
         run: npm run test
       - name: Central bootstrap smoke

@@ -209,7 +209,7 @@ fetches doet. Zet deze API niet direct publiek op internet.
   categorie-neutraal en gebruiken `RecoveryContract` in de naam. Categorie-specifieke
   structuurhelpers noemen hun categorie expliciet, zoals `UnlockError`, omdat zij de
   exacte alertstructuur van één herstelstatus bewaken. Nieuwe recovery-contracthelpers
-  kiezen eerst deze tweedeling voordat ze aan `tests/appShell.test.ts` worden
+  kiezen eerst deze tweedeling voordat ze aan `tests/ui/app-shell.integration.test.ts` worden
   toegevoegd; de app-shell broncodeguard bewaakt deze afspraak.
 - Browserrequests met een `Origin` buiten `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` worden
   `403` vóór body parsing en vóór API-side effects. Requests zonder `Origin` blijven

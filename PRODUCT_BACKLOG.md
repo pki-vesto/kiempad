@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1860 |
+| ☑ klaar | 1861 |
 | ◐ bezig | 0 |
-| ☐ open | 104 |
+| ☐ open | 103 |
 | ☒ archived | 104 |
 | **Totaal** | **2068** |
 
@@ -2228,7 +2228,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2064 | Premium Claude Design UI: Migreer scherm traject naar lit-html | P2 | F5 | ☑ |
 | G2065 | Premium Claude Design UI: Dun appShell.ts + main.ts uit; verwijder focus/rAF-hacks | P2 | F5 | ☑ |
 | G2066 | Premium Claude Design UI: Multi-device sync via dispatch | P2 | F5 | ☑ |
-| G2067 | Premium Claude Design UI: Splits restant tests/appShell.test.ts | P2 | F5 | ☐ |
+| G2067 | Premium Claude Design UI: Splits restant tests/appShell.test.ts | P2 | F5 | ☑ |
 | G2068 | Premium Claude Design UI: Dev-only CSP localhost via Vite transformIndexHtml | P2 | F5 | ☐ |
 | G2069 | Premium Claude Design UI: Iframe-print voor exportConsultPdf | P2 | F5 | ☐ |
 
