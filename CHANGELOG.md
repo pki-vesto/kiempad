@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Changed
+- G2065 shellafronding: `appShell.ts` en `main.ts` zijn dunne publieke grenzen; view/runtime-
+  implementatie staat apart en pending-focus plus requestAnimationFrame-compensatie is verwijderd.
 - G2063 follow-up: de Dossier-taakroutegrid rekt op desktop niet meer mee met de volledige
   werkruimtehoogte; alle vier routekeuzes blijven binnen de eerste viewport.
 - VERBETERINGEN-VOLLEDIG.md punt 109 (ontgrendelscherm herontworpen): rustige,

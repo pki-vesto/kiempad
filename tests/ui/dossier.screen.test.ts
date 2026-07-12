@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import mainSource from '../../src/main.ts?raw';
+import mainSource from '../../src/runtime.ts?raw';
 import { type DossierAction, renderDossierScreen } from '../../src/ui/screens/dossier';
 
 describe('dossier lit-html scherm', () => {

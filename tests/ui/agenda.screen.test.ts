@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import mainSource from '../../src/main.ts?raw';
+import mainSource from '../../src/runtime.ts?raw';
 import { type AgendaAction, renderAgendaScreen } from '../../src/ui/screens/agenda';
 
 describe('agenda lit-html scherm', () => {

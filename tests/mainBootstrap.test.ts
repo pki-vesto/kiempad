@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import mainSource from '../src/main.ts?raw';
+import mainSource from '../src/runtime.ts?raw';
 import dossierScreenSource from '../src/ui/screens/dossier.ts?raw';
 import startScreenSource from '../src/ui/screens/start.ts?raw';
 
@@ -102,8 +102,7 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('dismissDailyRecommendationRouteFocusStatus(root, state)');
     expect(mainSource).toContain('dailyRecommendationRouteFocusDismissed = true');
     expect(mainSource).toContain('dailyRecommendationRouteFocusDismissed = false');
-    expect(mainSource).toContain('dailyRecommendationRouteFocusPendingFocus = true');
-    expect(mainSource).toContain('dailyRecommendationRouteFocusPendingFocus = false');
+    expect(mainSource).not.toContain('dailyRecommendationRouteFocusPendingFocus');
     expect(mainSource).toContain('focusDailyRecommendationRouteFocusStatus(root)');
     expect(mainSource).toContain('function focusDailyRecommendationRouteFocusStatus');
     expect(mainSource).toContain('status.focus({ preventScroll: true })');
@@ -200,15 +199,15 @@ describe('main bootstrap', () => {
   it('brengt de actieve mobiele workspace-strip knop na render horizontaal in beeld', () => {
     expect(mainSource).toContain('alignActiveWorkspaceStripButton(root)');
     expect(mainSource).toContain('alignActiveRouteFocusLink(root)');
-    expect(mainSource).toContain(
+    expect(mainSource).not.toContain(
       'requestAnimationFrame(() => alignActiveWorkspaceStripButton(root))',
     );
-    expect(mainSource).toContain('requestAnimationFrame(() => alignActiveRouteFocusLink(root))');
-    expect(mainSource).toContain("window.addEventListener('popstate'");
-    expect(mainSource).toContain(
-      'requestAnimationFrame(() => alignActiveWorkspaceStripButton(app))',
+    expect(mainSource).not.toContain(
+      'requestAnimationFrame(() => alignActiveRouteFocusLink(root))',
     );
-    expect(mainSource).toContain('requestAnimationFrame(() => alignActiveRouteFocusLink(app))');
+    expect(mainSource).toContain("window.addEventListener('popstate'");
+    expect(mainSource).toContain('alignActiveWorkspaceStripButton(app)');
+    expect(mainSource).toContain('alignActiveRouteFocusLink(app)');
     expect(mainSource).toContain('function alignActiveWorkspaceStripButton(root: HTMLElement)');
     expect(mainSource).toContain('function alignActiveRouteFocusLink(root: HTMLElement)');
     expect(mainSource).toContain(
@@ -269,14 +268,14 @@ describe('main bootstrap', () => {
   });
 
   it('verplaatst focus na sessie-renewal recovery naar het veilige backup focusdoel', () => {
-    expect(mainSource).toContain('centralSessionRenewalRecoveryPendingFocus');
-    expect(mainSource).toContain('focusCentralSessionRenewalRecoveryStatus(root, state)');
+    expect(mainSource).not.toContain('centralSessionRenewalRecoveryPendingFocus');
+    expect(mainSource).toContain('focusCentralSessionRenewalRecoveryStatus(root)');
     expect(mainSource).toContain('!state.loadingState');
     expect(mainSource).toContain(
       "state.backupStatus?.startsWith('Centrale sessieherstelactie verwerkt.')",
     );
     expect(mainSource).toContain('function focusCentralSessionRenewalRecoveryStatus');
-    expect(mainSource).toContain('requestAnimationFrame(() =>');
+    expect(mainSource).not.toContain('requestAnimationFrame(() =>');
     expect(mainSource).toContain('querySelectorAll<HTMLElement>');
     expect(mainSource).toContain('getBoundingClientRect()');
     expect(mainSource).toContain('[data-central-session-renewal-recovery-focus-target="ready"]');

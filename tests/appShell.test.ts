@@ -2250,7 +2250,7 @@ describe('app shell', () => {
     const css = readFileSync('src/styles.css', 'utf8');
     const desktopCss = css.slice(0, css.indexOf('@media (max-width: 760px)'));
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
-    const appShell = readFileSync('src/appShell.ts', 'utf8');
+    const appShell = readFileSync('src/appShellView.ts', 'utf8');
     const components = readFileSync('src/ui/components.ts', 'utf8');
 
     expect(components).toContain('export function firstViewportWorkbench');
@@ -45433,7 +45433,7 @@ describe('app shell', () => {
   });
 
   it('bewaakt dat alle route-secties een zichtbare route-summary hebben', () => {
-    const source = readFileSync('src/appShell.ts', 'utf8');
+    const source = readFileSync('src/appShellView.ts', 'utf8');
     const routeRegex =
       /<section id="([^"]+)" class="([^"]*route-section[^"]*)"[^>]*data-([a-z]+)-route="([^"]+)"/g;
     const missingSummaries: string[] = [];
