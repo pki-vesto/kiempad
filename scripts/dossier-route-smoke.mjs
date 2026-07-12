@@ -133,7 +133,9 @@ async function assertDossierRoute(browser, options) {
       throw new Error(`${options.label}: dossierroute-stage staat niet in de eerste viewport.`);
     }
     if (result.routeNavBottom === null || result.routeNavBottom > result.viewportHeight) {
-      throw new Error(`${options.label}: dossierroutekeuze is niet volledig zichtbaar in de eerste viewport.`);
+      throw new Error(
+        `${options.label}: dossierroutekeuze is niet volledig zichtbaar in de eerste viewport (${Math.round(result.routeNavBottom ?? 0)}px > ${result.viewportHeight}px).`,
+      );
     }
     if (result.horizontalOverflow) {
       throw new Error(`${options.label}: dossierroute veroorzaakt horizontale overflow.`);

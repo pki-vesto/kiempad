@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Changed
+- G2063 follow-up: de Dossier-taakroutegrid rekt op desktop niet meer mee met de volledige
+  werkruimtehoogte; alle vier routekeuzes blijven binnen de eerste viewport.
 - VERBETERINGEN-VOLLEDIG.md punt 109 (ontgrendelscherm herontworpen): rustige,
   gecentreerde opbouw met brand-icoon, badge "Versleuteld · alleen op dit toestel",
   serif "Welkom terug" + één warme zin. "passphrase" → "wachtwoordzin",
