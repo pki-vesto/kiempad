@@ -132,7 +132,7 @@ Gebruik deze aanvullende evidence wanneer feedback-return cueparity rond dossier
 wordt gewijzigd.
 
 - **CI-stap:** `.github/workflows/ci.yml` bevat `Dossier cue parity smoke` met
-  `npm run test -- tests/appShell.test.ts`; de stap staat na `Secrets scan` en
+  `npm run test -- tests/ui/app-shell.integration.test.ts`; de stap staat na `Secrets scan` en
   `Sensitive fixture scan`, maar voor de volledige `Test`-stap.
 - **Scope:** de smoke bewaakt documentupload, consult, embryokwaliteit en embryo-status
   in standaard, reduced-motion en forced-colors context.
@@ -142,7 +142,7 @@ wordt gewijzigd.
 - **Freshness:** wijzig deze sectie samen met `docs/RUNBOOK.md`,
   `.github/workflows/ci.yml` en `tests/maintenanceDocs.test.ts` wanneer de
   cue-parity smoke van naam, commando of scope verandert. G1176 bewaakt dat het
-  exacte commando `npm run test -- tests/appShell.test.ts` in workflow, runbook,
+  exacte commando `npm run test -- tests/ui/app-shell.integration.test.ts` in workflow, runbook,
   completion-audit en maintenance-test synchroon blijft; `npm run assets:check`
   blijft onderdeel van de CI-validatie.
 
@@ -328,9 +328,9 @@ decision lanes, detail-lijst of mobiele raildichtheid wijzigt.
 Gebruik deze aanvullende release-evidence wanneer de mobiele Traject-route-rail,
 forced-colors cue pills of focusstijlen rond `command-task-route__cue` wijzigen.
 
-- **Test-locatie:** `tests/appShell.test.ts` bewaakt de forced-colors CSS-regels
+- **Test-locatie:** `tests/ui/app-shell.integration.test.ts` bewaakt de forced-colors CSS-regels
   voor `.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue`.
-- **Command:** `npm run test -- tests/appShell.test.ts` controleert de app-shell
+- **Command:** `npm run test -- tests/ui/app-shell.integration.test.ts` controleert de app-shell
   CSS contracten voor inactive focused cue pills en actieve cue distinctie.
 - **Scope:** de evidence bewaakt `ButtonFace` achtergrond, `ButtonText` tekst,
   `CanvasText` border/outline, `-webkit-text-fill-color: ButtonText`,

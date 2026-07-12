@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Changed
+- G2067 testsplitsing: de brede app-shellsuite is een UI-integratiesuite geworden en de
+  root-suite test alleen de publieke chromefacade; testdekking en data-hooks blijven behouden.
 - G2065 shellafronding: `appShell.ts` en `main.ts` zijn dunne publieke grenzen; view/runtime-
   implementatie staat apart en pending-focus plus requestAnimationFrame-compensatie is verwijderd.
 - G2063 follow-up: de Dossier-taakroutegrid rekt op desktop niet meer mee met de volledige
@@ -418,7 +420,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   zonder medische payload, OCR-tekst, broninhoud, secret, token of trackingpayload.
 - G1953 treatment mobile rail forced-colors cue text fill release evidence:
   releasecontext en onderhoudsdocs noemen nu
-  `npm run test -- tests/appShell.test.ts`,
+  `npm run test -- tests/ui/app-shell.integration.test.ts`,
   `.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue`,
   `ButtonFace`, `ButtonText`, `CanvasText`, `-webkit-text-fill-color: ButtonText`,
   `forced-color-adjust: auto` en actieve Highlight cue-fill distinctie, zodat

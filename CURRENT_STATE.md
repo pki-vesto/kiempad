@@ -54,6 +54,8 @@
   alleen bootstrap; runtime/viewimplementatie staat apart en pending-focus/rAF-compensatie is weg.
 - **G2066 centrale syncdispatch:** centrale sync- en sessiefeedback gebruiken dezelfde
   dispatch→targeted-renderroute als lokale mutaties, zonder polling of nieuwe netwerkcall.
+- **G2067 testsplitsing:** de brede app-shellregressie staat als integratiesuite onder
+  `tests/ui/`; de root-suite bewaakt alleen de publieke chromegrens naast per-schermtests.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
@@ -798,7 +800,7 @@
   zonder medische payload, OCR-tekst, broninhoud, secret, token of trackingpayload.
 - **G1953 treatment mobile rail forced-colors cue text fill release evidence:**
   releasecontext in changelog en current state noemt
-  `npm run test -- tests/appShell.test.ts`,
+  `npm run test -- tests/ui/app-shell.integration.test.ts`,
   `.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue`,
   `ButtonFace`, `ButtonText`, `CanvasText`, `-webkit-text-fill-color: ButtonText`,
   `forced-color-adjust: auto` en actieve Highlight cue-fill distinctie, zodat

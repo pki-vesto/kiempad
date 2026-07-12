@@ -44,18 +44,18 @@ import { BOOTSTRAP_SMOKE_PHASE_CODES } from '../src/storage/centralBootstrapDiag
 import centralHealthContractSource from '../src/storage/centralHealthContract.ts?raw';
 import centralHttpApiSource from '../src/storage/centralHttpApi.ts?raw';
 import vision from '../VISION.md?raw';
-import appShellTestSource from './appShell.test.ts?raw';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
 import centralHealthContractTest from './centralHealthContract.test.ts?raw';
 import centralHealthMonitorAnnotationCommandTest from './centralHealthMonitorAnnotationCommand.test.ts?raw';
 import centralHttpApiTest from './centralHttpApi.test.ts?raw';
+import appShellTestSource from './ui/app-shell.integration.test.ts?raw';
 
 const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contract-matrix:start';
 const BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER = 'backlog-health-json-contract-matrix:end';
 const BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION = `herstel beide markercomments ${BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER} en ${BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER} rond dezelfde issueSnapshot-matrixgroepverwachting in tests/backlogHealth.test.ts`;
 const BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR = `Backlog-health contractmatrix ontbreekt: ${BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION}.`;
 const DOSSIER_CUE_PARITY_SMOKE_LABEL = 'Dossier cue parity smoke';
-const DOSSIER_CUE_PARITY_SMOKE_COMMAND = 'npm run test -- tests/appShell.test.ts';
+const DOSSIER_CUE_PARITY_SMOKE_COMMAND = 'npm run test -- tests/ui/app-shell.integration.test.ts';
 const BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS = [
   'ciAnnotation',
   'schemaValidation',
@@ -413,7 +413,7 @@ const RECOVERY_CONTRACT_HELPER_DOCS_TERMS = [
   'Categorie-specifieke',
   'structuurhelpers noemen hun categorie expliciet',
   '`UnlockError`',
-  'tests/appShell.test.ts',
+  'tests/ui/app-shell.integration.test.ts',
   'app-shell broncodeguard',
 ] as const;
 const RECOVERY_CONTRACT_HELPER_RELEASE_TERMS = [
@@ -4005,9 +4005,9 @@ describe('onderhoudsdocumentatie', () => {
       ].join('\n'),
     ).toMatchInlineSnapshot(`
       "workflowLabel=Dossier cue parity smoke
-      workflowCommand=npm run test -- tests/appShell.test.ts
-      runbookCommand=npm run test -- tests/appShell.test.ts
-      auditCommand=npm run test -- tests/appShell.test.ts
+      workflowCommand=npm run test -- tests/ui/app-shell.integration.test.ts
+      runbookCommand=npm run test -- tests/ui/app-shell.integration.test.ts
+      auditCommand=npm run test -- tests/ui/app-shell.integration.test.ts
       docs=docs/RUNBOOK.md|docs/GOAL_COMPLETION_AUDIT.md|tests/maintenanceDocs.test.ts"
     `);
 
@@ -4630,7 +4630,7 @@ describe('onderhoudsdocumentatie', () => {
       'forced-color-adjust: auto',
       'text-decoration-color: ButtonText',
       'Highlight cue-fill distinctie',
-      'npm run test -- tests/appShell.test.ts',
+      'npm run test -- tests/ui/app-shell.integration.test.ts',
     ] as const;
     const forbiddenEvidenceTerms = [
       'medische payload',
@@ -4642,7 +4642,7 @@ describe('onderhoudsdocumentatie', () => {
     ] as const;
     const releaseEvidenceTerms = [
       'G1953 treatment mobile rail forced-colors cue text fill release evidence',
-      'npm run test -- tests/appShell.test.ts',
+      'npm run test -- tests/ui/app-shell.integration.test.ts',
       '.treatment-task-route:not([aria-current="page"]):focus-visible .command-task-route__cue',
       'ButtonFace',
       'ButtonText',

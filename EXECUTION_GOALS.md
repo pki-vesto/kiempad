@@ -28255,7 +28255,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests/appShell.test.ts, tests/ui/*
 - **ADR Needed:** no
 - **Score:** 78
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #4048
 
 ### G2068 — Premium Claude Design UI: Dev-only CSP localhost via Vite transformIndexHtml
