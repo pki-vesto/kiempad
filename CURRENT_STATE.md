@@ -50,6 +50,8 @@
   de desktop-taakroutegrid blijft volledig binnen de eerste viewport.
 - **G2064 traject lit-html:** trajectopslag, grafiek- en tijdlijnfilters, fase, archivering en
   verwijderen dispatchen vanuit de eigen schermtemplate zonder handmatige bindlaag.
+- **G2065 dunne shell/bootstrap:** `appShell.ts` is een publieke viewfacade en `main.ts`
+  alleen bootstrap; runtime/viewimplementatie staat apart en pending-focus/rAF-compensatie is weg.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.

@@ -28221,7 +28221,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** src/appShell.ts, src/main.ts
 - **ADR Needed:** no
 - **Score:** 70
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #4046
 
 ### G2066 — Premium Claude Design UI: Multi-device sync via dispatch
