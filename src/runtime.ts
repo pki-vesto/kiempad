@@ -113,6 +113,7 @@ import {
   koppelWebAuthnPrf,
   vraagWebAuthnPrfSecret,
 } from './storage/webauthn';
+import { subscribeCentralSyncDispatch } from './ui/centralSyncDispatch';
 import { canRenderTargeted, mountView, renderScreen, renderScreenTemplate } from './ui/render';
 import {
   type BackupRoute,
@@ -771,6 +772,14 @@ async function mount(): Promise<void> {
   }
 
   render(app, state);
+  subscribeCentralSyncDispatch(window, (feedback) => {
+    dispatch(app, state, () => {
+      state.centralSyncFeedback = {
+        ...deriveCentralSyncFeedback(state),
+        ...feedback,
+      };
+    });
+  });
   window.addEventListener('hashchange', () => render(app, state));
   window.addEventListener('popstate', () => {
     alignActiveWorkspaceStripButton(app);
