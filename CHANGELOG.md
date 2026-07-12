@@ -21,6 +21,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G2066 centrale syncdispatch: `kiempad:central-sync-update` en `central-session-feedback`
+  werken feedback via dezelfde targeted-renderdispatch bij zonder polling of extra verkeer.
 - G2064 trajectscherm: traject-, filter-, fase-, archief- en verwijderacties dispatchen via
   inline lit-html events met behoud van bestaande trajectdatahooks.
 - G2063 dossierscherm: upload-, consult-, embryo-, imaging- en reviewacties dispatchen via
