@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Changed
+- G2069 consultexport: PDF-print gebruikt een tijdelijk verborgen iframe met `srcdoc` en
+  `afterprint`-cleanup in plaats van een popup en `document.write`.
 - G2068 CSP-hardening: localhost- en websocket-origins worden alleen door Vite-dev via
   `transformIndexHtml` toegevoegd; productie blijft `'self'` plus de centrale API-origin.
 - G2067 testsplitsing: de brede app-shellsuite is een UI-integratiesuite geworden en de

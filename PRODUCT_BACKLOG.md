@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1862 |
+| ☑ klaar | 1863 |
 | ◐ bezig | 0 |
-| ☐ open | 102 |
+| ☐ open | 101 |
 | ☒ archived | 104 |
 | **Totaal** | **2068** |
 
@@ -2230,7 +2230,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G2066 | Premium Claude Design UI: Multi-device sync via dispatch | P2 | F5 | ☑ |
 | G2067 | Premium Claude Design UI: Splits restant tests/appShell.test.ts | P2 | F5 | ☑ |
 | G2068 | Premium Claude Design UI: Dev-only CSP localhost via Vite transformIndexHtml | P2 | F5 | ☑ |
-| G2069 | Premium Claude Design UI: Iframe-print voor exportConsultPdf | P2 | F5 | ☐ |
+| G2069 | Premium Claude Design UI: Iframe-print voor exportConsultPdf | P2 | F5 | ☑ |
 
 ---
 
