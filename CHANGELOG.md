@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Changed
+- G2068 CSP-hardening: localhost- en websocket-origins worden alleen door Vite-dev via
+  `transformIndexHtml` toegevoegd; productie blijft `'self'` plus de centrale API-origin.
 - G2067 testsplitsing: de brede app-shellsuite is een UI-integratiesuite geworden en de
   root-suite test alleen de publieke chromefacade; testdekking en data-hooks blijven behouden.
 - G2065 shellafronding: `appShell.ts` en `main.ts` zijn dunne publieke grenzen; view/runtime-

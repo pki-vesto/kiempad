@@ -56,6 +56,8 @@
   dispatch→targeted-renderroute als lokale mutaties, zonder polling of nieuwe netwerkcall.
 - **G2067 testsplitsing:** de brede app-shellregressie staat als integratiesuite onder
   `tests/ui/`; de root-suite bewaakt alleen de publieke chromegrens naast per-schermtests.
+- **G2068 omgevingsgebonden CSP:** productie staat op `connect-src 'self'` plus een
+  ingestelde centrale API-origin; alleen Vite-dev injecteert localhost- en ws-origins.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.

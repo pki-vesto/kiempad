@@ -25,9 +25,8 @@ describe('PWA baseline', () => {
     expect(csp).toBeDefined();
     expect(csp).toContain("default-src 'self'");
     expect(csp).toContain("script-src 'self'");
-    expect(csp).toContain(
-      "connect-src 'self' http://localhost:* http://127.0.0.1:* ws://localhost:* ws://127.0.0.1:*",
-    );
+    expect(csp).toContain("connect-src 'self'");
+    expect(csp).not.toMatch(/localhost|127\.0\.0\.1|ws:\/\//);
     expect(csp).toContain("img-src 'self' data: blob:");
     expect(csp).toContain("media-src 'self' data: blob:");
     expect(csp).toContain("object-src 'none'");

@@ -28272,7 +28272,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** vite.config.ts, index.html
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
+- **Status:** ☑ done
 - **Issue:** #4049
 
 ### G2069 — Premium Claude Design UI: Iframe-print voor exportConsultPdf
