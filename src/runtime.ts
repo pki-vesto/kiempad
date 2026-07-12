@@ -114,6 +114,7 @@ import {
   vraagWebAuthnPrfSecret,
 } from './storage/webauthn';
 import { subscribeCentralSyncDispatch } from './ui/centralSyncDispatch';
+import { printHtmlInIframe } from './ui/iframePrint';
 import { canRenderTargeted, mountView, renderScreen, renderScreenTemplate } from './ui/render';
 import {
   type BackupRoute,
@@ -2909,19 +2910,13 @@ function dispatchVragenAction(action: VragenAction, root: HTMLElement, state: Ru
 }
 
 function exportConsultPdf(root: HTMLElement, state: RuntimeState): void {
-  const printWindow = window.open('', '_blank');
-  if (!printWindow) return;
-
-  printWindow.document.write(
+  printHtmlInIframe(
     maakConsultPrintHtml({
       afspraken: state.afspraken.map((bundle) => bundle.afspraak),
       vragen: state.vragen.map((bundle) => bundle.vraag),
       medicatie: state.medicatie.map((bundle) => bundle.medicatie),
     }),
   );
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
   state.vraagStatus = 'Consult-PDF klaargezet.';
   render(root, state);
 }

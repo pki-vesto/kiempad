@@ -58,6 +58,8 @@
   `tests/ui/`; de root-suite bewaakt alleen de publieke chromegrens naast per-schermtests.
 - **G2068 omgevingsgebonden CSP:** productie staat op `connect-src 'self'` plus een
   ingestelde centrale API-origin; alleen Vite-dev injecteert localhost- en ws-origins.
+- **G2069 iframe-print:** consultexport print vanuit een verborgen, tijdelijk iframe zonder
+  popup of `document.write`; de bestaande lokale export-HTML blijft ongewijzigd.
 - **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
   actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
   Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
