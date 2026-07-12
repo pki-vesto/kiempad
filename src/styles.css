@@ -22272,6 +22272,10 @@ a.action-card:active {
 
 .dossier-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: max-content;
+  align-content: start;
+  align-self: start;
+  max-height: 180px;
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace__rail .command-task-route {
